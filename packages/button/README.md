@@ -61,7 +61,7 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🧱 Size Properties
 
-All size variants (extra-small, small, medium, large, extra-large) support:
+All size variants (`extra-small`, `small`, `medium`, `large`, `extra-large`) support:
 
 | Property                                     | Description                          |
 | -------------------------------------------- | ------------------------------------ |
@@ -83,7 +83,7 @@ All size variants (extra-small, small, medium, large, extra-large) support:
 
 #### 🎨 Appearance Variant Properties
 
-All appearance variants (filled, tonal, elevated, outlined, text) support the following properties (replace `[variant]` with the variant name):
+All appearance variants (`filled`, `tonal`, `elevated`, `outlined`, `text`) support the following properties (replace `[variant]` with the variant name):
 
 | Property                                     | Description                       |
 | -------------------------------------------- | --------------------------------- |

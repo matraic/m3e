@@ -2,7 +2,8 @@
   "workspaces": [
     "packages/core",
     "packages/app-bar",
-    "packages/button"
+    "packages/button",
+    "packages/icon-button"
   ],
   "scripts": {
     "build": "npm run build --workspaces",
