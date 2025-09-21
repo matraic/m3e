@@ -1,6 +1,7 @@
 {
   "workspaces": [
-    "packages/core"
+    "packages/core",
+    "packages/app-bar"
   ],
   "scripts": {
     "build": "npm run build --workspaces",
