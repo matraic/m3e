@@ -1,0 +1,12 @@
+{
+  "workspaces": [
+    "packages/core"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "cem": "npm run cem --workspaces",
+    "lint": "npm run lint --workspaces",
+    "all": "npm run build && npm run cem && npm run lint",
+    "clean": "npm run clean --workspaces"
+  }
+}
