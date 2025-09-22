@@ -26,9 +26,9 @@ This section details the attributes and CSS custom properties available for the 
 
 ### ⚙️ Attributes
 
-| Attribute | Type                           | Default         | Description         |
-| --------- | ------------------------------ | --------------- | ------------------- |
-| `variant` | `"uncontained" \| "contained"` | `"uncontained"` | Appearance variant. |
+| Attribute | Type                           | Default         | Description                              |
+| --------- | ------------------------------ | --------------- | ---------------------------------------- |
+| `variant` | `"uncontained" \| "contained"` | `"uncontained"` | The appearance variant of the indicator. |
 
 ### 🎛️ CSS Custom Properties
 

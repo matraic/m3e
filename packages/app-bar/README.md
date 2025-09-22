@@ -48,11 +48,11 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### ⚙️ Attributes
 
-| Attribute  | Type      | Default   | Description                                                                  |
-| ---------- | --------- | --------- | ---------------------------------------------------------------------------- |
-| `centered` | `boolean` | `false`   | Whether the title and subtitle are centered.                                 |
-| `size`     | `string`  | `"small"` | Sets the size of the app bar (`small`, `medium`, `large`).                   |
-| `for`      | `string`  |           | The identifier of the interactive control to which this element is attached. |
+| Attribute  | Type                             | Default   | Description                                                                  |
+| ---------- | -------------------------------- | --------- | ---------------------------------------------------------------------------- |
+| `centered` | `boolean`                        | `false`   | Whether the title and subtitle are centered.                                 |
+| `size`     | `"small" \| "medium" \| "large"` | `"small"` | The size of the bar.                                                         |
+| `for`      | `string`                         |           | The identifier of the interactive control to which this element is attached. |
 
 ### 🧩 Slots
 

@@ -30,15 +30,15 @@ The following example adds a top-level `m3e-theme` directly beneath a document's
 
 ### ⚙️ Attributes
 
-| Attribute      | Type                                                                                                                              | Default      | Description                                 |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------ | ------------------------------------------- |
-| `color`        | `string`                                                                                                                          | `"#7D67BE"`  | Hex color to derive dynamic color palettes. |
-| `variant`      | `"monochrome" \| "neutral" \| "tonal-spot" \| "vibrant" \| "expressive" \| "fidelity" \| "rainbow" \| "fruit-salad" \| "content"` | `"vibrant"`  | Color variant of the theme.                 |
-| `scheme`       | `"auto" \| "light" \| "dark"`                                                                                                     | `"auto"`     | Color scheme.                               |
-| `contrast`     | `"standard" \| "medium" \| "high"`                                                                                                | `"standard"` | Contrast level.                             |
-| `strong-focus` | `boolean`                                                                                                                         | `false`      | Enables strong focus indicators.            |
-| `density`      | `number` (0, -1, -2)                                                                                                              | `0`          | Density scale.                              |
-| `motion`       | `"standard" \| "expressive"`                                                                                                      | `"standard"` | Motion scheme.                              |
+| Attribute      | Type                                                                                                                              | Default      | Description                                                |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------ | ---------------------------------------------------------- |
+| `color`        | `string`                                                                                                                          | `"#7D67BE"`  | The hex color from which to derive dynamic color palettes. |
+| `variant`      | `"monochrome" \| "neutral" \| "tonal-spot" \| "vibrant" \| "expressive" \| "fidelity" \| "rainbow" \| "fruit-salad" \| "content"` | `"vibrant"`  | The color variant of the theme.                            |
+| `scheme`       | `"auto" \| "light" \| "dark"`                                                                                                     | `"auto"`     | The color scheme of the theme.                             |
+| `contrast`     | `"standard" \| "medium" \| "high"`                                                                                                | `"standard"` | The contrast level of the theme.                           |
+| `strong-focus` | `boolean`                                                                                                                         | `false`      | Whether to enable strong focus indicators.                 |
+| `density`      | `number`                                                                                                                          | `0`          | The density scale (0, -1, -2).                             |
+| `motion`       | `"standard" \| "expressive"`                                                                                                      | `"standard"` | The motion scheme.                                         |
 
 ## 🤝 Contributing
 

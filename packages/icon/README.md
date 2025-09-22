@@ -37,14 +37,14 @@ The next example illustrates a link used to download a variable font for outline
 
 ### ⚙️ Attributes
 
-| Attribute      | Type                                 | Default      | Description                                    |
-| -------------- | ------------------------------------ | ------------ | ---------------------------------------------- |
-| `name`         | `string`                             | `""`         | The name of the icon (e.g., `home`, `search`). |
-| `variant`      | `"outlined" \| "rounded" \| "sharp"` | `"outlined"` | Appearance variant.                            |
-| `filled`       | `boolean`                            | `false`      | Whether the icon is filled.                    |
-| `grade`        | `"low" \| "medium" \| "high"`        | `"medium"`   | Grade of the icon.                             |
-| `weight`       | `number` (100–700)                   | `400`        | Weight of the icon.                            |
-| `optical-size` | `number` (20–48)                     | `24`         | Optical size of the icon.                      |
+| Attribute      | Type                                 | Default      | Description                                                    |
+| -------------- | ------------------------------------ | ------------ | -------------------------------------------------------------- |
+| `name`         | `string`                             |              | The name of the icon.                                          |
+| `variant`      | `"outlined" \| "rounded" \| "sharp"` | `"outlined"` | The appearance variant of the icon.                            |
+| `filled`       | `boolean`                            | `false`      | Whether the icon is filled.                                    |
+| `grade`        | `"low" \| "medium" \| "high"`        | `"medium"`   | The grade of the icon.                                         |
+| `weight`       | `number`                             | `400`        | A value from 100 to 700 indicating the weight of the icon.     |
+| `optical-size` | `number`                             | `24`         | A value from 20 to 48 indicating the optical size of the icon. |
 
 ### 🎛️ CSS Custom Properties
 

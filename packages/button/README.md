@@ -30,22 +30,22 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### ⚙️ Attributes
 
-| Attribute              | Type                                                               | Default     | Description                                                    |
-| ---------------------- | ------------------------------------------------------------------ | ----------- | -------------------------------------------------------------- |
-| `variant`              | `"elevated" \| "filled" \| "tonal" \| "outlined" \| "text"`        | `"text"`    | Appearance variant.                                            |
-| `shape`                | `"rounded" \| "square"`                                            | `"rounded"` | Shape of the button.                                           |
-| `size`                 | `"extra-small" \| "small" \| "medium" \| "large" \| "extra-large"` | `"small"`   | Size of the button.                                            |
-| `toggle`               | `boolean`                                                          | `false`     | Whether the button toggles between selected/unselected states. |
-| `selected`             | `boolean`                                                          | `false`     | Whether the toggle button is selected.                         |
-| `disabled`             | `boolean`                                                          | `false`     | Disables the button.                                           |
-| `disabled-interactive` | `boolean`                                                          | `false`     | Disables the button but allows some interaction.               |
-| `type`                 | `"button" \| "submit" \| "reset"`                                  | `"button"`  | Button type.                                                   |
-| `name`                 | `string`                                                           |             | Name for form submission.                                      |
-| `value`                | `string`                                                           |             | Value for form submission.                                     |
-| `href`                 | `string`                                                           |             | URL for link button.                                           |
-| `target`               | `string`                                                           |             | Target for link button.                                        |
-| `rel`                  | `string`                                                           |             | Relationship for link button.                                  |
-| `download`             | `string`                                                           |             | Download attribute for link button.                            |
+| Attribute              | Type                                                               | Default     | Description                                                                                                                            |
+| ---------------------- | ------------------------------------------------------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant`              | `"elevated" \| "filled" \| "tonal" \| "outlined" \| "text"`        | `"text"`    | The appearance variant of the button.                                                                                                  |
+| `shape`                | `"rounded" \| "square"`                                            | `"rounded"` | The shape of the button.                                                                                                               |
+| `size`                 | `"extra-small" \| "small" \| "medium" \| "large" \| "extra-large"` | `"small"`   | The size of the button.                                                                                                                |
+| `toggle`               | `boolean`                                                          | `false`     | Whether the button will toggle between selected and unselected states.                                                                 |
+| `selected`             | `boolean`                                                          | `false`     | Whether the toggle button is selected.                                                                                                 |
+| `disabled`             | `boolean`                                                          | `false`     | Whether the element is disabled.                                                                                                       |
+| `disabled-interactive` | `boolean`                                                          | `false`     | Whether the element is disabled and interactive.                                                                                       |
+| `type`                 | `"button" \| "submit" \| "reset"`                                  | `"button"`  | The type of the element.                                                                                                               |
+| `name`                 | `string`                                                           |             | The name of the element, submitted as a pair with the element's value as part of form data, when the element is used to submit a form. |
+| `value`                | `string`                                                           |             | The value associated with the element's name when it's submitted with form data.                                                       |
+| `href`                 | `string`                                                           |             | The URL to which the link button points.                                                                                               |
+| `target`               | `string`                                                           |             | The target of the link button.                                                                                                         |
+| `rel`                  | `string`                                                           |             | The relationship between the target of the link button and the document.                                                               |
+| `download`             | `string`                                                           |             | A value indicating whether the target of the link button will be downloaded, optionally specifying the new name of the file.           |
 
 ### 🧩 Slots
 
