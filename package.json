@@ -17,6 +17,7 @@
     "cem": "npm run cem --workspaces",
     "lint": "npm run lint --workspaces",
     "all": "npm run build && npm run cem && npm run lint",
-    "clean": "npm run clean --workspaces"
+    "clean": "npm run clean --workspaces",
+    "release": "npm publish --access public --workspaces"
   }
 }

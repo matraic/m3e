@@ -1,12 +1,12 @@
 {
   "name": "@m3e/theme",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Theme for Material 3 Expressive (M3E)",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/matraic/m3e.git"
+    "url": "git+https://github.com/matraic/m3e.git"
   },
   "keywords": [
     "material design",
@@ -30,7 +30,7 @@
     "@material/material-color-utilities": "^0.3.0"
   },
   "peerDependencies": {
-    "@m3e/core": "^0.1.0",
+    "@m3e/core": "^0.1.1",
     "lit": "^3.3.0"
   },
   "devDependencies": {
