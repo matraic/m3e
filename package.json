@@ -5,6 +5,7 @@
     "packages/button",
     "packages/card",
     "packages/divider",
+    "packages/expansion-panel",
     "packages/fab",
     "packages/icon",
     "packages/icon-button",
