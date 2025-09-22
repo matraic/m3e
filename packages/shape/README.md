@@ -34,6 +34,12 @@ This section details the attributes, slots and CSS custom properties available f
 | --------- | ------------------- | ------- | ---------------------- |
 | `name`    | `ShapeName \| null` | `null`  | The name of the shape. |
 
+### 🧩 Slots
+
+| Slot Name   | Description                               |
+| ----------- | ----------------------------------------- |
+| _(default)_ | Renders the clipped content of the shape. |
+
 ### 🎛️ CSS Custom Properties
 
 | Property                      | Description                                |

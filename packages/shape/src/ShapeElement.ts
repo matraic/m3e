@@ -29,7 +29,7 @@ import { ShapeNameStyle } from "./ShapeNameStyle";
  *
  * @tag m3e-shape
  *
- * @slot - Renders the content of the shape.
+ * @slot - Renders the clipped content of the shape.
  *
  * @attr name - The name of the shape.
  *
