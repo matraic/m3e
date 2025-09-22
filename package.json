@@ -5,6 +5,7 @@
     "packages/button",
     "packages/icon",
     "packages/icon-button",
+    "packages/shape",
     "packages/theme"
   ],
   "scripts": {
