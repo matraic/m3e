@@ -4,6 +4,7 @@
     "packages/app-bar",
     "packages/button",
     "packages/divider",
+    "packages/fab",
     "packages/icon",
     "packages/icon-button",
     "packages/shape",
