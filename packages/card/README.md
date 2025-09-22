@@ -16,7 +16,7 @@ npm install @m3e/card
 
 ## 🗂️ Elements
 
-- `m3e-card`
+- `m3e-card` — A content container for text, images (or other media), and actions in the context of a single subject.
 
 ## 🧪 Examples
 

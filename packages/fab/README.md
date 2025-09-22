@@ -14,7 +14,7 @@ npm install @m3e/fab
 
 ## 🗂️ Elements
 
-- `m3e-fab`
+- `m3e-fab` — A floating action button (FAB) used to present important actions.
 
 ## 📖 API Reference
 

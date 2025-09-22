@@ -12,7 +12,7 @@ npm install @m3e/theme
 
 ## 🗂️ Elements
 
-- `m3e-theme`
+- `m3e-theme` — A non-visual element responsible for application-level theming.
 
 ## 🧪 Examples
 

@@ -14,7 +14,7 @@ npm install @m3e/shape
 
 ## 🗂️ Elements
 
-- `m3e-shape`
+- `m3e-shape` — A shape used to add emphasis and decorative flair.
 
 ## 🧪 Examples
 

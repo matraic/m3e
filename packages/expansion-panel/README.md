@@ -38,7 +38,7 @@ The following example illustrates the basic use of the `m3e-accordion` and `m3e-
 
 ### 🗂️ Accordion
 
-Combines multiple expansion panels in to an accordion.
+This section details the attributes, slots and CSS custom properties available for the `m3e-accordion` component.
 
 #### ⚙️ Attributes
 
@@ -65,7 +65,7 @@ Combines multiple expansion panels in to an accordion.
 
 ### 🗂️ Expansion Panel
 
-An expandable details-summary view.
+This section details the attributes, events, slots and CSS custom properties available for the `m3e-expansion-panel` component.
 
 #### 🏷️ Attributes
 

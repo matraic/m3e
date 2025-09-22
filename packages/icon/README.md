@@ -14,7 +14,7 @@ npm install @m3e/icon
 
 ## 🗂️ Elements
 
-- `m3e-icon`
+- `m3e-icon` — A small symbol used to easily identify an action or category.
 
 ## 🧪 Examples
 

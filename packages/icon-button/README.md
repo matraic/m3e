@@ -14,7 +14,7 @@ npm install @m3e/icon-button
 
 ## 🗂️ Elements
 
-- `m3e-icon-button`
+- `m3e-icon-button` — An icon button users interact with to perform a supplementary action.
 
 ## 🧪 Examples
 

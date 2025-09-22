@@ -10,7 +10,7 @@ npm install @m3e/loading-indicator
 
 ## 🗂️ Elements
 
-- `m3e-loading-indicator`
+- `m3e-loading-indicator` — Shows indeterminate progress for a short wait time.
 
 ## 🧪 Examples
 

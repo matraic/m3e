@@ -14,7 +14,7 @@ npm install @m3e/button
 
 ## 🗂️ Elements
 
-- `m3e-button`
+- `m3e-button` — A button users interact with to perform an action.
 
 ## 🧪 Examples
 

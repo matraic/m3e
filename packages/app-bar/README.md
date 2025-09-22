@@ -10,7 +10,7 @@ npm install @m3e/app-bar
 
 ## 🗂️ Elements
 
-- `m3e-app-bar`
+- `m3e-app-bar` — A bar, placed a the top of a screen, used to help users navigate through an application.
 
 ## 🧪 Examples
 

@@ -10,7 +10,7 @@ npm install @m3e/divider
 
 ## 🗂️ Elements
 
-- `m3e-divider`
+- `m3e-divider` — A thin line that separates content in lists or other containers.
 
 ## 🧪 Examples
 
