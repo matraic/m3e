@@ -3,6 +3,7 @@
     "packages/core",
     "packages/app-bar",
     "packages/button",
+    "packages/divider",
     "packages/icon",
     "packages/icon-button",
     "packages/shape",
