@@ -10,6 +10,7 @@
     "packages/icon",
     "packages/icon-button",
     "packages/list",
+    "packages/loading-indicator",
     "packages/shape",
     "packages/theme",
     "packages/tooltip"
