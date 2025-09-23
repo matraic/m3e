@@ -1,6 +1,6 @@
 {
   "name": "@m3e/theme",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Theme for Material 3 Expressive (M3E)",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "@material/material-color-utilities": "^0.3.0"
   },
   "peerDependencies": {
-    "@m3e/core": "^0.1.1",
+    "@m3e/core": "^0.1.2",
     "lit": "^3.3.0"
   },
   "devDependencies": {
