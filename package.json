@@ -10,7 +10,8 @@
     "packages/icon",
     "packages/icon-button",
     "packages/shape",
-    "packages/theme"
+    "packages/theme",
+    "packages/tooltip"
   ],
   "scripts": {
     "build": "npm run build --workspaces",
