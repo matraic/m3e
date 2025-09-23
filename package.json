@@ -2,6 +2,7 @@
   "workspaces": [
     "packages/core",
     "packages/app-bar",
+    "packages/badge",
     "packages/button",
     "packages/card",
     "packages/divider",
