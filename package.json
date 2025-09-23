@@ -9,6 +9,7 @@
     "packages/fab",
     "packages/icon",
     "packages/icon-button",
+    "packages/list",
     "packages/shape",
     "packages/theme",
     "packages/tooltip"
