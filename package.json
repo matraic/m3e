@@ -6,6 +6,7 @@
     "packages/button",
     "packages/card",
     "packages/divider",
+    "packages/drawer-container",
     "packages/expansion-panel",
     "packages/fab",
     "packages/icon",
