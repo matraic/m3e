@@ -60,6 +60,10 @@ This section details the attributes, slots and CSS custom properties available f
 | `--m3e-tooltip-supporting-text-line-height` | Line height of supporting text.            |
 | `--m3e-tooltip-supporting-text-tracking`    | Letter spacing of supporting text.         |
 
----
+## 🤝 Contributing
 
-For more details, see the [documentation](./src/TooltipElement.ts) or explore usage in `showcase.html`.
+See the root monorepo `CONTRIBUTING.md` for guidelines on contributing to this package.
+
+## 📄 License
+
+This package is licensed under the MIT License.
