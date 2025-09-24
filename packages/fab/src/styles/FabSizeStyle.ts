@@ -19,16 +19,16 @@ function fabStyle(size: FabSize): CSSResult {
       letter-spacing: ${FabSizeToken[size].labelTextTracking};
     }
     :host([size="${unsafeCSS(size)}"]:not([extended])) .wrapper {
-      padding-left: ${FabSizeToken[size].leadingSpace};
-      padding-right: ${FabSizeToken[size].trailingSpace};
+      padding-inline-start: ${FabSizeToken[size].leadingSpace};
+      padding-inline-end: ${FabSizeToken[size].trailingSpace};
     }
     :host([size="${unsafeCSS(size)}"]:not([extended])) .icon {
       font-size: ${FabSizeToken[size].iconSize};
       --m3e-icon-size: ${FabSizeToken[size].iconSize};
     }
     :host([size="${unsafeCSS(size)}"][extended]) .wrapper {
-      padding-left: ${FabSizeToken[size].extendedLeadingSpace};
-      padding-right: ${FabSizeToken[size].extendedTrailingSpace};
+      padding-inline-start: ${FabSizeToken[size].extendedLeadingSpace};
+      padding-inline-end: ${FabSizeToken[size].extendedTrailingSpace};
       column-gap: ${FabSizeToken[size].iconLabelSpace};
     }
     :host([size="${unsafeCSS(size)}"][extended]) .icon {

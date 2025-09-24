@@ -40,10 +40,11 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### 🧩 Slots
 
-| Slot Name   | Description                           |
-| ----------- | ------------------------------------- |
-| _(default)_ | Renders the icon of the button.       |
-| `label`     | Renders the label of an extended FAB. |
+| Slot Name    | Description                                          |
+| ------------ | ---------------------------------------------------- |
+| _(default)_  | Renders the icon of the button.                      |
+| `label`      | Renders the label of an extended FAB.                |
+| `close-icon` | Renders the close icon when used to open a FAB menu. |
 
 ### 🎛️ CSS Custom Properties
 

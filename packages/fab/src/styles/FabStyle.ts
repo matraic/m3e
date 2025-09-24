@@ -59,17 +59,44 @@ export const FabStyle: CSSResultGroup = css`
   :host([disabled-interactive]) {
     cursor: not-allowed;
   }
-  ::slotted(:not([slot])) {
+  .close-icon,
+  ::slotted(:not([slot])),
+  ::slotted([slot="close-icon"]) {
     font-size: inherit !important;
     flex: none;
   }
-  ::slotted(svg:not([slot])) {
+  .close-icon,
+  ::slotted(svg:not([slot])),
+  ::slotted(svg[slot="close-icon"]) {
     width: 1em;
     height: 1em;
   }
-  :host([toggle]:not([selected])) .base.with-selected-icon slot[name="selected-icon"],
-  :host([toggle][selected]) .base.with-selected-icon slot[name="icon"] {
+  :host(:not([extended])) ::slotted([slot="label"]),
+  .base.-with-menu ::slotted([slot="label"]),
+  .base:not(.-with-menu) ::slotted([slot="close-icon"]),
+  .base:not(.-with-menu) .close-icon,
+  :host([aria-expanded="true"]) .base.-with-menu ::slotted(:not([slot])),
+  :host([aria-expanded="false"]) .base.-with-menu ::slotted([slot="close-icon"]),
+  :host([aria-expanded="false"]) .base.-with-menu .close-icon {
     display: none;
+  }
+  :host([aria-expanded="true"]) .base.-with-menu {
+    border-radius: var(--m3e-fab-menu-close-button-container-shape, ${DesignToken.shape.corner.full});
+    height: calc(var(--m3e-fab-menu-close-button-container-height, 3.5rem) + ${DesignToken.density.calc(-3)});
+  }
+  :host([aria-expanded="true"]) .base.-with-menu .wrapper {
+    padding-inline-start: calc(var(--m3e-fab-menu-close-button-leading-space, 1rem) + ${DesignToken.density.calc(-3)});
+    padding-inline-end: calc(var(--m3e-fab-menu-close-button-trailing-space, 1rem) + ${DesignToken.density.calc(-3)});
+  }
+  :host([aria-expanded="true"]) .base.-with-menu .icon {
+    font-size: calc(var(--m3e-fab-menu-close-button-icon-size, 1.5rem) + ${DesignToken.density.calc(-3)});
+    --m3e-icon-size: calc(var(--m3e-fab-menu-close-button-icon-size, 1.5rem) + ${DesignToken.density.calc(-3)});
+  }
+  .base.-with-menu {
+    transition: height ${DesignToken.motion.spring.fastSpatial};
+  }
+  .base.-with-menu .wrapper {
+    transition: padding ${DesignToken.motion.spring.fastSpatial};
   }
   a {
     all: unset;

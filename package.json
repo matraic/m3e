@@ -9,6 +9,7 @@
     "packages/drawer-container",
     "packages/expansion-panel",
     "packages/fab",
+    "packages/fab-menu",
     "packages/icon",
     "packages/icon-button",
     "packages/list",

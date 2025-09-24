@@ -63,6 +63,7 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  *
  * @slot - Renders the icon of the button.
  * @slot label - Renders the label of an extended button.
+ * @slot close-icon - Renders the close icon when used to open a FAB menu.
  *
  * @attr disabled - Whether the element is disabled.
  * @attr disabled-interactive - Whether the element is disabled and interactive.
@@ -379,28 +380,6 @@ export class M3eFabElement extends KeyboardClick(
   @property({ type: Boolean, reflect: true }) extended = false;
 
   /** @inheritdoc */
-  override render(): unknown {
-    return html`<div class="base">
-      <m3e-elevation class="elevation" ?disabled="${this.disabled || this.disabledInteractive}"></m3e-elevation>
-      <m3e-state-layer class="state-layer" ?disabled="${this.disabled || this.disabledInteractive}"></m3e-state-layer>
-      <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
-      <m3e-ripple
-        class="ripple"
-        ?centered="${!this.extended}"
-        ?disabled="${this.disabled || this.disabledInteractive}"
-      ></m3e-ripple>
-      <div class="touch" aria-hidden="true"></div>
-      ${this[renderPseudoLink]()}
-      <div class="wrapper">
-        <slot class="icon" aria-hidden="true"></slot>
-        <div class="label">
-          <slot name="label"></slot>
-        </div>
-      </div>
-    </div>`;
-  }
-
-  /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
@@ -425,6 +404,40 @@ export class M3eFabElement extends KeyboardClick(
       this._base?.classList.toggle("pressed", false);
       this._base?.classList.toggle("resting", false);
     }
+  }
+
+  /** @inheritdoc */
+  override render(): unknown {
+    return html`<div class="base">
+      <m3e-elevation class="elevation" ?disabled="${this.disabled || this.disabledInteractive}"></m3e-elevation>
+      <m3e-state-layer class="state-layer" ?disabled="${this.disabled || this.disabledInteractive}"></m3e-state-layer>
+      <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
+      <m3e-ripple
+        class="ripple"
+        ?centered="${!this.extended}"
+        ?disabled="${this.disabled || this.disabledInteractive}"
+      ></m3e-ripple>
+      <div class="touch" aria-hidden="true"></div>
+      ${this[renderPseudoLink]()}
+      <div class="wrapper">
+        <slot class="icon" aria-hidden="true" @slotchange="${this.#handleSlotChange}"></slot>
+        <slot class="icon" aria-hidden="true" name="close-icon">
+          <svg class="close-icon" viewBox="0 -960 960 960" fill="currentColor">
+            <path
+              d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+            />
+          </svg>
+        </slot>
+        <div class="label">
+          <slot name="label" @slotchange="${this.#handleSlotChange}"></slot>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  /** @private */
+  #handleSlotChange(): void {
+    this._base?.classList.toggle("-with-menu", this.querySelector("m3e-fab-menu-trigger") !== null);
   }
 }
 

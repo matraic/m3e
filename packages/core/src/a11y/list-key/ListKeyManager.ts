@@ -270,7 +270,7 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
     }
   }
 
-  /** @internal */
+  /** @private */
   #findFirst(): T | null {
     for (let i = 0; i < this.items.length; i++) {
       if (this.items[i] === this.activeItem) break;
@@ -282,7 +282,7 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
     return null;
   }
 
-  /** @internal */
+  /** @private */
   #findLast(): T | null {
     for (let i = this.items.length - 1; i >= 0; i--) {
       if (this.items[i] === this.activeItem) break;
@@ -294,7 +294,7 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
     return null;
   }
 
-  /** @internal */
+  /** @private */
   #findNext(): T | null {
     for (let i = 0; i < this.items.length; i++) {
       if (this.items[i] === this.activeItem) {
@@ -310,7 +310,7 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
     return this.wrap ? this.#findFirst() : null;
   }
 
-  /** @internal */
+  /** @private */
   #findPrevious(): T | null {
     for (let i = 0; i < this.items.length; i++) {
       if (this.items[i] === this.activeItem) {
@@ -326,7 +326,7 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
     return this.wrap ? this.#findLast() : null;
   }
 
-  /** @internal */
+  /** @private */
   #findPreviousByIndex(index: number): T | null {
     for (let i = index; i >= 0; i--) {
       const test = this.items[i];
@@ -337,7 +337,7 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
     return null;
   }
 
-  /** @internal */
+  /** @private */
   #findNextByIndex(index: number): T | null {
     for (let i = index; i < this.items.length; i++) {
       const test = this.items[i];
