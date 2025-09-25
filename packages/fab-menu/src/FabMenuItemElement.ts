@@ -212,7 +212,7 @@ export class M3eFabMenuItemElement extends KeyboardClick(
   /** @private */
   #handleClick(e: Event): void {
     if (!e.defaultPrevented) {
-      setTimeout(() => this.menu?.hide(true));
+      this.menu?.hide(true);
     }
   }
 }
