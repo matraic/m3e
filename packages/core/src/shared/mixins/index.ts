@@ -17,3 +17,4 @@ export * from "./LinkButton";
 export * from "./Role";
 export * from "./Selected";
 export * from "./Touched";
+export * from "./Vertical";

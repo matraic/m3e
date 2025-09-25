@@ -17,6 +17,7 @@
     "packages/shape",
     "packages/snackbar",
     "packages/theme",
+    "packages/toolbar",
     "packages/tooltip"
   ],
   "scripts": {
