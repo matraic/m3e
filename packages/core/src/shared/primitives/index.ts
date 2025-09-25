@@ -5,4 +5,6 @@ export * from "./FocusRingElement";
 export * from "./PseudoCheckboxElement";
 export * from "./PseudoRadioElement";
 export * from "./RippleElement";
+export * from "./ScrollContainerElement";
+export * from "./ScrollDividers";
 export * from "./StateLayerElement";

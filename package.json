@@ -5,6 +5,7 @@
     "packages/badge",
     "packages/button",
     "packages/card",
+    "packages/dialog",
     "packages/divider",
     "packages/drawer-container",
     "packages/expansion-panel",
