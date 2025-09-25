@@ -96,8 +96,7 @@ export class M3eFabMenuTriggerElement extends HtmlFor(Role(LitElement, "none")) 
   /** @private */
   #handleClick(e: Event): void {
     if (!e.defaultPrevented && this.parentElement) {
-      const parent = this.parentElement;
-      setTimeout(() => this.menu?.toggle(parent));
+      this.menu?.toggle(this.parentElement);
     }
   }
 }
