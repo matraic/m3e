@@ -1,7 +1,8 @@
 import { css, CSSResultGroup, html, isServer, LitElement } from "lit";
 import { customElement, query } from "lit/decorators.js";
 
-import { Disabled, Role } from "../shared/mixins";
+import { Disabled } from "../shared/mixins/Disabled";
+import { Role } from "../shared/mixins/Role";
 
 import { M3eInteractivityChecker } from "./InteractivityChecker";
 
