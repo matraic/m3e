@@ -64,7 +64,11 @@ export class M3eFocusTrapElement extends Disabled(Role(LitElement, "none")) {
     let last: HTMLElement | null = null;
 
     this.#walkTree(this, [], (element, parents) => {
-      if (M3eInteractivityChecker.isFocusable(element, parents) && element instanceof HTMLElement) {
+      if (
+        M3eInteractivityChecker.isFocusable(element, parents) &&
+        element instanceof HTMLElement &&
+        element.tabIndex >= 0
+      ) {
         first = first ?? element;
         last = element;
       }

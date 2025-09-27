@@ -9,7 +9,7 @@ export class M3eInteractivityChecker {
   static isFocusable(element: Element, parents?: readonly Element[]): boolean {
     if (
       element.matches(
-        ":is(button,input,select,textarea,object,:is(a,area)[href],[tabindex],[contenteditable=true]):not(:disabled,[disabled]):not([tabindex^='-'])"
+        ":is(button,input,select,textarea,object,:is(a,area)[href],[tabindex],[contenteditable=true]):not(:disabled,[disabled])"
       )
     ) {
       return !this.#cannotFocusParent(parents);
@@ -18,8 +18,7 @@ export class M3eInteractivityChecker {
     if (
       !element.localName.includes("-") ||
       !element.matches(":not(:disabled,[disabled])") ||
-      element.getAttribute("aria-disabled") === "true" ||
-      (element instanceof HTMLElement && element.tabIndex < 0)
+      element.getAttribute("aria-disabled") === "true"
     ) {
       return false;
     }
