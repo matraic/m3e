@@ -420,7 +420,7 @@ export class M3eDialogElement extends EventAttribute(
   }
 }
 
-interface MxwcDialogElementEventMap extends HTMLElementEventMap {
+interface M3eDialogElementEventMap extends HTMLElementEventMap {
   opening: Event;
   opened: Event;
   closing: Event;
@@ -429,9 +429,9 @@ interface MxwcDialogElementEventMap extends HTMLElementEventMap {
 }
 
 export interface M3eDialogElement {
-  addEventListener<K extends keyof MxwcDialogElementEventMap>(
+  addEventListener<K extends keyof M3eDialogElementEventMap>(
     type: K,
-    listener: (this: M3eDialogElement, ev: MxwcDialogElementEventMap[K]) => void,
+    listener: (this: M3eDialogElement, ev: M3eDialogElementEventMap[K]) => void,
     options?: boolean | AddEventListenerOptions
   ): void;
 
@@ -441,9 +441,9 @@ export interface M3eDialogElement {
     options?: boolean | AddEventListenerOptions
   ): void;
 
-  removeEventListener<K extends keyof MxwcDialogElementEventMap>(
+  removeEventListener<K extends keyof M3eDialogElementEventMap>(
     type: K,
-    listener: (this: M3eDialogElement, ev: MxwcDialogElementEventMap[K]) => void,
+    listener: (this: M3eDialogElement, ev: M3eDialogElementEventMap[K]) => void,
     options?: boolean | EventListenerOptions
   ): void;
 
