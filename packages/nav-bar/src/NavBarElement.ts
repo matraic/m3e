@@ -63,9 +63,6 @@ export class M3eNavBarElement extends Role(LitElement, "navigation") {
     super();
 
     this[selectionManager].disableRovingTabIndex = true;
-    this[selectionManager].addEventListener("selectionChange", () =>
-      this.dispatchEvent(new Event("change", { bubbles: true }))
-    );
   }
 
   /**

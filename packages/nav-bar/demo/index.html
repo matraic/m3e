@@ -42,14 +42,14 @@
   </head>
   <body>
     <m3e-theme strong-focus>
-      <m3e-nav-bar>
+      <m3e-nav-bar onchange="console.log(this.selected)">
         <m3e-nav-item><m3e-icon slot="icon" filled name="news"></m3e-icon>News</m3e-nav-item>
         <m3e-nav-item><m3e-icon slot="icon" name="globe"></m3e-icon>Global</m3e-nav-item>
         <m3e-nav-item><m3e-icon slot="icon" name="star"></m3e-icon>For you</m3e-nav-item>
         <m3e-nav-item><m3e-icon slot="icon" name="newsstand"></m3e-icon>Trending</m3e-nav-item>
       </m3e-nav-bar>
       <br /><br />
-      <m3e-nav-bar orientation="horizontal">
+      <m3e-nav-bar orientation="horizontal" onchange="console.log(this.selected)">
         <m3e-nav-item><m3e-icon slot="icon" filled name="news"></m3e-icon>News</m3e-nav-item>
         <m3e-nav-item><m3e-icon slot="icon" name="globe"></m3e-icon>Global</m3e-nav-item>
         <m3e-nav-item><m3e-icon slot="icon" name="star"></m3e-icon>For you</m3e-nav-item>
