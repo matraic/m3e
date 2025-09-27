@@ -24,6 +24,7 @@ export function isDisabledInteractiveMixin(value: unknown): value is DisabledInt
 }
 
 const SUPPRESSED_EVENTS = ["click", "dblclick", "auxclick", "keydown", "keyup"];
+const INTERACTIVE_KEYS = ["Tab", "ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown", "Left", "Up", "Right", "Down"];
 const _suppressedEventHandler = Symbol("_suppressedEventHandler");
 
 /**
@@ -38,8 +39,8 @@ export function DisabledInteractive<T extends Constructor<LitElement & DisabledM
   abstract class _DisabledInteractiveMixin extends base implements DisabledInteractiveMixin {
     private readonly [_suppressedEventHandler] = (e: Event) => {
       if (this.disabledInteractive) {
-        // Allow tab key when disabled and interactive.
-        if (e instanceof KeyboardEvent && e.key === "Tab") {
+        // Only allow specific keys when disabled and interactive.
+        if (e instanceof KeyboardEvent && INTERACTIVE_KEYS.includes(e.key)) {
           return;
         }
         e.stopImmediatePropagation();
