@@ -16,6 +16,7 @@
     "packages/list",
     "packages/loading-indicator",
     "packages/nav-bar",
+    "packages/nav-rail",
     "packages/shape",
     "packages/snackbar",
     "packages/theme",
