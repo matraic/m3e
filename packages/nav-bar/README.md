@@ -53,11 +53,11 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🎛️ CSS Custom Properties
 
-| Property                          | Description                             |
-| --------------------------------- | --------------------------------------- |
-| --m3e-nav-bar-height              | Height of the navigation bar.           |
-| --m3e-nav-bar-container-color     | Background color of the navigation bar. |
-| --m3e-nav-bar-vertical-item-width | Minimum width of vertical nav items.    |
+| Property                            | Description                             |
+| ----------------------------------- | --------------------------------------- |
+| `--m3e-nav-bar-height`              | Height of the navigation bar.           |
+| `--m3e-nav-bar-container-color`     | Background color of the navigation bar. |
+| `--m3e-nav-bar-vertical-item-width` | Minimum width of vertical nav items.    |
 
 ### 🗂️ m3e-nav-item
 
@@ -93,36 +93,36 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                          | Description                                  |
-| ------------------------------------------------- | -------------------------------------------- |
-| --m3e-nav-item-label-text-font-size               | Font size for the label text.                |
-| --m3e-nav-item-label-text-font-weight             | Font weight for the label text.              |
-| --m3e-nav-item-label-text-line-height             | Line height for the label text.              |
-| --m3e-nav-item-label-text-tracking                | Letter spacing for the label text.           |
-| --m3e-nav-item-shape                              | Border radius of the nav item.               |
-| --m3e-nav-item-icon-size                          | Size of the icon.                            |
-| --m3e-nav-item-spacing                            | Spacing between icon and label.              |
-| --m3e-nav-item-inactive-label-text-color          | Color of the label text when inactive.       |
-| --m3e-nav-item-inactive-icon-color                | Color of the icon when inactive.             |
-| --m3e-nav-item-inactive-hover-state-layer-color   | State layer color on hover when inactive.    |
-| --m3e-nav-item-inactive-focus-state-layer-color   | State layer color on focus when inactive.    |
-| --m3e-nav-item-inactive-pressed-state-layer-color | State layer color on press when inactive.    |
-| --m3e-nav-item-active-label-text-color            | Color of the label text when active.         |
-| --m3e-nav-item-active-icon-color                  | Color of the icon when active.               |
-| --m3e-nav-item-active-container-color             | Container color when active.                 |
-| --m3e-nav-item-active-hover-state-layer-color     | State layer color on hover when active.      |
-| --m3e-nav-item-active-focus-state-layer-color     | State layer color on focus when active.      |
-| --m3e-nav-item-active-pressed-state-layer-color   | State layer color on press when active.      |
-| --m3e-nav-item-focus-ring-shape                   | Border radius for the focus ring.            |
-| --m3e-nav-item-disabled-label-text-color          | Color of the label text when disabled.       |
-| --m3e-nav-item-disabled-label-text-opacity        | Opacity of the label text when disabled.     |
-| --m3e-nav-item-disabled-icon-color                | Color of the icon when disabled.             |
-| --m3e-nav-item-disabled-icon-opacity              | Opacity of the icon when disabled.           |
-| --m3e-horizontal-nav-item-padding                 | Padding for horizontal orientation.          |
-| --m3e-horizontal-nav-item-active-indicator-height | Height of the active indicator (horizontal). |
-| --m3e-vertical-nav-item-active-indicator-width    | Width of the active indicator (vertical).    |
-| --m3e-vertical-nav-item-active-indicator-height   | Height of the active indicator (vertical).   |
-| --m3e-vertical-nav-item-active-indicator-margin   | Margin for the active indicator (vertical).  |
+| Property                                            | Description                                  |
+| --------------------------------------------------- | -------------------------------------------- |
+| `--m3e-nav-item-label-text-font-size`               | Font size for the label text.                |
+| `--m3e-nav-item-label-text-font-weight`             | Font weight for the label text.              |
+| `--m3e-nav-item-label-text-line-height`             | Line height for the label text.              |
+| `--m3e-nav-item-label-text-tracking`                | Letter spacing for the label text.           |
+| `--m3e-nav-item-shape`                              | Border radius of the nav item.               |
+| `--m3e-nav-item-icon-size`                          | Size of the icon.                            |
+| `--m3e-nav-item-spacing`                            | Spacing between icon and label.              |
+| `--m3e-nav-item-inactive-label-text-color`          | Color of the label text when inactive.       |
+| `--m3e-nav-item-inactive-icon-color`                | Color of the icon when inactive.             |
+| `--m3e-nav-item-inactive-hover-state-layer-color`   | State layer color on hover when inactive.    |
+| `--m3e-nav-item-inactive-focus-state-layer-color`   | State layer color on focus when inactive.    |
+| `--m3e-nav-item-inactive-pressed-state-layer-color` | State layer color on press when inactive.    |
+| `--m3e-nav-item-active-label-text-color`            | Color of the label text when active.         |
+| `--m3e-nav-item-active-icon-color`                  | Color of the icon when active.               |
+| `--m3e-nav-item-active-container-color`             | Container color when active.                 |
+| `--m3e-nav-item-active-hover-state-layer-color`     | State layer color on hover when active.      |
+| `--m3e-nav-item-active-focus-state-layer-color`     | State layer color on focus when active.      |
+| `--m3e-nav-item-active-pressed-state-layer-color`   | State layer color on press when active.      |
+| `--m3e-nav-item-focus-ring-shape`                   | Border radius for the focus ring.            |
+| `--m3e-nav-item-disabled-label-text-color`          | Color of the label text when disabled.       |
+| `--m3e-nav-item-disabled-label-text-opacity`        | Opacity of the label text when disabled.     |
+| `--m3e-nav-item-disabled-icon-color`                | Color of the icon when disabled.             |
+| `--m3e-nav-item-disabled-icon-opacity`              | Opacity of the icon when disabled.           |
+| `--m3e-horizontal-nav-item-padding`                 | Padding for horizontal orientation.          |
+| `--m3e-horizontal-nav-item-active-indicator-height` | Height of the active indicator (horizontal). |
+| `--m3e-vertical-nav-item-active-indicator-width`    | Width of the active indicator (vertical).    |
+| `--m3e-vertical-nav-item-active-indicator-height`   | Height of the active indicator (vertical).   |
+| `--m3e-vertical-nav-item-active-indicator-margin`   | Margin for the active indicator (vertical).  |
 
 ## 🤝 Contributing
 

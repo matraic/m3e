@@ -61,17 +61,17 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 ### 🎛️ CSS Custom Properties
 
-| Property                                  | Description                                     |
-| ----------------------------------------- | ----------------------------------------------- |
-| --m3e-nav-rail-top-space                  | Top block padding for the nav rail.             |
-| --m3e-nav-rail-bottom-space               | Bottom block padding for the nav rail.          |
-| --m3e-nav-rail-compact-width              | Width of the nav rail in compact mode.          |
-| --m3e-nav-rail-expanded-inline-padding    | Inline padding for expanded nav rail.           |
-| --m3e-nav-rail-expanded-min-width         | Minimum width of the nav rail in expanded mode. |
-| --m3e-nav-rail-expanded-max-width         | Maximum width of the nav rail in expanded mode. |
-| --m3e-nav-rail-expanded-item-height       | Height of nav items in expanded mode.           |
-| --m3e-nav-rail-button-item-space          | Space below icon buttons and FABs.              |
-| --m3e-nav-rail-expanded-icon-button-inset | Inset for icon buttons in expanded mode.        |
+| Property                                    | Description                                     |
+| ------------------------------------------- | ----------------------------------------------- |
+| `--m3e-nav-rail-top-space`                  | Top block padding for the nav rail.             |
+| `--m3e-nav-rail-bottom-space`               | Bottom block padding for the nav rail.          |
+| `--m3e-nav-rail-compact-width`              | Width of the nav rail in compact mode.          |
+| `--m3e-nav-rail-expanded-inline-padding`    | Inline padding for expanded nav rail.           |
+| `--m3e-nav-rail-expanded-min-width`         | Minimum width of the nav rail in expanded mode. |
+| `--m3e-nav-rail-expanded-max-width`         | Maximum width of the nav rail in expanded mode. |
+| `--m3e-nav-rail-expanded-item-height`       | Height of nav items in expanded mode.           |
+| `--m3e-nav-rail-button-item-space`          | Space below icon buttons and FABs.              |
+| `--m3e-nav-rail-expanded-icon-button-inset` | Inset for icon buttons in expanded mode.        |
 
 ## 🤝 Contributing
 

@@ -13,7 +13,7 @@ npm install @m3e/toolbar
 
 ## 🗂️ Elements
 
-- `m3e-toolbar` — A Material 3 Expressive toolbar for contextual actions and navigation.
+- `m3e-toolbar` — Presents frequently used actions relevant to the current page.
 
 ## 🧪 Examples
 

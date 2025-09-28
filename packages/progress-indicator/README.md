@@ -49,12 +49,12 @@ This section details the attributes and CSS custom properties available for the 
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                  | Description                                          |
-| ----------------------------------------- | ---------------------------------------------------- |
-| --m3e-linear-progress-indicator-thickness | Thickness (height) of the progress bar.              |
-| --m3e-linear-progress-indicator-shape     | Border radius of the progress bar.                   |
-| --m3e-progress-indicator-track-color      | Track color of the progress bar (background/buffer). |
-| --m3e-progress-indicator-color            | Color of the progress indicator (foreground).        |
+| Property                                    | Description                                          |
+| ------------------------------------------- | ---------------------------------------------------- |
+| `--m3e-linear-progress-indicator-thickness` | Thickness (height) of the progress bar.              |
+| `--m3e-linear-progress-indicator-shape`     | Border radius of the progress bar.                   |
+| `--m3e-progress-indicator-track-color`      | Track color of the progress bar (background/buffer). |
+| `--m3e-progress-indicator-color`            | Color of the progress indicator (foreground).        |
 
 ### 🗂️ m3e-circular-progress-indicator
 
@@ -78,10 +78,10 @@ This section details the attributes, slots, and CSS custom properties available 
 
 #### 🎛️ CSS Custom Properties
 
-| Property                             | Description                                          |
-| ------------------------------------ | ---------------------------------------------------- |
-| --m3e-progress-indicator-track-color | Track color of the progress bar (background/buffer). |
-| --m3e-progress-indicator-color       | Color of the progress indicator (foreground).        |
+| Property                               | Description                                          |
+| -------------------------------------- | ---------------------------------------------------- |
+| `--m3e-progress-indicator-track-color` | Track color of the progress bar (background/buffer). |
+| `--m3e-progress-indicator-color`       | Color of the progress indicator (foreground).        |
 
 ## 🤝 Contributing
 
