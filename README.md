@@ -36,6 +36,38 @@ This monorepo uses npm scripts for building, analyzing, linting, and cleaning pa
 - `npm run all` — Build, analyze, and lint in one step
 - `npm run clean` — Remove build output
 
+## 📦 Packages
+
+Below is a list of all packages in this monorepo, with a short summary and installation instructions for each:
+
+| Package                     | Summary                                                                                                                | Installation                          |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| **@m3e/app-bar**            | A prominent UI component providing access to key actions, navigation, and contextual info at the top of an app screen. | `npm install @m3e/app-bar`            |
+| **@m3e/badge**              | A compact visual indicator for counts, presence, or emphasis, attachable to icons, buttons, or other components.       | `npm install @m3e/badge`              |
+| **@m3e/button**             | A semantic, expressive UI primitive for actions, supporting five variants and dynamic theming.                         | `npm install @m3e/button`             |
+| **@m3e/card**               | A flexible, expressive container for presenting a unified subject—text, media, and actions—on a distinct surface.      | `npm install @m3e/card`               |
+| **@m3e/core**               | Essential primitives, utilities, and behavioral mixins for building Material 3 web components.                         | `npm install @m3e/core`               |
+| **@m3e/dialog**             | Presents important prompts, alerts, and actions with ARIA accessibility, focus management, and theming.                | `npm install @m3e/dialog`             |
+| **@m3e/divider**            | Visually separates content within layouts, lists, or containers using a thin, unobtrusive line.                        | `npm install @m3e/divider`            |
+| **@m3e/drawer-container**   | Provides a responsive layout container for managing one or two sliding drawers alongside main content.                 | `npm install @m3e/drawer-container`   |
+| **@m3e/expansion-panel**    | Expressive, accessible components for organizing content in collapsible sections and coordinated groups.               | `npm install @m3e/expansion-panel`    |
+| **@m3e/fab**                | A prominent, expressive floating action button (FAB) representing the primary action on a screen.                      | `npm install @m3e/fab`                |
+| **@m3e/fab-menu**           | Presents a dynamic menu of related actions, elegantly revealed from a floating action button (FAB).                    | `npm install @m3e/fab-menu`           |
+| **@m3e/icon**               | Makes it easy to use Material Symbols, supporting outlined, rounded, and sharp variants with variable font features.   | `npm install @m3e/icon`               |
+| **@m3e/icon-button**        | A semantic, expressive UI primitive for triggering actions with a single icon, supporting four visual variants.        | `npm install @m3e/icon-button`        |
+| **@m3e/list**               | Expressive, accessible components for organizing and displaying lists of items, with rich content and theming.         | `npm install @m3e/list`               |
+| **@m3e/loading-indicator**  | Uses animation to indicate that an activity is in progress, with contained and uncontained variants.                   | `npm install @m3e/loading-indicator`  |
+| **@m3e/nav-bar**            | Navigation bar and interactive items for switching between primary destinations, designed for smaller devices.         | `npm install @m3e/nav-bar`            |
+| **@m3e/nav-menu**           | Hierarchical, accessible navigation menu for sidebars, drawers, and complex menu structures.                           | `npm install @m3e/nav-menu`           |
+| **@m3e/nav-rail**           | Extends nav-bar to provide a vertical navigation rail for larger devices, supporting compact and expanded modes.       | `npm install @m3e/nav-rail`           |
+| **@m3e/progress-indicator** | Accessible, animated progress indicators for tracking task or process completion.                                      | `npm install @m3e/progress-indicator` |
+| **@m3e/shape**              | Allows use of abstract shapes for emphasis and decorative flair, including built-in shape morphing.                    | `npm install @m3e/shape`              |
+| **@m3e/snackbar**           | Provides a global service for presenting short updates about application processes at the bottom of the screen.        | `npm install @m3e/snackbar`           |
+| **@m3e/theme**              | A non-visual element used to apply dynamic color, expressive motion, density, and focus indicators to nested elements. | `npm install @m3e/theme`              |
+| **@m3e/toc**                | Hierarchical, interactive table of contents for in-page navigation, with automatic heading detection.                  | `npm install @m3e/toc`                |
+| **@m3e/toolbar**            | Presents contextual actions, navigation, and controls, supporting orientation, shape, and variant customization.       | `npm install @m3e/toolbar`            |
+| **@m3e/tooltip**            | Provides contextual information in response to user interaction, positioned relative to a target element.              | `npm install @m3e/tooltip`            |
+
 ## 🤝 Contributing
 
 Contributions from the community are welcome! Please review the [Contributing Guidelines](CONTRIBUTING.md) and help us advance the future of expressive web design.
