@@ -8,6 +8,9 @@ It supports both vertical and horizontal layouts through the `orientation` attri
 
 The component provides dynamic elevation, adaptive shape, and expressive color theming, and responds to interaction states (hover, focus, press, disabled) with smooth motion and visual feedback, ensuring clarity, accessibility, and a cohesive user experience in accordance with Material Design 3 guidelines.
 
+> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+
 ## 📦 Installation
 
 ```bash
