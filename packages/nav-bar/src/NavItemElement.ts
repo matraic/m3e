@@ -272,9 +272,6 @@ export class M3eNavItemElement extends LinkButton(
         height: var(--m3e-horizontal-nav-item-active-indicator-height, 2.5rem);
         width: fit-content;
       }
-      :host([orientation="horizontal"]) {
-        height: var(--_horizontal-nav-item-height);
-      }
       .state-layer,
       .ripple {
         margin-inline: auto;
@@ -346,6 +343,15 @@ export class M3eNavItemElement extends LinkButton(
         icon.toggleAttribute("filled", this.selected);
       }
       this.navBar?.[selectionManager].notifySelectionChange(this);
+    }
+  }
+
+  /** @inheritdoc */
+  protected override updated(_changedProperties: PropertyValues<this>): void {
+    super.updated(_changedProperties);
+
+    if (_changedProperties.has("orientation")) {
+      this._focusRing?.attach(this);
     }
   }
 

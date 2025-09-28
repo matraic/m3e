@@ -32,9 +32,9 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### ⚙️ Attributes
 
-| Attribute   | Type   | Default    | Description                          |
-| ----------- | ------ | ---------- | ------------------------------------ |
-| orientation | string | "vertical" | The orientation of items in the bar. |
+| Attribute | Type                                    | Default     | Description                                       |
+| --------- | --------------------------------------- | ----------- | ------------------------------------------------- |
+| mode      | `"compact"` \| `"expanded"` \| `"auto"` | `"compact"` | The mode in which items in the bar are presented. |
 
 #### 🔔 Events
 

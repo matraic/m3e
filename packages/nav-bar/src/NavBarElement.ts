@@ -1,12 +1,14 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 
 import { DesignToken, Role } from "@m3e/core";
 
 import { SelectionManager, selectionManager } from "@m3e/core/a11y";
+import { Breakpoint, M3eBreakpointObserver } from "@m3e/core/layout";
 
 import { M3eNavItemElement } from "./NavItemElement";
 import { NavItemOrientation } from "./NavItemOrientation";
+import { NavBarMode } from "./NavBarMode";
 
 /**
  * @summary
@@ -32,7 +34,7 @@ import { NavItemOrientation } from "./NavItemOrientation";
  *
  * @slot - Renders the items of the bar.
  *
- * @attr orientation - The orientation of items in the bar.
+ * @attr mode - The mode in which items in the bar are presented.
  *
  * @fires change - Emitted when the selected state of an item changes.
  *
@@ -65,11 +67,14 @@ export class M3eNavBarElement extends Role(LitElement, "navigation") {
     this[selectionManager].disableRovingTabIndex = true;
   }
 
+  /** @internal */ #breakpointUnobserve?: () => void;
+  /** @internal */ @state() private _mode?: Exclude<NavBarMode, "auto">;
+
   /**
-   * The orientation of items in the bar.
-   * @default "vertical"
+   * The mode in which items in the bar are presented.
+   * @default "compact"
    */
-  @property({ reflect: true }) orientation: NavItemOrientation = "vertical";
+  @property({ reflect: true }) mode: NavBarMode = "compact";
 
   /** The items of the bar. */
   get items(): readonly M3eNavItemElement[] {
@@ -81,12 +86,40 @@ export class M3eNavBarElement extends Role(LitElement, "navigation") {
     return this[selectionManager].selectedItems[0] ?? null;
   }
 
-  /** @inheritdoc */
-  protected override updated(_changedProperties: PropertyValues<this>): void {
-    super.updated(_changedProperties);
+  /** The current mode applied to the bar. */
+  get currentMode(): Exclude<NavBarMode, "auto"> {
+    return this._mode ?? (this.mode !== "compact" ? "expanded" : "compact");
+  }
+  set currentMode(value: Exclude<NavBarMode, "auto">) {
+    this._mode = value;
+  }
 
-    if (_changedProperties.has("orientation")) {
-      this.#updateItems();
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this._mode = undefined;
+    this.#breakpointUnobserve?.();
+  }
+
+  /** @inheritdoc */
+  protected override update(changedProperties: PropertyValues): void {
+    super.update(changedProperties);
+
+    if (changedProperties.has("mode")) {
+      this.#breakpointUnobserve?.();
+
+      if (this.mode === "auto") {
+        this.#breakpointUnobserve = M3eBreakpointObserver.observe([Breakpoint.XSmall, Breakpoint.Small], (matches) => {
+          this._mode = matches.get(Breakpoint.XSmall) || matches.get(Breakpoint.Small) ? "compact" : "expanded";
+          this._updateItems();
+        });
+      } else {
+        this._updateItems();
+      }
+    }
+    if (changedProperties.has("_mode")) {
+      this._updateItems();
     }
   }
 
@@ -98,7 +131,7 @@ export class M3eNavBarElement extends Role(LitElement, "navigation") {
   /** @private */
   #handleSlotChange(): void {
     this[selectionManager].setItems([...this.querySelectorAll("m3e-nav-item")]);
-    this.#updateItems();
+    this._updateItems();
   }
 
   /** @private */
@@ -107,9 +140,16 @@ export class M3eNavBarElement extends Role(LitElement, "navigation") {
     this.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
-  /** @private */
-  #updateItems(): void {
-    this[selectionManager].items.forEach((x) => (x.orientation = this.orientation));
+  /** @internal */
+  protected _updateItems(): void {
+    const orientation: NavItemOrientation = this.currentMode === "compact" ? "vertical" : "horizontal";
+    this._updateOrientation(orientation);
+    this.classList.toggle("-compact", orientation === "vertical");
+  }
+
+  /** @internal */
+  protected _updateOrientation(orientation: NavItemOrientation): void {
+    this[selectionManager].items.forEach((x) => (x.orientation = orientation));
   }
 }
 
