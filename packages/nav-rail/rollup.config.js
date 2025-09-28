@@ -26,7 +26,7 @@ export default [
         plugins: [terser({ mangle: true })],
       },
     ],
-    external: ["@m3e/core", "@m3e/core/a11y", "@m3e/core/layout", "@m3e/nav-bar", "lit"],
+    external: ["@m3e/core", "@m3e/core/a11y", "@m3e/nav-bar", "lit"],
     plugins: [resolve(), typescript()],
   },
 ];
