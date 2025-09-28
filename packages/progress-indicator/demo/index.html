@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow-y: auto">
+  <head>
+    <title>Button for Material 3 Expressive (M3E)</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Button for Material 3 Expressive (M3E)" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "../../core/dist/index.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="../../theme/dist/index.min.js"></script>
+    <script type="module" src="../dist/index.min.js"></script>
+    <style>
+      body {
+        font-family: "Roboto";
+      }
+      *:not(:defined) {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <m3e-theme strong-focus>
+      <m3e-linear-progress-indicator value="20"></m3e-linear-progress-indicator>
+      <br />
+      <m3e-linear-progress-indicator mode="indeterminate"></m3e-linear-progress-indicator>
+      <br />
+      <m3e-linear-progress-indicator mode="query"></m3e-linear-progress-indicator>
+      <br />
+      <m3e-linear-progress-indicator mode="buffer" value="30"></m3e-linear-progress-indicator>
+      <br />
+      <m3e-circular-progress-indicator value="20"></m3e-circular-progress-indicator>
+      <br />
+      <m3e-circular-progress-indicator indeterminate></m3e-circular-progress-indicator>
+    </m3e-theme>
+  </body>
+</html>
