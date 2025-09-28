@@ -161,6 +161,11 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
    */
   @property() trigger: string | HTMLElement | null = null;
 
+  /** Whether the ripple is currently visible to the user. */
+  get visible() {
+    return this.#ripple !== null;
+  }
+
   /**
    * Launches a manual ripple.
    * @param {number} x The x-coordinate, relative to the viewport, at which to present the ripple.
