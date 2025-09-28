@@ -2,6 +2,9 @@
 
 The `m3e-nav-rail` component extends `@m3e/nav-bar` to provide a vertical navigation rail and interactive items for switching between primary destinations in your application. Designed for larger devices, the nav rail supports compact and expanded modes, orientation, selection, and extensive theming via CSS custom properties.
 
+> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+
 ## 📦 Installation
 
 ```bash

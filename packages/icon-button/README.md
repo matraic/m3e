@@ -6,6 +6,9 @@ The component is accessible by default, with ARIA roles, contrast-safe color tok
 
 Native disabled `<button>` elements cannot receive focus. This can be problematic in some cases because it can prevent you from telling the user why the button is disabled. You can use the `disabled-interactive` attribute to style a `m3e-icon-button` as disabled but allow for it to receive focus. The button will have `aria-disabled="true"` for assistive technology.
 
+> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+
 ## 📦 Installation
 
 ```bash

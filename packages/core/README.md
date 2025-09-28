@@ -2,6 +2,9 @@
 
 The `@m3e/core` package delivers the essential primitives, utilities, and behavioral mixins for building Material 3 web components. It serves as the foundation for accessibility, layout, platform detection, design tokens, keycodes, and more—enabling consistent, scalable, and maintainable development across the monorepo.
 
+> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+
 ## ✨ Features
 
 - **Design Tokens**: Centralized design values for color, typography, shape, and elevation

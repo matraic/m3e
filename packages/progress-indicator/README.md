@@ -2,6 +2,9 @@
 
 The `m3e-linear-progress-indicator` and `m3e-circular-progress-indicator` components provide accessible, animated progress indicators for tracking the completion of tasks or processes. Both components support multiple modes and are fully customizable via CSS custom properties.
 
+> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+
 ## 📦 Installation
 
 ```bash

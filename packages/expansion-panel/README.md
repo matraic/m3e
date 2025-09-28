@@ -1,5 +1,8 @@
 # @m3e/expansion-panel
 
+> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+
 The `@m3e/expansion-panel` package provides expressive, accessible components for organizing content in collapsible sections and coordinated groups. It includes:
 
 - **`m3e-expansion-panel`** — An accessible, animated details-summary view for organizing content in collapsible sections. Supports custom header, content, actions, and toggle icon slots, configurable toggle position and direction, open/close states, lifecycle events, and rich theming via CSS custom properties for elevation, shape, spacing, and color.

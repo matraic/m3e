@@ -2,6 +2,9 @@
 
 The `m3e-app-bar` component is a prominent user interface component that provides consistent access to key actions, navigation, and contextual information at the top of an application screen. Designed according to Material 3 principles, it organizes content with clear hierarchy, supports dynamic color, elevation, alignment, and adapts to scrolling behavior.
 
+> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+
 ## 📦 Installation
 
 ```bash
