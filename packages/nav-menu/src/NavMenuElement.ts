@@ -45,6 +45,10 @@ import { M3eNavMenuItemElement } from "./NavMenuItemElement";
  *
  * @slot - Renders the items of the menu.
  *
+ * @cssprop --m3e-nav-menu-padding-top - Top padding for the menu.
+ * @cssprop --m3e-nav-menu-padding-bottom - Bottom padding for the menu.
+ * @cssprop --m3e-nav-menu-padding-left - Left padding for the menu.
+ * @cssprop --m3e-nav-menu-padding-right - Right padding for the menu.
  * @cssprop --m3e-nav-menu-divider-margin - Margin for divider elements in the menu.
  * @cssprop --m3e-nav-menu-scrollbar-width - Width of the menu scrollbar.
  * @cssprop --m3e-nav-menu-scrollbar-color - Color of the menu scrollbar.
@@ -61,6 +65,10 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
       overflow-x: hidden;
       position: relative;
       min-height: 0;
+      padding-block-start: var(--m3e-nav-menu-padding-top, 0.5rem);
+      padding-block-end: var(--m3e-nav-menu-padding-bottom, 0.5rem);
+      padding-inline-start: var(--m3e-nav-menu-padding-left, 0.75rem);
+      padding-inline-end: var(--m3e-nav-menu-padding-right, 0.75rem);
       scrollbar-width: ${DesignToken.scrollbar.width};
       scrollbar-color: ${DesignToken.scrollbar.color};
     }

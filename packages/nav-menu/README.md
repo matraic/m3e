@@ -81,6 +81,10 @@ This section details the slots and CSS custom properties available for the `m3e-
 
 | Property                         | Description                              |
 | -------------------------------- | ---------------------------------------- |
+| `--m3e-nav-menu-padding-top`     | Top padding for the menu.                |
+| `--m3e-nav-menu-padding-bottom`  | Bottom padding for the menu.             |
+| `--m3e-nav-menu-padding-left`    | Left padding for the menu.               |
+| `--m3e-nav-menu-padding-right`   | Right padding for the menu.              |
 | `--m3e-nav-menu-divider-margin`  | Margin for divider elements in the menu. |
 | `--m3e-nav-menu-scrollbar-width` | Width of the menu scrollbar.             |
 | `--m3e-nav-menu-scrollbar-color` | Color of the menu scrollbar.             |
