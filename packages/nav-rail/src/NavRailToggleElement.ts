@@ -69,8 +69,8 @@ export class M3eNavRailToggleElement extends HtmlFor(Role(LitElement, "none")) {
     if (control instanceof M3eNavRailElement) {
       this.#mutationController.observe(control);
     }
-    this.#updateToggle();
     super.attach(control);
+    this.#updateToggle();
   }
 
   /** @inheritdoc */
