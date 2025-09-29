@@ -32,6 +32,7 @@ export class FocusController extends MonitorControllerBase {
    * @param {HTMLElement} target The element to start observing.
    */
   protected override _observe(target: HTMLElement): void {
+    target.addEventListener("keydown", this.#focusInHandler);
     target.addEventListener("focusin", this.#focusInHandler);
     target.addEventListener("focusout", this.#focusOutHandler);
   }
@@ -41,6 +42,7 @@ export class FocusController extends MonitorControllerBase {
    * @param {HTMLElement} target The element to stop observing.
    */
   protected override _unobserve(target: HTMLElement): void {
+    target.removeEventListener("keydown", this.#focusInHandler);
     target.removeEventListener("focusin", this.#focusInHandler);
     target.removeEventListener("focusout", this.#focusOutHandler);
   }
