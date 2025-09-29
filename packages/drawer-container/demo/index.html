@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Drawer Container for Material 3 Expressive (M3E)</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Drawer Container for Material 3 Expressive (M3E)" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "../../core/dist/index.min.js",
+          "@m3e/core/a11y": "../../core/dist/a11y.min.js",
+          "@m3e/core/layout": "../../core/dist/layout.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="../../app-bar/dist/index.min.js"></script>
+    <script type="module" src="../../icon-button/dist/index.min.js"></script>
+    <script type="module" src="../../icon/dist/index.min.js"></script>
+    <script type="module" src="../../nav-menu/dist/index.min.js"></script>
+    <script type="module" src="../../theme/dist/index.min.js"></script>
+    <script type="module" src="../dist/index.min.js"></script>
+    <style>
+      body {
+        margin: unset;
+        font-family: "Roboto";
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+      }
+      m3e-app-bar {
+        flex: none;
+      }
+      m3e-drawer-container {
+        flex: 1 1 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <m3e-theme strong-focus>
+      <m3e-app-bar>
+        <m3e-icon-button slot="leading-icon" aria-label="Menu" toggle>
+          <m3e-icon name="menu"></m3e-icon>
+          <m3e-icon slot="selected" name="menu_open"></m3e-icon>
+          <m3e-drawer-toggle for="startDrawer"></m3e-drawer-toggle>
+        </m3e-icon-button>
+        <span slot="title">App title</span>
+      </m3e-app-bar>
+      <m3e-drawer-container start start-mode="auto">
+        <m3e-nav-menu id="startDrawer" slot="start">
+          <m3e-nav-menu-item open>
+            <m3e-icon slot="icon" name="rocket_launch"></m3e-icon>
+            <span slot="label">Getting Started</span>
+            <m3e-nav-menu-item>
+              <m3e-icon slot="icon" name="widgets"></m3e-icon>
+              <span slot="label">Overview</span>
+            </m3e-nav-menu-item>
+            <m3e-nav-menu-item>
+              <m3e-icon slot="icon" name="package_2"></m3e-icon>
+              <span slot="label">Installation</span>
+            </m3e-nav-menu-item>
+          </m3e-nav-menu-item>
+          <m3e-nav-menu-item>
+            <span slot="label">Actions</span>
+            <m3e-nav-menu-item><span slot="label">Button</span></m3e-nav-menu-item>
+            <m3e-nav-menu-item><span slot="label">Icon</span></m3e-nav-menu-item>
+            <m3e-nav-menu-item><span slot="label">Icon Button</span></m3e-nav-menu-item>
+          </m3e-nav-menu-item>
+        </m3e-nav-menu>
+      </m3e-drawer-container>
+    </m3e-theme>
+  </body>
+</html>
