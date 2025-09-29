@@ -11,6 +11,31 @@ The `m3e-nav-bar` and `m3e-nav-item` components provide a navigation bar and int
 npm install @m3e/nav-bar
 ```
 
+## 🚀 Browser Usage
+
+This package uses [JavaScript Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers). To use it directly in a browser without a bundler, use a module script similar to the following.
+
+```html
+<script type="module" src="/node_modules/@m3e/nav-bar/dist/index.js"></script>
+```
+
+In addition, you must use an [import map](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap) to include dependencies.
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+      "@m3e/core": "/node_modules/@m3e/core/dist/index.js",
+      "@m3e/core/a11y": "/node_modules/@m3e/core/dist/a11y.js",
+      "@m3e/core/layout": "/node_modules/@m3e/core/dist/layout.js"
+    }
+  }
+</script>
+```
+
+> For production, use index.min.js, a11y.min.js, and layout.min.js for faster load times.
+
 ## 🗂️ Elements
 
 - `m3e-nav-bar` — A horizontal bar, typically used on smaller devices, that allows a user to switch between 3-5 views.

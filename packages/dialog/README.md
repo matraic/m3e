@@ -8,6 +8,36 @@ The `m3e-dialog` component presents important prompts, alerts, and actions in us
 npm install @m3e/dialog
 ```
 
+## 🚀 Browser Usage
+
+This package uses [JavaScript Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers). To use it directly in a browser without a bundler, use a module script similar to the following.
+
+```html
+<script type="module" src="/node_modules/@m3e/dialog/dist/index.js"></script>
+```
+
+You also need a module script for `@m3e/icon-button` due to it being a dependency.
+
+```html
+<script type="module" src="/node_modules/@m3e/icon-button/dist/index.js"></script>
+```
+
+In addition, you must use an [import map](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap) to include additional dependencies.
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+      "@m3e/core": "/node_modules/@m3e/core/dist/index.js",
+      "@m3e/core/a11y": "/node_modules/@m3e/core/dist/a11y.js"
+    }
+  }
+</script>
+```
+
+> For production, use index.min.js and a11y.min.js for faster load times.
+
 ## 🗂️ Elements
 
 - `m3e-dialog` — A Material 3 Expressive dialog for prompts, alerts, and actions.

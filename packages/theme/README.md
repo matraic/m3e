@@ -13,6 +13,29 @@ When `m3e-theme` is nested directly beneath the `<body>` of a document, the `<bo
 npm install @m3e/theme
 ```
 
+## 🚀 Browser Usage
+
+This package uses [JavaScript Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers). To use it directly in a browser without a bundler, use a module script similar to the following.
+
+```html
+<script type="module" src="/node_modules/@m3e/theme/dist/index.js"></script>
+```
+
+In addition, you must use an [import map](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap) to include dependencies.
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+      "@m3e/core": "/node_modules/@m3e/core/dist/index.js"
+    }
+  }
+</script>
+```
+
+> For production, use index.min.js for faster load times.
+
 ## 🗂️ Elements
 
 - `m3e-theme` — A non-visual element responsible for application-level theming.
