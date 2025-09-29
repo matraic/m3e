@@ -65,7 +65,7 @@ export class HoverController extends MonitorControllerBase {
    */
   protected override _unobserve(target: HTMLElement): void {
     target.removeEventListener("pointerenter", this.#pointerInHandler);
-    target.removeEventListener("pointerout", this.#pointerLeaveHandler);
+    target.removeEventListener("pointerleave", this.#pointerLeaveHandler);
   }
 
   /** @private */

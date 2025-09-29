@@ -57,7 +57,7 @@ export class M3eFabMenuTriggerElement extends HtmlFor(Role(LitElement, "none")) 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.parentElement?.addEventListener("click", this.#clickHandler);
+    this.parentElement?.removeEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */

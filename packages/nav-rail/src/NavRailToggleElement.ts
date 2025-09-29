@@ -61,7 +61,7 @@ export class M3eNavRailToggleElement extends HtmlFor(Role(LitElement, "none")) {
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.parentElement?.addEventListener("click", this.#clickHandler);
+    this.parentElement?.removeEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */
