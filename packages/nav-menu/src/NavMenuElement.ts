@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { DesignToken, FocusController, Role, scrollIntoViewIfNeeded } from "@m3e/core";
+import { DesignToken, FocusController, PressedController, Role, scrollIntoViewIfNeeded } from "@m3e/core";
 import { SelectionManager, selectionManager } from "@m3e/core/a11y";
 
 import { M3eNavMenuItemElement } from "./NavMenuItemElement";
@@ -79,6 +79,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
   /** @private */ private static __nextId = 0;
   /** @private */ #ignoreFocusVisible = false;
+  /** @private */ #ignoreFocus = false;
 
   /** @private */
   readonly [selectionManager] = new SelectionManager<M3eNavMenuItemElement>()
@@ -101,7 +102,14 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
       }
     });
 
-    new FocusController(this, { callback: () => this.#updateFocusVisible() });
+    new PressedController(this, { callback: (pressed) => (this.#ignoreFocus = pressed) });
+    new FocusController(this, {
+      callback: () => {
+        if (!this.#ignoreFocus) {
+          this.#updateFocusVisible();
+        }
+      },
+    });
   }
 
   /** The selected item of the menu. */
