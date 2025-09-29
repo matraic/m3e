@@ -3,6 +3,8 @@ import { customElement } from "lit/decorators.js";
 
 import { HtmlFor, Role } from "@m3e/core";
 
+import { M3eDrawerContainerElement } from "./DrawerContainerElement";
+
 /**
  * An element, nested within a clickable element, used to toggle the opened state of a drawer.
  *
@@ -56,7 +58,12 @@ export class M3eDrawerToggleElement extends HtmlFor(Role(LitElement, "none")) {
 
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
-    control.closest("m3e-drawer-container")?.addEventListener("change", this.#drawerContainerChangeHandler);
+    const container = control.closest("m3e-drawer-container");
+    if (container) {
+      container.addEventListener("change", this.#drawerContainerChangeHandler);
+      this.#updateToggle(container, control);
+    }
+
     super.attach(control);
   }
 
@@ -90,15 +97,20 @@ export class M3eDrawerToggleElement extends HtmlFor(Role(LitElement, "none")) {
     if (this.control) {
       const container = this.control.closest("m3e-drawer-container");
       if (container) {
-        if (this.control.slot === "start") {
-          if (this.parentElement?.hasAttribute("toggle")) {
-            this.parentElement.toggleAttribute("selected", container.start);
-          }
-        } else if (this.control.slot === "end") {
-          if (this.parentElement?.hasAttribute("toggle")) {
-            this.parentElement.toggleAttribute("selected", container.end);
-          }
-        }
+        this.#updateToggle(container, this.control);
+      }
+    }
+  }
+
+  /** @private */
+  #updateToggle(container: M3eDrawerContainerElement, control: HTMLElement) {
+    if (control.slot === "start") {
+      if (this.parentElement?.hasAttribute("toggle")) {
+        this.parentElement.toggleAttribute("selected", container.start);
+      }
+    } else if (control.slot === "end") {
+      if (this.parentElement?.hasAttribute("toggle")) {
+        this.parentElement.toggleAttribute("selected", container.end);
       }
     }
   }
