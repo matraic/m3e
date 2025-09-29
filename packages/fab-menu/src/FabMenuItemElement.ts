@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, isServer, LitElement, PropertyValues, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { customElement, query } from "lit/decorators.js";
 
 import {
@@ -172,19 +172,13 @@ export class M3eFabMenuItemElement extends KeyboardClick(
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-
-    if (!isServer) {
-      this.addEventListener("click", this.#clickHandler);
-    }
+    this.addEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-
-    if (!isServer) {
-      this.removeEventListener("click", this.#clickHandler);
-    }
+    this.removeEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */

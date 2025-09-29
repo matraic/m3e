@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { css, CSSResultGroup, html, isServer, LitElement, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, LitElement, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import { DesignToken, DisabledMixin, Role, ScrollController } from "@m3e/core";
@@ -270,22 +270,18 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
     this.tabIndex = -1;
     this.setAttribute("popover", "manual");
 
-    if (!isServer) {
-      this.addEventListener("keydown", this.#keyDownHandler);
-      this.addEventListener("toggle", this.#toggleHandler);
-      document.addEventListener("click", this.#documentClickHandler);
-    }
+    this.addEventListener("keydown", this.#keyDownHandler);
+    this.addEventListener("toggle", this.#toggleHandler);
+    document.addEventListener("click", this.#documentClickHandler);
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    if (!isServer) {
-      this.removeEventListener("keydown", this.#keyDownHandler);
-      this.removeEventListener("toggle", this.#toggleHandler);
-      document.removeEventListener("click", this.#documentClickHandler);
-    }
+    this.removeEventListener("keydown", this.#keyDownHandler);
+    this.removeEventListener("toggle", this.#toggleHandler);
+    document.removeEventListener("click", this.#documentClickHandler);
   }
 
   /** @inheritdoc */

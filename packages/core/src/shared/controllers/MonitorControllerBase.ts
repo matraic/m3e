@@ -1,4 +1,4 @@
-import { isServer, ReactiveController, ReactiveControllerHost } from "lit";
+import { ReactiveController, ReactiveControllerHost } from "lit";
 
 /** Encapsulates options used to monitor the state of one or more elements. */
 export interface MonitorControllerOptions {
@@ -39,8 +39,6 @@ export abstract class MonitorControllerBase implements ReactiveController {
 
   /** @inheritdoc */
   hostConnected(): void {
-    if (isServer) return;
-
     // Target defaults to host unless explicitly null.
     if (this.#target !== null) {
       this.observe(this.#target ?? this.#host);
@@ -49,8 +47,6 @@ export abstract class MonitorControllerBase implements ReactiveController {
 
   /** @inheritdoc */
   hostDisconnected(): void {
-    if (isServer) return;
-
     this.#targets.forEach((x) => this.unobserve(x));
     this.#targets.clear();
   }
@@ -66,7 +62,7 @@ export abstract class MonitorControllerBase implements ReactiveController {
    * @param {HTMLElement} target The element to start observing.
    */
   observe(target: HTMLElement): void {
-    if (isServer || this.#targets.has(target)) return;
+    if (this.#targets.has(target)) return;
     this.#targets.add(target);
     this._observe(target);
   }
@@ -85,7 +81,7 @@ export abstract class MonitorControllerBase implements ReactiveController {
    * @param {HTMLElement} target The element to stop observing.
    */
   unobserve(target: HTMLElement): void {
-    if (isServer || !this.#targets.delete(target)) return;
+    if (!this.#targets.delete(target)) return;
     this._unobserve(target);
   }
 

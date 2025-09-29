@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, isServer, LitElement } from "lit";
+import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement, query } from "lit/decorators.js";
 
 import { Disabled } from "../shared/mixins/Disabled";
@@ -42,7 +42,6 @@ export class M3eFocusTrapElement extends Disabled(Role(LitElement, "none")) {
 
   /** @private */
   #onFocus(e: FocusEvent): void {
-    if (isServer) return;
     const [first, last] = this.#getFirstAndLastFocusableChild();
     const isFirst = e?.target === this._firstTrap;
     const fromFirst = e.relatedTarget === first;

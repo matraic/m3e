@@ -7,7 +7,7 @@
  * See LICENSE file in the project root for full license text.
  */
 
-import { css, CSSResultGroup, html, isServer } from "lit";
+import { css, CSSResultGroup, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import { DesignToken, safeStyleMap } from "@m3e/core";
@@ -244,14 +244,12 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
   override connectedCallback(): void {
     super.connectedCallback();
 
-    if (!isServer) {
-      // Prefix the SVG reference with the current path, otherwise they will not work
-      // in Safari if the page has a <base> tag.
+    // Prefix the SVG reference with the current path, otherwise they will not work
+    // in Safari if the page has a <base> tag.
 
-      const location = document?.location ?? null;
-      const path = location ? (location.pathname + location.search).split("#")[0] : "";
-      this.#patternFill = `url(${path}#${this.#patternId})`;
-    }
+    const location = document?.location ?? null;
+    const path = location ? (location.pathname + location.search).split("#")[0] : "";
+    this.#patternFill = `url(${path}#${this.#patternId})`;
   }
 
   /** @inheritdoc */

@@ -1,4 +1,4 @@
-import { isServer, LitElement } from "lit";
+import { LitElement } from "lit";
 import { property } from "lit/decorators.js";
 
 import { AttachInternalsMixin, internals, isAttachInternalsMixin } from "./AttachInternals";
@@ -71,16 +71,12 @@ export function FormSubmitter<T extends Constructor<LitElement & AttachInternals
 
     override connectedCallback(): void {
       super.connectedCallback();
-      if (!isServer) {
-        this.addEventListener("click", this[_clickHandler]);
-      }
+      this.addEventListener("click", this[_clickHandler]);
     }
 
     override disconnectedCallback(): void {
       super.disconnectedCallback();
-      if (!isServer) {
-        this.removeEventListener("click", this[_clickHandler]);
-      }
+      this.removeEventListener("click", this[_clickHandler]);
     }
 
     private [_clickHandler] = async (e: Event) => {

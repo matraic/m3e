@@ -1,4 +1,4 @@
-import { isServer, ReactiveControllerHost } from "lit";
+import { ReactiveControllerHost } from "lit";
 
 import { MonitorControllerBase, MonitorControllerOptions } from "./MonitorControllerBase";
 
@@ -47,19 +47,13 @@ export class PressedController extends MonitorControllerBase {
 
   /** @inheritdoc */
   override hostConnected(): void {
-    if (!isServer) {
-      document.addEventListener("pointerup", this.#pointerUpHandler);
-    }
-
+    document.addEventListener("pointerup", this.#pointerUpHandler);
     super.hostConnected();
   }
 
   /** @inheritdoc */
   override hostDisconnected(): void {
-    if (!isServer) {
-      document.removeEventListener("pointerup", this.#pointerUpHandler);
-    }
-
+    document.removeEventListener("pointerup", this.#pointerUpHandler);
     super.hostDisconnected();
     this.#pressedTargets.clear();
   }

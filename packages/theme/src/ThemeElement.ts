@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, isServer, LitElement, PropertyValues } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import {
@@ -130,27 +130,23 @@ export class M3eThemeElement extends Role(LitElement, "none") {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    if (!isServer) {
-      if (this.shadowRoot && !this.shadowRoot.adoptedStyleSheets.includes(this.#styleSheet)) {
-        this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, this.#styleSheet];
-      }
-
-      this.#light = matchMedia("(prefers-color-scheme: light)");
-      this.#dark = matchMedia("(prefers-color-scheme: dark)");
-      this.#light.addEventListener("change", this.#colorSchemeChangeHandler);
-      this.#dark.addEventListener("change", this.#colorSchemeChangeHandler);
+    if (this.shadowRoot && !this.shadowRoot.adoptedStyleSheets.includes(this.#styleSheet)) {
+      this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, this.#styleSheet];
     }
+
+    this.#light = matchMedia("(prefers-color-scheme: light)");
+    this.#dark = matchMedia("(prefers-color-scheme: dark)");
+    this.#light.addEventListener("change", this.#colorSchemeChangeHandler);
+    this.#dark.addEventListener("change", this.#colorSchemeChangeHandler);
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    if (!isServer) {
-      this.#light?.removeEventListener("change", this.#colorSchemeChangeHandler);
-      this.#dark?.removeEventListener("change", this.#colorSchemeChangeHandler);
-      this.#light = this.#dark = undefined;
-    }
+    this.#light?.removeEventListener("change", this.#colorSchemeChangeHandler);
+    this.#dark?.removeEventListener("change", this.#colorSchemeChangeHandler);
+    this.#light = this.#dark = undefined;
   }
 
   /** @inheritdoc */
@@ -172,8 +168,6 @@ export class M3eThemeElement extends Role(LitElement, "none") {
 
   /** @private */
   #apply(): void {
-    if (isServer) return;
-
     const color = argbFromHex(this.color);
     const palette = CorePalette.of(color);
     const scheme = new DynamicScheme({

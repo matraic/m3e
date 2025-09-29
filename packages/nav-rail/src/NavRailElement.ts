@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, isServer } from "lit";
+import { css, CSSResultGroup } from "lit";
 import { customElement } from "lit/decorators.js";
 
 import { DesignToken } from "@m3e/core";
@@ -111,19 +111,13 @@ export class M3eNavRailElement extends M3eNavBarElement {
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-
-    if (!isServer) {
-      this.addEventListener("keydown", this.#keyDownHandler);
-    }
+    this.addEventListener("keydown", this.#keyDownHandler);
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-
-    if (!isServer) {
-      this.removeEventListener("keydown", this.#keyDownHandler);
-    }
+    this.removeEventListener("keydown", this.#keyDownHandler);
   }
 
   /** @private */

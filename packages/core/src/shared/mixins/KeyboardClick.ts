@@ -1,4 +1,4 @@
-import { isServer, LitElement } from "lit";
+import { LitElement } from "lit";
 
 import { Constructor } from "./Constructor";
 import { isDisabledMixin } from "./Disabled";
@@ -17,18 +17,12 @@ export function KeyboardClick<T extends Constructor<LitElement>>(base: T, allowE
 
     override connectedCallback(): void {
       super.connectedCallback();
-
-      if (!isServer) {
-        this.addEventListener("keyup", this.#keyUpHandler);
-      }
+      this.addEventListener("keyup", this.#keyUpHandler);
     }
 
     override disconnectedCallback(): void {
       super.disconnectedCallback();
-
-      if (!isServer) {
-        this.removeEventListener("keyup", this.#keyUpHandler);
-      }
+      this.removeEventListener("keyup", this.#keyUpHandler);
     }
 
     #handleKeyUp(e: KeyboardEvent): void {

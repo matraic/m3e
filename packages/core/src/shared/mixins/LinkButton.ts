@@ -1,4 +1,4 @@
-import { html, isServer, LitElement, nothing } from "lit";
+import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
@@ -110,19 +110,16 @@ export function LinkButton<T extends Constructor<LitElement & AttachInternalsMix
 
     override connectedCallback(): void {
       super.connectedCallback();
+      this.addEventListener("click", this[_clickHandler]);
+
       if (this.hasAttribute("href") && this.role === "button") {
         this.role = "link";
-      }
-      if (!isServer) {
-        this.addEventListener("click", this[_clickHandler]);
       }
     }
 
     override disconnectedCallback(): void {
       super.disconnectedCallback();
-      if (!isServer) {
-        this.removeEventListener("click", this[_clickHandler]);
-      }
+      this.removeEventListener("click", this[_clickHandler]);
     }
 
     [renderPseudoLink](): unknown {

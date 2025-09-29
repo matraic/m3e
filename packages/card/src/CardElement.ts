@@ -1,4 +1,4 @@
-import { CSSResultGroup, html, isServer, LitElement, PropertyValues } from "lit";
+import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 
 import {
@@ -201,10 +201,7 @@ export class M3eCardElement extends KeyboardClick(
     }
 
     super.connectedCallback();
-
-    if (!isServer) {
-      this.addEventListener("click", this.#clickHandler);
-    }
+    this.addEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */
@@ -212,10 +209,7 @@ export class M3eCardElement extends KeyboardClick(
     super.disconnectedCallback();
 
     this._base?.classList.toggle("pressed", false);
-
-    if (!isServer) {
-      this.removeEventListener("click", this.#clickHandler);
-    }
+    this.removeEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */

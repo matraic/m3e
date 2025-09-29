@@ -1,4 +1,4 @@
-import { CSSResultGroup, html, isServer, LitElement, nothing, PropertyValues } from "lit";
+import { CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 
 import {
@@ -381,10 +381,7 @@ export class M3eIconButtonElement extends KeyboardClick(
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-
-    if (!isServer) {
-      this.addEventListener("click", this.#clickHandler);
-    }
+    this.addEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */
@@ -395,9 +392,7 @@ export class M3eIconButtonElement extends KeyboardClick(
     this._base?.classList.toggle("resting", false);
     this._base?.style.removeProperty("--_button-shape");
 
-    if (!isServer) {
-      this.removeEventListener("click", this.#clickHandler);
-    }
+    this.removeEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */

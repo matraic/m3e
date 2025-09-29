@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, isServer, LitElement } from "lit";
+import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
 import { DesignToken, FocusController, Role, scrollIntoViewIfNeeded } from "@m3e/core";
@@ -146,22 +146,18 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
     this.setAttribute("tabindex", "0");
 
-    if (!isServer) {
-      this.addEventListener("keydown", this.#keyDownHandler);
-      this.addEventListener("keyup", this.#keyUpHandler);
-      this.addEventListener("click", this.#clickHandler);
-    }
+    this.addEventListener("keydown", this.#keyDownHandler);
+    this.addEventListener("keyup", this.#keyUpHandler);
+    this.addEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    if (!isServer) {
-      this.removeEventListener("keydown", this.#keyDownHandler);
-      this.removeEventListener("keyup", this.#keyUpHandler);
-      this.removeEventListener("click", this.#clickHandler);
-    }
+    this.removeEventListener("keydown", this.#keyDownHandler);
+    this.removeEventListener("keyup", this.#keyUpHandler);
+    this.removeEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */

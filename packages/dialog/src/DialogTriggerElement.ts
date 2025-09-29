@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, isServer, LitElement } from "lit";
+import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
 import { AttachInternals, HtmlFor } from "@m3e/core";
@@ -28,19 +28,13 @@ export class M3eDialogTriggerElement extends HtmlFor(AttachInternals(LitElement)
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-
-    if (!isServer) {
-      this.parentElement?.addEventListener("click", this.#clickHandler);
-    }
+    this.parentElement?.addEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-
-    if (!isServer) {
-      this.parentElement?.removeEventListener("click", this.#clickHandler);
-    }
+    this.parentElement?.removeEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */

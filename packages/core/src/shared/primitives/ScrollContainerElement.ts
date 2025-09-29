@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, isServer, LitElement, PropertyValues } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import { Role } from "../mixins";
@@ -94,17 +94,14 @@ export class M3eScrollContainerElement extends Role(LitElement, "none") {
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-
-    if (!isServer) {
-      this.removeEventListener("scroll", this.#scrollHandler);
-    }
+    this.removeEventListener("scroll", this.#scrollHandler);
   }
 
   /** @inheritdoc */
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
 
-    if (changedProperties.has("dividers") && !isServer) {
+    if (changedProperties.has("dividers")) {
       this.removeEventListener("scroll", this.#scrollHandler);
       if (this.dividers !== "none") {
         this.addEventListener("scroll", this.#scrollHandler);

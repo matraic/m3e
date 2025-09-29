@@ -1,4 +1,4 @@
-import { isServer, LitElement, PropertyValues } from "lit";
+import { LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
 import { Constructor } from "./Constructor";
@@ -50,18 +50,12 @@ export function DisabledInteractive<T extends Constructor<LitElement & DisabledM
     @property({ attribute: "disabled-interactive", type: Boolean, reflect: true }) disabledInteractive = false;
 
     override connectedCallback(): void {
-      if (!isServer) {
-        SUPPRESSED_EVENTS.forEach((x) => this.addEventListener(x, this[_suppressedEventHandler], true));
-      }
-
+      SUPPRESSED_EVENTS.forEach((x) => this.addEventListener(x, this[_suppressedEventHandler], true));
       super.connectedCallback();
     }
 
     override disconnectedCallback(): void {
-      if (!isServer) {
-        SUPPRESSED_EVENTS.forEach((x) => this.removeEventListener(x, this[_suppressedEventHandler], true));
-      }
-
+      SUPPRESSED_EVENTS.forEach((x) => this.removeEventListener(x, this[_suppressedEventHandler], true));
       super.disconnectedCallback();
     }
 
