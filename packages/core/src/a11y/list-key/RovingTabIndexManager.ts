@@ -7,25 +7,11 @@ import { FocusKeyManager } from "./FocusKeyManager";
 export class RovingTabIndexManager<T extends HTMLElement> extends FocusKeyManager<T> {
   /** @private */ #disableRovingTabIndex = false;
 
-  /** A value indicating whether a roving tab index is disabled. */
-  get disableRovingTabIndex() {
-    return this.#disableRovingTabIndex;
-  }
-  set disableRovingTabIndex(value: boolean) {
-    if (value === this.#disableRovingTabIndex) return;
-    this.#disableRovingTabIndex = value;
-    for (const item of this.items) {
-      if (!this.skipPredicate(item)) {
-        item?.setAttribute("tabindex", value || item === this.activeItem ? "0" : "-1");
-      }
-    }
-  }
-
   /** @inheritdoc */
   override updateActiveItem(item: T | null | undefined): void {
     super.updateActiveItem(item);
 
-    if (!this.disableRovingTabIndex) {
+    if (!this.#disableRovingTabIndex) {
       item?.setAttribute("tabindex", "0");
       for (const other of this.items) {
         if (other !== item && other.hasAttribute("tabindex")) {
@@ -39,7 +25,7 @@ export class RovingTabIndexManager<T extends HTMLElement> extends FocusKeyManage
   override setItems(items: T[]): { added: readonly T[]; removed: readonly T[] } {
     const result = super.setItems(items);
 
-    if (!this.disableRovingTabIndex) {
+    if (!this.#disableRovingTabIndex) {
       for (const added of result.added) {
         if (added !== this.activeItem && !this.skipPredicate(added)) {
           added.setAttribute("tabindex", "-1");
@@ -48,5 +34,23 @@ export class RovingTabIndexManager<T extends HTMLElement> extends FocusKeyManage
     }
 
     return result;
+  }
+
+  /**
+   * Configures whether roving tab index is disabled.
+   * @param {boolean} [disabled=true] Whether the roving tab index is disabled.
+   * @returns {RovingTabIndexManager<T>} The configured roving tab index manager.
+   */
+  disableRovingTabIndex(disabled: boolean = true): this {
+    if (disabled !== this.#disableRovingTabIndex) {
+      this.#disableRovingTabIndex = disabled;
+      for (const item of this.items) {
+        if (!this.skipPredicate(item)) {
+          item?.setAttribute("tabindex", this.#disableRovingTabIndex || item === this.activeItem ? "0" : "-1");
+        }
+      }
+    }
+
+    return this;
   }
 }

@@ -86,7 +86,13 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
     .withVerticalOrientation()
     .withHomeAndEnd()
     .withTypeahead()
-    .withSkipPredicate((x) => x.disabled || !x.visible);
+    .withSkipPredicate((x) => x.disabled || !x.visible)
+    .disableRovingTabIndex()
+    .onActiveItemChange(() => {
+      if (this[selectionManager].activeItem) {
+        this.#activateItem(this[selectionManager].activeItem);
+      }
+    });
 
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);
   /** @private */ readonly #keyUpHandler = (e: KeyboardEvent) => this.#handleKeyUp(e);
@@ -94,13 +100,6 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
   constructor() {
     super();
-
-    this[selectionManager].disableRovingTabIndex = true;
-    this[selectionManager].addEventListener("activeItemChange", () => {
-      if (this[selectionManager].activeItem) {
-        this.#activateItem(this[selectionManager].activeItem);
-      }
-    });
 
     new PressedController(this, { callback: (pressed) => (this.#ignoreFocus = pressed) });
     new FocusController(this, {

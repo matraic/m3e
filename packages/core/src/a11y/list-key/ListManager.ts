@@ -1,14 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-
 /**
  * Utility for managing a list of items which supports activation.
  * @template T The type of managed item.
- *
- * @fires activeItemChange - Emitted when the active item changes.
  */
-export class ListManager<T> extends EventTarget {
+export class ListManager<T> {
   /** @private */ #items = new Array<T>();
   /** @private */ #activeItem: T | null = null;
+  /** @private */ #onActiveItemChangeCallback?: () => void;
 
   /** The items being managed. */
   get items(): ReadonlyArray<T> {
@@ -45,7 +42,7 @@ export class ListManager<T> extends EventTarget {
   setActiveItem(item: T | null | undefined): void {
     if (this.activeItem !== item) {
       this.updateActiveItem(item);
-      this.dispatchEvent(new Event("activeItemChange"));
+      this.#onActiveItemChangeCallback?.();
     }
   }
 
@@ -56,34 +53,14 @@ export class ListManager<T> extends EventTarget {
   updateActiveItem(item: T | null | undefined): void {
     this.#activeItem = item ?? null;
   }
-}
 
-export interface ListManagerEventMap {
-  activeItemChange: Event;
-}
-
-export interface ListManager<T> {
-  addEventListener<K extends keyof ListManagerEventMap>(
-    type: K,
-    listener: (this: ListManager<T>, ev: ListManagerEventMap[K]) => void,
-    options?: boolean | AddEventListenerOptions
-  ): void;
-
-  addEventListener(
-    type: string,
-    listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
-  ): void;
-
-  removeEventListener<K extends keyof ListManagerEventMap>(
-    type: K,
-    listener: (this: ListManager<T>, ev: ListManagerEventMap[K]) => void,
-    options?: boolean | EventListenerOptions
-  ): void;
-
-  removeEventListener(
-    type: string,
-    listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions
-  ): void;
+  /**
+   * Configures the list manager with a callback invoked when an item is activated.
+   * @param {() => void} callback The callback invoked when an item is activated.
+   * @returns {ListManager<T>} The configured list manager.
+   */
+  onActiveItemChange(callback: () => void): this {
+    this.#onActiveItemChangeCallback = callback;
+    return this;
+  }
 }

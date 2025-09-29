@@ -103,7 +103,7 @@ export class M3eNavRailElement extends M3eNavBarElement {
   constructor() {
     super();
 
-    this[selectionManager].addEventListener("selectionChange", () => {
+    this[selectionManager].onSelectedItemsChange(() => {
       this.#focusKeyManager.updateActiveItem(this[selectionManager].activeItem);
     });
   }

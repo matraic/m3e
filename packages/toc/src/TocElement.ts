@@ -168,7 +168,27 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   /** @private */ #ignoreScroll = false;
   /** @private */ readonly #selectionManager = new SelectionManager<M3eTocItemElement>()
     .withHomeAndEnd()
-    .withVerticalOrientation();
+    .withVerticalOrientation()
+    .disableRovingTabIndex()
+    .onSelectedItemsChange(() => {
+      if (this._activeIndicator) {
+        const item = this.#selectionManager.selectedItems[0];
+        if (!item) {
+          this.classList.toggle("-no-animate", true);
+          this._activeIndicator.style.top = `0px`;
+          this._activeIndicator.style.height = `0px`;
+          this._activeIndicator.style.visibility = "hidden";
+        } else {
+          this._activeIndicator.style.top = `${item.offsetTop}px`;
+          this._activeIndicator.style.height = `${item.clientHeight}px`;
+          this._activeIndicator.style.visibility = "";
+
+          if (this.classList.contains("-no-animate")) {
+            setTimeout(() => this.classList.toggle("-no-animate", false), 40);
+          }
+        }
+      }
+    });
 
   /** @private */
   readonly #intersectionController = new IntersectionController(this, {
@@ -213,30 +233,6 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
     callback: () => this._updateToc(),
   });
 
-  constructor() {
-    super();
-
-    this.#selectionManager.addEventListener("selectionChange", () => {
-      if (this._activeIndicator) {
-        const item = this.#selectionManager.selectedItems[0];
-        if (!item) {
-          this.classList.toggle("-no-animate", true);
-          this._activeIndicator.style.top = `0px`;
-          this._activeIndicator.style.height = `0px`;
-          this._activeIndicator.style.visibility = "hidden";
-        } else {
-          this._activeIndicator.style.top = `${item.offsetTop}px`;
-          this._activeIndicator.style.height = `${item.clientHeight}px`;
-          this._activeIndicator.style.visibility = "";
-
-          if (this.classList.contains("-no-animate")) {
-            setTimeout(() => this.classList.toggle("-no-animate", false), 40);
-          }
-        }
-      }
-    });
-  }
-
   /**
    * The maximum depth of the table of contents.
    * @default 2
@@ -257,12 +253,6 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
     }
     super.detach();
     this.#generateToc();
-  }
-
-  /** @inheritdoc */
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.#selectionManager.disableRovingTabIndex = true;
   }
 
   /** @inheritdoc */

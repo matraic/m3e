@@ -4,7 +4,6 @@ import { CheckedOrSelectedMixin, checkOrSelect, isCheckedOrSelected } from "../.
 import { DisabledMixin } from "../../shared/mixins/Disabled";
 
 import { RadioKeyManager } from "./RadioKeyManager";
-import { ListManagerEventMap } from "./ListManager";
 
 /** A symbol through which to access an element's selection manager. */
 export const selectionManager = Symbol("selectionManager");
@@ -13,11 +12,10 @@ export const selectionManager = Symbol("selectionManager");
  * Utility for managing keyboard events for selectable lists where one or more items can be selected.
  * @template T The type of managed item.
  */
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class SelectionManager<
   T extends LitElement & DisabledMixin & CheckedOrSelectedMixin
 > extends RadioKeyManager<T> {
+  /** @private */ #onSelectedItemsChangeCallback?: () => void;
   /** @private */ #selectedItems = new Array<T>();
   /** @private */ #multi = false;
 
@@ -59,7 +57,7 @@ export class SelectionManager<
     const index = this.#selectedItems.indexOf(item);
     if (index >= 0) {
       this.#selectedItems.splice(index, 1);
-      this.dispatchEvent(new Event("selectionChange"));
+      this.#onSelectedItemsChangeCallback?.();
     }
   }
 
@@ -89,7 +87,7 @@ export class SelectionManager<
       this.updateActiveItem(item);
     }
 
-    this.dispatchEvent(new Event("selectionChange"));
+    this.#onSelectedItemsChangeCallback?.();
   }
 
   /** @inheritdoc */
@@ -99,8 +97,18 @@ export class SelectionManager<
     this.#selectedItems = this.#selectedItems.filter((x) => !removed.includes(x));
     this.#selectedItems.push(...added.filter((x) => isCheckedOrSelected(x)));
     this.#enforceSingleSelect();
-    this.dispatchEvent(new Event("selectionChange"));
+    this.#onSelectedItemsChangeCallback?.();
     return { added, removed };
+  }
+
+  /**
+   * Configures the selection manager with a callback invoked when selected items change.
+   * @param {() => void} callback The callback invoked when selected items change.
+   * @returns {SelectionManager<T>} The configured selection manager.
+   */
+  onSelectedItemsChange(callback: () => void): this {
+    this.#onSelectedItemsChangeCallback = callback;
+    return this;
   }
 
   /** @private */
@@ -111,38 +119,8 @@ export class SelectionManager<
       }
       this.#selectedItems.length = 1;
       if (emit) {
-        this.dispatchEvent(new Event("selectionChange"));
+        this.#onSelectedItemsChangeCallback?.();
       }
     }
   }
-}
-
-export interface SelectionManagerEventMap extends ListManagerEventMap {
-  selectionChange: Event;
-}
-
-export interface SelectionManager<T> {
-  addEventListener<K extends keyof SelectionManagerEventMap>(
-    type: K,
-    listener: (this: SelectionManager<T>, ev: SelectionManagerEventMap[K]) => void,
-    options?: boolean | AddEventListenerOptions
-  ): void;
-
-  addEventListener(
-    type: string,
-    listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
-  ): void;
-
-  removeEventListener<K extends keyof SelectionManagerEventMap>(
-    type: K,
-    listener: (this: SelectionManager<T>, ev: SelectionManagerEventMap[K]) => void,
-    options?: boolean | EventListenerOptions
-  ): void;
-
-  removeEventListener(
-    type: string,
-    listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions
-  ): void;
 }
