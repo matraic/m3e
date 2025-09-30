@@ -38,10 +38,12 @@ export class SelectionManager<
    * @param {T} item The item whose selection state has changed.
    */
   notifySelectionChange(item: T): void {
-    if (isCheckedOrSelected(item)) {
-      this.select(item);
-    } else {
-      this.deselect(item);
+    if (this.items.includes(item)) {
+      if (isCheckedOrSelected(item)) {
+        this.select(item);
+      } else {
+        this.deselect(item);
+      }
     }
   }
 
@@ -50,14 +52,16 @@ export class SelectionManager<
    * @param {T} item The item to deselect.
    */
   deselect(item: T): void {
-    if (isCheckedOrSelected(item)) {
-      checkOrSelect(item, false);
-    }
+    if (this.items.includes(item)) {
+      if (isCheckedOrSelected(item)) {
+        checkOrSelect(item, false);
+      }
 
-    const index = this.#selectedItems.indexOf(item);
-    if (index >= 0) {
-      this.#selectedItems.splice(index, 1);
-      this.#onSelectedItemsChangeCallback?.();
+      const index = this.#selectedItems.indexOf(item);
+      if (index >= 0) {
+        this.#selectedItems.splice(index, 1);
+        this.#onSelectedItemsChangeCallback?.();
+      }
     }
   }
 
@@ -67,27 +71,29 @@ export class SelectionManager<
    * @param {boolean} [activate=true] A value indicating whether to activate the item.
    */
   select(item: T | null | undefined, activate: boolean = true): void {
-    if (!this.multi) {
-      for (const selected of this.#selectedItems) {
-        if (selected !== item) {
-          checkOrSelect(selected, false);
+    if (!item || this.items.includes(item)) {
+      if (!this.multi) {
+        for (const selected of this.#selectedItems) {
+          if (selected !== item) {
+            checkOrSelect(selected, false);
+          }
+        }
+        this.#selectedItems.length = 0;
+      }
+
+      if (item) {
+        this.#selectedItems.push(item);
+        if (!isCheckedOrSelected(item)) {
+          checkOrSelect(item, true);
         }
       }
-      this.#selectedItems.length = 0;
-    }
 
-    if (item) {
-      this.#selectedItems.push(item);
-      if (!isCheckedOrSelected(item)) {
-        checkOrSelect(item, true);
+      if (activate) {
+        this.updateActiveItem(item);
       }
-    }
 
-    if (activate) {
-      this.updateActiveItem(item);
+      this.#onSelectedItemsChangeCallback?.();
     }
-
-    this.#onSelectedItemsChangeCallback?.();
   }
 
   /** @inheritdoc */
