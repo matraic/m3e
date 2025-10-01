@@ -1,0 +1,46 @@
+{
+  "name": "@m3e/segmented-button",
+  "version": "0.1.2",
+  "description": "Segmented Button for Material 3 Expressive (M3E)",
+  "author": "matraic <matraic@yahoo.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matraic/m3e.git"
+  },
+  "keywords": [
+    "material design",
+    "web components",
+    "segmented button"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "browser": "dist/index.min.js",
+  "unpkg": "dist/index.min.js",
+  "types": "dist/src/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "cem": "cem analyze --config cem.config.mjs",
+    "lint": "npx eslint ./src",
+    "clean": "rimraf dist"
+  },
+  "peerDependencies": {
+    "@m3e/core": "^0.1.2",
+    "lit": "^3.3.0"
+  },
+  "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.10.4",
+    "@eslint/js": "^9.30.1",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "12.1.0",
+    "eslint": "^9.32.0",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.44.2",
+    "tslib": "^2.8.1",
+    "typescript": "~5.8.2",
+    "typescript-eslint": "^8.38.0"
+  },
+  "customElements": "dist/custom-elements.json"
+}
