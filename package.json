@@ -5,6 +5,7 @@
     "packages/badge",
     "packages/button",
     "packages/card",
+    "packages/checkbox",
     "packages/dialog",
     "packages/divider",
     "packages/drawer-container",

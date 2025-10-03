@@ -4,6 +4,8 @@ import { property } from "lit/decorators.js";
 import { AttachInternalsMixin, internals, isAttachInternalsMixin } from "./AttachInternals";
 import { Constructor } from "./Constructor";
 import { DisabledMixin } from "./Disabled";
+import { isCheckedMixin } from "./Checked";
+import { isCheckedIndeterminateMixin } from "./CheckedIndeterminate";
 import { isDirtyMixin } from "./Dirty";
 import { isTouchedMixin } from "./Touched";
 import { isLabelledMixin, LabelledMixin } from "./Labelled";
@@ -44,6 +46,7 @@ export function isFormAssociatedMixin(value: unknown): value is FormAssociatedMi
 }
 
 const _defaultValue = Symbol("_defaultValue");
+const _defaultIndeterminate = Symbol("_defaultIndeterminate");
 const _formDisabled = Symbol("_formDisabled");
 
 /**
@@ -58,6 +61,7 @@ export function FormAssociated<T extends Constructor<LitElement & DisabledMixin 
   abstract class _FormAssociatedMixin extends base implements FormAssociatedMixin {
     static readonly formAssociated = true;
     private [_defaultValue]: unknown;
+    private [_defaultIndeterminate] = false;
     private [_formDisabled] = false;
 
     get form(): HTMLFormElement | null {
@@ -76,7 +80,7 @@ export function FormAssociated<T extends Constructor<LitElement & DisabledMixin 
       return this[_defaultValue];
     }
 
-    @property() get name() {
+    @property({ noAccessor: true }) get name() {
       return this.getAttribute("name") ?? "";
     }
     set name(value: string) {
@@ -101,8 +105,12 @@ export function FormAssociated<T extends Constructor<LitElement & DisabledMixin 
 
     override connectedCallback(): void {
       super.connectedCallback();
-      if ("checked" in this) {
+
+      if (isCheckedMixin(this)) {
         this[_defaultValue] = this.checked;
+        if (isCheckedIndeterminateMixin(this)) {
+          this[_defaultIndeterminate] = this.indeterminate;
+        }
       } else if ("value" in this) {
         this[_defaultValue] = this.value;
       }
@@ -114,16 +122,19 @@ export function FormAssociated<T extends Constructor<LitElement & DisabledMixin 
     }
 
     formDisabledCallback(disabled: boolean): void {
-      const orig = this.disabled;
+      const wasDisabled = this.disabled;
       this[_formDisabled] = disabled;
-      if (this.disabled != orig) {
-        this.requestUpdate("disabled", orig);
+      if (this.disabled != wasDisabled) {
+        this.requestUpdate("disabled", wasDisabled);
       }
     }
 
     formResetCallback(): void {
-      if ("checked" in this) {
-        this.checked = this[defaultValue];
+      if (isCheckedMixin(this)) {
+        this.checked = this[_defaultValue] === true;
+        if (isCheckedIndeterminateMixin(this)) {
+          this.indeterminate = this[_defaultIndeterminate];
+        }
       } else if ("value" in this) {
         this.value = this[defaultValue];
       }
