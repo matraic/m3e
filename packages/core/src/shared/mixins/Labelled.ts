@@ -67,11 +67,16 @@ export function Labelled<T extends Constructor<LitElement & AttachInternalsMixin
     }
 
     private [_updateLabels](): void {
+      const focusable = this.hasAttribute("tabindex");
       const disabled =
         (isDisabledMixin(this) && this.disabled) || (isDisabledInteractiveMixin(this) && this.disabledInteractive);
+
       for (const label of this.labels) {
-        label.style.userSelect = "none";
-        label.style.cursor = !disabled ? "pointer" : "";
+        if (focusable) {
+          label.style.userSelect = "none";
+          label.style.cursor = !disabled ? "pointer" : "";
+        }
+
         label.style.color = disabled
           ? `color-mix(in srgb, ${DesignToken.color.onSurface} 38%, transparent)`
           : isTouchedMixin(this) && this.touched && this.ariaInvalid

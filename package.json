@@ -20,6 +20,7 @@
     "packages/nav-menu",
     "packages/nav-rail",
     "packages/progress-indicator",
+    "packages/radio-group",
     "packages/segmented-button",
     "packages/shape",
     "packages/snackbar",
