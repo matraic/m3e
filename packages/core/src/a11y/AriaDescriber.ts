@@ -48,6 +48,7 @@ export class M3eAriaDescriber {
 
       // Append to body if document, otherwise, append as a child of shadow root.
       (rootNode instanceof Document ? rootNode.body : rootNode).appendChild(container.containerElement);
+      this.#messageContainers.set(rootNode, container);
     }
 
     const key = `${role}:${message}`;
