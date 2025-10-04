@@ -12,6 +12,7 @@
     "packages/expansion-panel",
     "packages/fab",
     "packages/fab-menu",
+    "packages/form-field",
     "packages/icon",
     "packages/icon-button",
     "packages/list",
