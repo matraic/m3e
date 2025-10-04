@@ -42,6 +42,25 @@ In addition, you must use an [import map](https://developer.mozilla.org/en-US/do
 
 - `m3e-fab` — A floating action button (FAB) used to present important actions.
 
+## 🧪 Examples
+
+The following example illustrates a basic floating action button.
+
+```html
+<m3e-fab>
+  <m3e-icon>add</m3e-icon>
+</m3e-fab>
+```
+
+The next example illustrates an extended floating action button.
+
+```html
+<m3e-fab extended>
+  <m3e-icon>add</m3e-icon>
+  <span slot="label">Add</span>
+</m3e-fab>
+```
+
 ## 📖 API Reference
 
 This section details the attributes, slots and CSS custom properties available for the `m3e-fab` component.
