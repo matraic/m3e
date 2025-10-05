@@ -165,7 +165,7 @@ export class M3eCheckboxElement extends Labelled(
     :host(:not(:disabled):not(.-touched.-invalid):not([checked]):not([indeterminate]):not(:hover)) .wrapper {
       border-color: var(--m3e-checkbox-unselected-outline-color, ${DesignToken.color.onSurfaceVariant});
     }
-    :host(:not(:disabled):not(.-touched.-invalid):not([checked]):not([indeterminate]) :hover) .wrapper {
+    :host(:not(:disabled):not(.-touched.-invalid):not([checked]):not([indeterminate]):hover) .wrapper {
       border-color: var(--m3e-checkbox-unselected-hover-outline-color, ${DesignToken.color.onSurface});
     }
     :host(:disabled:not([checked]):not([indeterminate])) .wrapper {
@@ -204,6 +204,42 @@ export class M3eCheckboxElement extends Labelled(
     }
     :host(:not(:disabled).-touched.-invalid:not([checked]):not([indeterminate])) .wrapper {
       border-color: var(--m3e-checkbox-unselected-error-outline-color, ${DesignToken.color.error});
+    }
+    @media (forced-colors: active) {
+      :host(:not(.-touched.-invalid):not([indeterminate]):not([checked])) .base,
+      :host(:not(.-touched.-invalid)[checked]) .base,
+      :host(:not(.-touched.-invalid)[indeterminate]) .base {
+        --m3e-state-layer-hover-color: ButtonText;
+        --m3e-state-layer-focus-color: ButtonText;
+        --m3e-ripple-color: ButtonText;
+      }
+      :host(:not(:disabled):not(.-touched.-invalid):not([checked]):not([indeterminate]):not(:hover)) .wrapper,
+      :host(:not(:disabled):not(.-touched.-invalid):not([checked]):not([indeterminate]):hover) .wrapper {
+        border-color: ButtonText;
+      }
+      :host(:not(:disabled):not(.-touched.-invalid)[checked]) .wrapper,
+      :host(:not(:disabled):not(.-touched.-invalid)[indeterminate]) .wrapper {
+        background-color: ButtonText;
+        color: Canvas;
+      }
+      :host(:disabled:not([checked]):not([indeterminate])) .wrapper {
+        border-color: GrayText;
+      }
+      :host(:disabled[checked]) .wrapper,
+      :host(:disabled[indeterminate]) .wrapper {
+        background-color: GrayText;
+        color: Canvas;
+      }
+      :host(:not(:disabled).-touched.-invalid:not([checked]):not([indeterminate])) .wrapper {
+        border-color: Highlight;
+      }
+      :host(:not(:disabled).-touched.-invalid:not([checked]):not([indeterminate])) .base,
+      :host(:not(:disabled).-touched.-invalid[checked]) .base,
+      :host(:not(:disabled).-touched.-invalid[indeterminate]) .base {
+        --m3e-state-layer-hover-color: Highlight;
+        --m3e-state-layer-focus-color: Highlight;
+        --m3e-ripple-color: Highlight;
+      }
     }
   `;
 
