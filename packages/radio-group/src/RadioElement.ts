@@ -128,6 +128,18 @@ export class M3eRadioElement extends Dirty(
     :host(:disabled) .base {
       color: color-mix(in srgb, var(--m3e-radio-disabled-icon-color, ${DesignToken.color.onSurface}) 38%, transparent);
     }
+    @media (forced-colors: active) {
+      :host(:not([checked])) .base,
+      :host([checked]) .base {
+        --m3e-state-layer-hover-color: var(--_radio-forced-color, CanvasText);
+        --m3e-state-layer-focus-color: var(--_radio-forced-color, CanvasText);
+        --m3e-ripple-color: var(--_radio-forced-color, CanvasText);
+        color: var(--_radio-forced-color, CanvasText);
+      }
+      :host(:disabled) .base {
+        color: GrayText;
+      }
+    }
   `;
 
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;

@@ -77,6 +77,12 @@ export class M3eRadioGroupElement extends Labelled(
       --m3e-radio-unselected-icon-color: var(--m3e-radio-error-icon-color, ${DesignToken.color.error});
       color: var(--m3e-radio-error-icon-color, ${DesignToken.color.error});
     }
+    @media (forced-colors: active) {
+      :host(.-touched:invalid) {
+        --_radio-forced-color: Highlight;
+        color: Highlight;
+      }
+    }
   `;
 
   /** @private */ readonly #focusOutHandler = () => this.checkValidity();
