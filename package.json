@@ -25,6 +25,7 @@
     "packages/segmented-button",
     "packages/shape",
     "packages/snackbar",
+    "packages/switch",
     "packages/theme",
     "packages/toc",
     "packages/toolbar",
