@@ -67,6 +67,13 @@ This section details the attributes, events and CSS custom properties available 
 | `value`    | `string`                             | `"on"`   | A string representing the value of the switch.                            |
 | `icons`    | `boolean`                            | `false`  | Whether to present icons.                                                 |
 
+#### 🔔 Events
+
+| Event    | Description                             |
+| -------- | --------------------------------------- |
+| `input`  | Emitted when the checked state changes. |
+| `change` | Emitted when the checked state changes. |
+
 ### 🎛️ CSS Custom Properties
 
 | Property                                               | Description                                     |
