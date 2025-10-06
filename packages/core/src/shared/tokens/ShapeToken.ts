@@ -43,6 +43,16 @@ export const ShapeToken = {
     /** Extra large rounded symmetric shape. */
     extraLarge: unsafeCSS(`var(--md-sys-shape-corner-extra-large, ${CornerValue.extraLarge})`),
 
+    /** Extra large rounded asymmetric shape directed towards the end. */
+    extraLargeEnd: unsafeCSS(
+      `${CornerValue.none} ${CornerValue.extraLarge} ${CornerValue.extraLarge} ${CornerValue.none}`
+    ),
+
+    /** Extra large rounded asymmetric shape directed towards the start. */
+    extraLargeStart: unsafeCSS(
+      `${CornerValue.extraLarge} ${CornerValue.none} ${CornerValue.none} ${CornerValue.extraLarge}`
+    ),
+
     /** Large rounded asymmetric shape directed towards the top. */
     largeTop: unsafeCSS(
       `var(--md-sys-shape-corner-large-top, ${CornerValue.large} ${CornerValue.large} ${CornerValue.none} ${CornerValue.none})`
@@ -64,8 +74,26 @@ export const ShapeToken = {
     /** Medium rounded symmetric shape. */
     medium: unsafeCSS(`var(--md-sys-shape-corner-medium, ${CornerValue.medium})`),
 
+    /** Medium rounded asymmetric shape directed towards the top. */
+    mediumTop: unsafeCSS(`${CornerValue.medium} ${CornerValue.medium} ${CornerValue.none} ${CornerValue.none}`),
+
+    /** Medium rounded asymmetric shape directed towards the end. */
+    mediumEnd: unsafeCSS(`${CornerValue.none} ${CornerValue.medium} ${CornerValue.medium} ${CornerValue.none}`),
+
+    /** Medium rounded asymmetric shape directed towards the start. */
+    mediumStart: unsafeCSS(`${CornerValue.medium} ${CornerValue.none} ${CornerValue.none} ${CornerValue.medium}`),
+
     /** Small rounded symmetric shape. */
     small: unsafeCSS(`var(--md-sys-shape-corner-small, ${CornerValue.small})`),
+
+    /** Small rounded asymmetric shape directed towards the top. */
+    smallTop: unsafeCSS(`${CornerValue.small} ${CornerValue.small} ${CornerValue.none} ${CornerValue.none}`),
+
+    /** Small rounded asymmetric shape directed towards the end. */
+    smallEnd: unsafeCSS(`${CornerValue.none} ${CornerValue.small} ${CornerValue.small} ${CornerValue.none}`),
+
+    /** Small rounded asymmetric shape directed towards the start. */
+    smallStart: unsafeCSS(`${CornerValue.small} ${CornerValue.none} ${CornerValue.none} ${CornerValue.small}`),
 
     /** Extra small rounded asymmetric shape directed towards the top. */
     extraSmallTop: unsafeCSS(
@@ -74,6 +102,16 @@ export const ShapeToken = {
 
     /** Extra small rounded symmetric shape. */
     extraSmall: unsafeCSS(`var(--md-sys-shape-corner-extra-small, ${CornerValue.extraSmall})`),
+
+    /** Extra small rounded asymmetric shape directed towards the end. */
+    extraSmallEnd: unsafeCSS(
+      `${CornerValue.none} ${CornerValue.extraSmall} ${CornerValue.extraSmall} ${CornerValue.none}`
+    ),
+
+    /** Extra small rounded asymmetric shape directed towards the start. */
+    extraSmallStart: unsafeCSS(
+      `${CornerValue.extraSmall} ${CornerValue.none} ${CornerValue.none} ${CornerValue.extraSmall}`
+    ),
 
     /** No rounding. */
     none: unsafeCSS(`var(--md-sys-shape-corner-none, ${CornerValue.none})`),
