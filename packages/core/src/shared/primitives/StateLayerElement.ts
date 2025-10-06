@@ -58,19 +58,14 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
       border-radius: inherit;
     }
     .layer {
-      opacity: 0;
-      transition: ${unsafeCSS(
-        `opacity ${StateLayerToken.duration} ${StateLayerToken.easing}, 
-        background-color ${StateLayerToken.duration} ${StateLayerToken.easing}`
-      )};
+      will-change: background-color;
+      transition: ${unsafeCSS(`background-color ${StateLayerToken.duration} ${StateLayerToken.easing}`)};
     }
     .layer.focused {
-      background-color: ${StateLayerToken.focusColor};
-      opacity: ${StateLayerToken.focusOpacity};
+      background-color: color-mix(in srgb, ${StateLayerToken.focusColor} ${StateLayerToken.focusOpacity}, transparent);
     }
     .layer.hover {
-      background-color: ${StateLayerToken.hoverColor};
-      opacity: ${StateLayerToken.hoverOpacity};
+      background-color: color-mix(in srgb, ${StateLayerToken.hoverColor} ${StateLayerToken.hoverOpacity}, transparent);
     }
   `;
 

@@ -78,6 +78,7 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
       transform: scale(0);
       border-radius: ${DesignToken.shape.corner.full};
       background-color: color-mix(in srgb, ${RippleToken.color} ${RippleToken.opacity}, transparent);
+      will-change: background-color, opacity;
     }
     .ripple:not(.persistent) {
       animation: ripple ${RippleToken.enterDuration} linear;
