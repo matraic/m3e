@@ -2,7 +2,7 @@ import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { AttachInternals, DesignToken, prefersReducedMotion, ResizeController, safeStyleMap } from "@m3e/core";
+import { DesignToken, prefersReducedMotion, ResizeController, Role, safeStyleMap } from "@m3e/core";
 
 import { M3eSliderThumbElement } from "./SliderThumbElement";
 import { SliderSize } from "./SliderSize";
@@ -79,7 +79,7 @@ import { SliderSize } from "./SliderSize";
  * @cssprop --m3e-slider-disabled-tick-inactive-color - Color of inactive ticks when disabled.
  */
 @customElement("m3e-slider")
-export class M3eSliderElement extends AttachInternals(LitElement) {
+export class M3eSliderElement extends Role(LitElement, "none") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -351,12 +351,6 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
   /** The thumb used to select the upper value of a range slider. */
   get upperThumb(): M3eSliderThumbElement | null {
     return this.#thumbs[1] ?? null;
-  }
-
-  /** @inheritdoc */
-  override connectedCallback(): void {
-    this.role = this.role || "none";
-    super.connectedCallback();
   }
 
   /** @inheritdoc */
