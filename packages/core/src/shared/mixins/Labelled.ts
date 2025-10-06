@@ -72,10 +72,8 @@ export function Labelled<T extends Constructor<LitElement & AttachInternalsMixin
         (isDisabledMixin(this) && this.disabled) || (isDisabledInteractiveMixin(this) && this.disabledInteractive);
 
       for (const label of this.labels) {
-        if (focusable) {
-          label.style.userSelect = "none";
-          label.style.cursor = !disabled ? "pointer" : "";
-        }
+        label.style.userSelect = focusable ? "none" : "";
+        label.style.cursor = !disabled ? "pointer" : "";
 
         label.style.color = disabled
           ? `color-mix(in srgb, ${DesignToken.color.onSurface} 38%, transparent)`
