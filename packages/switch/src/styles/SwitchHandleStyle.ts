@@ -29,12 +29,12 @@ export const SwitchHandleStyle = css`
   .track.pressed .handle {
     --_switch-handle-effect: ${DesignToken.motion.spring.fastEffects};
   }
-  :host(:not(:disabled):not([checked])[icons="both"]) .track:not(.pressed) .handle {
+  :host(:not([aria-disabled="true"]):not([checked])[icons="both"]) .track:not(.pressed) .handle {
     width: ${SwitchToken.withIconHandleWidth};
     height: ${SwitchToken.withIconHandleHeight};
   }
   :host(:not([checked]):not([icons="both"])) .track:not(.pressed) .handle,
-  :host(:disabled:not([checked])) .handle {
+  :host([aria-disabled="true"]:not([checked])) .handle {
     width: ${SwitchToken.unselectedHandleWidth};
     height: ${SwitchToken.unselectedHandleHeight};
   }
@@ -46,38 +46,38 @@ export const SwitchHandleStyle = css`
     width: ${SwitchToken.pressedHandleWidth};
     height: ${SwitchToken.pressedHandleHeight};
   }
-  :host(:not(:disabled):not([checked]):not(:focus):not(:hover)) .track:not(.pressed) .handle {
+  :host(:not([aria-disabled="true"]):not([checked]):not(:focus):not(:hover)) .track:not(.pressed) .handle {
     background-color: ${SwitchToken.unselectedHandleColor};
   }
-  :host(:not(:disabled):not([checked]):not(:focus):hover) .track:not(.pressed) .handle {
+  :host(:not([aria-disabled="true"]):not([checked]):not(:focus):hover) .track:not(.pressed) .handle {
     background-color: ${SwitchToken.unselectedHoverHandleColor};
   }
-  :host(:not(:disabled):not([checked]):focus) .track:not(.pressed) .handle {
+  :host(:not([aria-disabled="true"]):not([checked]):focus) .track:not(.pressed) .handle {
     background-color: ${SwitchToken.unselectedFocusHandleColor};
   }
-  :host(:not(:disabled):not([checked])) .track.pressed .handle {
+  :host(:not([aria-disabled="true"]):not([checked])) .track.pressed .handle {
     background-color: ${SwitchToken.unselectedPressedHandleColor};
   }
-  :host(:not(:disabled)[checked]:not(:focus):not(:hover)) .track:not(.pressed) .handle {
+  :host(:not([aria-disabled="true"])[checked]:not(:focus):not(:hover)) .track:not(.pressed) .handle {
     background-color: ${SwitchToken.selectedHandleColor};
   }
-  :host(:not(:disabled)[checked]:not(:focus):hover) .track:not(.pressed) .handle {
+  :host(:not([aria-disabled="true"])[checked]:not(:focus):hover) .track:not(.pressed) .handle {
     background-color: ${SwitchToken.selectedHoverHandleColor};
   }
-  :host(:not(:disabled)[checked]:focus) .track:not(.pressed) .handle {
+  :host(:not([aria-disabled="true"])[checked]:focus) .track:not(.pressed) .handle {
     background-color: ${SwitchToken.selectedFocusHandleColor};
   }
-  :host(:not(:disabled)[checked]) .track.pressed .handle {
+  :host(:not([aria-disabled="true"])[checked]) .track.pressed .handle {
     background-color: ${SwitchToken.selectedPressedHandleColor};
   }
-  :host(:disabled:not([checked])) .handle {
+  :host([aria-disabled="true"]:not([checked])) .handle {
     background-color: color-mix(
       in srgb,
       ${SwitchToken.disabledUnselectedHandleColor} ${SwitchToken.disabledUnselectedHandleOpacity},
       transparent
     );
   }
-  :host(:disabled[checked]) .handle {
+  :host([aria-disabled="true"][checked]) .handle {
     background-color: color-mix(
       in srgb,
       ${SwitchToken.disabledSelectedHandleColor} ${SwitchToken.disabledSelectedHandleOpacity},
@@ -95,14 +95,14 @@ export const SwitchHandleStyle = css`
     );
   }
   :host(:not([checked]):not([icons="both"])) .track:not(.pressed) .handle,
-  :host(:disabled:not([checked])) .handle {
+  :host([aria-disabled="true"]:not([checked])) .handle {
     transform: translateX(
       calc(
         ${SwitchToken.trackOutlineWidth} + calc(${SwitchToken.pressedHandleWidth} - ${SwitchToken.withIconHandleWidth})
       )
     );
   }
-  :host(:not(:disabled):not([checked])[icons="both"]) .track:not(.pressed) .handle {
+  :host(:not([aria-disabled="true"]):not([checked])[icons="both"]) .track:not(.pressed) .handle {
     transform: translateX(${SwitchToken.trackOutlineWidth});
   }
   @media (forced-colors: active) {
@@ -113,22 +113,22 @@ export const SwitchHandleStyle = css`
       height ${DesignToken.motion.spring.fastEffects}`
       )};
     }
-    :host(:not(:disabled):not([checked]):not(:focus):not(:hover)) .track:not(.pressed) .handle,
-    :host(:not(:disabled):not([checked]):not(:focus):hover) .track:not(.pressed) .handle,
-    :host(:not(:disabled):not([checked]):focus) .track:not(.pressed) .handle,
-    :host(:not(:disabled):not([checked])) .track.pressed .handle {
+    :host(:not([aria-disabled="true"]):not([checked]):not(:focus):not(:hover)) .track:not(.pressed) .handle,
+    :host(:not([aria-disabled="true"]):not([checked]):not(:focus):hover) .track:not(.pressed) .handle,
+    :host(:not([aria-disabled="true"]):not([checked]):focus) .track:not(.pressed) .handle,
+    :host(:not([aria-disabled="true"]):not([checked])) .track.pressed .handle {
       background-color: ButtonText;
     }
-    :host(:disabled:not([checked])) .handle {
+    :host([aria-disabled="true"]:not([checked])) .handle {
       background-color: GrayText;
     }
-    :host(:not(:disabled)[checked]:not(:focus):not(:hover)) .track:not(.pressed) .handle,
-    :host(:not(:disabled)[checked]:not(:focus):hover) .track:not(.pressed) .handle,
-    :host(:not(:disabled)[checked]:focus) .track:not(.pressed) .handle,
-    :host(:not(:disabled)[checked]) .track.pressed .handle {
+    :host(:not([aria-disabled="true"])[checked]:not(:focus):not(:hover)) .track:not(.pressed) .handle,
+    :host(:not([aria-disabled="true"])[checked]:not(:focus):hover) .track:not(.pressed) .handle,
+    :host(:not([aria-disabled="true"])[checked]:focus) .track:not(.pressed) .handle,
+    :host(:not([aria-disabled="true"])[checked]) .track.pressed .handle {
       background-color: Canvas;
     }
-    :host(:disabled[checked]) .handle {
+    :host([aria-disabled="true"][checked]) .handle {
       background-color: Canvas;
     }
   }

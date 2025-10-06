@@ -24,23 +24,23 @@ export const SwitchTrackStyle = css`
     border-width: ${SwitchToken.trackOutlineWidth};
     border-style: solid;
   }
-  :host(:not(:disabled):not([checked]):not(:focus):not(:hover)) .track:not(.pressed) {
+  :host(:not([aria-disabled="true"]):not([checked]):not(:focus):not(:hover)) .track:not(.pressed) {
     border-color: ${SwitchToken.trackOutlineColor};
     background-color: ${SwitchToken.unselectedTrackColor};
   }
-  :host(:not(:disabled):not([checked]):not(:focus):hover) .track:not(.pressed) {
+  :host(:not([aria-disabled="true"]):not([checked]):not(:focus):hover) .track:not(.pressed) {
     border-color: ${SwitchToken.unselectedHoverTrackOutlineColor};
     background-color: ${SwitchToken.unselectedHoverTrackColor};
   }
-  :host(:not(:disabled):not([checked]):focus) .track:not(.pressed) {
+  :host(:not([aria-disabled="true"]):not([checked]):focus) .track:not(.pressed) {
     border-color: ${SwitchToken.unselectedFocusTrackOutlineColor};
     background-color: ${SwitchToken.unselectedFocusTrackColor};
   }
-  :host(:not(:disabled):not([checked])) .track.pressed {
+  :host(:not([aria-disabled="true"]):not([checked])) .track.pressed {
     border-color: ${SwitchToken.unselectedPressedTrackOutlineColor};
     background-color: ${SwitchToken.unselectedPressedTrackColor};
   }
-  :host(:disabled:not([checked])) .track {
+  :host([aria-disabled="true"]:not([checked])) .track {
     border-color: color-mix(
       in srgb,
       ${SwitchToken.disabledUnselectedTrackOutlineColor} ${SwitchToken.disabledTrackOpacity},
@@ -52,19 +52,19 @@ export const SwitchTrackStyle = css`
       transparent
     );
   }
-  :host(:not(:disabled)[checked]:not(:focus):not(:hover)) .track:not(.pressed) {
+  :host(:not([aria-disabled="true"])[checked]:not(:focus):not(:hover)) .track:not(.pressed) {
     background-color: ${SwitchToken.selectedTrackColor};
   }
-  :host(:not(:disabled)[checked]:not(:focus):hover) .track:not(.pressed) {
+  :host(:not([aria-disabled="true"])[checked]:not(:focus):hover) .track:not(.pressed) {
     background-color: ${SwitchToken.selectedHoverTrackColor};
   }
-  :host(:not(:disabled)[checked]:focus) .track:not(.pressed) {
+  :host(:not([aria-disabled="true"])[checked]:focus) .track:not(.pressed) {
     background-color: ${SwitchToken.selectedFocusTrackColor};
   }
-  :host(:not(:disabled)[checked]) .track.pressed {
+  :host(:not([aria-disabled="true"])[checked]) .track.pressed {
     background-color: ${SwitchToken.selectedPressedTrackColor};
   }
-  :host(:disabled[checked]) .track {
+  :host([aria-disabled="true"][checked]) .track {
     background-color: color-mix(
       in srgb,
       ${SwitchToken.disabledSelectedTrackColor} ${SwitchToken.disabledTrackOpacity},
@@ -75,24 +75,24 @@ export const SwitchTrackStyle = css`
     .track {
       transition: none;
     }
-    :host(:not(:disabled):not([checked]):not(:focus):not(:hover)) .track:not(.pressed),
-    :host(:not(:disabled):not([checked]):not(:focus):hover) .track:not(.pressed),
-    :host(:not(:disabled):not([checked]):focus) .track:not(.pressed),
-    :host(:not(:disabled):not([checked])) .track.pressed {
+    :host(:not([aria-disabled="true"]):not([checked]):not(:focus):not(:hover)) .track:not(.pressed),
+    :host(:not([aria-disabled="true"]):not([checked]):not(:focus):hover) .track:not(.pressed),
+    :host(:not([aria-disabled="true"]):not([checked]):focus) .track:not(.pressed),
+    :host(:not([aria-disabled="true"]):not([checked])) .track.pressed {
       border-color: ButtonText;
       background-color: Canvas;
     }
-    :host(:disabled:not([checked])) .track {
+    :host([aria-disabled="true"]:not([checked])) .track {
       border-color: GrayText;
       background-color: Canvas;
     }
-    :host(:not(:disabled)[checked]:not(:focus):not(:hover)) .track:not(.pressed),
-    :host(:not(:disabled)[checked]:not(:focus):hover) .track:not(.pressed),
-    :host(:not(:disabled)[checked]:focus) .track:not(.pressed),
-    :host(:not(:disabled)[checked]) .track.pressed {
+    :host(:not([aria-disabled="true"])[checked]:not(:focus):not(:hover)) .track:not(.pressed),
+    :host(:not([aria-disabled="true"])[checked]:not(:focus):hover) .track:not(.pressed),
+    :host(:not([aria-disabled="true"])[checked]:focus) .track:not(.pressed),
+    :host(:not([aria-disabled="true"])[checked]) .track.pressed {
       background-color: ButtonText;
     }
-    :host(:disabled[checked]) .track {
+    :host([aria-disabled="true"][checked]) .track {
       background-color: GrayText;
     }
   }
