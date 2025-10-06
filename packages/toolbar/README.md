@@ -78,7 +78,7 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### 🧩 Slots
 
-| Slot Name   | Description                         |
+| Slot        | Description                         |
 | ----------- | ----------------------------------- |
 | _(default)_ | Renders the content of the toolbar. |
 

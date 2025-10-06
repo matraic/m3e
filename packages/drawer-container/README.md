@@ -92,7 +92,7 @@ This section details the attributes and CSS custom properties available for the 
 
 ### 🧩 Slots
 
-| Slot Name   | Description               |
+| Slot        | Description               |
 | ----------- | ------------------------- |
 | _(default)_ | Renders the main content. |
 | `start`     | Renders the start drawer. |

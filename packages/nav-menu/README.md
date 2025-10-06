@@ -73,9 +73,9 @@ This section details the slots and CSS custom properties available for the `m3e-
 
 #### 🧩 Slots
 
-| Name      | Description                    |
-| --------- | ------------------------------ |
-| (default) | Renders the items of the menu. |
+| Slot        | Description                    |
+| ----------- | ------------------------------ |
+| _(default)_ | Renders the items of the menu. |
 
 #### 🎛️ CSS Custom Properties
 
@@ -113,9 +113,9 @@ This section details the attributes, slots, events, and CSS custom properties av
 
 #### 🧩 Slots
 
-| Name            | Description                                 |
+| Slot            | Description                                 |
 | --------------- | ------------------------------------------- |
-| (default)       | Renders the nested child items.             |
+| _(default)_     | Renders the nested child items.             |
 | `label`         | Renders the label of the item.              |
 | `icon`          | Renders the icon of the item.               |
 | `selected-icon` | Renders the icon of the item when selected. |

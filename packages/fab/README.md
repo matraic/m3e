@@ -85,7 +85,7 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### 🧩 Slots
 
-| Slot Name    | Description                                          |
+| Slot         | Description                                          |
 | ------------ | ---------------------------------------------------- |
 | _(default)_  | Renders the icon of the button.                      |
 | `label`      | Renders the label of an extended FAB.                |

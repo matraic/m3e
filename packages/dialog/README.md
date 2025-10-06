@@ -77,7 +77,7 @@ This section details the attributes, slots, events, and CSS custom properties av
 
 ### 🧩 Slots
 
-| Slot Name    | Description                              |
+| Slot         | Description                              |
 | ------------ | ---------------------------------------- |
 | _(default)_  | Renders the content of the dialog.       |
 | `header`     | Renders the header of the dialog.        |

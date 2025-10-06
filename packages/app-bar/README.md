@@ -82,7 +82,7 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### 🧩 Slots
 
-| Slot Name       | Description              |
+| Slot            | Description              |
 | --------------- | ------------------------ |
 | `leading-icon`  | Renders a leading icon.  |
 | `title`         | Renders the title.       |

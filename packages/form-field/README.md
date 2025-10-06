@@ -65,7 +65,7 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### 🧩 Slots
 
-| Slot Name     | Description                                                                 |
+| Slot          | Description                                                                 |
 | ------------- | --------------------------------------------------------------------------- |
 | _(default)_   | Renders the form control (e.g. `<input>`, `<select>`, or custom control).   |
 | `prefix`      | Renders visual content before the control (e.g. icons, avatars, tokens).    |

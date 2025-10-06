@@ -87,9 +87,9 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 ### 🧩 Slots
 
-| Name      | Description                    |
-| --------- | ------------------------------ |
-| (default) | Renders the items of the rail. |
+| Slot        | Description                    |
+| ----------- | ------------------------------ |
+| _(default)_ | Renders the items of the rail. |
 
 ### 🎛️ CSS Custom Properties
 

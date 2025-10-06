@@ -62,19 +62,19 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 | Attribute | Type                                    | Default     | Description                                       |
 | --------- | --------------------------------------- | ----------- | ------------------------------------------------- |
-| mode      | `"compact"` \| `"expanded"` \| `"auto"` | `"compact"` | The mode in which items in the bar are presented. |
+| `mode`    | `"compact"` \| `"expanded"` \| `"auto"` | `"compact"` | The mode in which items in the bar are presented. |
 
 #### 🔔 Events
 
-| Event  | Description                                        |
-| ------ | -------------------------------------------------- |
-| change | Emitted when the selected state of an item changes |
+| Event    | Description                                        |
+| -------- | -------------------------------------------------- |
+| `change` | Emitted when the selected state of an item changes |
 
 #### 🧩 Slots
 
-| Name      | Description                   |
-| --------- | ----------------------------- |
-| (default) | Renders the items of the bar. |
+| Slot        | Description                   |
+| ----------- | ----------------------------- |
+| _(default)_ | Renders the items of the bar. |
 
 #### 🎛️ CSS Custom Properties
 
@@ -90,31 +90,31 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### ⚙️ Attributes
 
-| Attribute            | Type    | Default    | Description                                  |
-| -------------------- | ------- | ---------- | -------------------------------------------- |
-| disabled             | boolean | false      | Whether the item is disabled.                |
-| disabled-interactive | boolean | false      | Whether the item is disabled and interactive |
-| download             | string  |            | Download target for link button.             |
-| href                 | string  |            | URL for the link button.                     |
-| orientation          | string  | "vertical" | The layout orientation of the item.          |
-| rel                  | string  |            | Relationship for the link button.            |
-| selected             | boolean | false      | Whether the item is selected.                |
-| target               | string  |            | Target for the link button.                  |
+| Attribute              | Type                           | Default      | Description                                  |
+| ---------------------- | ------------------------------ | ------------ | -------------------------------------------- |
+| `disabled`             | `boolean`                      | `false`      | Whether the item is disabled.                |
+| `disabled-interactive` | `boolean`                      | `false`      | Whether the item is disabled and interactive |
+| `download`             | `string`                       |              | Download target for link button.             |
+| `href`                 | `string`                       |              | URL for the link button.                     |
+| `orientation`          | `"vertical"` \| `"horizontal"` | `"vertical"` | The layout orientation of the item.          |
+| `rel`                  | `string`                       |              | Relationship for the link button.            |
+| `selected`             | `boolean`                      | `false`      | Whether the item is selected.                |
+| `target`               | `string`                       |              | Target for the link button.                  |
 
 #### 🔔 Events
 
-| Event  | Description                              |
-| ------ | ---------------------------------------- |
-| input  | Emitted when the selected state changes. |
-| change | Emitted when the selected state changes. |
+| Event    | Description                              |
+| -------- | ---------------------------------------- |
+| `input`  | Emitted when the selected state changes. |
+| `change` | Emitted when the selected state changes. |
 
 #### 🧩 Slots
 
-| Name          | Description                                 |
-| ------------- | ------------------------------------------- |
-| (default)     | Renders the label of the item.              |
-| icon          | Renders the icon of the item.               |
-| selected-icon | Renders the icon when the item is selected. |
+| Slot            | Description                                 |
+| --------------- | ------------------------------------------- |
+| _(default)_     | Renders the label of the item.              |
+| `icon`          | Renders the icon of the item.               |
+| `selected-icon` | Renders the icon when the item is selected. |
 
 #### 🎛️ CSS Custom Properties
 

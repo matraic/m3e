@@ -64,18 +64,18 @@ In addition, you must use an [import map](https://developer.mozilla.org/en-US/do
 
 #### ⚙️ Attributes
 
-| Attribute | Type   | Default | Description                                              |
-| --------- | ------ | ------- | -------------------------------------------------------- |
-| for       | string |         | Query selector for the element to generate the TOC from. |
-| max-depth | number | 2       | The maximum depth of the table of contents.              |
+| Attribute   | Type     | Default | Description                                              |
+| ----------- | -------- | ------- | -------------------------------------------------------- |
+| `for`       | `string` |         | Query selector for the element to generate the TOC from. |
+| `max-depth` | `number` | `2`     | The maximum depth of the table of contents.              |
 
 #### 🧩 Slots
 
-| Name      | Description                                    |
-| --------- | ---------------------------------------------- |
-| (default) | Renders content between the header and items.  |
-| overline  | Renders the overline of the table of contents. |
-| title     | Renders the title of the table of contents.    |
+| Slot        | Description                                    |
+| ----------- | ---------------------------------------------- |
+| _(default)_ | Renders content between the header and items.  |
+| `overline`  | Renders the overline of the table of contents. |
+| `title`     | Renders the title of the table of contents.    |
 
 #### 🎛️ CSS Custom Properties
 
@@ -102,16 +102,16 @@ In addition, you must use an [import map](https://developer.mozilla.org/en-US/do
 
 #### ⚙️ Attributes
 
-| Attribute | Type    | Default | Description                   |
-| --------- | ------- | ------- | ----------------------------- |
-| disabled  | boolean | false   | Whether the item is disabled. |
-| selected  | boolean | false   | Whether the item is selected. |
+| Attribute  | Type      | Default | Description                   |
+| ---------- | --------- | ------- | ----------------------------- |
+| `disabled` | `boolean` | `false` | Whether the item is disabled. |
+| `selected` | `boolean` | `false` | Whether the item is selected. |
 
 #### 🧩 Slots
 
-| Name      | Description                    |
-| --------- | ------------------------------ |
-| (default) | Renders the label of the item. |
+| Slot        | Description                    |
+| ----------- | ------------------------------ |
+| _(default)_ | Renders the label of the item. |
 
 #### 🎛️ CSS Custom Properties
 

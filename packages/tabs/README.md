@@ -88,7 +88,7 @@ This section details the attributes, events, slots and CSS custom properties ava
 
 #### 🧩 Slots
 
-| Slot Name   | Description                                                           |
+| Slot        | Description                                                           |
 | ----------- | --------------------------------------------------------------------- |
 | _(default)_ | Renders the tabs.                                                     |
 | `panel`     | Renders the panels of the tabs.                                       |
@@ -121,7 +121,7 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🧩 Slots
 
-| Slot Name   | Description                             |
+| Slot        | Description                             |
 | ----------- | --------------------------------------- |
 | _(default)_ | Renders the label of the tab.           |
 | `icon`      | Renders an icon before the tab's label. |
@@ -155,7 +155,7 @@ This section details the slots available for the `m3e-tab-panel` component.
 
 #### 🧩 Slots
 
-| Name        | Description                       |
+| Slot        | Description                       |
 | ----------- | --------------------------------- |
 | _(default)_ | Renders the content of the panel. |
 

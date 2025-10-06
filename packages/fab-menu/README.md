@@ -84,7 +84,9 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🧩 Slots
 
-- (default): Renders the contents of the menu.
+| Slot        | Description                       |
+| ----------- | --------------------------------- |
+| _(default)_ | Renders the contents of the menu. |
 
 ### 🎛️ CSS Custom Properties
 
@@ -124,8 +126,10 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🧩 Slots
 
-- (default): Renders the label of the item.
-- `icon`: Renders an icon before the item's label.
+| Slot        | Description                              |
+| ----------- | ---------------------------------------- |
+| _(default)_ | Renders the label of the item.           |
+| `icon`      | Renders an icon before the item's label. |
 
 ### 🎛️ CSS Custom Properties
 

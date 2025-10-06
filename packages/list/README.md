@@ -66,7 +66,7 @@ This section details the slots and CSS custom properties available for the `m3e-
 
 #### 🧩 Slots
 
-| Slot Name   | Description                    |
+| Slot        | Description                    |
 | ----------- | ------------------------------ |
 | _(default)_ | Renders the items of the list. |
 
@@ -84,7 +84,7 @@ This section details the slots and CSS custom properties available for the `m3e-
 
 #### 🧩 Slots
 
-| Slot Name                  | Description                           |
+| Slot                       | Description                           |
 | -------------------------- | ------------------------------------- |
 | _(default)_                | Renders the content of the list item. |
 | `leading-icon`             | Renders the leading icon.             |

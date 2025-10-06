@@ -72,7 +72,7 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### 🧩 Slots
 
-| Slot Name   | Description                      |
+| Slot        | Description                      |
 | ----------- | -------------------------------- |
 | _(default)_ | Renders content without padding. |
 | `header`    | Renders the header section.      |

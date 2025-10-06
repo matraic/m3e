@@ -74,7 +74,7 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🧩 Slots
 
-| Slot Name   | Description                          |
+| Slot        | Description                          |
 | ----------- | ------------------------------------ |
 | _(default)_ | Renders the panels of the accordion. |
 
@@ -114,7 +114,7 @@ This section details the attributes, events, slots and CSS custom properties ava
 
 #### 🧩 Slots
 
-| Slot Name     | Description                           |
+| Slot          | Description                           |
 | ------------- | ------------------------------------- |
 | _(default)_   | Renders the detail of the panel.      |
 | `header`      | Renders the header content.           |

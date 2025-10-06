@@ -95,9 +95,9 @@ This section details the attributes, slots, and CSS custom properties available 
 
 #### 🧩 Slots
 
-| Name      | Description                                        |
-| --------- | -------------------------------------------------- |
-| (default) | Renders the content inside the progress indicator. |
+| Slot        | Description                                        |
+| ----------- | -------------------------------------------------- |
+| _(default)_ | Renders the content inside the progress indicator. |
 
 #### 🎛️ CSS Custom Properties
 

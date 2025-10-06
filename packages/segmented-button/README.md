@@ -77,9 +77,9 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🧩 Slots
 
-| Name      | Description                         |
-| --------- | ----------------------------------- |
-| (default) | Renders the segments of the button. |
+| Slot        | Description                         |
+| ----------- | ----------------------------------- |
+| _(default)_ | Renders the segments of the button. |
 
 #### 🎛️ CSS Custom Properties
 
@@ -109,10 +109,10 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🧩 Slots
 
-| Name      | Description                                |
-| --------- | ------------------------------------------ |
-| (default) | Renders the label of the option.           |
-| `icon`    | Renders an icon before the option's label. |
+| Slot        | Description                                |
+| ----------- | ------------------------------------------ |
+| _(default)_ | Renders the label of the option.           |
+| `icon`      | Renders an icon before the option's label. |
 
 #### 🎛️ CSS Custom Properties
 

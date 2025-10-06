@@ -77,9 +77,9 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🧩 Slots
 
-| Name      | Description                             |
-| --------- | --------------------------------------- |
-| (default) | Renders the radio buttons of the group. |
+| Slot        | Description                             |
+| ----------- | --------------------------------------- |
+| _(default)_ | Renders the radio buttons of the group. |
 
 #### 🎛️ CSS Custom Properties
 
