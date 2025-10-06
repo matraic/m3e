@@ -24,6 +24,7 @@
     "packages/radio-group",
     "packages/segmented-button",
     "packages/shape",
+    "packages/slide-group",
     "packages/slider",
     "packages/snackbar",
     "packages/switch",
