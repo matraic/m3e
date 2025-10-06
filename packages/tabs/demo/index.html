@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow-y: auto">
+  <head>
+    <title>Tabs for Material 3 Expressive (M3E)</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Tabs for Material 3 Expressive (M3E)" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "../../core/dist/index.min.js",
+          "@m3e/core/a11y": "../../core/dist/a11y.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="../../theme/dist/index.min.js"></script>
+    <script type="module" src="../../icon/dist/index.min.js"></script>
+    <script type="module" src="../../icon-button/dist/index.min.js"></script>
+    <script type="module" src="../../slide-group/dist/index.min.js"></script>
+    <script type="module" src="../dist/index.min.js"></script>
+    <style>
+      body {
+        font-family: "Roboto";
+      }
+      *:not(:defined) {
+        display: none;
+      }
+      label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 400px;
+        margin-bottom: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <m3e-theme strong-focus motion="expressive">
+      <m3e-tabs>
+        <m3e-tab selected for="videos"><m3e-icon slot="icon" name="videocam"></m3e-icon>Video</m3e-tab>
+        <m3e-tab for="photos"><m3e-icon slot="icon" name="photo"></m3e-icon>Photos</m3e-tab>
+        <m3e-tab for="audio"><m3e-icon slot="icon" name="music_note"></m3e-icon>Audio</m3e-tab>
+        <m3e-tab-panel id="videos">Videos</m3e-tab-panel>
+        <m3e-tab-panel id="photos">Photos</m3e-tab-panel>
+        <m3e-tab-panel id="audio">Audio</m3e-tab-panel>
+      </m3e-tabs>
+      <br />
+      <m3e-tabs stretch>
+        <m3e-tab selected for="t4"><m3e-icon slot="icon" name="face"></m3e-icon>Tab 1</m3e-tab>
+        <m3e-tab for="t5"><m3e-icon slot="icon" name="face"></m3e-icon>Tab 2</m3e-tab>
+        <m3e-tab for="t6"><m3e-icon slot="icon" name="face"></m3e-icon>Tab 3</m3e-tab>
+        <m3e-tab-panel id="t4">Tab 1</m3e-tab-panel>
+        <m3e-tab-panel id="t5">Tab 2</m3e-tab-panel>
+        <m3e-tab-panel id="t6">Tab 3</m3e-tab-panel>
+      </m3e-tabs>
+      <m3e-tabs header-position="after">
+        <m3e-tab selected for="t7"><m3e-icon slot="icon" name="face"></m3e-icon>Tab 1</m3e-tab>
+        <m3e-tab for="t8"><m3e-icon slot="icon" name="face"></m3e-icon>Tab 2</m3e-tab>
+        <m3e-tab for="t9"><m3e-icon slot="icon" name="face"></m3e-icon>Tab 3</m3e-tab>
+        <m3e-tab-panel id="t7">Tab 1</m3e-tab-panel>
+        <m3e-tab-panel id="t8">Tab 2</m3e-tab-panel>
+        <m3e-tab-panel id="t9">Tab 3</m3e-tab-panel>
+      </m3e-tabs>
+      <m3e-tabs variant="primary">
+        <m3e-tab selected for="t10"><m3e-icon slot="icon" name="face"></m3e-icon>Tab 1</m3e-tab>
+        <m3e-tab for="t11"><m3e-icon slot="icon" name="face"></m3e-icon>Tab 2</m3e-tab>
+        <m3e-tab for="t12"><m3e-icon slot="icon" name="face"></m3e-icon>Tab 3</m3e-tab>
+        <m3e-tab-panel id="t10">Tab 1</m3e-tab-panel>
+        <m3e-tab-panel id="t11">Tab 2</m3e-tab-panel>
+        <m3e-tab-panel id="t12">Tab 3</m3e-tab-panel>
+      </m3e-tabs>
+      <br />
+      <m3e-tabs variant="primary" header-position="after">
+        <m3e-tab selected for="t13"><m3e-icon slot="icon" name="face"></m3e-icon>Tab 1</m3e-tab>
+        <m3e-tab for="t14"><m3e-icon slot="icon" name="face"></m3e-icon>Tab 2</m3e-tab>
+        <m3e-tab for="t15"><m3e-icon slot="icon" name="face"></m3e-icon>Tab 3</m3e-tab>
+        <m3e-tab-panel id="t13">Tab 1</m3e-tab-panel>
+        <m3e-tab-panel id="t14">Tab 2</m3e-tab-panel>
+        <m3e-tab-panel id="t15">Tab 3</m3e-tab-panel>
+      </m3e-tabs>
+    </m3e-theme>
+  </body>
+</html>

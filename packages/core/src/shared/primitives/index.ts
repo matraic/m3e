@@ -7,4 +7,5 @@ export * from "./PseudoRadioElement";
 export * from "./RippleElement";
 export * from "./ScrollContainerElement";
 export * from "./ScrollDividers";
+export * from "./SlideElement";
 export * from "./StateLayerElement";

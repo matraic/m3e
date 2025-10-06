@@ -28,6 +28,7 @@
     "packages/slider",
     "packages/snackbar",
     "packages/switch",
+    "packages/tabs",
     "packages/theme",
     "packages/toc",
     "packages/toolbar",

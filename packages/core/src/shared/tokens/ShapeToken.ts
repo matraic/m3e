@@ -113,6 +113,11 @@ export const ShapeToken = {
       `${CornerValue.extraSmall} ${CornerValue.none} ${CornerValue.none} ${CornerValue.extraSmall}`
     ),
 
+    /** Extra small rounded asymmetric shape directed towards the bottom. */
+    extraSmallBottom: unsafeCSS(
+      `${CornerValue.none} ${CornerValue.none} ${CornerValue.extraSmall} ${CornerValue.extraSmall}`
+    ),
+
     /** No rounding. */
     none: unsafeCSS(`var(--md-sys-shape-corner-none, ${CornerValue.none})`),
 
