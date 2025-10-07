@@ -2,7 +2,6 @@ import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { AttachInternalsMixin, isAttachInternalsMixin } from "./AttachInternals";
 import { Constructor } from "./Constructor";
 import { isDisabledInteractiveMixin } from "./DisabledInteractive";
 import { isDisabledMixin } from "./Disabled";
@@ -15,7 +14,7 @@ export const renderPseudoLink = Symbol("renderPseudoLink");
 export type LinkTarget = "_self" | "_blank" | "_parent" | "_top" | (string & {});
 
 /** Defines functionality for an interactive element that functions as a link. */
-export interface LinkButtonMixin extends AttachInternalsMixin {
+export interface LinkButtonMixin {
   /** The URL to which the link button points. */
   href: string;
 
@@ -41,7 +40,7 @@ export interface LinkButtonMixin extends AttachInternalsMixin {
  * @returns {value is LinkButtonMixin} Whether `value` is a `LinkButtonMixin`.
  */
 export function isLinkButtonMixin(value: unknown): value is LinkButtonMixin {
-  return hasKeys<LinkButtonMixin>(value, "download", "href", "rel", "target") && isAttachInternalsMixin(value);
+  return hasKeys<LinkButtonMixin>(value, "download", "href", "rel", "target");
 }
 
 const _clickHandler = Symbol("_clickHandler");
@@ -52,9 +51,7 @@ const _clickHandler = Symbol("_clickHandler");
  * @param {T} base The base class.
  * @returns {Constructor<LinkButtonMixin>} A constructor that implements `LinkButtonMixin`.
  */
-export function LinkButton<T extends Constructor<LitElement & AttachInternalsMixin>>(
-  base: T
-): Constructor<LinkButtonMixin> & T {
+export function LinkButton<T extends Constructor<LitElement>>(base: T): Constructor<LinkButtonMixin> & T {
   abstract class _LinkButtonMixin extends base implements LinkButtonMixin {
     private [_clickHandler] = async (e: Event) => {
       if (isDisabledInteractiveMixin(this) && this.disabledInteractive) {
