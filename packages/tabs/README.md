@@ -146,6 +146,7 @@ This section details the attributes, slots and CSS custom properties available f
 | `--m3e-tab-unselected-container-focus-color` | Focus state-layer color for unselected tab. |
 | `--m3e-tab-unselected-ripple-color`          | Ripple color for unselected tab.            |
 | `--m3e-tab-disabled-color`                   | Text color for disabled tab.                |
+| `--m3e-tab-disabled-opacity`                 | Text opacity for disabled tab.              |
 | `--m3e-tab-spacing`                          | Column gap between icon and label.          |
 | `--m3e-tab-icon-size`                        | Font size for slotted icon.                 |
 

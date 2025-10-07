@@ -2,6 +2,7 @@ import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { customElement, query } from "lit/decorators.js";
 
 import {
+  AttachInternals,
   DesignToken,
   Disabled,
   Focusable,
@@ -65,11 +66,14 @@ import { addAriaReferencedId, removeAriaReferencedId, selectionManager } from "@
  * @cssprop --m3e-tab-unselected-container-focus-color - Focus state-layer color for unselected tab.
  * @cssprop --m3e-tab-unselected-ripple-color - Ripple color for unselected tab.
  * @cssprop --m3e-tab-disabled-color - Text color for disabled tab.
+ * @cssprop --m3e-tab-disabled-opacity - Text opacity for disabled tab.
  * @cssprop --m3e-tab-spacing - Column gap between icon and label.
  * @cssprop --m3e-tab-icon-size - Font size for slotted icon.
  */
 @customElement("m3e-tab")
-export class M3eTabElement extends Selected(HtmlFor(KeyboardClick(Focusable(Disabled(Role(LitElement, "tab")))))) {
+export class M3eTabElement extends Selected(
+  HtmlFor(KeyboardClick(Focusable(Disabled(AttachInternals(Role(LitElement, "tab"), true)))))
+) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -124,7 +128,11 @@ export class M3eTabElement extends Selected(HtmlFor(KeyboardClick(Focusable(Disa
       --m3e-ripple-color: var(--m3e-tab-unselected-ripple-color, ${DesignToken.color.onSurface});
     }
     :host(:disabled) .base {
-      color: var(--m3e-tab-disabled-color, ${DesignToken.color.onSurface});
+      color: color-mix(
+        in srgb,
+        var(--m3e-tab-disabled-color, ${DesignToken.color.onSurface}) var(--m3e-tab-disabled-opacity, 38%),
+        transparent
+      );
     }
     .wrapper {
       display: inline-flex;
@@ -209,7 +217,13 @@ export class M3eTabElement extends Selected(HtmlFor(KeyboardClick(Focusable(Disa
 
   /** @private */
   #handleClick(e: Event): void {
+    if (this.disabled) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }
+
     if (e.defaultPrevented || this.selected) return;
+
     this.selected = true;
     if (this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
       this.closest("m3e-tabs")?.[selectionManager].notifySelectionChange(this);
