@@ -15,6 +15,7 @@ import {
   DesignToken,
   FocusController,
   getTextContent,
+  hasAssignedNodes,
   HoverController,
   isReadOnlyMixin,
   MutationController,
@@ -740,13 +741,13 @@ export class M3eFormFieldElement extends AttachInternals(Role(LitElement, "none"
 
   /** @private */
   #handlePrefixSlotChange(e: Event): void {
-    this.classList.toggle("-with-prefix", (<HTMLSlotElement>e.target).assignedNodes({ flatten: true }).length > 0);
+    this.classList.toggle("-with-prefix", hasAssignedNodes(<HTMLSlotElement>e.target));
     this.#resizeController.observe(this._prefix);
   }
 
   /** @private */
   #handleSuffixSlotChange(e: Event): void {
-    this.classList.toggle("-with-suffix", (<HTMLSlotElement>e.target).assignedNodes({ flatten: true }).length > 0);
+    this.classList.toggle("-with-suffix", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */

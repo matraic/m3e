@@ -5,6 +5,7 @@ import {
   AttachInternals,
   debounce,
   DesignToken,
+  hasAssignedNodes,
   HtmlFor,
   IntersectionController,
   MutationController,
@@ -323,12 +324,12 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
 
   /** @private */
   #handleOverlineSlotChange(e: Event): void {
-    this.classList.toggle("-with-overline", (<HTMLSlotElement>e.target).assignedNodes({ flatten: true }).length > 0);
+    this.classList.toggle("-with-overline", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
   #handleTitleSlotChange(e: Event): void {
-    this.classList.toggle("-with-title", (<HTMLSlotElement>e.target).assignedNodes({ flatten: true }).length > 0);
+    this.classList.toggle("-with-title", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
