@@ -17,6 +17,7 @@
     "packages/icon-button",
     "packages/list",
     "packages/loading-indicator",
+    "packages/menu",
     "packages/nav-bar",
     "packages/nav-menu",
     "packages/nav-rail",
