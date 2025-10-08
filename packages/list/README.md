@@ -43,7 +43,7 @@ In addition, you must use an [import map](https://developer.mozilla.org/en-US/do
 
 The following example illustrates a list with a single item using all supported slots.
 
-> Note: This example uses the `@mwc/icon` package to present Material Design symbols, but any icon package can be substituted depending on your design system or preferences
+> Note: This example uses the `@m3e/icon` package to present Material Design symbols, but any icon package can be substituted depending on your design system or preferences
 
 ```html
 <m3e-list>

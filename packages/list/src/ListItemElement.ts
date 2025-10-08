@@ -16,7 +16,7 @@ import { DesignToken, Role } from "@m3e/core";
  * @example
  * The following example illustrates a list with a single item using all supported slots.
  *
- * Note: This example uses the `@mwc/icon` package to present Material Design symbols, but any icon package can be
+ * Note: This example uses the `@m3e/icon` package to present Material Design symbols, but any icon package can be
  * substituted depending on your design system or preferences
  *
  * ```html
