@@ -26,7 +26,7 @@ You also need a module script for `@m3e/button` and `@m3e/icon-button` due to be
 <script type="module" src="/node_modules/@m3e/icon-button/dist/index.js"></script>
 ```
 
-In addition, you must use an [import map](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap) to include dependencies.
+In addition, you must use an [import map](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap) to include additional dependencies.
 
 ```html
 <script type="importmap">
