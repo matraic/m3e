@@ -62,7 +62,7 @@ import type { M3eFabMenuElement } from "./FabMenuElement";
  */
 @customElement("m3e-fab-menu-item")
 export class M3eFabMenuItemElement extends KeyboardClick(
-  LinkButton(Disabled(AttachInternals(Role(LitElement, "menuitem"))))
+  LinkButton(Disabled(AttachInternals(Role(LitElement, "menuitem"), true)))
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -98,6 +98,23 @@ export class M3eFabMenuItemElement extends KeyboardClick(
       --m3e-state-layer-hover-color: var(--_fab-menu-background-hover-color);
       --m3e-state-layer-focus-color: var(--_fab-menu-background-focus-color);
       --m3e-ripple-color: var(--_fab-menu-ripple-color);
+    }
+    :host(:disabled) .base {
+      background-color: color-mix(
+        in srgb,
+        var(--m3e-fab-menu-item-disabled-container-color, ${DesignToken.color.onSurface})
+          var(--m3e-fab-menu-item-disabled-container-opacity, 10%),
+        transparent
+      );
+    }
+    :host(:disabled) .label,
+    :host(:disabled) .icon {
+      color: color-mix(
+        in srgb,
+        var(--m3e-fab-menu-item-disabled-color, ${DesignToken.color.onSurface})
+          var(--m3e-fab-menu-item-disabled-opacity, 38%),
+        transparent
+      );
     }
     .touch {
       position: absolute;
