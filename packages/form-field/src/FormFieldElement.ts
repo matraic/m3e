@@ -497,6 +497,20 @@ export class M3eFormFieldElement extends AttachInternals(Role(LitElement, "none"
     :host(.-no-animate) *::after {
       transition: none !important;
     }
+    @media (forced-colors: active) {
+      :host([variant="filled"]) .base::after {
+        transition: none;
+      }
+      :host {
+        --_form-field-outline-color: CanvasText;
+      }
+      :host(.-disabled) {
+        --_form-field-input-color: GrayText;
+        --_form-field-color: GrayText;
+        --_form-field-label-color: GrayText;
+        --_form-field-outline-color: GrayText;
+      }
+    }
     @media (prefers-reduced-motion) {
       .base::before,
       .prefix-text,

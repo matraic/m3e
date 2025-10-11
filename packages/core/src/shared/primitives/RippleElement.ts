@@ -115,6 +115,11 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
         transition-duration: 10ms;
       }
     }
+    @media (forced-colors: active) {
+      .ripple {
+        display: none;
+      }
+    }
   `;
 
   /** @private */ #ripple: HTMLElement | null = null;

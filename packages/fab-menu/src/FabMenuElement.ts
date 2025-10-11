@@ -151,6 +151,13 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
         transition: none;
       }
     }
+    @media (forced-colors: active) {
+      :host {
+        border-radius: ${DesignToken.shape.corner.medium};
+        border: 1px solid MenuText;
+        background-color: Menu;
+      }
+    }
   `;
 
   /** @private */ #fabTabIndex?: number;

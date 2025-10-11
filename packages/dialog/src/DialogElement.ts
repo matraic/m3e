@@ -200,6 +200,17 @@ export class M3eDialogElement extends EventAttribute(
       width: 1em;
       font-size: var(--m3e-icon-button-icon-size, 1.5rem) !important;
     }
+    @media (forced-colors: active) {
+      .base:not([open])::backdrop,
+      .base[open]::backdrop {
+        transition: none;
+      }
+      .base {
+        border-style: solid;
+        border-width: 1px;
+        border-color: CanvasText;
+      }
+    }
     @media (prefers-reduced-motion) {
       .base:not([open]),
       .base[open],

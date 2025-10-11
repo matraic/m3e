@@ -279,7 +279,7 @@ export class M3eIconButtonElement extends KeyboardClick(
   LinkButton(FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))))
 ) {
   /** The styles of the element. */
-  static override styles: CSSResultGroup = [IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle];
+  static override styles: CSSResultGroup = [IconButtonSizeStyle, IconButtonVariantStyle, IconButtonStyle];
 
   /** @private */ @query(".base") private readonly _base?: HTMLElement;
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;

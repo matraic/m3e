@@ -398,7 +398,7 @@ export class M3eButtonElement extends KeyboardClick(
   LinkButton(FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))))
 ) {
   /** The styles of the element. */
-  static override styles: CSSResultGroup = [ButtonStyle, ButtonSizeStyle, ButtonVariantStyle];
+  static override styles: CSSResultGroup = [ButtonSizeStyle, ButtonVariantStyle, ButtonStyle];
 
   /** @private */ @query(".base") private readonly _base?: HTMLElement;
   /** @private */ @query(".elevation") private readonly _elevation?: M3eElevationElement;

@@ -146,7 +146,7 @@ export class M3eCardElement extends KeyboardClick(
   LinkButton(FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "none"), true))))))
 ) {
   /** The styles of the element. */
-  static override styles: CSSResultGroup = [CardStyle, CardVariantStyle];
+  static override styles: CSSResultGroup = [CardVariantStyle, CardStyle];
 
   /** @private */ @query(".base") private readonly _base?: HTMLElement;
   /** @private */ @query(".elevation") private readonly _elevation?: M3eElevationElement;

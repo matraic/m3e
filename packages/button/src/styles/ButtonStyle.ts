@@ -85,6 +85,72 @@ export const ButtonStyle: CSSResultGroup = css`
     bottom: 0px;
     z-index: 1;
   }
+  @media (forced-colors: active) {
+    .base,
+    .label,
+    .icon {
+      transition: none;
+    }
+    .base.resting,
+    .base.pressed {
+      transition: ${unsafeCSS(`border-radius ${DesignToken.motion.spring.fastEffects}`)};
+    }
+    :host([variant]:not(:disabled):not([disabled-interactive]):not([toggle])) .base {
+      background-color: ButtonFace;
+      outline-color: ButtonText;
+    }
+    :host([variant]:not(:disabled):not([disabled-interactive]):not([toggle])) .label,
+    :host([variant]:not(:disabled):not([disabled-interactive]):not([toggle])) .icon {
+      color: ButtonText;
+    }
+    :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .base {
+      background-color: ButtonFace;
+      outline-color: ButtonText;
+    }
+    :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .label,
+    :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .icon {
+      color: ButtonText;
+    }
+    :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]) .base {
+      background-color: Highlight;
+      outline-color: HighlightText;
+    }
+    :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]) .label,
+    :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]) .icon {
+      forced-color-adjust: none;
+      color: HighlightText;
+      background-color: Highlight;
+    }
+    :host([variant]:disabled) .base,
+    :host([variant][disabled-interactive]) .base {
+      outline-color: GrayText;
+      background-color: unset;
+    }
+    :host([variant]:disabled) .label,
+    :host([variant][disabled-interactive]) .label,
+    :host([variant]:disabled) .icon,
+    :host([variant][disabled-interactive]) .icon {
+      color: GrayText;
+    }
+    .base {
+      outline-style: solid;
+    }
+    :host([size="extra-small"]) .base {
+      outline-width: var(--m3e-button-extra-small-outline-thickness, 1px);
+    }
+    :host([size="small"]) .base {
+      outline-width: var(--m3e-button-small-outline-thickness, 1px);
+    }
+    :host([size="medium"]) .base {
+      outline-width: var(--m3e-button-medium-outline-thickness, 1px);
+    }
+    :host([size="large"]) .base {
+      outline-width: var(--m3e-button-large-outline-thickness, 0.125rem);
+    }
+    :host([size="extra-large"]) .base {
+      outline-width: var(--m3e-button-extra-large-outline-thickness, 0.1875rem);
+    }
+  }
   @media (prefers-reduced-motion) {
     .base,
     .base.resting,

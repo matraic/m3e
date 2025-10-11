@@ -67,6 +67,16 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
     .layer.hover {
       background-color: color-mix(in srgb, ${StateLayerToken.hoverColor} ${StateLayerToken.hoverOpacity}, transparent);
     }
+    @media (prefers-reduced-motion) {
+      .layer {
+        transition: none;
+      }
+    }
+    @media (forced-colors: active) {
+      .layer {
+        display: none;
+      }
+    }
   `;
 
   /** @private */

@@ -62,4 +62,12 @@ export const ExpansionPanelStyle = css`
       transition: none;
     }
   }
+  @media (forced-colors: active) {
+    :host {
+      border: 1px solid CanvasText;
+    }
+    ::slotted([slot="actions"]) {
+      border-top-color: GrayText;
+    }
+  }
 `;

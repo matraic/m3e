@@ -333,7 +333,7 @@ export class M3eFabElement extends KeyboardClick(
   LinkButton(FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))))
 ) {
   /** The styles of the element. */
-  static override styles: CSSResultGroup = [FabStyle, FabSizeStyle, FabVariantStyle];
+  static override styles: CSSResultGroup = [FabSizeStyle, FabVariantStyle, FabStyle];
 
   /** @private */ @query(".base") private readonly _base?: HTMLElement;
   /** @private */ @query(".elevation") private readonly _elevation?: M3eElevationElement;

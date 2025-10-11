@@ -3,6 +3,7 @@ import { css, CSSResult, unsafeCSS } from "lit";
 import { DesignToken } from "@m3e/core";
 
 import { CardToken } from "./CardToken";
+import { CardVariantToken } from "./CardVariantToken";
 
 /**
  * Baseline styles for `M3eCardElement`.
@@ -138,6 +139,21 @@ export const CardStyle: CSSResult = css`
     right: 0px;
     bottom: 0px;
     z-index: 1;
+  }
+  @media (forced-colors: active) {
+    .base {
+      transition: none;
+    }
+    :host([variant]) .base {
+      border-style: solid;
+      border-color: CanvasText;
+      border-width: ${CardVariantToken.outlined.outlineThickness ?? unsafeCSS("unset")};
+    }
+    :host([actionable][variant]:disabled) .base,
+    :host([actionable][variant][disabled-interactive]) .base {
+      color: GrayText;
+      border-color: GrayText;
+    }
   }
   @media (prefers-reduced-motion) {
     .base {

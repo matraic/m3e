@@ -133,6 +133,11 @@ export class M3eElevationElement extends HtmlFor(Role(LitElement, "none")) {
         transition: none;
       }
     }
+    @media (forced-colors: active) {
+      .shadow {
+        display: none;
+      }
+    }
   `;
 
   /** @private */

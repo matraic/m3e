@@ -79,6 +79,12 @@ function cardVariantStyle(variant: CardVariant): CSSResult {
       )`)
         : unsafeCSS("unset")};
     }
+    :host([actionable][variant="${unsafeCSS(variant)}"]:disabled) ::slotted(img),
+    :host([actionable][variant="${unsafeCSS(variant)}"][disabled-interactive]) ::slotted(img),
+    :host([actionable][variant="${unsafeCSS(variant)}"]:disabled) ::slotted(video),
+    :host([actionable][variant="${unsafeCSS(variant)}"][disabled-interactive]) ::slotted(video) {
+      opacity: ${CardVariantToken[variant].disabled.imageOpacity};
+    }
   `;
 }
 

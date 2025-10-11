@@ -102,6 +102,11 @@ export class M3eFocusRingElement extends HtmlFor(Role(LitElement, "none")) {
         animation: none;
       }
     }
+    @media (forced-colors: active) {
+      .outline {
+        outline-color: Highlight;
+      }
+    }
   `;
 
   /** @private */

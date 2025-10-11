@@ -202,10 +202,6 @@ export class M3eChipElement extends Role(LitElement, "none") {
       .base {
         transition: none;
       }
-      .state-layer,
-      .ripple {
-        display: none;
-      }
       :host(:not(:disabled):not([disabled-interactive]):not([selected])) .base,
       :host(:not(:disabled):not([disabled-interactive]):not([selected])) ::slotted([slot="icon"]),
       :host(:not(:disabled):not([disabled-interactive]):not([selected])) ::slotted([slot="trailing-icon"]) {

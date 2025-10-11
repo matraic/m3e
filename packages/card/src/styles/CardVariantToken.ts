@@ -14,6 +14,7 @@ type _CardVariantToken = {
   disabled: {
     textColor: CSSResult;
     textOpacity: CSSResult;
+    imageOpacity: CSSResult;
     containerColor?: CSSResult;
     containerOpacity?: CSSResult;
     containerElevation: CSSResult;
@@ -57,6 +58,7 @@ export const CardVariantToken: Record<CardVariant, _CardVariantToken> = {
     disabled: {
       textColor: unsafeCSS(`var(--m3e-filled-card-disabled-text-color, ${DesignToken.color.onSurface})`),
       textOpacity: unsafeCSS(`var(--m3e-filled-card-disabled-text-opacity, 38%)`),
+      imageOpacity: unsafeCSS(`var(--m3e-filled-card-disabled-image-opacity, 38%)`),
       containerColor: unsafeCSS(`var(--m3e-filled-card-disabled-container-color, ${DesignToken.color.surfaceVariant})`),
       containerElevation: unsafeCSS(
         `var(--m3e-filled-card-disabled-container-elevation, ${DesignToken.elevation.level0})`
@@ -105,6 +107,7 @@ export const CardVariantToken: Record<CardVariant, _CardVariantToken> = {
     disabled: {
       textColor: unsafeCSS(`var(--m3e-elevated-card-disabled-text-color, ${DesignToken.color.onSurface})`),
       textOpacity: unsafeCSS(`var(--m3e-elevated-card-disabled-text-opacity, 38%)`),
+      imageOpacity: unsafeCSS(`var(--m3e-elevated-card-disabled-image-opacity, 38%)`),
       containerColor: unsafeCSS(`var(--m3e-elevated-card-disabled-container-color, ${DesignToken.color.surface})`),
       containerElevation: unsafeCSS(
         `var(--m3e-elevated-card-disabled-container-elevation, ${DesignToken.elevation.level1})`
@@ -154,6 +157,7 @@ export const CardVariantToken: Record<CardVariant, _CardVariantToken> = {
     disabled: {
       textColor: unsafeCSS(`var(--m3e-outlined-card-disabled-text-color, ${DesignToken.color.onSurface})`),
       textOpacity: unsafeCSS(`var(--m3e-outlined-card-disabled-text-opacity, 38%)`),
+      imageOpacity: unsafeCSS(`var(--m3e-outlined-card-disabled-image-opacity, 38%)`),
       containerElevation: unsafeCSS(
         `var(--m3e-outlined-card-disabled-container-elevation, ${DesignToken.elevation.level0})`
       ),

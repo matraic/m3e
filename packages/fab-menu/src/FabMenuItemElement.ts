@@ -172,6 +172,24 @@ export class M3eFabMenuItemElement extends KeyboardClick(
         transition: none;
       }
     }
+    @media (forced-colors: active) {
+      .base,
+      .label,
+      .icon {
+        transition: none;
+      }
+      :host(:not(:disabled)) .base {
+        background-color: Menu;
+      }
+      :host(:not(:disabled)) .label,
+      :host(:not(:disabled)) .icon {
+        color: MenuText;
+      }
+      :host(:disabled) .label,
+      :host(:disabled) .icon {
+        color: GrayText;
+      }
+    }
   `;
 
   /** @private */ @query(".elevation") private readonly _elevation?: M3eElevationElement;

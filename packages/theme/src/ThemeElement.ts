@@ -71,6 +71,7 @@ export class M3eThemeElement extends Role(LitElement, "none") {
   /** @private */ #firstUpdated = false;
   /** @private */ #light?: MediaQueryList;
   /** @private */ #dark?: MediaQueryList;
+  /** @private */ #forcedColor?: MediaQueryList;
 
   /** @private */ readonly #colorSchemeChangeHandler = () => this.#apply();
 
@@ -136,17 +137,21 @@ export class M3eThemeElement extends Role(LitElement, "none") {
 
     this.#light = matchMedia("(prefers-color-scheme: light)");
     this.#dark = matchMedia("(prefers-color-scheme: dark)");
-    this.#light.addEventListener("change", this.#colorSchemeChangeHandler);
-    this.#dark.addEventListener("change", this.#colorSchemeChangeHandler);
+    this.#forcedColor = matchMedia("(forced-colors: active)");
+
+    [this.#light, this.#dark, this.#forcedColor].forEach((x) =>
+      x.addEventListener("change", this.#colorSchemeChangeHandler)
+    );
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    this.#light?.removeEventListener("change", this.#colorSchemeChangeHandler);
-    this.#dark?.removeEventListener("change", this.#colorSchemeChangeHandler);
-    this.#light = this.#dark = undefined;
+    [this.#light, this.#dark, this.#forcedColor].forEach((x) =>
+      x?.removeEventListener("change", this.#colorSchemeChangeHandler)
+    );
+    this.#light = this.#dark = this.#forcedColor = undefined;
   }
 
   /** @inheritdoc */
@@ -213,13 +218,21 @@ export class M3eThemeElement extends Role(LitElement, "none") {
     if (this.parentElement instanceof HTMLBodyElement) {
       const computedStyle = getComputedStyle(this);
 
-      this.parentElement.style.backgroundColor = computedStyle.getPropertyValue("--md-sys-color-background");
-      this.parentElement.style.color = computedStyle.getPropertyValue("--md-sys-color-on-background");
+      if (this.#forcedColor?.matches) {
+        this.parentElement.style.backgroundColor =
+          this.parentElement.style.color =
+          this.parentElement.ownerDocument.documentElement.style.scrollbarColor =
+          this.parentElement.style.scrollbarColor =
+            "";
+      } else {
+        this.parentElement.style.backgroundColor = computedStyle.getPropertyValue("--md-sys-color-background");
+        this.parentElement.style.color = computedStyle.getPropertyValue("--md-sys-color-on-background");
 
-      this.parentElement.ownerDocument.documentElement.style.scrollbarColor =
-        this.parentElement.style.scrollbarColor = `${computedStyle.getPropertyValue(
-          "--m3e-scrollbar-thumb-color"
-        )} ${computedStyle.getPropertyValue("--m3e-scrollbar-track-color")}`;
+        this.parentElement.ownerDocument.documentElement.style.scrollbarColor =
+          this.parentElement.style.scrollbarColor = `${computedStyle.getPropertyValue(
+            "--m3e-scrollbar-thumb-color"
+          )} ${computedStyle.getPropertyValue("--m3e-scrollbar-track-color")}`;
+      }
     }
 
     if (this.#firstUpdated) {

@@ -59,7 +59,7 @@
         </m3e-icon-button>
         <span slot="title">App title</span>
       </m3e-app-bar>
-      <m3e-drawer-container start start-mode="auto">
+      <m3e-drawer-container start end start-mode="auto" end-mode="auto" end-divider>
         <m3e-nav-menu id="startDrawer" slot="start">
           <m3e-nav-menu-item open>
             <m3e-icon slot="icon" name="rocket_launch"></m3e-icon>
@@ -80,6 +80,8 @@
             <m3e-nav-menu-item><span slot="label">Icon Button</span></m3e-nav-menu-item>
           </m3e-nav-menu-item>
         </m3e-nav-menu>
+        <aside slot="end">Right-side content</aside>
+        <div>Main content</div>
       </m3e-drawer-container>
     </m3e-theme>
   </body>

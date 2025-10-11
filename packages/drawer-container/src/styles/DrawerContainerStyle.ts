@@ -131,6 +131,43 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   :host([end-divider].-end-side[end]:not(.-start-push[start]):not(.-start-over[start])) ::slotted([slot="end"]) {
     border-inline-start-color: ${DrawerContainerToken.dividerColor};
   }
+  @media (forced-colors: active) {
+    ::slotted([slot="start"]),
+    ::slotted([slot="end"]) {
+      background-color: Canvas;
+      box-shadow: unset;
+      transition: ${unsafeCSS(
+        `margin ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard},
+      visibility ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard} allow-discrete`
+      )};
+    }
+    :host(.-start-push) ::slotted([slot="start"]),
+    :host(.-end-push) ::slotted([slot="end"]),
+    :host(.-start-over) ::slotted([slot="start"]),
+    :host(.-end-over) ::slotted([slot="end"]) {
+      background-color: Canvas;
+      box-shadow: unset;
+      border-color: CanvasText;
+    }
+    ::slotted([slot="start"]),
+    ::slotted([slot="end"]) {
+      border-style: solid;
+      border-color: Canvas;
+      border-width: 1px;
+    }
+    ::slotted([slot="start"]) {
+      border-inline-start-style: none;
+    }
+    ::slotted([slot="end"]) {
+      border-inline-end-style: none;
+    }
+    :host([start-divider].-start-side[start]:not(.-end-push[end]):not(.-end-over[end])) ::slotted([slot="start"]) {
+      border-inline-end-color: GrayText;
+    }
+    :host([end-divider].-end-side[end]:not(.-start-push[start]):not(.-start-over[start])) ::slotted([slot="end"]) {
+      border-inline-start-color: GrayText;
+    }
+  }
   @media (prefers-reduced-motion) {
     ::slotted([slot="start"]),
     ::slotted([slot="end"]),

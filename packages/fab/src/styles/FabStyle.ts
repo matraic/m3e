@@ -30,11 +30,6 @@ export const FabStyle: CSSResultGroup = css`
     left: 0;
     right: 0;
   }
-  .base.resting,
-  .base.pressed {
-    transition: ${unsafeCSS(`background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard},
-          border-radius ${DesignToken.motion.spring.fastEffects}`)};
-  }
   .wrapper {
     width: 100%;
     overflow: hidden;
@@ -107,6 +102,43 @@ export const FabStyle: CSSResultGroup = css`
     right: 0px;
     bottom: 0px;
     z-index: 1;
+  }
+  @media (forced-colors: active) {
+    .base,
+    .icon {
+      transition: none;
+    }
+    .base {
+      outline-style: solid;
+    }
+    :host([variant]:not(:disabled):not([disabled-interactive])) .base {
+      background-color: ButtonFace;
+      outline-color: ButtonText;
+    }
+    :host([variant]:not(:disabled):not([disabled-interactive])) .label,
+    :host([variant]:not(:disabled):not([disabled-interactive])) .icon {
+      color: ButtonText;
+    }
+    :host([variant]:disabled) .base,
+    :host([variant][disabled-interactive]) .base {
+      outline-color: GrayText;
+      background-color: unset;
+    }
+    :host([variant]:disabled) .label,
+    :host([variant][disabled-interactive]) .label,
+    :host([variant]:disabled) .icon,
+    :host([variant][disabled-interactive]) .icon {
+      color: GrayText;
+    }
+    :host([size="small"]) .base {
+      outline-width: var(--m3e-button-small-outline-thickness, 1px);
+    }
+    :host([size="medium"]) .base {
+      outline-width: var(--m3e-button-medium-outline-thickness, 1px);
+    }
+    :host([size="large"]) .base {
+      outline-width: var(--m3e-button-large-outline-thickness, 0.125rem);
+    }
   }
   @media (prefers-reduced-motion) {
     .base,

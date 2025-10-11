@@ -75,6 +75,23 @@ export class M3eScrollContainerElement extends Role(LitElement, "none") {
         outline-width: calc(var(--m3e-focus-ring-thickness, 0.25rem) * var(--m3e-focus-ring-factor, 2));
       }
     }
+    @media (forced-colors: active) {
+      :host {
+        border-top: var(--m3e-divider-thickness, 1px) solid Canvas;
+        border-bottom: var(--m3e-divider-thickness, 1px) solid Canvas;
+      }
+      :host(:not(:focus-visible).-above) {
+        border-top-color: GrayText;
+      }
+      :host(:not(:focus-visible).-below) {
+        border-bottom-color: GrayText;
+      }
+    }
+    @media (prefers-reduced-motion) {
+      :host(:focus-visible) {
+        animation: none;
+      }
+    }
   `;
 
   /** @private */ readonly #scrollHandler = () => this._updateScroll();

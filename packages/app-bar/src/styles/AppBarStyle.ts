@@ -98,8 +98,24 @@ export const AppBarStyle: CSSResult = css`
     text-align: center;
   }
   @media (prefers-reduced-motion) {
-    :host {
+    .base {
       transition: none;
+    }
+  }
+  @media (forced-colors: active) {
+    .base {
+      transition: none;
+    }
+    .base:not(.-on-scroll),
+    .base.-on-scroll {
+      background-color: Canvas;
+      box-shadow: unset;
+    }
+    .title {
+      color: CanvasText;
+    }
+    .subtitle {
+      color: FieldText;
     }
   }
 `;

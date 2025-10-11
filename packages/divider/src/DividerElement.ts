@@ -91,6 +91,11 @@ export class M3eDividerElement extends Role(LitElement, "none") {
     :host(:not([vertical]):not([inset]):not([inset-end]))::before {
       right: 0;
     }
+    @media (forced-colors: active) {
+      :host::before {
+        border-color: GrayText;
+      }
+    }
   `;
 
   /**
