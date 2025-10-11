@@ -15,6 +15,7 @@
     "packages/form-field",
     "packages/icon",
     "packages/icon-button",
+    "packages/chips",
     "packages/list",
     "packages/loading-indicator",
     "packages/menu",

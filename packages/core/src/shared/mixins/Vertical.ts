@@ -7,7 +7,7 @@ import { hasKeys } from "./hasKeys";
 /** Defines functionality for an element which supports a vertical orientation. */
 export interface VerticalMixin {
   /**
-   * A value indicating whether the element is oriented vertically.
+   * Whether the element is oriented vertically.
    * @default false
    */
   vertical: boolean;

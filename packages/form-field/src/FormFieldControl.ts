@@ -43,6 +43,8 @@ export interface FormFieldControl extends HTMLElement {
   checkValidity?: () => boolean;
 }
 
+const KNOWN_FORM_FIELD_TAGS = ["m3e-input-chip-set", "m3e-select"];
+
 /**
  * Determines whether a value is a `FormFieldControl`.
  * @param {unknown} value The value to test.
@@ -50,10 +52,11 @@ export interface FormFieldControl extends HTMLElement {
  */
 export function isFormFieldControl(value: unknown): value is FormFieldControl {
   return (
-    value instanceof HTMLInputElement ||
-    value instanceof HTMLTextAreaElement ||
-    value instanceof HTMLSelectElement ||
-    (value instanceof HTMLElement && "disabled" in value)
+    value instanceof HTMLElement &&
+    (value instanceof HTMLInputElement ||
+      value instanceof HTMLTextAreaElement ||
+      value instanceof HTMLSelectElement ||
+      KNOWN_FORM_FIELD_TAGS.includes(value.tagName.toLowerCase()))
   );
 }
 

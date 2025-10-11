@@ -249,7 +249,8 @@ export class M3eFormFieldElement extends AttachInternals(Role(LitElement, "none"
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
     }
-    ::slotted(m3e-select) {
+    ::slotted(m3e-select),
+    ::slotted(m3e-input-chip-set) {
       flex: 1 1 auto;
       min-width: 0;
     }

@@ -7,12 +7,12 @@ import { hasKeys } from "./hasKeys";
 /** Defines functionality for an element which supports a required state. */
 export interface RequiredMixin {
   /**
-   * A value indicating whether the element is required.
+   * Whether a value is required for the element.
    * @default false
    */
   required: boolean;
 
-  /** A value indicating whether the element is not required. */
+  /** Whether a value is not required for the element. */
   readonly optional: boolean;
 }
 
