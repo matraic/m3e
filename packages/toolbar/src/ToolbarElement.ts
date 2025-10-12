@@ -70,6 +70,7 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
       display: flex;
       align-items: center;
       box-sizing: border-box;
+      border-radius: inherit;
     }
     :host(:not([vertical])) {
       height: fit-content;
@@ -103,11 +104,24 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
     }
     :host([variant="standard"]) .state-layer {
       background-color: var(--m3e-toolbar-standard-container-color, ${DesignToken.color.surfaceContainer});
+    }
+    :host([variant="standard"]) .base {
       color: var(--m3e-toolbar-standard-color, ${DesignToken.color.onSurface});
     }
     :host([variant="vibrant"]) .state-layer {
       background-color: var(--m3e-toolbar-vibrant-container-color, ${DesignToken.color.primaryContainer});
+    }
+    :host([variant="vibrant"]) .base {
       color: var(--m3e-toolbar-vibrant-color, ${DesignToken.color.onPrimaryContainer});
+    }
+    @media (forced-colors: active) {
+      :host([variant]) .state-layer {
+        background-color: Canvas;
+      }
+      :host([variant]) .base {
+        color: CanvasText;
+        outline: 1px solid CanvasText;
+      }
     }
   `;
 
