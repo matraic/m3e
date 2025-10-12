@@ -91,7 +91,7 @@ import { NavItemOrientation } from "./NavItemOrientation";
  */
 @customElement("m3e-nav-item")
 export class M3eNavItemElement extends LinkButton(
-  Selected(KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button")))))))
+  Selected(KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))))
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = [
