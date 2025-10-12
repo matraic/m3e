@@ -94,208 +94,226 @@ export class M3eNavItemElement extends LinkButton(
   Selected(KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))))
 ) {
   /** The styles of the element. */
-  static override styles: CSSResultGroup = [
-    css`
-      :host {
-        display: inline-block;
-        vertical-align: middle;
-        position: relative;
-        outline: none;
-        user-select: none;
-        flex: 1;
-        font-size: var(--m3e-nav-item-label-text-font-size, ${DesignToken.typescale.standard.label.medium.fontSize});
-        font-weight: var(
-          --m3e-nav-item-label-text-font-weight,
-          ${DesignToken.typescale.standard.label.medium.fontWeight}
-        );
-        line-height: var(
-          --m3e-nav-item-label-text-line-height,
-          ${DesignToken.typescale.standard.label.medium.lineHeight}
-        );
-        letter-spacing: var(
-          --m3e-nav-item-label-text-tracking,
-          ${DesignToken.typescale.standard.label.medium.tracking}
-        );
-        border-radius: var(--m3e-nav-item-shape, ${DesignToken.shape.corner.full});
-        min-width: var(--_nav-item-min-width);
-        align-self: var(--_nav-item-align-self);
-      }
-      :host([orientation="horizontal"]) {
-        max-width: fit-content;
-      }
-      :host(:not(:disabled):not([disabled-interactive])) {
-        cursor: pointer;
-      }
-      :host([disabled-interactive]) {
-        cursor: not-allowed;
-      }
-      .outer {
-        height: 100%;
-      }
-      .outer,
-      .inner {
-        display: flex;
-        align-items: center;
-        justify-content: var(--_nav-item-justify-content, center);
-        position: relative;
-        border-radius: inherit;
-      }
-      .icon-wrapper {
-        position: relative;
-        flex: none;
-      }
-      .base {
-        justify-content: unset;
-        box-sizing: border-box;
-        vertical-align: middle;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        width: 100%;
-      }
-      .icon {
-        position: absolute;
-      }
-      .label {
-        vertical-align: middle;
-      }
-      ::slotted([slot="icon"]),
-      ::slotted([slot="selected-icon"]) {
-        width: 1em;
-        font-size: var(--m3e-nav-item-icon-size, 1.5rem) !important;
-      }
-      :host(:not([selected]):not(:disabled):not([disabled-interactive])) .outer {
-        --m3e-state-layer-hover-color: var(
-          --m3e-nav-item-inactive-hover-state-layer-color,
-          ${DesignToken.color.onSecondaryContainer}
-        );
-        --m3e-state-layer-focus-color: var(
-          --m3e-nav-item-inactive-focus-state-layer-color,
-          ${DesignToken.color.onSecondaryContainer}
-        );
-        --m3e-ripple-color: var(
-          --m3e-nav-item-inactive-pressed-state-layer-color,
-          ${DesignToken.color.onSecondaryContainer}
-        );
-      }
-      :host(:not([selected]):not(:disabled):not([disabled-interactive])) .label {
-        color: var(--m3e-nav-item-inactive-label-text-color, ${DesignToken.color.onSurfaceVariant});
-      }
-      :host(:not([selected]):not(:disabled):not([disabled-interactive])) .icon {
-        color: var(--m3e-nav-item-inactive-icon-color, ${DesignToken.color.onSecondaryContainer});
-      }
-      :host([selected]:not(:disabled):not([disabled-interactive])) .outer {
-        --m3e-state-layer-hover-color: var(
-          --m3e-nav-item-active-hover-state-layer-color,
-          ${DesignToken.color.onSecondaryContainer}
-        );
-        --m3e-state-layer-focus-color: var(
-          --m3e-nav-item-active-focus-state-layer-color,
-          ${DesignToken.color.onSecondaryContainer}
-        );
-        --m3e-ripple-color: var(
-          --m3e-nav-item-active-pressed-state-layer-color,
-          ${DesignToken.color.onSecondaryContainer}
-        );
-      }
-      :host([selected]:not(:disabled):not([disabled-interactive])) .label {
-        color: var(--m3e-nav-item-active-label-text-color, ${DesignToken.color.secondary});
-      }
-      :host([selected]:not(:disabled):not([disabled-interactive])) .state-layer {
-        background-color: var(--m3e-nav-item-active-container-color, ${DesignToken.color.secondaryContainer});
-      }
-      :host([selected]:not(:disabled):not([disabled-interactive])) .icon {
-        color: var(--m3e-nav-item-active-icon-color, ${DesignToken.color.onSecondaryContainer});
-      }
-      :host([orientation="vertical"]) .outer {
-        align-self: stretch;
-        align-items: flex-start;
-      }
-      :host([orientation="vertical"]) .label {
-        text-align: center;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        line-clamp: 2;
-      }
-      :host([orientation="vertical"]) .base {
-        flex-direction: column;
-        row-gap: var(--m3e-nav-item-spacing, 0.25rem);
-      }
-      :host([orientation="vertical"]) .base {
-        margin-block: var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem);
-      }
-      :host([orientation="vertical"]) .state-layer,
-      :host([orientation="vertical"]) .ripple {
-        top: var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem);
-        bottom: unset;
-      }
-      :host([orientation="vertical"]) .state-layer,
-      :host([orientation="vertical"]) .ripple,
-      :host([orientation="vertical"]) .icon-wrapper {
-        width: var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem);
-      }
-      :host([orientation="vertical"]) .state-layer,
-      :host([orientation="vertical"]) .ripple,
-      :host([orientation="vertical"]) .icon-wrapper {
-        height: var(--m3e-vertical-nav-item-active-indicator-height, 2rem);
-      }
-      :host([orientation="vertical"]) .icon {
-        top: calc(
-          calc(var(--m3e-vertical-nav-item-active-indicator-height, 2rem) / 2) -
-            calc(var(--m3e-nav-item-icon-size, 1.5rem) / 2)
-        );
-        left: calc(
-          calc(var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem) / 2) -
-            calc(var(--m3e-nav-item-icon-size, 1.5rem) / 2)
-        );
-      }
-      :host([orientation="vertical"]) .focus-ring {
-        border-radius: var(--m3e-nav-item-focus-ring-shape, ${DesignToken.shape.corner.extraSmall});
-      }
-      :host([orientation="horizontal"]) .icon-wrapper {
-        width: var(--m3e-nav-item-icon-size, 1.5rem);
-        height: var(--m3e-nav-item-icon-size, 1.5rem);
-      }
-      :host([orientation="horizontal"]) .base {
-        padding: var(--m3e-horizontal-nav-item-padding, 1rem);
-      }
-      :host([orientation="horizontal"]) .label {
-        flex: 1 1 auto;
-      }
-      :host([orientation="horizontal"]) .base {
-        column-gap: var(--m3e-nav-item-spacing, 0.25rem);
-      }
-      :host([orientation="horizontal"]) .inner {
-        height: var(--m3e-horizontal-nav-item-active-indicator-height, 2.5rem);
-        width: fit-content;
-      }
-      .state-layer,
-      .ripple {
-        margin-inline: auto;
-      }
+  static override styles: CSSResultGroup = css`
+    :host {
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+      outline: none;
+      user-select: none;
+      flex: 1;
+      font-size: var(--m3e-nav-item-label-text-font-size, ${DesignToken.typescale.standard.label.medium.fontSize});
+      font-weight: var(
+        --m3e-nav-item-label-text-font-weight,
+        ${DesignToken.typescale.standard.label.medium.fontWeight}
+      );
+      line-height: var(
+        --m3e-nav-item-label-text-line-height,
+        ${DesignToken.typescale.standard.label.medium.lineHeight}
+      );
+      letter-spacing: var(--m3e-nav-item-label-text-tracking, ${DesignToken.typescale.standard.label.medium.tracking});
+      border-radius: var(--m3e-nav-item-shape, ${DesignToken.shape.corner.full});
+      min-width: var(--_nav-item-min-width);
+      align-self: var(--_nav-item-align-self);
+    }
+    :host([orientation="horizontal"]) {
+      max-width: fit-content;
+    }
+    :host(:not(:disabled):not([disabled-interactive])) {
+      cursor: pointer;
+    }
+    :host([disabled-interactive]) {
+      cursor: not-allowed;
+    }
+    .outer {
+      height: 100%;
+    }
+    .outer,
+    .inner {
+      display: flex;
+      align-items: center;
+      justify-content: var(--_nav-item-justify-content, center);
+      position: relative;
+      border-radius: inherit;
+    }
+    .icon-wrapper {
+      position: relative;
+      flex: none;
+    }
+    .base {
+      justify-content: unset;
+      box-sizing: border-box;
+      vertical-align: middle;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+    }
+    .icon {
+      position: absolute;
+    }
+    .label {
+      vertical-align: middle;
+    }
+    ::slotted([slot="icon"]),
+    ::slotted([slot="selected-icon"]) {
+      width: 1em;
+      font-size: var(--m3e-nav-item-icon-size, 1.5rem) !important;
+    }
+    :host(:not([selected]):not(:disabled):not([disabled-interactive])) .outer {
+      --m3e-state-layer-hover-color: var(
+        --m3e-nav-item-inactive-hover-state-layer-color,
+        ${DesignToken.color.onSecondaryContainer}
+      );
+      --m3e-state-layer-focus-color: var(
+        --m3e-nav-item-inactive-focus-state-layer-color,
+        ${DesignToken.color.onSecondaryContainer}
+      );
+      --m3e-ripple-color: var(
+        --m3e-nav-item-inactive-pressed-state-layer-color,
+        ${DesignToken.color.onSecondaryContainer}
+      );
+    }
+    :host(:not([selected]):not(:disabled):not([disabled-interactive])) .label {
+      color: var(--m3e-nav-item-inactive-label-text-color, ${DesignToken.color.onSurfaceVariant});
+    }
+    :host(:not([selected]):not(:disabled):not([disabled-interactive])) .icon {
+      color: var(--m3e-nav-item-inactive-icon-color, ${DesignToken.color.onSecondaryContainer});
+    }
+    :host([selected]:not(:disabled):not([disabled-interactive])) .outer {
+      --m3e-state-layer-hover-color: var(
+        --m3e-nav-item-active-hover-state-layer-color,
+        ${DesignToken.color.onSecondaryContainer}
+      );
+      --m3e-state-layer-focus-color: var(
+        --m3e-nav-item-active-focus-state-layer-color,
+        ${DesignToken.color.onSecondaryContainer}
+      );
+      --m3e-ripple-color: var(
+        --m3e-nav-item-active-pressed-state-layer-color,
+        ${DesignToken.color.onSecondaryContainer}
+      );
+    }
+    :host([selected]:not(:disabled):not([disabled-interactive])) .label {
+      color: var(--m3e-nav-item-active-label-text-color, ${DesignToken.color.secondary});
+    }
+    :host([selected]:not(:disabled):not([disabled-interactive])) .state-layer {
+      background-color: var(--m3e-nav-item-active-container-color, ${DesignToken.color.secondaryContainer});
+    }
+    :host([selected]:not(:disabled):not([disabled-interactive])) .icon {
+      color: var(--m3e-nav-item-active-icon-color, ${DesignToken.color.onSecondaryContainer});
+    }
+    :host([orientation="vertical"]) .outer {
+      align-self: stretch;
+      align-items: flex-start;
+    }
+    :host([orientation="vertical"]) .label {
+      text-align: center;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-clamp: 2;
+    }
+    :host([orientation="vertical"]) .base {
+      flex-direction: column;
+      row-gap: var(--m3e-nav-item-spacing, 0.25rem);
+    }
+    :host([orientation="vertical"]) .base {
+      margin-block: var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem);
+    }
+    :host([orientation="vertical"]) .state-layer,
+    :host([orientation="vertical"]) .ripple {
+      top: var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem);
+      bottom: unset;
+    }
+    :host([orientation="vertical"]) .state-layer,
+    :host([orientation="vertical"]) .ripple,
+    :host([orientation="vertical"]) .icon-wrapper {
+      width: var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem);
+    }
+    :host([orientation="vertical"]) .state-layer,
+    :host([orientation="vertical"]) .ripple,
+    :host([orientation="vertical"]) .icon-wrapper {
+      height: var(--m3e-vertical-nav-item-active-indicator-height, 2rem);
+    }
+    :host([orientation="vertical"]) .icon {
+      top: calc(
+        calc(var(--m3e-vertical-nav-item-active-indicator-height, 2rem) / 2) -
+          calc(var(--m3e-nav-item-icon-size, 1.5rem) / 2)
+      );
+      left: calc(
+        calc(var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem) / 2) -
+          calc(var(--m3e-nav-item-icon-size, 1.5rem) / 2)
+      );
+    }
+    :host([orientation="vertical"]) .focus-ring {
+      border-radius: var(--m3e-nav-item-focus-ring-shape, ${DesignToken.shape.corner.extraSmall});
+    }
+    :host([orientation="horizontal"]) .icon-wrapper {
+      width: var(--m3e-nav-item-icon-size, 1.5rem);
+      height: var(--m3e-nav-item-icon-size, 1.5rem);
+    }
+    :host([orientation="horizontal"]) .base {
+      padding: var(--m3e-horizontal-nav-item-padding, 1rem);
+    }
+    :host([orientation="horizontal"]) .label {
+      flex: 1 1 auto;
+    }
+    :host([orientation="horizontal"]) .base {
+      column-gap: var(--m3e-nav-item-spacing, 0.25rem);
+    }
+    :host([orientation="horizontal"]) .inner {
+      height: var(--m3e-horizontal-nav-item-active-indicator-height, 2.5rem);
+      width: fit-content;
+    }
+    .state-layer,
+    .ripple {
+      margin-inline: auto;
+    }
+    :host(:disabled) .label,
+    :host([disabled-interactive]) .label {
+      color: color-mix(
+        in srgb,
+        var(--m3e-nav-item-disabled-label-text-color, ${DesignToken.color.onSurface})
+          var(--m3e-nav-item-disabled-label-text-opacity, 38%),
+        transparent
+      );
+    }
+    :host(:disabled) .icon,
+    :host([disabled-interactive]) .icon {
+      color: color-mix(
+        in srgb,
+        var(--m3e-nav-item-disabled-icon-color, ${DesignToken.color.onSurface})
+          var(--m3e-nav-item-disabled-icon-opacity, 38%),
+        transparent
+      );
+    }
+    @media (forced-colors: active) {
       :host(:disabled) .label,
-      :host([disabled-interactive]) .label {
-        color: color-mix(
-          in srgb,
-          var(--m3e-nav-item-disabled-label-text-color, ${DesignToken.color.onSurface})
-            var(--m3e-nav-item-disabled-label-text-opacity, 38%),
-          transparent
-        );
-      }
+      :host([disabled-interactive]) .label,
       :host(:disabled) .icon,
       :host([disabled-interactive]) .icon {
-        color: color-mix(
-          in srgb,
-          var(--m3e-nav-item-disabled-icon-color, ${DesignToken.color.onSurface})
-            var(--m3e-nav-item-disabled-icon-opacity, 38%),
-          transparent
-        );
+        color: GrayText;
       }
-    `,
-  ];
+      :host(:not([selected]):not(:disabled):not([disabled-interactive])) .label,
+      :host(:not([selected]):not(:disabled):not([disabled-interactive])) .icon {
+        color: ButtonText;
+      }
+      :host([selected]:not(:disabled):not([disabled-interactive])) .state-layer {
+        background-color: Highlight;
+      }
+      :host([orientation="vertical"][selected]:not(:disabled):not([disabled-interactive])) .label {
+        color: Highlight;
+      }
+      :host([orientation="horizontal"][selected]:not(:disabled):not([disabled-interactive])) .label,
+      :host([selected]:not(:disabled):not([disabled-interactive])) .icon {
+        forced-color-adjust: none;
+        color: HighlightText;
+      }
+    }
+  `;
 
   /** @private */ readonly #clickHandler = (e: Event) => this.#handleClick(e);
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;
