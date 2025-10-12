@@ -256,6 +256,30 @@ export class M3eButtonSegmentElement extends Dirty(
         transition: none;
       }
     }
+    @media (forced-colors: active) {
+      .base,
+      .icon,
+      .label {
+        transition: none !important;
+      }
+
+      :host(:disabled) .label,
+      :host(:disabled) .icon {
+        color: GrayText;
+      }
+      :host(:not([selected]):not(:disabled)) .label,
+      :host(:not([selected]):not(:disabled)) .icon {
+        color: ButtonText;
+      }
+      :host(:not(:disabled)[checked]) .base {
+        background-color: Highlight;
+      }
+      :host(:not(:disabled)[checked]) .label,
+      :host(:not(:disabled)[checked]) .icon {
+        forced-color-adjust: none;
+        color: HighlightText;
+      }
+    }
   `;
 
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;
