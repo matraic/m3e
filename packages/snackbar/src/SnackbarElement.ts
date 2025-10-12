@@ -150,6 +150,15 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
       width: 1em;
       font-size: var(--m3e-icon-button-icon-size, 1.5rem) !important;
     }
+    @media (forced-colors: active) {
+      :host {
+        background-color: Canvas;
+        color: CanvasText;
+        border-radius: ${DesignToken.shape.corner.small};
+        box-sizing: border-box;
+        border: 1px solid CanvasText;
+      }
+    }
   `;
 
   /** @private */ static __current: M3eSnackbarElement | null = null;
