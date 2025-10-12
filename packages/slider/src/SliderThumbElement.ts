@@ -161,6 +161,20 @@ export class M3eSliderThumbElement extends Dirty(
         transition: none;
       }
     }
+    @media (forced-colors: active) {
+      .label {
+        forced-color-adjust: none;
+        background-color: CanvasText;
+        color: Canvas;
+      }
+      :host(:not([aria-disabled="true"])) .handle {
+        background-color: CanvasText;
+      }
+      :host([aria-disabled="true"]) .handle {
+        opacity: unset;
+        background-color: GrayText;
+      }
+    }
   `;
 
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;

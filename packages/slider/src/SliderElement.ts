@@ -264,6 +264,39 @@ export class M3eSliderElement extends Role(LitElement, "none") {
       --_slider-label-opacity: 1;
       --_slider-label-transform: scale(1);
     }
+    @media (forced-colors: active) {
+      :host(:not([disabled])) .track-inactive {
+        background-color: unset;
+      }
+      :host(:not([disabled])) .base.range .track-inactive.start,
+      :host(:not([disabled])) .track-inactive.end {
+        border: 1px solid CanvasText;
+        box-sizing: border-box;
+      }
+      :host(:not([disabled])) .tick.inactive {
+        background-color: CanvasText;
+      }
+      :host(:not([disabled])) .tick.active {
+        background-color: Canvas;
+      }
+      :host(:not([disabled])) .track-active {
+        background-color: CanvasText;
+      }
+      :host([disabled]) .base.range .track-inactive.start,
+      :host([disabled]) .track-inactive.end {
+        border: 1px solid GrayText;
+        box-sizing: border-box;
+      }
+      :host([disabled]) .track-active {
+        background-color: GrayText;
+      }
+      :host([disabled]) .tick.inactive {
+        background-color: GrayText;
+      }
+      :host([disabled]) .tick.active {
+        background-color: Canvas;
+      }
+    }
   `;
 
   /** @private */
@@ -458,6 +491,7 @@ export class M3eSliderElement extends Role(LitElement, "none") {
     this.lowerThumb.style.transform = `translate(${lowerPos}px, 0)`;
 
     if (!this.upperThumb) {
+      this._base?.classList.toggle("range", false);
       this._base?.style.setProperty("--_slider-active-track-size", `${lowerPos}px`);
       this._base?.style.setProperty("--_slider-inactive-track-after-offset", `${lowerPos + this.#cachedThumbWidth}px`);
       this._base?.style.setProperty(
@@ -471,6 +505,7 @@ export class M3eSliderElement extends Role(LitElement, "none") {
       const upperPos = this.#pointFromValue(upperValue);
       this.upperThumb.style.transform = `translate(${upperPos}px, 0)`;
 
+      this._base?.classList.toggle("range", true);
       this._base?.style.setProperty("--_slider-inactive-track-before-size", `${lowerPos}px`);
       this._base?.style.setProperty("--_slider-active-track-offset", `${lowerPos + this.#cachedThumbWidth}px`);
       this._base?.style.setProperty("--_slider-active-track-size", `${upperPos - lowerPos - this.#cachedThumbWidth}px`);
