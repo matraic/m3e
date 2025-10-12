@@ -302,15 +302,15 @@ export class M3eNavItemElement extends LinkButton(
         color: ButtonText;
       }
       :host([selected]:not(:disabled):not([disabled-interactive])) .state-layer {
-        background-color: Highlight;
+        background-color: ButtonText;
       }
       :host([orientation="vertical"][selected]:not(:disabled):not([disabled-interactive])) .label {
-        color: Highlight;
+        color: ButtonText;
       }
       :host([orientation="horizontal"][selected]:not(:disabled):not([disabled-interactive])) .label,
       :host([selected]:not(:disabled):not([disabled-interactive])) .icon {
         forced-color-adjust: none;
-        color: HighlightText;
+        color: ButtonFace;
       }
     }
   `;

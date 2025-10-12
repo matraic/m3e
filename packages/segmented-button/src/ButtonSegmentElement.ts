@@ -272,12 +272,15 @@ export class M3eButtonSegmentElement extends Dirty(
         color: ButtonText;
       }
       :host(:not(:disabled)[checked]) .base {
-        background-color: Highlight;
+        background-color: ButtonText;
       }
       :host(:not(:disabled)[checked]) .label,
       :host(:not(:disabled)[checked]) .icon {
         forced-color-adjust: none;
-        color: HighlightText;
+        color: ButtonFace;
+      }
+      :host {
+        --m3e-segmented-button-outline-color: ButtonText;
       }
     }
   `;

@@ -112,14 +112,14 @@ export const ButtonStyle: CSSResultGroup = css`
       color: ButtonText;
     }
     :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]) .base {
-      background-color: Highlight;
-      outline-color: HighlightText;
+      background-color: ButtonText;
+      outline: none;
     }
     :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]) .label,
     :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]) .icon {
       forced-color-adjust: none;
-      color: HighlightText;
-      background-color: Highlight;
+      color: ButtonFace;
+      background-color: ButtonText;
     }
     :host([variant]:disabled) .base,
     :host([variant][disabled-interactive]) .base {

@@ -282,12 +282,12 @@ export class M3eNavMenuItemElement extends Selected(
       }
       :host([selected]:not(.-has-items):not(:disabled)) .base {
         forced-color-adjust: none;
-        color: HighlightText;
-        background-color: Highlight;
+        color: ButtonFace;
+        background-color: ButtonText;
       }
       :host([selected].-has-items:not(:disabled)) .base {
         background-color: unset;
-        color: Highlight;
+        color: ButtonText;
       }
     }
   `;
