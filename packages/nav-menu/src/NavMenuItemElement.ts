@@ -262,9 +262,32 @@ export class M3eNavMenuItemElement extends Selected(
       margin-block-end: var(--m3e-nav-menu-item-vertical-inset, 0.25rem);
     }
     @media (prefers-reduced-motion) {
+      .base,
       .toggle,
       .state-layer {
         transition: none !important;
+      }
+    }
+    @media (forced-colors: active) {
+      .base,
+      .state-layer {
+        transition: none !important;
+      }
+
+      :host(:disabled) .base {
+        color: GrayText;
+      }
+      :host(:not([selected]):not(:disabled)) .base {
+        color: ButtonText;
+      }
+      :host([selected]:not(.-has-items):not(:disabled)) .base {
+        forced-color-adjust: none;
+        color: HighlightText;
+        background-color: Highlight;
+      }
+      :host([selected].-has-items:not(:disabled)) .base {
+        background-color: unset;
+        color: Highlight;
       }
     }
   `;
