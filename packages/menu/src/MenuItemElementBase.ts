@@ -115,6 +115,15 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       width: 1em;
       font-size: var(--m3e-menu-item-icon-size, 1.5rem) !important;
     }
+    @media (forced-colors: active) {
+      .base {
+        background-color: Menu;
+        color: MenuText;
+      }
+      :host(:disabled) .base {
+        color: GrayText;
+      }
+    }
   `;
 
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;

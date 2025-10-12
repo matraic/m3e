@@ -153,6 +153,13 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
         transition: none;
       }
     }
+    @media (forced-colors: active) {
+      :host {
+        background-color: Menu;
+        color: MenuText;
+        border: 1px solid CanvasText;
+      }
+    }
   `;
 
   /** @private */ #trigger?: HTMLElement;
