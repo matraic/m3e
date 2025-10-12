@@ -45,7 +45,7 @@ export class M3eAccordionElement extends Role(LitElement, "none") {
       display: block;
     }
     ::slotted(m3e-expansion-panel) {
-      --m3e-expansion-panel-container-color: ${DesignToken.color.surface};
+      --m3e-expansion-panel-container-color: ${DesignToken.color.surfaceContainerLow};
       --m3e-expansion-panel-elevation: ${DesignToken.elevation.level2};
       --m3e-expansion-panel-open-shape: ${DesignToken.shape.corner.medium};
       --_expansion-panel-open-spacing: 1rem;
