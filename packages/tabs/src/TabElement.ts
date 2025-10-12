@@ -146,6 +146,17 @@ export class M3eTabElement extends Selected(
       width: 1em;
       font-size: var(--m3e-tab-icon-size, 1.5rem) !important;
     }
+    @media (forced-colors: active) {
+      :host([selected]:not(:disabled)) .base {
+        color: ButtonText;
+      }
+      :host(:not([selected]):not(:disabled)) .base {
+        color: ButtonText;
+      }
+      :host(:disabled) .base {
+        color: GrayText;
+      }
+    }
   `;
 
   /** @private */ private static __nextId = 0;

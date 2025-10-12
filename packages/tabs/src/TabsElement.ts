@@ -164,6 +164,12 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
         transition: none;
       }
     }
+    @media (forced-colors: active) {
+      .active-indicator {
+        background-color: ButtonText;
+        --m3e-divider-color: GrayText;
+      }
+    }
   `;
 
   /** @private */ @query(".tablist") private readonly _tablist!: HTMLElement;
