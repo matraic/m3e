@@ -53,150 +53,162 @@ const DEFAULT_STROKE_WIDTH = 10;
 @customElement("m3e-circular-progress-indicator")
 export class M3eCircularProgressIndicatorElement extends ProgressElementIndicatorBase {
   /** The styles of the element. */
-  static override styles: CSSResultGroup = css`
-    :host {
-      display: inline-flex;
-      vertical-align: middle;
-      width: var(--_diameter);
-      height: var(--_diameter);
-      position: relative;
-      align-items: center;
-      justify-content: center;
-      contain: strict;
+  static override styles: CSSResultGroup = [
+    ProgressElementIndicatorBase.styles,
+    css`
+      :host {
+        display: inline-flex;
+        vertical-align: middle;
+        width: var(--_diameter);
+        height: var(--_diameter);
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        contain: strict;
 
-      --_arc-duration: 1333ms;
-      --_cycle-duration: calc(4 * var(--_arc-duration));
-      --_linear-rotate-duration: calc(var(--_arc-duration) * 360 / 306);
-      --_indeterminate-easing: cubic-bezier(0.4, 0, 0.2, 1);
-      --_container-padding: 0px;
-      --_diameter: ${DEFAULT_DIAMETER}px;
-      --_stroke-width: ${DEFAULT_STROKE_WIDTH};
-    }
-    svg {
-      transform: rotate(-90deg);
-    }
-    circle {
-      cx: 50%;
-      cy: 50%;
-      r: calc(50% * (1 - var(--_stroke-width) / 100));
-      stroke-width: calc(var(--_stroke-width) * 1%);
-      stroke-dasharray: 100;
-      fill: transparent;
-    }
-    .active-track {
-      transition: stroke-dashoffset 500ms cubic-bezier(0, 0, 0.2, 1);
-      stroke: var(--m3e-progress-indicator-color, ${DesignToken.color.primary});
-    }
-    .track {
-      stroke: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
-    }
-    .progress {
-      flex: 1;
-      align-self: stretch;
-      margin: var(--_container-padding);
-      pointer-events: none;
-    }
-    .progress,
-    .spinner,
-    .left,
-    .right,
-    .content,
-    .circle {
-      position: absolute;
-      inset: 0;
-    }
+        --_arc-duration: 1333ms;
+        --_cycle-duration: calc(4 * var(--_arc-duration));
+        --_linear-rotate-duration: calc(var(--_arc-duration) * 360 / 306);
+        --_indeterminate-easing: cubic-bezier(0.4, 0, 0.2, 1);
+        --_container-padding: 0px;
+        --_diameter: ${DEFAULT_DIAMETER}px;
+        --_stroke-width: ${DEFAULT_STROKE_WIDTH};
+      }
+      svg {
+        transform: rotate(-90deg);
+      }
+      circle {
+        cx: 50%;
+        cy: 50%;
+        r: calc(50% * (1 - var(--_stroke-width) / 100));
+        stroke-width: calc(var(--_stroke-width) * 1%);
+        stroke-dasharray: 100;
+        fill: transparent;
+      }
+      .active-track {
+        transition: stroke-dashoffset 500ms cubic-bezier(0, 0, 0.2, 1);
+        stroke: var(--m3e-progress-indicator-color, ${DesignToken.color.primary});
+      }
+      .track {
+        stroke: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
+      }
+      .progress {
+        flex: 1;
+        align-self: stretch;
+        margin: var(--_container-padding);
+        pointer-events: none;
+      }
+      .progress,
+      .spinner,
+      .left,
+      .right,
+      .content,
+      .circle {
+        position: absolute;
+        inset: 0;
+      }
 
-    .content {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    :host([indeterminate]) {
-      content-visibility: auto;
-    }
-    :host([indeterminate]) .progress {
-      animation: linear infinite linear-rotate;
-      animation-duration: var(--_linear-rotate-duration);
-    }
-    .spinner {
-      animation: infinite both rotate-arc;
-      animation-duration: var(--_cycle-duration);
-      animation-timing-function: var(--_indeterminate-easing);
-    }
-    .left {
-      overflow: hidden;
-      inset: 0 50% 0 0;
-    }
-    .right {
-      overflow: hidden;
-      inset: 0 0 0 50%;
-    }
-    .circle {
-      box-sizing: border-box;
-      border-radius: 50%;
-      border: solid calc(calc(var(--_stroke-width) / 100) * calc(var(--_diameter) - 2 * var(--_container-padding)));
-      border-color: var(--m3e-progress-indicator-color, ${DesignToken.color.primary})
-        var(--m3e-progress-indicator-color, ${DesignToken.color.primary}) transparent transparent;
-      animation: expand-arc;
-      animation-iteration-count: infinite;
-      animation-fill-mode: both;
-      animation-duration: var(--_arc-duration), var(--_cycle-duration);
-      animation-timing-function: var(--_indeterminate-easing);
-    }
-    .left .circle {
-      rotate: 135deg;
-      inset: 0 -100% 0 0;
-    }
-    .right .circle {
-      rotate: 100deg;
-      inset: 0 0 0 -100%;
-      animation-delay: calc(-0.5 * var(--_arc-duration)), 0ms;
-    }
-    @keyframes expand-arc {
-      0% {
-        transform: rotate(265deg);
+      .content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
-      50% {
-        transform: rotate(130deg);
+      :host([indeterminate]) {
+        content-visibility: auto;
       }
-      100% {
-        transform: rotate(265deg);
+      :host([indeterminate]) .progress {
+        animation: linear infinite linear-rotate;
+        animation-duration: var(--_linear-rotate-duration);
       }
-    }
-    @keyframes rotate-arc {
-      12.5% {
-        transform: rotate(135deg);
+      .spinner {
+        animation: infinite both rotate-arc;
+        animation-duration: var(--_cycle-duration);
+        animation-timing-function: var(--_indeterminate-easing);
       }
-      25% {
-        transform: rotate(270deg);
+      .left {
+        overflow: hidden;
+        inset: 0 50% 0 0;
       }
-      37.5% {
-        transform: rotate(405deg);
+      .right {
+        overflow: hidden;
+        inset: 0 0 0 50%;
       }
-      50% {
-        transform: rotate(540deg);
+      .circle {
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: solid calc(calc(var(--_stroke-width) / 100) * calc(var(--_diameter) - 2 * var(--_container-padding)));
+        border-color: var(--m3e-progress-indicator-color, ${DesignToken.color.primary})
+          var(--m3e-progress-indicator-color, ${DesignToken.color.primary}) transparent transparent;
+        animation: expand-arc;
+        animation-iteration-count: infinite;
+        animation-fill-mode: both;
+        animation-duration: var(--_arc-duration), var(--_cycle-duration);
+        animation-timing-function: var(--_indeterminate-easing);
       }
-      62.5% {
-        transform: rotate(675deg);
+      .left .circle {
+        rotate: 135deg;
+        inset: 0 -100% 0 0;
       }
-      75% {
-        transform: rotate(810deg);
+      .right .circle {
+        rotate: 100deg;
+        inset: 0 0 0 -100%;
+        animation-delay: calc(-0.5 * var(--_arc-duration)), 0ms;
       }
-      87.5% {
-        transform: rotate(945deg);
+      @keyframes expand-arc {
+        0% {
+          transform: rotate(265deg);
+        }
+        50% {
+          transform: rotate(130deg);
+        }
+        100% {
+          transform: rotate(265deg);
+        }
       }
-      100% {
-        transform: rotate(1080deg);
+      @keyframes rotate-arc {
+        12.5% {
+          transform: rotate(135deg);
+        }
+        25% {
+          transform: rotate(270deg);
+        }
+        37.5% {
+          transform: rotate(405deg);
+        }
+        50% {
+          transform: rotate(540deg);
+        }
+        62.5% {
+          transform: rotate(675deg);
+        }
+        75% {
+          transform: rotate(810deg);
+        }
+        87.5% {
+          transform: rotate(945deg);
+        }
+        100% {
+          transform: rotate(1080deg);
+        }
       }
-    }
-    @keyframes linear-rotate {
-      to {
-        transform: rotate(360deg);
+      @keyframes linear-rotate {
+        to {
+          transform: rotate(360deg);
+        }
       }
-    }
-  `;
+      @media (forced-colors: active) {
+        circle {
+          fill: Canvas;
+        }
+        .circle {
+          border-color: var(--m3e-progress-indicator-color, ${DesignToken.color.primary})
+            var(--m3e-progress-indicator-color, ${DesignToken.color.primary}) Canvas Canvas;
+        }
+      }
+    `,
+  ];
 
   /** @private */ #diameter = DEFAULT_DIAMETER;
   /** @private */ #strokeWidth = DEFAULT_STROKE_WIDTH;

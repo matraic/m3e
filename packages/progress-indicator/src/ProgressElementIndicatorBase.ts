@@ -1,10 +1,20 @@
-import { LitElement, PropertyValues } from "lit";
+import { css, CSSResultGroup, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
 import { AttachInternals, Role } from "@m3e/core";
 
 /** A base implementation for an element used to convey progress. This class must be inherited. */
 export abstract class ProgressElementIndicatorBase extends AttachInternals(Role(LitElement, "progressbar"), true) {
+  /** The styles of the element. */
+  static override styles: CSSResultGroup = css`
+    @media (forced-colors: active) {
+      :host {
+        --m3e-progress-indicator-color: CanvasText;
+        --m3e-progress-indicator-track-color: Canvas;
+      }
+    }
+  `;
+
   /**
    * A fractional value, between 0 and `max`, indicating progress.
    * @default 0

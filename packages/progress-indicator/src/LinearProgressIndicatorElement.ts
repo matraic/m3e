@@ -52,177 +52,185 @@ import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
 @customElement("m3e-linear-progress-indicator")
 export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorBase {
   /** The styles of the element. */
-  static override styles: CSSResultGroup = css`
-    :host {
-      display: block;
-      height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
-      overflow: hidden;
-      position: relative;
-      transform: opacity var(--_piece-animation-duration) linear;
-      border-radius: var(--m3e-linear-progress-indicator-shape, ${DesignToken.shape.corner.extraSmall});
+  static override styles: CSSResultGroup = [
+    ProgressElementIndicatorBase.styles,
+    css`
+      :host {
+        display: block;
+        height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+        overflow: hidden;
+        position: relative;
+        transform: opacity var(--_piece-animation-duration) linear;
+        border-radius: var(--m3e-linear-progress-indicator-shape, ${DesignToken.shape.corner.extraSmall});
 
-      --_piece-animation-duration: 250ms;
-      --_full-animation-duration: 2000ms;
-    }
-    :host([mode="indeterminate"]),
-    :host([mode="query"]) {
-      content-visibility: auto;
-    }
-    .progress {
-      pointer-events: none;
-    }
-    .progress,
-    .wrapper {
-      height: 100%;
-    }
-    .element,
-    .fill::after {
-      position: absolute;
-      height: 100%;
-      width: 100%;
-    }
-    .background {
-      width: calc(100% + 0.625rem);
-      fill: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
-    }
-    .buffer {
-      transform-origin: top left;
-      transition: transform var(--_piece-animation-duration) ease;
-      background-color: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
-    }
-    .primary {
-      transform: scale3d(calc(var(--_value, 0) / var(--_max)), 1, 1);
-    }
-    .secondary {
-      display: none;
-    }
-    .fill {
-      animation: none;
-      transform-origin: top left;
-      transition: transform var(--_piece-animation-duration) ease;
-    }
-    .fill::after {
-      animation: none;
-      content: "";
-      display: inline-block;
-      left: 0;
-      background-color: var(--m3e-progress-indicator-color, ${DesignToken.color.primary});
-    }
-    :host([mode="query"]) {
-      transform: rotateZ(180deg);
-    }
-    :host([mode="indeterminate"]) .fill,
-    :host([mode="query"]) .fill {
-      transition: none;
-    }
-    :host([mode="indeterminate"]) .primary,
-    :host([mode="query"]) .primary {
-      backface-visibility: hidden;
-      animation: primary-indeterminate-translate var(--_full-animation-duration) infinite linear;
-      left: -145.166611%;
-    }
-    :host([mode="indeterminate"]) .primary.fill::after,
-    :host([mode="query"]) .primary.fill::after {
-      backface-visibility: hidden;
-      animation: primary-indeterminate-scale var(--_full-animation-duration) infinite linear;
-    }
-    :host([mode="indeterminate"]) .secondary,
-    :host([mode="query"]) .secondary {
-      display: block;
-      backface-visibility: hidden;
-      animation: secondary-indeterminate-translate var(--_full-animation-duration) infinite linear;
-      left: -54.888891%;
-    }
-    :host([mode="indeterminate"]) .secondary.fill::after,
-    :host([mode="query"]) .secondary.fill::after {
-      backface-visibility: hidden;
-      animation: secondary-indeterminate-scale var(--_full-animation-duration) infinite linear;
-    }
-    :host([mode="determinate"]) .background,
-    :host([mode="indeterminate"]) .background,
-    :host([mode="query"]) .background {
-      fill: transparent !important;
-    }
-    :host([mode="buffer"]) .buffer {
-      transform: scale3d(calc(var(--_buffer-value, 0) / var(--_max)), 1, 1);
-    }
-    :host([mode="buffer"]) .background {
-      display: block;
-      backface-visibility: hidden;
-      animation: background-scroll var(--_piece-animation-duration) infinite linear;
-    }
-    @keyframes primary-indeterminate-translate {
-      0% {
-        transform: translateX(0);
+        --_piece-animation-duration: 250ms;
+        --_full-animation-duration: 2000ms;
       }
-      20% {
-        animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
-        transform: translateX(0);
+      :host([mode="indeterminate"]),
+      :host([mode="query"]) {
+        content-visibility: auto;
       }
-      59.15% {
-        animation-timing-function: cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);
-        transform: translateX(83.67142%);
+      .progress {
+        pointer-events: none;
       }
-      100% {
-        transform: translateX(200.611057%);
+      .progress,
+      .wrapper {
+        height: 100%;
       }
-    }
-    @keyframes primary-indeterminate-scale {
-      0% {
-        transform: scaleX(0.08);
+      .element,
+      .fill::after {
+        position: absolute;
+        height: 100%;
+        width: 100%;
       }
-      36.65% {
-        animation-timing-function: cubic-bezier(0.334731, 0.12482, 0.785844, 1);
-        transform: scaleX(0.08);
+      .background {
+        width: calc(100% + 0.625rem);
+        fill: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
       }
-      69.15% {
-        animation-timing-function: cubic-bezier(0.06, 0.11, 0.6, 1);
-        transform: scaleX(0.661479);
+      .buffer {
+        transform-origin: top left;
+        transition: transform var(--_piece-animation-duration) ease;
+        background-color: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
       }
-      100% {
-        transform: scaleX(0.08);
+      .primary {
+        transform: scale3d(calc(var(--_value, 0) / var(--_max)), 1, 1);
       }
-    }
-    @keyframes secondary-indeterminate-translate {
-      0% {
-        animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
-        transform: translateX(0);
+      .secondary {
+        display: none;
       }
-      25% {
-        animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
-        transform: translateX(37.651913%);
+      .fill {
+        animation: none;
+        transform-origin: top left;
+        transition: transform var(--_piece-animation-duration) ease;
       }
-      48.35% {
-        animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
-        transform: translateX(84.386165%);
+      .fill::after {
+        animation: none;
+        content: "";
+        display: inline-block;
+        left: 0;
+        background-color: var(--m3e-progress-indicator-color, ${DesignToken.color.primary});
       }
-      100% {
-        transform: translateX(160.277782%);
+      :host([mode="query"]) {
+        transform: rotateZ(180deg);
       }
-    }
-    @keyframes secondary-indeterminate-scale {
-      0% {
-        animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
-        transform: scaleX(0.08);
+      :host([mode="indeterminate"]) .fill,
+      :host([mode="query"]) .fill {
+        transition: none;
       }
-      19.15% {
-        animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
-        transform: scaleX(0.457104);
+      :host([mode="indeterminate"]) .primary,
+      :host([mode="query"]) .primary {
+        backface-visibility: hidden;
+        animation: primary-indeterminate-translate var(--_full-animation-duration) infinite linear;
+        left: -145.166611%;
       }
-      44.15% {
-        animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
-        transform: scaleX(0.72796);
+      :host([mode="indeterminate"]) .primary.fill::after,
+      :host([mode="query"]) .primary.fill::after {
+        backface-visibility: hidden;
+        animation: primary-indeterminate-scale var(--_full-animation-duration) infinite linear;
       }
-      100% {
-        transform: scaleX(0.08);
+      :host([mode="indeterminate"]) .secondary,
+      :host([mode="query"]) .secondary {
+        display: block;
+        backface-visibility: hidden;
+        animation: secondary-indeterminate-translate var(--_full-animation-duration) infinite linear;
+        left: -54.888891%;
       }
-    }
-    @keyframes background-scroll {
-      to {
-        transform: translateX(calc(calc(0px - 0.25rem) * 2));
+      :host([mode="indeterminate"]) .secondary.fill::after,
+      :host([mode="query"]) .secondary.fill::after {
+        backface-visibility: hidden;
+        animation: secondary-indeterminate-scale var(--_full-animation-duration) infinite linear;
       }
-    }
-  `;
+      :host([mode="determinate"]) .background,
+      :host([mode="indeterminate"]) .background,
+      :host([mode="query"]) .background {
+        fill: transparent !important;
+      }
+      :host([mode="buffer"]) .buffer {
+        transform: scale3d(calc(var(--_buffer-value, 0) / var(--_max)), 1, 1);
+      }
+      :host([mode="buffer"]) .background {
+        display: block;
+        backface-visibility: hidden;
+        animation: background-scroll var(--_piece-animation-duration) infinite linear;
+      }
+      @keyframes primary-indeterminate-translate {
+        0% {
+          transform: translateX(0);
+        }
+        20% {
+          animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
+          transform: translateX(0);
+        }
+        59.15% {
+          animation-timing-function: cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);
+          transform: translateX(83.67142%);
+        }
+        100% {
+          transform: translateX(200.611057%);
+        }
+      }
+      @keyframes primary-indeterminate-scale {
+        0% {
+          transform: scaleX(0.08);
+        }
+        36.65% {
+          animation-timing-function: cubic-bezier(0.334731, 0.12482, 0.785844, 1);
+          transform: scaleX(0.08);
+        }
+        69.15% {
+          animation-timing-function: cubic-bezier(0.06, 0.11, 0.6, 1);
+          transform: scaleX(0.661479);
+        }
+        100% {
+          transform: scaleX(0.08);
+        }
+      }
+      @keyframes secondary-indeterminate-translate {
+        0% {
+          animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
+          transform: translateX(0);
+        }
+        25% {
+          animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
+          transform: translateX(37.651913%);
+        }
+        48.35% {
+          animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
+          transform: translateX(84.386165%);
+        }
+        100% {
+          transform: translateX(160.277782%);
+        }
+      }
+      @keyframes secondary-indeterminate-scale {
+        0% {
+          animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
+          transform: scaleX(0.08);
+        }
+        19.15% {
+          animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
+          transform: scaleX(0.457104);
+        }
+        44.15% {
+          animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
+          transform: scaleX(0.72796);
+        }
+        100% {
+          transform: scaleX(0.08);
+        }
+      }
+      @keyframes background-scroll {
+        to {
+          transform: translateX(calc(calc(0px - 0.25rem) * 2));
+        }
+      }
+      @media (forced-colors: active) {
+        .background {
+          fill: GrayText;
+        }
+      }
+    `,
+  ];
 
   /** @private */ private static __nextPatternId = 0;
   /** @private */ #patternId = `m3e-progress-pattern-${M3eLinearProgressIndicatorElement.__nextPatternId++}`;
