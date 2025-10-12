@@ -66,13 +66,15 @@ import { M3eExpansionHeaderElement } from "./ExpansionHeaderElement";
  * @cssprop --m3e-expansion-header-font-weight - The font weight of the header text.
  * @cssprop --m3e-expansion-header-line-height - The line height of the header text.
  * @cssprop --m3e-expansion-header-tracking - Letter spacing (tracking) of the header text.
- * @cssprop --m3e-expansion-panel-text-color - Color of the panel’s text content.
+ * @cssprop --m3e-expansion-panel-text-color - Color of the panel's text content.
+ * @cssprop --m3e-expansion-panel-disabled-text-color - Color of the panel's text content, when disabled.
+ * @cssprop --m3e-expansion-panel-disabled-text-opacity - Opacity of the panel's text content, when disabled.
  * @cssprop --m3e-expansion-panel-container-color - Background color of the panel container.
  * @cssprop --m3e-expansion-panel-elevation - Elevation level when the panel is collapsed.
  * @cssprop --m3e-expansion-panel-shape - Shape (e.g. border radius) of the panel when collapsed.
  * @cssprop --m3e-expansion-panel-open-elevation - Elevation level when the panel is expanded.
  * @cssprop --m3e-expansion-panel-open-shape - Shape (e.g. border radius) of the panel when expanded.
- * @cssprop --m3e-expansion-panel-content-padding - Padding around the panel’s content area.
+ * @cssprop --m3e-expansion-panel-content-padding - Padding around the panel's content area.
  * @cssprop --m3e-expansion-panel-actions-spacing - Spacing between action buttons or elements.
  * @cssprop --m3e-expansion-panel-actions-padding - Padding around the actions section.
  * @cssprop --m3e-expansion-panel-actions-divider-thickness - Thickness of the divider above actions.

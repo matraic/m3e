@@ -8,6 +8,8 @@ import { DesignToken } from "@m3e/core";
  */
 export const ExpansionPanelToken = {
   textColor: unsafeCSS(`var(--m3e-expansion-panel-text-color, ${DesignToken.color.onSurface})`),
+  disabledTextColor: unsafeCSS(`var(--m3e-expansion-panel-disabled-text-color, ${DesignToken.color.onSurface})`),
+  disabledTextOpacity: unsafeCSS(`var(--m3e-expansion-panel-disabled-text-opacity, 38%)`),
   containerColor: unsafeCSS("var(--m3e-expansion-panel-container-color)"),
   collapsedElevation: unsafeCSS("var(--m3e-expansion-panel-elevation)"),
   collapsedShape: unsafeCSS("var(--m3e-expansion-panel-shape)"),

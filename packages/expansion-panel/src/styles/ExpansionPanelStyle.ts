@@ -12,10 +12,19 @@ import { ExpansionHeaderToken } from "./ExpansionHeaderToken";
 export const ExpansionPanelStyle = css`
   :host {
     display: block;
-    color: ${ExpansionPanelToken.textColor};
     background-color: ${ExpansionPanelToken.containerColor};
     transition: ${unsafeCSS(`box-shadow var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
         ${DesignToken.motion.easing.standard}`)};
+  }
+  :host(:not(:disabled)) {
+    color: ${ExpansionPanelToken.textColor};
+  }
+  :host(:disabled) {
+    color: color-mix(
+      in srgb,
+      ${ExpansionPanelToken.disabledTextColor} ${ExpansionPanelToken.disabledTextOpacity},
+      transparent
+    );
   }
   :host(:not([open])) {
     box-shadow: ${ExpansionPanelToken.collapsedElevation};
@@ -65,6 +74,9 @@ export const ExpansionPanelStyle = css`
   @media (forced-colors: active) {
     :host {
       border: 1px solid CanvasText;
+    }
+    :host(:disabled) {
+      color: GrayText;
     }
     ::slotted([slot="actions"]) {
       border-top-color: GrayText;
