@@ -141,6 +141,14 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(Role(LitElement, 
         transition: none;
       }
     }
+    @media (forced-colors: active) {
+      .base {
+        background-color: Canvas;
+        color: CanvasText;
+        box-sizing: border-box;
+        border: 1px solid CanvasText;
+      }
+    }
   `;
 
   /** @private */ private static readonly __openTooltips = new Array<M3eTooltipElement>();
