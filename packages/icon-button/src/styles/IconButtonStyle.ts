@@ -75,6 +75,9 @@ export const IconButtonStyle: CSSResultGroup = css`
     bottom: 0px;
     z-index: 1;
   }
+  :host(.-grouped.-connected) {
+    flex: 1 1 auto;
+  }
   :host(.-grouped:not(.-connected):not(.-adjacent-pressed):not(.-pressed)) {
     flex-shrink: 0;
     flex-grow: 0;
