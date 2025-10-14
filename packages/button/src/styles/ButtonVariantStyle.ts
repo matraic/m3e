@@ -40,7 +40,7 @@ function buttonVariantStyle(variant: ButtonVariant): CSSResult {
     :host([variant="${unsafeCSS(variant)}"]:hover) .base {
       outline-color: ${ButtonVariantToken[variant].hover.outlineColor ?? unsafeCSS("unset")};
     }
-    :host([variant="${unsafeCSS(variant)}"]) .base.pressed {
+    :host([variant="${unsafeCSS(variant)}"].-pressed) .base {
       outline-color: ${ButtonVariantToken[variant].pressed.outlineColor ?? unsafeCSS("unset")};
     }
     :host([variant="${unsafeCSS(variant)}"]) .label {
@@ -70,13 +70,13 @@ function buttonVariantStyle(variant: ButtonVariant): CSSResult {
     :host([variant="${unsafeCSS(variant)}"][toggle][selected]:hover) .label {
       color: ${ButtonVariantToken[variant].hover.selectedLabelTextColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]) .base.pressed .label {
+    :host([variant="${unsafeCSS(variant)}"].-pressed) .label {
       color: ${ButtonVariantToken[variant].pressed.labelTextColor};
     }
-    :host([variant="${unsafeCSS(variant)}"][toggle]:not([selected])) .base.pressed .label {
+    :host([variant="${unsafeCSS(variant)}"][toggle]:not([selected]).-pressed) .label {
       color: ${ButtonVariantToken[variant].pressed.unselectedLabelTextColor};
     }
-    :host([variant="${unsafeCSS(variant)}"][toggle][selected]) .base.pressed .label {
+    :host([variant="${unsafeCSS(variant)}"][toggle][selected].-pressed) .label {
       color: ${ButtonVariantToken[variant].pressed.selectedLabelTextColor};
     }
     :host([variant="${unsafeCSS(variant)}"]) .icon {
@@ -106,13 +106,13 @@ function buttonVariantStyle(variant: ButtonVariant): CSSResult {
     :host([variant="${unsafeCSS(variant)}"][toggle][selected]:hover) .icon {
       color: ${ButtonVariantToken[variant].hover.selectedIconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]) .base.pressed .icon {
+    :host([variant="${unsafeCSS(variant)}"].-pressed) .icon {
       color: ${ButtonVariantToken[variant].pressed.iconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"][toggle]:not([selected])) .base.pressed .icon {
+    :host([variant="${unsafeCSS(variant)}"][toggle]:not([selected]).-pressed) .icon {
       color: ${ButtonVariantToken[variant].pressed.unselectedIconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"][toggle][selected]) .base.pressed .icon {
+    :host([variant="${unsafeCSS(variant)}"][toggle][selected].-pressed) .icon {
       color: ${ButtonVariantToken[variant].pressed.selectedIconColor};
     }
     :host([variant="${unsafeCSS(variant)}"]:disabled) .base,

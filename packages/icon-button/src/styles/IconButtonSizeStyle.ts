@@ -33,13 +33,13 @@ function iconButtonStyle(size: IconButtonSize): CSSResult {
     :host([size="${unsafeCSS(size)}"][shape="square"]) .base {
       border-radius: ${IconButtonSizeToken[size].shapeSquare};
     }
-    :host([size="${unsafeCSS(size)}"][shape="rounded"][toggle][selected]) .base:not(.pressed) {
+    :host([size="${unsafeCSS(size)}"][shape="rounded"][toggle][selected]:not(.-pressed)) .base {
       border-radius: ${IconButtonSizeToken[size].selectedShapeRound};
     }
-    :host([size="${unsafeCSS(size)}"][shape="square"][toggle][selected]) .base:not(.pressed) {
+    :host([size="${unsafeCSS(size)}"][shape="square"][toggle][selected]:not(.-pressed)) .base {
       border-radius: var(--_button-shape, ${IconButtonSizeToken[size].selectedShapeSquare});
     }
-    :host([size="${unsafeCSS(size)}"]) .base.pressed {
+    :host([size="${unsafeCSS(size)}"].-pressed) .base {
       border-radius: ${IconButtonSizeToken[size].shapePressedMorph};
     }
   `;

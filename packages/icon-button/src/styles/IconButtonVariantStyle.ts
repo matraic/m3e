@@ -36,7 +36,7 @@ function iconButtonVariantStyle(variant: IconButtonVariant): CSSResult {
     :host([variant="${unsafeCSS(variant)}"]:hover) .base {
       outline-color: ${IconButtonVariantToken[variant].hover.outlineColor ?? unsafeCSS("unset")};
     }
-    :host([variant="${unsafeCSS(variant)}"]) .base.pressed {
+    :host([variant="${unsafeCSS(variant)}"].-pressed) .base {
       outline-color: ${IconButtonVariantToken[variant].pressed.outlineColor ?? unsafeCSS("unset")};
     }
     :host([variant="${unsafeCSS(variant)}"]) .icon {
@@ -66,13 +66,13 @@ function iconButtonVariantStyle(variant: IconButtonVariant): CSSResult {
     :host([variant="${unsafeCSS(variant)}"][toggle][selected]:hover) .icon {
       color: ${IconButtonVariantToken[variant].hover.selectedIconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]) .base.pressed .icon {
+    :host([variant="${unsafeCSS(variant)}"].-pressed) .icon {
       color: ${IconButtonVariantToken[variant].pressed.iconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"][toggle]:not([selected])) .base.pressed .icon {
+    :host([variant="${unsafeCSS(variant)}"][toggle]:not([selected]).-pressed) .icon {
       color: ${IconButtonVariantToken[variant].pressed.unselectedIconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"][toggle][selected]) .base.pressed .icon {
+    :host([variant="${unsafeCSS(variant)}"][toggle][selected].-pressed) .icon {
       color: ${IconButtonVariantToken[variant].pressed.selectedIconColor};
     }
     :host([variant="${unsafeCSS(variant)}"]:disabled) .base,

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow-y: auto">
+  <head>
+    <title>Button for Material 3 Expressive (M3E)</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Button for Material 3 Expressive (M3E)" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "../../core/dist/index.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="../../icon/dist/index.min.js"></script>
+    <script type="module" src="../../button/dist/index.min.js"></script>
+    <script type="module" src="../../icon-button/dist/index.min.js"></script>
+    <script type="module" src="../../theme/dist/index.min.js"></script>
+    <script type="module" src="../dist/index.min.js"></script>
+    <style>
+      body {
+        font-family: "Roboto";
+      }
+      *:not(:defined) {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <m3e-theme strong-focus>
+      <m3e-button-group variant="connected">
+        <m3e-button variant="tonal" toggle>Start</m3e-button>
+        <m3e-button variant="tonal" toggle>Directions</m3e-button>
+        <m3e-button variant="tonal" toggle>Share</m3e-button>
+      </m3e-button-group>
+      <br />
+      <m3e-button-group variant="connected">
+        <m3e-button variant="tonal" shape="square" toggle>Start</m3e-button>
+        <m3e-button variant="tonal" shape="square" toggle>Directions</m3e-button>
+        <m3e-button variant="tonal" shape="square" toggle>Share</m3e-button>
+      </m3e-button-group>
+      <br />
+      <m3e-button-group>
+        <m3e-button variant="tonal" toggle>Start</m3e-button>
+        <m3e-button variant="tonal" toggle>Directions</m3e-button>
+        <m3e-button variant="tonal" toggle>Directions</m3e-button>
+        <m3e-button variant="tonal" disabled>Directions</m3e-button>
+        <m3e-button variant="tonal" toggle>Share</m3e-button>
+      </m3e-button-group>
+
+      <br /><br />
+      <m3e-button-group>
+        <m3e-icon-button variant="tonal" toggle><m3e-icon name="format_bold"></m3e-icon></m3e-icon-button>
+        <m3e-icon-button variant="tonal" toggle><m3e-icon name="format_italic"></m3e-icon></m3e-icon-button>
+        <m3e-icon-button variant="tonal" toggle><m3e-icon name="format_underlined"></m3e-icon></m3e-icon-button>
+      </m3e-button-group>
+      <br /><br />
+      <m3e-button-group>
+        <m3e-icon-button variant="tonal" toggle><m3e-icon name="home"></m3e-icon></m3e-icon-button>
+        <m3e-button variant="tonal" toggle>Directions</m3e-button>
+        <m3e-icon-button variant="tonal" toggle><m3e-icon name="home"></m3e-icon></m3e-icon-button>
+      </m3e-button-group>
+    </m3e-theme>
+  </body>
+</html>

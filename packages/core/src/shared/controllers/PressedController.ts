@@ -14,6 +14,9 @@ export interface PressedControllerOptions extends MonitorControllerOptions {
   /** The callback invoked when the pressed state of an element changes. */
   callback: PressedControllerCallback;
 
+  /** Whether events are captured. */
+  capture?: boolean;
+
   /**
    * A function used to determine whether a given keyboard key toggles the pressed state.
    * @param key The `KeyboardEvent.key` to test.
@@ -24,6 +27,7 @@ export interface PressedControllerOptions extends MonitorControllerOptions {
 
 /** A `ReactiveController` used to monitor the pressed state of one or more elements. */
 export class PressedController extends MonitorControllerBase {
+  /** @private */ readonly #capture?: boolean;
   /** @private */ readonly #callback: PressedControllerCallback;
   /** @private */ readonly #isPressedKey?: (key: string) => boolean;
   /** @private */ readonly #pressedTargets = new Set<HTMLElement>();
@@ -41,19 +45,20 @@ export class PressedController extends MonitorControllerBase {
   constructor(host: ReactiveControllerHost & HTMLElement, options: PressedControllerOptions) {
     super(host, options);
 
+    this.#capture = options.capture;
     this.#callback = options.callback;
     this.#isPressedKey = options.isPressedKey;
   }
 
   /** @inheritdoc */
   override hostConnected(): void {
-    document.addEventListener("pointerup", this.#pointerUpHandler);
+    document.addEventListener("pointerup", this.#pointerUpHandler, { capture: this.#capture });
     super.hostConnected();
   }
 
   /** @inheritdoc */
   override hostDisconnected(): void {
-    document.removeEventListener("pointerup", this.#pointerUpHandler);
+    document.removeEventListener("pointerup", this.#pointerUpHandler, { capture: this.#capture });
     super.hostDisconnected();
     this.#pressedTargets.clear();
   }
@@ -63,10 +68,10 @@ export class PressedController extends MonitorControllerBase {
    * @param {HTMLElement} target The element to start observing.
    */
   protected override _observe(target: HTMLElement): void {
-    target.addEventListener("pointerdown", this.#pointerDownHandler);
+    target.addEventListener("pointerdown", this.#pointerDownHandler, { capture: this.#capture });
     if (this.#isPressedKey) {
-      target.addEventListener("keydown", this.#keyDownHandler);
-      target.addEventListener("keyup", this.#keyUpHandler);
+      target.addEventListener("keydown", this.#keyDownHandler, { capture: this.#capture });
+      target.addEventListener("keyup", this.#keyUpHandler, { capture: this.#capture });
     }
   }
 
@@ -75,11 +80,11 @@ export class PressedController extends MonitorControllerBase {
    * @param {HTMLElement} target The element to stop observing.
    */
   protected override _unobserve(target: HTMLElement): void {
-    target.removeEventListener("pointerdown", this.#pointerDownHandler);
+    target.removeEventListener("pointerdown", this.#pointerDownHandler, { capture: this.#capture });
 
     if (this.#isPressedKey) {
-      target.removeEventListener("keydown", this.#keyDownHandler);
-      target.removeEventListener("keyup", this.#keyUpHandler);
+      target.removeEventListener("keydown", this.#keyDownHandler, { capture: this.#capture });
+      target.removeEventListener("keyup", this.#keyUpHandler, { capture: this.#capture });
     }
   }
 
