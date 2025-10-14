@@ -1,13 +1,12 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { customElement, property, query, queryAssignedElements } from "lit/decorators.js";
 
-import { Role, isSelectedMixin, DesignToken } from "@m3e/core";
+import { PressedController, Role, isSelectedMixin, DesignToken } from "@m3e/core";
 import { M3eButtonElement } from "@m3e/button";
 import { M3eIconButtonElement } from "@m3e/icon-button";
 
 import { ButtonGroupVariant } from "./ButtonGroupVariant";
 import { ButtonGroupSize } from "./ButtonGroupSize";
-import { PressedController } from "@m3e/core";
 
 /**
  * @summary
@@ -305,9 +304,8 @@ export class M3eButtonGroupElement extends Role(LitElement, "group") {
   @property({ type: Boolean }) multi = false;
 
   /** The buttons contained by the group. */
-  get buttons(): ReadonlyArray<M3eButtonElement | M3eIconButtonElement> {
-    return [...this.querySelectorAll<M3eButtonElement | M3eIconButtonElement>("m3e-button,m3e-icon-button")];
-  }
+  @queryAssignedElements({ slot: "", selector: "m3e-button,m3e-icon-button", flatten: true })
+  readonly buttons!: ReadonlyArray<M3eButtonElement | M3eIconButtonElement>;
 
   /** @inheritdoc */
   override disconnectedCallback(): void {

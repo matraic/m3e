@@ -408,7 +408,6 @@ export class M3eButtonElement extends KeyboardClick(
   /** @private */ @query(".state-layer") private readonly _stateLayer?: M3eStateLayerElement;
   /** @private */ @query(".ripple") private readonly _ripple?: M3eRippleElement;
 
-  /** @private */ #grouped = false;
   /** @private */ readonly #clickHandler = (e: Event) => this.#handleClick(e);
 
   constructor() {
@@ -416,7 +415,7 @@ export class M3eButtonElement extends KeyboardClick(
 
     new ResizeController(this, {
       callback: () => {
-        if (this.#grouped) {
+        if (this.grouped) {
           this._handleResize();
         }
       },
@@ -427,7 +426,7 @@ export class M3eButtonElement extends KeyboardClick(
         if (!this.disabledInteractive && this._base) {
           if (focused) {
             this.#updateButtonShape();
-          } else if (!this.#grouped) {
+          } else if (!this.grouped) {
             this._base?.style.removeProperty("--_button-shape");
           }
         }
@@ -496,6 +495,11 @@ export class M3eButtonElement extends KeyboardClick(
    */
   @property({ type: Boolean, reflect: true }) selected = false;
 
+  /** Whether the button is contained by a button group. */
+  get grouped() {
+    return this.classList.contains("-grouped");
+  }
+
   /** @inheritdoc */
   override render(): unknown {
     return html`<div class="base">
@@ -527,8 +531,6 @@ export class M3eButtonElement extends KeyboardClick(
   override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener("click", this.#clickHandler);
-
-    this.#grouped = this.closest("m3e-button-group") !== null;
   }
 
   /** @inheritdoc */
@@ -540,7 +542,6 @@ export class M3eButtonElement extends KeyboardClick(
     this.style.removeProperty("--_button-width");
     this.style.removeProperty("--_adjacent-button-width");
     this.classList.remove("-adjacent-pressed");
-    this.#grouped = false;
 
     this.removeEventListener("click", this.#clickHandler);
   }
@@ -602,7 +603,7 @@ export class M3eButtonElement extends KeyboardClick(
   /** @private */
   @debounce(40)
   private _handleResize(): void {
-    if (this.#grouped && !this.classList.contains("-pressed")) {
+    if (this.grouped && !this.classList.contains("-pressed")) {
       this.style.setProperty("--_button-width", `${this.clientWidth}px`);
       this.#updateButtonShape(true);
     }
