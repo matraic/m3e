@@ -143,6 +143,7 @@ export class M3eFilterChipElement extends Selected(
         color: var(--m3e-chip-unselected-trailing-icon-color, ${DesignToken.color.onSurfaceVariant});
       }
       :host(:not(:disabled):not([disabled-interactive])[selected]) .base {
+        outline-offset: unset;
         outline-width: var(--m3e-chip-selected-outline-thickness, 0);
         color: var(--m3e-chip-selected-label-text-color, ${DesignToken.color.onSecondaryContainer});
         background-color: var(--m3e-chip-selected-container-color, ${DesignToken.color.secondaryContainer});
@@ -190,7 +191,8 @@ export class M3eFilterChipElement extends Selected(
           color: ButtonText;
         }
         :host(:not(:disabled):not([disabled-interactive])[selected]) .base {
-          outline-width: var(--m3e-outlined-chip-outline-thickness, 0.0625rem);
+          outline-offset: calc(0px - var(--m3e-outlined-chip-outline-thickness, 1px));
+          outline-width: var(--m3e-outlined-chip-outline-thickness, 1px);
           outline-color: ButtonText;
         }
       }

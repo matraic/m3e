@@ -10,21 +10,22 @@ function iconButtonStyle(size: IconButtonSize): CSSResult {
       height: ${IconButtonSizeToken[size].containerHeight};
     }
     :host([size="${unsafeCSS(size)}"][width="default"]) .wrapper {
-      padding-left: ${IconButtonSizeToken[size].defaultLeadingSpace};
-      padding-right: ${IconButtonSizeToken[size].defaultTrailingSpace};
+      padding-inline-start: ${IconButtonSizeToken[size].defaultLeadingSpace};
+      padding-inline-end: ${IconButtonSizeToken[size].defaultTrailingSpace};
     }
     :host([size="${unsafeCSS(size)}"][width="narrow"]) .wrapper {
-      padding-left: ${IconButtonSizeToken[size].narrowLeadingSpace};
-      padding-right: ${IconButtonSizeToken[size].narrowTrailingSpace};
+      padding-inline-start: ${IconButtonSizeToken[size].narrowLeadingSpace};
+      padding-inline-end: ${IconButtonSizeToken[size].narrowTrailingSpace};
     }
     :host([size="${unsafeCSS(size)}"][width="wide"]) .wrapper {
-      padding-left: ${IconButtonSizeToken[size].wideLeadingSpace};
-      padding-right: ${IconButtonSizeToken[size].wideTrailingSpace};
+      padding-inline-start: ${IconButtonSizeToken[size].wideLeadingSpace};
+      padding-inline-end: ${IconButtonSizeToken[size].wideTrailingSpace};
     }
     :host([size="${unsafeCSS(size)}"]) .icon {
       font-size: ${IconButtonSizeToken[size].iconSize};
     }
     :host([size="${unsafeCSS(size)}"]) .base {
+      outline-offset: calc(0px - ${IconButtonSizeToken[size].outlineThickness});
       outline-width: ${IconButtonSizeToken[size].outlineThickness};
     }
     :host(:not(.-connected)[size="${unsafeCSS(size)}"][shape="rounded"]:not(.-pressed)) .base {

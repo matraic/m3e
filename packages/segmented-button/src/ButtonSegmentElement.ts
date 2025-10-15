@@ -112,7 +112,7 @@ export class M3eButtonSegmentElement extends Dirty(
       width: 100%;
       height: calc(var(--m3e-segmented-button-height, 2.5rem) + ${DesignToken.density.calc(-3)});
       box-sizing: border-box;
-      border-width: var(--m3e-segmented-button-outline-thickness, 0.0625rem);
+      border-width: var(--m3e-segmented-button-outline-thickness, 1px);
       border-color: var(--m3e-segmented-button-outline-color, ${DesignToken.color.outline});
       border-style: solid;
       border-radius: inherit;

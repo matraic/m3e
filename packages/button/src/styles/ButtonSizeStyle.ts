@@ -35,6 +35,7 @@ function buttonStyle(size: ButtonSize): CSSResult {
       --m3e-icon-size: ${ButtonSizeToken[size].iconSize};
     }
     :host([size="${unsafeCSS(size)}"]) .base {
+      outline-offset: calc(0px - ${ButtonSizeToken[size].outlineThickness});
       outline-width: ${ButtonSizeToken[size].outlineThickness};
     }
     :host(:not(.-connected)[size="${unsafeCSS(size)}"][shape="rounded"]) .base {

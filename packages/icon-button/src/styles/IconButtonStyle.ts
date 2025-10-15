@@ -42,9 +42,11 @@ export const IconButtonStyle: CSSResultGroup = css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    transition: ${unsafeCSS(`padding-inline ${DesignToken.motion.spring.fastEffects}`)};
   }
   .icon {
     transition: ${unsafeCSS(`color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`)};
+
     --m3e-icon-size: 1em;
   }
   :host(:not(:disabled):not([disabled-interactive])) {
@@ -56,6 +58,11 @@ export const IconButtonStyle: CSSResultGroup = css`
   ::slotted(*) {
     font-size: inherit !important;
     flex: none;
+    transform: var(--_icon-button-icon-transform);
+    transform-origin: center center;
+    transition: ${unsafeCSS(
+      `transform var(--_icon-button-icon-transform-transition, ${DesignToken.motion.spring.fastEffects})`
+    )};
   }
   ::slotted(svg) {
     width: 1em;
@@ -145,18 +152,23 @@ export const IconButtonStyle: CSSResultGroup = css`
       outline-style: solid;
     }
     :host([size="extra-small"]) .base {
+      outline-offset: calc(0px - var(--m3e-icon-button-extra-small-outline-thickness, 1px));
       outline-width: var(--m3e-icon-button-extra-small-outline-thickness, 1px);
     }
     :host([size="small"]) .base {
+      outline-offset: calc(0px - var(--m3e-icon-button-small-outline-thickness, 1px));
       outline-width: var(--m3e-icon-button-small-outline-thickness, 1px);
     }
     :host([size="medium"]) .base {
+      outline-offset: calc(0px - var(--m3e-icon-button-medium-outline-thickness, 1px));
       outline-width: var(--m3e-icon-button-medium-outline-thickness, 1px);
     }
     :host([size="large"]) .base {
+      outline-offset: calc(0px - var(--m3e-icon-button-large-outline-thickness, 0.125rem));
       outline-width: var(--m3e-icon-button-large-outline-thickness, 0.125rem);
     }
     :host([size="extra-large"]) .base {
+      outline-offset: calc(0px - var(--m3e-icon-button-extra-large-outline-thickness, 0.1875rem));
       outline-width: var(--m3e-icon-button-extra-large-outline-thickness, 0.1875rem);
     }
   }
@@ -164,6 +176,7 @@ export const IconButtonStyle: CSSResultGroup = css`
     :host(.-pressed) .base,
     :host(.-resting) .base,
     .base,
+    .wrapper,
     .icon {
       transition: none;
     }

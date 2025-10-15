@@ -131,12 +131,15 @@ export const FabStyle: CSSResultGroup = css`
       color: GrayText;
     }
     :host([size="small"]) .base {
+      outline-offset: calc(0px - var(--m3e-button-small-outline-thickness, 1px));
       outline-width: var(--m3e-button-small-outline-thickness, 1px);
     }
     :host([size="medium"]) .base {
+      outline-offset: calc(0px - var(--m3e-button-medium-outline-thickness, 1px));
       outline-width: var(--m3e-button-medium-outline-thickness, 1px);
     }
     :host([size="large"]) .base {
+      outline-offset: calc(0px - var(--m3e-button-large-outline-thickness, 0.125rem));
       outline-width: var(--m3e-button-large-outline-thickness, 0.125rem);
     }
   }

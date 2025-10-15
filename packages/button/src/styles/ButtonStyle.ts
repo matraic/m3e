@@ -159,18 +159,23 @@ export const ButtonStyle: CSSResultGroup = css`
       outline-style: solid;
     }
     :host([size="extra-small"]) .base {
+      outline-offset: calc(0px - var(--m3e-button-extra-small-outline-thickness, 1px));
       outline-width: var(--m3e-button-extra-small-outline-thickness, 1px);
     }
     :host([size="small"]) .base {
+      outline-offset: calc(0px - var(--m3e-button-small-outline-thickness, 1px));
       outline-width: var(--m3e-button-small-outline-thickness, 1px);
     }
     :host([size="medium"]) .base {
+      outline-offset: calc(0px - var(--m3e-button-medium-outline-thickness, 1px));
       outline-width: var(--m3e-button-medium-outline-thickness, 1px);
     }
     :host([size="large"]) .base {
+      outline-offset: calc(0px - var(--m3e-button-large-outline-thickness, 0.125rem));
       outline-width: var(--m3e-button-large-outline-thickness, 0.125rem);
     }
     :host([size="extra-large"]) .base {
+      outline-offset: calc(0px - var(--m3e-button-extra-large-outline-thickness, 0.1875rem));
       outline-width: var(--m3e-button-extra-large-outline-thickness, 0.1875rem);
     }
   }

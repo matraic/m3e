@@ -125,8 +125,9 @@ export class M3eChipElement extends Role(LitElement, "none") {
       --m3e-elevation-pressed-level: var(--m3e-elevated-chip-elevation, ${DesignToken.elevation.level1});
     }
     :host([variant="outlined"]) .base {
-      outline-width: var(--m3e-outlined-chip-outline-thickness, 0.0625rem);
+      outline-width: var(--m3e-outlined-chip-outline-thickness, 1px);
       outline-style: solid;
+      outline-offset: calc(0px - var(--m3e-outlined-chip-outline-thickness, 1px));
     }
     :host(:not(:disabled):not([disabled-interactive])[variant="outlined"]) .base {
       outline-color: var(--m3e-outlined-chip-outline-color, ${DesignToken.color.outlineVariant});
