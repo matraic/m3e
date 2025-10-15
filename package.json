@@ -34,6 +34,7 @@
     "packages/switch",
     "packages/tabs",
     "packages/theme",
+    "packages/textarea-autosize",
     "packages/toc",
     "packages/toolbar",
     "packages/tooltip"
