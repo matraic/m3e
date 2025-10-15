@@ -30,6 +30,7 @@
     "packages/slide-group",
     "packages/slider",
     "packages/snackbar",
+    "packages/split-button",
     "packages/switch",
     "packages/tabs",
     "packages/theme",

@@ -8,6 +8,7 @@ import { IconButtonVariant } from "../IconButtonVariant";
 type _IconButtonVariantToken = {
   iconColor: CSSResult;
   containerColor?: CSSResult;
+  containerElevation?: CSSResult;
   outlineColor?: CSSResult;
   unselectedIconColor: CSSResult;
   unselectedContainerColor?: CSSResult;
@@ -15,6 +16,7 @@ type _IconButtonVariantToken = {
   selectedContainerColor?: CSSResult;
   disabled: {
     containerColor: CSSResult;
+    containerElevation?: CSSResult;
     containerOpacity: CSSResult;
     iconColor: CSSResult;
     iconOpacity: CSSResult;
@@ -24,6 +26,7 @@ type _IconButtonVariantToken = {
     iconColor: CSSResult;
     stateLayerColor: CSSResult;
     stateLayerOpacity: CSSResult;
+    containerElevation?: CSSResult;
     outlineColor?: CSSResult;
     unselectedIconColor: CSSResult;
     unselectedStateLayerColor: CSSResult;
@@ -34,6 +37,7 @@ type _IconButtonVariantToken = {
     iconColor: CSSResult;
     stateLayerColor: CSSResult;
     stateLayerOpacity: CSSResult;
+    containerElevation?: CSSResult;
     outlineColor?: CSSResult;
     unselectedIconColor: CSSResult;
     unselectedStateLayerColor: CSSResult;
@@ -44,6 +48,7 @@ type _IconButtonVariantToken = {
     iconColor: CSSResult;
     stateLayerColor: CSSResult;
     stateLayerOpacity: CSSResult;
+    containerElevation?: CSSResult;
     outlineColor?: CSSResult;
     unselectedIconColor: CSSResult;
     unselectedStateLayerColor: CSSResult;
@@ -56,7 +61,185 @@ type _IconButtonVariantToken = {
  * Component design tokens that control the appearance variants of `M3eIconButtonElement`.
  * @internal
  */
-export const IconButtonVariantToken: Record<IconButtonVariant, _IconButtonVariantToken> = {
+export const IconButtonVariantToken: Record<IconButtonVariant | "elevated", _IconButtonVariantToken> = {
+  /** Design tokens that control the `elevated` variant. */
+  elevated: {
+    /** Default icon color. */
+    iconColor: unsafeCSS(`var(--m3e-elevated-icon-button-icon-color, ${DesignToken.color.primary})`),
+
+    /** Default container background color. */
+    containerColor: unsafeCSS(
+      `var(--m3e-elevated-icon-button-container-color, ${DesignToken.color.surfaceContainerLow})`
+    ),
+
+    /** Resting elevation. */
+    containerElevation: unsafeCSS(
+      `var(--m3e-elevated-icon-button-container-elevation, ${DesignToken.elevation.level1})`
+    ),
+
+    /** Unselected icon color. */
+    unselectedIconColor: unsafeCSS(
+      `var(--m3e-elevated-icon-button-unselected-icon-color, ${DesignToken.color.primary})`
+    ),
+
+    /** Unselected container background color. */
+    unselectedContainerColor: unsafeCSS(
+      `var(--m3e-elevated-icon-button-unselected-container-color, ${DesignToken.color.surfaceContainerLow})`
+    ),
+
+    /** Selected icon color. */
+    selectedIconColor: unsafeCSS(`var(--m3e-elevated-icon-button-selected-icon-color, ${DesignToken.color.onPrimary})`),
+
+    /** Selected container background color. */
+    selectedContainerColor: unsafeCSS(
+      `var(--m3e-elevated-icon-button-selected-container-color, ${DesignToken.color.primary})`
+    ),
+
+    /** Design tokens that control disabled state. */
+    disabled: {
+      /** Container background color when disabled. */
+      containerColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-disabled-container-color, ${DesignToken.color.onSurface})`
+      ),
+
+      /** Opacity of container when disabled. */
+      containerOpacity: unsafeCSS(`var(--m3e-elevated-icon-button-disabled-container-opacity, 10%)`),
+
+      /** Icon color when disabled. */
+      iconColor: unsafeCSS(`var(--m3e-elevated-icon-button-disabled-icon-color, ${DesignToken.color.onSurface})`),
+
+      /** Icon opacity when disabled. */
+      iconOpacity: unsafeCSS(`var(--m3e-elevated-icon-button-disabled-icon-opacity, 38%)`),
+
+      /** Elevation when disabled. */
+      containerElevation: unsafeCSS(
+        `var(--m3e-elevated-icon-button-disabled-container-elevation, ${DesignToken.elevation.level0})`
+      ),
+    },
+
+    /** Design tokens that control hover state. */
+    hover: {
+      /** Icon color on hover. */
+      iconColor: unsafeCSS(`var(--m3e-elevated-icon-button-hover-icon-color, ${DesignToken.color.primary})`),
+
+      /** State layer color on hover. */
+      stateLayerColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-hover-state-layer-color, ${DesignToken.color.primary})`
+      ),
+
+      /** State layer opacity on hover. */
+      stateLayerOpacity: unsafeCSS(
+        `var(--m3e-elevated-icon-button-hover-state-layer-opacity, ${DesignToken.state.hoverStateLayerOpacity})`
+      ),
+
+      /** Elevation on hover. */
+      containerElevation: unsafeCSS(
+        `var(--m3e-elevated-icon-button-hover-container-elevation, ${DesignToken.elevation.level2})`
+      ),
+
+      /** Unselected icon color on hover. */
+      unselectedIconColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-hover-unselected-icon-color, ${DesignToken.color.primary})`
+      ),
+
+      /** Unselected state layer color on hover. */
+      unselectedStateLayerColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-hover-unselected-state-layer-color, ${DesignToken.color.primary})`
+      ),
+
+      /** Selected icon color on hover. */
+      selectedIconColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-hover-selected-icon-color, ${DesignToken.color.onPrimary})`
+      ),
+
+      /** Selected ripple color on hover. */
+      selectedStateLayerColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-hover-selected-state-layer-color, ${DesignToken.color.onPrimary})`
+      ),
+    },
+
+    /** Design tokens that control focus state. */
+    focus: {
+      /** Icon color on focus. */
+      iconColor: unsafeCSS(`var(--m3e-elevated-icon-button-focus-icon-color, ${DesignToken.color.primary})`),
+
+      /** State layer color on focus. */
+      stateLayerColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-focus-state-layer-color, ${DesignToken.color.primary})`
+      ),
+
+      /**State layer opacity on focus. */
+      stateLayerOpacity: unsafeCSS(
+        `var(--m3e-elevated-icon-button-focus-state-layer-opacity, ${DesignToken.state.focusStateLayerOpacity})`
+      ),
+
+      /** Elevation on focus. */
+      containerElevation: unsafeCSS(
+        `var(--m3e-elevated-icon-button-focus-container-elevation, ${DesignToken.elevation.level1})`
+      ),
+
+      /** Unselected icon color on focus. */
+      unselectedIconColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-focus-unselected-icon-color, ${DesignToken.color.primary})`
+      ),
+
+      /** Unselected ripple color on focus. */
+      unselectedStateLayerColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-focus-unselected-state-layer-color, ${DesignToken.color.primary})`
+      ),
+
+      /** Selected icon color on focus. */
+      selectedIconColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-focus-selected-icon-color, ${DesignToken.color.onPrimary})`
+      ),
+
+      /** Selected ripple color on focus. */
+      selectedStateLayerColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-focus-selected-state-layer-color, ${DesignToken.color.onPrimary})`
+      ),
+    },
+
+    /** Design tokens that control pressed state. */
+    pressed: {
+      /** Icon color on pressed. */
+      iconColor: unsafeCSS(`var(--m3e-elevated-icon-button-pressed-icon-color, ${DesignToken.color.primary})`),
+
+      /** State layer color on pressed. */
+      stateLayerColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-pressed-state-layer-color, ${DesignToken.color.primary})`
+      ),
+
+      /** State layer opacity on pressed. */
+      stateLayerOpacity: unsafeCSS(
+        `var(--m3e-elevated-icon-button-pressed-state-layer-opacity, ${DesignToken.state.pressedStateLayerOpacity})`
+      ),
+
+      /** Elevation on pressed. */
+      containerElevation: unsafeCSS(
+        `var(--m3e-elevated-icon-button-pressed-container-elevation, ${DesignToken.elevation.level1})`
+      ),
+
+      /** Unselected icon color on pressed. */
+      unselectedIconColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-pressed-unselected-icon-color, ${DesignToken.color.primary})`
+      ),
+
+      /** Unselected ripple color on pressed. */
+      unselectedStateLayerColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-pressed-unselected-state-layer-color, ${DesignToken.color.primary})`
+      ),
+
+      /** Selected icon color on pressed. */
+      selectedIconColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-pressed-selected-icon-color, ${DesignToken.color.onPrimary})`
+      ),
+
+      /** Selected ripple color on pressed. */
+      selectedStateLayerColor: unsafeCSS(
+        `var(--m3e-elevated-icon-button-pressed-selected-state-layer-color, ${DesignToken.color.onPrimary})`
+      ),
+    },
+  },
   /** Design tokens that control the `outlined` variant. */
   outlined: {
     /** Default icon color. */

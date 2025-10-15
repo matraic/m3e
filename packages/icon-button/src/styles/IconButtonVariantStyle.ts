@@ -4,7 +4,7 @@ import { IconButtonVariant } from "../IconButtonVariant";
 import { IconButtonVariantToken } from "./IconButtonVariantToken";
 
 /** @private */
-function iconButtonVariantStyle(variant: IconButtonVariant): CSSResult {
+function iconButtonVariantStyle(variant: IconButtonVariant | "elevated"): CSSResult {
   return css`
     :host([variant="${unsafeCSS(variant)}"]:not(:disabled):not([disabled-interactive])) .base {
       background-color: ${IconButtonVariantToken[variant].containerColor ?? unsafeCSS("unset")};
@@ -14,6 +14,11 @@ function iconButtonVariantStyle(variant: IconButtonVariant): CSSResult {
       --m3e-state-layer-focus-opacity: ${IconButtonVariantToken[variant].focus.stateLayerOpacity};
       --m3e-ripple-color: ${IconButtonVariantToken[variant].pressed.stateLayerColor};
       --m3e-ripple-opacity: ${IconButtonVariantToken[variant].pressed.stateLayerOpacity};
+      --m3e-elevation-level: ${IconButtonVariantToken[variant].containerElevation ?? unsafeCSS("unset")};
+      --m3e-elevation-hover-level: ${IconButtonVariantToken[variant].hover.containerElevation ?? unsafeCSS("unset")};
+      --m3e-elevation-focus-level: ${IconButtonVariantToken[variant].focus.containerElevation ?? unsafeCSS("unset")};
+      --m3e-elevation-pressed-level: ${IconButtonVariantToken[variant].pressed.containerElevation ??
+      unsafeCSS("unset")};
     }
     :host([variant="${unsafeCSS(variant)}"][toggle]:not([selected]):not(:disabled):not([disabled-interactive])) .base {
       background-color: ${IconButtonVariantToken[variant].unselectedContainerColor ?? unsafeCSS("unset")};
@@ -109,6 +114,7 @@ export const IconButtonVariantStyle: CSSResultGroup = [
   iconButtonVariantStyle("outlined"),
   iconButtonVariantStyle("filled"),
   iconButtonVariantStyle("tonal"),
+  iconButtonVariantStyle("elevated"),
   css`
     :host([variant="outlined"]) .base {
       outline-style: solid;

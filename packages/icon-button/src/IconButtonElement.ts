@@ -10,6 +10,7 @@ import {
   FocusController,
   FormSubmitter,
   LinkButton,
+  M3eElevationElement,
   M3eFocusRingElement,
   M3eRippleElement,
   M3eStateLayerElement,
@@ -284,6 +285,7 @@ export class M3eIconButtonElement extends KeyboardClick(
   static override styles: CSSResultGroup = [IconButtonSizeStyle, IconButtonVariantStyle, IconButtonStyle];
 
   /** @private */ @query(".base") private readonly _base?: HTMLElement;
+  /** @private */ @query(".elevation") private readonly _elevation?: M3eElevationElement;
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;
   /** @private */ @query(".state-layer") private readonly _stateLayer?: M3eStateLayerElement;
   /** @private */ @query(".ripple") private readonly _ripple?: M3eRippleElement;
@@ -390,6 +392,7 @@ export class M3eIconButtonElement extends KeyboardClick(
   override render(): unknown {
     return html`<div class="base">
       <m3e-state-layer class="state-layer" ?disabled="${this.disabled || this.disabledInteractive}"></m3e-state-layer>
+      <m3e-elevation class="elevation" ?disabled="${this.disabled || this.disabledInteractive}"></m3e-elevation>
       <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
       <m3e-ripple class="ripple" centered ?disabled="${this.disabled || this.disabledInteractive}"></m3e-ripple>
       <div class="touch" aria-hidden="true"></div>
@@ -431,7 +434,7 @@ export class M3eIconButtonElement extends KeyboardClick(
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
     super.firstUpdated(_changedProperties);
-    [this._focusRing, this._stateLayer, this._ripple].forEach((x) => x?.attach(this));
+    [this._elevation, this._focusRing, this._stateLayer, this._ripple].forEach((x) => x?.attach(this));
   }
 
   /** @inheritdoc */
