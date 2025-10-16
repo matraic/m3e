@@ -86,7 +86,6 @@ export class M3eInputChipSetElement
         padding: unset;
       }
       ::slotted(m3e-input-chip) {
-        flex-shrink: auto;
         min-width: 0;
       }
       ::slotted([slot="input"])::placeholder {
@@ -235,16 +234,16 @@ export class M3eInputChipSetElement
         chip.disabled = true;
       }
       chip.addEventListener("remove", this.#chipRemoveHandler);
-      chip.label.addEventListener("click", this.#chipClickHandler);
+      chip.cell.addEventListener("click", this.#chipClickHandler);
     }
 
     removed.forEach((x) => {
       x.removeEventListener("remove", this.#chipRemoveHandler);
-      x.label.removeEventListener("click", this.#chipClickHandler);
+      x.cell.removeEventListener("click", this.#chipClickHandler);
     });
 
     this.#listKeyManager.setItems(
-      this.#listManager.items.flatMap((x) => (x.removeButton ? [x.label, x.removeButton] : [x.label]))
+      this.#listManager.items.flatMap((x) => (x.removeButton ? [x.cell, x.removeButton] : [x.cell]))
     );
     if (!this.#listKeyManager.activeItem) {
       this.#listKeyManager.updateActiveItem(this.#listKeyManager.items.find((x) => x.hasAttribute("tabindex")));
@@ -311,7 +310,7 @@ export class M3eInputChipSetElement
 
   /** @private */
   #handleChipClick(e: Event): void {
-    this.#listKeyManager.updateActiveItem(e.composedPath().find((x) => x instanceof M3eInputChipElement)?.label);
+    this.#listKeyManager.updateActiveItem(e.composedPath().find((x) => x instanceof M3eInputChipElement)?.cell);
   }
 
   /** @private */

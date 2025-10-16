@@ -83,19 +83,12 @@ export class M3eInputChipElement extends EventAttribute(
   static override styles: CSSResultGroup = [
     M3eChipElement.styles,
     css`
-      .label {
+      .cell {
         display: inline-flex;
         align-items: center;
         outline: none;
         column-gap: var(--m3e-chip-spacing, 0.5rem);
         min-width: 0;
-      }
-      .content {
-        flex: 1 1 auto;
-        min-width: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
       }
       .remove-button {
         --m3e-icon-button-extra-small-container-height: 1.5rem;
@@ -118,6 +111,7 @@ export class M3eInputChipElement extends EventAttribute(
         min-width: 0;
       }
       ::slotted([slot="avatar"]) {
+        flex: none;
         font-size: var(--m3e-chip-avatar-size, 1.5rem);
       }
       :host(:disabled) ::slotted([slot="avatar"]),
@@ -140,8 +134,8 @@ export class M3eInputChipElement extends EventAttribute(
     `,
   ];
 
-  /** A reference to the label of the chip. */
-  @query(".label") readonly label!: HTMLSpanElement;
+  /** A reference to the grid cell of the chip. */
+  @query(".cell") readonly cell!: HTMLSpanElement;
 
   /** A reference to the button used to remove the chip. */
   @query(".remove-button") readonly removeButton!: M3eIconButtonElement | null;
@@ -179,27 +173,27 @@ export class M3eInputChipElement extends EventAttribute(
     return html`<div class="base">
       <m3e-elevation
         class="elevation"
-        for="label"
+        for="cell"
         ?disabled="${this.disabled || this.disabledInteractive}"
       ></m3e-elevation>
       <m3e-state-layer
         class="state-layer"
-        for="label"
+        for="cell"
         ?disabled="${this.disabled || this.disabledInteractive}"
       ></m3e-state-layer>
-      <m3e-focus-ring class="focus-ring" for="label" ?disabled="${this.disabled}"></m3e-focus-ring>
-      <m3e-ripple class="ripple" for="label" ?disabled="${this.disabled || this.disabledInteractive}"></m3e-ripple>
+      <m3e-focus-ring class="focus-ring" for="cell" ?disabled="${this.disabled}"></m3e-focus-ring>
+      <m3e-ripple class="ripple" for="cell" ?disabled="${this.disabled || this.disabledInteractive}"></m3e-ripple>
       <div class="wrapper">
         <div
-          id="label"
-          class="label"
+          id="cell"
+          class="cell"
           role="gridcell"
           tabindex="${ifDefined(this.disabled ? undefined : "-1")}"
           @keydown="${this.#handleKeyDown}"
         >
           <slot name="avatar" @slotchange="${this.#handleAvatarSlotChange}"></slot>
           ${this._renderIcon()}
-          <div class="content">${this._renderSlot()}</div>
+          <div class="label">${this._renderSlot()}</div>
           <div class="touch" aria-hidden="true"></div>
         </div>
         ${this._renderTrailingIcon()}

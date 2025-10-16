@@ -116,6 +116,13 @@ export class M3eChipElement extends Role(LitElement, "none") {
       align-items: center;
       column-gap: var(--m3e-chip-spacing, 0.5rem);
     }
+    .label {
+      flex: 1 1 auto;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     :host([variant="elevated"]) .base {
       background-color: var(--m3e-elevated-chip-container-color, ${DesignToken.color.surfaceContainerLow});
 
@@ -155,6 +162,7 @@ export class M3eChipElement extends Role(LitElement, "none") {
     }
     ::slotted([slot="icon"]),
     ::slotted([slot="trailing-icon"]) {
+      flex: none;
       width: 1em;
       font-size: var(--m3e-chip-icon-size, 1.125rem) !important;
     }
@@ -275,13 +283,15 @@ export class M3eChipElement extends Role(LitElement, "none") {
       <m3e-ripple class="ripple" ?disabled="${disabled || disabledInteractive}"></m3e-ripple>
       <div class="touch" aria-hidden="true"></div>
       ${isLinkButtonMixin(this) ? this[renderPseudoLink]() : nothing}
-      <div class="wrapper">${this._renderContent()}</div>
+      <div class="wrapper">${this.#renderContent()}</div>
     </div>`;
   }
 
-  /** @internal */
-  protected _renderContent(): unknown {
-    return html`${this._renderIcon()}${this._renderSlot()}${this._renderTrailingIcon()}`;
+  /** @private */
+  #renderContent(): unknown {
+    return html`${this._renderIcon()}
+      <div class="label">${this._renderSlot()}</div>
+      ${this._renderTrailingIcon()}`;
   }
 
   /** @internal */
