@@ -486,8 +486,13 @@ export class M3eNavMenuItemElement extends Selected(
       .assignedElements({ flatten: true })
       .filter((x) => x instanceof M3eNavMenuItemElement);
 
+    const hadChildItems = this._hasChildItems;
     this._hasChildItems = this.#items.length > 0;
     this.classList.toggle("-has-items", this._hasChildItems);
+
+    if (hadChildItems || this._hasChildItems) {
+      this.selected = this.#items.some((x) => x.selected);
+    }
   }
 
   /** @private */
