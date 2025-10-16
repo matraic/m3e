@@ -13,6 +13,7 @@
     "packages/fab",
     "packages/fab-menu",
     "packages/form-field",
+    "packages/heading",
     "packages/icon",
     "packages/icon-button",
     "packages/button-group",
