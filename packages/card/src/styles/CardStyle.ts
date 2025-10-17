@@ -28,7 +28,7 @@ export const CardStyle: CSSResult = css`
   }
   .base {
     width: 100%;
-    height: inherit;
+    height: 100%;
     position: relative;
     box-sizing: border-box;
     border-radius: ${CardToken.shape};
