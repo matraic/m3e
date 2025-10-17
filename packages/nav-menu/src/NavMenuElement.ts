@@ -96,7 +96,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);
   /** @private */ readonly #keyUpHandler = (e: KeyboardEvent) => this.#handleKeyUp(e);
-  /** @private */ readonly #clickHandler = (e: Event) => this.#handleClick(e);
+  /** @private */ readonly #pointerDownHandler = (e: Event) => this.#handlePointerDown(e);
 
   constructor() {
     super();
@@ -155,7 +155,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
     this.addEventListener("keydown", this.#keyDownHandler);
     this.addEventListener("keyup", this.#keyUpHandler);
-    this.addEventListener("click", this.#clickHandler);
+    this.addEventListener("pointerdown", this.#pointerDownHandler);
   }
 
   /** @inheritdoc */
@@ -164,7 +164,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
     this.removeEventListener("keydown", this.#keyDownHandler);
     this.removeEventListener("keyup", this.#keyUpHandler);
-    this.removeEventListener("click", this.#clickHandler);
+    this.removeEventListener("pointerdown", this.#pointerDownHandler);
   }
 
   /** @inheritdoc */
@@ -269,7 +269,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
   }
 
   /** @private */
-  #handleClick(e: Event): void {
+  #handlePointerDown(e: Event): void {
     if (!e.defaultPrevented && !this.#ignoreFocusVisible) {
       this.#ignoreFocusVisible = true;
       if (this[selectionManager].activeItem) {
@@ -287,7 +287,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
   /** @private */
   #updateFocusVisible(): void {
-    const focused = this.matches(":focus");
+    const focused = this.matches(":focus") || this.matches(":focus-within");
     const focusVisible = !this.#ignoreFocusVisible && this.matches(":focus-visible");
     this[selectionManager].items.forEach((x) => {
       const active = x === this[selectionManager].activeItem;
