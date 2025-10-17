@@ -335,9 +335,9 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   /** @private */
   #handleClick(e: Event): void {
     if (e.target instanceof M3eTocItemElement && !e.target.disabled && e.target.node?.element) {
-      if ("onscrollend" in window) {
+      if ("onscrollend" in window && this.control) {
         this.#ignoreScroll = true;
-        this.control?.addEventListener("scrollend", () => (this.#ignoreScroll = false), { once: true });
+        this.control.addEventListener("scrollend", () => (this.#ignoreScroll = false), { once: true });
       }
 
       e.target.node.element.scrollIntoView({ block: "start", inline: "start", behavior: "smooth" });
