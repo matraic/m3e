@@ -9,16 +9,10 @@ export function scrollIntoViewIfNeeded(
   scrollContainer: HTMLElement,
   behavior: ScrollBehavior = "auto"
 ): void {
-  const targetTop = element.offsetTop;
-  const targetBottom = targetTop + element.offsetHeight;
-  const scrollTop = scrollContainer.scrollTop;
-  const parentHeight = scrollContainer.clientHeight;
-  const parentTop = element.offsetParent === scrollContainer ? 0 : scrollContainer.offsetTop;
-  const visibleTop = scrollTop;
-  const visibleBottom = scrollTop + parentHeight;
+  const containerRect = scrollContainer.getBoundingClientRect();
+  const elementRect = element.getBoundingClientRect();
 
-  if (targetTop < visibleTop || targetBottom > visibleBottom) {
-    const scrollTo = targetTop - parentTop;
-    scrollContainer.scrollTo({ top: scrollTo, behavior: behavior });
+  if (elementRect.top < containerRect.top || elementRect.bottom > containerRect.bottom) {
+    element.scrollIntoView({ block: "nearest", behavior: behavior });
   }
 }
