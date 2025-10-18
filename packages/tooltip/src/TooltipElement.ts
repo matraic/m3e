@@ -289,6 +289,7 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(Role(LitElement, 
 
     M3eTooltipElement.__openTooltips.filter((x) => x !== this).forEach((x) => x.hide());
 
+    this._base.showPopover();
     this.#anchorCleanup = await positionAnchor(this._base, this.control, {
       position:
         this.position === "above"
@@ -303,8 +304,6 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(Role(LitElement, 
       shift: true,
       offset: TOOLTIP_OFFSET,
     });
-
-    this._base.showPopover();
 
     if (!M3eTooltipElement.__openTooltips.includes(this)) {
       M3eTooltipElement.__openTooltips.push(this);
