@@ -115,6 +115,7 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
   static override styles: CSSResultGroup = [AppBarStyle, AppBarSizeStyle];
 
   /** @private */ readonly #scrollHandler = (e: Event) => this._updateScroll(e);
+  /** @private */ readonly #frameLoadHandler = () => this.#handleFrameLoad();
   /** @private */ @query(".base") private readonly _base?: HTMLElement;
   /** @private */ @query(".leading-icon") private readonly _leadingIcon?: HTMLElement;
   /** @private */ @query(".trailing-icon") private readonly _trailingIcon?: HTMLElement;
@@ -133,12 +134,22 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
 
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
-    control.addEventListener("scroll", this.#scrollHandler);
     super.attach(control);
+
+    if (control instanceof HTMLIFrameElement) {
+      control.addEventListener("load", this.#frameLoadHandler);
+      this.#handleFrameLoad();
+    } else {
+      control.addEventListener("scroll", this.#scrollHandler);
+    }
   }
 
   /** @inheritdoc */
   override detach(): void {
+    if (this.control instanceof HTMLIFrameElement) {
+      this.control.removeEventListener("load", this.#frameLoadHandler);
+      this.control.contentDocument?.removeEventListener("scroll", this.#scrollHandler);
+    }
     if (this.control) {
       this.control.removeEventListener("scroll", this.#scrollHandler);
     }
@@ -254,8 +265,25 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
   /** @private */
   @debounce(40)
   private _updateScroll(e: Event): void {
-    if (e.target instanceof HTMLElement) {
-      this._base?.classList.toggle("-on-scroll", e.target.scrollTop > 0);
+    let scrollTop = 0;
+
+    if (this.control instanceof HTMLIFrameElement) {
+      // Both document element (<html>) and body are tested for scroll top, taking the maximum.
+      scrollTop = Math.max(
+        this.control.contentDocument?.documentElement.scrollTop ?? 0,
+        this.control.contentDocument?.body.scrollTop ?? 0
+      );
+    } else if (e.target instanceof HTMLElement) {
+      scrollTop = e.target.scrollTop;
+    }
+
+    this._base?.classList.toggle("-on-scroll", scrollTop > 0);
+  }
+
+  /** @private */
+  #handleFrameLoad(): void {
+    if (this.control instanceof HTMLIFrameElement) {
+      this.control.contentDocument?.addEventListener("scroll", this.#scrollHandler);
     }
   }
 }
