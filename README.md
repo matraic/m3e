@@ -6,6 +6,10 @@ Welcome to the Material 3 Expressive (M3E) monorepo—a unified collection of ro
 
 Material 3 (M3) introduces a new era of expressive design, focusing on personalization, dynamic color, and enhanced accessibility. This monorepo provides a comprehensive suite of reusable components, each crafted to deliver seamless integration, consistent theming, and intuitive user experiences.
 
+## 🛡️ Disclaimer
+
+This project is not affiliated with or endorsed by Google. “Material Design” and “Material 3” are trademarks of Google LLC.
+
 ## ✨ Features
 
 - **Expressive Components**: Leverage Material 3’s design tokens, dynamic color, shape and motion systems for highly customizable UI elements.
