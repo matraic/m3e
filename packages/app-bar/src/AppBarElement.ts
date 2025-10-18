@@ -268,11 +268,7 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
     let scrollTop = 0;
 
     if (this.control instanceof HTMLIFrameElement) {
-      // Both document element (<html>) and body are tested for scroll top, taking the maximum.
-      scrollTop = Math.max(
-        this.control.contentDocument?.documentElement.scrollTop ?? 0,
-        this.control.contentDocument?.body.scrollTop ?? 0
-      );
+      scrollTop = this.#getFrameScrollTop(this.control);
     } else if (e.target instanceof HTMLElement) {
       scrollTop = e.target.scrollTop;
     }
@@ -284,7 +280,14 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
   #handleFrameLoad(): void {
     if (this.control instanceof HTMLIFrameElement) {
       this.control.contentDocument?.addEventListener("scroll", this.#scrollHandler);
+      this._base?.classList.toggle("-on-scroll", this.#getFrameScrollTop(this.control) > 0);
     }
+  }
+
+  /** @private */
+  #getFrameScrollTop(frame: HTMLIFrameElement): number {
+    // Both document element (<html>) and body are tested for scroll top, taking the maximum.
+    return Math.max(frame.contentDocument?.documentElement.scrollTop ?? 0, frame.contentDocument?.body.scrollTop ?? 0);
   }
 }
 
