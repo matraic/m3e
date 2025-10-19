@@ -287,7 +287,10 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
   /** @private */
   #getFrameScrollTop(frame: HTMLIFrameElement): number {
     // Both document element (<html>) and body are tested for scroll top, taking the maximum.
-    return Math.max(frame.contentDocument?.documentElement.scrollTop ?? 0, frame.contentDocument?.body.scrollTop ?? 0);
+    return Math.max(
+      frame.contentDocument?.documentElement?.scrollTop ?? 0,
+      frame.contentDocument?.body?.scrollTop ?? 0
+    );
   }
 }
 
