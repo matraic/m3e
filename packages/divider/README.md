@@ -11,6 +11,23 @@ The `m3e-divider` component visually separates content within layouts, lists, or
 npm install @m3e/divider
 ```
 
+## 💻 Editor Integration
+
+This package includes a [Custom Elements Manifest](https://github.com/webcomponents/custom-elements-manifest) to support enhanced editor tooling and developer experience.
+
+### Visual Studio Code
+
+To enable autocomplete and hover documentation for `@m3e/divider`, install the [Custom Elements Manifest Language Server](https://marketplace.visualstudio.com/items?itemName=pwrs.cem-language-server-vscode) extension. It will automatically detect the manifest bundled with this package and surface tag names, attributes, slots, and events in supported files.
+
+Alternately, you can explicitly reference the `html-custom-data.json` and `css-custom-data.json` in your workspace settings:
+
+```json
+{
+  "html.customData": ["./node_modules/@m3e/divider/dist/html-custom-data.json"],
+  "css.customData": ["./node_modules/@m3e/divider/dist/css-custom-data.json"]
+}
+```
+
 ## 🚀 Browser Usage
 
 This package uses [JavaScript Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers). To use it directly in a browser without a bundler, use a module script similar to the following.
