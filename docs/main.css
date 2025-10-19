@@ -26,7 +26,8 @@ m3e-card + .example {
   right: 2rem;
 }
 p + p,
-p + ul {
+p + ul,
+.example + p {
   margin-block-start: unset;
 }
 *:not(:defined) {
