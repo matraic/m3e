@@ -1,9 +1,10 @@
 {
   "name": "@m3e/toolbar",
-  "version": "0.1.2",
+  "version": "1.0.0-rc.1",
   "description": "Toolbar for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
+  "homepage": "https://matraic.github.io/m3e/",
   "repository": {
     "type": "git",
     "url": "https://github.com/matraic/m3e.git"
@@ -29,7 +30,7 @@
     "@material/material-color-utilities": "^0.3.0"
   },
   "peerDependencies": {
-    "@m3e/core": "^0.1.2",
+    "@m3e/core": "1.0.0-rc.1",
     "lit": "^3.3.0"
   },
   "devDependencies": {
