@@ -411,7 +411,11 @@ export class M3eNavMenuItemElement extends Selected(
       for (const icon of this.querySelectorAll(":scope > m3e-icon[slot]")) {
         icon.toggleAttribute("filled", this.selected);
       }
+
       this.#path.forEach((x) => (x.selected = this.selected));
+      if (this.selected && !this.hasChildItems) {
+        this.closest("m3e-nav-menu")?.[selectionManager].notifySelectionChange(this);
+      }
     }
   }
 

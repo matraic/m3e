@@ -92,6 +92,14 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
       if (this[selectionManager].activeItem) {
         this.#activateItem(this[selectionManager].activeItem);
       }
+    })
+    .onSelectedItemsChange(() => {
+      const selected = this.selected;
+      for (const item of this.items) {
+        if (item !== selected) {
+          this.#updateItemFocusVisible(item, false, false);
+        }
+      }
     });
 
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);
