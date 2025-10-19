@@ -2,7 +2,7 @@
 
 The `m3e-drawer-container` component provides a responsive layout container for managing one or two sliding drawers alongside main content. It supports multiple drawer modes (`over`, `push`, `side`, and `auto`), adapts to breakpoint size, and encodes spatial hierarchy, motion transitions, and accessibility semantics for modal, dismissible, and permanent navigation.
 
-> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> **Part of the [M3E](../../README.md) monorepo**  
 > This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
 
 ## 📦 Installation

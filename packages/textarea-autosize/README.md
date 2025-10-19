@@ -2,7 +2,7 @@
 
 The `m3e-textarea-autosize` component automatically adjusts the height of a linked `textarea` to fit its content, preserving layout integrity and user experience. This non-visual element listens to input changes and applies dynamic resizing, constrained by optional row limits. It supports declarative configuration via attributes and can be disabled when manual control is preferred.
 
-> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> **Part of the [M3E](../../README.md) monorepo**  
 > This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
 
 ## 📦 Installation

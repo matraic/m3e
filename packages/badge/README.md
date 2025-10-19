@@ -2,7 +2,7 @@
 
 The `m3e-badge` component is a compact visual indicator used to label content. Designed according to Material Design 3 guidelines, it can display counts, presence, or semantic emphasis, and is attachable to icons, buttons, or other components. Badges support dynamic sizing, color, and shape, ensuring clarity and accessibility while maintaining a consistent, expressive appearance across surfaces.
 
-> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> **Part of the [M3E](../../README.md) monorepo**  
 > This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
 
 ## 📦 Installation

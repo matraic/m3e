@@ -1,6 +1,6 @@
-# Material 3 Expressive (M3E)
+# M3E
 
-Welcome to the Material 3 Expressive (M3E) monorepo—a unified collection of robust, customizable web components built with the latest Material Design 3 guidelines. This repository empowers developers to create visually rich, adaptive, and accessible user interfaces for modern web applications.
+Welcome to the M3E (Material 3 Expressive) monorepo—a unified collection of robust, customizable web components built with the latest Material Design 3 guidelines. This repository empowers developers to create visually rich, adaptive, and accessible user interfaces for modern web applications.
 
 ## 📝 Overview
 

@@ -2,7 +2,7 @@
 
 The `m3e-heading` component provides expressive, accessible headings for pages and sections, supporting display, headline, title, and label variants in multiple sizes. It applies Material 3 typographic tokens for font size, weight, line height, and letter spacing, ensuring visual hierarchy and clarity.
 
-> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> **Part of the [M3E](../../README.md) monorepo**  
 > This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
 
 ## 📦 Installation

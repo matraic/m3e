@@ -2,7 +2,7 @@
 
 The `m3e-loading-indicator` component uses animation to grab attention, mitigate perceived latency, and indicate that an activity is in progress. Use the `variant` attribute to switch between `uncontained` (default) and `contained` appearances for contrast and context.
 
-> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> **Part of the [M3E](../../README.md) monorepo**  
 > This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
 
 ## 📦 Installation

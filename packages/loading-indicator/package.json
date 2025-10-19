@@ -1,7 +1,7 @@
 {
   "name": "@m3e/loading-indicator",
   "version": "0.1.2",
-  "description": "Loading Indicator for Material 3 Expressive (M3E)",
+  "description": "Loading Indicator for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
   "repository": {

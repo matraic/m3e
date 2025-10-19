@@ -1,6 +1,6 @@
 # Contributing to Material 3 Expressive
 
-Thank you for your interest in contributing to the Material 3 Expressive (M3E) monorepo! We welcome contributions that help improve, extend, and refine our suite of Material 3 web components.
+Thank you for your interest in contributing to the M3E monorepo! We welcome contributions that help improve, extend, and refine our suite of Material 3 web components.
 
 ## How to Contribute
 

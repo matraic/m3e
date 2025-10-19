@@ -1,7 +1,7 @@
 {
   "name": "@m3e/segmented-button",
   "version": "0.1.2",
-  "description": "Segmented Button for Material 3 Expressive (M3E)",
+  "description": "Segmented Button for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
   "repository": {

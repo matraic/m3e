@@ -2,7 +2,7 @@
 
 The `m3e-slide-group` component presents directional pagination controls for navigating overflowing content. It orchestrates scrollable layouts with expressive slot-based icons and adaptive orientation, revealing navigation affordances only when content exceeds a defined threshold. It supports both horizontal and vertical flows, and encodes accessibility through customizable labels and interaction states.
 
-> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> **Part of the [M3E](../../README.md) monorepo**  
 > This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
 
 ## 📦 Installation

@@ -2,7 +2,7 @@
 
 The `@m3e/snackbar` package provides the `M3eSnackbar` global service on `window` (`globalThis`) used to present short updates about application processes at the bottom of the screen from anywhere in an application.
 
-> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> **Part of the [M3E](../../README.md) monorepo**  
 > This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
 
 ## 📦 Installation

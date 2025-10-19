@@ -1,7 +1,7 @@
 {
   "name": "@m3e/drawer-container",
   "version": "0.1.2",
-  "description": "Drawer Container for Material 3 Expressive (M3E)",
+  "description": "Drawer Container for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
   "repository": {

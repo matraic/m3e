@@ -2,7 +2,7 @@
 
 ## Our Pledge
 
-As contributors and maintainers of the Material 3 Expressive (M3E) monorepo, we pledge to make participation in this project a welcoming, inclusive, and respectful experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
+As contributors and maintainers of the M3E monorepo, we pledge to make participation in this project a welcoming, inclusive, and respectful experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
 ## Standards
 

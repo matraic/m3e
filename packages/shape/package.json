@@ -1,7 +1,7 @@
 {
   "name": "@m3e/shape",
   "version": "0.1.2",
-  "description": "Shape for Material 3 Expressive (M3E)",
+  "description": "Shape for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
   "repository": {

@@ -2,7 +2,7 @@
 
 The `m3e-segmented-button` and `m3e-button-segment` components allows users to select one or more options from a horizontal group. Each segment behaves like a toggle-able button, supporting icon and label content, selection state, and accessibility roles. Built with Material Design 3 principles, it adapts shape, color, and ripple feedback based on interaction state and input modality. Segments are visually unified but independently interactive.
 
-> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> **Part of the [M3E](../../README.md) monorepo**  
 > This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
 
 ## 📦 Installation

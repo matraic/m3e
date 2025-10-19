@@ -2,7 +2,7 @@
 
 The `m3e-button-group` component arranges multiple into a unified, expressive layout, supporting both `standard` and `connected` variants. It enables seamless, accessible grouping of actions, adapts to various sizes, and ensures consistent spacing, shape, and alignment. Designed according to Material 3 principles, it empowers users to interact with related actions in a visually harmonious and intuitive way.
 
-> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> **Part of the [M3E](../../README.md) monorepo**  
 > This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
 
 ## 📦 Installation

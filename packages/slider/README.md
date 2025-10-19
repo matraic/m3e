@@ -2,7 +2,7 @@
 
 The `m3e-slider` component enables users to select a numeric value from a continuous or discrete range. Designed according to Material 3 principles, it supports labeled value indicators, tick marks, and snapping behavior.
 
-> **Part of the [Material 3 Expressive (M3E)](../../README.md) monorepo**  
+> **Part of the [M3E](../../README.md) monorepo**  
 > This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
 
 ## 📦 Installation
