@@ -10,5 +10,8 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  frame.src = location.hash ? location.hash.substring(2) : "getting-started/overview.html";
+  // Only allow "[segment/]*file.html" paths, no suspicious characters
+  const allowedPathRegex = /^([a-zA-Z0-9_-]+\/)*[a-zA-Z0-9_-]+\.html$/;
+  const requestedPath = location.hash ? location.hash.substring(2) : "";
+  frame.src = allowedPathRegex.test(requestedPath) ? requestedPath : "getting-started/overview.html";
 });
