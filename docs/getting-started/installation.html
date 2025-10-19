@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Installation for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Installation for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "../../packages/core/dist/index.min.js",
+          "@m3e/core/a11y": "../../packages/core/dist/a11y.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="../../packages/card/dist/index.min.js"></script>
+    <script type="module" src="../../packages/heading/dist/index.min.js"></script>
+    <script type="module" src="../../packages/toc/dist/index.min.js"></script>
+    <script type="module" src="../../packages/theme/dist/index.min.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Installation</span>
+      </m3e-toc>
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Installation</m3e-heading>
+      <p>
+        The M3E web component library is distributed as a set of modular packages under the scoped namespace
+        <strong>@m3e</strong>. Each component is published independently and can be installed as needed.
+      </p>
+      <p>For example:</p>
+      <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/button</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        Each package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use a package directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/button/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must also use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies. The following is an example import map for <code>@m3e/button</code>.
+      </p>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Editor integration</m3e-heading>
+      <p>
+        Each package includes a
+        <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank">Custom Elements Manifest</a>
+        to support enhanced editor tooling and developer experience.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Visual Studio Code</m3e-heading>
+      <p>
+        To enable autocomplete and hover documentation for a package, install the
+        <a href="https://marketplace.visualstudio.com/items?itemName=pwrs.cem-language-server-vscode" target="_blank"
+          >Custom Elements Manifest Language Server</a
+        >
+        extension. It will automatically detect the manifest bundled with this package and surface tag names,
+        attributes, slots, and events in supported files.
+      </p>
+      <p>
+        Alternately, you can explicitly reference the <code>html-custom-data.json</code> and
+        <code>css-custom-data.json</code> in your workspace settings. The following is an example for
+        <code>@m3e/button</code>.
+      </p>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&#123;
+&nbsp;&nbsp;&quot;html.customData&quot;: [&quot;./node_modules/@m3e/button/dist/html-custom-data.json&quot;],
+&nbsp;&nbsp;&quot;css.customData&quot;: [&quot;./node_modules/@m3e/button/dist/css-custom-data.json&quot;]
+&#125;</pre
+        >
+      </m3e-card>
+    </m3e-theme>
+  </body>
+</html>

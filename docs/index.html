@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "../packages/core/dist/index.min.js",
+          "@m3e/core/a11y": "../packages/core/dist/a11y.min.js",
+          "@m3e/core/anchoring": "../packages/core/dist/anchoring.min.js",
+          "@m3e/core/layout": "../packages/core/dist/layout.min.js",
+          "@m3e/core/platform": "../packages/core/dist/platform.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="../packages/app-bar/dist/index.min.js"></script>
+    <script type="module" src="../packages/icon-button/dist/index.min.js"></script>
+    <script type="module" src="../packages/icon/dist/index.min.js"></script>
+    <script type="module" src="../packages/drawer-container/dist/index.min.js"></script>
+    <script type="module" src="../packages/nav-menu/dist/index.min.js"></script>
+    <script type="module" src="../packages/tooltip/dist/index.min.js"></script>
+    <script type="module" src="../packages/theme/dist/index.min.js"></script>
+    <script src="index.js"></script>
+    <link href="index.css" rel="stylesheet" />
+  </head>
+  <body>
+    <m3e-theme strong-focus>
+      <m3e-app-bar class="docs-header-bar" for="content-frame">
+        <m3e-icon-button slot="leading-icon" aria-label="Menu" toggle>
+          <m3e-icon name="menu"></m3e-icon>
+          <m3e-icon slot="selected" name="menu_open"></m3e-icon>
+          <m3e-drawer-toggle for="nav-drawer"></m3e-drawer-toggle>
+        </m3e-icon-button>
+        <span slot="title">M3E</span>
+        <span slot="subtitle">Material 3 Expressive for Every Framework</span>
+        <span slot="trailing-icon">
+          <m3e-icon-button id="github-button" aria-label="Git" href="https://github.com/matraic/m3e">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98 96" fill="currentColor">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
+              />
+            </svg>
+          </m3e-icon-button>
+          <m3e-tooltip for="github-button">Github</m3e-tooltip>
+        </span>
+      </m3e-app-bar>
+      <m3e-drawer-container class="docs-drawer-container" start start-mode="auto">
+        <m3e-nav-menu id="nav-drawer" slot="start">
+          <m3e-nav-menu-item open>
+            <m3e-icon slot="icon" name="rocket_launch"></m3e-icon>
+            <span slot="label">Getting Started</span>
+            <m3e-nav-menu-item>
+              <m3e-icon slot="icon" name="near_me"></m3e-icon>
+              <a slot="label" target="content-frame" href="getting-started/overview.html">Overview</a>
+            </m3e-nav-menu-item>
+            <m3e-nav-menu-item>
+              <m3e-icon slot="icon" name="package_2"></m3e-icon>
+              <a slot="label" target="content-frame" href="getting-started/installation.html">Installation</a>
+            </m3e-nav-menu-item>
+          </m3e-nav-menu-item>
+          <m3e-nav-menu-item open>
+            <m3e-icon slot="icon" name="widgets"></m3e-icon>
+            <span slot="label">Components</span>
+            <m3e-nav-menu-item>
+              <a slot="label" target="content-frame" href="components/button.html">Button</a>
+            </m3e-nav-menu-item>
+          </m3e-nav-menu-item>
+        </m3e-nav-menu>
+        <main>
+          <iframe id="content-frame" class="docs-frame" title="Main content" name="content-frame"></iframe>
+        </main>
+      </m3e-drawer-container>
+    </m3e-theme>
+  </body>
+</html>

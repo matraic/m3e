@@ -1,0 +1,92 @@
+api-viewer,
+api-viewer::part(tab-panel) {
+  background: unset;
+}
+api-viewer::part(tab-panel) {
+  border-left: 1px solid var(--md-sys-color-outline-variant);
+}
+api-viewer::part(tab),
+api-viewer::part(button) {
+  text-transform: capitalize;
+}
+api-viewer::part(header) {
+  justify-content: center;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+api-viewer::part(header-title) {
+  font-weight: 700;
+}
+api-viewer::part(radio-label),
+api-viewer::part(radio-button),
+api-viewer::part(select-label) {
+  display: none;
+}
+api-viewer {
+  width: 100%;
+  max-width: unset;
+  border-color: var(--md-sys-color-outline-variant);
+  border-radius: 0.75rem;
+}
+api-viewer::part(tab) {
+  border-radius: 624.9375rem;
+  padding-block: 0.5rem;
+  padding-inline: 1.5rem;
+  text-align: center;
+  justify-content: center;
+  margin: 0.5rem;
+  min-width: 8.5rem;
+  min-height: 3.5rem;
+  font-weight: 500;
+  --ave-primary-color: color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent);
+}
+api-viewer::part(docs-tag) {
+  border: none;
+  background-color: var(--md-sys-color-surface-variant);
+  text-shadow: 0 1px 1px var(--md-sys-color-surface-variant);
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+api-viewer::part(docs-label) {
+  color: var(--md-sys-color-on-surface);
+}
+api-viewer::part(docs-markdown) {
+  color: var(--md-sys-color-on-surface-variant);
+}
+api-viewer::part(docs-value) {
+  font-weight: 700;
+}
+api-viewer::part(docs-item) {
+  border-color: var(--md-sys-color-outline-variant);
+}
+api-viewer {
+  --ave-primary-color: var(--md-sys-color-primary);
+  --ave-accent-color: var(--md-sys-color-on-surface-variant);
+  --ave-secondary-color: var(--md-sys-color-tertiary);
+  --ave-header-background: transparent;
+  --ave-header-color: var(--md-sys-color-on-surface);
+  --ave-border-color: var(--md-sys-color-outline-variant);
+  --ave-item-color: var(--md-sys-color-on-surface);
+  --ave-label-color: var(--md-sys-color-on-surface);
+  --ave-tag-background-color: var(--md-sys-color-surface-container-lowest);
+  --ave-tag-border-color: var(--md-sys-color-outline-variant);
+  --ave-tag-color: var(--md-sys-color-on-surface-variant);
+  --ave-tab-color: var(--md-sys-color-on-surface-variant);
+  --ave-tab-selected-color: var(--md-sys-color-primary);
+  --ave-tab-indicator-size: 100%;
+}
+m3e-heading + api-viewer {
+  margin-top: 1rem;
+}
+api-viewer:last-child {
+  margin-bottom: 1rem;
+}
+@media (forced-colors: active) {
+  api-viewer::part(tab) {
+    --ave-tab-selected-color: ButtonText;
+  }
+  api-viewer::part(docs-tag) {
+    forced-color-adjust: none;
+    background-color: ButtonText;
+    color: ButtonFace;
+  }
+}

@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Button for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Button for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "../../packages/core/dist/index.min.js",
+          "@m3e/core/a11y": "../../packages/core/dist/a11y.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="../../packages/card/dist/index.min.js"></script>
+    <script type="module" src="../../packages/heading/dist/index.min.js"></script>
+    <script type="module" src="../../packages/icon/dist/index.min.js"></script>
+    <script type="module" src="../../packages/toc/dist/index.min.js"></script>
+    <script type="module" src="../../packages/theme/dist/index.min.js"></script>
+    <script type="module" src="../../packages/button/dist/index.min.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Button</span>
+      </m3e-toc>
+
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Button</m3e-heading>
+      <p>
+        The <code>m3e-button</code> component is a semantic, expressive UI primitive users interact with to perform an
+        action.
+      </p>
+      <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
+      <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/button</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/button/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>
+        This section provides practical examples for implementing the components included in this package. It outlines
+        typical usage patterns, integration approaches, and configuration options to help developers adopt the
+        components effectively across a variety of environments.
+      </p>
+      <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+      <p>
+        There are five button appearance variants: <code>elevated</code>, <code>filled</code>, <code>tonal</code>,
+        <code>outlined</code>, and <code>text</code> (default). Use the <code>variant</code> attribute to change the
+        appearance.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button variant="elevated">Elevated</m3e-button>
+          <m3e-button variant="filled">Filled</m3e-button>
+          <m3e-button variant="tonal">Tonal</m3e-button>
+          <m3e-button variant="outlined">Outlined</m3e-button>
+          <m3e-button variant="text">Text</m3e-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button variant=&quot;elevated&quot;&gt;Elevated&lt;/m3e-button&gt;
+&lt;!-- Additional variants omitted for brevity --&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Shapes</m3e-heading>
+      <p>
+        Buttons can come in two shapes: <code>rounded</code> (default) or <code>square</code>. Use the
+        <code>shape</code> attribute to control the shape of a button.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button variant="elevated" shape="square">Square Elevated</m3e-button>
+          <m3e-button variant="filled" shape="square">Square Filled</m3e-button>
+          <m3e-button variant="tonal" shape="square">Square Tonal</m3e-button>
+          <m3e-button variant="outlined" shape="square">Square Outlined</m3e-button>
+          <m3e-button variant="text" shape="square">Square Text</m3e-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button variant=&quot;elevated&quot; shape=&quot;square&quot;&gt;Square Elevated&lt;/m3e-button&gt;
+&lt;!-- Additional variants omitted for brevity --&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Sizes</m3e-heading>
+      <p>
+        There are five size variants which can be used to add or remove emphasis:
+        <code>extra-small</code>, <code>small</code> (default), <code>medium</code>, <code>large</code>, and
+        <code>extra-large</code>. Use the <code>size</code> attribute to control a button's size.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button variant="tonal" size="extra-small">Extra Small</m3e-button>
+          <m3e-button variant="tonal" size="small">Small</m3e-button>
+          <m3e-button variant="tonal" size="medium">Medium</m3e-button>
+          <m3e-button variant="tonal" size="large">Large</m3e-button>
+          <m3e-button variant="tonal" size="extra-large">Extra Large</m3e-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button variant=&quot;tonal&quot; size=&quot;extra-small&quot;&gt;Extra Small&lt;/m3e-button&gt;
+&lt;!-- Additional sizes omitted for brevity --&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Icons</m3e-heading>
+      <p>
+        Use the <code>icon</code> slot to render an icon before the button's label. In addition, use the
+        <code>trailing-icon</code> slot to render an icon after the button's label. While not required, the following
+        example uses the <code>m3e-icon</code> component from <code>@m3e/icon</code> to present icons using Material
+        Symbols.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button variant="tonal"><m3e-icon slot="icon" name="send"></m3e-icon>Send</m3e-button>
+          <m3e-button variant="tonal">
+            <m3e-icon slot="trailing-icon" name="open_in_new_window"></m3e-icon>Open
+          </m3e-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button variant=&quot;tonal&quot;&gt;
+  &lt;m3e-icon slot=&quot;icon&quot; name=&quot;send&quot;&gt;&lt;/m3e-icon&gt;Send
+&lt;/m3e-button&gt;
+&lt;m3e-button variant=&quot;tonal&quot;&gt;
+  Open&lt;m3e-icon slot=&quot;trailing-icon&quot; name=&quot;open_in_new_window&quot;&gt;&lt;/m3e-icon&gt;
+&lt;/m3e-button&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Toggle</m3e-heading>
+      <p>
+        Use the <code>toggle</code> attribute to control whether a button can be used for binary selection and the
+        <code>selected</code> attribute to control the selected state. When clicked, a cancellable
+        <code>input</code> event is emitted followed by a <code>change</code> event. To cancel selection change, call
+        <code>preventDefault</code> during <code>input</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button variant="elevated" toggle>Elevated Toggle</m3e-button>
+          <m3e-button variant="filled" toggle>Filled Toggle</m3e-button>
+          <m3e-button variant="tonal" toggle>Tonal Toggle</m3e-button>
+          <m3e-button variant="outlined" toggle>Outlined Toggle</m3e-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button variant=&quot;elevated&quot; toggle&gt;Elevated Toggle&lt;/m3e-button&gt;
+&lt;!-- Additional variants omitted for brevity --&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you can use the <code>selected</code> and <code>selected-icon</code> slots to specify an alternate
+        label and icon when selected. When using the <code>m3e-icon</code> to present icons, the icon will automatically
+        be filled when a button is selected.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button variant="filled" toggle>
+            <m3e-icon slot="icon" name="play_arrow"></m3e-icon>
+            <m3e-icon slot="selected-icon" name="stop"></m3e-icon>
+            Start
+            <span slot="selected">Stop</span>
+          </m3e-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button variant=&quot;filled&quot; toggle&gt;
+  &lt;m3e-icon slot=&quot;icon&quot; name=&quot;play_arrow&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;m3e-icon slot=&quot;selected-icon&quot; name=&quot;stop&quot;&gt;&lt;/m3e-icon&gt;
+  Start
+  &lt;span slot=&quot;selected&quot;&gt;Stop&lt;/span&gt;
+&lt;/m3e-button&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+      <p>
+        Use the <code>disabled</code> attribute to disable a button. By default, disabled buttons are not focusable with
+        the keyboard. You can use the <code>disabled-interactive</code> attribute to support
+        <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls" target="_blank"
+          >focusability of disabled controls</a
+        >
+        to increase their discoverability.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button variant="filled" disabled>Disabled</m3e-button>
+          <m3e-button variant="filled" disabled-interactive>Disabled Interactive</m3e-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button variant=&quot;filled&quot; disabled&gt;Disabled&lt;/m3e-button&gt;
+&lt;m3e-button variant=&quot;filled&quot; disabled-interactive&gt;Disabled Interactive&lt;/m3e-button&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Types</m3e-heading>
+      <p>
+        Use the <code>type</code> attribute to control the behavior of a button. By default, <code>type</code> is
+        <code>button</code>. You can change this to <code>submit</code> or <code>reset</code> to submit or reset a
+        parenting form when clicked. When submitting a form, you can use the <code>name</code> and
+        <code>value</code> attributes to specify a value.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Links</m3e-heading>
+      <p>
+        Buttons can also behave like links by specifying a URL using the <code>href</code> attribute. You can also
+        specify <code>target</code>, <code>rel</code> and <code>download</code> similar to native anchor tags.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button variant="tonal" href="https://www.google.com" target="_blank">
+            Google<m3e-icon slot="trailing-icon" name="open_in_new_window"></m3e-icon>
+          </m3e-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button variant=&quot;tonal&quot; href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;
+&nbsp;&nbsp;Google&lt;m3e-icon slot=&quot;trailing-icon&quot; name=&quot;open_in_new_window&quot;&gt;&lt;/m3e-icon&gt;
+&lt;/m3e-button&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        By default, buttons are given the ARIA role <code>button</code>, indicating they are clickable elements that
+        trigger actions.
+      </p>
+      <p>
+        Icons slots have <code>aria-hidden="true"</code> to ensure icons are always hidden from assistive technologies.
+      </p>
+      <p>
+        When disabling using either the <code>disabled</code> or <code>disabled-interactive</code> attribute,
+        <code>aria-disabled="true"</code> is used to convey to assistive technologies that the button is disabled. If
+        disabled using <code>disabled-interactive</code>, <code>tabindex</code> is retained to convey that the button
+        continues to be interactive.
+      </p>
+      <p>
+        When <code>href</code> is specified, the ARIA role <code>link</code> is used instead of <code>button</code> to
+        convey the button provides an interactive reference to a resource. In addition, the component presents an
+        internal anchor, hidden from assistive technologies, used to invoke native browser features such a context menu
+        options and tooltips.
+      </p>
+      <p>For toggle buttons, <code>aria-pressed</code> is used to convey the selected state, even when disabled.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer src="../../packages/button/dist/custom-elements.json"> </api-viewer>
+    </m3e-theme>
+  </body>
+</html>

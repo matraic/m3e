@@ -1,0 +1,52 @@
+html {
+  overflow-y: auto;
+}
+body {
+  font-family: "Roboto";
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding-inline: 2rem;
+}
+#body {
+  padding-inline-end: 13.75rem;
+}
+m3e-heading + m3e-heading,
+m3e-heading + .install,
+.install + m3e-heading,
+.example + m3e-heading {
+  margin-block-start: 1rem;
+}
+m3e-card + .example {
+  margin-block: 1rem;
+}
+.toc {
+  position: fixed;
+  top: 0;
+  right: 2rem;
+}
+p + p,
+p + ul {
+  margin-block-start: unset;
+}
+*:not(:defined) {
+  visibility: hidden;
+}
+a,
+a:visited {
+  color: var(--md-sys-color-primary);
+}
+code {
+  background-color: var(--md-sys-color-surface-variant);
+  text-shadow: 0 1px 1px var(--md-sys-color-surface-variant);
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  font-weight: inherit;
+  font-size: 0.875em;
+}
+pre {
+  color: var(--md-sys-color-primary);
+  font-weight: inherit;
+  font-size: 0.875em;
+  white-space: pre-wrap;
+}

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Overview for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Overview for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="overview.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "../../packages/core/dist/index.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="../../packages/heading/dist/index.min.js"></script>
+    <script type="module" src="../../packages/card/dist/index.min.js"></script>
+    <script type="module" src="../../packages/theme/dist/index.min.js"></script>
+  </head>
+  <body>
+    <m3e-theme strong-focus>
+      <m3e-heading variant="display" size="large" level="1">Overview</m3e-heading>
+      <p>
+        Welcome to the <strong>M3E Showcase</strong>, a curated presentation of modular, accessible, and expressive web
+        components built with fidelity to Google's
+        <a href="https://m3.material.io/" target="_blank">Material Design</a>. Google's Material 3 (M3) introduces a new
+        era of expressive design, focusing on personalization, dynamic color, and enhanced accessibility.
+      </p>
+      <p>
+        This library provides a comprehensive suite of reusable components, each crafted to deliver seamless
+        integration, consistent theming, and intuitive user experiences.
+      </p>
+      <div class="card-grid">
+        <m3e-card>
+          <m3e-heading slot="header" variant="title" size="large">Expressive Components</m3e-heading>
+          <p slot="content">
+            Leverage Material 3's design tokens, dynamic color, shape and motion systems for highly customizable UI
+            elements.
+          </p>
+        </m3e-card>
+        <m3e-card>
+          <m3e-heading slot="header" variant="title" size="large">Unified Architecture</m3e-heading>
+          <p slot="content">Modular packages for easy maintenance, scalability, and rapid development.</p>
+        </m3e-card>
+        <m3e-card>
+          <m3e-heading slot="header" variant="title" size="large">Accessibility First</m3e-heading>
+          <p slot="content">
+            Built-in support for accessibility standards, ensuring inclusive experiences for all users.
+          </p>
+        </m3e-card>
+        <m3e-card>
+          <m3e-heading slot="header" variant="title" size="large">Theming & Personalization</m3e-heading>
+          <p slot="content">
+            Effortlessly adapt components to your brand or user preferences with Material 3's advanced theming
+            capabilities.
+          </p>
+        </m3e-card>
+        <m3e-card>
+          <m3e-heading slot="header" variant="title" size="large">Performance Optimized</m3e-heading>
+          <p slot="content">Lightweight, fast-loading components designed for modern web platforms.</p>
+        </m3e-card>
+        <m3e-card>
+          <m3e-heading slot="header" variant="title" size="large">Security Conscious</m3e-heading>
+          <p slot="content">
+            Built with secure-by-default patterns, including XSS-safe templating, Trusted Types compatibility, and
+            support for strong Content Security Policies (CSP).
+          </p>
+        </m3e-card>
+      </div>
+    </m3e-theme>
+  </body>
+</html>

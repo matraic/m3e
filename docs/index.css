@@ -1,0 +1,29 @@
+html {
+  overflow: hidden;
+}
+body {
+  font-family: "Roboto";
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+main {
+  display: contents;
+}
+*:not(:defined) {
+  visibility: hidden;
+}
+.docs-header-bar {
+  flex: none;
+}
+.docs-drawer-container {
+  flex: 1 1 auto;
+}
+.docs-frame {
+  display: block;
+  background: transparent;
+  height: 100%;
+  width: 100%;
+  border: none;
+}
