@@ -10,6 +10,7 @@ import {
   IntersectionController,
   MutationController,
   Role,
+  ScrollController,
 } from "@m3e/core";
 
 import { SelectionManager } from "@m3e/core/a11y";
@@ -163,10 +164,10 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
     }
   `;
 
-  /** @private */
-  @query(".active-indicator") private readonly _activeIndicator!: HTMLElement;
-
+  /** @private */ @state() private _toc: Array<TocNode> = [];
+  /** @private */ @query(".active-indicator") private readonly _activeIndicator!: HTMLElement;
   /** @private */ #ignoreScroll = false;
+
   /** @private */ readonly #selectionManager = new SelectionManager<M3eTocItemElement>()
     .withHomeAndEnd()
     .withVerticalOrientation()
@@ -222,7 +223,12 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
     },
   });
 
-  /** @private */ @state() private _toc: Array<TocNode> = [];
+  /** @private */
+  readonly #scrollController = new ScrollController(this, {
+    target: null,
+    callback: () => (this.#ignoreScroll = false),
+    debounce: true,
+  });
 
   /** @private */
   readonly #mutationController = new MutationController(this, {
@@ -244,6 +250,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   override attach(control: HTMLElement): void {
     super.attach(control);
     this.#mutationController.observe(control);
+    this.#scrollController.observe(control);
     this.#generateToc();
   }
 
@@ -251,6 +258,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   override detach(): void {
     if (this.control) {
       this.#mutationController.unobserve(this.control);
+      this.#scrollController.unobserve(this.control);
     }
     super.detach();
     this.#generateToc();
@@ -335,11 +343,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   /** @private */
   #handleClick(e: Event): void {
     if (e.target instanceof M3eTocItemElement && !e.target.disabled && e.target.node?.element) {
-      if ("onscrollend" in window && this.control) {
-        this.#ignoreScroll = true;
-        this.control.addEventListener("scrollend", () => (this.#ignoreScroll = false), { once: true });
-      }
-
+      this.#ignoreScroll = true;
       e.target.node.element.scrollIntoView({ block: "start", inline: "start", behavior: "smooth" });
       this.#selectionManager.updateActiveItem(e.target);
       this.#selectionManager.select(e.target);

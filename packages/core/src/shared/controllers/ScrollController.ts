@@ -1,6 +1,7 @@
 import { ReactiveControllerHost } from "lit";
 
 import { MonitorControllerBase, MonitorControllerOptions } from "./MonitorControllerBase";
+import { debounce } from "../decorators";
 
 /** The callback function invoked when a scrollable ancestor is scrolled. */
 export type ScrollControllerCallback = (target: Element) => void;
@@ -9,12 +10,16 @@ export type ScrollControllerCallback = (target: Element) => void;
 export interface ScrollControllerOptions extends MonitorControllerOptions {
   /** The callback invoked a scrollable ancestor is scrolled. */
   callback: ScrollControllerCallback;
+
+  /** Whether to debounce scroll events. */
+  debounce?: boolean;
 }
 
 /** A `ReactiveController` used to monitor when a scroll event is emitted from a scrollable ancestor. */
 export class ScrollController extends MonitorControllerBase {
+  /** @private */ readonly #debounce: boolean;
   /** @private */ readonly #callback: ScrollControllerCallback;
-  /** @private */ readonly #scrollHandler = (e: Event) => this.#callback(e.target as Element);
+  /** @private */ readonly #scrollHandler = (e: Event) => this.#handleScroll(e);
   /** @private */ readonly #scrollContainers = new Map<HTMLElement, Element[]>();
 
   /**
@@ -24,6 +29,7 @@ export class ScrollController extends MonitorControllerBase {
    */
   constructor(host: ReactiveControllerHost & HTMLElement, options: ScrollControllerOptions) {
     super(host, options);
+    this.#debounce = options.debounce === true;
     this.#callback = options.callback;
   }
 
@@ -42,7 +48,9 @@ export class ScrollController extends MonitorControllerBase {
     if (scrollableAncestors.length > 0) {
       this.#scrollContainers.set(target, scrollableAncestors);
       for (const ancestor of scrollableAncestors) {
-        ancestor.addEventListener("scroll", this.#scrollHandler, { passive: true });
+        (ancestor === document.documentElement ? document : ancestor).addEventListener("scroll", this.#scrollHandler, {
+          passive: true,
+        });
       }
     }
   }
@@ -51,7 +59,10 @@ export class ScrollController extends MonitorControllerBase {
   protected override _unobserve(target: HTMLElement): void {
     if (this.#scrollContainers.has(target)) {
       for (const ancestor of this.#scrollContainers.get(target)!) {
-        ancestor.removeEventListener("scroll", this.#scrollHandler);
+        (ancestor === document.documentElement ? document : ancestor).removeEventListener(
+          "scroll",
+          this.#scrollHandler
+        );
       }
       this.#scrollContainers.delete(target);
     }
@@ -60,13 +71,30 @@ export class ScrollController extends MonitorControllerBase {
   /** @private */
   #getScrollContainers(element: Element): Element[] {
     const ancestors = new Array<Element>();
-    while (element.parentElement) {
-      element = element.parentElement;
-      const style = getComputedStyle(element);
+    let ancestor: Element | null = element;
+    while (ancestor) {
+      const style = getComputedStyle(ancestor);
       if (/(auto|scroll)/.test(style.overflow + style.overflowY + style.overflowX)) {
-        ancestors.push(element);
+        ancestors.push(ancestor);
       }
+      ancestor = ancestor.parentElement;
     }
     return ancestors;
+  }
+
+  /** @private */
+  #handleScroll(e: Event): void {
+    const target = e.target === document ? document.documentElement : e.target;
+    if (this.#debounce) {
+      this._debounceCallback(target as Element);
+    } else {
+      this.#callback(target as Element);
+    }
+  }
+
+  /** @private */
+  @debounce(40)
+  private _debounceCallback(target: Element): void {
+    this.#callback(target);
   }
 }
