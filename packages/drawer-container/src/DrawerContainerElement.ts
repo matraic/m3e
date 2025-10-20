@@ -70,7 +70,6 @@ export class M3eDrawerContainerElement extends Role(LitElement, "none") {
   /** @private */ #breakpointUnobserve?: () => void;
   /** @private */ #disableStartFocusTrap = false;
   /** @private */ #disableEndFocusTrap = false;
-  /** @private */ #initialized = false;
 
   /**
    * Whether the start drawer is open.
@@ -125,14 +124,12 @@ export class M3eDrawerContainerElement extends Role(LitElement, "none") {
 
       if (this.startMode === "auto" || this.endMode === "auto") {
         this.#breakpointUnobserve = M3eBreakpointObserver.observe([Breakpoint.XSmall, Breakpoint.Small], (matches) =>
-          this.#updateMode(matches, this.#initialized)
+          this.#updateMode(matches, true)
         );
       } else {
         this.#updateMode();
       }
     }
-
-    this.#initialized = true;
   }
 
   /** @inheritdoc */
