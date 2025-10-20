@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Loading Indicator for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Loading Indicator for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@latest/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@latest/dist/a11y.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/loading-indicator@latest/dist/index.min.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Loading Indicator</span>
+      </m3e-toc>
+
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Loading Indicator</m3e-heading>
+      <p>
+        The <code>m3e-loading-indicator</code> component shows indeterminate progress for a short wait time. It uses
+        animation to grab attention, mitigate perceived latency, and indicate that an activity is in progress.
+      </p>
+      <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
+      <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/loading-indicator</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/loading-indicator/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>
+        This section provides practical examples for implementing the components included in this package. It outlines
+        typical usage patterns, integration approaches, and configuration options to help developers adopt the
+        components effectively across a variety of environments.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+      <p>
+        There are two loading indicator appearance variants: <code>uncontained</code> (default) and
+        <code>contained</code>. Use the <code>variant</code> attribute to change the appearance.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-loading-indicator></m3e-loading-indicator>
+          <m3e-loading-indicator variant="contained"></m3e-loading-indicator>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-loading-indicator&gt;&lt;/m3e-loading-indicator&gt;
+&lt;m3e-loading-indicator variant=&quot;contained&quot;&gt;&lt;/m3e-loading-indicator&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        The <code>m3e-loading-indicator</code> implements the ARIA <code>role="progressbar"</code> pattern. By default,
+        the component sets <code>aria-valuemin</code> to 0 and <code>aria-valuemax</code> to 100.
+      </p>
+      <p>
+        Always provide an accessible label via <code>aria-label</code> or <code>aria-labelledby</code> for each loading
+        indicator.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer src="https://cdn.jsdelivr.net/npm/@m3e/loading-indicator@latest/dist/custom-elements.json">
+      </api-viewer>
+    </m3e-theme>
+  </body>
+</html>
