@@ -59,4 +59,5 @@ pre {
   font-weight: inherit;
   font-size: 0.875em;
   white-space: pre-wrap;
+  word-break: break-word;
 }
