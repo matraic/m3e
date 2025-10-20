@@ -183,7 +183,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
         } else {
           this._activeIndicator.style.top = `${item.offsetTop}px`;
           this._activeIndicator.style.height = `${item.clientHeight}px`;
-          this._activeIndicator.style.visibility = "";
+          this._activeIndicator.style.visibility = item.clientHeight == 0 ? "hidden" : "";
 
           if (this.classList.contains("-no-animate")) {
             setTimeout(() => this.classList.toggle("-no-animate", false), 40);
