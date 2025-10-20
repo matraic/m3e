@@ -2,8 +2,7 @@
 
 The `m3e-divider` component visually separates content within layouts, lists, or containers using a thin, unobtrusive line. It supports horizontal and vertical orientation, with optional inset variants to align with layout padding and visual hierarchy. The divider thickness, color, and inset behavior are customizable via CSS properties to maintain consistency across surfaces. It is designed to reinforce spatial relationships without drawing attention, preserving focus on primary content.
 
-> **Part of the [M3E](../../README.md) monorepo**  
-> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+> **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
 ## 📦 Installation
 

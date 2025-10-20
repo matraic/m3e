@@ -4,8 +4,7 @@ The `m3e-toc` and `m3e-toc-item` components provide a hierarchical, interactive 
 
 > To exclude a heading from the generated table of contents, add the `m3e-toc-ignore` attribute to that heading element.
 
-> **Part of the [M3E](../../README.md) monorepo**  
-> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+> **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
 ## 📦 Installation
 

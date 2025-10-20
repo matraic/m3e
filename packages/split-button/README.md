@@ -7,8 +7,7 @@ the main action, while the trailing icon button reveals additional options, enab
 and clear visual hierarchy. The split button ensures accessible, adaptive, and visually harmonious
 interactions, reflecting Material 3’s principles of clarity, flexibility, and expressive design.
 
-> **Part of the [M3E](../../README.md) monorepo**  
-> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+> **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
 ## 📦 Installation
 

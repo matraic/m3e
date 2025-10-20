@@ -4,8 +4,7 @@ The `m3e-theme` component is a non-visual element used to apply dynamic color, e
 
 When `m3e-theme` is nested directly beneath the `<body>` of a document, the `<body>`'s `background-color` is set to the computed value of `--md-sys-color-background` and `color` is set to the computed value of `--md-sys-color-on-background`. In addition the document's `scrollbar-color` is set to the computed values of `--m3e-scrollbar-thumb-color` and `--m3e-scrollbar-track-color` which, when supported, cascades to all viewport scrollbars.
 
-> **Part of the [M3E](../../README.md) monorepo**  
-> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+> **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
 ## 📦 Installation
 

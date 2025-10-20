@@ -6,8 +6,7 @@ The `@m3e/expansion-panel` package provides expressive, accessible components fo
 
 - **`m3e-accordion`** — Organizes multiple expansion panels into a coordinated, accessible group. Supports single or multiple open panels via the `multi` attribute, expressive theming and shape control for grouped layouts, and manages open/close state across child panels for interactive disclosure patterns.
 
-> **Part of the [M3E](../../README.md) monorepo**  
-> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+> **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
 ## 📦 Installation
 

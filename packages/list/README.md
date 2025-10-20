@@ -2,8 +2,7 @@
 
 The `@m3e/list` package provides expressive, accessible components for organizing and displaying lists of items. It includes both the `m3e-list` container and the `m3e-list-item` element, supporting rich content, flexible layout, and extensive theming via CSS custom properties.
 
-> **Part of the [M3E](../../README.md) monorepo**  
-> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+> **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
 ## 📦 Installation
 

@@ -2,8 +2,7 @@
 
 The `m3e-switch` component is a semantic, accessible toggle control that reflects a binary state. Designed according to Material Design 3 guidelines, it supports shape transitions, and adaptive color theming across selected, unselected, and disabled states. The component responds to user interaction with smooth motion and expressive feedback. It supports optional icons (`none`, `selected`, or `both`) and integrates with form-associated behavior, emitting `input` and `change` events when toggled.
 
-> **Part of the [M3E](../../README.md) monorepo**  
-> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+> **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
 ## 📦 Installation
 

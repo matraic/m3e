@@ -2,6 +2,8 @@
 
 The `m3e-dialog` component presents important prompts, alerts, and actions in user flows. Designed according to Material 3 principles, it supports custom header, content, and close icon slots, ARIA accessibility, focus management, and theming via CSS custom properties.
 
+> **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
+
 ## 📦 Installation
 
 ```bash

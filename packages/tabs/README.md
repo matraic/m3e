@@ -2,8 +2,7 @@
 
 The `m3e-tabs` component provides a structured navigation surface for organizing content into distinct views, where only one view is visible at a time. It supports scrollable tab headers with optional pagination, accessible labeling for navigation controls, and configurable header positioning to suit various layout contexts. Two visual variants are available: `primary`, which emphasizes active indicators and shape styling for prominent navigation, and `secondary`, which offers a more subtle presentation with reduced indicator thickness. Stretch behavior allows tabs to expand and align rhythmically within their container, consistent with Material 3 guidance.
 
-> **Part of the [M3E](../../README.md) monorepo**  
-> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+> **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
 ## 📦 Installation
 

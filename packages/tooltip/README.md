@@ -2,8 +2,7 @@
 
 The `m3e-tooltip` component provides contextual information in response to user interaction, enhancing comprehension and reducing ambiguity. Tooltips are positioned relative to a target element and support configurable delays for show and hide behavior. Use the `for` attribute to designate the element for which to provide a tooltip.
 
-> **Part of the [M3E](../../README.md) monorepo**  
-> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+> **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
 ## 📦 Installation
 

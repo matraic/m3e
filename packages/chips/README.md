@@ -2,8 +2,7 @@
 
 The `@m3e/chips` package provides expressive, accessible chip components for actions, input, filtering, and suggestions, each supporting two appearance variants—`outlined` and `elevated`. Use `outlined` for lightweight, unobtrusive chips such as tags or filters, and `elevated` for chips that require stronger visual affordance, like assist actions or selected states. These variants help convey interaction weight, visual hierarchy, and contextual emphasis across static and interactive use cases.
 
-> **Part of the [M3E](../../README.md) monorepo**  
-> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+> **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
 ## 📦 Installation
 

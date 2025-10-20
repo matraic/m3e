@@ -2,8 +2,7 @@
 
 The `m3e-nav-menu` and `m3e-nav-menu-item` components provide a hierarchical, accessible navigation menu. Designed for sidebars, navigation drawers, and complex menu structures, they support nested expandable items, keyboard navigation, selection, and extensive theming via CSS custom properties.
 
-> **Part of the [M3E](../../README.md) monorepo**  
-> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+> **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
 ## 📦 Installation
 

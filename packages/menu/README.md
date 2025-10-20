@@ -2,8 +2,7 @@
 
 The `@m3e/menu` package provides a cohesive set of components for constructing accessible, anchored menus that align with Material 3 design guidance. It supports both single and multi-selection patterns, nested menu hierarchies, and dynamically positioned floating panels. Menus are triggered from interactive elements and present checkable or exclusive choices using item variants. Grouping primitives establish selection boundaries, while nested flows support layered navigation and progressive disclosure.
 
-> **Part of the [M3E](../../README.md) monorepo**  
-> This package is maintained within the unified M3E repository, which provides a suite of Material 3 web components.
+> **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
 ## 📦 Installation
 
