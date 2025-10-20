@@ -47,6 +47,9 @@
       m3e-drawer-container {
         flex: 1 1 auto;
       }
+      *:not(:defined) {
+        visibility: hidden;
+      }
     </style>
   </head>
   <body>
@@ -65,7 +68,7 @@
             <m3e-icon slot="icon" name="rocket_launch"></m3e-icon>
             <span slot="label">Getting Started</span>
             <m3e-nav-menu-item>
-              <m3e-icon slot="icon" name="widgets"></m3e-icon>
+              <m3e-icon slot="icon" name="near_me"></m3e-icon>
               <span slot="label">Overview</span>
             </m3e-nav-menu-item>
             <m3e-nav-menu-item>
@@ -74,7 +77,8 @@
             </m3e-nav-menu-item>
           </m3e-nav-menu-item>
           <m3e-nav-menu-item>
-            <span slot="label">Actions</span>
+            <m3e-icon slot="icon" name="widgets"></m3e-icon>
+            <span slot="label">Components</span>
             <m3e-nav-menu-item><span slot="label">Button</span></m3e-nav-menu-item>
             <m3e-nav-menu-item><span slot="label">Icon</span></m3e-nav-menu-item>
             <m3e-nav-menu-item><span slot="label">Icon Button</span></m3e-nav-menu-item>
