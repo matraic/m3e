@@ -43,6 +43,7 @@ export class M3eLoadingIndicatorElement extends Role(LitElement, "progressbar") 
       display: inline-block;
       aspect-ratio: 1 / 1;
       contain: strict;
+      vertical-align: middle;
       content-visibility: auto;
     }
     :host([variant="uncontained"]) {
@@ -77,7 +78,9 @@ export class M3eLoadingIndicatorElement extends Role(LitElement, "progressbar") 
       transition: clip-path ${DesignToken.motion.spring.slowEffects};
     }
     .active-indicator.animate {
-      animation: rotate 4998ms infinite, noop 714ms infinite;
+      animation:
+        rotate 4998ms infinite,
+        noop 714ms infinite;
     }
     @keyframes noop {
       from {
