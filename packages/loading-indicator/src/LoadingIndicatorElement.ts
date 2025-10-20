@@ -165,6 +165,14 @@ export class M3eLoadingIndicatorElement extends Role(LitElement, "progressbar") 
   @property({ reflect: true }) variant: LoadingIndicatorVariant = "uncontained";
 
   /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    this.ariaValueMin = this.ariaValueMin || "0";
+    this.ariaValueMax = this.ariaValueMax || "100";
+  }
+
+  /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
