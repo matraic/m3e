@@ -25,6 +25,15 @@ m3e-card + .example {
   top: 0;
   right: 2rem;
 }
+@media (max-width: 600px) {
+  .toc {
+    display: none;
+  }
+  #body {
+    padding-inline-end: unset;
+  }
+}
+
 p + p,
 p + ul,
 m3e-card + .example + p {
