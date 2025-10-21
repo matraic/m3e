@@ -48,7 +48,7 @@ import { BadgePosition } from "./BadgePosition";
  * @cssprop --m3e-badge-large-tracking - Letter spacing for large badge label.
  */
 @customElement("m3e-badge")
-export class M3eBadgeElement extends HtmlFor(Role(LitElement, "status")) {
+export class M3eBadgeElement extends HtmlFor(Role(LitElement, "none")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
