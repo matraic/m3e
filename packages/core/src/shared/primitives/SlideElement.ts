@@ -2,7 +2,6 @@ import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from
 import { customElement, property, queryAssignedElements } from "lit/decorators.js";
 
 import { DesignToken } from "../tokens";
-import { Role } from "../mixins";
 
 /**
  * A carousel-like container used to horizontally cycle through slotted items.
@@ -27,7 +26,7 @@ import { Role } from "../mixins";
  * @cssprop --m3e-slide-animation-duration - The duration of transitions between slotted items.
  */
 @customElement("m3e-slide")
-export class M3eSlide extends Role(LitElement, "none") {
+export class M3eSlide extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

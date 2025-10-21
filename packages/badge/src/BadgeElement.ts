@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { DesignToken, HtmlFor, Role } from "@m3e/core";
+import { DesignToken, HtmlFor } from "@m3e/core";
 import { M3eDirectionality } from "@m3e/core/bidi";
 import { AnchorPosition, positionAnchor } from "@m3e/core/anchoring";
 
@@ -48,7 +48,7 @@ import { BadgePosition } from "./BadgePosition";
  * @cssprop --m3e-badge-large-tracking - Letter spacing for large badge label.
  */
 @customElement("m3e-badge")
-export class M3eBadgeElement extends HtmlFor(Role(LitElement, "none")) {
+export class M3eBadgeElement extends HtmlFor(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

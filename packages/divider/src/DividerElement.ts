@@ -33,7 +33,7 @@ import { DesignToken, Role } from "@m3e/core";
  * @cssprop --m3e-divider-inset-end-size - When inset, trailing inset size.
  */
 @customElement("m3e-divider")
-export class M3eDividerElement extends Role(LitElement, "none") {
+export class M3eDividerElement extends Role(LitElement, "separator") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

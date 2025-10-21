@@ -13,7 +13,6 @@ import {
   M3eRippleElement,
   M3eStateLayerElement,
   renderPseudoLink,
-  Role,
 } from "@m3e/core";
 
 import { ChipVariant } from "./ChipVariant";
@@ -68,7 +67,7 @@ import { ChipVariant } from "./ChipVariant";
  * @cssprop --m3e-outlined-chip-outline-color - Outline color for outlined variant.
  */
 @customElement("m3e-chip")
-export class M3eChipElement extends Role(LitElement, "none") {
+export class M3eChipElement extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

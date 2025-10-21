@@ -3,7 +3,7 @@
 import { CSSResultGroup, html, LitElement } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 
-import { AttachInternals, Disabled, EventAttribute, Role } from "@m3e/core";
+import { AttachInternals, Disabled, EventAttribute } from "@m3e/core";
 
 import { ExpansionTogglePosition } from "./ExpansionTogglePosition";
 import { ExpansionToggleDirection } from "./ExpansionToggleDirection";
@@ -82,7 +82,7 @@ import { M3eExpansionHeaderElement } from "./ExpansionHeaderElement";
  */
 @customElement("m3e-expansion-panel")
 export class M3eExpansionPanelElement extends EventAttribute(
-  Disabled(AttachInternals(Role(LitElement, "none"), true)),
+  Disabled(AttachInternals(LitElement, true)),
   "opening",
   "opened",
   "closing",

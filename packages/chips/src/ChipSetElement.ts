@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { Role, Vertical } from "@m3e/core";
+import { Vertical } from "@m3e/core";
 
 /**
  * @summary
@@ -32,7 +32,7 @@ import { Role, Vertical } from "@m3e/core";
  * @cssprop --m3e-chip-set-spacing - The spacing (gap) between chips in the set.
  */
 @customElement("m3e-chip-set")
-export class M3eChipSetElement extends Vertical(Role(LitElement, "none")) {
+export class M3eChipSetElement extends Vertical(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

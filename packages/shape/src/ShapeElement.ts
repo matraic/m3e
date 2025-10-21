@@ -1,8 +1,6 @@
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { Role } from "@m3e/core";
-
 import { ShapeName } from "./ShapeName";
 import { ShapeStyle } from "./ShapeStyle";
 import { ShapeNameStyle } from "./ShapeNameStyle";
@@ -38,7 +36,7 @@ import { ShapeNameStyle } from "./ShapeNameStyle";
  * @cssprop --m3e-shape-transition - Transition used to morph between shapes.
  */
 @customElement("m3e-shape")
-export class M3eShapeElement extends Role(LitElement, "none") {
+export class M3eShapeElement extends LitElement {
   /** The styles of the element. */
   static override styles = [ShapeStyle, ShapeNameStyle];
 

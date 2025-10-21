@@ -10,7 +10,7 @@ import {
   MaterialDynamicColors,
 } from "@material/material-color-utilities";
 
-import { DesignToken, Role } from "@m3e/core";
+import { DesignToken } from "@m3e/core";
 
 import { ColorScheme } from "./ColorScheme";
 import { ContrastLevel } from "./ContrastLevel";
@@ -55,7 +55,7 @@ import { MotionScheme } from "./MotionScheme";
  * @fires change - Dispatched when the theme changes.
  */
 @customElement("m3e-theme")
-export class M3eThemeElement extends Role(LitElement, "none") {
+export class M3eThemeElement extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

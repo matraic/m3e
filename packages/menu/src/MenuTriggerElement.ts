@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { HtmlFor, Role } from "@m3e/core";
+import { HtmlFor } from "@m3e/core";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/core/a11y";
 
 import type { M3eMenuElement } from "./MenuElement";
@@ -66,7 +66,7 @@ import type { M3eMenuElement } from "./MenuElement";
  * @slot - Renders the contents of the trigger.
  */
 @customElement("m3e-menu-trigger")
-export class M3eMenuTriggerElement extends HtmlFor(Role(LitElement, "none")) {
+export class M3eMenuTriggerElement extends HtmlFor(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

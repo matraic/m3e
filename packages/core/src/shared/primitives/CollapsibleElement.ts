@@ -3,7 +3,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { EventAttribute, Role } from "../mixins";
+import { EventAttribute } from "../mixins";
 import { DesignToken } from "../tokens";
 import { prefersReducedMotion } from "../utils";
 
@@ -31,13 +31,7 @@ import { prefersReducedMotion } from "../utils";
  * @cssprop --m3e-collapsible-animation-duration - The duration of the expand / collapse animation.
  */
 @customElement("m3e-collapsible")
-export class M3eCollapsibleElement extends EventAttribute(
-  Role(LitElement, "none"),
-  "opening",
-  "opened",
-  "closing",
-  "closed"
-) {
+export class M3eCollapsibleElement extends EventAttribute(LitElement, "opening", "opened", "closing", "closed") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

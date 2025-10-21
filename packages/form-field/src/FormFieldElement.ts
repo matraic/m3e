@@ -21,7 +21,6 @@ import {
   MutationController,
   PressedController,
   ResizeController,
-  Role,
 } from "@m3e/core";
 
 import { M3eAriaDescriber } from "@m3e/core/a11y";
@@ -104,7 +103,7 @@ import { FloatLabelType } from "./FloatLabelType";
  * @cssprop --m3e-form-field-disabled-container-opacity - Opacity for disabled container background.
  */
 @customElement("m3e-form-field")
-export class M3eFormFieldElement extends AttachInternals(Role(LitElement, "none")) {
+export class M3eFormFieldElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

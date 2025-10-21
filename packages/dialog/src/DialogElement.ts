@@ -3,7 +3,7 @@ import { css, CSSResultGroup, html, LitElement, nothing, unsafeCSS } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { DesignToken, EventAttribute, prefersReducedMotion, Role } from "@m3e/core";
+import { DesignToken, EventAttribute, prefersReducedMotion } from "@m3e/core";
 import {} from "@m3e/core/a11y";
 
 /**
@@ -68,14 +68,7 @@ import {} from "@m3e/core/a11y";
  * @cssprop --m3e-dialog-content-tracking - Letter spacing for the dialog content.
  */
 @customElement("m3e-dialog")
-export class M3eDialogElement extends EventAttribute(
-  Role(LitElement, "none"),
-  "opening",
-  "opened",
-  "cancel",
-  "closing",
-  "closed"
-) {
+export class M3eDialogElement extends EventAttribute(LitElement, "opening", "opened", "cancel", "closing", "closed") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

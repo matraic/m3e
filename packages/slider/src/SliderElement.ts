@@ -2,7 +2,7 @@ import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { DesignToken, prefersReducedMotion, ResizeController, Role, safeStyleMap } from "@m3e/core";
+import { DesignToken, prefersReducedMotion, ResizeController, safeStyleMap } from "@m3e/core";
 
 import { M3eSliderThumbElement } from "./SliderThumbElement";
 import { SliderSize } from "./SliderSize";
@@ -79,7 +79,7 @@ import { SliderSize } from "./SliderSize";
  * @cssprop --m3e-slider-disabled-tick-inactive-color - Color of inactive ticks when disabled.
  */
 @customElement("m3e-slider")
-export class M3eSliderElement extends Role(LitElement, "none") {
+export class M3eSliderElement extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

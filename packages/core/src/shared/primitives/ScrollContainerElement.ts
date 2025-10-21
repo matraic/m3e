@@ -1,7 +1,6 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { Role } from "../mixins";
 import { debounce } from "../decorators";
 import { DesignToken } from "../tokens";
 
@@ -39,7 +38,7 @@ import { ScrollDividers } from "./ScrollDividers";
  * @cssprop --m3e-focus-ring-duration - Duration of the focus ring animation.
  */
 @customElement("m3e-scroll-container")
-export class M3eScrollContainerElement extends Role(LitElement, "none") {
+export class M3eScrollContainerElement extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

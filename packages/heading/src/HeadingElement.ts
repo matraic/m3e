@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { DesignToken, Role } from "@m3e/core";
+import { DesignToken } from "@m3e/core";
 
 import { HeadingLevel } from "./HeadingLevel";
 import { HeadingSize } from "./HeadingSize";
@@ -50,7 +50,7 @@ import { HeadingVariant } from "./HeadingVariant";
  * @attr variant - The appearance variant of the heading.
  */
 @customElement("m3e-heading")
-export class M3eHeadingElement extends Role(LitElement, "none") {
+export class M3eHeadingElement extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -232,7 +232,7 @@ export class M3eHeadingElement extends Role(LitElement, "none") {
 
     if (changedProperties.has("level")) {
       this.ariaLevel = this.level !== undefined ? `${this.level}` : null;
-      this.role = this.ariaLevel ? "heading" : "none";
+      this.role = this.ariaLevel ? "heading" : null;
     }
   }
 

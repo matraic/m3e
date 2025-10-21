@@ -308,6 +308,15 @@ export class M3eButtonGroupElement extends Role(LitElement, "group") {
   readonly buttons!: ReadonlyArray<M3eButtonElement | M3eIconButtonElement>;
 
   /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    if (this.hasAttribute("disable-role")) {
+      this.role = null;
+    }
+  }
+
+  /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this._base?.style.removeProperty("--_button-group-width");
@@ -339,7 +348,11 @@ export class M3eButtonGroupElement extends Role(LitElement, "group") {
       this.#pressedController.unobserve(target);
     }
     const canToggle = [...this.buttons].some((x) => x.toggle);
-    this.role = canToggle && !this.multi ? "radiogroup" : "group";
+
+    // disable-role is an internal attribute to by split-button to disable setting roles.
+    if (!this.hasAttribute("disable-role")) {
+      this.role = canToggle && !this.multi ? "radiogroup" : "group";
+    }
 
     const buttonRole = this.role === "radiogroup" ? "radio" : "button";
 
@@ -348,7 +361,7 @@ export class M3eButtonGroupElement extends Role(LitElement, "group") {
       button.classList.toggle("-connected", this.variant === "connected");
       button.classList.add("-grouped");
 
-      if (button.role !== buttonRole && button.toggle) {
+      if (!this.hasAttribute("disable-role") && button.role !== buttonRole && button.toggle) {
         const checked = !button.toggle ? null : button.selected ? "true" : "false";
         button.role = buttonRole;
         if (button.role === "button") {

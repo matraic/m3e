@@ -12,7 +12,6 @@ import {
   HtmlFor,
   isDisabledMixin,
   LongPressController,
-  Role,
 } from "@m3e/core";
 
 import { TooltipPosition } from "./TooltipPosition";
@@ -67,7 +66,7 @@ const TOOLTIP_HIDE_DELAY = 200;
  * @cssprop --m3e-tooltip-supporting-text-tracking - Letter spacing of supporting text.
  */
 @customElement("m3e-tooltip")
-export class M3eTooltipElement extends HtmlFor(AttachInternals(Role(LitElement, "none"))) {
+export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -295,10 +294,10 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(Role(LitElement, 
         this.position === "above"
           ? "top"
           : this.position === "below"
-          ? "bottom"
-          : this.position === "before"
-          ? "left"
-          : "right",
+            ? "bottom"
+            : this.position === "before"
+              ? "left"
+              : "right",
       inline: true,
       flip: true,
       shift: true,

@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { HtmlFor, MutationController, Role } from "@m3e/core";
+import { HtmlFor, MutationController } from "@m3e/core";
 
 import { M3eNavRailElement } from "./NavRailElement";
 
@@ -34,7 +34,7 @@ import { M3eNavRailElement } from "./NavRailElement";
  * @tag m3e-nav-rail-toggle
  */
 @customElement("m3e-nav-rail-toggle")
-export class M3eNavRailToggleElement extends HtmlFor(Role(LitElement, "none")) {
+export class M3eNavRailToggleElement extends HtmlFor(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

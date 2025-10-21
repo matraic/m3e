@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { AttachInternals, Role } from "@m3e/core";
+import { AttachInternals } from "@m3e/core";
 
 /**
  * An element, nested within a clickable element, used to close a parenting dialog.
@@ -10,7 +10,7 @@ import { AttachInternals, Role } from "@m3e/core";
  * @attr return-value - The value to return from the dialog.
  */
 @customElement("m3e-dialog-action")
-export class M3eDialogActionElement extends AttachInternals(Role(LitElement, "none")) {
+export class M3eDialogActionElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

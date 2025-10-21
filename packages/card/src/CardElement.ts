@@ -14,7 +14,6 @@ import {
   M3eRippleElement,
   M3eStateLayerElement,
   PressedController,
-  Role,
   KeyboardClick,
 } from "@m3e/core";
 
@@ -143,7 +142,7 @@ import { CardOrientation } from "./CardOrientation";
  */
 @customElement("m3e-card")
 export class M3eCardElement extends KeyboardClick(
-  LinkButton(FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "none"), true))))))
+  LinkButton(FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(LitElement), true)))))
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = [CardVariantStyle, CardStyle];

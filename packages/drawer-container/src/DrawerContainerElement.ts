@@ -1,7 +1,7 @@
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 
-import { hasAssignedNodes, Role } from "@m3e/core";
+import { hasAssignedNodes } from "@m3e/core";
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/core/layout";
 
 import { DrawerMode } from "./DrawerMode";
@@ -61,7 +61,7 @@ import { DrawerContainerStyle } from "./styles";
  * @cssprop --m3e-drawer-divider-thickness - The thickness of the divider line.
  */
 @customElement("m3e-drawer-container")
-export class M3eDrawerContainerElement extends Role(LitElement, "none") {
+export class M3eDrawerContainerElement extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = DrawerContainerStyle;
 

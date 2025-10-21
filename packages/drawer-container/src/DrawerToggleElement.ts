@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { HtmlFor, Role } from "@m3e/core";
+import { HtmlFor } from "@m3e/core";
 
 import { M3eDrawerContainerElement } from "./DrawerContainerElement";
 
@@ -30,7 +30,7 @@ import { M3eDrawerContainerElement } from "./DrawerContainerElement";
  * @tag m3e-drawer-toggle
  */
 @customElement("m3e-drawer-toggle")
-export class M3eDrawerToggleElement extends HtmlFor(Role(LitElement, "none")) {
+export class M3eDrawerToggleElement extends HtmlFor(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
