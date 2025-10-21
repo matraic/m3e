@@ -125,6 +125,7 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
   /** @private */ #ripple: HTMLElement | null = null;
   /** @private */ readonly #pressedController = new PressedController(this, {
     target: null,
+    minPressedDuration: 150,
     isPressedKey: (key) => key === " " || (!this.disableEnter && key === "Enter"),
     callback: (pressed, { x, y }) => this.#handlePressedChange(pressed, x, y),
   });

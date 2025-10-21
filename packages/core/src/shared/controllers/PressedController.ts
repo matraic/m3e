@@ -14,6 +14,9 @@ export interface PressedControllerOptions extends MonitorControllerOptions {
   /** The callback invoked when the pressed state of an element changes. */
   callback: PressedControllerCallback;
 
+  /** The minimum amount of time, in milliseconds, to retain a pressed state. */
+  minPressedDuration?: number;
+
   /** Whether events are captured. */
   capture?: boolean;
 
@@ -30,7 +33,8 @@ export class PressedController extends MonitorControllerBase {
   /** @private */ readonly #capture?: boolean;
   /** @private */ readonly #callback: PressedControllerCallback;
   /** @private */ readonly #isPressedKey?: (key: string) => boolean;
-  /** @private */ readonly #pressedTargets = new Set<HTMLElement>();
+  /** @private */ readonly #pressedTargets = new Map<HTMLElement, number>();
+  /** @private */ readonly #minPressedDuration: number;
 
   /** @private */ readonly #pointerDownHandler = (e: PointerEvent) => this.#handlePointerDown(e);
   /** @private */ readonly #pointerUpHandler = (e: PointerEvent) => this.#handlePointerUp(e);
@@ -48,6 +52,7 @@ export class PressedController extends MonitorControllerBase {
     this.#capture = options.capture;
     this.#callback = options.callback;
     this.#isPressedKey = options.isPressedKey;
+    this.#minPressedDuration = options.minPressedDuration ?? 0;
   }
 
   /** @inheritdoc */
@@ -94,8 +99,10 @@ export class PressedController extends MonitorControllerBase {
 
     for (const target of e.composedPath()) {
       if (target instanceof HTMLElement && this.isObserving(target)) {
-        this.#pressedTargets.add(target);
-        this.#callback(true, { x: e.x, y: e.y }, target);
+        if (!this.#pressedTargets.has(target)) {
+          this.#pressedTargets.set(target, performance.now());
+          this.#callback(true, { x: e.x, y: e.y }, target);
+        }
         break;
       }
     }
@@ -105,8 +112,21 @@ export class PressedController extends MonitorControllerBase {
   #handlePointerUp(e: PointerEvent): void {
     if (e.pointerType === "mouse" && e.button > 1) return;
 
-    this.#pressedTargets.forEach((x) => this.#callback(false, { x: e.x, y: e.y }, x));
-    this.#pressedTargets.clear();
+    const x = e.x;
+    const y = e.y;
+
+    for (const target of this.#pressedTargets.keys()) {
+      const remainingTime = this.#minPressedDuration - (performance.now() - this.#pressedTargets.get(target)!);
+      if (remainingTime > 0) {
+        setTimeout(() => {
+          this.#pressedTargets.delete(target);
+          this.#callback(false, { x, y }, target);
+        }, remainingTime);
+      } else {
+        this.#pressedTargets.delete(target);
+        this.#callback(false, { x, y }, target);
+      }
+    }
   }
 
   /** @private */
@@ -118,7 +138,7 @@ export class PressedController extends MonitorControllerBase {
         e.preventDefault();
       }
 
-      this.#pressedTargets.add(target);
+      this.#pressedTargets.set(target, performance.now());
       const bounds = target.getBoundingClientRect();
       this.#callback(true, { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 }, target);
     }
@@ -129,9 +149,17 @@ export class PressedController extends MonitorControllerBase {
     const target = e.target as HTMLElement;
 
     if (this.#pressedTargets.has(target) && this.#isPressedKey?.(e.key)) {
-      this.#pressedTargets.delete(target);
+      const remainingTime = this.#minPressedDuration - (performance.now() - this.#pressedTargets.get(target)!);
       const bounds = target.getBoundingClientRect();
-      this.#callback(false, { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 }, target);
+      if (remainingTime > 0) {
+        setTimeout(() => {
+          this.#pressedTargets.delete(target);
+          this.#callback(false, { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 }, target);
+        }, remainingTime);
+      } else {
+        this.#pressedTargets.delete(target);
+        this.#callback(false, { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 }, target);
+      }
     }
   }
 }

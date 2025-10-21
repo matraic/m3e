@@ -270,6 +270,7 @@ export class M3eButtonGroupElement extends Role(LitElement, "group") {
   /** @private */ readonly #pressedController = new PressedController(this, {
     target: null,
     capture: true,
+    minPressedDuration: 150,
     isPressedKey: (key) => key === " " || key === "Enter",
     callback: (pressed) => {
       if (!this._base) return;
