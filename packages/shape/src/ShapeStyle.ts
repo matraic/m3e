@@ -24,6 +24,7 @@ export const ShapeStyle: CSSResultGroup = css`
     position: relative;
     isolation: isolate;
     overflow: hidden;
+    will-change: clip-path;
   }
   ::slotted(img),
   ::slotted(video) {

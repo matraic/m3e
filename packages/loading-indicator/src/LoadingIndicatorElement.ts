@@ -76,11 +76,12 @@ export class M3eLoadingIndicatorElement extends Role(LitElement, "progressbar") 
       transform-origin: center;
       clip-path: var(--_polygon);
       transition: clip-path ${DesignToken.motion.spring.slowEffects};
+      will-change: transform, clip-path;
     }
     .active-indicator.animate {
       animation:
         rotate 4998ms infinite,
-        noop 714ms infinite;
+        noop 714ms steps(1, end) infinite;
     }
     @keyframes noop {
       from {
