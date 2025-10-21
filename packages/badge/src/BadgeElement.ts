@@ -219,14 +219,14 @@ export class M3eBadgeElement extends HtmlFor(Role(LitElement, "status")) {
 
     this.#anchorCleanup = await positionAnchor(this, this.control, { position }, (x, y) => {
       this.dir = M3eDirectionality.current;
-      if (this.position.includes("before")) {
+      if (this.position.includes("before") && this.position !== "before") {
         if (this.dir == "rtl") {
           x += this.clientWidth;
         } else {
           x -= this.clientWidth;
         }
       }
-      if (this.position.includes("after")) {
+      if (this.position.includes("after") && this.position !== "after") {
         if (this.dir == "rtl") {
           x -= this.clientWidth;
         } else {
