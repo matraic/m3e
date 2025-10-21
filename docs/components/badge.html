@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Badge for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Badge for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@latest/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@latest/dist/a11y.min.js",
+          "@m3e/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/core@latest/dist/anchoring.min.js",
+          "@m3e/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/core@latest/dist/bidi.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/button@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/badge@latest/dist/index.min.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Badge</span>
+      </m3e-toc>
+
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Badge</m3e-heading>
+      <p>
+        The <code>m3e-badge</code> component is a compact visual indicator for counts, presence, or emphasis that can be
+        attached to icons, buttons, or other components.
+      </p>
+      <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
+      <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/badge</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/badge/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include additional dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/bidi&quot;: &quot;/node_modules/@m3e/core/dist/bidi.js&quot;,
+      &quot;@m3e/core/anchoring&quot;: &quot;/node_modules/@m3e/core/dist/anchoring.js&quot;
+
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js, bidi.min.js, and anchoring.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>
+        This section provides practical examples for implementing the components included in this package. It outlines
+        typical usage patterns, integration approaches, and configuration options to help developers adopt the
+        components effectively across a variety of environments.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Sizes</m3e-heading>
+      <p>
+        There are three size variants for a badge: <code>small</code>, <code>medium</code> (default), and
+        <code>large</code>. Use the <code>size</code> attribute to control a badge's size.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-badge size="small">10</m3e-badge>
+          <m3e-badge size="medium">10</m3e-badge>
+          <m3e-badge size="large">10</m3e-badge>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-badge size=&quot;small&quot;&gt;10&lt;/m3e-badge&gt;
+&lt;m3e-badge size=&quot;medium&quot;&gt;10&lt;/m3e-badge&gt;
+&lt;m3e-badge size=&quot;large&quot;&gt;10&lt;/m3e-badge&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Anchoring</m3e-heading>
+      <p>
+        An <code>m3e-badge</code> can be anchored to another element using the <code>for</code> attribute, which
+        references the target element’s <code>id</code>. This creates a semantic and visual link, allowing the badge to
+        track its anchor even across layout shifts.
+      </p>
+      <p>
+        To control placement, use the <code>position</code> attribute. These values define where the badge appears
+        relative to its anchor:
+      </p>
+      <ul>
+        <li><code>above-after</code> — Above the anchor, aligned to its end edge (right in LTR, left in RTL)</li>
+        <li><code>above-before</code> — Above the anchor, aligned to its start edge (left in LTR, right in RTL)</li>
+        <li><code>below-before</code> — Below the anchor, aligned to its start edge</li>
+        <li><code>below-after</code> — Below the anchor, aligned to its end edge</li>
+        <li><code>before</code> — Inline with the anchor, placed before it (left in LTR, right in RTL)</li>
+        <li><code>after</code> — Inline with the anchor, placed after it (right in LTR, left in RTL)</li>
+        <li><code>above</code> — Centered above the anchor</li>
+        <li><code>below</code> — Centered below the anchor</li>
+      </ul>
+      <p>
+        These positions are <em>bidi-aware</em>, adapting automatically to left-to-right and right-to-left layouts. They
+        honor expressive anchoring and layout clarity, even across responsive shifts.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button id="btn" variant="filled">Button</m3e-button>
+          <m3e-badge for="btn" position="above-after">AA</m3e-badge>
+          <m3e-badge for="btn" position="above-before">AB</m3e-badge>
+          <m3e-badge for="btn" position="below-before">BB</m3e-badge>
+          <m3e-badge for="btn" position="below-after">BA</m3e-badge>
+          <m3e-badge for="btn" position="before">BE</m3e-badge>
+          <m3e-badge for="btn" position="after">AF</m3e-badge>
+          <m3e-badge for="btn" position="above">A</m3e-badge>
+          <m3e-badge for="btn" position="below">B</m3e-badge>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button id=&quot;btn&quot; variant=&quot;filled&quot;&gt;Button&lt;/m3e-button&gt;
+&lt;m3e-badge for=&quot;btn&quot; position=&quot;above-after&quot;&gt;AA&lt;/m3e-badge&gt;
+&lt;m3e-badge for=&quot;btn&quot; position=&quot;above-before&quot;&gt;AB&lt;/m3e-badge&gt;
+&lt;m3e-badge for=&quot;btn&quot; position=&quot;below-before&quot;&gt;BB&lt;/m3e-badge&gt;
+&lt;m3e-badge for=&quot;btn&quot; position=&quot;below-after&quot;&gt;BA&lt;/m3e-badge&gt;
+&lt;m3e-badge for=&quot;btn&quot; position=&quot;before&quot;&gt;BE&lt;/m3e-badge&gt;
+&lt;m3e-badge for=&quot;btn&quot; position=&quot;after&quot;&gt;AF&lt;/m3e-badge&gt;
+&lt;m3e-badge for=&quot;btn&quot; position=&quot;above&quot;&gt;A&lt;/m3e-badge&gt;
+&lt;m3e-badge for=&quot;btn&quot; position=&quot;below&quot;&gt;B&lt;/m3e-badge&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        By default, badges are not given an ARIA role, indicating that they are treated as neutral, non-semantic
+        elements in the accessibility tree unless explicitly referenced or annotated.
+      </p>
+      <p>Use <code>aria-describedby</code> when attaching a badge to an interactive element.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer src="https://cdn.jsdelivr.net/npm/@m3e/badge@latest/dist/custom-elements.json"> </api-viewer>
+    </m3e-theme>
+  </body>
+</html>
