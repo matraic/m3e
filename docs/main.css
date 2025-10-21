@@ -14,7 +14,8 @@ body {
 m3e-heading + m3e-heading,
 m3e-heading + .install,
 .install + m3e-heading,
-.example + m3e-heading {
+.example + m3e-heading,
+m3e-card + m3e-card {
   margin-block-start: 1rem;
 }
 m3e-card + .example {

@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Button Group for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Button Group for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <link href="app-bar.css" rel="stylesheet" />
+    <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@latest/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@latest/dist/a11y.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon-button@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/app-bar@latest/dist/index.min.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">App Bar</span>
+      </m3e-toc>
+
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">App Bar</m3e-heading>
+      <p>
+        The <code>m3e-app-bar</code> component is a prominent user interface component that provides consistent access
+        to key actions, navigation, and contextual information at the top of an application screen.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
+      <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/app-bar</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/app-bar/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include additional dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>
+        This section provides practical examples for implementing the components included in this package. It outlines
+        typical usage patterns, integration approaches, and configuration options to help developers adopt the
+        components effectively across a variety of environments.
+      </p>
+      <m3e-heading variant="headline" size="small" level="3">Anatomy</m3e-heading>
+      <p>
+        The <code>m3e-app-bar</code> component provides a structured layout for top-level navigation and contextual
+        information. It exposes the following named slots:
+      </p>
+      <ul>
+        <li>
+          <code>leading-icon</code> — typically a navigation affordance such as a back arrow or menu button. Positioned
+          at the start of the bar.
+        </li>
+        <li>
+          <code>title</code> — The primary label for the current view or context. Usually a short, expressive heading.
+        </li>
+        <li>
+          <code>subtitle</code> — An optional secondary label that provides additional context or hierarchy beneath the
+          title.
+        </li>
+        <li>
+          <code>trailing-icon</code> — One or more action buttons aligned to the end of the bar. Common examples include
+          search, bookmark, or overflow menus.
+        </li>
+      </ul>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-app-bar>
+            <m3e-icon-button slot="leading-icon" aria-label="Back">
+              <m3e-icon name="arrow_back"></m3e-icon>
+            </m3e-icon-button>
+            <span slot="title">Top 10 hiking trails</span>
+            <span slot="subtitle">Discover popular trails</span>
+            <m3e-icon-button slot="trailing-icon" aria-label="Bookmark" variant="tonal">
+              <m3e-icon name="bookmark" filled></m3e-icon>
+            </m3e-icon-button>
+          </m3e-app-bar>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-app-bar&gt;
+  &lt;m3e-icon-button slot=&quot;leading-icon&quot; aria-label=&quot;Back&quot;&gt;
+    &lt;m3e-icon name=&quot;arrow_back&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;span slot=&quot;title&quot;&gt;Top 10 hiking trails&lt;/span&gt;
+  &lt;span slot=&quot;subtitle&quot;&gt;Discover popular trails&lt;/span&gt;
+  &lt;m3e-icon-button slot=&quot;trailing-icon&quot; aria-label=&quot;Bookmark&quot; variant=&quot;tonal&quot;&gt;
+    &lt;m3e-icon name=&quot;bookmark&quot; filled&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-icon-button&gt;
+&lt;/m3e-app-bar&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Sizes</m3e-heading>
+      <p>
+        There are three size variants: <code>small</code> (default), <code>medium</code>, and <code>large</code>. Use
+        the <code>size</code> attribute to control an app bar's size.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-app-bar size="medium">
+            <m3e-icon-button slot="leading-icon" aria-label="Back">
+              <m3e-icon name="arrow_back"></m3e-icon>
+            </m3e-icon-button>
+            <span slot="title">Top 10 hiking trails</span>
+            <span slot="subtitle">Discover popular trails</span>
+            <m3e-icon-button slot="trailing-icon" aria-label="Bookmark" variant="tonal">
+              <m3e-icon name="bookmark" filled></m3e-icon>
+            </m3e-icon-button>
+          </m3e-app-bar>
+        </div>
+      </m3e-card>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-app-bar size="large">
+            <m3e-icon-button slot="leading-icon" aria-label="Back">
+              <m3e-icon name="arrow_back"></m3e-icon>
+            </m3e-icon-button>
+            <span slot="title">Top 10 hiking trails</span>
+            <span slot="subtitle">Discover popular trails</span>
+            <m3e-icon-button slot="trailing-icon" aria-label="Bookmark" variant="tonal">
+              <m3e-icon name="bookmark" filled></m3e-icon>
+            </m3e-icon-button>
+          </m3e-app-bar>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-app-bar size=&quot;medium&quot;&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-app-bar&gt;
+&lt;m3e-app-bar size=&quot;large&quot;&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-app-bar&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Centered</m3e-heading>
+      <p>
+        A <code>centered</code> app bar ensures that its primary content — the <code>title</code> and optional
+        <code>subtitle</code> — remains visually centered within the available horizontal space, regardless of the
+        number or size of elements in the <code>leading-icon</code> or <code>trailing-icon</code> slots.
+      </p>
+      <p>
+        This is achieved through layout symmetry, not equal spacing. The title area is anchored to the center of the
+        container, while icons on either side are allowed to vary in number or width without shifting the title's
+        position.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-app-bar centered>
+            <m3e-icon-button slot="leading-icon" aria-label="Back">
+              <m3e-icon name="arrow_back"></m3e-icon>
+            </m3e-icon-button>
+            <span slot="title">Top 10 hiking trails</span>
+            <span slot="subtitle">Discover popular trails</span>
+            <m3e-icon-button slot="trailing-icon" aria-label="Bookmark">
+              <m3e-icon name="bookmark"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button slot="trailing-icon" aria-label="help">
+              <m3e-icon name="help"></m3e-icon>
+            </m3e-icon-button>
+          </m3e-app-bar>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-app-bar centered&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-app-bar&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Scroll effects</m3e-heading>
+      <p>
+        An <code>m3e-app-bar</code> can be attached to a scrollable container using the <code>for</code> attribute,
+        which references the container's id. This establishes a scroll contract between the app bar and its content
+        region. As the user scrolls:
+      </p>
+      <ul>
+        <li>
+          The app bar's background becomes elevated — typically via a shadow or surface tone — to signal separation from
+          the content.
+        </li>
+        <li>
+          When the scroll position returns to the top, the elevation is removed, restoring a flat visual hierarchy.
+        </li>
+      </ul>
+      <p>
+        This behavior enhances contextual clarity, signaling that content is in motion while preserving the app bar's
+        role as a stable anchor.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <div id="scrollContainer">
+            <m3e-app-bar for="scrollContainer">
+              <m3e-icon-button slot="leading-icon" aria-label="Back">
+                <m3e-icon name="arrow_back"></m3e-icon>
+              </m3e-icon-button>
+              <span slot="title">Top 10 hiking trails</span>
+              <span slot="subtitle">Discover popular trails</span>
+              <m3e-icon-button slot="trailing-icon" aria-label="Bookmark" variant="tonal">
+                <m3e-icon name="bookmark" filled></m3e-icon>
+              </m3e-icon-button>
+            </m3e-app-bar>
+            <div class="scroll-item">Scroll down to see the elevation effect</div>
+          </div>
+        </div>
+      </m3e-card>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;div id=&quot;scrollContainer&quot;&gt;
+  &lt;m3e-app-bar for=&quot;scrollContainer&quot;&gt;
+    &lt;!-- Content omitted for brevity --&gt;
+  &lt;/m3e-app-bar&gt;
+  &lt;div class=&quot;scroll-item&quot;&gt;Scroll down to see the elevation effect&lt;/div&gt;
+&lt;/div&gt;
+&lt;m3e-app-bar centered&gt;
+&lt;style&gt;
+  #scrollContainer {
+    overflow-y: auto;
+    height: 300px;
+  }
+  m3e-app-bar[for=&quot;scrollContainer&quot;] {
+    position: sticky;
+    top: 0;
+  }
+  .scroll-item {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+&lt;/style&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        By default, app bars are given the ARIA <code>role="banner"</code> to identify them as the site-wide landmark
+        region for branding, navigation, or contextual identity. This role signals to assistive technologies that the
+        app bar serves as the top-level heading for the page or application.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer src="https://cdn.jsdelivr.net/npm/@m3e/app-bar@latest/dist/custom-elements.json"> </api-viewer>
+    </m3e-theme>
+  </body>
+</html>

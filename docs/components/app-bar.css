@@ -1,0 +1,14 @@
+#scrollContainer {
+  overflow-y: auto;
+  height: 300px;
+}
+m3e-app-bar[for="scrollContainer"] {
+  position: sticky;
+  top: 0;
+}
+.scroll-item {
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
