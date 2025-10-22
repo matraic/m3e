@@ -24,7 +24,8 @@ m3e-card + .example {
 .toc {
   position: fixed;
   top: 0;
-  right: 2rem;
+  right: 0;
+  max-height: 100vh;
 }
 @media (max-width: 600px) {
   .toc {
