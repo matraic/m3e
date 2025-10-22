@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Card for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Card for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <link href="card.css" rel="stylesheet" />
+    <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@latest/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@latest/dist/a11y.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/button@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@latest/dist/index.min.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body" max-depth="4">
+        <span slot="overline">On this page</span>
+        <span slot="title">Card</span>
+      </m3e-toc>
+
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Card</m3e-heading>
+      <p>
+        The <code>m3e-card</code> component is a flexible, expressive container for presenting a unified subject—text,
+        media, and actions—on a visually distinct surface.
+      </p>
+      <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
+      <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/card</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/card/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include additional dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>
+        This section provides practical examples for implementing the components included in this package. It outlines
+        typical usage patterns, integration approaches, and configuration options to help developers adopt the
+        components effectively across a variety of environments.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Anatomy</m3e-heading>
+      <p>
+        The <code>m3e-card</code> component provides a modular layout for structured content blocks. It exposes the
+        following named slots:
+      </p>
+      <ul>
+        <li>
+          <code>header</code> — Renders the header region of the card. Typically used for titles, icons, or introductory
+          context.
+        </li>
+        <li>
+          <code>content</code> — Renders the padded content region. Ideal for body text, form fields, or structured
+          information.
+        </li>
+        <li>
+          <code>actions</code> — Renders the action region. Use for buttons, toggles, or interactive controls aligned to
+          the card's intent.
+        </li>
+        <li>
+          <code>footer</code> — Renders the footer region. Suitable for metadata, disclaimers, or secondary actions.
+        </li>
+        <li>
+          <code>(default)</code> — Renders the default content of the card without padding. Use for full-bleed layouts
+          or custom compositions.
+        </li>
+      </ul>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-card>
+            <m3e-heading slot="header" variant="display" size="small">Card Header</m3e-heading>
+            <div slot="content">Card Content</div>
+            <div slot="actions">
+              <m3e-button variant="filled">Action</m3e-button>
+            </div>
+            <div slot="footer">Card Footer</div>
+          </m3e-card>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-card&gt;
+  &lt;m3e-heading slot=&quot;header&quot; variant=&quot;display&quot; size=&quot;small&quot;&gt;Card Header&lt;/m3e-heading&gt;
+  &lt;div slot=&quot;content&quot;&gt;Card Content&lt;/div&gt;
+  &lt;div slot=&quot;actions&quot;&gt;
+    &lt;m3e-button variant=&quot;filled&quot;&gt;Action&lt;/m3e-button&gt;
+  &lt;/div&gt;
+  &lt;div slot=&quot;footer&quot;&gt;Card Footer&lt;/div&gt;
+&lt;/m3e-card&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        You can change the horizontal alignment of the <code>actions</code> slot by adding an <code>end</code> attribute
+        to the slotted element.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-card>
+            <m3e-heading slot="header" variant="display" size="small">Card Header</m3e-heading>
+            <div slot="content">Card Content</div>
+            <div slot="actions" end>
+              <m3e-button variant="filled">Action</m3e-button>
+            </div>
+          </m3e-card>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-card&gt;
+  &lt;m3e-heading slot=&quot;header&quot; variant=&quot;display&quot; size=&quot;small&quot;&gt;Card Header&lt;/m3e-heading&gt;
+  &lt;div slot=&quot;content&quot;&gt;Card Content&lt;/div&gt;
+  &lt;div slot=&quot;actions&quot; end&gt;
+    &lt;m3e-button variant=&quot;filled&quot;&gt;Action&lt;/m3e-button&gt;
+  &lt;/div&gt;
+&lt;/m3e-card&gt;</pre
+        >
+      </m3e-card>
+
+      <p>When using the default slot, the <code>m3e-card</code> will not add any padding.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-card>Card content</m3e-card>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">&lt;m3e-card&gt;Card content&lt;/m3e-card&gt;</pre>
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+      <p>
+        There are three card appearance variants: <code>filled</code> (default), <code>outlined</code>, and
+        <code>elevated</code>. Use the <code>variant</code> attribute to control a card's appearance.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-card variant="filled"><div slot="content">Filled</div></m3e-card>
+          <br />
+          <m3e-card variant="outlined"><div slot="content">Outlined</div></m3e-card>
+          <br />
+          <m3e-card variant="elevated"><div slot="content">Elevated</div></m3e-card>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-card variant=&quot;filled&quot;&gt;
+  &lt;div slot=&quot;content&quot;&gt;Filled&lt;/div&gt;
+&lt;/m3e-card&gt;
+&lt;!-- Additional variants omitted for brevity --&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Inline</m3e-heading>
+      <p>
+        By default, cards are rendered as block-level elements. Use the <code>inline</code> attribute to make a card
+        render inline with surrounding content.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-card inline><div slot="content">Inline</div></m3e-card>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-card inline&gt;
+  &lt;div slot=&quot;content&quot;&gt;Inline&lt;/div&gt;
+&lt;/m3e-card&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Orientation</m3e-heading>
+      <p>
+        By default, cards are oriented vertically. Use the <code>orientation</code> attribute to change the orientation
+        to <code>horizontal</code> or <code>vertically</code> (default).
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-card class="image-card" inline orientation="horizontal">
+            <img slot="header" src="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480" />
+            <div slot="content">Horizontal</div>
+          </m3e-card>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-card class=&quot;image-card&quot; inline orientation=&quot;horizontal&quot;&gt;
+  &lt;img slot=&quot;header&quot; src=&quot;[YOUR IMAGE URL HERE]&quot; /&gt;
+  &lt;div slot=&quot;content&quot;&gt;Horizontal&lt;/div&gt;
+&lt;/m3e-card&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Actionable</m3e-heading>
+      <p>
+        Use the <code>actionable</code> attribute to configure a card as an actionable surface, allowing users to
+        interact with the entire card as a single affordance. This pattern is ideal for navigation, selection, or
+        triggering contextual behavior.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-card variant="filled" actionable><div slot="content">Filled Actionable</div></m3e-card>
+          <br />
+          <m3e-card variant="outlined" actionable><div slot="content">Outlined Actionable</div></m3e-card>
+          <br />
+          <m3e-card variant="elevated" actionable><div slot="content">Elevated Actionable</div></m3e-card>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-card variant=&quot;filled&quot; actionable&gt;
+  &lt;div slot=&quot;content&quot;&gt;Filled&lt;/div&gt;
+&lt;/m3e-card&gt;
+&lt;!-- Additional variants omitted for brevity --&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Disabling</m3e-heading>
+      <p>
+        Use the <code>disabled</code> attribute to disable an actionable card. By default, disabled cards are not
+        focusable with the keyboard. You can use the <code>disabled-interactive</code> attribute to support
+        <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls" target="_blank"
+          >focusability of disabled controls</a
+        >
+        to increase their discoverability.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-card variant="filled" actionable disabled>
+            <div slot="content">Disabled</div>
+          </m3e-card>
+          <br />
+          <m3e-card variant="filled" actionable disabled-interactive>
+            <div slot="content">Disabled Interactive</div>
+          </m3e-card>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-card variant=&quot;filled&quot; actionable disabled&gt;
+  &lt;div slot=&quot;content&quot;&gt;Disabled&lt;/div&gt;
+&lt;/m3e-card&gt;
+&lt;br /&gt;
+&lt;m3e-card variant=&quot;filled&quot; actionable disabled-interactive&gt;
+  &lt;div slot=&quot;content&quot;&gt;Disabled Interactive&lt;/div&gt;
+&lt;/m3e-card&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Links</m3e-heading>
+      <p>
+        Actionable cards can also behave like links by specifying a URL using the <code>href</code> attribute. You can
+        also specify <code>target</code>, <code>rel</code> and <code>download</code> similar to native anchor tags.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-card actionable href="https://www.google.com" target="_blank">
+            <div slot="content">Google</div>
+          </m3e-card>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-card actionable href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;
+  &lt;div slot=&quot;content&quot;&gt;Google&lt;/div&gt;
+&lt;/m3e-card&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        By default, cards are not given an ARIA role, indicating that they are treated as neutral, non-semantic elements
+        in the accessibility tree unless explicitly referenced or annotated.
+      </p>
+      <p>
+        Actionable cards are given ARIA <code>role="button"</code> indicating they are clickable elements that trigger
+        actions.
+      </p>
+      <p>
+        When disabling using either the <code>disabled</code> or <code>disabled-interactive</code> attribute,
+        <code>aria-disabled="true"</code> is used to convey to assistive technologies that the actionable card is
+        disabled. If disabled using <code>disabled-interactive</code>, <code>tabindex</code> is retained to convey that
+        the card continues to be interactive.
+      </p>
+      <p>
+        When <code>href</code> is specified, the ARIA role <code>link</code> is used instead of <code>button</code> to
+        convey the actionable card provides an interactive reference to a resource. In addition, the component presents
+        an internal anchor, hidden from assistive technologies, used to invoke native browser features such a context
+        menu options and tooltips.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer src="https://cdn.jsdelivr.net/npm/@m3e/card@latest/dist/custom-elements.json"> </api-viewer>
+    </m3e-theme>
+  </body>
+</html>

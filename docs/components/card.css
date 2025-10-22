@@ -1,0 +1,7 @@
+.image-card {
+  width: 200px;
+  height: 80px;
+}
+.image-card > img {
+  width: 80px;
+}
