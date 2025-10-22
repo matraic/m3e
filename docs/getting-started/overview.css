@@ -5,3 +5,6 @@
   align-items: stretch;
   margin-block-start: 1rem;
 }
+m3e-card + m3e-card {
+  margin: unset;
+}
