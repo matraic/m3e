@@ -37,6 +37,7 @@ export class M3eTocItemElement extends Selected(Disabled(AttachInternals(Role(Li
       display: inline-block;
       position: relative;
       user-select: none;
+      outline: none;
       border-radius: var(--m3e-toc-item-shape, ${DesignToken.shape.corner.largeIncreased});
       padding-block: var(--m3e-toc-item-padding-block, 0.5rem);
     }
