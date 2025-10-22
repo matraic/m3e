@@ -59,6 +59,7 @@ import { NavItemOrientation } from "./NavItemOrientation";
  *
  * @fires input - Emitted when the selected state changes.
  * @fires change - Emitted when the selected state changes.
+ * @fires click - Emitted when the element is clicked.
  *
  * @cssprop --m3e-nav-item-label-text-font-size - Font size for the label text.
  * @cssprop --m3e-nav-item-label-text-font-weight - Font weight for the label text.
@@ -240,12 +241,14 @@ export class M3eNavItemElement extends LinkButton(
     }
     :host([orientation="vertical"]) .icon {
       top: calc(
-        calc(var(--m3e-vertical-nav-item-active-indicator-height, 2rem) / 2) -
-          calc(var(--m3e-nav-item-icon-size, 1.5rem) / 2)
+        calc(var(--m3e-vertical-nav-item-active-indicator-height, 2rem) / 2) - calc(
+            var(--m3e-nav-item-icon-size, 1.5rem) / 2
+          )
       );
       left: calc(
-        calc(var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem) / 2) -
-          calc(var(--m3e-nav-item-icon-size, 1.5rem) / 2)
+        calc(var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem) / 2) - calc(
+            var(--m3e-nav-item-icon-size, 1.5rem) / 2
+          )
       );
     }
     :host([orientation="vertical"]) .focus-ring {

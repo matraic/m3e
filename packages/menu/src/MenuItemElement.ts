@@ -75,6 +75,8 @@ import { M3eMenuTriggerElement } from "./MenuTriggerElement";
  * @attr rel - The relationship between the `target` of the link button and the document.
  * @attr target - The target of the link button.
  *
+ * @fires click - Emitted when the element is clicked.
+ *
  * @cssprop --m3e-menu-item-container-height - Height of the menu item container.
  * @cssprop --m3e-menu-item-color - Text color for unselected, enabled menu items.
  * @cssprop --m3e-menu-item-container-hover-color - State layer hover color for unselected items.

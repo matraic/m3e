@@ -60,6 +60,7 @@ import { SwitchIcons } from "./SwitchIcons";
  *
  * @fires input - Emitted when the checked state changes.
  * @fires change - Emitted when the checked state changes.
+ * @fires click - Emitted when the element is clicked.
  *
  * @cssprop --m3e-switch-selected-icon-color - Color of the icon when the switch is selected.
  * @cssprop --m3e-switch-selected-icon-size - Size of the icon in the selected state.

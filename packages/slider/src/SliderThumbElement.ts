@@ -47,6 +47,7 @@ import {
  *
  * @fires input - Emitted when the value changes.
  * @fires change - Emitted when the value changes.
+ * @fires click - Emitted when the element is clicked.
  *
  * @cssprop --m3e-slider-thumb-width - Width of the slider thumb.
  * @cssprop --m3e-slider-thumb-padding - Horizontal padding around the thumb.

@@ -39,6 +39,8 @@ import { MenuItemElementBase } from "./MenuItemElementBase";
  * @attr disabled - Whether the element is disabled.
  * @attr checked - Whether the element is checked.
  *
+ * @fires click - Emitted when the element is clicked.
+ *
  * @cssprop --m3e-menu-item-container-height - Height of the menu item container.
  * @cssprop --m3e-menu-item-color - Text color for unselected, enabled menu items.
  * @cssprop --m3e-menu-item-container-hover-color - State layer hover color for unselected items.

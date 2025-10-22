@@ -28,6 +28,8 @@ import { ExpansionHeaderStyle } from "./styles";
  * @attr toggle-direction - The direction of the expansion toggle.
  * @attr toggle-position - The position of the expansion toggle.
  *
+ * @fires click - Emitted when the element is clicked.
+ *
  * @cssprop --m3e-expansion-header-collapsed-height - Height of the header when the panel is collapsed.
  * @cssprop --m3e-expansion-header-expanded-height - Height of the header when the panel is expanded.
  * @cssprop --m3e-expansion-header-padding-left - Left padding inside the header.

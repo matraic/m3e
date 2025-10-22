@@ -13,6 +13,8 @@ import { TocNode } from "./TocGenerator";
  *
  * @attr disabled - A value indicating whether the element is disabled.
  *
+ * @fires click - Emitted when the element is clicked.
+ *
  * @cssprop --m3e-toc-item-shape - Border radius of the TOC item.
  * @cssprop --m3e-toc-item-padding-block - Block padding for the TOC item.
  * @cssprop --m3e-toc-item-padding - Inline padding for the TOC item.

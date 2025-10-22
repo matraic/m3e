@@ -49,6 +49,8 @@ import type { M3eFabMenuElement } from "./FabMenuElement";
  * @attr rel - The relationship between the `target` of the link button and the document.
  * @attr target - The target of the link button.
  *
+ * @fires click - Emitted when the element is clicked.
+ *
  * @cssprop --m3e-fab-menu-item-height - Height of the menu item.
  * @cssprop --m3e-fab-menu-item-font-size - Font size of the menu item label.
  * @cssprop --m3e-fab-menu-item-font-weight - Font weight of the menu item label.

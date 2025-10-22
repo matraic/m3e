@@ -41,6 +41,7 @@ import { M3eChipElement } from "./ChipElement";
  *
  * @fires input - Emitted when the selected state changes.
  * @fires change - Emitted when the selected state changes.
+ * @fires click - Emitted when the element is clicked.
  *
  * @cssprop --m3e-chip-container-shape - Border radius of the chip container.
  * @cssprop --m3e-chip-container-height - Base height of the chip container before density adjustment.

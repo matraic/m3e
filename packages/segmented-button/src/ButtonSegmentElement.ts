@@ -59,6 +59,7 @@ import { selectionManager } from "@m3e/core/a11y";
  *
  * @fires input - Emitted when the checked state changes.
  * @fires change - Emitted when the checked state changes.
+ * @fires click - Emitted when the element is clicked.
  *
  * @cssprop --m3e-segmented-button-height - Total height of the segmented button.
  * @cssprop --m3e-segmented-button-outline-thickness - Thickness of the button’s border.

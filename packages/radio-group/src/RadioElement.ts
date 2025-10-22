@@ -55,6 +55,7 @@ import { selectionManager } from "@m3e/core/a11y";
  *
  * @fires input - Emitted when the checked state changes.
  * @fires change - Emitted when the checked state changes.
+ * @fires click - Emitted when the element is clicked.
  *
  * @cssprop --m3e-radio-container-size - Base size of the radio button container.
  * @cssprop --m3e-radio-icon-size - Size of the radio icon inside the wrapper.

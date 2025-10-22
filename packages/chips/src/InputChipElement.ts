@@ -41,6 +41,7 @@ import { M3eChipElement } from "./ChipElement";
  * @attr variant - The appearance variant of the chip.
  *
  * @fires remove - Emitted when the remove button is clicked or DELETE or BACKSPACE key is pressed.
+ * @fires click - Emitted when the element is clicked.
  *
  * @cssprop --m3e-chip-container-shape - Border radius of the chip container.
  * @cssprop --m3e-chip-container-height - Base height of the chip container before density adjustment.

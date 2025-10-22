@@ -61,6 +61,7 @@ import {
  *
  * @fires input - Emitted when the checked state changes.
  * @fires change - Emitted when the checked state changes.
+ * @fires click - Emitted when the element is clicked.
  *
  * @cssprop --m3e-checkbox-icon-size - Size of the checkbox icon inside the container.
  * @cssprop --m3e-checkbox-container-size - Base size of the checkbox container.

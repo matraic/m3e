@@ -72,6 +72,7 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  * @fires opened - Emitted when the item has opened.
  * @fires closing - Emitted when the item begins to close.
  * @fires closed - Emitted when the item has closed.
+ * @fires click - Emitted when the element is clicked.
  *
  * @cssprop --m3e-nav-menu-item-font-size - Font size for the item label.
  * @cssprop --m3e-nav-menu-item-font-weight - Font weight for the item label.

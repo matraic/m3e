@@ -50,6 +50,10 @@ import { addAriaReferencedId, removeAriaReferencedId, selectionManager } from "@
  * @attr for - The query selector used to specify the element related to this element.
  * @attr selected - Whether the element is selected.
  *
+ * @fires input - Emitted when the selected state changes.
+ * @fires change - Emitted when the selected state changes.
+ * @fires click - Emitted when the element is clicked.
+ *
  * @cssprop --m3e-tab-font-size - Font size for tab label.
  * @cssprop --m3e-tab-font-weight - Font weight for tab label.
  * @cssprop --m3e-tab-line-height - Line height for tab label.

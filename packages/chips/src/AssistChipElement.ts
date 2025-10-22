@@ -54,6 +54,8 @@ import { M3eChipElement } from "./ChipElement";
  * @attr value - A string representing the value of the chip.
  * @attr variant - The appearance variant of the chip.
  *
+ * @fires click - Emitted when the element is clicked.
+ *
  * @cssprop --m3e-chip-container-shape - Border radius of the chip container.
  * @cssprop --m3e-chip-container-height - Base height of the chip container before density adjustment.
  * @cssprop --m3e-chip-label-text-font-size - Font size of the chip label text.

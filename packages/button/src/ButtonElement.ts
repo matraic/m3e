@@ -78,6 +78,7 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  *
  * @fires input - Dispatched when a toggle button's selected state changes.
  * @fires change - Dispatched when a toggle button's selected state changes.
+ * @fires click - Emitted when the element is clicked.
  *
  * @cssprop --m3e-button-extra-small-container-height - Height of the button container, for the extra-small size variant.
  * @cssprop --m3e-button-extra-small-outline-thickness - Thickness of the button outline, for the extra-small size variant.

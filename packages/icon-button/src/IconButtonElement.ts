@@ -81,6 +81,7 @@ import { IconButtonWidth } from "./IconButtonWidth";
  *
  * @fires input - Dispatched when a toggle button's selected state changes.
  * @fires change - Dispatched when a toggle button's selected state changes.
+ * @fires click - Emitted when the element is clicked.
  *
  * @cssprop --m3e-icon-button-extra-small-container-height - Height of the extra-small container.
  * @cssprop --m3e-icon-button-extra-small-outline-thickness - Outline thickness for extra-small.
