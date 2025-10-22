@@ -124,6 +124,7 @@ export type ARIARole =
  */
 export function Role<T extends Constructor<LitElement>>(base: T, role: ARIARole): Constructor & T {
   abstract class _RoleMixin extends base {
+    /** @inheritdoc */
     override connectedCallback(): void {
       this.role = this.role || role;
       super.connectedCallback();

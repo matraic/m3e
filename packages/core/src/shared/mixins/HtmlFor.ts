@@ -45,17 +45,21 @@ export function HtmlFor<T extends Constructor<LitElement>>(base: T): Constructor
     /** @private */ private [_control]: HTMLElement | null = null;
     /** @private */ private [_firstUpdated] = false;
 
+    /** The identifier of the interactive control to which this element is attached. */
     @property({ attribute: "for" }) htmlFor: string | null = null;
 
+    /** The interactive element to which this element is attached. */
     get control() {
       return this[_control];
     }
 
+    /** @inheritdoc */
     protected override firstUpdated(_changedProperties: PropertyValues): void {
       super.firstUpdated(_changedProperties);
       this[_firstUpdated] = true;
     }
 
+    /** @inheritdoc */
     protected override update(changedProperties: PropertyValues<this>): void {
       super.update(changedProperties);
 
@@ -76,10 +80,15 @@ export function HtmlFor<T extends Constructor<LitElement>>(base: T): Constructor
       }
     }
 
+    /**
+     * Attaches the element to an interactive control.
+     * @param {HTMLElement} control The element that controls the attachable element.
+     */
     attach(control: HTMLElement): void {
       this[_control] = control;
     }
 
+    /** Detaches the element from its current interactive control. */
     detach(): void {
       this[_control] = null;
     }

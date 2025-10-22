@@ -13,6 +13,7 @@ const _tabindex = Symbol("_tabindex");
  */
 export function Focusable<T extends Constructor<LitElement & DisabledMixin>>(base: T): Constructor & T {
   abstract class _FocusableMixin extends base {
+    /** @private */
     private [_tabindex] = 0;
 
     /** @inheritdoc */
@@ -21,6 +22,7 @@ export function Focusable<T extends Constructor<LitElement & DisabledMixin>>(bas
       super.connectedCallback();
     }
 
+    /** @inheritdoc */
     protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
       super.firstUpdated(_changedProperties);
 
@@ -29,6 +31,7 @@ export function Focusable<T extends Constructor<LitElement & DisabledMixin>>(bas
       }
     }
 
+    /** @inheritdoc */
     protected override update(changedProperties: PropertyValues<this>): void {
       super.update(changedProperties);
 

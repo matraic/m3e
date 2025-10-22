@@ -13,18 +13,22 @@ import { isDisabledInteractiveMixin } from "./DisabledInteractive";
  */
 export function KeyboardClick<T extends Constructor<LitElement>>(base: T, allowEnter: boolean = true): T {
   abstract class _KeyboardClickMixin extends base {
+    /** @private */
     readonly #keyUpHandler = (e: KeyboardEvent) => this.#handleKeyUp(e);
 
+    /** @inheritdoc */
     override connectedCallback(): void {
       super.connectedCallback();
       this.addEventListener("keyup", this.#keyUpHandler);
     }
 
+    /** @inheritdoc */
     override disconnectedCallback(): void {
       super.disconnectedCallback();
       this.removeEventListener("keyup", this.#keyUpHandler);
     }
 
+    /** @private */
     #handleKeyUp(e: KeyboardEvent): void {
       if ((isDisabledMixin(this) && this.disabled) || (isDisabledInteractiveMixin(this) && this.disabledInteractive)) {
         return;
@@ -42,5 +46,6 @@ export function KeyboardClick<T extends Constructor<LitElement>>(base: T, allowE
       }
     }
   }
+
   return _KeyboardClickMixin;
 }

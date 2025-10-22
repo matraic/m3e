@@ -35,10 +35,13 @@ export function AttachInternals<T extends Constructor<LitElement>>(
   formAssociated?: boolean
 ): Constructor<AttachInternalsMixin> & T {
   abstract class _AttachInternals extends base implements AttachInternalsMixin {
+    /** Indicates that this custom element participates in form submission, validation, and form state restoration. */
     static readonly formAssociated = formAssociated;
 
+    /** @private */
     private [_internals]?: ElementInternals;
 
+    /** @internal */
     get [internals](): ElementInternals {
       return this[_internals] ?? (this[_internals] = this.attachInternals());
     }

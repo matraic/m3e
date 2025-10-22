@@ -37,31 +37,38 @@ const _eventHandler = Symbol("_eventHandler");
  */
 export function Touched<T extends Constructor<LitElement>>(base: T): Constructor<TouchedMixin> & T {
   abstract class _Touched extends base implements TouchedMixin {
+    /** @private */
     private [_eventHandler] = () => this.markAsTouched();
 
+    /** Whether the user has interacted when the element. */
     get touched(): boolean {
       return this.classList.contains("-touched");
     }
 
+    /** Whether the user has not interacted when the element. */
     get untouched(): boolean {
       return !this.touched;
     }
 
+    /** @inheritdoc */
     override connectedCallback(): void {
       this.markAsUntouched();
       super.connectedCallback();
       this.addEventListener("focusout", this[_eventHandler]);
     }
 
+    /** @inheritdoc */
     override disconnectedCallback(): void {
       super.disconnectedCallback();
       this.removeEventListener("focusout", this[_eventHandler]);
     }
 
+    /** Marks the element as touched. */
     markAsTouched(): void {
       this.classList.toggle("-touched", true);
     }
 
+    /** Marks the element as untouched. */
     markAsUntouched(): void {
       this.classList.toggle("-touched", false);
     }

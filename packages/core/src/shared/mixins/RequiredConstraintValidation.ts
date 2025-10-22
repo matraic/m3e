@@ -24,9 +24,10 @@ export function isRequiredConstraintValidationMixin(value: unknown): value is Re
  * @returns {Constructor<RequiredConstraintValidationMixin> & T} A constructor that implements `RequiredConstraintValidationMixin`.
  */
 export function RequiredConstraintValidation<
-  T extends Constructor<LitElement & RequiredMixin & ConstraintValidationMixin>
+  T extends Constructor<LitElement & RequiredMixin & ConstraintValidationMixin>,
 >(base: T): Constructor<RequiredConstraintValidationMixin> & T {
   abstract class _RequiredConstraintValidation extends base implements RequiredConstraintValidationMixin {
+    /** @internal */
     override [validate](): ValidityStateFlags | undefined {
       const validity = super[validate]();
       if (!validity && this.required) {

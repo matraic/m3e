@@ -1,7 +1,7 @@
 import { customElementVsCodePlugin } from "custom-element-vs-code-integration";
 
 export default {
-  globs: ["src/**/*.ts"],
+  globs: ["src/**/*.ts", "../core/src/shared/mixins/*.ts"],
   exclude: ["src/**/*.spec.ts"],
   packagejson: true,
   outdir: "dist",

@@ -33,8 +33,13 @@ export function CheckedIndeterminate<T extends Constructor<LitElement>>(
   base: T
 ): Constructor<CheckedIndeterminateMixin> & T {
   abstract class _CheckedIndeterminateMixin extends Checked(base) implements CheckedIndeterminateMixin {
+    /**
+     * Whether the element's checked state is indeterminate.
+     * @default false
+     */
     @property({ type: Boolean, reflect: true }) indeterminate = false;
 
+    /** @inheritdoc */
     protected override update(changedProperties: PropertyValues<this>): void {
       super.update(changedProperties);
 

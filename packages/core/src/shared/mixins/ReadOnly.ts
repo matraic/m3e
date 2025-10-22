@@ -34,8 +34,13 @@ export function ReadOnly<T extends Constructor<LitElement>>(
   reflect: boolean = true
 ): Constructor<ReadOnlyMixin> & T {
   abstract class _ReadOnlyMixin extends base implements ReadOnlyMixin {
+    /**
+     * A value indicating whether the element is read-only.
+     * @default false
+     */
     @property({ attribute: "readonly", type: Boolean, reflect: reflect }) readOnly = false;
 
+    /** @inheritdoc */
     protected override update(changedProperties: PropertyValues<this>): void {
       super.update(changedProperties);
 

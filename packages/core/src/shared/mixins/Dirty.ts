@@ -37,31 +37,38 @@ const _eventHandler = Symbol("_eventHandler");
  */
 export function Dirty<T extends Constructor<LitElement>>(base: T): Constructor<DirtyMixin> & T {
   abstract class _Dirty extends base implements DirtyMixin {
+    /** @private */
     private [_eventHandler] = () => this.markAsDirty();
 
+    /** Whether the user has modified the value of the element. */
     get dirty(): boolean {
       return this.classList.contains("-dirty");
     }
 
+    /** Whether the user has not modified the value of the element. */
     get pristine(): boolean {
       return !this.dirty;
     }
 
+    /** @inheritdoc */
     override connectedCallback(): void {
       this.markAsPristine();
       super.connectedCallback();
       this.addEventListener("change", this[_eventHandler]);
     }
 
+    /** @inheritdoc */
     override disconnectedCallback(): void {
       super.disconnectedCallback();
       this.removeEventListener("change", this[_eventHandler]);
     }
 
+    /** Marks the element as pristine. */
     markAsPristine(): void {
       this.classList.toggle("-dirty", false);
     }
 
+    /** Marks the element as dirty. */
     markAsDirty(): void {
       this.classList.toggle("-dirty", true);
     }

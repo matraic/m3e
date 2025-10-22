@@ -33,12 +33,18 @@ export function isRequiredMixin(value: unknown): value is RequiredMixin {
  */
 export function Required<T extends Constructor<LitElement>>(base: T): Constructor<RequiredMixin> & T {
   abstract class _RequiredMixin extends base implements RequiredMixin {
+    /**
+     * Whether a value is required for the element.
+     * @default false
+     */
     @property({ type: Boolean, reflect: true }) required = false;
 
+    /** Whether a value is not required for the element. */
     get optional() {
       return !this.required;
     }
 
+    /** @inheritdoc */
     protected override update(changedProperties: PropertyValues<this>): void {
       super.update(changedProperties);
       if (changedProperties.has("required")) {

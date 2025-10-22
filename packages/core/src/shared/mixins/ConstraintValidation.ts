@@ -79,24 +79,32 @@ export function ConstraintValidation<T extends Constructor<LitElement & FormAsso
   abstract class _ConstraintValidation extends base implements ConstraintValidationMixin {
     private [_validityMessage]?: string;
 
+    /** Whether the element is a submittable element that is a candidate for constraint validation. */
     get willValidate(): boolean {
       return this[internals].willValidate;
     }
 
+    /** The validity state of the element. */
     get validity(): ValidityState {
       this[_updateValidity]();
       return this[internals].validity;
     }
 
+    /** The error message that would be displayed if the user submits the form, or an empty string if no error message. */
     get validationMessage(): string {
       this[_updateValidity]();
       return this[internals].validationMessage;
     }
 
+    /** @internal */
     [validate](): ValidityStateFlags | undefined {
       return this[_validityMessage] ? { customError: true } : undefined;
     }
 
+    /**
+     * Returns `true` if the element has no validity problems; otherwise, returns `false`, fires
+     * an invalid event, and (if the event isn't canceled) reports the problem to the user.
+     */
     reportValidity(): boolean {
       if (isTouchedMixin(this)) {
         this.markAsTouched();
@@ -106,11 +114,19 @@ export function ConstraintValidation<T extends Constructor<LitElement & FormAsso
       return this[internals].reportValidity();
     }
 
+    /**
+     * Returns `true` if the element has no validity problems; otherwise,
+     * returns `false`, fires an invalid event.
+     */
     checkValidity(): boolean {
       this[_updateValidity]();
       return this[internals].checkValidity();
     }
 
+    /**
+     * Sets a custom validity message for the element.
+     * @param error The message to use for validity errors.
+     */
     setCustomValidity(error: string): void {
       if (error) {
         this[_validityMessage] = error;
@@ -121,15 +137,19 @@ export function ConstraintValidation<T extends Constructor<LitElement & FormAsso
       this[_updateValidity]();
     }
 
+    /** @inheritdoc */
     override requestUpdate(name?: PropertyKey, oldValue?: unknown, options?: PropertyDeclaration): void {
       super.requestUpdate(name, oldValue, options);
       this[_updateValidity]();
     }
+
+    /** @inheritdoc */
     protected override firstUpdated(_changedProperties: PropertyValues): void {
       super.firstUpdated(_changedProperties);
       this[_updateValidity]();
     }
 
+    /** @private */
     private [_updateValidity](): void {
       if (isServer || !this.isConnected) return;
 

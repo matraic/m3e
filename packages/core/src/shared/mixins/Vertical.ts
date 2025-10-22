@@ -30,8 +30,13 @@ export function isVerticalMixin(value: unknown): value is VerticalMixin {
  */
 export function Vertical<T extends Constructor<LitElement>>(base: T): Constructor<VerticalMixin> & T {
   abstract class _VerticalMixin extends base implements VerticalMixin {
+    /**
+     * Whether the element is oriented vertically.
+     * @default false
+     */
     @property({ type: Boolean, reflect: true }) vertical = false;
 
+    /** @inheritdoc */
     protected override update(changedProperties: PropertyValues<this>): void {
       super.update(changedProperties);
 

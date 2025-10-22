@@ -37,6 +37,7 @@ export function DisabledInteractive<T extends Constructor<LitElement & DisabledM
   base: T
 ): Constructor<DisabledInteractiveMixin> & T {
   abstract class _DisabledInteractiveMixin extends base implements DisabledInteractiveMixin {
+    /** @private */
     private readonly [_suppressedEventHandler] = (e: Event) => {
       if (this.disabledInteractive) {
         // Only allow specific keys when disabled and interactive.
@@ -47,18 +48,26 @@ export function DisabledInteractive<T extends Constructor<LitElement & DisabledM
         e.preventDefault();
       }
     };
+
+    /**
+     * Whether the element is disabled and interactive.
+     * @default false
+     */
     @property({ attribute: "disabled-interactive", type: Boolean, reflect: true }) disabledInteractive = false;
 
+    /** @inheritdoc */
     override connectedCallback(): void {
       SUPPRESSED_EVENTS.forEach((x) => this.addEventListener(x, this[_suppressedEventHandler], true));
       super.connectedCallback();
     }
 
+    /** @inheritdoc */
     override disconnectedCallback(): void {
       SUPPRESSED_EVENTS.forEach((x) => this.removeEventListener(x, this[_suppressedEventHandler], true));
       super.disconnectedCallback();
     }
 
+    /** @inheritdoc */
     protected override update(changedProperties: PropertyValues<this>): void {
       super.update(changedProperties);
 

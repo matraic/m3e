@@ -30,8 +30,13 @@ export function isSelectedMixin(value: unknown): value is SelectedMixin {
  */
 export function Selected<T extends Constructor<LitElement>>(base: T): Constructor<SelectedMixin> & T {
   abstract class _SelectedMixin extends base implements SelectedMixin {
+    /**
+     * Whether the element is selected.
+     * @default false
+     */
     @property({ type: Boolean, reflect: true }) selected = false;
 
+    /** @inheritdoc */
     protected override update(changedProperties: PropertyValues<this>): void {
       super.update(changedProperties);
 

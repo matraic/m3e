@@ -15,18 +15,28 @@ export type LinkTarget = "_self" | "_blank" | "_parent" | "_top" | (string & {})
 
 /** Defines functionality for an interactive element that functions as a link. */
 export interface LinkButtonMixin {
-  /** The URL to which the link button points. */
+  /**
+   * The URL to which the link button points.
+   * @default ""
+   */
   href: string;
 
-  /** The target of the link button. */
+  /**
+   * The target of the link button.
+   * @default ""
+   */
   target: LinkTarget;
 
-  /** The relationship between the `target` of the link button and the document. */
+  /**
+   * The relationship between the `target` of the link button and the document.
+   * @default ""
+   */
   rel: string;
 
   /**
    * A value indicating whether the `target` of the link button will be downloaded,
    * optionally specifying the new name of the file.
+   * @default null
    */
   download: string | null;
 
@@ -86,10 +96,29 @@ export function LinkButton<T extends Constructor<LitElement>>(base: T): Construc
       }
     };
 
+    /**
+     * The URL to which the link button points.
+     * @default ""
+     */
     @property() href = "";
+
+    /**
+     * The target of the link button.
+     * @default ""
+     */
     @property() target: LinkTarget = "";
+
+    /**
+     * The relationship between the `target` of the link button and the document.
+     * @default ""
+     */
     @property() rel = "";
 
+    /**
+     * A value indicating whether the `target` of the link button will be downloaded,
+     * optionally specifying the new name of the file.
+     * @default null
+     */
     @property({ reflect: false }) get download(): string | null {
       return this.getAttribute("download");
     }
@@ -105,6 +134,7 @@ export function LinkButton<T extends Constructor<LitElement>>(base: T): Construc
       }
     }
 
+    /** @inheritdoc */
     override connectedCallback(): void {
       super.connectedCallback();
       this.addEventListener("click", this[_clickHandler]);
@@ -114,11 +144,13 @@ export function LinkButton<T extends Constructor<LitElement>>(base: T): Construc
       }
     }
 
+    /** @inheritdoc */
     override disconnectedCallback(): void {
       super.disconnectedCallback();
       this.removeEventListener("click", this[_clickHandler]);
     }
 
+    /** @internal */
     [renderPseudoLink](): unknown {
       const disabled = isDisabledMixin(this) && this.disabled;
       const disabledInteractive = isDisabledInteractiveMixin(this) && this.disabledInteractive;
@@ -138,6 +170,7 @@ export function LinkButton<T extends Constructor<LitElement>>(base: T): Construc
         : nothing;
     }
 
+    /** @private */
     #handleLinkPointerDown(e: PointerEvent): void {
       if (e.button !== 2) {
         e.preventDefault();
@@ -155,11 +188,13 @@ export function LinkButton<T extends Constructor<LitElement>>(base: T): Construc
       }
     }
 
+    /** @private */
     #handleLinkFocus(e: Event): void {
       (e.target as HTMLLinkElement).blur();
       this.focus();
     }
 
+    /** @private */
     #handleLinkBlur(e: Event): void {
       (e.target as HTMLLinkElement).setAttribute("aria-hidden", "true");
     }

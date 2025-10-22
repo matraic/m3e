@@ -34,8 +34,13 @@ export function Disabled<T extends Constructor<LitElement>>(
   reflect: boolean = true
 ): Constructor<DisabledMixin> & T {
   abstract class _DisabledMixin extends base implements DisabledMixin {
+    /**
+     * Whether the element is disabled.
+     * @default false
+     */
     @property({ type: Boolean, reflect: reflect }) disabled = false;
 
+    /** @inheritdoc */
     protected override update(changedProperties: PropertyValues<this>): void {
       super.update(changedProperties);
 

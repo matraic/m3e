@@ -37,35 +37,42 @@ export function Labelled<T extends Constructor<LitElement & AttachInternalsMixin
   base: T
 ): Constructor<LabelledMixin> & T {
   abstract class _Labelled extends base implements LabelledMixin {
+    /** Indicates that this custom element participates in form submission, validation, and form state restoration. */
     static readonly formAssociated = true;
 
+    /** @private */
     private readonly [_eventHandler] = (e: Event) => {
       if (!e.defaultPrevented) {
         this[_updateLabels]();
       }
     };
 
+    /** The label elements that the element is associated with. */
     get labels(): NodeListOf<HTMLLabelElement> {
       return this[internals].labels as NodeListOf<HTMLLabelElement>;
     }
 
+    /** @inheritdoc */
     override connectedCallback(): void {
       super.connectedCallback();
       this.addEventListener("focusout", this[_eventHandler]);
       this.addEventListener("change", this[_eventHandler]);
     }
 
+    /** @inheritdoc */
     override disconnectedCallback(): void {
       super.disconnectedCallback();
       this.removeEventListener("focusout", this[_eventHandler]);
       this.removeEventListener("change", this[_eventHandler]);
     }
 
+    /** @inheritdoc */
     protected override update(changedProperties: PropertyValues): void {
       super.update(changedProperties);
       this[_updateLabels]();
     }
 
+    /** @private */
     private [_updateLabels](): void {
       const focusable = this.hasAttribute("tabindex");
       const disabled =
@@ -78,8 +85,8 @@ export function Labelled<T extends Constructor<LitElement & AttachInternalsMixin
         label.style.color = disabled
           ? `color-mix(in srgb, ${DesignToken.color.onSurface} 38%, transparent)`
           : isTouchedMixin(this) && this.touched && this.ariaInvalid
-          ? `${DesignToken.color.error}`
-          : "";
+            ? `${DesignToken.color.error}`
+            : "";
       }
     }
   }

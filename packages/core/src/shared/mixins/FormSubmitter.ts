@@ -21,7 +21,10 @@ export interface FormSubmitterMixin extends AttachInternalsMixin {
   /** The value associated with the element's name when it's submitted with form data. */
   value: string | null;
 
-  /** The type of the element. */
+  /**
+   * The type of the element.
+   * @default "button"
+   */
   type: FormSubmitterType;
 }
 
@@ -46,6 +49,10 @@ export function FormSubmitter<T extends Constructor<LitElement & AttachInternals
   base: T
 ): Constructor<FormSubmitterMixin> & T {
   abstract class _FormSubmitterMixin extends base implements FormSubmitterMixin {
+    /**
+     * The name of the element, submitted as a pair with the element's `value`
+     * as part of form data, when the element is used to submit a form.
+     */
     @property() get name() {
       return this.getAttribute("name") ?? "";
     }
@@ -56,6 +63,8 @@ export function FormSubmitter<T extends Constructor<LitElement & AttachInternals
         this.removeAttribute("name");
       }
     }
+
+    /** The value associated with the element's name when it's submitted with form data. */
     @property() get value() {
       return this.getAttribute("value");
     }
@@ -67,18 +76,25 @@ export function FormSubmitter<T extends Constructor<LitElement & AttachInternals
       }
     }
 
+    /**
+     * The type of the element.
+     * @default "button"
+     */
     @property() type: FormSubmitterType = "button";
 
+    /** @inheritdoc */
     override connectedCallback(): void {
       super.connectedCallback();
       this.addEventListener("click", this[_clickHandler]);
     }
 
+    /** @inheritdoc */
     override disconnectedCallback(): void {
       super.disconnectedCallback();
       this.removeEventListener("click", this[_clickHandler]);
     }
 
+    /** @private */
     private [_clickHandler] = async (e: Event) => {
       if ((isDisabledMixin(this) && this.disabled) || (isDisabledInteractiveMixin(this) && this.disabledInteractive)) {
         return;

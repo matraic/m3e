@@ -30,8 +30,13 @@ export function isCheckedMixin(value: unknown): value is CheckedMixin {
  */
 export function Checked<T extends Constructor<LitElement>>(base: T): Constructor<CheckedMixin> & T {
   abstract class _CheckedMixin extends base implements CheckedMixin {
+    /**
+     * Whether the element is checked.
+     * @default false
+     */
     @property({ type: Boolean, reflect: true }) checked = false;
 
+    /** @inheritdoc */
     protected override update(changedProperties: PropertyValues<this>): void {
       super.update(changedProperties);
 

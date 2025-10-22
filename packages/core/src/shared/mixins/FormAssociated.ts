@@ -59,27 +59,34 @@ export function FormAssociated<T extends Constructor<LitElement & DisabledMixin 
   base: T
 ): Constructor<FormAssociatedMixin> & T {
   abstract class _FormAssociatedMixin extends base implements FormAssociatedMixin {
+    /** Indicates that this custom element participates in form submission, validation, and form state restoration. */
     static readonly formAssociated = true;
-    private [_defaultValue]: unknown;
-    private [_defaultIndeterminate] = false;
-    private [_formDisabled] = false;
 
+    /** @private */ private [_defaultValue]: unknown;
+    /** @private */ private [_defaultIndeterminate] = false;
+    /** @private */ private [_formDisabled] = false;
+
+    /** The `HTMLFormElement` associated with this element. */
     get form(): HTMLFormElement | null {
       return this[internals].form;
     }
 
+    /** @inheritdoc */
     get labels(): NodeListOf<HTMLLabelElement> {
       return this[internals].labels as NodeListOf<HTMLLabelElement>;
     }
 
+    /** @internal */
     get [formValue](): string | File | FormData | null {
       return null;
     }
 
+    /** @internal */
     get [defaultValue](): unknown {
       return this[_defaultValue];
     }
 
+    /** The name that identifies the element when submitting the associated form. */
     @property({ noAccessor: true }) get name() {
       return this.getAttribute("name") ?? "";
     }
@@ -95,6 +102,10 @@ export function FormAssociated<T extends Constructor<LitElement & DisabledMixin 
     // how the formDisabledCallback overrides an element's disabled state.
     // See https://github.com/whatwg/html/issues/8365
 
+    /**
+     * Whether the element is disabled.
+     * @default false
+     */
     @property({ type: Boolean })
     override get disabled(): boolean {
       return super.disabled || this[_formDisabled];
@@ -103,6 +114,7 @@ export function FormAssociated<T extends Constructor<LitElement & DisabledMixin 
       super.disabled = value;
     }
 
+    /** @inheritdoc */
     override connectedCallback(): void {
       super.connectedCallback();
 
@@ -116,11 +128,13 @@ export function FormAssociated<T extends Constructor<LitElement & DisabledMixin 
       }
     }
 
+    /** @inheritdoc */
     override requestUpdate(name?: PropertyKey, oldValue?: unknown, options?: PropertyDeclaration): void {
       super.requestUpdate(name, oldValue, options);
       this[internals].setFormValue(this[formValue]);
     }
 
+    /** Called when the element is disabled or enabled via its form association. */
     formDisabledCallback(disabled: boolean): void {
       const wasDisabled = this.disabled;
       this[_formDisabled] = disabled;
@@ -129,6 +143,7 @@ export function FormAssociated<T extends Constructor<LitElement & DisabledMixin 
       }
     }
 
+    /** Called when the associated form is reset. */
     formResetCallback(): void {
       if (isCheckedMixin(this)) {
         this.checked = this[_defaultValue] === true;
