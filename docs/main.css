@@ -47,6 +47,7 @@ m3e-card + .example + p {
 a,
 a:visited {
   color: var(--md-sys-color-primary);
+  outline-color: var(--md-sys-color-secondary);
 }
 code {
   background-color: var(--md-sys-color-surface-variant);
