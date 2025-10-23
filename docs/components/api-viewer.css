@@ -46,6 +46,8 @@ api-viewer::part(docs-tag) {
   border-radius: 0.25rem;
   font-size: 0.875em;
 }
+api-viewer::part(docs-container),
+api-viewer::part(docs-description),
 api-viewer::part(docs-label) {
   color: var(--md-sys-color-on-surface);
 }
@@ -79,6 +81,9 @@ m3e-heading + api-viewer {
 }
 api-viewer:last-child {
   margin-bottom: 1rem;
+}
+api-viewer + api-viewer {
+  margin-top: 1rem;
 }
 @media (forced-colors: active) {
   api-viewer::part(tab) {

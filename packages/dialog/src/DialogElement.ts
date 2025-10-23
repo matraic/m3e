@@ -33,6 +33,7 @@ import {} from "@m3e/core/a11y";
  *
  * @slot - Renders the content of the dialog.
  * @slot header - Renders the header of the dialog.
+ * @slot actions - Renders the actions of the dialog.
  * @slot close-icon - Renders the icon of the button used to close the dialog.
  *
  * @attr alert - Whether the dialog is an alert.

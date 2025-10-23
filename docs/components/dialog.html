@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Dialog for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Dialog for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@latest/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@latest/dist/a11y.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/button@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/dialog@latest/dist/index.min.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Dialog</span>
+      </m3e-toc>
+
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Button</m3e-heading>
+      <p>
+        The <code>m3e-dialog</code> component is a semantic, expressive UI primitive users interact with to perform an
+        action.
+      </p>
+      <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
+      <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/dialog</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/dialog/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>
+        This section provides practical examples for implementing the components included in this package. It outlines
+        typical usage patterns, integration approaches, and configuration options to help developers adopt the
+        components effectively across a variety of environments.
+      </p>
+      <p>
+        <strong>NOTE: this page is presented in a nested <code>iframe</code>.</strong>
+      </p>
+      <ul>
+        <li>The dialog scrim will only overlay the current window.</li>
+        <li>The dialog is positioned relative the current window.</li>
+      </ul>
+
+      <m3e-heading variant="headline" size="small" level="3">Anatomy</m3e-heading>
+      <p>
+        The <code>m3e-dialog</code> component supports structured composition through named slots, enabling flexible
+        layout and expressive content delivery:
+      </p>
+      <ul>
+        <li><code>(default)</code> — Renders the main content of the dialog.</li>
+        <li>
+          <code>header</code> — Renders the header of the dialog. Typically used for titles, summaries, or introductory
+          context.
+        </li>
+        <li>
+          <code>actions</code> — Renders the actions of the dialog. Commonly includes buttons such as "OK", "Cancel", or
+          custom actions.
+        </li>
+        <li><code>close-icon</code> — Renders the icon of the button used to dismiss the dialog.</li>
+      </ul>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button variant="filled">
+            <m3e-dialog-trigger for="dlg">Open Dialog</m3e-dialog-trigger>
+          </m3e-button>
+          <m3e-dialog id="dlg" dismissible>
+            <span slot="header">Lorem ipsum dolor sit amet</span>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
+            <div slot="actions" end>
+              <m3e-button autofocus><m3e-dialog-action return-value="ok">Close</m3e-dialog-action></m3e-button>
+            </div>
+          </m3e-dialog>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button variant=&quot;filled&quot;&gt;
+  &lt;m3e-dialog-trigger for=&quot;dlg&quot;&gt;Open Dialog&lt;/m3e-dialog-trigger&gt;
+&lt;/m3e-button&gt;
+&lt;m3e-dialog id=&quot;dlg&quot; dismissible&gt;
+  &lt;span slot=&quot;header&quot;&gt;Lorem ipsum dolor sit amet&lt;/span&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+  &lt;div slot=&quot;actions&quot; end&gt;
+    &lt;m3e-button autofocus&gt;&lt;m3e-dialog-action return-value=&quot;ok&quot;&gt;Close&lt;/m3e-dialog-action&gt;&lt;/m3e-button&gt;
+  &lt;/div&gt;
+&lt;/m3e-dialog&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Opening</m3e-heading>
+      <p>
+        Use the <code>m3e-dialog-trigger</code> to open a dialog. This component should be nested inside a clickable
+        element and be associated with a dialog by setting the <code>for</code> attribute to the <code>id</code> of the
+        dialog to open.
+      </p>
+      <p>
+        When its parent is clicked, it opens the dialog. When the dialog is closed, focus is stored to the parenting
+        element.
+      </p>
+      <p>Alternately, you can programmatically open a dialog using the <code>show</code> method.</p>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button variant=&quot;filled&quot;&gt;
+  &lt;m3e-dialog-trigger for=&quot;dlg&quot;&gt;Open Dialog&lt;/m3e-dialog-trigger&gt;
+&lt;/m3e-button&gt;
+&lt;m3e-dialog id=&quot;dlg&quot; dismissible&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-dialog&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Actions</m3e-heading>
+      <p>
+        When closed, the <code>m3e-dialog</code> emits a <code>closed</code> event. Actions are used to designate a
+        return value, set on the dialog when closed. Use the <code>m3e-dialog-action</code> component define an action.
+      </p>
+      <p>
+        When the parenting element of a <code>m3e-dialog-action</code> is clicked, it sets the
+        <code>returnValue</code> property of its parenting <code>m3e-dialog</code> to the value of the
+        <code>return-value</code> attribute and closes the dialog.
+      </p>
+      <p>Alternately, you can programmatically close a dialog using the <code>hide</code> method.</p>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button&gt;
+    &lt;m3e-dialog-action return-value=&quot;ok&quot;&gt;Close&lt;/m3e-dialog-action&gt;
+&lt;/m3e-button&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Dismissible</m3e-heading>
+      <p>
+        By default, a close (or dismiss) button is not presented for a dialog. Use the
+        <code>dismissible</code> attribute of the <code>m3e-dialog</code> to control this behavior. You can change the
+        icon using the <code>close-icon</code> slot and change the accessible label using the
+        <code>close-label</code> attribute.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Disabling close</m3e-heading>
+      <p>
+        The component provides an accessible experience by allowing users to click a dialog's backdrop or press
+        <code>ESCAPE</code> to close a dialog. When this occurs, the <code>cancel</code> event is emitted. Use the
+        <code>disable-close</code> attribute of the <code>m3e-dialog</code> to disable this behavior.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Focus management</m3e-heading>
+      <p>
+        The component provides an accessible experience by providing a focus trap used to keep focus within a dialog.
+        Use the <code>no-focus-trap</code> attribute of the <code>m3e-dialog</code> to disable this behavior.
+      </p>
+      <p>
+        In addition, you can use the <code>autofocus</code> attribute to specify which action should be focused when the
+        dialog is opened.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        The <code>m3e-dialog</code> presents an internal <code>dialog</code> element labelled by the content of the
+        <code>header</code> slot. You can use the <code>alert</code> attribute to specify whether the ARIA
+        <code>role="alertdialog"</code> is applied to the internal dialog.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer
+        only="m3e-dialog-trigger"
+        src="https://cdn.jsdelivr.net/npm/@m3e/dialog@latest/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-dialog-action"
+        src="https://cdn.jsdelivr.net/npm/@m3e/dialog@latest/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer only="m3e-dialog" src="https://cdn.jsdelivr.net/npm/@m3e/dialog@latest/dist/custom-elements.json">
+      </api-viewer>
+    </m3e-theme>
+  </body>
+</html>
