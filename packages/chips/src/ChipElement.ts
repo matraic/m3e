@@ -18,7 +18,6 @@ import {
 import { ChipVariant } from "./ChipVariant";
 
 /**
- * @summary
  * A non-interactive chip used to convey small pieces of information.
  *
  * @description

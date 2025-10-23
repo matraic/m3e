@@ -4,7 +4,6 @@ import { customElement, property, query, state } from "lit/decorators.js";
 import { debounce, ResizeController } from "@m3e/core";
 
 /**
- * @summary
  * Presents pagination controls used to scroll overflowing content.
  *
  * @description

@@ -11,7 +11,6 @@ import { TabHeaderPosition } from "./TabHeaderPosition";
 const MIN_PRIMARY_TAB_WIDTH = 24;
 
 /**
- * @summary
  * Organizes content into separate views where only one view can be visible at a time.
  *
  * @description
@@ -235,7 +234,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
 
   /** The selected tab. */
   get selectedTab(): M3eTabElement | null {
-    return this._selectedIndex !== null ? this.tabs[this._selectedIndex] ?? null : null;
+    return this._selectedIndex !== null ? (this.tabs[this._selectedIndex] ?? null) : null;
   }
 
   /** The zero-based index of the selected tab. */

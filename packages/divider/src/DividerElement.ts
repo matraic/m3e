@@ -4,7 +4,6 @@ import { customElement, property } from "lit/decorators.js";
 import { DesignToken, Role } from "@m3e/core";
 
 /**
- * @summary
  * A thin line that separates content in lists or other containers.
  *
  * @description

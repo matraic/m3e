@@ -8,7 +8,6 @@ import { M3eSliderThumbElement } from "./SliderThumbElement";
 import { SliderSize } from "./SliderSize";
 
 /**
- * @summary
  * Allows for the selection of numeric values from a range.
  *
  * @description

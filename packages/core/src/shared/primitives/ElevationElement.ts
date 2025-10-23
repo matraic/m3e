@@ -9,7 +9,6 @@ import { ElevationToken } from "./ElevationToken";
 import { DesignToken } from "../tokens";
 
 /**
- * @summary
  * Visually depicts elevation using a shadow.
  *
  * @description

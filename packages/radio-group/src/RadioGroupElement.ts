@@ -21,7 +21,6 @@ import { SelectionManager, selectionManager } from "@m3e/core/a11y";
 import { M3eRadioElement } from "./RadioElement";
 
 /**
- * @summary
  * A container for a set of radio buttons that enforces single selection.
  *
  * @description

@@ -18,7 +18,6 @@ import { SelectionManager, selectionManager } from "@m3e/core/a11y";
 import { M3eButtonSegmentElement } from "./ButtonSegmentElement";
 
 /**
- * @summary
  * A button that allows a user to select from a limited set of options.
  *
  * @description

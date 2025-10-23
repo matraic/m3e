@@ -8,7 +8,6 @@ import { LoadingIndicatorToken } from "./LoadingIndicatorToken";
 import { ShapePolygon } from "./ShapePolygon";
 
 /**
- * @summary
  * Shows indeterminate progress for a short wait time.
  *
  * @description

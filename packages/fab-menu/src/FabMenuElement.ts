@@ -13,7 +13,6 @@ import { FabMenuVariant } from "./FabMenuVariant";
 import { M3eFabMenuItemElement } from "./FabMenuItemElement";
 
 /**
- * @summary
  * A menu, opened from a floating action button (FAB), used to display multiple related actions.
  *
  * @description

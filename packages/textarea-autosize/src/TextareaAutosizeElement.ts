@@ -13,7 +13,6 @@ import { customElement, property } from "lit/decorators.js";
 import { debounce, HtmlFor, Role } from "@m3e/core";
 
 /**
- * @summary
  * A non-visual element used to automatically resize a `textarea` to fit its content.
  *
  * @description

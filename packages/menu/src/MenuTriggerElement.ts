@@ -7,7 +7,6 @@ import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/core/a11y";
 import type { M3eMenuElement } from "./MenuElement";
 
 /**
- * @summary
  * An element, nested within a clickable element, used to open a menu.
  *
  * @description

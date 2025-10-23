@@ -9,7 +9,6 @@ import { BadgeSize } from "./BadgeSize";
 import { BadgePosition } from "./BadgePosition";
 
 /**
- * @summary
  * A visual indicator used to label content.
  *
  * @description

@@ -8,7 +8,6 @@ import { ToolbarVariant } from "./ToolbarVariant";
 import { ToolbarShape } from "./ToolbarShape";
 
 /**
- * @summary
  * Presents frequently used actions relevant to the current page.
  *
  * @description

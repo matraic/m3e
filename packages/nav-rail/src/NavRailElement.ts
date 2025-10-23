@@ -6,7 +6,6 @@ import { M3eInteractivityChecker, RovingTabIndexManager, selectionManager } from
 import { M3eNavBarElement, NavItemOrientation } from "@m3e/nav-bar";
 
 /**
- * @summary
  * A vertical bar, typically used on larger devices, that allows a user to switch between views.
  *
  * @description

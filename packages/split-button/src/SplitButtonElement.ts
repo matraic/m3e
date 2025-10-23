@@ -8,7 +8,6 @@ import { M3eIconButtonElement } from "@m3e/icon-button";
 import { SplitButtonVariant } from "./SplitButtonVariant";
 
 /**
- * @summary
  * A button used to show an action with a menu of related actions.
  *
  * @description

@@ -22,7 +22,6 @@ import {
 import { selectionManager } from "@m3e/core/a11y";
 
 /**
- * @summary
  * A radio button that allows a user to select one option from a set of options.
  *
  * @description

@@ -16,7 +16,6 @@ import { LinearProgressMode } from "./LinearProgressMode";
 import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
 
 /**
- * @summary
  * A horizontal bar for indicating progress and activity.
  *
  * @description

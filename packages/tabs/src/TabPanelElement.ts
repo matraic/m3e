@@ -4,7 +4,6 @@ import { customElement } from "lit/decorators.js";
 import { DesignToken, Role } from "@m3e/core";
 
 /**
- * @summary
  * A panel presented for a tab.
  *
  * @description

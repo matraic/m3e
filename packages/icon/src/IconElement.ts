@@ -7,7 +7,6 @@ import { IconVariant } from "./IconVariant";
 import { IconGrade } from "./IconGrade";
 
 /**
- * @summary
  * A small symbol used to easily identify an action or category.
  *
  * @description
@@ -67,8 +66,11 @@ export class M3eIconElement extends Role(LitElement, "img") {
       width: inherit;
       height: inherit;
       vertical-align: inherit;
-      font-variation-settings: "FILL" var(--_icon-fill, 0), "wght" var(--_icon-weight, 400),
-        "GRAD" var(--_icon-grade, 0), "opsz" var(--_icon-optical-size, 24);
+      font-variation-settings:
+        "FILL" var(--_icon-fill, 0),
+        "wght" var(--_icon-weight, 400),
+        "GRAD" var(--_icon-grade, 0),
+        "opsz" var(--_icon-optical-size, 24);
     }
     :host([variant="outlined"]) .icon {
       font-family: "Material Symbols Outlined";

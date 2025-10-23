@@ -12,7 +12,6 @@ import { ExpansionPanelStyle } from "./styles";
 import { M3eExpansionHeaderElement } from "./ExpansionHeaderElement";
 
 /**
- * @summary
  * An expandable details-summary view.
  *
  * @description

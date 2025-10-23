@@ -21,7 +21,6 @@ import { selectionManager } from "@m3e/core/a11y";
 import type { M3eNavMenuElement } from "./NavMenuElement";
 
 /**
- * @summary
  * An expandable item in a navigation menu.
  *
  * @description

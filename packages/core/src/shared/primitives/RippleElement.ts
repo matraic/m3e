@@ -8,7 +8,6 @@ import { RippleToken } from "./RippleToken";
 import { DesignToken } from "../tokens";
 
 /**
- * @summary
  * Connects user input to screen reactions using ripples.
  *
  * @description

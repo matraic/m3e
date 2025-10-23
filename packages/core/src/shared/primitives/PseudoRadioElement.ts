@@ -5,7 +5,6 @@ import { Checked, Disabled, Role } from "../mixins";
 import { DesignToken } from "../tokens";
 
 /**
- * @summary
  * An element which looks like a radio button.
  *
  * @description

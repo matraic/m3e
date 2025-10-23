@@ -5,7 +5,6 @@ import { CheckedIndeterminate, Disabled, Role } from "../mixins";
 import { DesignToken } from "../tokens";
 
 /**
- * @summary
  * An element which looks like a checkbox.
  *
  * @description

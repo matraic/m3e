@@ -9,7 +9,6 @@ import { ButtonGroupVariant } from "./ButtonGroupVariant";
 import { ButtonGroupSize } from "./ButtonGroupSize";
 
 /**
- * @summary
  * Organizes buttons and adds interactions between them.
  *
  * @description

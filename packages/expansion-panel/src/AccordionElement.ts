@@ -6,7 +6,6 @@ import { DesignToken } from "@m3e/core";
 import { M3eExpansionPanelElement } from "./ExpansionPanelElement";
 
 /**
- * @summary
  * Combines multiple expansion panels in to an accordion.
  *
  * @description

@@ -9,7 +9,6 @@ import { DrawerMode } from "./DrawerMode";
 import { DrawerContainerStyle } from "./styles";
 
 /**
- * @summary
  * A container for one or two sliding drawers.
  *
  * @description

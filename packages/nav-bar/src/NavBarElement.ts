@@ -11,7 +11,6 @@ import { NavItemOrientation } from "./NavItemOrientation";
 import { NavBarMode } from "./NavBarMode";
 
 /**
- * @summary
  * A horizontal bar, typically used on smaller devices, that allows a user to switch between 3-5 views.
  *
  * @description

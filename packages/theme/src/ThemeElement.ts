@@ -18,7 +18,6 @@ import { ThemeVariant } from "./ThemeVariant";
 import { MotionScheme } from "./MotionScheme";
 
 /**
- * @summary
  * A non-visual element responsible for application-level theming.
  *
  * @description

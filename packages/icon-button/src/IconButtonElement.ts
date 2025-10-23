@@ -30,7 +30,6 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
 import { IconButtonWidth } from "./IconButtonWidth";
 
 /**
- * @summary
  * An icon button users interact with to perform a supplementary action.
  *
  * @description

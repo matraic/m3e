@@ -6,7 +6,6 @@ import { ShapeStyle } from "./ShapeStyle";
 import { ShapeNameStyle } from "./ShapeNameStyle";
 
 /**
- * @summary
  * A shape used to add emphasis and decorative flair.
  *
  * @description

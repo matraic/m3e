@@ -8,7 +8,6 @@ import { M3eMenuItemElement } from "./MenuItemElement";
 import { MenuItemElementBase } from "./MenuItemElementBase";
 
 /**
- * @summary
  * An item of a menu which supports a mutually exclusive checkable state.
  *
  * @description

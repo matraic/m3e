@@ -31,7 +31,6 @@ import { HideSubscriptType } from "./HideSubscriptType";
 import { FloatLabelType } from "./FloatLabelType";
 
 /**
- * @summary
  * A container for form controls that applies Material Design styling and behavior.
  *
  * @description

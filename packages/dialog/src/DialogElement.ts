@@ -7,7 +7,6 @@ import { DesignToken, EventAttribute, prefersReducedMotion } from "@m3e/core";
 import {} from "@m3e/core/a11y";
 
 /**
- * @summary
  * A dialog that provides important prompts in a user flow.
  *
  * @description

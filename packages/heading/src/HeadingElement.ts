@@ -8,7 +8,6 @@ import { HeadingSize } from "./HeadingSize";
 import { HeadingVariant } from "./HeadingVariant";
 
 /**
- * @summary
  * A heading to a page or section.
  *
  * @description

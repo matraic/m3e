@@ -29,7 +29,6 @@ import { ButtonVariant } from "./ButtonVariant";
 import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
 
 /**
- * @summary
  * A button users interact with to perform an action.
  *
  * @description

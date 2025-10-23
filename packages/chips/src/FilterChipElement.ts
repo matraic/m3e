@@ -17,7 +17,6 @@ import { selectionManager } from "@m3e/core/a11y";
 import { M3eChipElement } from "./ChipElement";
 
 /**
- * @summary
  * A chip users interact with to select/deselect options.
  *
  * @description

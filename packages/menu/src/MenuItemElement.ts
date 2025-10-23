@@ -8,7 +8,6 @@ import { MenuItemElementBase } from "./MenuItemElementBase";
 import { M3eMenuTriggerElement } from "./MenuTriggerElement";
 
 /**
- * @summary
  * An item of a menu.
  *
  * @description

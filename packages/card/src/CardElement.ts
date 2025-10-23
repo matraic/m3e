@@ -23,7 +23,6 @@ import { CardStyle, CardVariantStyle } from "./styles";
 import { CardOrientation } from "./CardOrientation";
 
 /**
- * @summary
  * A content container for text, images (or other media), and actions in the context of a single subject.
  *
  * @description

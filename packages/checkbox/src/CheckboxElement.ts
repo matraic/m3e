@@ -25,7 +25,6 @@ import {
 } from "@m3e/core";
 
 /**
- * @summary
  * A checkbox that allows a user to select one or more options from a limited number of choices.
  *
  * @description

@@ -18,7 +18,6 @@ import { M3eIconButtonElement } from "@m3e/icon-button";
 import { M3eChipElement } from "./ChipElement";
 
 /**
- * @summary
  * A chip which represents a discrete piece of information entered by a user.
  *
  * @description

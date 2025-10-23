@@ -18,7 +18,6 @@ import {
 import { addAriaReferencedId, removeAriaReferencedId, selectionManager } from "@m3e/core/a11y";
 
 /**
- * @summary
  * An interactive element that, when activated, presents an associated tab panel.
  *
  * @description

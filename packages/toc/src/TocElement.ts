@@ -19,7 +19,6 @@ import { M3eTocItemElement } from "./TocItemElement";
 import { TocGenerator, TocNode } from "./TocGenerator";
 
 /**
- * @summary
  * A table of contents that provides in-page scroll navigation.
  *
  * @description

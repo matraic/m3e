@@ -22,7 +22,6 @@ import { M3eChipSetElement } from "./ChipSetElement";
 import { M3eInputChipElement } from "./InputChipElement";
 
 /**
- * @summary
  * A container that transforms user input into a cohesive set of interactive chips, supporting entry, editing, and removal of discrete values.
  *
  * @description

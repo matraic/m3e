@@ -15,7 +15,6 @@ import {
 import { M3eChipElement } from "./ChipElement";
 
 /**
- * @summary
  * A chip used to help narrow a user's intent by presenting dynamically generated suggestions, such as
  * suggested responses or search filters.
  *

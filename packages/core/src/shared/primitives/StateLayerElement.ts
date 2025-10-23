@@ -7,7 +7,6 @@ import { HtmlFor, Role } from "../mixins";
 import { StateLayerToken } from "./StateLayerToken";
 
 /**
- * @summary
  * Provides focus and hover state layer treatment for an interactive element.
  *
  * @description

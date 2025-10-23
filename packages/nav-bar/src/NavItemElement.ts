@@ -23,7 +23,6 @@ import type { M3eNavBarElement } from "./NavBarElement";
 import { NavItemOrientation } from "./NavItemOrientation";
 
 /**
- * @summary
  * An item, placed in a navigation bar or rail, used to navigate to destinations in an application.
  *
  * @description

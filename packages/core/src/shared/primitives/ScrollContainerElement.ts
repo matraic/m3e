@@ -7,7 +7,6 @@ import { DesignToken } from "../tokens";
 import { ScrollDividers } from "./ScrollDividers";
 
 /**
- * @summary
  * A vertically oriented content container which presents dividers above and below content when scrolled.
  *
  * @description

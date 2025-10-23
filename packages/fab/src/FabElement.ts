@@ -24,7 +24,6 @@ import { FabVariant } from "./FabVariant";
 import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
 
 /**
- * @summary
  * A floating action button (FAB) used to present important actions.
  *
  * @description

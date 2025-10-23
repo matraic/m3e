@@ -7,7 +7,6 @@ import { HtmlFor, Role } from "../mixins";
 import { FocusRingToken } from "./FocusRingToken";
 
 /**
- * @summary
  * A focus ring used to depict a strong focus indicator.
  *
  * @description

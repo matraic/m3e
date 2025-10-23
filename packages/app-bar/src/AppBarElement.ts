@@ -8,7 +8,6 @@ import { AppBarSize } from "./AppBarSize";
 import { AppBarSizeStyle, AppBarStyle } from "./styles";
 
 /**
- * @summary
  * A bar, placed a the top of a screen, used to help users navigate through an application.
  *
  * @description

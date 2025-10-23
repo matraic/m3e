@@ -3,7 +3,6 @@ import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
 /**
- * @summary
  * Groups related items (such a radios) in a menu.
  *
  * @description

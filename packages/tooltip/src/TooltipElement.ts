@@ -24,7 +24,6 @@ const TOOLTIP_OFFSET = 4;
 const TOOLTIP_HIDE_DELAY = 200;
 
 /**
- * @summary
  * Adds additional context to a button or other UI element.
  *
  * @description

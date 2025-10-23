@@ -4,7 +4,6 @@ import { customElement } from "lit/decorators.js";
 import { Vertical } from "@m3e/core";
 
 /**
- * @summary
  * A container used to organize chips into a cohesive unit.
  *
  * @description

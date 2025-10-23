@@ -11,7 +11,6 @@ import { MenuPositionX, MenuPositionY } from "./MenuPosition";
 import { MenuItemElementBase } from "./MenuItemElementBase";
 
 /**
- * @summary
  * Presents a list of choices on a temporary surface.
  *
  * @description
@@ -255,12 +254,12 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
             ? "left-start"
             : "right-start"
           : this.positionY === "above"
-          ? this.positionX === "before"
-            ? "top-end"
-            : "top-start"
-          : this.positionX === "before"
-          ? "bottom-end"
-          : "bottom-start",
+            ? this.positionX === "before"
+              ? "top-end"
+              : "top-start"
+            : this.positionX === "before"
+              ? "bottom-end"
+              : "bottom-start",
         inline: true,
         flip: true,
         shift: true,

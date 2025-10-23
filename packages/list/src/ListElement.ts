@@ -4,7 +4,6 @@ import { customElement } from "lit/decorators.js";
 import { Role } from "@m3e/core";
 
 /**
- * @summary
  * A list of items.
  *
  * @description

@@ -7,7 +7,6 @@ import { M3eMenuItemElement } from "./MenuItemElement";
 import { MenuItemElementBase } from "./MenuItemElementBase";
 
 /**
- * @summary
  * An item of a menu which supports a checkable state.
  *
  * @description

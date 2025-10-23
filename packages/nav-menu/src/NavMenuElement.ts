@@ -7,7 +7,6 @@ import { SelectionManager, selectionManager } from "@m3e/core/a11y";
 import { M3eNavMenuItemElement } from "./NavMenuItemElement";
 
 /**
- * @summary
  * Presents a hierarchical menu.
  *
  * @description

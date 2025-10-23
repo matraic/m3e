@@ -25,7 +25,6 @@ import { SwitchHandleStyle, SwitchIconStyle, SwitchStateLayerStyle, SwitchStyle,
 import { SwitchIcons } from "./SwitchIcons";
 
 /**
- * @summary
  * An on/off control that can be toggled by clicking.
  *
  * @description

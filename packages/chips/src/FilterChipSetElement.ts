@@ -8,7 +8,6 @@ import { M3eChipSetElement } from "./ChipSetElement";
 import { M3eFilterChipElement } from "./FilterChipElement";
 
 /**
- * @summary
  * A container that organizes filter chips into a cohesive group, enabling selection and
  * deselection of values used to refine content or trigger contextual behavior.
  *

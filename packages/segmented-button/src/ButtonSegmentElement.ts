@@ -18,7 +18,6 @@ import {
 import { selectionManager } from "@m3e/core/a11y";
 
 /**
- * @summary
  * A option that can be selected within a segmented button.
  *
  * @description

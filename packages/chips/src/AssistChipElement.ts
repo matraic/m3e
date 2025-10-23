@@ -15,7 +15,6 @@ import {
 import { M3eChipElement } from "./ChipElement";
 
 /**
- * @summary
  * A chip users interact with to perform a smart or automated action that can span multiple applications.
  *
  * @description
