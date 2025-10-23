@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Checkbox for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Checkbox for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <link href="card.css" rel="stylesheet" />
+    <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@latest/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@latest/dist/a11y.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/button@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@latest/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/checkbox@latest/dist/index.min.js"></script>
+    <script src="checkbox.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body" max-depth="4">
+        <span slot="overline">On this page</span>
+        <span slot="title">Checkbox</span>
+      </m3e-toc>
+
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Checkbox</m3e-heading>
+      <p>The <code>m3e-checkbox</code> component enables users to select one or more options from a set.</p>
+      <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
+      <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/checkbox</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/checkbox/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include additional dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>
+        This section provides practical examples for implementing the components included in this package. It outlines
+        typical usage patterns, integration approaches, and configuration options to help developers adopt the
+        components effectively across a variety of environments.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+      <p>
+        Checkboxes may be standalone, pre-checked, or indeterminate. When clicked, a cancellable
+        <code>input</code> event is emitted followed by a <code>change</code> event. To cancel checked state changes,
+        call <code>preventDefault</code> during <code>input</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-checkbox></m3e-checkbox>
+          <m3e-checkbox checked></m3e-checkbox>
+          <m3e-checkbox indeterminate></m3e-checkbox>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-checkbox&gt;&lt;/m3e-checkbox&gt;
+&lt;m3e-checkbox checked&gt;&lt;/m3e-checkbox&gt;
+&lt;m3e-checkbox indeterminate&gt;&lt;/m3e-checkbox&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Labels</m3e-heading>
+      <p>Associate a label with a checkbox using the <code>label</code> element.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <label><m3e-checkbox></m3e-checkbox> Checkbox 1</label>
+          <m3e-checkbox id="chk2"></m3e-checkbox>
+          <label for="chk2">Checkbox 2</label>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;label&gt;&lt;m3e-checkbox&gt;&lt;/m3e-checkbox&gt; Checkbox 1&lt;/label&gt;
+&lt;m3e-checkbox id=&quot;chk2&quot;&gt;&lt;/m3e-checkbox&gt;
+&lt;label for=&quot;chk2&quot;&gt;Checkbox 2&lt;/label&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Form Associated</m3e-heading>
+      <p>
+        This component participates in form submission as a
+        <a
+          href="https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-face"
+          target="_blank"
+          rel="noopener noreferrer"
+          >form-associated custom element</a
+        >
+        (FACE), contributing its state to the form data. The <code>name</code> attribute defines the key under which the
+        component's value is submitted in a form. When checked and not disabled, <code>value</code> (defaults to
+        <code>"on"</code>) is submitted.
+      </p>
+      <p>
+        The component honors the <code>disabled</code> state as a <strong>property-only</strong> control. When disabled
+        at runtime, it does <em>not</em> sprout a <code>disabled</code> attribute into the DOM.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+      <p>
+        Use the <code>disabled</code> attribute to disable a checkbox. Associated labels are automatically styled to
+        show disabled.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <label><m3e-checkbox disabled></m3e-checkbox>Disabled Checkbox 1</label>
+          <m3e-checkbox id="chk3" disabled></m3e-checkbox>
+          <label for="chk3">Disabled Checkbox 2</label>
+        </div>
+      </m3e-card>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;label&gt;&lt;m3e-checkbox disabled&gt;&lt;/m3e-checkbox&gt;Disabled Checkbox 1&lt;/label&gt;
+&lt;m3e-checkbox id=&quot;chk3&quot; disabled&gt;&lt;/m3e-checkbox&gt;
+&lt;label for=&quot;chk3&quot;&gt;Disabled Checkbox 2&lt;/label&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Required</m3e-heading>
+      <p>
+        Use the <code>required</code> attribute to control whether a checkbox must be checked. The
+        <code>invalid</code> event fires when a form is submitted and the element fails constraint validation. When
+        invalid, labels are automatically styled accordingly.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <form>
+            <label> <m3e-checkbox name="accepted" required></m3e-checkbox>I accept the Terms and Conditions </label>
+            <br />
+            <m3e-button variant="filled" type="submit">Submit</m3e-button>
+          </form>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;form&gt;
+  &lt;label&gt;
+    &lt;m3e-checkbox name=&quot;accepted&quot; required&gt;&lt;/m3e-checkbox&gt;I accept the Terms and Conditions
+  &lt;/label&gt;
+  &lt;br /&gt;
+  &lt;m3e-button variant=&quot;filled&quot; type=&quot;submit&quot;&gt;Submit&lt;/m3e-button&gt;
+&lt;/form&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Checkboxes are given the ARIA <code>role="checkbox"</code> aligning its semantic identity with native checkbox
+        controls. This ensures screen readers and assistive technologies interpret its behavior correctly.
+      </p>
+      <p>The component manages and reflects its state via <code>aria-checked</code>:</p>
+      <ul>
+        <li><code>aria-checked="true"</code> → checked</li>
+        <li><code>aria-checked="false"</code> → unchecked</li>
+        <li><code>aria-checked="mixed"</code> → indeterminate</li>
+      </ul>
+      <p>
+        When disabled using the <code>disabled</code> attribute, <code>aria-disabled="true"</code> is used to convey to
+        assistive technologies that the checkbox is disabled. When disabled at runtime, it does <em>not</em> sprout a
+        <code>disabled</code> attribute into the DOM.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer src="https://cdn.jsdelivr.net/npm/@m3e/checkbox@latest/dist/custom-elements.json"> </api-viewer>
+    </m3e-theme>
+  </body>
+</html>

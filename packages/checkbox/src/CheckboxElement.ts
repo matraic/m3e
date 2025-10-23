@@ -60,6 +60,7 @@ import {
  * @attr value - A string representing the value of the checkbox.
  *
  * @fires input - Emitted when the checked state changes.
+ * @fires invalid - Emitted when a form is submitted and the element fails constraint validation.
  * @fires change - Emitted when the checked state changes.
  * @fires click - Emitted when the element is clicked.
  *
