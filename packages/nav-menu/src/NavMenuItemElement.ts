@@ -513,6 +513,18 @@ export class M3eNavMenuItemElement extends Selected(
       this.#menu?.[selectionManager].select(this);
       this.#path.forEach((x) => (x.selected = this.selected));
       this.#link?.click();
+
+      const drawerContainer = this.closest("m3e-drawer-container");
+      if (drawerContainer) {
+        const drawer = this.closest("[slot='start']") ?? this.closest("[slot='end')");
+        if (
+          drawer &&
+          (drawerContainer.classList.contains(`-${drawer.slot}-push`) ||
+            drawerContainer.classList.contains(`-${drawer.slot}-over`))
+        ) {
+          setTimeout(() => drawerContainer.removeAttribute(drawer.slot), 300);
+        }
+      }
     } else {
       this.toggle();
     }
