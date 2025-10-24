@@ -49,7 +49,38 @@
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/loading-indicator</pre></m3e-card>
 
-      <m3e-heading variant="headline" size="small" level="3">Native module support</m3e-heading>
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+      <p>
+        There are two loading indicator appearance variants: <code>uncontained</code> (default) and
+        <code>contained</code>. Use the <code>variant</code> attribute to change the appearance.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-loading-indicator></m3e-loading-indicator>
+          <m3e-loading-indicator variant="contained"></m3e-loading-indicator>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-loading-indicator&gt;&lt;/m3e-loading-indicator&gt;
+&lt;m3e-loading-indicator variant=&quot;contained&quot;&gt;&lt;/m3e-loading-indicator&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        The <code>m3e-loading-indicator</code> implements the ARIA <code>role="progressbar"</code> pattern. By default,
+        the component sets <code>aria-valuemin</code> to 0 and <code>aria-valuemax</code> to 100.
+      </p>
+      <p>
+        Always provide an accessible label via <code>aria-label</code> or <code>aria-labelledby</code> for each loading
+        indicator.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
       <p>
         This package uses
         <a
@@ -86,41 +117,6 @@
         >
       </m3e-card>
       <p>For production, use index.min.js for faster load times.</p>
-
-      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
-      <p>
-        This section provides practical examples for implementing the components included in this package. It outlines
-        typical usage patterns, integration approaches, and configuration options to help developers adopt the
-        components effectively across a variety of environments.
-      </p>
-
-      <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
-      <p>
-        There are two loading indicator appearance variants: <code>uncontained</code> (default) and
-        <code>contained</code>. Use the <code>variant</code> attribute to change the appearance.
-      </p>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-loading-indicator></m3e-loading-indicator>
-          <m3e-loading-indicator variant="contained"></m3e-loading-indicator>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
-&lt;m3e-loading-indicator&gt;&lt;/m3e-loading-indicator&gt;
-&lt;m3e-loading-indicator variant=&quot;contained&quot;&gt;&lt;/m3e-loading-indicator&gt;</pre
-        >
-      </m3e-card>
-
-      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
-      <p>
-        The <code>m3e-loading-indicator</code> implements the ARIA <code>role="progressbar"</code> pattern. By default,
-        the component sets <code>aria-valuemin</code> to 0 and <code>aria-valuemax</code> to 100.
-      </p>
-      <p>
-        Always provide an accessible label via <code>aria-label</code> or <code>aria-labelledby</code> for each loading
-        indicator.
-      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
       <p>

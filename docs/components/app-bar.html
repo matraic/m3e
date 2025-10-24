@@ -53,50 +53,8 @@
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/app-bar</pre></m3e-card>
 
-      <m3e-heading variant="headline" size="small" level="3">Native module support</m3e-heading>
-      <p>
-        This package uses
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
-          target="_blank"
-          >JavaScript Modules</a
-        >. To use it directly in a browser without a bundler, use a module script similar to the following.
-      </p>
-
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
-&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/app-bar/dist/index.js&quot;&gt;&lt;/script&gt;</pre
-        >
-      </m3e-card>
-      <p>
-        In addition, you must use an
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
-          target="_blank"
-          >import map</a
-        >
-        to include additional dependencies.
-      </p>
-      <m3e-card variant="filled" class="install">
-        <pre slot="content">
-&lt;script type=&quot;importmap&quot;&gt;
-  {
-    &quot;imports&quot;: {
-      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
-      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
-    }
-  }
-&lt;/script&gt;</pre
-        >
-      </m3e-card>
-      <p>For production, use index.min.js for faster load times.</p>
-
       <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
-      <p>
-        This section provides practical examples for implementing the components included in this package. It outlines
-        typical usage patterns, integration approaches, and configuration options to help developers adopt the
-        components effectively across a variety of environments.
-      </p>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
       <m3e-heading variant="headline" size="small" level="3">Anatomy</m3e-heading>
       <p>
         The <code>m3e-app-bar</code> component provides a structured layout for top-level navigation and contextual
@@ -301,6 +259,44 @@
         region for branding, navigation, or contextual identity. This role signals to assistive technologies that the
         app bar serves as the top-level heading for the page or application.
       </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/app-bar/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include additional dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
 
       <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
       <p>
