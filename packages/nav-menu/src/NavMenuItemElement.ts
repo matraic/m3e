@@ -315,6 +315,11 @@ export class M3eNavMenuItemElement extends Selected(
     return this.#link;
   }
 
+  /** A reference to the element used to present the label of the item. */
+  get label(): HTMLElement | null {
+    return this._base ?? null;
+  }
+
   /** Whether the item is visible. */
   get visible(): boolean {
     return !this.#path.some((x) => !x.open);

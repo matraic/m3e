@@ -99,6 +99,10 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
           this.#updateItemFocusVisible(item, false, false);
         }
       }
+
+      if (selected?.label) {
+        scrollIntoViewIfNeeded(selected.label, this, { block: "start", behavior: "smooth" });
+      }
     });
 
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);
@@ -288,7 +292,9 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
   /** @private */
   #activateItem(item: M3eNavMenuItemElement): void {
     this.setAttribute("aria-activedescendant", item.id);
-    scrollIntoViewIfNeeded(item, this, "instant");
+    if (item.label) {
+      scrollIntoViewIfNeeded(item.label, this, { block: "nearest", behavior: "smooth" });
+    }
     this.#updateFocusVisible();
   }
 
