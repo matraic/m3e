@@ -32,7 +32,7 @@ m3e-card + .example {
     display: none;
   }
   #body {
-    padding-inline-end: unset;
+    padding-inline-end: 2rem;
   }
 }
 
