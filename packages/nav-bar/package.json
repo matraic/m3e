@@ -1,13 +1,13 @@
 {
   "name": "@m3e/nav-bar",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "description": "Navigation Bar for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
   "homepage": "https://matraic.github.io/m3e/#/components/nav-bar.html",
   "repository": {
     "type": "git",
-    "url": "https://github.com/matraic/m3e.git"
+    "url": "git+https://github.com/matraic/m3e.git"
   },
   "keywords": [
     "material design",
@@ -27,7 +27,7 @@
     "clean": "rimraf dist"
   },
   "peerDependencies": {
-    "@m3e/core": "1.0.0-rc.1",
+    "@m3e/core": "1.0.0-rc.2",
     "lit": "^3.3.0"
   },
   "devDependencies": {

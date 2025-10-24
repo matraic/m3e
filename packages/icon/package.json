@@ -1,6 +1,6 @@
 {
   "name": "@m3e/icon",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "description": "Icon for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
@@ -27,7 +27,7 @@
     "clean": "rimraf dist"
   },
   "peerDependencies": {
-    "@m3e/core": "1.0.0-rc.1",
+    "@m3e/core": "1.0.0-rc.2",
     "lit": "^3.3.0"
   },
   "devDependencies": {
