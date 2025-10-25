@@ -17,6 +17,7 @@
       rel="stylesheet"
     />
     <link href="../main.css" rel="stylesheet" />
+    <link href="divider.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
     <script type="importmap">
@@ -32,7 +33,8 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.2/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/divider@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/list@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="../../packages/divider/dist/index.min.js"></script>
   </head>
   <body id="body">
     <m3e-theme strong-focus>
@@ -42,10 +44,145 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Divider</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-divider</code> component visually separates content within layouts, lists, or containers using a
+        thin, unobtrusive line.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/divider</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Lists</m3e-heading>
+      <p>
+        The following example illustrates use of the <code>m3e-divider</code> to provide separators between items in a
+        <code>m3e-list</code>. For more information on lists, see <a href="../components/list.html">List</a>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-list>
+            <m3e-list-item>Item 1</m3e-list-item>
+            <m3e-divider></m3e-divider>
+            <m3e-list-item>Item 2</m3e-list-item>
+            <m3e-divider></m3e-divider>
+            <m3e-list-item>Item 3</m3e-list-item>
+          </m3e-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-list&gt;
+  &lt;m3e-list-item&gt;Item 1&lt;/m3e-list-item&gt;
+  &lt;m3e-divider&gt;&lt;/m3e-divider&gt;
+  &lt;m3e-list-item&gt;Item 2&lt;/m3e-list-item&gt;
+  &lt;m3e-divider&gt;&lt;/m3e-divider&gt;
+  &lt;m3e-list-item&gt;Item 3&lt;/m3e-list-item&gt;
+&lt;/m3e-list&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Standalone</m3e-heading>
+      <p>A <code>m3e-divider</code> can be used on its own to create a horizontal (or vertical) line.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Inset</m3e-heading>
+      <p>
+        Use the <code>inset</code> attribute to control whether the divider is inset. Alternately, use
+        <code>inset-start</code> and <code>inset-end</code> to control the start or end inset.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-divider></m3e-divider>
+          <br />
+          <m3e-divider inset></m3e-divider>
+          <br />
+          <m3e-divider inset-start></m3e-divider>
+          <br />
+          <m3e-divider inset-end></m3e-divider>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-divider&gt;&lt;/m3e-divider&gt;
+&lt;m3e-divider inset&gt;&lt;/m3e-divider&gt;
+&lt;m3e-divider inset-start&gt;&lt;/m3e-divider&gt;
+&lt;m3e-divider inset-end&gt;&lt;/m3e-divider&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Orientation</m3e-heading>
+      <p>Use the <code>vertical</code> attribute to control whether a divider is oriented vertically.</p>
+
+      <m3e-card variant="outlined">
+        <div slot="content" class="vertical-example">
+          <m3e-divider vertical></m3e-divider>
+          <m3e-divider vertical inset></m3e-divider>
+          <m3e-divider vertical inset-start></m3e-divider>
+          <m3e-divider vertical inset-end></m3e-divider>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-divider vertical&gt;&lt;/m3e-divider&gt;
+&lt;m3e-divider vertical inset&gt;&lt;/m3e-divider&gt;
+&lt;m3e-divider vertical inset-start&gt;&lt;/m3e-divider&gt;
+&lt;m3e-divider vertical inset-end&gt;&lt;/m3e-divider&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        The <code>m3e-divider</code> applies the ARIA <code>role="separator"</code>, implementing a non-focusable
+        separator used to separate content.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/divider/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+
+      <api-viewer src="https://cdn.jsdelivr.net/npm/@m3e/divider@1.0.0-rc.2/dist/custom-elements.json"> </api-viewer>
     </m3e-theme>
   </body>
 </html>
