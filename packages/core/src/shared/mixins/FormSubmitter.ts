@@ -99,7 +99,11 @@ export function FormSubmitter<T extends Constructor<LitElement & AttachInternals
 
     /** @private */
     private [_clickHandler] = async (e: Event) => {
-      if ((isDisabledMixin(this) && this.disabled) || (isDisabledInteractiveMixin(this) && this.disabledInteractive)) {
+      if (
+        e.defaultPrevented ||
+        (isDisabledMixin(this) && this.disabled) ||
+        (isDisabledInteractiveMixin(this) && this.disabledInteractive)
+      ) {
         return;
       }
 
