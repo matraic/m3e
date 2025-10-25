@@ -52,7 +52,9 @@
           href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
           target="_blank"
           >JavaScript Modules</a
-        >. To use a package directly in a browser without a bundler, use a module script similar to the following.
+        >
+        and documents their native module support. To use a package directly in a browser without a bundler, use a
+        module script similar to the following.
       </p>
 
       <m3e-card variant="filled" class="example">
@@ -67,7 +69,8 @@
           target="_blank"
           >import map</a
         >
-        to include dependencies. The following is an example import map for <code>@m3e/button</code>.
+        to include dependencies. The following is an example import map that imports all entry points for
+        <code>@m3e/core</code>.
       </p>
       <m3e-card variant="filled" class="example">
         <pre slot="content">
@@ -75,12 +78,18 @@
   {
     &quot;imports&quot;: {
       &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
-      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;,
+      &quot;@m3e/core/anchoring&quot;: &quot;/node_modules/@m3e/core/dist/anchoring.js&quot;,
+      &quot;@m3e/core/bidi&quot;: &quot;/node_modules/@m3e/core/dist/bidi.js&quot;,
+      &quot;@m3e/core/layout&quot;: &quot;/node_modules/@m3e/core/dist/layout.js&quot;,
+      &quot;@m3e/core/platform&quot;: &quot;/node_modules/@m3e/core/dist/platform.js&quot;
     }
   }
 &lt;/script&gt;</pre
         >
       </m3e-card>
+      <p>For production, use minified versions (e.g. index.min.js) for faster load times.</p>
 
       <m3e-heading variant="headline" size="medium" level="2">Editor integration</m3e-heading>
       <p>
