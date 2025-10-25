@@ -71,11 +71,11 @@ export class M3eDividerElement extends Role(LitElement, "separator") {
       left: var(--m3e-divider-inset-start-size, var(--m3e-divider-inset-size, 1rem));
     }
     :host([vertical][inset])::before,
-    :host([vertical][inset-start])::before {
+    :host([vertical][inset-end])::before {
       bottom: var(--m3e-divider-inset-end-size, var(--m3e-divider-inset-size, 1rem));
     }
     :host(:not([vertical])[inset])::before,
-    :host(:not([vertical])[inset-start])::before {
+    :host(:not([vertical])[inset-end])::before {
       right: var(--m3e-divider-inset-end-size, var(--m3e-divider-inset-size, 1rem));
     }
     :host([vertical]:not([inset]):not([inset-start]))::before {
