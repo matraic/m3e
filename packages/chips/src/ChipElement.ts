@@ -121,6 +121,16 @@ export class M3eChipElement extends LitElement {
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    a {
+      all: unset;
+      display: block;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      z-index: 1;
+    }
     :host([variant="elevated"]) .base {
       background-color: var(--m3e-elevated-chip-container-color, ${DesignToken.color.surfaceContainerLow});
 
