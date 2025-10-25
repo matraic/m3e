@@ -131,7 +131,8 @@ export class PressedController extends MonitorControllerBase {
 
   /** @private */
   #handleKeyDown(e: KeyboardEvent): void {
-    const target = e.target as HTMLElement;
+    if (e.target !== e.currentTarget) return;
+    const target = e.currentTarget as HTMLElement;
 
     if (!this.#pressedTargets.has(target) && this.#isPressedKey?.(e.key)) {
       if (e.key === " ") {
