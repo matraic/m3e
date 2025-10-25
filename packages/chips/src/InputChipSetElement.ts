@@ -136,7 +136,7 @@ export class M3eInputChipSetElement
     return [...this.querySelectorAll("m3e-input-chip")];
   }
 
-  /** The selected values of the set. */
+  /** The values of the set. */
   get value(): readonly string[] | null {
     const values = this.chips.map((x) => x.value);
     return values.length == 0 ? null : values;
