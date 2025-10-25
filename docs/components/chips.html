@@ -30,22 +30,689 @@
     </script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon-button@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/form-field@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/chips@1.0.0-rc.2/dist/index.min.js"></script>
   </head>
   <body id="body">
     <m3e-theme strong-focus>
-      <m3e-toc class="toc" for="body">
+      <m3e-toc class="toc" for="body" max-depth="4">
         <span slot="overline">On this page</span>
         <span slot="title">Chips</span>
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Chips</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>@m3e/chips</code> package provides expressive, accessible chip components for actions, input,
+        filtering, and suggestions.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/chips</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Non-interactive chips</m3e-heading>
+      <p>
+        Use the <code>m3e-chip</code> component to present a non-interactive chip. You can optionally nest chips in a
+        <code>m3e-chip-set</code> which provides default spacing between chips.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-chip-set>
+            <m3e-chip>Confidential</m3e-chip>
+            <m3e-chip>Draft</m3e-chip>
+            <m3e-chip>Finance</m3e-chip>
+            <m3e-chip>Presentation</m3e-chip>
+          </m3e-chip-set>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-chip-set&gt;
+  &lt;m3e-chip&gt;Confidential&lt;/m3e-chip&gt;
+  &lt;m3e-chip&gt;Draft&lt;/m3e-chip&gt;
+  &lt;m3e-chip&gt;Finance&lt;/m3e-chip&gt;
+  &lt;m3e-chip&gt;Presentation&lt;/m3e-chip&gt;
+&lt;/m3e-chip-set&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Variants</m3e-heading>
+      <p>
+        All chip types support two appearance variants: <code>outlined</code> (default) and <code>elevated</code>. Use
+        the <code>variant</code> attribute to change a chip's appearance.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-chip>Outlined</m3e-chip>
+          <m3e-chip variant="elevated">Elevated</m3e-chip>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-chip&gt;Outlined&lt;/m3e-chip&gt;
+&lt;m3e-chip variant=&quot;elevated&quot;&gt;Elevated&lt;/m3e-chip&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Orientation</m3e-heading>
+      <p>Chips can be stacked vertically using the <code>vertical</code> attribute of a <code>m3e-chip-set</code>.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-chip-set vertical>
+            <m3e-chip>Confidential</m3e-chip>
+            <m3e-chip>Draft</m3e-chip>
+            <m3e-chip>Finance</m3e-chip>
+            <m3e-chip>Presentation</m3e-chip>
+          </m3e-chip-set>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-chip-set vertical&gt;
+  &lt;m3e-chip&gt;Confidential&lt;/m3e-chip&gt;
+  &lt;m3e-chip&gt;Draft&lt;/m3e-chip&gt;
+  &lt;m3e-chip&gt;Finance&lt;/m3e-chip&gt;
+  &lt;m3e-chip&gt;Presentation&lt;/m3e-chip&gt;
+&lt;/m3e-chip-set&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Icons</m3e-heading>
+      <p>
+        The <code>m3e-chip</code> provides slots for two icons. Use the <code>icon</code> slot to present an icon before
+        a chip's label and use the <code>trailing-icon</code> slot to present an icon after it. While not required, the
+        following example uses the <code>m3e-icon</code> component from <code>@m3e/icon</code> to present icons using
+        Material Symbols.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-chip><m3e-icon slot="icon" name="finance"></m3e-icon>Finance</m3e-chip>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-chip&gt;
+  &lt;m3e-icon slot=&quot;icon&quot; name=&quot;finance&quot;&gt;&lt;/m3e-icon&gt;
+  Finance
+&lt;/m3e-chip&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Assist chips</m3e-heading>
+      <p>
+        Use the <code>m3e-assist-chip</code> to perform a smart or automated action that can span multiple applications.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-assist-chip>Outlined Assist</m3e-assist-chip>
+          <m3e-assist-chip variant="elevated">Elevated Assist</m3e-assist-chip>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-assist-chip&gt;Outlined Assist&lt;/m3e-assist-chip&gt;
+&lt;m3e-assist-chip variant=&quot;elevated&quot;&gt;Elevated Assist&lt;/m3e-assist-chip&gt;</pre
+        >
+      </m3e-card>
+      <m3e-heading variant="title" size="medium" level="4">Icons</m3e-heading>
+      <p>
+        The <code>m3e-assist-chip</code> provides a single slot, <code>icon</code>, to present an icon before a chip's
+        label. Trailing icons are not supported for this chip type.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-assist-chip><m3e-icon slot="icon" name="finance"></m3e-icon>Finance</m3e-assist-chip>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-assist-chip&gt;
+  &lt;m3e-icon slot=&quot;icon&quot; name=&quot;finance&quot;&gt;&lt;/m3e-icon&gt;
+  Finance
+&lt;/m3e-assist-chip&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Disabling</m3e-heading>
+      <p>
+        Use the <code>disabled</code> attribute to disable an assist chip. By default, disabled chips are not focusable
+        with the keyboard. You can use the <code>disabled-interactive</code> attribute to support
+        <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls" target="_blank"
+          >focusability of disabled controls</a
+        >
+        to increase their discoverability.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-assist-chip disabled>Disabled</m3e-assist-chip>
+          <m3e-assist-chip disabled-interactive>Disabled Interactive</m3e-assist-chip>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-assist-chip disabled&gt;Disabled&lt;/m3e-assist-chip&gt;
+&lt;m3e-assist-chip disabled-interactive&gt;Disabled Interactive&lt;/m3e-assist-chip&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Types</m3e-heading>
+      <p>
+        Use the <code>type</code> attribute to control the behavior of an assist chip. By default, <code>type</code> is
+        <code>button</code>. You can change this to <code>submit</code> or <code>reset</code> to submit or reset a
+        parenting form when clicked. When submitting a form, you can use the <code>name</code> and
+        <code>value</code> attributes to specify a value.
+      </p>
+
+      <m3e-heading variant="title" size="medium" level="4">Links</m3e-heading>
+      <p>
+        Assist chips can also behave like links by specifying a URL using the <code>href</code> attribute. You can also
+        specify <code>target</code>, <code>rel</code> and <code>download</code> similar to native anchor tags.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-assist-chip href="https://www.google.com" target="_blank"> Google </m3e-assist-chip>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-assist-chip href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;
+&nbsp;&nbsp;Google&lt;
+&lt;/m3e-assist-chip&gt;</pre
+        >
+      </m3e-card>
+      <m3e-heading variant="headline" size="small" level="3">Filter chips</m3e-heading>
+      <p>
+        Use the <code>m3e-filter-chip</code> and <code>m3e-filter-chip-set</code> components to present chips that users
+        can select or deselect to filter content or data sets.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-filter-chip-set>
+            <m3e-filter-chip>Outlined</m3e-filter-chip>
+            <m3e-filter-chip variant="elevated">Elevated</m3e-filter-chip>
+          </m3e-filter-chip-set>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-filter-chip-set&gt;
+  &lt;m3e-filter-chip&gt;Outlined&lt;/m3e-filter-chip&gt;
+  &lt;m3e-filter-chip variant=&quot;elevated&quot;&gt;Elevated&lt;/m3e-filter-chip&gt;
+&lt;/m3e-filter-chip-set&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Icons</m3e-heading>
+      <p>
+        The <code>m3e-filter-chip</code> provides slots for two icons. Use the <code>icon</code> slot to present an icon
+        before a chip's label and use the <code>trailing-icon</code> slot to present an icon after it.
+      </p>
+      <p>When selected, a filter chip's icon it replaced with a check icon.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-filter-chip-set aria-label="Filter by topic">
+            <m3e-filter-chip selected><m3e-icon slot="icon" name="palette"></m3e-icon>Design </m3e-filter-chip>
+            <m3e-filter-chip><m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility </m3e-filter-chip>
+            <m3e-filter-chip><m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion </m3e-filter-chip>
+            <m3e-filter-chip><m3e-icon slot="icon" name="description"></m3e-icon>Documentation </m3e-filter-chip>
+          </m3e-filter-chip-set>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-filter-chip-set aria-label=&quot;Filter by topic&quot;&gt;
+  &lt;m3e-filter-chip selected&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;palette&quot;&gt;&lt;/m3e-icon&gt;Design
+  &lt;/m3e-filter-chip&gt;
+  &lt;!-- Additional chips omitted for brevity --&gt;
+&lt;/m3e-filter-chip-set&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Selection</m3e-heading>
+      <p>
+        Filter chips support both single-select and multi-select modes. Use the
+        <code>multi</code> attribute of <code>m3e-filter-chip-set</code> to allow multiple chips to be selected
+        simultaneously.
+      </p>
+      <p>
+        Use the <code>selected</code> attribute to control the selected state of a <code>m3e-filter-chip</code>. When
+        clicked, a cancellable <code>input</code> event is emitted followed by a <code>change</code> event. To cancel
+        selection change, call <code>preventDefault</code> during <code>input</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-filter-chip-set aria-label="Filter by topic" multi>
+            <m3e-filter-chip selected><m3e-icon slot="icon" name="palette"></m3e-icon>Design </m3e-filter-chip>
+            <m3e-filter-chip selected>
+              <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility
+            </m3e-filter-chip>
+            <m3e-filter-chip><m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion </m3e-filter-chip>
+            <m3e-filter-chip><m3e-icon slot="icon" name="description"></m3e-icon>Documentation </m3e-filter-chip>
+          </m3e-filter-chip-set>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-filter-chip-set aria-label=&quot;Filter by topic&quot; multi&gt;
+  &lt;m3e-filter-chip selected&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;palette&quot;&gt;&lt;/m3e-icon&gt;Design
+  &lt;/m3e-filter-chip&gt;
+  &lt;m3e-filter-chip selected&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;accessibility_new&quot;&gt;&lt;/m3e-icon&gt;Accessibility
+  &lt;/m3e-filter-chip&gt;
+  &lt;!-- Additional chips omitted for brevity --&gt;
+&lt;/m3e-filter-chip-set&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Disabling</m3e-heading>
+      <p>
+        Use the <code>disabled</code> attribute to disable a filter chip. By default, disabled chips are not focusable
+        with the keyboard. You can use the <code>disabled-interactive</code> attribute to support
+        <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls" target="_blank"
+          >focusability of disabled controls</a
+        >
+        to increase their discoverability.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-filter-chip-set aria-label="Filter by topic">
+            <m3e-filter-chip disabled><m3e-icon slot="icon" name="palette"></m3e-icon>Design </m3e-filter-chip>
+            <m3e-filter-chip disabled-interactive>
+              <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility
+            </m3e-filter-chip>
+            <m3e-filter-chip><m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion </m3e-filter-chip>
+            <m3e-filter-chip><m3e-icon slot="icon" name="description"></m3e-icon>Documentation </m3e-filter-chip>
+          </m3e-filter-chip-set>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-filter-chip-set aria-label=&quot;Filter by topic&quot;&gt;
+  &lt;m3e-filter-chip disabled&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;palette&quot;&gt;&lt;/m3e-icon&gt;Design
+  &lt;/m3e-filter-chip&gt;
+  &lt;m3e-filter-chip disabled-interactive&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;accessibility_new&quot;&gt;&lt;/m3e-icon&gt;Accessibility
+  &lt;/m3e-filter-chip&gt;
+  &lt;!-- Additional chips omitted for brevity --&gt;
+&lt;/m3e-filter-chip-set&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        You can also use the <code>disabled</code> attribute of <code>m3e-filter-chip-set</code> to disable the chip set
+        in its entirety.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-filter-chip-set aria-label="Filter by topic" multi disabled>
+            <m3e-filter-chip selected><m3e-icon slot="icon" name="palette"></m3e-icon>Design </m3e-filter-chip>
+            <m3e-filter-chip selected>
+              <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility
+            </m3e-filter-chip>
+            <m3e-filter-chip><m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion </m3e-filter-chip>
+            <m3e-filter-chip><m3e-icon slot="icon" name="description"></m3e-icon>Documentation </m3e-filter-chip>
+          </m3e-filter-chip-set>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-filter-chip-set aria-label=&quot;Filter by topic&quot; multi disabled&gt;
+  &lt;!-- Chips omitted for brevity --&gt;
+&lt;/m3e-filter-chip-set&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Hiding the selection indicator</m3e-heading>
+      <p>
+        Use the <code>hide-selection-indicator</code> attribute of <code>m3e-filter-chip-set</code> to hide selection
+        indicators. If a filter chip has an icon via use of the <code>icon</code> slot, the icon is retained upon
+        selection and it's replaced by a check icon.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-filter-chip-set aria-label="Filter by topic" hide-selection-indicator>
+            <m3e-filter-chip>Design </m3e-filter-chip>
+            <m3e-filter-chip>Accessibility </m3e-filter-chip>
+            <m3e-filter-chip><m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion </m3e-filter-chip>
+            <m3e-filter-chip><m3e-icon slot="icon" name="description"></m3e-icon>Documentation </m3e-filter-chip>
+          </m3e-filter-chip-set>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-filter-chip-set aria-label=&quot;Filter by topic&quot; hide-selection-indicator&gt;
+  &lt;m3e-filter-chip&gt;Design &lt;/m3e-filter-chip&gt;
+  &lt;m3e-filter-chip&gt;Accessibility &lt;/m3e-filter-chip&gt;
+  &lt;m3e-filter-chip&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;motion_photos_on&quot;&gt;&lt;/m3e-icon&gt;Motion &lt;/m3e-filter-chip&gt;
+  &lt;m3e-filter-chip&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;description&quot;&gt;&lt;/m3e-icon&gt;Documentation &lt;/m3e-filter-chip&gt;
+&lt;/m3e-filter-chip-set&gt;&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Form Associated</m3e-heading>
+      <p>
+        Filter chips can participate in form submission as a
+        <a
+          href="https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-face"
+          target="_blank"
+          rel="noopener noreferrer"
+          >form-associated custom element</a
+        >
+        (FACE), contributing its state to the form data. The <code>name</code> attribute defines the key under which the
+        component's value is submitted in a form. The chip set's value is determined by selected chips. You can use the
+        <code>value</code> of a <code>m3e-filter-chip</code> to control a chip's value. Otherwise, the value is derived
+        from the chip's label (default slot). When multiple chips are selected, form data will include multiple entries
+        keyed by the same <code>name</code>.
+      </p>
+      <p>
+        The component honors the <code>disabled</code> state (on the chip set itself) as a
+        <strong>property-only</strong> control. When disabled at runtime, it does <em>not</em> sprout a
+        <code>disabled</code> attribute into the DOM.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Input chips</m3e-heading>
+      <p>
+        The <code>m3e-input-chip-set</code> component enables users to input, display, and manage a collection of
+        discrete values as input chips. Designed for expressive, accessible forms, it supports keyboard navigation,
+        validation, and seamless integration with <code>m3e-form-field</code>.
+      </p>
+      <p>
+        Use the <code>input</code> slot of the <code>m3e-input-chip-set</code> to designate the input element associated
+        with the component. When <code>change</code> is fired on the input, the chip set adds a new removable
+        <code>m3e-input-chip</code> to the set. Users can press <code>BACKSPACE</code> to remove chips or click the
+        remove button on individual chips. If a chip is focused, users can press <code>DELETE</code> to remove the chip.
+      </p>
+      <p>
+        The <code>m3e-input-chip-set</code> component raises a <code>change</code> event when chips are added to, or
+        removed from, the set. You can use the <code>value</code> property to programmatically access the values of the
+        chips in the set.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field>
+            <label slot="label" for="keywords">Keywords</label>
+            <m3e-input-chip-set aria-label="Enter keywords">
+              <input id="keywords" slot="input" placeholder="New keyword..." />
+            </m3e-input-chip-set>
+          </m3e-form-field>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;keywords&quot;&gt;Keywords&lt;/label&gt;
+  &lt;m3e-input-chip-set aria-label=&quot;Enter keywords&quot;&gt;
+    &lt;input id=&quot;keywords&quot; slot=&quot;input&quot; placeholder=&quot;New keyword...&quot; /&gt;
+  &lt;/m3e-input-chip-set&gt;
+&lt;/m3e-form-field&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Prepopulated chips</m3e-heading>
+      <p>
+        You can prepopulate a <code>m3e-input-chip-set</code> with chips using the
+        <code>m3e-input-chip</code> component. Use the <code>removable</code> attribute to control whether a button is
+        presented that allows the user to remove an input chip. This also controls whether <code>BACKSPACE</code> can be
+        used to delete a chip using the keyboard.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field>
+            <label slot="label" for="keywords">Keywords</label>
+            <m3e-input-chip-set aria-label="Enter keywords">
+              <m3e-input-chip removable>Design</m3e-input-chip>
+              <m3e-input-chip removable>Accessibility</m3e-input-chip>
+              <m3e-input-chip removable>Motion</m3e-input-chip>
+              <input id="keywords" slot="input" placeholder="New keyword..." />
+            </m3e-input-chip-set>
+          </m3e-form-field>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;keywords&quot;&gt;Keywords&lt;/label&gt;
+  &lt;m3e-input-chip-set aria-label=&quot;Enter keywords&quot;&gt;
+    &lt;m3e-input-chip removable&gt;Design&lt;/m3e-input-chip&gt;
+    &lt;m3e-input-chip removable&gt;Accessibility&lt;/m3e-input-chip&gt;
+    &lt;m3e-input-chip removable&gt;Motion&lt;/m3e-input-chip&gt;
+    &lt;input id=&quot;keywords&quot; slot=&quot;input&quot; placeholder=&quot;New keyword...&quot; /&gt;
+  &lt;/m3e-input-chip-set&gt;
+&lt;/m3e-form-field&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Disabling</m3e-heading>
+      <p>
+        Use the <code>disabled</code> attribute of <code>m3e-input-chip-set</code> to disable the chip set in its
+        entirety, including its corresponding <code>input</code> and any prepopulated chips. In addition, chips cannot
+        be removed when disabled.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field>
+            <label slot="label" for="keywords">Keywords</label>
+            <m3e-input-chip-set aria-label="Enter keywords" disabled>
+              <m3e-input-chip removable>Design</m3e-input-chip>
+              <m3e-input-chip removable>Accessibility</m3e-input-chip>
+              <m3e-input-chip removable>Motion</m3e-input-chip>
+              <input id="keywords" slot="input" placeholder="New keyword..." />
+            </m3e-input-chip-set>
+          </m3e-form-field>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;keywords&quot;&gt;Keywords&lt;/label&gt;
+  &lt;m3e-input-chip-set aria-label=&quot;Enter keywords&quot; disabled&gt;
+    &lt;m3e-input-chip removable&gt;Design&lt;/m3e-input-chip&gt;
+    &lt;m3e-input-chip removable&gt;Accessibility&lt;/m3e-input-chip&gt;
+    &lt;m3e-input-chip removable&gt;Motion&lt;/m3e-input-chip&gt;
+    &lt;input id=&quot;keywords&quot; slot=&quot;input&quot; placeholder=&quot;New keyword...&quot; /&gt;
+  &lt;/m3e-input-chip-set&gt;
+&lt;/m3e-form-field&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Form Associated</m3e-heading>
+      <p>
+        Input chips can participate in form submission as a
+        <a
+          href="https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-face"
+          target="_blank"
+          rel="noopener noreferrer"
+          >form-associated custom element</a
+        >
+        (FACE), contributing its state to the form data. The <code>name</code> attribute defines the key under which the
+        component's value is submitted in a form. The chip set's value is determined by its chips. When multiple chips
+        are specified, form data will include multiple entries keyed by the same <code>name</code>.
+      </p>
+      <p>
+        The component honors the <code>disabled</code> state (on the chip set itself) as a
+        <strong>property-only</strong> control. When disabled at runtime, it does <em>not</em> sprout a
+        <code>disabled</code> attribute into the DOM.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Suggestion chips</m3e-heading>
+      <p>
+        Use the <code>m3e-suggestion-chip</code> component to offer users contextually relevant actions or responses.
+        This component is visually and functionally equivalent to <code>m3e-assist-chip</code>, differing only in
+        semantic intent. It encodes contextual suggestion rather than passive assistance, guiding user action through
+        implied relevance.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-suggestion-chip>Outlined Suggestion</m3e-suggestion-chip>
+          <m3e-suggestion-chip variant="elevated">Elevated Suggestion</m3e-suggestion-chip>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-suggestion-chip&gt;Outlined Suggestion&lt;/m3e-suggestion-chip&gt;
+&lt;m3e-suggestion-chip variant=&quot;elevated&quot;&gt;Elevated Suggestion&lt;/m3e-suggestion-chip&gt;</pre
+        >
+      </m3e-card>
+      <m3e-heading variant="title" size="medium" level="4">Icons</m3e-heading>
+      <p>
+        The <code>m3e-suggestion-chip</code> provides a single slot, <code>icon</code>, to present an icon before a
+        chip's label. Trailing icons are not supported for this chip type.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-suggestion-chip>
+            <m3e-icon slot="icon" name="lightbulb"></m3e-icon>Try budget planner
+          </m3e-suggestion-chip>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-suggestion-chip&gt;
+  &lt;m3e-icon slot=&quot;icon&quot; name=&quot;lightbulb&quot;&gt;&lt;/m3e-icon&gt;
+  Try budget planner
+&lt;/m3e-suggestion-chip&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Disabling</m3e-heading>
+      <p>
+        Use the <code>disabled</code> attribute to disable a suggestion chip. By default, disabled chips are not
+        focusable with the keyboard. You can use the <code>disabled-interactive</code> attribute to support
+        <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls" target="_blank"
+          >focusability of disabled controls</a
+        >
+        to increase their discoverability.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-suggestion-chip disabled>Disabled</m3e-suggestion-chip>
+          <m3e-suggestion-chip disabled-interactive>Disabled Interactive</m3e-suggestion-chip>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-suggestion-chip disabled&gt;Disabled&lt;/m3e-suggestion-chip&gt;
+&lt;m3e-suggestion-chip disabled-interactive&gt;Disabled Interactive&lt;/m3e-suggestion-chip&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Types</m3e-heading>
+      <p>
+        Use the <code>type</code> attribute to control the behavior of a suggestion chip. By default,
+        <code>type</code> is <code>button</code>. You can change this to <code>submit</code> or <code>reset</code> to
+        submit or reset a parenting form when clicked. When submitting a form, you can use the <code>name</code> and
+        <code>value</code> attributes to specify a value.
+      </p>
+
+      <m3e-heading variant="title" size="medium" level="4">Links</m3e-heading>
+      <p>
+        Suggestion chips can also behave like links by specifying a URL using the <code>href</code> attribute. You can
+        also specify <code>target</code>, <code>rel</code> and <code>download</code> similar to native anchor tags.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-suggestion-chip href="https://www.google.com" target="_blank"> Google </m3e-suggestion-chip>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-suggestion-chip href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;
+&nbsp;&nbsp;Google&lt;
+&lt;/m3e-suggestion-chip&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        By default, <code>m3e-chip</code> and <code>m3e-chip-set</code>are not given an ARIA role, indicating that they
+        are treated as neutral, non-semantic elements in the accessibility tree unless explicitly referenced or
+        annotated.
+      </p>
+      <p>
+        Chip sets, regardless of variant (e.g., filter, input, suggestion), are annotated with
+        <code>aria-orientation="vertical"</code> when rendered in a vertical layout. This attribute communicates
+        directional flow to assistive technologies, ensuring spatial clarity and navigational predictability for screen
+        reader users.
+      </p>
+      <p>
+        By default, action and suggestion chips are given the ARIA role <code>button</code>, indicating they are
+        clickable elements that trigger actions. When <code>href</code> is specified, the ARIA role <code>link</code> is
+        used instead of <code>button</code> to convey the chip provides an interactive reference to a resource. In
+        addition, the chip presents an internal anchor, hidden from assistive technologies, used to invoke native
+        browser features such a context menu options and tooltips.
+      </p>
+      <p>
+        When disabling using either the <code>disabled</code> or <code>disabled-interactive</code> attribute,
+        <code>aria-disabled="true"</code> is used to convey to assistive technologies that the chip is disabled. If
+        disabled using <code>disabled-interactive</code>, <code>tabindex</code> is retained to convey that the chip
+        continues to be interactive.
+      </p>
+      <p>
+        Filter chip sets are given the ARIA <code>role="radiogroup"</code> and chips are given
+        <code>role="radio"</code> for single-select chip sets. For multi-select, sets are given
+        <code>role="listbox"</code> and <code>aria-multiselectable="true"</code> and chips are given
+        <code>role="option"</code>.
+      </p>
+      <p>
+        Input chip sets are given ARIA <code>role="grid"</code> and chips are given <code>role="row"</code>.
+        Additionally, the internal content of an input chip (icons and label) are given ARIA
+        <code>role="gridcell"</code> and the remove button's container is given <code>role="gridcell"</code>. This
+        pattern enables assistive technologies to interpret input chips as structured, interactive rows—enhancing
+        clarity, predictability, and discoverability for users navigating via screen readers or keyboard.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+
+      <api-viewer only="m3e-chip" src="https://cdn.jsdelivr.net/npm/@m3e/chips@1.0.0-rc.2/dist/custom-elements.json">
+      </api-viewer>
+      <api-viewer
+        only="m3e-chip-set"
+        src="https://cdn.jsdelivr.net/npm/@m3e/chips@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-assist-chip"
+        src="https://cdn.jsdelivr.net/npm/@m3e/chips@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-filter-chip"
+        src="https://cdn.jsdelivr.net/npm/@m3e/chips@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-filter-chip-set"
+        src="https://cdn.jsdelivr.net/npm/@m3e/chips@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-input-chip"
+        src="https://cdn.jsdelivr.net/npm/@m3e/chips@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-input-chip-set"
+        src="https://cdn.jsdelivr.net/npm/@m3e/chips@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-suggestion-chip"
+        src="https://cdn.jsdelivr.net/npm/@m3e/chips@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>
