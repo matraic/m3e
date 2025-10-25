@@ -49,6 +49,9 @@ export function FormSubmitter<T extends Constructor<LitElement & AttachInternals
   base: T
 ): Constructor<FormSubmitterMixin> & T {
   abstract class _FormSubmitterMixin extends base implements FormSubmitterMixin {
+    /** Indicates that this custom element participates in form submission, validation, and form state restoration. */
+    static readonly formAssociated = true;
+
     /**
      * The name of the element, submitted as a pair with the element's `value`
      * as part of form data, when the element is used to submit a form.
