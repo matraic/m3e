@@ -30,7 +30,12 @@ export function KeyboardClick<T extends Constructor<LitElement>>(base: T, allowE
 
     /** @private */
     #handleKeyUp(e: KeyboardEvent): void {
-      if ((isDisabledMixin(this) && this.disabled) || (isDisabledInteractiveMixin(this) && this.disabledInteractive)) {
+      if (
+        e.defaultPrevented ||
+        e.target !== e.currentTarget ||
+        (isDisabledMixin(this) && this.disabled) ||
+        (isDisabledInteractiveMixin(this) && this.disabledInteractive)
+      ) {
         return;
       }
 
