@@ -25,6 +25,19 @@ import { M3eChipElement } from "./ChipElement";
  * and manage discrete values such as tags or keywords. It supports expressive styling, accessibility,
  * keyboard interaction, and appearance variants including `elevated` and `outlined`.
  *
+ * @example
+ * The following example illustrates the use of the `m3e-input-chip-set` inside a `m3e-form-field`.
+ * In this example, the `input` slot specifies the `input` element used to add input chips and the
+ * field label's `for` attribute targets the `input` element to provide an accessible label.
+ * ```html
+ * <m3e-form-field>
+ *  <label slot="label" for="keywords">Keywords</label>
+ *  <m3e-input-chip-set aria-label="Enter keywords">
+ *    <input id="keywords" slot="input" placeholder="New keyword..." />
+ *  </m3e-input-chip-set>
+ * </m3e-form-field>
+ * ```
+ *
  * @tag m3e-input-chip
  *
  * @slot - Renders the label of the chip.

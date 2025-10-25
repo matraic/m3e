@@ -26,6 +26,18 @@ import { M3eChipElement } from "./ChipElement";
  * with Material 3 guidelines.  Appearance variants include `elevated` and `outlined`, enabling visual
  * differentiation and contextual emphasis.
  *
+ * @example
+ * The following example illustrates a single-select `m3e-filter-chip-set` containing multiple `m3e-filter-chip` components that
+ * allow a user to choose an option. You can use the `multi` attribute to enable multiselect.
+ * ```html
+ * <m3e-filter-chip-set aria-label="Filter by topic">
+ *  <m3e-filter-chip><m3e-icon slot="icon" name="palette"></m3e-icon>Design</m3e-filter-chip>
+ *  <m3e-filter-chip><m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility</m3e-filter-chip>
+ *  <m3e-filter-chip><m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion</m3e-filter-chip>
+ *  <m3e-filter-chip><m3e-icon slot="icon" name="description"></m3e-icon>Documentation</m3e-filter-chip>
+ * </m3e-filter-chip-set>
+ * ```
+ *
  * @tag m3e-filter-chip
  *
  * @slot - Renders the label of the chip.
