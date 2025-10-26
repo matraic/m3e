@@ -16,6 +16,7 @@ main {
 }
 .docs-header-bar {
   flex: none;
+  z-index: 4;
 }
 .docs-drawer-container {
   flex: 1 1 auto;
