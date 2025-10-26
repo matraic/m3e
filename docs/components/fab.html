@@ -30,6 +30,7 @@
     </script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/fab@1.0.0-rc.2/dist/index.min.js"></script>
@@ -42,10 +43,240 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">FAB</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>The <code>m3e-fab</code> is a floating action button (FAB) used to present important actions.</p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/fab</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+      <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+      <p>
+        There are seven FAB appearance variants: <code>primary</code>, <code>primary-container</code> (default),
+        <code>secondary</code>, and <code>secondary-container</code>, <code>tertiary</code>,
+        <code>tertiary-container</code>, and <code>surface</code>. Use the <code>variant</code> attribute to change the
+        appearance.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-fab variant="primary"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab variant="primary-container"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab variant="secondary"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab variant="secondary-container"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab variant="tertiary"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab variant="tertiary-container"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab variant="surface"><m3e-icon name="add"></m3e-icon></m3e-fab>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-fab variant=&quot;primary&quot;&gt;
+  &lt;m3e-icon name=&quot;add&quot;&gt;&lt;/m3e-icon&gt;
+&lt;/m3e-fab&gt;
+&lt;!-- Additional variants omitted for brevity --&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Lowering</m3e-heading>
+      <p>
+        Use the <code>lowered</code> attribute to lower the elevation of a FAB to reduce emphasis. Lowering is supported
+        for all appearance variants.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-fab lowered variant="primary"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab lowered variant="primary-container"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab lowered variant="secondary"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab lowered variant="secondary-container"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab lowered variant="tertiary"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab lowered variant="tertiary-container"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab lowered variant="surface"><m3e-icon name="add"></m3e-icon></m3e-fab>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-fab lowered variant=&quot;primary&quot;&gt;
+  &lt;m3e-icon name=&quot;add&quot;&gt;&lt;/m3e-icon&gt;
+&lt;/m3e-fab&gt;
+&lt;!-- Additional variants omitted for brevity --&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Sizes</m3e-heading>
+      <p>
+        There are three size variants which can be used to add or remove emphasis:
+        <code>small</code>, <code>medium</code> (default), and <code>large</code>. Use the <code>size</code> attribute
+        to control a FAB's size.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-fab size="small"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab size="medium"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab size="large"><m3e-icon name="add"></m3e-icon></m3e-fab>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-fab size=&quot;small&quot;&gt;
+  &lt;m3e-icon name=&quot;add&quot;&gt;&lt;/m3e-icon&gt;
+&lt;/m3e-fab&gt;
+&lt;!-- Additional variants omitted for brevity --&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+      <p>
+        Use the <code>disabled</code> attribute to disable a FAB. By default, disabled FABs are not focusable with the
+        keyboard. You can use the <code>disabled-interactive</code> attribute to support
+        <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls" target="_blank"
+          >focusability of disabled controls</a
+        >
+        to increase their discoverability.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-fab disabled><m3e-icon name="add"></m3e-icon></m3e-fab>
+          <m3e-fab disabled-interactive><m3e-icon name="add"></m3e-icon></m3e-fab>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-fab disabled&gt;
+  &lt;m3e-icon name=&quot;add&quot;&gt;&lt;/m3e-icon&gt;
+&lt;/m3e-fab&gt;
+&lt;m3e-fab disabled-interactive&gt;
+  &lt;m3e-icon name=&quot;add&quot;&gt;&lt;/m3e-icon&gt;
+&lt;/m3e-fab&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Extended FABs</m3e-heading>
+      <p>Use the <code>extended</code> attribute and <code>label</code> slot to create an extended FAB.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-fab extended size="small">
+            <m3e-icon name="add"></m3e-icon>
+            <span slot="label">Extended Small</span>
+          </m3e-fab>
+          <m3e-fab extended size="medium">
+            <m3e-icon name="add"></m3e-icon>
+            <span slot="label">Extended Medium</span>
+          </m3e-fab>
+          <m3e-fab extended size="large">
+            <m3e-icon name="add"></m3e-icon>
+            <span slot="label">Extended Large</span>
+          </m3e-fab>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-fab extended size=&quot;small&quot;&gt;
+  &lt;m3e-icon name=&quot;add&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;span slot=&quot;label&quot;&gt;Extended&lt;/span&gt;
+&lt;/m3e-fab&gt;
+&lt;!-- Additional sizes omitted for brevity --&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Types</m3e-heading>
+      <p>
+        Use the <code>type</code> attribute to control the behavior of a FAB. By default, <code>type</code> is
+        <code>button</code>. You can change this to <code>submit</code> or <code>reset</code> to submit or reset a
+        parenting form when clicked. When submitting a form, you can use the <code>name</code> and
+        <code>value</code> attributes to specify a value.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Links</m3e-heading>
+      <p>
+        FABs can also behave like links by specifying a URL using the <code>href</code> attribute. You can also specify
+        <code>target</code>, <code>rel</code> and <code>download</code> similar to native anchor tags.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-fab extended href="https://www.google.com" target="_blank">
+            <m3e-icon name="open_in_new_window"></m3e-icon>
+            <span slot="label">Google</span>
+          </m3e-fab>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-fab extended href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;
+  &lt;m3e-icon name=&quot;open_in_new_window&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;span slot=&quot;label&quot;&gt;Google&lt;/span&gt;
+&lt;/m3e-fab&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        By default, FABs are given the ARIA role <code>button</code>, indicating they are clickable elements that
+        trigger actions.
+      </p>
+      <p>
+        Unless extended, always provide an accessible label via <code>aria-label</code> or
+        <code>aria-labelledby</code> for each FAB.
+      </p>
+      <p>Slots have <code>aria-hidden="true"</code> to ensure icons are always hidden from assistive technologies.</p>
+      <p>
+        When disabling using either the <code>disabled</code> or <code>disabled-interactive</code> attribute,
+        <code>aria-disabled="true"</code> is used to convey to assistive technologies that the FAB is disabled. If
+        disabled using <code>disabled-interactive</code>, <code>tabindex</code> is retained to convey that the FAB
+        continues to be interactive.
+      </p>
+      <p>
+        When <code>href</code> is specified, the ARIA role <code>link</code> is used instead of <code>button</code> to
+        convey the FAB provides an interactive reference to a resource. In addition, the component presents an internal
+        anchor, hidden from assistive technologies, used to invoke native browser features such a context menu options
+        and tooltips.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/fab/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+
+      <api-viewer src="https://cdn.jsdelivr.net/npm/@m3e/fab@1.0.0-rc.2/dist/custom-elements.json"> </api-viewer>
     </m3e-theme>
   </body>
 </html>
