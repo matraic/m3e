@@ -11,7 +11,7 @@ import { Constructor } from "./Constructor";
  */
 export function EventAttribute<T extends Constructor<LitElement>>(base: T, ...types: string[]): T {
   abstract class _EventAttribute extends base {
-    /** @inheritdoc */
+    /** @internal */
     override dispatchEvent(event: Event): boolean {
       if (types.includes(event.type)) {
         const eventAttribute = this.getAttribute(`on${event.type}`);
