@@ -40,7 +40,7 @@ import { M3eExpansionHeaderElement } from "./ExpansionHeaderElement";
  * @tag m3e-expansion-panel
  *
  * @slot - Renders the detail of the panel.
- * @slot actions- Renders the actions bar of the panel.
+ * @slot actions - Renders the actions bar of the panel.
  * @slot header - Renders the header content.
  * @slot toggle-icon - Renders the expansion toggle icon.
  *
