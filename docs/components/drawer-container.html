@@ -17,6 +17,7 @@
       rel="stylesheet"
     />
     <link href="../main.css" rel="stylesheet" />
+    <link href="drawer-container.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
     <script type="importmap">
@@ -24,13 +25,16 @@
         "imports": {
           "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
           "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/index.min.js",
-          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/a11y.min.js"
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/a11y.min.js",
+          "@m3e/core/layout": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/layout.min.js"
         }
       }
     </script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon-button@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.2/dist/index.min.js"></script>
     <script
       type="module"
@@ -45,10 +49,236 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Drawer Container</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-drawer-container</code> is a responsive layout container that manages collapsible left and right
+        drawers alongside main content.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/drawer-container</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Drawers</m3e-heading>
+      <p>
+        The <code>m3e-drawer-container</code> provides the <code>start</code> and <code>end</code> slots for specifying
+        drawer elements. The default slot presents the content between drawers. The <code>start</code> and
+        <code>end</code> attributes control whether the corresponding drawer is open.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-drawer-container start end>
+            <div slot="start">Start drawer</div>
+            <div>Main content</div>
+            <div slot="end">End drawer</div>
+          </m3e-drawer-container>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-drawer-container start end&gt;
+  &lt;div slot=&quot;start&quot;&gt;Start drawer&lt;/div&gt;
+  &lt;div&gt;Main content&lt;/div&gt;
+  &lt;div slot=&quot;end&quot;&gt;End drawer&lt;/div&gt;
+&lt;/m3e-drawer-container&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Sizes</m3e-heading>
+      <p>
+        You can control the drawer widths using the <code>--m3e-drawer-container-width</code> CSS custom property or by
+        explicitly setting the width of a drawer.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-drawer-container start>
+            <div slot="start" style="width: 200px">Start drawer</div>
+            <div>Main content</div>
+          </m3e-drawer-container>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-drawer-container start&gt;
+  &lt;div slot=&quot;start&quot; style=&quot;width: 200px;&quot;&gt;Start drawer&lt;/div&gt;
+  &lt;div&gt;Main content&lt;/div&gt;
+&lt;/m3e-drawer-container&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Modes</m3e-heading>
+
+      <p>The <code>&lt;m3e-drawer-container&gt;</code> supports four expressive drawer modes:</p>
+      <ul>
+        <li><code>side</code> (default): Drawers remain visible alongside content.</li>
+        <li><code>push</code>: Drawers shift main content when opened.</li>
+        <li><code>over</code>: Drawers overlay content without displacement.</li>
+        <li><code>auto</code>: Mode adapts responsively based on viewport size.</li>
+      </ul>
+      <p>
+        The <code>push</code> and <code>over</code> modes present a scrim overlaying main content, a focus trap keeps
+        focus in drawers, and main content becomes inert. Clicking the scrim will automatically close drawers.
+      </p>
+      <p>
+        Use the <code>start-mode</code> attribute to control the behavior of the start drawer, and
+        <code>end-mode</code> to configure the end drawer independently.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-drawer-container start start-mode="push">
+            <div slot="start">Start drawer</div>
+            <div>Main content</div>
+          </m3e-drawer-container>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-drawer-container start start-mode=&quot;push&quot;&gt;
+  &lt;div slot=&quot;start&quot;&gt;Start drawer&lt;/div&gt;
+  &lt;div&gt;Main content&lt;/div&gt;
+&lt;/m3e-drawer-container&gt;</pre
+        >
+      </m3e-card>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-drawer-container start start-mode="over">
+            <div slot="start">Start drawer</div>
+            <div>Main content</div>
+          </m3e-drawer-container>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-drawer-container start start-mode=&quot;over&quot;&gt;
+  &lt;div slot=&quot;start&quot;&gt;Start drawer&lt;/div&gt;
+  &lt;div&gt;Main content&lt;/div&gt;
+&lt;/m3e-drawer-container&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Toggle</m3e-heading>
+      <p>
+        Use the <code>m3e-drawer-toggle</code> to toggle the opened state of a drawer. This component should be nested
+        inside a clickable element and be associated with a slotted drawer by setting the <code>for</code> attribute to
+        the <code>id</code> of a drawer.
+      </p>
+      <p>
+        The following example illustrates use of a <code>m3e-icon-button</code> to toggle a drawer. See
+        <a href="../components/icon-button.html">Icon Button</a> for more information.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-icon-button slot="leading-icon" aria-label="Menu" toggle>
+            <m3e-icon name="menu"></m3e-icon>
+            <m3e-icon slot="selected" name="menu_open"></m3e-icon>
+            <m3e-drawer-toggle for="nav-drawer"></m3e-drawer-toggle>
+          </m3e-icon-button>
+          <m3e-drawer-container start-mode="over">
+            <div slot="start" id="nav-drawer">Start drawer</div>
+            <div>Main content</div>
+          </m3e-drawer-container>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-icon-button slot=&quot;leading-icon&quot; aria-label=&quot;Menu&quot; toggle&gt;
+  &lt;m3e-icon name=&quot;menu&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;m3e-icon slot=&quot;selected&quot; name=&quot;menu_open&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;m3e-drawer-toggle for=&quot;nav-drawer&quot;&gt;&lt;/m3e-drawer-toggle&gt;
+&lt;/m3e-icon-button&gt;
+&lt;m3e-drawer-container start-mode=&quot;over&quot;&gt;
+  &lt;div slot=&quot;start&quot; id=&quot;nav-drawer&quot;&gt;Start drawer&lt;/div&gt;
+  &lt;div&gt;Main content&lt;/div&gt;
+&lt;/m3e-drawer-container&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        The <code>m3e-drawer-container</code> is not given an ARIA role, indicating that it is treated as a neutral,
+        non-semantic element in the accessibility tree.
+      </p>
+      <p>
+        Drawers should each be given an appropriate ARIA role. Consider using a <code>nav</code> element or ARIA
+        <code>role="navigation"</code> for start drawers that present links used to navigate an application. An end
+        drawer may use a <code>aside</code> element or be given the ARIA <code>role="complementary"</code> when its
+        content is related to the main content, but not essential to understanding it. Otherwise,
+        <code>role="region"</code> is a good fallback.
+      </p>
+      <p>
+        Consider nesting a <code>main</code> element inside a <code>m3e-drawer-container</code>'s default slot when its
+        used as the primary drawer container for an application. Otherwise, consider using a single
+        <code>div</code> with ARIA <code>role="region"</code>.
+      </p>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-drawer-container&gt;
+  &lt;nav slot=&quot;start&quot;&gt;&lt;/nav&gt;
+  &lt;main&gt;&lt;/main&gt;
+  &lt;aside slot=&quot;end&quot;&gt;&lt;/aside&gt;
+&lt;/m3e-drawer-container&gt;</pre
+        >
+      </m3e-card>
+
+      <p>
+        <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      </p>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/drawer-container/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/layout&quot;: &quot;/node_modules/@m3e/core/dist/layout.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js and layout.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+
+      <api-viewer
+        only="m3e-drawer-container"
+        src="https://cdn.jsdelivr.net/npm/@m3e/drawer-container@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-drawer-toggle"
+        src="https://cdn.jsdelivr.net/npm/@m3e/drawer-container@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>
