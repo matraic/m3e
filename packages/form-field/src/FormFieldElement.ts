@@ -103,6 +103,32 @@ import { FloatLabelType } from "./FloatLabelType";
  */
 @customElement("m3e-form-field")
 export class M3eFormFieldElement extends AttachInternals(LitElement) {
+  static {
+    const lightDomStyle = new CSSStyleSheet();
+    lightDomStyle.replaceSync(
+      css`
+        m3e-form-field input::placeholder,
+        m3e-form-field textarea::placeholder {
+          user-select: none;
+          color: currentColor;
+          transition: opacity ${DesignToken.motion.duration.extraLong1};
+        }
+        m3e-form-field[float-label="auto"]:not(.-float-label).-with-label input::placeholder,
+        m3e-form-field[float-label="auto"]:not(.-float-label).-with-label textarea::placeholder {
+          opacity: 0;
+          transition: opacity 0s;
+        }
+        @media (prefers-reduced-motion) {
+          m3e-form-field input::placeholder,
+          m3e-form-field textarea::placeholder {
+            transition: none !important;
+          }
+        }
+      `.toString()
+    );
+
+    document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
+  }
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -255,20 +281,10 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     :host([variant="outlined"]) ::slotted(m3e-input-chip-set) {
       margin-block: calc(calc(3.5rem + ${DesignToken.density.calc(-2)}) / 4);
     }
-    ::slotted(:not([slot])::part(focus-ring)) {
-      display: none;
-    }
-    ::slotted(input)::placeholder,
-    ::slotted(textarea)::placeholder {
-      user-select: none;
-      color: currentColor;
-      transition: opacity ${DesignToken.motion.duration.extraLong1};
-    }
     :host([float-label="auto"]:not(.-float-label):not(.-pressed)) .label {
       font-size: inherit;
     }
-    :host([float-label="auto"]:not(.-float-label).-with-label) ::slotted(input)::placeholder,
-    :host([float-label="auto"]:not(.-float-label).-with-label) ::slotted(textarea)::placeholder,
+
     :host([float-label="auto"]:not(.-float-label).-with-label) .prefix-text,
     :host([float-label="auto"]:not(.-float-label).-with-label) .suffix-text {
       opacity: 0;
@@ -518,9 +534,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       .outline-start,
       .outline-notch,
       .outline-end,
-      .pseudo-label,
-      ::slotted(input)::placeholder,
-      ::slotted(textarea)::placeholder {
+      .pseudo-label {
         transition: none !important;
       }
     }

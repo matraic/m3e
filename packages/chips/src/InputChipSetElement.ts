@@ -66,6 +66,33 @@ export class M3eInputChipSetElement
   )
   implements FormFieldControl
 {
+  static {
+    const lightDomStyle = new CSSStyleSheet();
+    lightDomStyle.replaceSync(
+      css`
+        m3e-input-chip-set [slot="input"]::placeholder {
+          user-select: none;
+          color: currentColor;
+          transition: opacity ${DesignToken.motion.duration.extraLong1};
+        }
+        m3e-input-chip-set:not(:focus-within) [slot="input"]::placeholder {
+          opacity: 0;
+          transition: 0s;
+        }
+        m3e-input-chip-set:hover [slot="input"]::placeholder {
+          transition: 0s;
+        }
+        @media (prefers-reduced-motion) {
+          m3e-input-chip-set [slot="input"]::placeholder {
+            transition: none !important;
+          }
+        }
+      `.toString()
+    );
+
+    document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
+  }
+
   /** The styles of the element. */
   static override styles: CSSResultGroup = [
     M3eChipSetElement.styles,
@@ -87,26 +114,9 @@ export class M3eInputChipSetElement
       ::slotted(m3e-input-chip) {
         min-width: 0;
       }
-      ::slotted([slot="input"])::placeholder {
-        user-select: none;
-        color: currentColor;
-        transition: opacity ${DesignToken.motion.duration.extraLong1};
-      }
-      :host(:not(:focus-within)) ::slotted([slot="input"])::placeholder {
-        opacity: 0;
-        transition: 0s;
-      }
-      :host(:hover) ::slotted([slot="input"])::placeholder {
-        transition: 0s;
-      }
       span[role="row"],
       span[role="gridcell"] {
         display: contents;
-      }
-      @media (prefers-reduced-motion) {
-        ::slotted([slot="input"])::placeholder {
-          transition: none !important;
-        }
       }
     `,
   ];
