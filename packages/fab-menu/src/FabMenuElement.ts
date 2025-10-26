@@ -241,8 +241,6 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
    * @param {boolean} [restoreFocus=false] A value indicating whether to restore focus to the menu's trigger.
    */
   hide(restoreFocus: boolean = false): void {
-    this.hidePopover();
-
     if (this.#trigger) {
       this.#trigger.ariaExpanded = "false";
       if (restoreFocus) {
@@ -254,6 +252,7 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
       this.#scrollController.unobserve(this.#trigger);
       this.#trigger = undefined;
     }
+    this.hidePopover();
   }
 
   /**
