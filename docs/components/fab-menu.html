@@ -18,20 +18,25 @@
     />
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
+    <link href="fab-menu.css" rel="stylesheet" />
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
     <script type="importmap">
       {
         "imports": {
           "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
           "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/index.min.js",
-          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/a11y.min.js"
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/a11y.min.js",
+          "@m3e/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/anchoring.min.js",
+          "@m3e/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/bidi.min.js"
         }
       }
     </script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/fab@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/fab-menu@1.0.0-rc.2/dist/index.min.js"></script>
   </head>
   <body id="body">
@@ -42,10 +47,307 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">FAB Menu</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-fab-menu</code> component presents a dynamic menu of related actions, elegantly revealed from a
+        floating action button (FAB). See <a href="../components/fab.html">FAB</a> for more information on using
+        floating action buttons.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/fab-menu</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Anatomy</m3e-heading>
+      <p>
+        The <code>m3e-fab-menu</code> is used in conjunction with a <code>m3e-fab</code> to create a menu opened when a
+        FAB is activated.
+      </p>
+      <ul>
+        <li>Use a <code>m3e-fab-menu-trigger</code>, nested inside a <code>m3e-fab</code>, to trigger a menu.</li>
+        <li>
+          Use the <code>for</code> attribute of the <code>m3e-fab-menu-trigger</code> to designate the menu to open.
+        </li>
+        <li>
+          Nest 2-6 <code>m3e-fab-menu-item</code> components inside a <code>m3e-fab-menu</code> to designate menu items.
+        </li>
+      </ul>
+      <m3e-card variant="outlined">
+        <div slot="content" class="fab-example">
+          <m3e-fab variant="primary" size="large">
+            <m3e-fab-menu-trigger for="fabmenu">
+              <m3e-icon name="edit"></m3e-icon>
+            </m3e-fab-menu-trigger>
+          </m3e-fab>
+          <m3e-fab-menu id="fabmenu" variant="primary">
+            <m3e-fab-menu-item>
+              <m3e-icon slot="icon" name="email" filled></m3e-icon>
+              Email
+            </m3e-fab-menu-item>
+            <m3e-fab-menu-item>
+              <m3e-icon slot="icon" name="chat" filled></m3e-icon>
+              Message
+            </m3e-fab-menu-item>
+            <m3e-fab-menu-item>
+              <m3e-icon slot="icon" name="folder" filled></m3e-icon>
+              Folder
+            </m3e-fab-menu-item>
+          </m3e-fab-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-fab variant=&quot;primary&quot; size=&quot;large&quot;&gt;
+  &lt;m3e-fab-menu-trigger for=&quot;fabmenu&quot;&gt;
+    &lt;m3e-icon name=&quot;edit&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-fab-menu-trigger&gt;
+&lt;/m3e-fab&gt;
+&lt;m3e-fab-menu id=&quot;fabmenu&quot; variant=&quot;primary&quot;&gt;
+  &lt;m3e-fab-menu-item&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;email&quot; filled&gt;&lt;/m3e-icon&gt;
+    Email
+  &lt;/m3e-fab-menu-item&gt;
+  &lt;m3e-fab-menu-item&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;chat&quot; filled&gt;&lt;/m3e-icon&gt;
+    Message
+  &lt;/m3e-fab-menu-item&gt;
+  &lt;m3e-fab-menu-item&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;folder&quot; filled&gt;&lt;/m3e-icon&gt;
+    Folder
+  &lt;/m3e-fab-menu-item&gt;
+&lt;/m3e-fab-menu&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+      <p>
+        The <code>m3e-fab-menu</code> supports three appearance variants: <code>primary</code> (default),
+        <code>secondary</code>, and <code>tertiary</code>. Use the <code>variant</code> attribute to change the
+        appearance.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content" class="fab-example">
+          <m3e-fab variant="secondary" size="large">
+            <m3e-fab-menu-trigger for="fabmenu2">
+              <m3e-icon name="edit"></m3e-icon>
+            </m3e-fab-menu-trigger>
+          </m3e-fab>
+          <m3e-fab-menu id="fabmenu2" variant="secondary">
+            <m3e-fab-menu-item>
+              <m3e-icon slot="icon" name="email" filled></m3e-icon>
+              Email
+            </m3e-fab-menu-item>
+            <m3e-fab-menu-item>
+              <m3e-icon slot="icon" name="chat" filled></m3e-icon>
+              Message
+            </m3e-fab-menu-item>
+            <m3e-fab-menu-item>
+              <m3e-icon slot="icon" name="folder" filled></m3e-icon>
+              Folder
+            </m3e-fab-menu-item>
+          </m3e-fab-menu>
+          <m3e-fab variant="tertiary" size="large">
+            <m3e-fab-menu-trigger for="fabmenu3">
+              <m3e-icon name="edit"></m3e-icon>
+            </m3e-fab-menu-trigger>
+          </m3e-fab>
+          <m3e-fab-menu id="fabmenu3" variant="tertiary">
+            <m3e-fab-menu-item>
+              <m3e-icon slot="icon" name="email" filled></m3e-icon>
+              Email
+            </m3e-fab-menu-item>
+            <m3e-fab-menu-item>
+              <m3e-icon slot="icon" name="chat" filled></m3e-icon>
+              Message
+            </m3e-fab-menu-item>
+            <m3e-fab-menu-item>
+              <m3e-icon slot="icon" name="folder" filled></m3e-icon>
+              Folder
+            </m3e-fab-menu-item>
+          </m3e-fab-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-fab variant=&quot;secondary&quot; size=&quot;large&quot;&gt;
+  &lt;m3e-fab-menu-trigger for=&quot;fabmenu&quot;&gt;
+    &lt;m3e-icon name=&quot;edit&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-fab-menu-trigger&gt;
+&lt;/m3e-fab&gt;
+&lt;m3e-fab-menu id=&quot;fabmenu&quot; variant=&quot;secondary&quot;&gt;
+  &lt;!-- Items omitted for brevity --&gt;
+&lt;/m3e-fab-menu&gt;
+&lt;!-- Other variants omitted for brevity --&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Icons</m3e-heading>
+      <p>
+        Use the <code>icon</code> slot of a <code>m3e-fab-menu-item</code> to present an icon before an item's label.
+        While not required, the following example uses the <code>m3e-icon</code> component from
+        <code>@m3e/icon</code> to present icons using Material Symbols. See
+        <a href="../components/icon.html">Icon</a> for more information.
+      </p>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-fab-menu-item&gt;
+  &lt;m3e-icon slot=&quot;icon&quot; name=&quot;email&quot; filled&gt;&lt;/m3e-icon&gt;
+  Email
+&lt;/m3e-fab-menu-item&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+      <p>
+        You can disable a <code>m3e-fab-menu-item</code> using the <code>disabled</code> attribute. In addition, if the
+        <code>m3e-fab</code> is disabled, the <code>m3e-fab-menu</code> will not be opened on click.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content" class="fab-example">
+          <m3e-fab size="large">
+            <m3e-fab-menu-trigger for="fabmenu4">
+              <m3e-icon name="edit"></m3e-icon>
+            </m3e-fab-menu-trigger>
+          </m3e-fab>
+          <m3e-fab-menu id="fabmenu4">
+            <m3e-fab-menu-item disabled>
+              <m3e-icon slot="icon" name="email" filled></m3e-icon>
+              Email
+            </m3e-fab-menu-item>
+            <m3e-fab-menu-item>
+              <m3e-icon slot="icon" name="chat" filled></m3e-icon>
+              Message
+            </m3e-fab-menu-item>
+            <m3e-fab-menu-item>
+              <m3e-icon slot="icon" name="folder" filled></m3e-icon>
+              Folder
+            </m3e-fab-menu-item>
+          </m3e-fab-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-fab-menu-item disabled&gt;
+  &lt;m3e-icon slot=&quot;icon&quot; name=&quot;email&quot; filled&gt;&lt;/m3e-icon&gt;
+  Email
+&lt;/m3e-fab-menu-item&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Links</m3e-heading>
+      <p>
+        Menu items can also behave like links by specifying a URL using the <code>href</code> attribute. You can also
+        specify <code>target</code>, <code>rel</code> and <code>download</code> similar to native anchor tags.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content" class="fab-example">
+          <m3e-fab size="large">
+            <m3e-fab-menu-trigger for="fabmenu5">
+              <m3e-icon name="edit"></m3e-icon>
+            </m3e-fab-menu-trigger>
+          </m3e-fab>
+          <m3e-fab-menu id="fabmenu5">
+            <m3e-fab-menu-item href="https://www.google.com" target="_blank">
+              <m3e-icon slot="icon" name="open_in_new_window" filled></m3e-icon>
+              Google
+            </m3e-fab-menu-item>
+          </m3e-fab-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-fab-menu-item href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;
+  &lt;m3e-icon slot=&quot;icon&quot; name=&quot;open_in_new_window&quot; filled&gt;&lt;/m3e-icon&gt;
+  Google
+&lt;/m3e-fab-menu-item&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        FAB menus are given ARIA <code>role="menu"</code> and items are given <code>role="menuitem"</code> indicating
+        that the menu behaves like a contextual action list.
+      </p>
+      <p>
+        The <code>aria-controls</code> attribute of the <code>m3e-fab</code> is assigned the ID of the menu and
+        <code>aria-haspopup="menu"</code> indicates that the FAB will open a menu. In addition, the FAB's
+        <code>aria-expanded</code> attribute reflects the opened state of the menu.
+      </p>
+      <p>
+        When <code>href</code> is specified for an item, the ARIA role does not change and continues to be
+        <code>menuitem</code>. In addition, the component presents an internal anchor, hidden from assistive
+        technologies, used to invoke native browser features such a context menu options and tooltips.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/fab-menu/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>You also need a module script for <code>@m3e/fab</code> due to being a dependency.</p>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/fab/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include additional dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;,
+      &quot;@m3e/core/anchoring&quot;: &quot;/node_modules/@m3e/core/dist/anchoring.js&quot;,
+      &quot;@m3e/core/bidi&quot;: &quot;/node_modules/@m3e/core/dist/bidi.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js, a11y.min.js, anchoring.min.js, and bidi.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer
+        only="m3e-fab-menu-trigger"
+        src="https://cdn.jsdelivr.net/npm/@m3e/fab-menu@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-fab-menu"
+        src="https://cdn.jsdelivr.net/npm/@m3e/fab-menu@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-fab-menu-item"
+        src="https://cdn.jsdelivr.net/npm/@m3e/fab-menu@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>

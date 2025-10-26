@@ -1,0 +1,7 @@
+.fab-example {
+  height: 96px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  column-gap: 2rem;
+}
