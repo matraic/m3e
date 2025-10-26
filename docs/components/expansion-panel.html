@@ -42,10 +42,239 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Expansion Panel</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>@m3e/expansion-panel</code> package provides components for organizing content in collapsible sections
+        and coordinated groups. It includes the following components:
+      </p>
+      <ul>
+        <li>
+          <code>m3e-expansion-panel</code> — A details-summary view for organizing content in collapsible sections.
+        </li>
+        <li><code>m3e-accordion</code> — Organizes multiple expansion panels into a coordinated group.</li>
+      </ul>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/expansion-panel</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Standalone panels</m3e-heading>
+      <p>
+        You can use a standalone <code>m3e-expansion-panel</code> to present a collapsible details-summary section. Use
+        the <code>header</code> slot to specify the title of a panel and use the default slot for its content.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-expansion-panel>
+            <span slot="header">Panel header</span>
+            Panel contents
+          </m3e-expansion-panel>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-expansion-panel&gt;
+  &lt;span slot=&quot;header&quot;&gt;Panel header&lt;/span&gt;
+  Panel contents
+&lt;/m3e-expansion-panel&gt;</pre
+        >
+      </m3e-card>
+      <p>Use the <code>open</code> attribute to control whether a panel is open (expanded).</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-expansion-panel open>
+            <span slot="header">Panel header</span>
+            Panel contents
+          </m3e-expansion-panel>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-expansion-panel open&gt;
+  &lt;span slot=&quot;header&quot;&gt;Panel header&lt;/span&gt;
+  Panel contents
+&lt;/m3e-expansion-panel&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Toggles</m3e-heading>
+      <p>
+        You can change the toggle position and direction using the <code>toggle-position</code> and
+        <code>toggle-direction</code> attributes. Supported positions include: <code>before</code> and
+        <code>after</code> (default). Supported directions include <code>vertical</code> (default) and
+        <code>horizontal</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-expansion-panel toggle-position="before" toggle-direction="horizontal">
+            <span slot="header">Panel header</span>
+            Panel contents
+          </m3e-expansion-panel>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-expansion-panel toggle-position=&quot;before&quot; toggle-direction=&quot;horizontal&quot;&gt;
+  &lt;span slot=&quot;header&quot;&gt;Panel header&lt;/span&gt;
+  Panel contents
+&lt;/m3e-expansion-panel&gt;</pre
+        >
+      </m3e-card>
+
+      <p>Use the <code>hide-toggle</code> attribute to hide the toggle.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-expansion-panel hide-toggle>
+            <span slot="header">Panel header</span>
+            Panel contents
+          </m3e-expansion-panel>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-expansion-panel hide-toggle&gt;
+  &lt;span slot=&quot;header&quot;&gt;Panel header&lt;/span&gt;
+  Panel contents
+&lt;/m3e-expansion-panel&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Accordion</m3e-heading>
+      <p>Use a <code>m3e-accordion</code> to create a coordinated group of panels.</p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-accordion>
+            <m3e-expansion-panel open>
+              <span slot="header">Panel 1</span>
+              I am content for the first panel
+            </m3e-expansion-panel>
+            <m3e-expansion-panel>
+              <span slot="header">Panel 2</span>
+              I am content for the second panel
+            </m3e-expansion-panel>
+            <m3e-expansion-panel>
+              <span slot="header">Panel 3</span>
+              I am content for the third panel
+            </m3e-expansion-panel>
+          </m3e-accordion>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-accordion&gt;
+  &lt;m3e-expansion-panel open&gt;
+    &lt;span slot=&quot;header&quot;&gt;Panel 1&lt;/span&gt;
+    I am content for the first panel
+  &lt;/m3e-expansion-panel&gt;
+  &lt;!-- Additional panels omitted for brevity --&gt;
+&lt;/m3e-accordion&gt;</pre
+        >
+      </m3e-card>
+
+      <p>
+        By default, only one panel can be open at a time. Use the <code>multi</code> attribute to allow multiple panels
+        to be open at the same time.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-accordion multi>
+            <m3e-expansion-panel open>
+              <span slot="header">Panel 1</span>
+              I am content for the first panel
+            </m3e-expansion-panel>
+            <m3e-expansion-panel open>
+              <span slot="header">Panel 2</span>
+              I am content for the second panel
+            </m3e-expansion-panel>
+            <m3e-expansion-panel open>
+              <span slot="header">Panel 3</span>
+              I am content for the third panel
+            </m3e-expansion-panel>
+          </m3e-accordion>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-accordion multi&gt;
+  &lt;m3e-expansion-panel open&gt;
+    &lt;span slot=&quot;header&quot;&gt;Panel 1&lt;/span&gt;
+    I am content for the first panel
+  &lt;/m3e-expansion-panel&gt;
+  &lt;!-- Additional panels omitted for brevity --&gt;
+&lt;/m3e-accordion&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Expansion panels imitate the experience of the native <code>detail</code> and <code>summary</code> elements.
+        Internally, a panel's header is given ARIA <code>role="button"</code> and the
+        <code>aria-controls</code> attribute with the panel's internal content wrapper's ID. Additionally, the internal
+        header's <code>aria-expanded</code> attribute reflects the expanded state of the panel.
+      </p>
+      <p>
+        Because expansion panel headers are buttons, avoid adding interactive controls in the <code>header</code> slot,
+        including buttons and anchors.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/expansion-panel/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+
+      <api-viewer
+        only="m3e-accordion"
+        src="https://cdn.jsdelivr.net/npm/@m3e/expansion-panel@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-expansion-panel"
+        src="https://cdn.jsdelivr.net/npm/@m3e/expansion-panel@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>
