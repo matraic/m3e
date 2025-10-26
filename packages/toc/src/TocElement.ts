@@ -11,6 +11,7 @@ import {
   MutationController,
   Role,
   ScrollController,
+  scrollIntoViewIfNeeded,
 } from "@m3e/core";
 
 import { SelectionManager } from "@m3e/core/a11y";
@@ -180,6 +181,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
           this._activeIndicator.style.height = `0px`;
           this._activeIndicator.style.visibility = "hidden";
         } else {
+          scrollIntoViewIfNeeded(item, this, { block: "nearest", behavior: "smooth" });
           this._activeIndicator.style.top = `${item.offsetTop}px`;
           this._activeIndicator.style.height = `${item.clientHeight}px`;
           this._activeIndicator.style.visibility = item.clientHeight == 0 ? "hidden" : "";
