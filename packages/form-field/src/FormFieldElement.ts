@@ -206,7 +206,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       )};
     }
     :host(.-with-select) .label {
-      margin-right: 1.5rem;
+      margin-inline-end: 1.5rem;
     }
     ::slotted([slot="label"]) {
       white-space: nowrap;
@@ -291,21 +291,17 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       transition: opacity 0s;
     }
     .prefix {
-      margin-left: 1rem;
+      margin-inline-start: 1rem;
     }
     :host(.-with-prefix) .prefix {
-      margin-right: 1rem;
-      margin-left: 0.75rem;
-    }
-    .suffix {
-      margin-right: 1rem;
+      margin-inline-end: 1rem;
+      margin-inline-start: 0.75rem;
     }
     :host(.-with-suffix) .suffix {
-      margin-left: 1rem;
-      margin-right: 0.75rem;
+      margin-inline-start: 0.25rem;
     }
     :host(.-with-suffix.-with-select) .suffix {
-      margin-left: unset;
+      margin-inline-start: unset;
     }
     :host(.-with-select) .suffix-text {
       display: none;
@@ -324,17 +320,17 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     }
     :host([variant="outlined"]) .pseudo-label {
       visibility: hidden;
-      margin-right: 0.25rem;
+      margin-inline-end: 0.25rem;
       font-size: var(--_form-field-label-font-size);
       line-height: var(--_form-field-label-line-height);
       letter-spacing: var(--_form-field-label-tracking);
       max-width: 100%;
-      transition-property: max-width, margin-right;
+      transition-property: max-width, margin-inline-end;
       transition-duration: 1ms;
     }
     :host([variant="outlined"][float-label="auto"]:not(.-float-label):not(.-pressed)) .pseudo-label {
       max-width: 0;
-      margin-right: 0px;
+      margin-inline-end: 0px;
       transition-delay: ${DesignToken.motion.duration.short2};
     }
     :host([variant="outlined"]) .outline-start,
@@ -347,9 +343,6 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     }
     :host([variant="outlined"]:not(.-with-label)) .outline-notch {
       display: none;
-    }
-    :host([variant="outlined"].-with-suffix:not(.-with-select)) .outline-notch {
-      margin-right: -0.75rem;
     }
     :host([variant="outlined"]) .outline-start {
       min-width: 0.75rem;
