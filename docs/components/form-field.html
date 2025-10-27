@@ -18,6 +18,7 @@
     />
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
+    <link href="form-field.css" rel="stylesheet" />
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
     <script type="importmap">
       {
@@ -31,6 +32,8 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon-button@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/form-field@1.0.0-rc.2/dist/index.min.js"></script>
   </head>
@@ -42,10 +45,267 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Form Field</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-form-field</code> is a container for form controls that applies Material Design styling and
+        behavior. Supported controls include: <code>input</code>, <code>select</code>, <code>textarea</code>, and
+        <code>m3e-input-chip-set</code>.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/form-field</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+      <p>
+        There are two form field appearance variants: <code>outlined</code> (default) and <code>filled</code>. Use the
+        <code>variant</code> attribute to change the appearance.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field variant="outlined">
+            <label slot="label" for="fld1">Outlined</label>
+            <input id="fld1" />
+          </m3e-form-field>
+          <m3e-form-field variant="filled">
+            <label slot="label" for="fld2">Filled</label>
+            <input id="fld2" />
+          </m3e-form-field>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;fld&quot;&gt;Outlined&lt;/label&gt;
+  &lt;input id=&quot;fld&quot; /&gt;
+&lt;/m3e-form-field&gt;
+&lt;!-- Additional variants omitted for brevity --&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Float label</m3e-heading>
+      <p>
+        When a form field's control is empty, the label is presented over the control instead of above. You can change
+        this behavior using the
+        <code>float-label</code> attribute. Supported values include <code>always</code> and
+        <code>auto</code> (default).
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field float-label="always">
+            <label slot="label" for="fld3">Always float label</label>
+            <input id="fld3" />
+          </m3e-form-field>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field float-label=&quot;always&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;fld&quot;&gt;Always float label&lt;/label&gt;
+  &lt;input id=&quot;fld&quot; /&gt;
+&lt;/m3e-form-field&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Hint labels</m3e-heading>
+      <p>
+        Hint labels are additional descriptive text that appear in a field's subscript. Use the
+        <code>hint</code> slot to specify a hint. By default, a field's subscript is hidden until focused or when a
+        field is invalid. Use the <code>hide-subscript</code> attribute to control this behavior. Supported values
+        include: <code>always</code>, <code>auto</code> (default), and <code>never</code>. Using
+        <code>always</code> will remove the space reserved for a field's subscript.
+      </p>
+      <p>
+        The following example illustrates use of the <code>hint</code> slot with <code>hide-subscript</code> set to
+        <code>never</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field hide-subscript="never">
+            <label slot="label" for="fld4">Field w/ hint</label>
+            <input id="fld4" />
+            <span slot="hint">Hint text</span>
+          </m3e-form-field>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field hide-subscript=&quot;never&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;fld&quot;&gt;Field w/ hint&lt;/label&gt;
+  &lt;input id=&quot;fld&quot; /&gt;
+  &lt;span slot=&quot;hint&quot;&gt;Hint text&lt;/span&gt;
+&lt;/m3e-form-field&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Error messages</m3e-heading>
+      <p>
+        Errors are hidden by default and only become visible after the user has interacted with the field—such as
+        focusing and then blurring—or after the parent form has been submitted. This behavior ensures that validation
+        feedback is contextually relevant and non-intrusive, appearing only when the user is likely to expect it.
+      </p>
+      <p>
+        When an error message is shown, it occupies the same subscript region beneath the field that is normally used
+        for the hint label. To prevent visual overlap and maintain clarity, the hint is automatically hidden whenever an
+        error is displayed.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field>
+            <label slot="label" for="fld5">Required field</label>
+            <input id="fld5" required />
+            <span slot="hint">Hint text</span>
+          </m3e-form-field>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;fld5&quot;&gt;Required field&lt;/label&gt;
+  &lt;input id=&quot;fld5&quot; required /&gt;
+  &lt;span slot=&quot;hint&quot;&gt;Hint text&lt;/span&gt;
+&lt;/m3e-form-field&gt;</pre
+        >
+      </m3e-card>
+
+      <p>
+        By default, the validation message of a field's control is presented in a field's subscript. You can specify
+        custom error messages using the <code>error</code> slot.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field>
+            <label slot="label" for="fld6">Required field</label>
+            <input id="fld6" required />
+            <span slot="hint">Hint text</span>
+            <span slot="error">Custom error message</span>
+          </m3e-form-field>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;fld&quot;&gt;Required field&lt;/label&gt;
+  &lt;input id=&quot;fld&quot; required /&gt;
+  &lt;span slot=&quot;hint&quot;&gt;Hint text&lt;/span&gt;
+  &lt;span slot=&quot;error&quot;&gt;Custom error message&lt;/span&gt;
+&lt;/m3e-form-field&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Hiding the required marker</m3e-heading>
+      <p>
+        By default, required fields will present a marker next to the field's label. Use the
+        <code>hide-required-marker</code> attribute to remove it.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field hide-required-marker>
+            <label slot="label" for="fld7">Required field</label>
+            <input id="fld7" required />
+          </m3e-form-field>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field hide-required-marker&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;fld&quot;&gt;Required field&lt;/label&gt;
+  &lt;input id=&quot;fld&quot; required /&gt;
+&lt;/m3e-form-field&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Prefix and suffix</m3e-heading>
+      <p>
+        Content can be included before or after the field's control to serve as a prefix or suffix. This content is
+        rendered inside the same visual container that wraps the form control, ensuring consistent alignment, spacing,
+        and styling.
+      </p>
+      <p>
+        Use the <code>prefix</code> and <code>suffix</code> slots for icons and buttons. For textual content, use the
+        <code>prefix-text</code> and <code>suffix-text</code> slots.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field>
+            <label slot="label" for="fld8">Amount</label>
+            <span slot="prefix-text">$</span>
+            <input id="fld8" type="number" placeholder="0" />
+            <span slot="suffix-text">.00</span>
+            <m3e-icon-button slot="suffix">
+              <m3e-icon name="clear"></m3e-icon>
+            </m3e-icon-button>
+          </m3e-form-field>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;fld&quot;&gt;Amount&lt;/label&gt;
+  &lt;span slot=&quot;prefix-text&quot;&gt;$&lt;/span&gt;
+  &lt;input id=&quot;fld&quot; type=&quot;number&quot; placeholder=&quot;0&quot; /&gt;
+  &lt;span slot=&quot;suffix-text&quot;&gt;.00&lt;/span&gt;
+  &lt;m3e-icon-button slot=&quot;suffix&quot;&gt;
+    &lt;m3e-icon name=&quot;clear&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-icon-button&gt;
+&lt;/m3e-form-field&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        The <code>m3e-form-field</code> will hide hint labels and error messages from the accessibility tree and use a
+        visually hidden element to present them to assistive technologies. Their IDs are added to the
+        <code>aria-describedby</code> attribute of the field's control.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/form-field/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+
+      <api-viewer src="https://cdn.jsdelivr.net/npm/@m3e/form-field@1.0.0-rc.2/dist/custom-elements.json"> </api-viewer>
     </m3e-theme>
   </body>
 </html>
