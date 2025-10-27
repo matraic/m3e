@@ -647,9 +647,9 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
 
   /**
    * Notifies the form field that the state of the hosted `control` has changed.
-   * @param [checkValidity=false] Whether to check validity.
+   * @param {boolean} [checkValidity=false] Whether to check validity.
    */
-  notifyControlStateChange(checkValidity = false): void {
+  notifyControlStateChange(checkValidity: boolean = false): void {
     this._required = this.#control?.required === true;
     this.classList.toggle("-required", this._required);
     this.classList.toggle("-disabled", this.#control?.disabled === true);
