@@ -42,10 +42,145 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Icon</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-icon</code> component makes it easy to use Material Symbols in your application. It supports
+        outlined, rounded, and sharp variants, as well as variable font features like fill, weight, grade, and optical
+        size. For more information, see the
+        <a href="https://developers.google.com/fonts/docs/material_symbols" target="_blank" rel="noopener noreferrer">
+          Material Symbol Guide
+        </a>
+        and
+        <a href="https://fonts.google.com/icons" target="_blank" rel="noopener noreferrer"> Material Symbol Library </a
+        >.
+      </p>
+
+      <p>
+        The Material Symbols font is the easiest way to incorporate Material Symbols into your application. Using the
+        <a
+          href="https://developers.google.com/fonts/docs/css2#forming_api_urls"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Fonts CSS API</a
+        >, you can use variable fonts to optimize icon usage within your application. See
+        <a href="https://caniuse.com/variable-fonts" target="_blank" rel="noopener noreferrer">
+          Can I Use's Variable Fonts
+        </a>
+        to determine whether your user's browser supports variable fonts.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/icon</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Basic icons</m3e-heading>
+      <p>
+        The following illustrates the basic use of the <code>m3e-icon</code> component. Use the
+        <code>name</code> attribute to specify the name of the
+        <a href="https://fonts.google.com/icons" target="_blank" rel="noopener noreferrer">Material Symbol</a> to
+        present.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-icon name="home"></m3e-icon>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">&lt;m3e-icon name=&quot;home&quot;&gt;&lt;/m3e-icon&gt;</pre>
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Variable fonts</m3e-heading>
+      <p>The following illustrates a link used to download a variable font for outlined icons with fill support.</p>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;link
+  href=&quot;https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&quot;
+  rel=&quot;stylesheet&quot;
+/&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Appearance variants</m3e-heading>
+      <p>
+        The <code>m3e-icon</code> component supports appearance variants and fine-grained typographic controls for fill,
+        weight, grade, and optical size.
+      </p>
+      <p>
+        Use the <code>variant</code> attribute to control the visual style of the icon. Supported values include:
+        <code>outlined</code> (default), <code>rounded</code>, and <code>sharp</code>. Use the
+        <code>filled</code> attribute to specify whether the icon is filled (<code>1</code>) or unfilled
+        (<code>0</code>). This attribute maps to the <code>FILL</code> axis of the variable font.
+      </p>
+      <p>
+        The <code>weight</code> attribute adjusts the thickness and boldness of the icon's strokes. It behaves like font
+        weight in text accepting values from <code>100</code> to <code>700</code>. Use the <code>grade</code> attribute
+        to adjust the stroke thickness of an icon. Supported values include: <code>low</code>,
+        <code>medium</code> (default) and <code>high</code>. This attribute maps to the <code>GRAD</code> axis of the
+        variable font with values like <code>-25</code>, <code>0</code>, or <code>200</code>.
+      </p>
+      <p>
+        The <code>optical-size</code> attribute supports values from <code>20</code> to <code>48</code> indicating the
+        optical size of the icon.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Icons are given the ARIA <code>role="img"</code>, indicating that they represent meaningful visual content and
+        should be interpreted by assistive technologies as images.
+      </p>
+      <p>
+        Include <code>aria-hidden="true"</code> if the icon is purely decorative. Otherwise, they must be labeled using
+        <code>aria-label</code> or <code>aria-labelledby</code>.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/icon/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+
+      <api-viewer src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.0-rc.2/dist/custom-elements.json"> </api-viewer>
     </m3e-theme>
   </body>
 </html>
