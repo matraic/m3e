@@ -30,6 +30,8 @@
     </script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/divider@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/list@1.0.0-rc.2/dist/index.min.js"></script>
@@ -42,10 +44,169 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">List</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-list</code> component provides a list container for organizing and displaying multiple list items.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/list</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Anatomy</m3e-heading>
+      <p>
+        To create a list of items, use the <code>m3e-list</code> component with one or more
+        <code>m3e-list-item</code> components nested inside it.
+      </p>
+      <p>
+        The <code>m3e-list-item</code> component provides a modular layout for structured content blocks. It exposes the
+        following named slots:
+      </p>
+      <ul>
+        <li><code>(default)</code> — Renders the content of the list item.</li>
+        <li><code>leading-icon</code> — Renders the leading icon of the list item.</li>
+        <li><code>overline</code> — Renders the overline of the list item.</li>
+        <li><code>supporting-text</code> — Renders the supporting text of the list item.</li>
+        <li><code>trailing-supporting-text</code> — Renders the trailing supporting text of the list item.</li>
+        <li><code>trailing-icon</code> — Renders the trailing icon of the list item.</li>
+      </ul>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-list>
+            <m3e-list-item>
+              <m3e-icon slot="leading-icon" name="person"></m3e-icon>
+              <span slot="overline">Overline</span>
+              Headline
+              <span slot="supporting-text">Supporting text</span>
+              <span slot="trailing-supporting-text">100+</span>
+              <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
+            </m3e-list-item>
+          </m3e-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-list&gt;
+  &lt;m3e-list-item&gt;
+    &lt;m3e-icon slot=&quot;leading-icon&quot; name=&quot;person&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;span slot=&quot;overline&quot;&gt;Overline&lt;/span&gt;
+    Headline
+    &lt;span slot=&quot;supporting-text&quot;&gt;Supporting text&lt;/span&gt;
+    &lt;span slot=&quot;trailing-supporting-text&quot;&gt;100+&lt;/span&gt;
+    &lt;m3e-icon slot=&quot;trailing-icon&quot; name=&quot;arrow_right&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-list-item&gt;
+&lt;/m3e-list&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Dividers</m3e-heading>
+      <p>
+        The following example illustrates use of the <code>m3e-divider</code> to provide separators between items in a
+        <code>m3e-list</code>. For more information on dividers, see <a href="../components/divider.html">Divider</a>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-list>
+            <m3e-list-item>Item 1</m3e-list-item>
+            <m3e-divider></m3e-divider>
+            <m3e-list-item>Item 2</m3e-list-item>
+            <m3e-divider></m3e-divider>
+            <m3e-list-item>Item 3</m3e-list-item>
+          </m3e-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-list&gt;
+  &lt;m3e-list-item&gt;Item 1&lt;/m3e-list-item&gt;
+  &lt;m3e-divider&gt;&lt;/m3e-divider&gt;
+  &lt;m3e-list-item&gt;Item 2&lt;/m3e-list-item&gt;
+  &lt;m3e-divider&gt;&lt;/m3e-divider&gt;
+  &lt;m3e-list-item&gt;Item 3&lt;/m3e-list-item&gt;
+&lt;/m3e-list&gt;</pre
+        >
+      </m3e-card>
+      <p>Dividers can also be inset using the <code>inset</code> attribute of a <code>m3e-divider</code>.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-list>
+            <m3e-list-item>Item 1</m3e-list-item>
+            <m3e-divider inset></m3e-divider>
+            <m3e-list-item>Item 2</m3e-list-item>
+            <m3e-divider inset></m3e-divider>
+            <m3e-list-item>Item 3</m3e-list-item>
+          </m3e-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-list&gt;
+  &lt;m3e-list-item&gt;Item 1&lt;/m3e-list-item&gt;
+  &lt;m3e-divider inset&gt;&lt;/m3e-divider&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-list&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Lists are given the ARIA <code>role="list"</code> and list items are given <code>role="listitem"</code> to
+        ensure that assistive technologies can correctly interpret the structure and semantics of the content.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/list/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+
+      <api-viewer only="m3e-list" src="https://cdn.jsdelivr.net/npm/@m3e/list@1.0.0-rc.2/dist/custom-elements.json">
+      </api-viewer>
+      <api-viewer
+        only="m3e-list-item"
+        src="https://cdn.jsdelivr.net/npm/@m3e/list@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>
