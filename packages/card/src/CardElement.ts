@@ -239,7 +239,21 @@ export class M3eCardElement extends KeyboardClick(
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
     super.firstUpdated(_changedProperties);
+
     [this._elevation, this._focusRing, this._stateLayer, this._ripple].forEach((x) => x?.attach(this));
+
+    if (!this.actionable && this.hasAttribute("tabindex")) {
+      this.removeAttribute("tabindex");
+    }
+  }
+
+  /** @inheritdoc */
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+
+    if (!this.actionable && this.hasAttribute("tabindex")) {
+      this.removeAttribute("tabindex");
+    }
   }
 
   /** @private */
