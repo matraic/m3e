@@ -10,3 +10,4 @@ export * from "./ScrollDividers";
 export * from "./SlideElement";
 export * from "./StateLayerElement";
 export * from "./TextOverflowElement";
+export * from "./TextHighlightElement";
