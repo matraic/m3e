@@ -24,28 +24,445 @@
         "imports": {
           "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
           "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/index.min.js",
-          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/a11y.min.js"
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/a11y.min.js",
+          "@m3e/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/anchoring.min.js"
         }
       }
     </script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/button@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/divider@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.0.0-rc.2/dist/index.min.js"></script>
   </head>
   <body id="body">
     <m3e-theme strong-focus>
-      <m3e-toc class="toc" for="body">
+      <m3e-toc class="toc" for="body" max-depth="4">
         <span slot="overline">On this page</span>
         <span slot="title">Menu</span>
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Menu</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-menu</code> component presents a list of choices on a temporary surface, typically anchored to a
+        trigger element.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/menu</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+      <p>
+        The <code>m3e-menu</code> is used in conjunction with a <code>m3e-menu-trigger</code> to create a menu opened
+        when the parenting element of the trigger is activated. Use the <code>for</code> attribute of the
+        <code>m3e-menu-trigger</code> to designate the menu to open.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-menu-trigger for="menu1">Menu</m3e-menu-trigger>
+          </m3e-button>
+          <m3e-menu id="menu1">
+            <m3e-menu-item>Item 1</m3e-menu-item>
+            <m3e-menu-item>Item 2</m3e-menu-item>
+          </m3e-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button&gt;
+  &lt;m3e-menu-trigger for=&quot;menu1&quot;&gt;Menu&lt;/m3e-menu-trigger&gt;
+&lt;/m3e-button&gt;
+&lt;m3e-menu id=&quot;menu1&quot;&gt;
+  &lt;m3e-menu-item&gt;Item 1&lt;/m3e-menu-item&gt;
+  &lt;m3e-menu-item&gt;Item 2&lt;/m3e-menu-item&gt;
+&lt;/m3e-menu&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Menu items</m3e-heading>
+      <p>
+        The <code>&lt;m3e-menu&gt;</code> component supports three distinct types of menu items, each tailored for
+        different interaction patterns and semantic roles:
+      </p>
+      <ul>
+        <li><code>m3e-menu-item</code> — A standard menu item typically used for navigation or triggering commands.</li>
+        <li><code>m3e-menu-item-checkbox</code> — A toggleable menu item option used for multi-select scenarios.</li>
+        <li><code>m3e-menu-item-radio</code> — A toggleable menu item option used for single-select scenarios.</li>
+      </ul>
+
+      <m3e-heading variant="title" size="medium" level="4">Icons</m3e-heading>
+      <p>
+        All menu item types provide two named slots for icons. Use the <code>icon</code> slot to present an icon before
+        an item's label and use the <code>trailing-icon</code> slot to present an icon after it.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-menu-trigger for="menu8">Menu items with icons</m3e-menu-trigger>
+          </m3e-button>
+          <m3e-menu id="menu8">
+            <m3e-menu-item>
+              <m3e-icon slot="icon" name="dialpad"></m3e-icon>
+              Redial
+            </m3e-menu-item>
+            <m3e-menu-item>
+              <m3e-icon slot="icon" name="voicemail"></m3e-icon>
+              Check voice mail
+            </m3e-menu-item>
+            <m3e-menu-item>
+              <m3e-icon slot="icon" name="notifications_off"></m3e-icon>
+              Disable alerts
+            </m3e-menu-item>
+          </m3e-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button&gt;
+  &lt;m3e-menu-trigger for=&quot;menu8&quot;&gt;Menu items with icons&lt;/m3e-menu-trigger&gt;
+&lt;/m3e-button&gt;
+&lt;m3e-menu id=&quot;menu8&quot;&gt;
+  &lt;m3e-menu-item&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;dialpad&quot;&gt;&lt;/m3e-icon&gt;
+    Redial
+  &lt;/m3e-menu-item&gt;
+  &lt;m3e-menu-item&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;voicemail&quot;&gt;&lt;/m3e-icon&gt;
+    Check voice mail
+  &lt;/m3e-menu-item&gt;
+  &lt;m3e-menu-item&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;notifications_off&quot;&gt;&lt;/m3e-icon&gt;
+    Disable alerts
+  &lt;/m3e-menu-item&gt;
+&lt;/m3e-menu&gt;
+        </pre>
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Disabling</m3e-heading>
+      <p>Use the <code>disabled</code> attribute to disable a menu item.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-menu-trigger for="menu9">Menu with disabled items</m3e-menu-trigger>
+          </m3e-button>
+          <m3e-menu id="menu9">
+            <m3e-menu-item disabled>
+              <m3e-icon slot="icon" name="dialpad"></m3e-icon>
+              Redial
+            </m3e-menu-item>
+            <m3e-menu-item>
+              <m3e-icon slot="icon" name="voicemail"></m3e-icon>
+              Check voice mail
+            </m3e-menu-item>
+            <m3e-menu-item>
+              <m3e-icon slot="icon" name="notifications_off"></m3e-icon>
+              Disable alerts
+            </m3e-menu-item>
+          </m3e-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-menu id=&quot;menu8&quot;&gt;
+  &lt;m3e-menu-item disabled&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;dialpad&quot;&gt;&lt;/m3e-icon&gt;
+    Redial
+  &lt;/m3e-menu-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-menu&gt;
+        </pre>
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Checkboxes</m3e-heading>
+      <p>
+        Use a <code>m3e-menu-item-checkbox</code> to present a toggleable menu item that supports multi-select. The
+        <code>checked</code> attribute reflects the checked state of the menu item. If a menu item specifies an icon
+        using the <code>icon</code> slot, it will be replaced with a check icon when checked.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-menu-trigger for="menu2">Menu with checkboxes</m3e-menu-trigger>
+          </m3e-button>
+          <m3e-menu id="menu2">
+            <m3e-menu-item-checkbox checked>
+              <m3e-icon slot="icon" name="format_bold"></m3e-icon>
+              Bold
+            </m3e-menu-item-checkbox>
+            <m3e-menu-item-checkbox>
+              <m3e-icon slot="icon" name="format_italic"></m3e-icon>
+              Italic
+            </m3e-menu-item-checkbox>
+            <m3e-menu-item-checkbox>
+              <m3e-icon slot="icon" name="format_underlined"></m3e-icon>
+              Underline
+            </m3e-menu-item-checkbox>
+          </m3e-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button&gt;
+  &lt;m3e-menu-trigger for=&quot;menu2&quot;&gt;Menu with checkboxes&lt;/m3e-menu-trigger&gt;
+&lt;/m3e-button&gt;
+&lt;m3e-menu id=&quot;menu2&quot;&gt;
+  &lt;m3e-menu-item-checkbox checked&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;format_bold&quot;&gt;&lt;/m3e-icon&gt;
+    Bold
+  &lt;/m3e-menu-item-checkbox&gt;
+  &lt;m3e-menu-item-checkbox&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;format_italic&quot;&gt;&lt;/m3e-icon&gt;
+    Italic
+  &lt;/m3e-menu-item-checkbox&gt;
+  &lt;m3e-menu-item-checkbox&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;format_underlined&quot;&gt;&lt;/m3e-icon&gt;
+    Underline
+  &lt;/m3e-menu-item-checkbox&gt;
+&lt;/m3e-menu&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Radios</m3e-heading>
+      <p>
+        Use a <code>m3e-menu-item-radio</code> to present a toggleable menu item that supports single-select. The
+        <code>checked</code> attribute reflects the checked state of the menu item. If a menu item specifies an icon
+        using the <code>icon</code> slot, it will be replaced with a check icon when checked.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-menu-trigger for="menu3">Menu with radios</m3e-menu-trigger>
+          </m3e-button>
+          <m3e-menu id="menu3">
+            <m3e-menu-item-radio checked>Ascending</m3e-menu-item-radio>
+            <m3e-menu-item-radio>Descending</m3e-menu-item-radio>
+          </m3e-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button&gt;
+  &lt;m3e-menu-trigger for=&quot;menu3&quot;&gt;Menu with radios&lt;/m3e-menu-trigger&gt;
+&lt;/m3e-button&gt;
+&lt;m3e-menu id=&quot;menu3&quot;&gt;
+  &lt;m3e-menu-item-radio checked&gt;Ascending&lt;/m3e-menu-item-radio&gt;
+  &lt;m3e-menu-item-radio&gt;Descending&lt;/m3e-menu-item-radio&gt;
+&lt;/m3e-menu&gt;</pre
+        >
+      </m3e-card>
+
+      <p>
+        Use a <code>m3e-menu-item-group</code> to organize multiple sets of radio items within a single
+        <code>m3e-menu</code>. Each group maintains its own selection state, allowing distinct radio groups to coexist
+        independently.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-menu-trigger for="menu4">Menu with radio groups</m3e-menu-trigger>
+          </m3e-button>
+          <m3e-menu id="menu4">
+            <m3e-menu-item-group>
+              <m3e-menu-item-radio checked>Ascending</m3e-menu-item-radio>
+              <m3e-menu-item-radio>Descending</m3e-menu-item-radio>
+            </m3e-menu-item-group>
+            <m3e-divider></m3e-divider>
+            <m3e-menu-item-group>
+              <m3e-menu-item-radio checked>Alphabetical</m3e-menu-item-radio>
+              <m3e-menu-item-radio>By Date</m3e-menu-item-radio>
+            </m3e-menu-item-group>
+          </m3e-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button&gt;
+  &lt;m3e-menu-trigger for=&quot;menu4&quot;&gt;Menu with radio groups&lt;/m3e-menu-trigger&gt;
+&lt;/m3e-button&gt;
+&lt;m3e-menu id=&quot;menu4&quot;&gt;
+  &lt;m3e-menu-item-group&gt;
+    &lt;m3e-menu-item-radio checked&gt;Ascending&lt;/m3e-menu-item-radio&gt;
+    &lt;m3e-menu-item-radio&gt;Descending&lt;/m3e-menu-item-radio&gt;
+  &lt;/m3e-menu-item-group&gt;
+  &lt;m3e-divider&gt;&lt;/m3e-divider&gt;
+  &lt;m3e-menu-item-group&gt;
+    &lt;m3e-menu-item-radio checked&gt;Alphabetical&lt;/m3e-menu-item-radio&gt;
+    &lt;m3e-menu-item-radio&gt;By Date&lt;/m3e-menu-item-radio&gt;
+  &lt;/m3e-menu-item-group&gt;
+&lt;/m3e-menu&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Submenus</m3e-heading>
+      <p>
+        Submenus are triggered by nesting a <code>m3e-menu-trigger</code> in a <code>m3e-menu-item</code> and
+        designating the submenu to open using the <code>for</code> attribute.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-menu-trigger for="menu5">Menu with submenus</m3e-menu-trigger>
+          </m3e-button>
+          <m3e-menu id="menu5">
+            <m3e-menu-item>
+              <m3e-menu-trigger for="menu6">Fruits with A</m3e-menu-trigger>
+            </m3e-menu-item>
+            <m3e-menu-item>Grapes</m3e-menu-item>
+            <m3e-menu-item>Olive</m3e-menu-item>
+            <m3e-menu-item>Orange</m3e-menu-item>
+          </m3e-menu>
+          <m3e-menu id="menu6">
+            <m3e-menu-item>Apricot</m3e-menu-item>
+            <m3e-menu-item>Avocado</m3e-menu-item>
+            <m3e-menu-item>
+              <m3e-menu-trigger for="menu7">Apples</m3e-menu-trigger>
+            </m3e-menu-item>
+          </m3e-menu>
+          <m3e-menu id="menu7">
+            <m3e-menu-item>Fuji</m3e-menu-item>
+            <m3e-menu-item>Granny Smith</m3e-menu-item>
+            <m3e-menu-item>Red Delicious</m3e-menu-item>
+          </m3e-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button&gt;
+  &lt;m3e-menu-trigger for=&quot;menu5&quot;&gt;Menu with submenus&lt;/m3e-menu-trigger&gt;
+&lt;/m3e-button&gt;
+&lt;m3e-menu id=&quot;menu5&quot;&gt;
+  &lt;m3e-menu-item&gt;
+    &lt;m3e-menu-trigger for=&quot;menu6&quot;&gt;Fruits with A&lt;/m3e-menu-trigger&gt;
+  &lt;/m3e-menu-item&gt;
+  &lt;m3e-menu-item&gt;Grapes&lt;/m3e-menu-item&gt;
+  &lt;m3e-menu-item&gt;Olive&lt;/m3e-menu-item&gt;
+  &lt;m3e-menu-item&gt;Orange&lt;/m3e-menu-item&gt;
+&lt;/m3e-menu&gt;
+&lt;m3e-menu id=&quot;menu6&quot;&gt;
+  &lt;m3e-menu-item&gt;Apricot&lt;/m3e-menu-item&gt;
+  &lt;m3e-menu-item&gt;Avocado&lt;/m3e-menu-item&gt;
+  &lt;m3e-menu-item&gt;
+    &lt;m3e-menu-trigger for=&quot;menu7&quot;&gt;Apples&lt;/m3e-menu-trigger&gt;
+  &lt;/m3e-menu-item&gt;
+&lt;/m3e-menu&gt;
+&lt;m3e-menu id=&quot;menu7&quot;&gt;
+  &lt;m3e-menu-item&gt;Fuji&lt;/m3e-menu-item&gt;
+  &lt;m3e-menu-item&gt;Granny Smith&lt;/m3e-menu-item&gt;
+  &lt;m3e-menu-item&gt;Red Delicious&lt;/m3e-menu-item&gt;
+&lt;/m3e-menu&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Menus are given the ARIA <code>role="menu"</code>, indicating that the serve as a container for a list of
+        interactive menu items.
+      </p>
+      <p>
+        Triggers augment their parenting elements with <code>aria-haspopup</code>, <code>aria-controls</code>, and
+        <code>aria-expanded</code> to create a relationship with the trigger's menu.
+      </p>
+      <p>
+        When a menu is opened, the focus is set to the first enabled menu item. On close, focus is returned to the
+        trigger.
+      </p>
+      <p>
+        Standard menu items are given ARIA <code>role="menuitem"</code>, checkboxes are given
+        <code>role="menuitemcheckbox"</code>, and radios are given <code>role="menuitemradio"</code>. The
+        <code>aria-checked</code> attribute reflects the checked state of an item.
+      </p>
+      <p>
+        Disabled menu items are given <code>aria-disabled="true"</code> in order to convey to assistive technologies
+        that the item is disabled. In addition, <code>tabindex</code> is removed to indicate the item is no longer
+        focusable.
+      </p>
+      <p>
+        Menu item groups are given ARIA <code>role="group"</code> and should be labelled using
+        <code>aria-label</code> or <code>aria-labelledby</code>.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/menu/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;,
+      &quot;@m3e/core/anchoring&quot;: &quot;/node_modules/@m3e/core/dist/anchoring.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js, a11y.min.js, and anchoring.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+
+      <api-viewer only="m3e-menu" src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.0.0-rc.2/dist/custom-elements.json">
+      </api-viewer>
+      <api-viewer
+        only="m3e-menu-trigger"
+        src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-menu-item"
+        src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-menu-item-checkbox"
+        src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-menu-item-radio"
+        src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-menu-item-group"
+        src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>
