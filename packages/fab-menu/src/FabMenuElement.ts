@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { css, CSSResultGroup, html, LitElement, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import { DesignToken, DisabledMixin, Role, ScrollController } from "@m3e/core";
@@ -78,6 +78,8 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
       opacity: 0;
       background-color: transparent;
       display: none;
+    }
+    :host(:not(.-no-animate)) {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.spring.fastEffects}, 
         transform ${DesignToken.motion.spring.fastSpatial},
@@ -146,7 +148,7 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
       }
     }
     @media (prefers-reduced-motion) {
-      :host {
+      :host(:not(.-no-animate)) {
         transition: none;
       }
     }
@@ -274,6 +276,7 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
 
     this.tabIndex = -1;
     this.setAttribute("popover", "manual");
+    this.classList.add("-no-animate");
 
     this.addEventListener("keydown", this.#keyDownHandler);
     this.addEventListener("toggle", this.#toggleHandler);
@@ -287,6 +290,12 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
     this.removeEventListener("keydown", this.#keyDownHandler);
     this.removeEventListener("toggle", this.#toggleHandler);
     document.removeEventListener("click", this.#documentClickHandler);
+  }
+
+  /** @inheritdoc */
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
+    super.firstUpdated(_changedProperties);
+    requestAnimationFrame(() => this.classList.remove("-no-animate"));
   }
 
   /** @inheritdoc */
