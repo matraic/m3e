@@ -48,6 +48,7 @@ export class M3eNavBarElement extends Role(LitElement, "navigation") {
     :host {
       display: flex;
       overflow-x: auto;
+      overflow-y: hidden;
       align-items: stretch;
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
