@@ -59,6 +59,7 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  * @slot - Renders the nested child items.
  * @slot label - Renders the label of the item.
  * @slot icon - Renders the icon of the item.
+ * @slot badge - Renders the badge of the item.
  * @slot selected-icon - Renders the icon of the item when selected.
  * @slot toggle-icon - Renders the toggle icon.
  *
