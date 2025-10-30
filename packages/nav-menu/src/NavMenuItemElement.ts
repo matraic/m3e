@@ -437,10 +437,12 @@ export class M3eNavMenuItemElement extends Selected(
   }
 
   /** @inheritdoc */
-  protected override update(changedProperties: PropertyValues<this>): void {
+  protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
 
     if (changedProperties.has("selected")) {
+      // Remove aria-selected and just use aria-current.
+      this.ariaSelected = "";
       this.ariaCurrent = this.hasChildItems ? null : `${this.selected}`;
       for (const icon of this.querySelectorAll(":scope > m3e-icon[slot]")) {
         icon.toggleAttribute("filled", this.selected);
@@ -450,6 +452,10 @@ export class M3eNavMenuItemElement extends Selected(
       if (this.selected && !this.hasChildItems) {
         this.closest("m3e-nav-menu")?.[selectionManager].notifySelectionChange(this);
       }
+    }
+
+    if (changedProperties.has("open") || changedProperties.has("_hasChildItems")) {
+      this.ariaExpanded = this._hasChildItems ? `${this.open}` : null;
     }
   }
 
