@@ -292,6 +292,16 @@ export class M3eNavItemElement extends LinkButton(
         transparent
       );
     }
+    a {
+      all: unset;
+      display: block;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      z-index: 1;
+    }
     @media (forced-colors: active) {
       :host(:disabled) .label,
       :host([disabled-interactive]) .label,
