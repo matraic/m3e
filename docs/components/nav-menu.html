@@ -18,6 +18,7 @@
     />
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
+    <link href="nav-menu.css" rel="stylesheet" />
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
     <script type="importmap">
       {
@@ -30,6 +31,8 @@
     </script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/divider@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/nav-menu@1.0.0-rc.3/dist/index.min.js"></script>
@@ -42,10 +45,275 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Nav Menu</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-nav-menu</code> component is a hierarchical menu optimized for sidebars and drawers on larger
+        devices. It enables users to explore nested menu structures and seamlessly switch between application views.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/nav-menu</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Multilevel menus</m3e-heading>
+      <p>
+        Use the <code>m3e-nav-menu</code> and <code>m3e-nav-menu-item</code> to create a multilevel navigation menu.
+      </p>
+      <p>
+        Use the <code>label</code> slot of a <code>m3e-nav-menu-item</code> to specify an item's label. In addition, use
+        the <code>icon</code> slot to include an icon before the item's label and use the <code>badge</code> slot to
+        specify to specify a compact status indicator or supplementary text.
+      </p>
+      <p>To create multiple levels, nest one or more <code>m3e-nav-menu-item</code> components.</p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-nav-menu>
+            <m3e-nav-menu-item open>
+              <m3e-icon slot="icon" name="rocket_launch" aria-hidden="true"></m3e-icon>
+              <span slot="label">Getting Started</span>
+              <m3e-nav-menu-item>
+                <m3e-icon slot="icon" name="widgets" aria-hidden="true"></m3e-icon>
+                <span slot="label">Overview</span>
+              </m3e-nav-menu-item>
+              <m3e-nav-menu-item>
+                <m3e-icon slot="icon" name="package_2" aria-hidden="true"></m3e-icon>
+                <span slot="label">Installation</span>
+              </m3e-nav-menu-item>
+            </m3e-nav-menu-item>
+            <m3e-nav-menu-item>
+              <span slot="label">Actions</span>
+              <m3e-nav-menu-item><span slot="label">Button</span></m3e-nav-menu-item>
+              <m3e-nav-menu-item><span slot="label">Icon</span></m3e-nav-menu-item>
+              <m3e-nav-menu-item><span slot="label">Icon Button</span></m3e-nav-menu-item>
+            </m3e-nav-menu-item>
+          </m3e-nav-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-nav-menu&gt;
+  &lt;m3e-nav-menu-item open&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;rocket_launch&quot; aria-hidden=&quot;true&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;span slot=&quot;label&quot;&gt;Getting Started&lt;/span&gt;
+    &lt;m3e-nav-menu-item&gt;
+      &lt;m3e-icon slot=&quot;icon&quot; name=&quot;widgets&quot; aria-hidden=&quot;true&quot;&gt;&lt;/m3e-icon&gt;
+      &lt;span slot=&quot;label&quot;&gt;Overview&lt;/span&gt;
+    &lt;/m3e-nav-menu-item&gt;
+    &lt;!-- Additional items omitted for brevity --&gt;;
+  &lt;/m3e-nav-menu-item&gt;
+  &lt;m3e-nav-menu-item&gt;
+    &lt;span slot=&quot;label&quot;&gt;Actions&lt;/span&gt;
+    &lt;!-- Items omitted for brevity --&gt;;
+  &lt;/m3e-nav-menu-item&gt;
+&lt;/m3e-nav-menu&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Grouping top-level items</m3e-heading>
+      <p>
+        You can use a <code>m3e-nav-menu-item-group</code> to group top-level items in a menu. Use the
+        <code>label</code> slot to specify a group's label. Use a <code>m3e-divider</code> to separate groups in a menu.
+        See <a href="../components/divider.html">Divider</a> for more information.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-nav-menu>
+            <m3e-nav-menu-item-group>
+              <m3e-heading m3e-toc-ignore slot="label" variant="label" size="large">Mail</m3e-heading>
+              <m3e-nav-menu-item>
+                <m3e-icon slot="icon" name="mail"></m3e-icon>
+                <span slot="label">Inbox</span>
+                <span slot="badge">24</span>
+              </m3e-nav-menu-item>
+              <m3e-nav-menu-item>
+                <m3e-icon slot="icon" name="send"></m3e-icon>
+                <span slot="label">Outbox</span>
+              </m3e-nav-menu-item>
+              <m3e-nav-menu-item>
+                <m3e-icon slot="icon" name="favorite"></m3e-icon>
+                <span slot="label">Favorites</span>
+              </m3e-nav-menu-item>
+              <m3e-nav-menu-item>
+                <m3e-icon slot="icon" name="delete"></m3e-icon>
+                <span slot="label">Trash</span>
+              </m3e-nav-menu-item>
+            </m3e-nav-menu-item-group>
+            <m3e-divider></m3e-divider>
+            <m3e-nav-menu-item-group>
+              <m3e-heading m3e-toc-ignore slot="label" variant="label" size="large">Personal folders</m3e-heading>
+              <m3e-nav-menu-item>
+                <m3e-icon slot="icon" name="folder"></m3e-icon>
+                <span slot="label">Family</span>
+              </m3e-nav-menu-item>
+              <m3e-nav-menu-item>
+                <m3e-icon slot="icon" name="folder"></m3e-icon>
+                <span slot="label">Wedding</span>
+              </m3e-nav-menu-item>
+            </m3e-nav-menu-item-group>
+          </m3e-nav-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-nav-menu&gt;
+  &lt;m3e-nav-menu-item-group&gt;
+    &lt;m3e-heading slot="label" variant="label" size="large"&gt;Mail&lt;/m3e-heading&gt;
+    &lt;m3e-nav-menu-item&gt;
+      &lt;m3e-icon slot="icon" name="mail"&gt;&lt;/m3e-icon&gt;
+      &lt;span slot="label"&gt;Inbox&lt;/span&gt;
+      &lt;span slot="badge"&gt;24&lt;/span&gt;
+    &lt;/m3e-nav-menu-item&gt;
+    &lt;!-- Additional items omitted for brevity --&gt;
+  &lt;/m3e-nav-menu-item-group&gt;
+  &lt;m3e-divider&gt;&lt;/m3e-divider&gt;
+  &lt;m3e-nav-menu-item-group&gt;
+    &lt;m3e-heading slot="label" variant="label" size="large"&gt;Personal folders&lt;/m3e-heading&gt;
+    &lt;!-- Items omitted for brevity --&gt;;
+  &lt;/m3e-nav-menu-item-group&gt;
+&lt;/m3e-nav-menu&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+      <p>
+        Use the <code>disabled</code> attribute of a <code>m3e-nav-menu-item</code> to disable the item and any
+        children. Disabling an item with children will not automatically close it.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-nav-menu>
+            <m3e-nav-menu-item open disabled>
+              <m3e-icon slot="icon" name="rocket_launch" aria-hidden="true"></m3e-icon>
+              <span slot="label">Getting Started</span>
+              <m3e-nav-menu-item>
+                <m3e-icon slot="icon" name="widgets" aria-hidden="true"></m3e-icon>
+                <span slot="label">Overview</span>
+              </m3e-nav-menu-item>
+              <m3e-nav-menu-item>
+                <m3e-icon slot="icon" name="package_2" aria-hidden="true"></m3e-icon>
+                <span slot="label">Installation</span>
+              </m3e-nav-menu-item>
+            </m3e-nav-menu-item>
+            <m3e-nav-menu-item open>
+              <span slot="label">Actions</span>
+              <m3e-nav-menu-item disabled><span slot="label">Button</span></m3e-nav-menu-item>
+              <m3e-nav-menu-item><span slot="label">Icon</span></m3e-nav-menu-item>
+              <m3e-nav-menu-item><span slot="label">Icon Button</span></m3e-nav-menu-item>
+            </m3e-nav-menu-item>
+          </m3e-nav-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-nav-menu&gt;
+  &lt;m3e-nav-menu-item open disabled&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;rocket_launch&quot; aria-hidden=&quot;true&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;span slot=&quot;label&quot;&gt;Getting Started&lt;/span&gt;
+    &lt;m3e-nav-menu-item&gt;
+      &lt;m3e-icon slot=&quot;icon&quot; name=&quot;widgets&quot; aria-hidden=&quot;true&quot;&gt;&lt;/m3e-icon&gt;
+      &lt;span slot=&quot;label&quot;&gt;Overview&lt;/span&gt;
+    &lt;/m3e-nav-menu-item&gt;
+    &lt;!-- Additional items omitted for brevity --&gt;;
+  &lt;/m3e-nav-menu-item&gt;
+  &lt;m3e-nav-menu-item open&gt;
+    &lt;span slot=&quot;label&quot;&gt;Actions&lt;/span&gt;
+    &lt;m3e-nav-menu-item disabled&gt;&lt;span slot=&quot;label&quot;&gt;Button&lt;/span&gt;&lt;/m3e-nav-menu-item&gt;
+    &lt;!-- Additional items omitted for brevity --&gt;;
+  &lt;/m3e-nav-menu-item&gt;
+&lt;/m3e-nav-menu&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Nav menus are given ARIA <code>role="tree"</code>, and items are assigned <code>role="treeitem"</code>,
+        indicating a structured, hierarchical navigation model that supports keyboard interaction, semantic grouping,
+        and accessible labeling. Expandable items use <code>aria-expanded</code> to indicate visibility of nested
+        content, and current items may use <code>aria-current</code> to signal the active page or view.
+      </p>
+      <p>
+        Focus is managed on the <code>m3e-nav-menu</code> container using <code>tabindex="0"</code>, and the currently
+        active item is referenced via <code>aria-activedescendant</code>, which points to the ID of the focused
+        <code>m3e-nav-menu-item</code>. This enables roving focus without shifting DOM focus, ensuring accessible
+        keyboard navigation and consistent screen reader feedback.
+      </p>
+      <p>
+        Groups are given ARIA <code>role="group"</code>, indicating that their contents form a semantic unit within the
+        navigation tree and are labeled by the content of the group's <code>label</code> slot.
+      </p>
+      <p>
+        Icons and dividers are given <code>aria-hidden="true"</code> ensure they're treated as purely decorative and
+        excluded from the accessibility tree.
+      </p>
+      <p>
+        Disabling an item sets <code>aria-disabled="true"</code> signaling to assistive technologies that the item is
+        not interactive.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/nav-menu/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js and a11y.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer
+        only="m3e-nav-menu"
+        src="https://cdn.jsdelivr.net/npm/@m3e/nav-menu@1.0.0-rc.3/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-nav-menu-item"
+        src="https://cdn.jsdelivr.net/npm/@m3e/nav-menu@1.0.0-rc.3/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-nav-menu-item-group"
+        src="https://cdn.jsdelivr.net/npm/@m3e/nav-menu@1.0.0-rc.3/dist/custom-elements.json"
+      >
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>
