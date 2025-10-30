@@ -457,6 +457,10 @@ export class M3eNavMenuItemElement extends Selected(
     if (changedProperties.has("open") || changedProperties.has("_hasChildItems")) {
       this.ariaExpanded = this._hasChildItems ? `${this.open}` : null;
     }
+
+    if ((changedProperties.has("_hasChildItems") && this.disabled) || changedProperties.has("disabled")) {
+      this.#items.forEach((x) => (x.disabled = this.disabled));
+    }
   }
 
   /** @inheritdoc */
