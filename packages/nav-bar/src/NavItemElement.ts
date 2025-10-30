@@ -336,13 +336,13 @@ export class M3eNavItemElement extends LinkButton(
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener("click", this.#clickHandler);
+    this.addEventListener("click", this.#clickHandler, { capture: true });
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.removeEventListener("click", this.#clickHandler);
+    this.removeEventListener("click", this.#clickHandler, { capture: true });
   }
 
   /** @inheritdoc */
