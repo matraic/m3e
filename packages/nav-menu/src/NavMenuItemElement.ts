@@ -442,7 +442,7 @@ export class M3eNavMenuItemElement extends Selected(
 
     if (changedProperties.has("selected")) {
       // Remove aria-selected and just use aria-current.
-      this.ariaSelected = "";
+      this.ariaSelected = null;
       this.ariaCurrent = this.hasChildItems ? null : `${this.selected}`;
       for (const icon of this.querySelectorAll(":scope > m3e-icon[slot]")) {
         icon.toggleAttribute("filled", this.selected);
