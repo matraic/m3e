@@ -314,8 +314,14 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
   #handlePointerDown(e: Event): void {
     if (!e.defaultPrevented && !this.#ignoreFocusVisible) {
       this.#ignoreFocusVisible = true;
-      if (this[selectionManager].activeItem) {
-        this.#updateItemFocusVisible(this[selectionManager].activeItem, true, false);
+
+      const item = e
+        .composedPath()
+        .reverse()
+        .find((x) => x instanceof M3eNavMenuItemElement);
+
+      if (item && !item.disabled) {
+        this.#updateItemFocusVisible(item, true, false);
       }
     }
   }
