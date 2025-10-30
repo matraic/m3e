@@ -1,6 +1,6 @@
 {
   "name": "@m3e/fab",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "description": "FAB for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "clean": "rimraf dist"
   },
   "peerDependencies": {
-    "@m3e/core": "1.0.0-rc.2",
+    "@m3e/core": "1.0.0-rc.3",
     "lit": "^3.3.0"
   },
   "devDependencies": {
