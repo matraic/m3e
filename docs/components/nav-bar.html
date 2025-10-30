@@ -24,13 +24,15 @@
         "imports": {
           "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
           "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/index.min.js",
-          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/a11y.min.js"
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/a11y.min.js",
+          "@m3e/core/layout": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.2/dist/layout.min.js"
         }
       }
     </script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.2/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/nav-bar@1.0.0-rc.2/dist/index.min.js"></script>
   </head>
@@ -42,10 +44,235 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Nav Bar</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-nav-bar</code> is a horizontal bar, typically used on smaller devices, that allows a user to
+        switch between 3-5 views.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/nav-bar</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Modes</m3e-heading>
+      <p>
+        The <code>m3e-nav-bar</code> supports three modes: <code>compact</code> (default), <code>expanded</code>, and
+        <code>auto</code>. In a compact mode, items are oriented vertically and fill the available space of the bar.
+        When extended, items are oriented horizontally and are centered within the bar. Using <code>auto</code>, the
+        orientation is responsive and determined by viewport size. Use the <code>mode</code> attribute to change a bar's
+        mode.
+      </p>
+      <p>The following example illustrates both compact and extended modes.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-nav-bar mode="compact">
+            <m3e-nav-item><m3e-icon slot="icon" name="news"></m3e-icon>News</m3e-nav-item>
+            <m3e-nav-item><m3e-icon slot="icon" name="globe"></m3e-icon>Global</m3e-nav-item>
+            <m3e-nav-item><m3e-icon slot="icon" name="star"></m3e-icon>For you</m3e-nav-item>
+            <m3e-nav-item><m3e-icon slot="icon" name="newsstand"></m3e-icon>Trending</m3e-nav-item>
+          </m3e-nav-bar>
+          <br />
+          <m3e-nav-bar mode="extended">
+            <m3e-nav-item><m3e-icon slot="icon" name="news"></m3e-icon>News</m3e-nav-item>
+            <m3e-nav-item><m3e-icon slot="icon" name="globe"></m3e-icon>Global</m3e-nav-item>
+            <m3e-nav-item><m3e-icon slot="icon" name="star"></m3e-icon>For you</m3e-nav-item>
+            <m3e-nav-item><m3e-icon slot="icon" name="newsstand"></m3e-icon>Trending</m3e-nav-item>
+          </m3e-nav-bar>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-nav-bar mode=&quot;compact&quot;&gt;
+  &lt;m3e-nav-item&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;news&quot;&gt;&lt;/m3e-icon&gt;News&lt;/m3e-nav-item&gt;
+  &lt;m3e-nav-item&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;globe&quot;&gt;&lt;/m3e-icon&gt;Global&lt;/m3e-nav-item&gt;
+  &lt;m3e-nav-item&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;star&quot;&gt;&lt;/m3e-icon&gt;For you&lt;/m3e-nav-item&gt;
+  &lt;m3e-nav-item&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;newsstand&quot;&gt;&lt;/m3e-icon&gt;Trending&lt;/m3e-nav-item&gt;
+&lt;/m3e-nav-bar&gt;
+&lt;br /&gt;
+&lt;m3e-nav-bar mode=&quot;extended&quot;&gt;
+  &lt;!-- Items omitted for brevity --&gt;
+&lt;/m3e-nav-bar&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Items</m3e-heading>
+      <p>
+        As illustrated above, items are specified using the <code>m3e-nav-item</code> component. Use the default slot to
+        specify an item's label and use the <code>icon</code> slot to specify an icon.
+      </p>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-nav-item&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;news&quot;&gt;&lt;/m3e-icon&gt;News&lt;/m3e-nav-item&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Selection</m3e-heading>
+      <p>
+        The <code>m3e-nav-bar</code> only supports single-select. Use the <code>selected</code> attribute of
+        <code>m3e-nav-item</code> to specify which item in a bar is selected. When clicked, a cancellable
+        <code>input</code> event is emitted followed by a <code>change</code> event. To cancel selection change, call
+        <code>preventDefault</code> during <code>input</code>.
+      </p>
+      <p>
+        In addition, you can use the <code>selected-icon</code> slots to specify an alternate icon when selected. When
+        using the <code>m3e-icon</code> to present icons, the icon will automatically be filled when an item is
+        selected.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-nav-bar>
+            <m3e-nav-item selected><m3e-icon slot="icon" name="news"></m3e-icon>News</m3e-nav-item>
+            <m3e-nav-item><m3e-icon slot="icon" name="globe"></m3e-icon>Global</m3e-nav-item>
+            <m3e-nav-item><m3e-icon slot="icon" name="star"></m3e-icon>For you</m3e-nav-item>
+            <m3e-nav-item><m3e-icon slot="icon" name="newsstand"></m3e-icon>Trending</m3e-nav-item>
+          </m3e-nav-bar>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-nav-bar&gt;
+  &lt;m3e-nav-item selected&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;news&quot;&gt;&lt;/m3e-icon&gt;News&lt;/m3e-nav-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-nav-bar&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+      <p>
+        Use the <code>disabled</code> attribute to disable an item. By default, disabled items are not focusable with
+        the keyboard. You can use the <code>disabled-interactive</code> attribute to support
+        <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls" target="_blank"
+          >focusability of disabled controls</a
+        >
+        to increase their discoverability.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-nav-bar>
+            <m3e-nav-item disabled><m3e-icon slot="icon" name="news"></m3e-icon>News</m3e-nav-item>
+            <m3e-nav-item disabled-interactive><m3e-icon slot="icon" name="globe"></m3e-icon>Global</m3e-nav-item>
+            <m3e-nav-item><m3e-icon slot="icon" name="star"></m3e-icon>For you</m3e-nav-item>
+            <m3e-nav-item><m3e-icon slot="icon" name="newsstand"></m3e-icon>Trending</m3e-nav-item>
+          </m3e-nav-bar>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-nav-bar&gt;
+  &lt;m3e-nav-item disabled&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;news&quot;&gt;&lt;/m3e-icon&gt;News&lt;/m3e-nav-item&gt;
+  &lt;m3e-nav-item disabled-interactive&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;globe&quot;&gt;&lt;/m3e-icon&gt;Global&lt;/m3e-nav-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-nav-bar&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Links</m3e-heading>
+      <p>
+        Items can also behave like links by specifying a URL using the <code>href</code> attribute. You can also specify
+        <code>target</code>, <code>rel</code> and <code>download</code> similar to native anchor tags.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-nav-bar>
+            <m3e-nav-item href="https://www.google.com" target="_blank">
+              <m3e-icon slot="icon" name="news"></m3e-icon>News
+            </m3e-nav-item>
+          </m3e-nav-bar>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-nav-bar&gt;
+  &lt;m3e-nav-item href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;news&quot;&gt;&lt;/m3e-icon&gt;News
+  &lt;/m3e-nav-item&gt;
+&lt;/m3e-nav-bar&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Navigation bars are given ARIA <code>role="navigation"</code>, indicating that the region serves as a
+        navigational landmark and helps assistive technologies identify it as a container for site or app navigation
+        links. Always provide an accessible label via <code>aria-label</code> or <code>aria-labelledby</code>.
+      </p>
+      <p>
+        Items are given the ARIA role <code>button</code>, indicating they are clickable elements that trigger actions
+        and <code>aria-current="true"</code> is used to convey the selected state.
+      </p>
+      <p>
+        Icons slots have <code>aria-hidden="true"</code> to ensure icons are always hidden from assistive technologies.
+      </p>
+      <p>
+        When disabling using either the <code>disabled</code> or <code>disabled-interactive</code> attribute,
+        <code>aria-disabled="true"</code> is used to convey to assistive technologies that the item is disabled. If
+        disabled using <code>disabled-interactive</code>, <code>tabindex</code> is retained to convey that the item
+        continues to be interactive.
+      </p>
+      <p>
+        When <code>href</code> is specified, the ARIA role <code>link</code> is used instead of <code>button</code> to
+        convey the item provides an interactive reference to a resource. In addition, the component presents an internal
+        anchor, hidden from assistive technologies, used to invoke native browser features such a context menu options
+        and tooltips.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/nav-bar/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;,
+      &quot;@m3e/core/layout&quot;: &quot;/node_modules/@m3e/core/dist/layout.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js, a11y.min.js, and layout.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer
+        only="m3e-nav-bar"
+        src="https://cdn.jsdelivr.net/npm/@m3e/nav-bar@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-nav-item"
+        src="https://cdn.jsdelivr.net/npm/@m3e/nav-bar@1.0.0-rc.2/dist/custom-elements.json"
+      >
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>
