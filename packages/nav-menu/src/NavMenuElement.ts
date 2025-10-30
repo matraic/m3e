@@ -7,7 +7,7 @@ import { SelectionManager, selectionManager } from "@m3e/core/a11y";
 import { M3eNavMenuItemElement } from "./NavMenuItemElement";
 
 /**
- * Presents a hierarchical menu.
+ * A hierarchical menu, typically used on larger devices, that allows a user to switch between views.
  *
  * @description
  * The `m3e-nav-menu` component provides a hierarchical, accessible navigation menu supporting
@@ -73,6 +73,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
     }
     ::slotted(m3e-divider) {
       margin-block: var(--m3e-nav-menu-divider-margin, 0.25rem);
+      flex: none;
     }
   `;
 
@@ -185,6 +186,9 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
   /** @private */
   #handleSlotChange(): void {
+    for (const divider of this.querySelectorAll("m3e-divider")) {
+      divider.ariaHidden = "true";
+    }
     const { added } = this[selectionManager].setItems([...this.querySelectorAll("m3e-nav-menu-item")]);
     for (const item of added) {
       item.id = item.id || `m3e-nav-menu-item-${M3eNavMenuElement.__nextId++}`;
