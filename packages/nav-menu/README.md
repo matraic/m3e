@@ -1,6 +1,6 @@
 # @m3e/nav-menu
 
-The `m3e-nav-menu` and `m3e-nav-menu-item` components provide a hierarchical, accessible navigation menu. Designed for sidebars, navigation drawers, and complex menu structures, they support nested expandable items, keyboard navigation, selection, and extensive theming via CSS custom properties.
+The `m3e-nav-menu` component provides a hierarchical, accessible navigation menu. Designed for sidebars, navigation drawers, and complex menu structures, it supports nested expandable items, keyboard navigation, selection, and extensive theming via CSS custom properties.
 
 > **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
@@ -53,10 +53,44 @@ In addition, you must use an [import map](https://developer.mozilla.org/en-US/do
 
 ## 🗂️ Elements
 
-- `m3e-nav-menu` — Presents a hierarchical menu.
-- `m3e-nav-menu-item` — An expandable item in a navigation menu.
+- `m3e-nav-menu` — A hierarchical menu, typically used on larger devices, that allows a user to switch between views.
+- `m3e-nav-menu-item` — An expandable item, selectable item within a navigation menu.
+- `m3e-nav-menu-item-group` — A top-level semantic grouping of items in a navigation menu.
 
-## 🧪 Example
+## 🧪 Examples
+
+The following example illustrates a navigation menu with a top-level group of menu items.
+
+```html
+<m3e-nav-menu>
+  <m3e-nav-menu-item-group>
+    <m3e-heading slot="label" variant="label" size="large">Mail</m3e-heading>
+
+    <m3e-nav-menu-item>
+      <m3e-icon slot="icon" name="mail"></m3e-icon>
+      <span slot="label">Inbox</span>
+      <span slot="badge">24</span>
+    </m3e-nav-menu-item>
+
+    <m3e-nav-menu-item>
+      <m3e-icon slot="icon" name="send"></m3e-icon>
+      <span slot="label">Outbox</span>
+    </m3e-nav-menu-item>
+
+    <m3e-nav-menu-item>
+      <m3e-icon slot="icon" name="favorite"></m3e-icon>
+      <span slot="label">Favorites</span>
+    </m3e-nav-menu-item>
+
+    <m3e-nav-menu-item>
+      <m3e-icon slot="icon" name="delete"></m3e-icon>
+      <span slot="label">Trash</span>
+    </m3e-nav-menu-item>
+  </m3e-nav-menu-item-group>
+</m3e-nav-menu>
+```
+
+The next example illustrates a multilevel navigation menu.
 
 ```html
 <m3e-nav-menu>
@@ -173,6 +207,24 @@ This section details the attributes, slots, events, and CSS custom properties av
 | `--m3e-nav-menu-badge-item-tracking`                   | Letter spacing for badge slot.                |
 | `--m3e-nav-menu-divider-margin`                        | Margin for divider elements.                  |
 | `--m3e-nav-menu-item-vertical-inset`                   | Vertical margin for first/last child items.   |
+
+### 🗂️ m3e-nav-menu-item-group
+
+This section details the slots and CSS custom properties available for the `m3e-nav-menu-item-group` component.
+
+#### 🧩 Slots
+
+| Slot        | Description                     |
+| ----------- | ------------------------------- |
+| _(default)_ | Renders the items of the group. |
+| `label`     | Renders the label of the group. |
+
+#### 🎛️ CSS Custom Properties
+
+| Property                                | Description                                        |
+| --------------------------------------- | -------------------------------------------------- |
+| `--m3e-nav-menu-item-group-label-inset` | Insets the label from the start edge of the group. |
+| `--m3e-nav-menu-item-group-label-space` | Vertical spacing around the group's label.         |
 
 ## 🤝 Contributing
 

@@ -27,6 +27,8 @@
     </script>
     <script type="module" src="../../icon/dist/index.min.js"></script>
     <script type="module" src="../../theme/dist/index.min.js"></script>
+    <script type="module" src="../../divider/dist/index.min.js"></script>
+    <script type="module" src="../../heading/dist/index.min.js"></script>
     <script type="module" src="../dist/index.min.js"></script>
     <style>
       body {
@@ -58,6 +60,42 @@
           <m3e-nav-menu-item><span slot="label">Icon</span></m3e-nav-menu-item>
           <m3e-nav-menu-item><span slot="label">Icon Button</span></m3e-nav-menu-item>
         </m3e-nav-menu-item>
+      </m3e-nav-menu>
+
+      <br /><br />
+      <m3e-nav-menu style="max-width: 300px">
+        <m3e-nav-menu-item-group>
+          <m3e-heading slot="label" m3e-toc-ignore variant="label" size="large">Mail</m3e-heading>
+          <m3e-nav-menu-item>
+            <m3e-icon slot="icon" name="mail"></m3e-icon>
+            <span slot="label">Inbox</span>
+            <span slot="badge">24</span>
+          </m3e-nav-menu-item>
+          <m3e-nav-menu-item>
+            <m3e-icon slot="icon" name="send"></m3e-icon>
+            <span slot="label">Outbox</span>
+          </m3e-nav-menu-item>
+          <m3e-nav-menu-item>
+            <m3e-icon slot="icon" name="favorite"></m3e-icon>
+            <span slot="label">Favorites</span>
+          </m3e-nav-menu-item>
+          <m3e-nav-menu-item>
+            <m3e-icon slot="icon" name="delete"></m3e-icon>
+            <span slot="label">Trash</span>
+          </m3e-nav-menu-item>
+        </m3e-nav-menu-item-group>
+        <m3e-divider></m3e-divider>
+        <m3e-nav-menu-item-group>
+          <m3e-heading slot="label" m3e-toc-ignore variant="label" size="large">Personal folders</m3e-heading>
+          <m3e-nav-menu-item>
+            <m3e-icon slot="icon" name="folder"></m3e-icon>
+            <span slot="label">Family</span>
+          </m3e-nav-menu-item>
+          <m3e-nav-menu-item>
+            <m3e-icon slot="icon" name="folder"></m3e-icon>
+            <span slot="label">Wedding</span>
+          </m3e-nav-menu-item>
+        </m3e-nav-menu-item-group>
       </m3e-nav-menu>
     </m3e-theme>
   </body>

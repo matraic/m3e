@@ -16,7 +16,34 @@ import { M3eNavMenuItemElement } from "./NavMenuItemElement";
  * and complex menu structures.
  *
  * @example
- * The following example illustrates a multilevel navigation menu.
+ * The following example illustrates a navigation menu with a top-level group of menu items.
+ * ```html
+ * <m3e-nav-menu>
+ *   <m3e-nav-menu-item-group>
+ *     <m3e-heading slot="label" variant="label" size="large">Mail</m3e-heading>
+ *     <m3e-nav-menu-item>
+ *       <m3e-icon slot="icon" name="mail"></m3e-icon>
+ *       <span slot="label">Inbox</span>
+ *       <span slot="badge">24</span>
+ *     </m3e-nav-menu-item>
+ *     <m3e-nav-menu-item>
+ *       <m3e-icon slot="icon" name="send"></m3e-icon>
+ *       <span slot="label">Outbox</span>
+ *     </m3e-nav-menu-item>
+ *     <m3e-nav-menu-item>
+ *       <m3e-icon slot="icon" name="favorite"></m3e-icon>
+ *       <span slot="label">Favorites</span>
+ *     </m3e-nav-menu-item>
+ *     <m3e-nav-menu-item>
+ *       <m3e-icon slot="icon" name="delete"></m3e-icon>
+ *       <span slot="label">Trash</span>
+ *     </m3e-nav-menu-item>
+ *   </m3e-nav-menu-item-group>
+ * </m3e-nav-menu>
+ * ```
+ *
+ * @example
+ * The next example illustrates a multilevel navigation menu.
  * ```html
  * <m3e-nav-menu>
  *   <m3e-nav-menu-item open>
