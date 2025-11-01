@@ -18,6 +18,7 @@
     />
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
+    <link href="theme.css" rel="stylesheet" />
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
     <script type="importmap">
       {
@@ -31,6 +32,8 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/button@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/switch@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.3/dist/index.min.js"></script>
   </head>
   <body id="body">
@@ -41,10 +44,459 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Theme</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-theme</code> component is a non-visual element used to apply dynamic color, expressive motion,
+        density, and strong focus indicators to nested, theme-aware elements.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/theme</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Color</m3e-heading>
+      <p>
+        Use the <code>color</code> attribute to specify a HEX color from which to derive color palettes. This will set
+        CSS custom properties that reflect the standard Material Design 3 color palettes. For example,
+        <code>--md-sys-color-primary</code> is set to the primary color.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-theme color="#4285F4">
+            <div class="swatch-grid">
+              <div class="swatch primary">
+                <div class="swatch-label">Primary</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-primary">
+                <div class="swatch-label">On Primary</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch primary-container">
+                <div class="swatch-label">Primary Container</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-primary-container">
+                <div class="swatch-label">On Primary Container</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch secondary">
+                <div class="swatch-label">Secondary</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-secondary">
+                <div class="swatch-label">On Secondary</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch secondary-container">
+                <div class="swatch-label">Secondary Container</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-secondary-container">
+                <div class="swatch-label">On Secondary Container</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch tertiary">
+                <div class="swatch-label">Tertiary</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-tertiary">
+                <div class="swatch-label">On Tertiary</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch tertiary-container">
+                <div class="swatch-label">Tertiary Container</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-tertiary-container">
+                <div class="swatch-label">On Tertiary Container</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch error">
+                <div class="swatch-label">Error</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-error">
+                <div class="swatch-label">On Error</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch error-container">
+                <div class="swatch-label">Error Container</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-error-container">
+                <div class="swatch-label">On Error Container</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch background">
+                <div class="swatch-label">Background</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-background">
+                <div class="swatch-label">On Background</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch surface">
+                <div class="swatch-label">Surface</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-surface">
+                <div class="swatch-label">On Surface</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch surface-variant">
+                <div class="swatch-label">Surface Variant</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-surface-variant">
+                <div class="swatch-label">On Surface Variant</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch inverse-surface">
+                <div class="swatch-label">Inverse Surface</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch inverse-on-surface">
+                <div class="swatch-label">Inverse On Surface</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch outline">
+                <div class="swatch-label">Outline</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch outline-variant">
+                <div class="swatch-label">Outline Variant</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch shadow">
+                <div class="swatch-label">Shadow</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch scrim">
+                <div class="swatch-label">Scrim</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch surface-tint">
+                <div class="swatch-label">Surface Tint</div>
+                <div class="swatch-box"></div>
+              </div>
+            </div>
+          </m3e-theme>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-theme color=&quot;#4285F4&quot;&gt;
+  &lt;!-- Swatches omitted for brevity --&gt;
+&lt;/m3e-theme&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Schemes</m3e-heading>
+      <p>
+        Themes support three color schemes: <code>light</code>, <code>dark</code>, and <code>auto</code> (default). Use
+        the <code>scheme</code> attribute to specify the color scheme.
+      </p>
+      <p>
+        When <code>auto</code> is used, the theme dynamically responds to system preferences by monitoring the media
+        queries <code>(prefers-color-scheme: light)</code> and <code>(prefers-color-scheme: dark)</code>, selecting the
+        appropriate color scheme based on the user's environment.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-theme color="#4285F4" scheme="dark">
+            <div class="dark-example">
+              <div class="swatch-grid">
+                <div class="swatch primary">
+                  <div class="swatch-label">Primary</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch on-primary">
+                  <div class="swatch-label">On Primary</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch primary-container">
+                  <div class="swatch-label">Primary Container</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch on-primary-container">
+                  <div class="swatch-label">On Primary Container</div>
+                  <div class="swatch-box"></div>
+                </div>
+
+                <div class="swatch secondary">
+                  <div class="swatch-label">Secondary</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch on-secondary">
+                  <div class="swatch-label">On Secondary</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch secondary-container">
+                  <div class="swatch-label">Secondary Container</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch on-secondary-container">
+                  <div class="swatch-label">On Secondary Container</div>
+                  <div class="swatch-box"></div>
+                </div>
+
+                <div class="swatch tertiary">
+                  <div class="swatch-label">Tertiary</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch on-tertiary">
+                  <div class="swatch-label">On Tertiary</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch tertiary-container">
+                  <div class="swatch-label">Tertiary Container</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch on-tertiary-container">
+                  <div class="swatch-label">On Tertiary Container</div>
+                  <div class="swatch-box"></div>
+                </div>
+
+                <div class="swatch error">
+                  <div class="swatch-label">Error</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch on-error">
+                  <div class="swatch-label">On Error</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch error-container">
+                  <div class="swatch-label">Error Container</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch on-error-container">
+                  <div class="swatch-label">On Error Container</div>
+                  <div class="swatch-box"></div>
+                </div>
+
+                <div class="swatch background">
+                  <div class="swatch-label">Background</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch on-background">
+                  <div class="swatch-label">On Background</div>
+                  <div class="swatch-box"></div>
+                </div>
+
+                <div class="swatch surface">
+                  <div class="swatch-label">Surface</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch on-surface">
+                  <div class="swatch-label">On Surface</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch surface-variant">
+                  <div class="swatch-label">Surface Variant</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch on-surface-variant">
+                  <div class="swatch-label">On Surface Variant</div>
+                  <div class="swatch-box"></div>
+                </div>
+
+                <div class="swatch inverse-surface">
+                  <div class="swatch-label">Inverse Surface</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch inverse-on-surface">
+                  <div class="swatch-label">Inverse On Surface</div>
+                  <div class="swatch-box"></div>
+                </div>
+
+                <div class="swatch outline">
+                  <div class="swatch-label">Outline</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch outline-variant">
+                  <div class="swatch-label">Outline Variant</div>
+                  <div class="swatch-box"></div>
+                </div>
+
+                <div class="swatch shadow">
+                  <div class="swatch-label">Shadow</div>
+                  <div class="swatch-box"></div>
+                </div>
+                <div class="swatch scrim">
+                  <div class="swatch-label">Scrim</div>
+                  <div class="swatch-box"></div>
+                </div>
+
+                <div class="swatch surface-tint">
+                  <div class="swatch-label">Surface Tint</div>
+                  <div class="swatch-box"></div>
+                </div>
+              </div>
+            </div>
+          </m3e-theme>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-theme color=&quot;#4285F4&quot; scheme=&quot;dark&quot;&gt;
+  &lt;!-- Swatches omitted for brevity --&gt;
+&lt;/m3e-theme&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Density</m3e-heading>
+      <p>
+        Use the <code>density</code> attribute to control layout compactness across density-aware components within a
+        theme. It adjusts spacing, padding, and sizing to achieve a more compact or more spacious visual rhythm.
+      </p>
+      <ul>
+        <li><strong>Valid values:</strong> <code>-3</code> (most compact) to <code>+1</code> (most spacious)</li>
+        <li><strong>Default:</strong> <code>0</code></li>
+        <li><strong>Scope:</strong> Applies globally to all components within the theme</li>
+      </ul>
+      <p>
+        When a theme is initialized with a <code>density</code> value, it sets the system token
+        <code>--md-sys-density-scale</code> to reflect that value. This token is used by density-aware components to
+        adjust their internal layout metrics.
+      </p>
+      <ul>
+        <li>Compact density reduces vertical padding and component height</li>
+        <li>Spacious density increases spacing for relaxed layouts</li>
+        <li>Touch targets remain accessible and compliant with minimum size guidelines</li>
+      </ul>
+      <p>
+        The following example demonstrates how <code>m3e-button</code> responds to theme-level density adjustments. A
+        medium-sized button is shown, which supports a minimum density of <code>-2</code>. Note that densities
+        <code>-3</code> and <code>-2</code> produce identical layout behavior for this size, as values below the
+        supported threshold are clamped to <code>-2</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-theme strong-focus density="-3">
+            <m3e-button variant="filled" size="medium">-3 density</m3e-button>
+          </m3e-theme>
+          <m3e-theme strong-focus density="-2">
+            <m3e-button variant="filled" size="medium">-2 density</m3e-button>
+          </m3e-theme>
+          <m3e-theme strong-focus density="-1">
+            <m3e-button variant="filled" size="medium">-1 density</m3e-button>
+          </m3e-theme>
+          <m3e-theme strong-focus density="0">
+            <m3e-button variant="filled" size="medium">0 (default) density</m3e-button>
+          </m3e-theme>
+          <m3e-theme strong-focus density="1">
+            <m3e-button variant="filled" size="medium">1 density</m3e-button>
+          </m3e-theme>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-theme density=&quot;-3&quot;&gt;
+  &lt;!-- Buttons omitted for brevity --&gt;
+&lt;/m3e-theme&gt;
+&lt;!-- Additional densities omitted for brevity --&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Motion</m3e-heading>
+      <p>
+        Themes support two motion schemes: <code>standard</code> (default) and <code>expressive</code>. These schemes
+        define how components animate across the system, using spring-based physics to guide spatial and effect
+        transitions. Use the <code>motion</code> attribute to control the motion scheme.
+      </p>
+      <p>
+        The following example illustrates how the <code>m3e-switch</code> adapts to the motion scheme. Note the spring
+        effect when clicking the expressive example.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content" class="switch-example">
+          <m3e-theme strong-focus motion="standard">
+            <label>Standard&nbsp;<m3e-switch></m3e-switch></label>
+          </m3e-theme>
+          <m3e-theme strong-focus motion="expressive">
+            <label>Expressive&nbsp;<m3e-switch></m3e-switch></label>
+          </m3e-theme>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-theme motion=&quot;standard&quot;&gt;
+  &lt;!-- Switch omitted for brevity --&gt;
+&lt;/m3e-theme&gt;
+&lt;m3e-theme motion=&quot;expressive&quot;&gt;
+  &lt;!-- Switch omitted for brevity --&gt;
+&lt;/m3e-theme&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        By default, themes are not given an ARIA role, indicating that they are treated as neutral, non-semantic
+        elements in the accessibility tree unless explicitly referenced or annotated.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/theme/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer only="m3e-theme" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.3/dist/custom-elements.json">
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>

@@ -1,0 +1,136 @@
+.dark-example {
+  background-color: var(--md-sys-color-background);
+  padding: 1rem;
+  border-radius: 0.75rem;
+}
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  font-family: sans-serif;
+}
+
+.swatch {
+  border-radius: 0.75rem;
+  padding: 1rem;
+  color: var(--md-sys-color-on-surface);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 120px;
+}
+
+.swatch-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.swatch-box {
+  flex-grow: 1;
+  border-radius: 0.5rem;
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
+
+/* System color roles */
+.primary .swatch-box {
+  background-color: var(--md-sys-color-primary);
+}
+.on-primary .swatch-box {
+  background-color: var(--md-sys-color-on-primary);
+}
+.primary-container .swatch-box {
+  background-color: var(--md-sys-color-primary-container);
+}
+.on-primary-container .swatch-box {
+  background-color: var(--md-sys-color-on-primary-container);
+}
+
+.secondary .swatch-box {
+  background-color: var(--md-sys-color-secondary);
+}
+.on-secondary .swatch-box {
+  background-color: var(--md-sys-color-on-secondary);
+}
+.secondary-container .swatch-box {
+  background-color: var(--md-sys-color-secondary-container);
+}
+.on-secondary-container .swatch-box {
+  background-color: var(--md-sys-color-on-secondary-container);
+}
+
+.tertiary .swatch-box {
+  background-color: var(--md-sys-color-tertiary);
+}
+.on-tertiary .swatch-box {
+  background-color: var(--md-sys-color-on-tertiary);
+}
+.tertiary-container .swatch-box {
+  background-color: var(--md-sys-color-tertiary-container);
+}
+.on-tertiary-container .swatch-box {
+  background-color: var(--md-sys-color-on-tertiary-container);
+}
+
+.error .swatch-box {
+  background-color: var(--md-sys-color-error);
+}
+.on-error .swatch-box {
+  background-color: var(--md-sys-color-on-error);
+}
+.error-container .swatch-box {
+  background-color: var(--md-sys-color-error-container);
+}
+.on-error-container .swatch-box {
+  background-color: var(--md-sys-color-on-error-container);
+}
+
+.background .swatch-box {
+  background-color: var(--md-sys-color-background);
+}
+.on-background .swatch-box {
+  background-color: var(--md-sys-color-on-background);
+}
+
+.surface .swatch-box {
+  background-color: var(--md-sys-color-surface);
+}
+.on-surface .swatch-box {
+  background-color: var(--md-sys-color-on-surface);
+}
+.surface-variant .swatch-box {
+  background-color: var(--md-sys-color-surface-variant);
+}
+.on-surface-variant .swatch-box {
+  background-color: var(--md-sys-color-on-surface-variant);
+}
+
+.inverse-surface .swatch-box {
+  background-color: var(--md-sys-color-inverse-surface);
+}
+.inverse-on-surface .swatch-box {
+  background-color: var(--md-sys-color-inverse-on-surface);
+}
+
+.outline .swatch-box {
+  background-color: var(--md-sys-color-outline);
+}
+.outline-variant .swatch-box {
+  background-color: var(--md-sys-color-outline-variant);
+}
+
+.shadow .swatch-box {
+  background-color: var(--md-sys-color-shadow);
+}
+.scrim .swatch-box {
+  background-color: var(--md-sys-color-scrim);
+}
+
+.surface-tint .swatch-box {
+  background-color: var(--md-sys-color-surface-tint);
+}
+.switch-example label {
+  display: inline-flex;
+  align-items: center;
+}
