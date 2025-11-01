@@ -24,12 +24,17 @@
         "imports": {
           "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
           "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.3/dist/index.min.js",
-          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.3/dist/a11y.min.js"
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.3/dist/a11y.min.js",
+          "@m3e/core/layout": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.3/dist/layout.min.js",
+          "@m3e/nav-bar": "https://cdn.jsdelivr.net/npm/@m3e/nav-bar@1.0.0-rc.3/dist/index.min.js"
         }
       }
     </script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon-button@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/fab@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/nav-rail@1.0.0-rc.3/dist/index.min.js"></script>
@@ -42,10 +47,202 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Nav Rail</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-nav-rail</code> extends <a href="../components/nav-bar.html">Nav Bar</a> to provide a vertical
+        bar, typically used on larger devices, that allows a user to switch between views.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/nav-rail</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Modes</m3e-heading>
+      <p>
+        The <code>m3e-nav-rail</code> supports three modes: <code>compact</code> (default), <code>expanded</code>, and
+        <code>auto</code>. In a compact mode, items are oriented vertically. When extended, items are oriented
+        horizontally. Using <code>auto</code>, the orientation is responsive and determined by viewport size. Use the
+        <code>mode</code> attribute to change a bar's mode.
+      </p>
+      <p>The following example illustrates a common layout.</p>
+      <ul>
+        <li>
+          A <code>m3e-icon-button</code> is used in conjunction with the <code>m3e-nav-rail-toggle</code> to provide a
+          toggle button used to toggle between modes. The <code>for</code> attribute designates the rail to toggle.
+        </li>
+        <li>An extended <code>m3e-fab</code> will automatically transition to reflect the mode of the rail.</li>
+        <li>
+          Top-level destinations are specified using <code>m3e-nav-item</code> from the
+          <a href="../components/nav-bar.html">Nav Bar</a> package.
+        </li>
+      </ul>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-nav-rail id="nav-rail">
+            <m3e-icon-button toggle>
+              <m3e-icon name="menu"></m3e-icon>
+              <m3e-icon slot="selected" name="menu_open"></m3e-icon>
+              <m3e-nav-rail-toggle for="nav-rail"></m3e-nav-rail-toggle>
+            </m3e-icon-button>
+            <m3e-fab size="small">
+              <m3e-icon name="edit"></m3e-icon>
+              <span slot="label">Extended</span>
+            </m3e-fab>
+            <m3e-nav-item><m3e-icon slot="icon" name="news"></m3e-icon>News</m3e-nav-item>
+            <m3e-nav-item><m3e-icon slot="icon" name="globe"></m3e-icon>Global</m3e-nav-item>
+            <m3e-nav-item><m3e-icon slot="icon" name="star"></m3e-icon>For you</m3e-nav-item>
+            <m3e-nav-item><m3e-icon slot="icon" name="newsstand"></m3e-icon>Trending</m3e-nav-item>
+          </m3e-nav-rail>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-nav-rail id=&quot;nav-rail&quot;&gt;
+  &lt;m3e-icon-button toggle&gt;
+    &lt;m3e-icon name=&quot;menu&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;m3e-icon slot=&quot;selected&quot; name=&quot;menu_open&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;m3e-nav-rail-toggle for=&quot;nav-rail&quot;&gt;&lt;/m3e-nav-rail-toggle&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;m3e-fab size=&quot;small&quot;&gt;
+    &lt;m3e-icon name=&quot;edit&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;span slot=&quot;label&quot;&gt;Extended&lt;/span&gt;
+  &lt;/m3e-fab&gt;
+  &lt;m3e-nav-item&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;news&quot;&gt;&lt;/m3e-icon&gt;News&lt;/m3e-nav-item&gt;
+  &lt;m3e-nav-item&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;globe&quot;&gt;&lt;/m3e-icon&gt;Global&lt;/m3e-nav-item&gt;
+  &lt;m3e-nav-item&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;star&quot;&gt;&lt;/m3e-icon&gt;For you&lt;/m3e-nav-item&gt;
+  &lt;m3e-nav-item&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;newsstand&quot;&gt;&lt;/m3e-icon&gt;Trending&lt;/m3e-nav-item&gt;
+&lt;/m3e-nav-rail&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Items</m3e-heading>
+      <p>
+        As illustrated above, items are specified using the <code>m3e-nav-item</code> component. Use the default slot to
+        specify an item's label and use the <code>icon</code> slot to specify an icon.
+      </p>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-nav-item&gt;&lt;m3e-icon slot=&quot;icon&quot; name=&quot;news&quot;&gt;&lt;/m3e-icon&gt;News&lt;/m3e-nav-item&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Selection</m3e-heading>
+      <p>
+        The <code>m3e-nav-rail</code> only supports single-select. Use the <code>selected</code> attribute of
+        <code>m3e-nav-item</code> to specify which item in a rail is selected. When clicked, a cancellable
+        <code>input</code> event is emitted followed by a <code>change</code> event. To cancel selection change, call
+        <code>preventDefault</code> during <code>input</code>.
+      </p>
+      <p>
+        In addition, you can use the <code>selected-icon</code> slots to specify an alternate icon when selected. When
+        using the <code>m3e-icon</code> to present icons, the icon will automatically be filled when an item is
+        selected.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+      <p>
+        Use the <code>disabled</code> attribute to disable an item. By default, disabled items are not focusable with
+        the keyboard. You can use the <code>disabled-interactive</code> attribute to support
+        <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls" target="_blank"
+          >focusability of disabled controls</a
+        >
+        to increase their discoverability.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Links</m3e-heading>
+      <p>
+        Items can also behave like links by specifying a URL using the <code>href</code> attribute. You can also specify
+        <code>target</code>, <code>rel</code> and <code>download</code> similar to native anchor tags.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Navigation rails are given ARIA <code>role="navigation"</code>, indicating that the region serves as a
+        navigational landmark and helps assistive technologies identify it as a container for site or app navigation
+        links. Always provide an accessible label via <code>aria-label</code> or <code>aria-labelledby</code>.
+      </p>
+      <p>
+        Items are given the ARIA role <code>button</code>, indicating they are clickable elements that trigger actions
+        and <code>aria-current="true"</code> is used to convey the selected state.
+      </p>
+      <p>
+        Icons slots have <code>aria-hidden="true"</code> to ensure icons are always hidden from assistive technologies.
+      </p>
+      <p>
+        When disabling using either the <code>disabled</code> or <code>disabled-interactive</code> attribute,
+        <code>aria-disabled="true"</code> is used to convey to assistive technologies that the item is disabled. If
+        disabled using <code>disabled-interactive</code>, <code>tabindex</code> is retained to convey that the item
+        continues to be interactive.
+      </p>
+      <p>
+        When <code>href</code> is specified, the ARIA role <code>link</code> is used instead of <code>button</code> to
+        convey the item provides an interactive reference to a resource. In addition, the component presents an internal
+        anchor, hidden from assistive technologies, used to invoke native browser features such a context menu options
+        and tooltips.
+      </p>
+      <p>
+        Rail toggles use <code>aria-controls</code> to associate its parenting element with the rail, and dynamically
+        update <code>aria-expanded</code> to indicate whether the rail is expanded.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/nav-rail/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;,
+      &quot;@m3e/core/layout&quot;: &quot;/node_modules/@m3e/core/dist/layout.js&quot;,
+      &quot;@m3e/nav-bar&quot;: &quot;/node_modules/@m3e/nav-bar/dist/index.js&quot;,
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js, a11y.min.js, and layout.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer
+        only="m3e-nav-rail"
+        src="https://cdn.jsdelivr.net/npm/@m3e/nav-rail@1.0.0-rc.3/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-nav-rail-toggle"
+        src="https://cdn.jsdelivr.net/npm/@m3e/nav-rail@1.0.0-rc.3/dist/custom-elements.json"
+      >
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>
