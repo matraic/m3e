@@ -35,12 +35,6 @@ This package uses [JavaScript Modules](https://developer.mozilla.org/en-US/docs/
 <script type="module" src="/node_modules/@m3e/nav-rail/dist/index.js"></script>
 ```
 
-You also need a module script for `@m3e/nav-bar` due to it being a dependency.
-
-```html
-<script type="module" src="/node_modules/@m3e/nav-bar/dist/index.js"></script>
-```
-
 In addition, you must use an [import map](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap) to include dependencies.
 
 ```html
