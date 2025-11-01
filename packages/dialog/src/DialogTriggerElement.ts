@@ -28,13 +28,21 @@ export class M3eDialogTriggerElement extends HtmlFor(AttachInternals(LitElement)
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-    this.parentElement?.addEventListener("click", this.#clickHandler);
+
+    if (this.parentElement) {
+      this.parentElement.addEventListener("click", this.#clickHandler);
+      this.parentElement.ariaHasPopup = "dialog";
+    }
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.parentElement?.removeEventListener("click", this.#clickHandler);
+
+    if (this.parentElement) {
+      this.parentElement.removeEventListener("click", this.#clickHandler);
+      this.parentElement.ariaHasPopup = null;
+    }
   }
 
   /** @inheritdoc */
