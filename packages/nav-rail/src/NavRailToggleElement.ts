@@ -4,6 +4,7 @@ import { customElement } from "lit/decorators.js";
 import { HtmlFor, MutationController } from "@m3e/core";
 
 import { M3eNavRailElement } from "./NavRailElement";
+import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/core/a11y";
 
 /**
  * An element, nested within a clickable element, used to toggle the expanded state of a navigation rail.
@@ -69,6 +70,9 @@ export class M3eNavRailToggleElement extends HtmlFor(LitElement) {
     if (control instanceof M3eNavRailElement) {
       this.#mutationController.observe(control);
     }
+    if (this.htmlFor && this.parentElement) {
+      addAriaReferencedId(this.parentElement, "aria-controls", this.htmlFor);
+    }
     super.attach(control);
     this.#updateToggle();
   }
@@ -78,7 +82,14 @@ export class M3eNavRailToggleElement extends HtmlFor(LitElement) {
     for (const target of this.#mutationController.targets) {
       this.#mutationController.unobserve(target);
     }
-    this.#updateToggle();
+
+    if (this.parentElement) {
+      if (this.htmlFor) {
+        removeAriaReferencedId(this.parentElement, "aria-controls", this.htmlFor);
+      }
+      this.parentElement.ariaExpanded = null;
+    }
+
     super.detach();
   }
 
@@ -95,12 +106,20 @@ export class M3eNavRailToggleElement extends HtmlFor(LitElement) {
   }
 
   /** @private */
-  #updateToggle(): void {
-    if (this.parentElement?.hasAttribute("toggle")) {
-      this.parentElement.toggleAttribute(
-        "selected",
-        this.control instanceof M3eNavRailElement && this.control.currentMode === "expanded"
-      );
+  async #updateToggle(): Promise<void> {
+    if (!this.parentElement) return;
+
+    const selected = this.control instanceof M3eNavRailElement && this.control.currentMode === "expanded";
+    this.parentElement.ariaExpanded = `${selected}`;
+
+    if (this.parentElement.hasAttribute("toggle")) {
+      this.parentElement.toggleAttribute("selected", selected);
+    }
+
+    if (this.parentElement instanceof LitElement) {
+      // Wait for update and remove aria-pressed due to use of aria-expanded.
+      await (this.parentElement as LitElement).updateComplete;
+      this.parentElement.ariaPressed = null;
     }
   }
 }
