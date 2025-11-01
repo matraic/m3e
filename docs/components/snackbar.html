@@ -18,6 +18,7 @@
     />
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
+    <script src="snackbar.js"></script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
     <script type="importmap">
       {
@@ -31,6 +32,8 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/button@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon-button@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/snackbar@1.0.0-rc.3/dist/index.min.js"></script>
   </head>
@@ -42,10 +45,142 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Snackbar</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>@m3e/snackbar</code> package provides the <code>M3eSnackbar</code> global service on
+        <code>window</code> (<code>globalThis</code>) used to present short updates about application processes at the
+        bottom of the screen from anywhere in an application.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/snackbar</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Snackbar service</m3e-heading>
+      <p>Use the <code>open</code> method of the <code>M3eSnackbar</code> service to open a snackbar.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button id="example1">Delete file</m3e-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+M3eSnackbar.open(&quot;File deleted&quot;);
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Actions</m3e-heading>
+      <p>You can include a single action and callback when opening a snackbar message.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button id="example2">Delete file</m3e-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+M3eSnackbar.open(&quot;File deleted&quot;, &quot;Undo&quot;, {
+  actionCallback: () =&gt; {
+    // Undo logic here
+  },
+});</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Dismissal</m3e-heading>
+      <p>A snackbar message can optionally include a dismiss button.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button id="example3">Delete file</m3e-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">M3eSnackbar.open(&quot;File deleted&quot;, true);</pre>
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Options</m3e-heading>
+      <p>
+        When opening a snackbar message, you can pass a <code>SnackbarOptions</code> object that includes the following
+        properties.
+      </p>
+      <ul>
+        <li>
+          <code>duration?: number</code> — The length of time, in milliseconds, to wait before automatically dismissing
+          the snackbar.
+        </li>
+        <li>
+          <code>closeLabel?: string</code> — The accessible label given to the close button used to dismiss the
+          snackbar.
+        </li>
+        <li><code>actionCallback?: () =&gt; void</code> — The callback function invoked when the action is clicked.</li>
+      </ul>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Snackbar messages are given ARIA <code>role="status"</code> and <code>aria-live="polite"</code>, indicating that
+        they are polite live regions intended to be announced by assistive technologies without requiring focus.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/snackbar/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        You also need a module script for <code>@m3e/button</code> and <code>@m3e/icon-button</code> due to being a
+        dependency.
+      </p>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/button/dist/index.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/icon-button/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include additional dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer
+        only="m3e-snackbar"
+        src="https://cdn.jsdelivr.net/npm/@m3e/snackbar@1.0.0-rc.3/dist/custom-elements.json"
+      >
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>
