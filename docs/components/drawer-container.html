@@ -220,6 +220,10 @@
 &lt;/m3e-drawer-container&gt;</pre
         >
       </m3e-card>
+      <p>
+        Drawer toggles use <code>aria-controls</code> to associate its parenting element with the drawer, and
+        dynamically update <code>aria-expanded</code> to indicate whether the drawer is open.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
       <p>
@@ -252,13 +256,14 @@
     &quot;imports&quot;: {
       &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
       &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;,
       &quot;@m3e/core/layout&quot;: &quot;/node_modules/@m3e/core/dist/layout.js&quot;
     }
   }
 &lt;/script&gt;</pre
         >
       </m3e-card>
-      <p>For production, use index.min.js and layout.min.js for faster load times.</p>
+      <p>For production, use index.min.js, a11y.min.js, and layout.min.js for faster load times.</p>
 
       <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
       <p>

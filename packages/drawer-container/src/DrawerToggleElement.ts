@@ -2,6 +2,7 @@ import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
 import { HtmlFor } from "@m3e/core";
+import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/core/a11y";
 
 import { M3eDrawerContainerElement } from "./DrawerContainerElement";
 
@@ -58,18 +59,31 @@ export class M3eDrawerToggleElement extends HtmlFor(LitElement) {
 
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
+    super.attach(control);
+
+    if (this.htmlFor && this.parentElement) {
+      addAriaReferencedId(this.parentElement, "aria-controls", this.htmlFor);
+    }
+
     const container = control.closest("m3e-drawer-container");
     if (container) {
       container.addEventListener("change", this.#drawerContainerChangeHandler);
-      this.#updateToggle(container, control);
+      this.#updateToggle(container);
     }
-
-    super.attach(control);
   }
 
   /** @inheritdoc */
   override detach(): void {
+    if (this.parentElement) {
+      if (this.htmlFor) {
+        removeAriaReferencedId(this.parentElement, "aria-controls", this.htmlFor);
+      }
+
+      this.parentElement.ariaExpanded = null;
+    }
+
     this.control?.closest("m3e-drawer-container")?.removeEventListener("change", this.#drawerContainerChangeHandler);
+
     super.detach();
   }
 
@@ -88,6 +102,7 @@ export class M3eDrawerToggleElement extends HtmlFor(LitElement) {
         } else if (this.control.slot === "end") {
           container.end = !container.end;
         }
+        this.#updateToggle(container);
       }
     }
   }
@@ -97,21 +112,34 @@ export class M3eDrawerToggleElement extends HtmlFor(LitElement) {
     if (this.control) {
       const container = this.control.closest("m3e-drawer-container");
       if (container) {
-        this.#updateToggle(container, this.control);
+        this.#updateToggle(container);
       }
     }
   }
 
   /** @private */
-  #updateToggle(container: M3eDrawerContainerElement, control: HTMLElement) {
-    if (control.slot === "start") {
-      if (this.parentElement?.hasAttribute("toggle")) {
-        this.parentElement.toggleAttribute("selected", container.start);
-      }
-    } else if (control.slot === "end") {
-      if (this.parentElement?.hasAttribute("toggle")) {
-        this.parentElement.toggleAttribute("selected", container.end);
-      }
+  async #updateToggle(container: M3eDrawerContainerElement): Promise<void> {
+    if (!this.parentElement || !this.control) {
+      return;
+    }
+
+    let selected = false;
+    if (this.control.slot === "start") {
+      selected = container.start;
+    } else if (this.control.slot === "end") {
+      selected = container.end;
+    }
+
+    this.parentElement.ariaExpanded = `${selected}`;
+
+    if (this.parentElement.hasAttribute("toggle")) {
+      this.parentElement.toggleAttribute("selected", selected);
+    }
+
+    if (this.parentElement instanceof LitElement) {
+      // Wait for update and remove aria-pressed due to use of aria-expanded.
+      await (this.parentElement as LitElement).updateComplete;
+      this.parentElement.ariaPressed = null;
     }
   }
 }
