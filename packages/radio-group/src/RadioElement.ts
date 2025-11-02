@@ -310,6 +310,9 @@ export class M3eRadioElement extends Labelled(
     if (changedProperties.has("checked")) {
       this.#notifySelectionChange();
     }
+    if (changedProperties.has("required")) {
+      this.ariaRequired = null;
+    }
   }
 
   /** @inheritdoc */
