@@ -33,7 +33,7 @@ Alternately, you can explicitly reference the `html-custom-data.json` and `css-c
 }
 ```
 
-## 🚀 Browser Usage
+## 🚀 Native Module Support
 
 This package uses [JavaScript Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers). To use it directly in a browser without a bundler, use a module script similar to the following.
 
