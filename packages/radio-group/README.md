@@ -79,11 +79,11 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### ⚙️ Attributes
 
-| Attribute  | Type      | Default | Description                                   |
-| ---------- | --------- | ------- | --------------------------------------------- |
-| `checked`  | `boolean` | `false` | Whether the element is checked.               |
-| `disabled` | `boolean` | `false` | Whether the element is disabled.              |
-| `value`    | `string`  | `""`    | A string representing the value of the radio. |
+| Attribute  | Type      | Default | Description                                                               |
+| ---------- | --------- | ------- | ------------------------------------------------------------------------- |
+| `disabled` | `boolean` | `false` | Whether the element is disabled.                                          |
+| `name`     | `string`  | `""`    | The name that identifies the element when submitting the associated form. |
+| `required` | `boolean` | `false` | Whether the element is required.                                          |
 
 #### 🔔 Events
 
@@ -97,26 +97,19 @@ This section details the attributes, slots, events and CSS custom properties ava
 | ----------- | --------------------------------------- |
 | _(default)_ | Renders the radio buttons of the group. |
 
-#### 🎛️ CSS Custom Properties
-
-| Property                         | Description                                                       |
-| -------------------------------- | ----------------------------------------------------------------- |
-| `--m3e-radio-error-hover-color`  | Fallback hover color used when the radio is invalid and touched.  |
-| `--m3e-radio-error-focus-color`  | Fallback focus color used when the radio is invalid and touched.  |
-| `--m3e-radio-error-ripple-color` | Fallback ripple color used when the radio is invalid and touched. |
-| `--m3e-radio-error-icon-color`   | Fallback icon color used when the radio is invalid and touched.   |
-
 ### 🗂️ m3e-radio
 
 This section details the attributes, events and CSS custom properties available for the `m3e-radio` component.
 
 #### ⚙️ Attributes
 
-| Attribute  | Type      | Default | Description                                   |
-| ---------- | --------- | ------- | --------------------------------------------- |
-| `checked`  | `boolean` | `false` | Whether the element is checked.               |
-| `disabled` | `boolean` | `false` | Whether the element is disabled.              |
-| `value`    | `string`  | `""`    | A string representing the value of the radio. |
+| Attribute  | Type      | Default | Description                                                               |
+| ---------- | --------- | ------- | ------------------------------------------------------------------------- |
+| `checked`  | `boolean` | `false` | Whether the element is checked.                                           |
+| `disabled` | `boolean` | `false` | Whether the element is disabled.                                          |
+| `name`     | `string`  | `""`    | The name that identifies the element when submitting the associated form. |
+| `required` | `boolean` | `false` | Whether the element is required.                                          |
+| `value`    | `string`  | `""`    | A string representing the value of the radio.                             |
 
 #### 🔔 Events
 
@@ -127,19 +120,23 @@ This section details the attributes, events and CSS custom properties available 
 
 #### 🎛️ CSS Custom Properties
 
-| Property                              | Description                                         |
-| ------------------------------------- | --------------------------------------------------- |
-| `--m3e-radio-container-size`          | Base size of the radio button container.            |
-| `--m3e-radio-icon-size`               | Size of the radio icon inside the wrapper.          |
-| `--m3e-radio-unselected-hover-color`  | Hover state layer color when radio is not selected. |
-| `--m3e-radio-unselected-focus-color`  | Focus state layer color when radio is not selected. |
-| `--m3e-radio-unselected-ripple-color` | Ripple color when radio is not selected.            |
-| `--m3e-radio-unselected-icon-color`   | Icon color when radio is not selected.              |
-| `--m3e-radio-selected-hover-color`    | Hover state layer color when radio is selected.     |
-| `--m3e-radio-selected-focus-color`    | Focus state layer color when radio is selected.     |
-| `--m3e-radio-selected-ripple-color`   | Ripple color when radio is selected.                |
-| `--m3e-radio-selected-icon-color`     | Icon color when radio is selected.                  |
-| `--m3e-radio-disabled-icon-color`     | Icon color when radio is disabled.                  |
+| Property                              | Description                                                       |
+| ------------------------------------- | ----------------------------------------------------------------- |
+| `--m3e-radio-container-size`          | Base size of the radio button container.                          |
+| `--m3e-radio-icon-size`               | Size of the radio icon inside the wrapper.                        |
+| `--m3e-radio-unselected-hover-color`  | Hover state layer color when radio is not selected.               |
+| `--m3e-radio-unselected-focus-color`  | Focus state layer color when radio is not selected.               |
+| `--m3e-radio-unselected-ripple-color` | Ripple color when radio is not selected.                          |
+| `--m3e-radio-unselected-icon-color`   | Icon color when radio is not selected.                            |
+| `--m3e-radio-selected-hover-color`    | Hover state layer color when radio is selected.                   |
+| `--m3e-radio-selected-focus-color`    | Focus state layer color when radio is selected.                   |
+| `--m3e-radio-selected-ripple-color`   | Ripple color when radio is selected.                              |
+| `--m3e-radio-selected-icon-color`     | Icon color when radio is selected.                                |
+| `--m3e-radio-disabled-icon-color`     | Icon color when radio is disabled.                                |
+| `--m3e-radio-error-hover-color`       | Fallback hover color used when the radio is invalid and touched.  |
+| `--m3e-radio-error-focus-color`       | Fallback focus color used when the radio is invalid and touched.  |
+| `--m3e-radio-error-ripple-color`      | Fallback ripple color used when the radio is invalid and touched. |
+| `--m3e-radio-error-icon-color`        | Fallback icon color used when the radio is invalid and touched.   |
 
 ## 🤝 Contributing
 
