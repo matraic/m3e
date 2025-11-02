@@ -39,16 +39,201 @@
   </head>
   <body id="body">
     <m3e-theme strong-focus>
-      <m3e-toc class="toc" for="body">
+      <m3e-toc class="toc" for="body" max-depth="4">
         <span slot="overline">On this page</span>
         <span slot="title">Process Indicator</span>
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Process Indicator</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-linear-progress-indicator</code> and <code>m3e-circular-progress-indicator</code> components
+        provide accessible, animated progress indicators for tracking the completion of tasks or processes.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/progress-indicator</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Circular</m3e-heading>
+      <p>
+        Use the <code>m3e-circular-progress-indicator</code> to present a circular indicator of progress and activity.
+        This component supports two modes: determinate and indeterminate.
+      </p>
+      <m3e-heading variant="title" size="medium" level="4">Determinate</m3e-heading>
+      <p>
+        By default, circular progress indicators are determinate. Use the
+        <code>value</code> attribute to indicate completion percentage and use <code>max</code> to specify the total
+        number of steps or units of progress. In addition, you can provide content in the default slot.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-circular-progress-indicator value="25">25</m3e-circular-progress-indicator>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-circular-progress-indicator value=&quot;25&quot;&gt;25&lt;/m3e-circular-progress-indicator&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Indeterminate</m3e-heading>
+      <p>
+        Use the <code>indeterminate</code> attribute to change the mode to indeterminate. In this mode,
+        <code>value</code> and <code>max</code> are ignored.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-circular-progress-indicator indeterminate></m3e-circular-progress-indicator>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-circular-progress-indicator indeterminate&gt;&lt;/m3e-circular-progress-indicator&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Linear</m3e-heading>
+      <p>
+        Use the <code>m3e-linear-progress-indicator</code> to present a horizontal bar for indicating progress and
+        activity. This component supports four modes: <code>determinate</code> (default), <code>indeterminate</code>,
+        <code>buffer</code>, and <code>query</code>.
+      </p>
+      <p>Use the <code>mode</code> attribute to change the mode.</p>
+
+      <m3e-heading variant="title" size="medium" level="4">Determinate</m3e-heading>
+      <p>
+        Use the <code>determinate</code> mode where the percentage of the operation complete is known. Use the
+        <code>value</code> attribute to indicate completion percentage and use <code>max</code> to specify the total
+        number of steps or units of progress. This is the default mode.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-linear-progress-indicator value="25"></m3e-linear-progress-indicator>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-linear-progress-indicator value=&quot;25&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Indeterminate</m3e-heading>
+      <p>
+        Use the <code>indeterminate</code> mode to express that something is happening, but without conveying discrete
+        progress. In this mode, <code>value</code> and <code>max</code> are ignored.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-linear-progress-indicator mode="indeterminate"></m3e-linear-progress-indicator>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-linear-progress-indicator mode=&quot;indeterminate&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Buffer</m3e-heading>
+      <p>
+        Use the <code>buffer</code> mode to indicate some activity or loading from the server. In this mode,
+        <code>value</code> determines the progress of the primary bar while the <code>buffer-value</code> attribute is
+        used to show buffering progress.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-linear-progress-indicator mode="buffer" value="10" buffer-value="25"></m3e-linear-progress-indicator>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-linear-progress-indicator mode=&quot;buffer&quot; value=&quot;10&quot; buffer-value=&quot;25&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Query</m3e-heading>
+      <p>
+        Use the <code>query</code> mode to indicate pre-loading before the actual loading starts. In this mode,
+        <code>value</code> and <code>max</code> are ignored.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-linear-progress-indicator mode="query"></m3e-linear-progress-indicator>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-linear-progress-indicator mode=&quot;query&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Progress indicators implement the ARIA <code>role="progressbar"</code> pattern. They set
+        <code>aria-valuemin</code> to <code>0</code>, <code>aria-valuenow</code> to <code>value</code>, and
+        <code>aria-valuemax</code> to <code>max</code>.
+      </p>
+      <p>
+        Always provide an accessible label via <code>aria-label</code> or <code>aria-labelledby</code> for each progress
+        indicator.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/progress-indicator/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer
+        only="m3e-circular-progress-indicator"
+        src="https://cdn.jsdelivr.net/npm/@m3e/progress-indicator@1.0.0-rc.3/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-linear-progress-indicator"
+        src="https://cdn.jsdelivr.net/npm/@m3e/progress-indicator@1.0.0-rc.3/dist/custom-elements.json"
+      >
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>
