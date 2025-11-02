@@ -54,13 +54,13 @@ export function Touched<T extends Constructor<LitElement>>(base: T): Constructor
     override connectedCallback(): void {
       this.markAsUntouched();
       super.connectedCallback();
-      this.addEventListener("focusout", this[_eventHandler]);
+      this.addEventListener("focusout", this[_eventHandler], { capture: true });
     }
 
     /** @inheritdoc */
     override disconnectedCallback(): void {
       super.disconnectedCallback();
-      this.removeEventListener("focusout", this[_eventHandler]);
+      this.removeEventListener("focusout", this[_eventHandler], { capture: true });
     }
 
     /** Marks the element as touched. */
