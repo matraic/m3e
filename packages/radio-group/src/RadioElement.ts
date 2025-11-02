@@ -149,11 +149,10 @@ export class M3eRadioElement extends Labelled(
     :host(:disabled) .base {
       color: color-mix(in srgb, var(--m3e-radio-disabled-icon-color, ${DesignToken.color.onSurface}) 38%, transparent);
     }
-    :host(.-touched:invalid) {
-      --m3e-radio-unselected-hover-color: var(--m3e-radio-error-hover-color, ${DesignToken.color.error});
-      --m3e-radio-unselected-focus-color: var(--m3e-radio-error-focus-color, ${DesignToken.color.error});
-      --m3e-radio-unselected-ripple-color: var(--m3e-radio-error-ripple-color, ${DesignToken.color.error});
-      --m3e-radio-unselected-icon-color: var(--m3e-radio-error-icon-color, ${DesignToken.color.error});
+    :host(.-touched:invalid) .base {
+      --m3e-state-layer-hover-color: var(--m3e-radio-error-hover-color, ${DesignToken.color.error});
+      --m3e-state-layer-focus-color: var(--m3e-radio-error-focus-color, ${DesignToken.color.error});
+      --m3e-ripple-color: var(--m3e-radio-error-ripple-color, ${DesignToken.color.error});
       color: var(--m3e-radio-error-icon-color, ${DesignToken.color.error});
     }
     @media (forced-colors: active) {
