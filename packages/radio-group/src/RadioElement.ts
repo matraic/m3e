@@ -102,7 +102,7 @@ export class M3eRadioElement extends Labelled(
       height: fit-content;
       vertical-align: middle;
     }
-    :host(:not(:disabled)) {
+    :host(:not([aria-disabled="true"])) {
       cursor: pointer;
     }
     .base {
@@ -146,7 +146,7 @@ export class M3eRadioElement extends Labelled(
       --m3e-ripple-color: var(--m3e-radio-selected-ripple-color, ${DesignToken.color.primary});
       color: var(--m3e-radio-selected-icon-color, ${DesignToken.color.primary});
     }
-    :host(:disabled) .base {
+    :host([aria-disabled="true"]) .base {
       color: color-mix(in srgb, var(--m3e-radio-disabled-icon-color, ${DesignToken.color.onSurface}) 38%, transparent);
     }
     :host(.-touched:invalid) .base {
@@ -163,7 +163,7 @@ export class M3eRadioElement extends Labelled(
         --m3e-ripple-color: var(--_radio-forced-color, CanvasText);
         color: var(--_radio-forced-color, CanvasText);
       }
-      :host(:disabled) .base {
+      :host([aria-disabled="true"]) .base {
         color: GrayText;
       }
       :host(.-touched:invalid) {
@@ -346,7 +346,7 @@ export class M3eRadioElement extends Labelled(
 
   /** @private */
   #handleClick(e: Event): void {
-    if (e.defaultPrevented || this.checked) return;
+    if (e.defaultPrevented || this.checked || this.disabled) return;
     this.checked = true;
     if (this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
       this.#notifySelectionChange();
