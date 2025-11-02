@@ -5,6 +5,7 @@ import { Constructor } from "./Constructor";
 import { FormAssociatedMixin, isFormAssociatedMixin } from "./FormAssociated";
 import { hasKeys } from "./hasKeys";
 import { isTouchedMixin } from "./Touched";
+import { isLabelledMixin, updateLabels } from "./Labelled";
 
 /** A symbol through which a "Form Associated" custom element validates its current state. */
 export const validate = Symbol("validate");
@@ -164,6 +165,10 @@ export function ConstraintValidation<T extends Constructor<LitElement & FormAsso
       this[internals].setValidity(validity, validityMessage);
       this.ariaInvalid = invalid ? "true" : null;
       this.classList.toggle("-invalid", invalid === true);
+
+      if (isLabelledMixin(this)) {
+        this[updateLabels]?.();
+      }
     }
 
     /** @private */
