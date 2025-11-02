@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 
-import { css, CSSResultGroup, html, LitElement, nothing, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { DesignToken, ResizeController, Role } from "@m3e/core";
+import { DesignToken, Role } from "@m3e/core";
 
 /**
  * Presents short updates about application processes at the bottom of the screen.
@@ -41,9 +41,10 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
       border: unset;
       border-radius: var(--m3e-snackbar-container-shape, ${DesignToken.shape.corner.extraSmall});
       background-color: var(--m3e-snackbar-container-color, ${DesignToken.color.inverseSurface});
-      padding: var(--m3e-snackbar-padding, 0.75rem 1rem 0.75rem 1rem);
+      padding: var(--m3e-snackbar-padding, 0 1rem 0 1rem);
       min-width: var(--m3e-snackbar-min-width, 21.5rem);
       max-width: var(--m3e-snackbar-max-width, 42rem);
+      box-sizing: border-box;
       visibility: hidden;
       opacity: 0;
       transform: scale(0.8);
@@ -144,6 +145,12 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
     }
     .supporting-text {
       flex: 1 1 auto;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-clamp: 2;
+      margin-block: var(--m3e-snackbar-supporting-text-margin-block, 0.875rem);
     }
     ::slotted([slot="close-icon"]),
     .close-icon {
@@ -166,16 +173,6 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
   /** @private */ #timeoutId = -1;
   /** @private */ #actionTaken = false;
   /** @private */ readonly #beforeToggleHandler = (e: ToggleEvent) => this.#handleBeforeToggle(e);
-
-  constructor() {
-    super();
-
-    new ResizeController(this, {
-      callback: () => {
-        this.style.setProperty("--_snackbar-height", `${this.getBoundingClientRect().height}px`);
-      },
-    });
-  }
 
   /** The currently open snackbar. */
   static get current(): M3eSnackbarElement | null {
@@ -233,6 +230,17 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
       <span class="supporting-text"><slot></slot></span>
       ${this.#renderActionButton()} ${this.#renderCloseButton()}
     </div>`;
+  }
+
+  /** @inheritdoc */
+  protected override updated(_changedProperties: PropertyValues): void {
+    super.updated(_changedProperties);
+
+    // After render, compute the (unscaled) height of the snackbar in order
+    // to properly position it relative to the viewport.
+    // top: calc(100vh - var(--_snackbar-height, 0px) - var(--m3e-snackbar-margin, 1rem));
+
+    this.style.setProperty("--_snackbar-height", `${this.getBoundingClientRect().height / 0.8}px`);
   }
 
   /** @private */

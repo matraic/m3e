@@ -40,9 +40,15 @@
   <body>
     <m3e-theme strong-focus>
       <m3e-button
-        onclick="M3eSnackbar.open('Test', 'Custom Action', true, { duration: 5000, actionCallback: () => console.log('Action Taken')})"
+        onclick="M3eSnackbar.open('Lorem ipsum dolor sit amet', 'Custom Action', true, { duration: 5000, actionCallback: () => console.log('Action Taken')})"
       >
-        Open Snackbar
+        Open single line snackbar
+      </m3e-button>
+
+      <m3e-button
+        onclick="M3eSnackbar.open('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'Custom Action', true, { duration: 5000, actionCallback: () => console.log('Action Taken')})"
+      >
+        Open multiline snackbar
       </m3e-button>
     </m3e-theme>
   </body>
