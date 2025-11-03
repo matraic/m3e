@@ -42,10 +42,254 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Radio Group</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-radio-group</code> and <code>m3e-radio</code> components enable single-choice selection within a
+        set of mutually exclusive options.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/radio-group</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Radio groups</m3e-heading>
+      <p>Radios are typically placed inside a <code>m3e-radio-group</code>.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-radio-group>
+            <label><m3e-radio value="1"></m3e-radio> Option 1</label>
+            <label><m3e-radio value="2"></m3e-radio> Option 2</label>
+            <label><m3e-radio value="3"></m3e-radio> Option 3</label>
+            <label><m3e-radio value="4"></m3e-radio> Option 4</label>
+          </m3e-radio-group>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-radio-group&gt;
+  &lt;label&gt;&lt;m3e-radio value=&quot;1&quot;&gt;&lt;/m3e-radio&gt; Option 1&lt;/label&gt;
+  &lt;label&gt;&lt;m3e-radio value=&quot;2&quot;&gt;&lt;/m3e-radio&gt; Option 2&lt;/label&gt;
+  &lt;label&gt;&lt;m3e-radio value=&quot;3&quot;&gt;&lt;/m3e-radio&gt; Option 3&lt;/label&gt;
+  &lt;label&gt;&lt;m3e-radio value=&quot;4&quot;&gt;&lt;/m3e-radio&gt; Option 4&lt;/label&gt;
+&lt;/m3e-radio-group&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Labels</m3e-heading>
+      <p>
+        Associate a label with a radio using the <code>label</code> element. In addition, radio groups can also be
+        labelled using a <code>label</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <label for="radio-group">Select an option</label>
+          <br />
+          <m3e-radio-group id="radio-group">
+            <label><m3e-radio value="1"></m3e-radio> Option 1</label>
+            <label><m3e-radio value="2"></m3e-radio> Option 2</label>
+            <label><m3e-radio value="3"></m3e-radio> Option 3</label>
+            <label><m3e-radio value="4"></m3e-radio> Option 4</label>
+          </m3e-radio-group>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;label for=&quot;radio-group&quot;&gt;Select an option&lt;/label&gt;
+&lt;m3e-radio-group id=&quot;radio-group&quot;&gt;
+  &lt;label&gt;&lt;m3e-radio value=&quot;1&quot;&gt;&lt;/m3e-radio&gt; Option 1&lt;/label&gt;
+  &lt;!-- Additional radios omitted for brevity --&gt;
+&lt;/m3e-radio-group&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Form Associated</m3e-heading>
+      <p>
+        Radios participate in form submission as a
+        <a
+          href="https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-face"
+          target="_blank"
+          rel="noopener noreferrer"
+          >form-associated custom element</a
+        >
+        (FACE), contributing its state to the form data. The <code>name</code> attribute defines the key under which the
+        radio's value is submitted in a form. When checked and not disabled, <code>value</code> (defaults to
+        <code>"on"</code>) is submitted.
+      </p>
+      <p>
+        Radios honor the <code>disabled</code> state as a <strong>property-only</strong> control. When disabled at
+        runtime, it does <em>not</em> sprout a <code>disabled</code> attribute into the DOM.
+      </p>
+      <p>When using a radio group, the group's <code>name</code> is propagated to all nested radios.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+      <p>
+        Use the <code>disabled</code> attribute to disable an individual radio or a entire radio group. Associated
+        labels are automatically styled to show disabled.
+      </p>
+      <p>The following example illustrates disabling individual radios in a group.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <label for="radio-group2">Select an option</label>
+          <br />
+          <m3e-radio-group id="radio-group2">
+            <label><m3e-radio disabled value="1"></m3e-radio> Option 1</label>
+            <label><m3e-radio value="2"></m3e-radio> Option 2</label>
+            <label><m3e-radio value="3"></m3e-radio> Option 3</label>
+            <label><m3e-radio value="4"></m3e-radio> Option 4</label>
+          </m3e-radio-group>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;label for=&quot;radio-group&quot;&gt;Select an option&lt;/label&gt;
+&lt;m3e-radio-group id=&quot;radio-group&quot;&gt;
+  &lt;label&gt;&lt;m3e-radio disabled value=&quot;1&quot;&gt;&lt;/m3e-radio&gt; Option 1&lt;/label&gt;
+  &lt;!-- Additional radios omitted for brevity --&gt;
+&lt;/m3e-radio-group&gt;</pre
+        >
+      </m3e-card>
+      <p>The next example illustrates disabling an entire group.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <label for="radio-group3">Select an option</label>
+          <br />
+          <m3e-radio-group id="radio-group3" disabled>
+            <label><m3e-radio value="1"></m3e-radio> Option 1</label>
+            <label><m3e-radio value="2"></m3e-radio> Option 2</label>
+            <label><m3e-radio value="3"></m3e-radio> Option 3</label>
+            <label><m3e-radio value="4"></m3e-radio> Option 4</label>
+          </m3e-radio-group>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;label for=&quot;radio-group&quot;&gt;Select an option&lt;/label&gt;
+&lt;m3e-radio-group id=&quot;radio-group&quot; disabled&gt;
+  &lt;label&gt;&lt;m3e-radio value=&quot;1&quot;&gt;&lt;/m3e-radio&gt; Option 1&lt;/label&gt;
+  &lt;!-- Additional radios omitted for brevity --&gt;
+&lt;/m3e-radio-group&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Required</m3e-heading>
+      <p>
+        Use the <code>required</code> attribute of a radio group to require an option to be checked. Associated labels
+        are automatically styled to show the validity state.
+      </p>
+      <p>
+        In the example below, press TAB to enter the radio group, then TAB again to exit without making a selection to
+        see how validation is trigger. Selecting a radio will revalidate.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <label for="radio-group4">Select an option</label>
+          <br />
+          <m3e-radio-group id="radio-group4" required>
+            <label><m3e-radio value="1"></m3e-radio> Option 1</label>
+            <label><m3e-radio value="2"></m3e-radio> Option 2</label>
+            <label><m3e-radio value="3"></m3e-radio> Option 3</label>
+            <label><m3e-radio value="4"></m3e-radio> Option 4</label>
+          </m3e-radio-group>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;label for=&quot;radio-group&quot;&gt;Select an option&lt;/label&gt;
+&lt;m3e-radio-group id=&quot;radio-group&quot; required&gt;
+  &lt;label&gt;&lt;m3e-radio value=&quot;1&quot;&gt;&lt;/m3e-radio&gt; Option 1&lt;/label&gt;
+  &lt;!-- Additional radios omitted for brevity --&gt;
+&lt;/m3e-radio-group&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Each radio group is assigned <code>role="radiogroup"</code> to signal a related set of options, while individual
+        radios receive <code>role="radio"</code> to indicate their participation in the group. This ensures screen
+        readers can convey the correct context and selection state to users.
+      </p>
+      <p>
+        The <code>aria-checked</code> attribute reflects whether a radio is currently selected within its group. When a
+        radio is checked, <code>aria-checked="true"</code> is exposed to assistive technologies; otherwise, it is
+        <code>"false"</code>.
+      </p>
+      <p>
+        When disabled using the <code>disabled</code> attribute, <code>aria-disabled="true"</code> is used to convey to
+        assistive technologies that the radio is disabled. When disabled at runtime, it does <em>not</em> sprout a
+        <code>disabled</code> attribute into the DOM.
+      </p>
+      <p>
+        When a radio group is disabled, <code>aria-disabled</code> is not applied to the group. Instead, the disabled
+        state is reflected by applying <code>aria-disabled="true"</code> to each nested radio, ensuring assistive
+        technologies correctly interpret the non-interactive status of individual options.
+      </p>
+      <p>
+        When a radio group is marked as required using the <code>required</code> attribute,
+        <code>aria-required="true"</code>is applied to the group. This communicates to assistive technologies that a
+        selection is mandatory. The <code>aria-required="true"</code> attribute is not propagated to individual radios,
+        as the requirement applies to the group as a whole, not each option.
+      </p>
+      <p>
+        Always provide an accessible label via <code>aria-label</code> or <code>aria-labelledby</code> for radios and
+        radio groups without descriptive text content
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/radio-group/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js and a11y.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer
+        only="m3e-radio"
+        src="https://cdn.jsdelivr.net/npm/@m3e/radio-group@1.0.0-rc.3/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-radio-group"
+        src="https://cdn.jsdelivr.net/npm/@m3e/radio-group@1.0.0-rc.3/dist/custom-elements.json"
+      >
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>
