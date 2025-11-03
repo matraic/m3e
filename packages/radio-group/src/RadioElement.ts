@@ -4,7 +4,6 @@ import { customElement, property, query } from "lit/decorators.js";
 import {
   AttachInternals,
   Checked,
-  ConstraintValidation,
   DesignToken,
   Dirty,
   Disabled,
@@ -18,10 +17,8 @@ import {
   M3eRippleElement,
   M3eStateLayerElement,
   PressedController,
-  Required,
   Role,
   Touched,
-  validate,
 } from "@m3e/core";
 
 import { selectionManager } from "@m3e/core/a11y";
@@ -83,13 +80,7 @@ import { selectionManager } from "@m3e/core/a11y";
 export class M3eRadioElement extends Labelled(
   Dirty(
     Touched(
-      Checked(
-        KeyboardClick(
-          Focusable(
-            Required(ConstraintValidation(FormAssociated(Disabled(AttachInternals(Role(LitElement, "radio"), true)))))
-          )
-        )
-      )
+      Checked(KeyboardClick(Focusable(FormAssociated(Disabled(AttachInternals(Role(LitElement, "radio"), true))))))
     )
   )
 ) {
@@ -149,7 +140,7 @@ export class M3eRadioElement extends Labelled(
     :host([aria-disabled="true"]) .base {
       color: color-mix(in srgb, var(--m3e-radio-disabled-icon-color, ${DesignToken.color.onSurface}) 38%, transparent);
     }
-    :host(.-touched:invalid) .base {
+    :host(.-touched.-invalid) .base {
       --m3e-state-layer-hover-color: var(--m3e-radio-error-hover-color, ${DesignToken.color.error});
       --m3e-state-layer-focus-color: var(--m3e-radio-error-focus-color, ${DesignToken.color.error});
       --m3e-ripple-color: var(--m3e-radio-error-ripple-color, ${DesignToken.color.error});
@@ -166,19 +157,17 @@ export class M3eRadioElement extends Labelled(
       :host([aria-disabled="true"]) .base {
         color: GrayText;
       }
-      :host(.-touched:invalid) {
+      :host(.-touched.-invalid) .base {
         --_radio-forced-color: Highlight;
         color: Highlight;
       }
     }
   `;
 
-  /** @private */ #ignoreSiblingCheck = false;
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;
   /** @private */ @query(".state-layer") private readonly _stateLayer?: M3eStateLayerElement;
   /** @private */ @query(".ripple") private readonly _ripple?: M3eRippleElement;
   /** @private */ readonly #clickHandler = (e: Event) => this.#handleClick(e);
-  /** @private */ readonly #focusOutHandler = () => this.checkValidity();
 
   /** @private */ readonly #hoverController = new HoverController(this, {
     target: null,
@@ -221,60 +210,7 @@ export class M3eRadioElement extends Labelled(
 
   /** @inheritdoc @internal */
   override get [formValue](): string | File | FormData | null {
-    return this.value;
-  }
-
-  /** @internal */
-  override [validate](): ValidityStateFlags | undefined {
-    const validity = super[validate]();
-    if (!validity && this.required && !this.checked) {
-      // If the radio is required and not checked, check other radios that are either
-      // parented by the same group or those that have the same name.
-
-      const group = this.closest("m3e-radio-group");
-      if ((group && !group.selected) || (!group && !this.#siblingRadios.some((x) => x.checked))) {
-        return { valueMissing: true };
-      }
-    }
-    return validity;
-  }
-
-  /** @inheritdoc */
-  override markAsTouched(): void {
-    super.markAsTouched();
-    this.#evaluateSiblings((x) => x.markAsTouched());
-  }
-
-  /** @inheritdoc */
-  override markAsPristine(): void {
-    super.markAsPristine();
-    this.#evaluateSiblings((x) => x.markAsPristine());
-  }
-
-  /** @inheritdoc */
-  override markAsDirty(): void {
-    super.markAsDirty();
-    this.#evaluateSiblings((x) => x.markAsDirty());
-  }
-
-  /** @inheritdoc */
-  override markAsUntouched(): void {
-    super.markAsUntouched();
-    this.#evaluateSiblings((x) => x.markAsUntouched());
-  }
-
-  /** @inheritdoc */
-  override checkValidity(): boolean {
-    const validity = super.checkValidity();
-    this.#evaluateSiblings((x) => x.checkValidity());
-    return validity;
-  }
-
-  /** @inheritdoc */
-  override reportValidity(): boolean {
-    const validity = super.reportValidity();
-    this.#evaluateSiblings((x) => x.reportValidity());
-    return validity;
+    return this.checked ? this.value : null;
   }
 
   /** @inheritdoc */
@@ -282,7 +218,6 @@ export class M3eRadioElement extends Labelled(
     super.connectedCallback();
 
     this.addEventListener("click", this.#clickHandler);
-    this.addEventListener("focusout", this.#focusOutHandler, { capture: true });
 
     for (const label of this.labels) {
       this.#hoverController.observe(label);
@@ -295,7 +230,6 @@ export class M3eRadioElement extends Labelled(
     super.disconnectedCallback();
 
     this.removeEventListener("click", this.#clickHandler);
-    this.removeEventListener("focusout", this.#focusOutHandler, { capture: true });
 
     for (const label of this.labels) {
       this.#hoverController.unobserve(label);
@@ -309,9 +243,6 @@ export class M3eRadioElement extends Labelled(
 
     if (changedProperties.has("checked")) {
       this.#notifySelectionChange();
-    }
-    if (changedProperties.has("required")) {
-      this.ariaRequired = null;
     }
   }
 
@@ -364,22 +295,6 @@ export class M3eRadioElement extends Labelled(
     } else if (this.name && this.checked) {
       // Uncheck any sibling radios of the same name which are also checked.
       this.#siblingRadios.filter((x) => x.checked).forEach((x) => (x.checked = false));
-    }
-    this.#evaluateSiblings((x) => x.checkValidity());
-  }
-
-  /** @private */
-  #evaluateSiblings(callback: (sibling: M3eRadioElement) => void): void {
-    if (!this.#ignoreSiblingCheck) {
-      for (const sibling of this.closest("m3e-radio-group")?.[selectionManager]?.items?.filter((x) => x !== this) ??
-        this.#siblingRadios) {
-        sibling.#ignoreSiblingCheck = true;
-        try {
-          callback(sibling);
-        } finally {
-          sibling.#ignoreSiblingCheck = false;
-        }
-      }
     }
   }
 }

@@ -1,7 +1,19 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement } from "lit/decorators.js";
 
-import { AttachInternals, Labelled, Dirty, Disabled, Touched, Role, Required } from "@m3e/core";
+import {
+  AttachInternals,
+  Labelled,
+  Dirty,
+  Disabled,
+  Touched,
+  Role,
+  Required,
+  ConstraintValidation,
+  FormAssociated,
+  RequiredConstraintValidation,
+  updateLabels,
+} from "@m3e/core";
 
 import { SelectionManager, selectionManager } from "@m3e/core/a11y";
 
@@ -40,8 +52,17 @@ import { M3eRadioElement } from "./RadioElement";
  */
 @customElement("m3e-radio-group")
 export class M3eRadioGroupElement extends Labelled(
-  Dirty(Touched(Required(Disabled(AttachInternals(Role(LitElement, "radiogroup"))))))
+  RequiredConstraintValidation(
+    Dirty(
+      Touched(Required(ConstraintValidation(FormAssociated(Disabled(AttachInternals(Role(LitElement, "radiogroup")))))))
+    )
+  )
 ) {
+  /** The list of attributes corresponding to the registered properties. */
+  static override get observedAttributes() {
+    return [...super.observedAttributes, "aria-invalid"];
+  }
+
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -49,24 +70,12 @@ export class M3eRadioGroupElement extends Labelled(
     }
   `;
 
+  /** @private */ readonly #focusOutHandler = () => this.#handleChange();
+
   /** @internal */
   readonly [selectionManager] = new SelectionManager<M3eRadioElement>().withWrap().onActiveItemChange(() => {
     this[selectionManager].activeItem?.click();
   });
-
-  /** The name that identifies the element when submitting the associated form. */
-  @property({ noAccessor: true }) get name() {
-    return this.getAttribute("name") ?? "";
-  }
-  set name(value: string) {
-    const oldName = this.name;
-    if (value) {
-      this.setAttribute("name", value);
-    } else {
-      this.removeAttribute("name");
-    }
-    this.requestUpdate("name", oldName);
-  }
 
   /** The radios in the group. */
   get radios(): readonly M3eRadioElement[] {
@@ -84,6 +93,60 @@ export class M3eRadioGroupElement extends Labelled(
   }
 
   /** @inheritdoc */
+  override markAsTouched(): void {
+    super.markAsTouched();
+    this.radios.forEach((x) => x.markAsTouched());
+  }
+
+  /** @inheritdoc */
+  override markAsUntouched(): void {
+    super.markAsUntouched();
+    this.radios.forEach((x) => x.markAsUntouched());
+  }
+
+  /** @inheritdoc */
+  override markAsDirty(): void {
+    super.markAsDirty();
+    this.radios.forEach((x) => x.markAsDirty());
+  }
+
+  /** @inheritdoc */
+  override markAsPristine(): void {
+    super.markAsPristine();
+    this.radios.forEach((x) => x.markAsPristine());
+  }
+
+  /** Synchronizes property values when attributes change. */
+  override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
+    super.attributeChangedCallback(name, oldValue, newValue);
+
+    switch (name) {
+      case "name":
+        this.radios.forEach((x) => (x.name = this.name));
+        break;
+
+      case "aria-invalid":
+        this.radios.forEach((x) => {
+          x.classList.toggle("-invalid", newValue === "true");
+          x[updateLabels]?.();
+        });
+        break;
+    }
+  }
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener("focusout", this.#focusOutHandler);
+  }
+
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener("focusout", this.#focusOutHandler);
+  }
+
+  /** @inheritdoc */
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
 
@@ -94,31 +157,31 @@ export class M3eRadioGroupElement extends Labelled(
     if (changedProperties.has("disabled") && (changedProperties.get("disabled") !== undefined || this.disabled)) {
       this[selectionManager].disabled = this.disabled;
     }
-    if (changedProperties.has("required") && (changedProperties.get("required") !== undefined || this.required)) {
-      this[selectionManager].items.forEach((x) => (x.required = this.required));
-    }
-    if (changedProperties.has("name")) {
-      this[selectionManager].items.forEach((x) => (x.name = this.name));
-    }
   }
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot @slotchange="${this.#handleSlotChange}" @keydown="${this.#handleKeyDown}"></slot>`;
+    return html`<slot
+      @slotchange="${this.#handleSlotChange}"
+      @keydown="${this.#handleKeyDown}"
+      @change="${this.#handleChange}"
+    ></slot>`;
   }
 
   /** @private */
   #handleSlotChange() {
     const { added } = this[selectionManager].setItems([...this.querySelectorAll("m3e-radio")]);
-    added.forEach((x) => {
-      x.name = this.name;
-      x.required = this.required;
-    });
+    added.forEach((x) => (x.name = x.name || this.name));
   }
 
   /** @private */
   #handleKeyDown(e: KeyboardEvent): void {
     this[selectionManager].onKeyDown(e);
+  }
+
+  /** @private */
+  #handleChange(): void {
+    this.checkValidity();
   }
 }
 

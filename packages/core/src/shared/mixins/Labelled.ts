@@ -82,6 +82,7 @@ export function Labelled<T extends Constructor<LitElement & AttachInternalsMixin
       const focusable = this.hasAttribute("tabindex");
       const disabled =
         (isDisabledMixin(this) && this.disabled) || (isDisabledInteractiveMixin(this) && this.disabledInteractive);
+      const invalid = isTouchedMixin(this) && this.touched && (this.ariaInvalid || this.classList.contains("-invalid"));
 
       for (const label of this.labels ?? []) {
         label.style.userSelect = focusable ? "none" : "";
@@ -89,7 +90,7 @@ export function Labelled<T extends Constructor<LitElement & AttachInternalsMixin
 
         label.style.color = disabled
           ? `color-mix(in srgb, ${DesignToken.color.onSurface} 38%, transparent)`
-          : isTouchedMixin(this) && this.touched && this.ariaInvalid
+          : invalid
             ? `${DesignToken.color.error}`
             : "";
       }
