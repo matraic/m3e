@@ -166,6 +166,11 @@ export class M3eSegmentedButtonElement extends Labelled(
       this[selectionManager].disableRovingTabIndex(this.multi);
     }
 
+    if (changedProperties.has("multi") || changedProperties.has("disabled")) {
+      // aria-disabled is not supported on radiogroup roles.
+      this.ariaDisabled = this.multi && this.disabled ? "true" : null;
+    }
+
     if (changedProperties.has("hideSelectionIndicator")) {
       this.segments.forEach((x) => x.classList.toggle("-hide-selection", this.hideSelectionIndicator));
     }
