@@ -62,7 +62,7 @@ The following example adds a top-level `m3e-theme` directly beneath a document's
 
 ```html
 <body>
-  <m3e-theme color="#7D67BE" scheme="auto" motion="expressive" strong-focus>
+  <m3e-theme color="#6750A4" scheme="auto" motion="expressive" strong-focus>
     <!-- App content here -->
   </m3e-theme>
 </body>
