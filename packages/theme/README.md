@@ -74,8 +74,8 @@ The following example adds a top-level `m3e-theme` directly beneath a document's
 
 | Attribute      | Type                                                                                                                              | Default      | Description                                                |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------ | ---------------------------------------------------------- |
-| `color`        | `string`                                                                                                                          | `"#7D67BE"`  | The hex color from which to derive dynamic color palettes. |
-| `variant`      | `"monochrome" \| "neutral" \| "tonal-spot" \| "vibrant" \| "expressive" \| "fidelity" \| "rainbow" \| "fruit-salad" \| "content"` | `"vibrant"`  | The color variant of the theme.                            |
+| `color`        | `string`                                                                                                                          | `"#6750A4"`  | The hex color from which to derive dynamic color palettes. |
+| `variant`      | `"monochrome" \| "neutral" \| "tonal-spot" \| "vibrant" \| "expressive" \| "fidelity" \| "rainbow" \| "fruit-salad" \| "content"` | `"content"`  | The color variant of the theme.                            |
 | `scheme`       | `"auto" \| "light" \| "dark"`                                                                                                     | `"auto"`     | The color scheme of the theme.                             |
 | `contrast`     | `"standard" \| "medium" \| "high"`                                                                                                | `"standard"` | The contrast level of the theme.                           |
 | `strong-focus` | `boolean`                                                                                                                         | `false`      | Whether to enable strong focus indicators.                 |

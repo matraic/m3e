@@ -6,8 +6,18 @@ import {
   CorePalette,
   DynamicColor,
   DynamicScheme,
+  Hct,
   hexFromArgb,
   MaterialDynamicColors,
+  SchemeContent,
+  SchemeExpressive,
+  SchemeFidelity,
+  SchemeFruitSalad,
+  SchemeMonochrome,
+  SchemeNeutral,
+  SchemeRainbow,
+  SchemeTonalSpot,
+  SchemeVibrant,
 } from "@material/material-color-utilities";
 
 import { DesignToken } from "@m3e/core";
@@ -76,14 +86,14 @@ export class M3eThemeElement extends LitElement {
 
   /**
    * The hex color from which to derive dynamic color palettes.
-   * @default "#7D67BE"
+   * @default "#6750A4"
    */
-  @property() color = "#7D67BE";
+  @property() color = "#6750A4";
   /**
    * The color variant of the theme.
-   * @default "vibrant"
+   * @default "content"
    */
-  @property() variant: ThemeVariant = "vibrant";
+  @property() variant: ThemeVariant = "content";
 
   /**
    * The color scheme of the theme.
@@ -171,20 +181,34 @@ export class M3eThemeElement extends LitElement {
   }
 
   /** @private */
+  #createScheme(sourceColor: Hct): DynamicScheme {
+    switch (this.variant) {
+      case "content":
+        return new SchemeContent(sourceColor, this.isDark, this.#getContrastLevel());
+      case "expressive":
+        return new SchemeExpressive(sourceColor, this.isDark, this.#getContrastLevel());
+      case "fidelity":
+        return new SchemeFidelity(sourceColor, this.isDark, this.#getContrastLevel());
+      case "fruit-salad":
+        return new SchemeFruitSalad(sourceColor, this.isDark, this.#getContrastLevel());
+      case "monochrome":
+        return new SchemeMonochrome(sourceColor, this.isDark, this.#getContrastLevel());
+      case "neutral":
+        return new SchemeNeutral(sourceColor, this.isDark, this.#getContrastLevel());
+      case "rainbow":
+        return new SchemeRainbow(sourceColor, this.isDark, this.#getContrastLevel());
+      case "tonal-spot":
+        return new SchemeTonalSpot(sourceColor, this.isDark, this.#getContrastLevel());
+      case "vibrant":
+        return new SchemeVibrant(sourceColor, this.isDark, this.#getContrastLevel());
+    }
+  }
+
+  /** @private */
   #apply(): void {
     const color = argbFromHex(this.color);
     const palette = CorePalette.of(color);
-    const scheme = new DynamicScheme({
-      sourceColorArgb: color,
-      variant: this.#getVariant(),
-      contrastLevel: this.#getContrastLevel(),
-      isDark: this.isDark,
-      primaryPalette: palette.a1,
-      secondaryPalette: palette.a2,
-      tertiaryPalette: palette.a3,
-      neutralPalette: palette.n1,
-      neutralVariantPalette: palette.n2,
-    });
+    const scheme = this.#createScheme(Hct.fromInt(color));
 
     let css = "";
 
@@ -236,30 +260,6 @@ export class M3eThemeElement extends LitElement {
 
     if (this.#firstUpdated) {
       this.dispatchEvent(new Event("change", { bubbles: true }));
-    }
-  }
-
-  /** @private */
-  #getVariant(): number {
-    switch (this.variant) {
-      case "monochrome":
-        return 0;
-      case "neutral":
-        return 1;
-      case "tonal-spot":
-        return 2;
-      case "vibrant":
-        return 3;
-      case "expressive":
-        return 4;
-      case "fidelity":
-        return 5;
-      case "rainbow":
-        return 7;
-      case "fruit-salad":
-        return 8;
-      default: // content
-        return 6;
     }
   }
 
