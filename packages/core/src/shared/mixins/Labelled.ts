@@ -85,7 +85,7 @@ export function Labelled<T extends Constructor<LitElement & AttachInternalsMixin
 
       for (const label of this.labels ?? []) {
         label.style.userSelect = focusable ? "none" : "";
-        label.style.cursor = !disabled ? "pointer" : "";
+        label.style.cursor = !disabled && focusable ? "pointer" : "";
 
         label.style.color = disabled
           ? `color-mix(in srgb, ${DesignToken.color.onSurface} 38%, transparent)`
