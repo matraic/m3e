@@ -659,8 +659,9 @@
       <p>
         Filter chip sets are given the ARIA <code>role="radiogroup"</code> and chips are given
         <code>role="radio"</code> for single-select chip sets. For multi-select, sets are given
-        <code>role="listbox"</code> and <code>aria-multiselectable="true"</code> and chips are given
-        <code>role="option"</code>.
+        <code>role="group"</code> and chips are given <code>role="button"</code>. When selected, the chip's selection
+        state is reflected using <code>aria-checked</code> for single-select chips sets and
+        <code>aria-pressed</code> for multi-select chips sets.
       </p>
       <p>
         Input chip sets are given ARIA <code>role="grid"</code> and chips are given <code>role="row"</code>.
