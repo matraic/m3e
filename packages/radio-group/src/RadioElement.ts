@@ -200,14 +200,6 @@ export class M3eRadioElement extends Labelled(
    */
   @property() value = "on";
 
-  /** @private */
-  get #siblingRadios(): ReadonlyArray<M3eRadioElement> {
-    return [
-      ...((this.getRootNode() as ParentNode)?.querySelectorAll<M3eRadioElement>(`m3e-radio[name="${this.name}"]`) ??
-        []),
-    ].filter((x) => x !== this);
-  }
-
   /** @inheritdoc @internal */
   override get [formValue](): string | File | FormData | null {
     return this.checked ? this.value : null;
@@ -294,7 +286,12 @@ export class M3eRadioElement extends Labelled(
       group[selectionManager].notifySelectionChange(this);
     } else if (this.name && this.checked) {
       // Uncheck any sibling radios of the same name which are also checked.
-      this.#siblingRadios.filter((x) => x.checked).forEach((x) => (x.checked = false));
+      [
+        ...((this.getRootNode() as ParentNode)?.querySelectorAll<M3eRadioElement>(`m3e-radio[name="${this.name}"]`) ??
+          []),
+      ]
+        .filter((x) => x !== this && x.checked)
+        .forEach((x) => (x.checked = false));
     }
   }
 }
