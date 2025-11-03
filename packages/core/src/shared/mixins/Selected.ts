@@ -44,9 +44,15 @@ export function Selected<T extends Constructor<LitElement>>(base: T): Constructo
         if (this.role === "button") {
           this.ariaPressed = `${this.selected}`;
           this.ariaSelected = null;
+          this.ariaChecked = null;
+        } else if (this.role === "radio") {
+          this.ariaChecked = `${this.selected}`;
+          this.ariaSelected = null;
+          this.ariaPressed = null;
         } else if (this.role && this.role !== "none" && this.role !== "presentation") {
           this.ariaSelected = `${this.selected}`;
           this.ariaPressed = null;
+          this.ariaChecked = null;
         }
       }
     }

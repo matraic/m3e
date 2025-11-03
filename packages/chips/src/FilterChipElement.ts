@@ -100,7 +100,7 @@ import { M3eChipElement } from "./ChipElement";
  */
 @customElement("m3e-filter-chip")
 export class M3eFilterChipElement extends Selected(
-  KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(M3eChipElement, "option"), true)))))
+  KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(M3eChipElement, "radio"), true)))))
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = [

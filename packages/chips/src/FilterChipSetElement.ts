@@ -46,7 +46,7 @@ import { M3eFilterChipElement } from "./FilterChipElement";
  */
 @customElement("m3e-filter-chip-set")
 export class M3eFilterChipSetElement extends Labelled(
-  Dirty(Touched(FormAssociated(Disabled(AttachInternals(Role(M3eChipSetElement, "listbox"))))))
+  Dirty(Touched(FormAssociated(Disabled(AttachInternals(Role(M3eChipSetElement, "radiogroup"))))))
 ) {
   /** @internal */
   readonly [selectionManager] = new SelectionManager<M3eFilterChipElement>()
@@ -114,9 +114,15 @@ export class M3eFilterChipSetElement extends Labelled(
     }
 
     if (changedProperties.has("multi")) {
-      this.ariaMultiSelectable = `${this.multi}`;
+      this.role = this.multi ? "group" : "radiogroup";
+      this.#updateChipRole();
       this[selectionManager].multi = this.multi;
       this[selectionManager].disableRovingTabIndex(this.multi);
+    }
+
+    if (changedProperties.has("multi") || changedProperties.has("disabled")) {
+      // aria-disabled is not supported on radiogroup roles.
+      this.ariaDisabled = this.multi && this.disabled ? "true" : null;
     }
 
     if (changedProperties.has("hideSelectionIndicator")) {
@@ -133,23 +139,29 @@ export class M3eFilterChipSetElement extends Labelled(
     ></slot>`;
   }
 
-  /** @internal */
+  /** @private */
   #handleSlotChange() {
     const { added } = this[selectionManager].setItems([...this.querySelectorAll("m3e-filter-chip")]);
     added.forEach((x) => x.classList.toggle("-hide-selection", this.hideSelectionIndicator));
+    this.#updateChipRole();
   }
 
-  /** @internal */
+  /** @private */
   #handleKeyDown(e: KeyboardEvent): void {
     if (!this.multi) {
       this[selectionManager].onKeyDown(e);
     }
   }
 
-  /** @internal */
+  /** @private */
   #handleChange(e: Event): void {
     e.stopPropagation();
     this.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+
+  /** @private */
+  #updateChipRole(): void {
+    this.chips.forEach((x) => (x.role = this.multi ? "button" : "radio"));
   }
 }
 
