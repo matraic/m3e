@@ -20,12 +20,14 @@ import { SelectionManager, selectionManager } from "@m3e/core/a11y";
 import { M3eRadioElement } from "./RadioElement";
 
 /**
- * A container for a set of radio buttons that enforces single selection.
+ * A container for a set of radio buttons.
  *
  * @description
- * The `m3e-radio-group` component orchestrates a collection of `m3e-radio` components, ensuring that
- * only one option is selected at a time. It manages selection state, propagates value changes, and
- * supports form integration through `name` and `value` attributes.
+ * The `m3e-radio-group` component is a semantic container that orchestrates a set of `m3e-radio` elements.
+ * It provides accessible grouping, keyboard navigation, and validation logic for mutually exclusive selection.
+ * When marked as `required`, the group enforces selection constraints and reflects validation state, while
+ * delegating form submission to the checked radio. The group does not submit a value itself—it coordinates
+ * behavior, focus, and feedback across its radios.
  *
  * @example
  * The following example illustrates using `m3e-radio-group` and `m3e-radio` to present a group of options.

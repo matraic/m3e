@@ -53,7 +53,7 @@ In addition, you must use an [import map](https://developer.mozilla.org/en-US/do
 
 ## 🗂️ Elements
 
-- `m3e-radio-group` — A container for a set of radio buttons that enforces single selection.
+- `m3e-radio-group` — A container for a set of radio buttons.
 - `m3e-radio` — A radio button that allows a user to select one option from a set of options.
 
 ## 🧪 Example
