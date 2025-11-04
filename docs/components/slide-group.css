@@ -1,0 +1,12 @@
+m3e-slide-group div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 100px;
+  height: 56px;
+}
+m3e-slide-group[vertical] {
+  max-height: 300px;
+  width: 100px;
+}
