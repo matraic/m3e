@@ -30,6 +30,7 @@
     </script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.3/dist/index.min.js"></script>
     <script
@@ -45,10 +46,277 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Segmented Button</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-segmented-button</code> component allows users to select one or more options from a horizontal
+        group.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/segmented-button</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Anatomy</m3e-heading>
+      <p>
+        A segmented button is defined using the <code>m3e-segmented-button</code> component, which serves as a semantic
+        container for a set of interactive segments. Each segment is represented by a
+        <code>m3e-button-segment</code> component, allowing users to select from multiple related options within a
+        unified control.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-segmented-button>
+            <m3e-button-segment checked>8 oz</m3e-button-segment>
+            <m3e-button-segment>12 oz</m3e-button-segment>
+            <m3e-button-segment>16 oz</m3e-button-segment>
+            <m3e-button-segment>20 oz</m3e-button-segment>
+          </m3e-segmented-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-segmented-button&gt;
+  &lt;m3e-button-segment checked&gt;8 oz&lt;/m3e-button-segment&gt;
+  &lt;!-- Additional segments omitted for brevity --&gt;
+&lt;/m3e-segmented-button&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Icons</m3e-heading>
+      <p>
+        Use the <code>icon</code> slot of the <code>m3e-button-segment</code> to present an icon before a segment's
+        label.
+      </p>
+      <p>When selected, a segments's icon is replaced with a check icon.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-segmented-button>
+            <m3e-button-segment> <m3e-icon slot="icon" name="palette"></m3e-icon>Design </m3e-button-segment>
+            <m3e-button-segment>
+              <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility
+            </m3e-button-segment>
+            <m3e-button-segment> <m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion </m3e-button-segment>
+            <m3e-button-segment> <m3e-icon slot="icon" name="description"></m3e-icon>Documentation </m3e-button-segment>
+          </m3e-segmented-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-segmented-button&gt;
+  &lt;m3e-button-segment&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;palette&quot;&gt;&lt;/m3e-icon&gt;Design
+  &lt;/m3e-button-segment&gt;
+  &lt;!-- Additional segments omitted for brevity --&gt;
+&lt;/m3e-segmented-button&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Selection</m3e-heading>
+      <p>
+        Segmented buttons support both single-select and multi-select modes. Use the
+        <code>multi</code> attribute of <code>m3e-segmented-button</code> to allow multiple segments to be selected
+        simultaneously.
+      </p>
+      <p>
+        Use the <code>checked</code> attribute to control the selected state of a <code>m3e-button-segment</code>. When
+        clicked, a cancellable <code>input</code> event is emitted followed by a <code>change</code> event. To cancel
+        selection change, call <code>preventDefault</code> during <code>input</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-segmented-button multi>
+            <m3e-button-segment checked>8 oz</m3e-button-segment>
+            <m3e-button-segment checked>12 oz</m3e-button-segment>
+            <m3e-button-segment>16 oz</m3e-button-segment>
+            <m3e-button-segment>20 oz</m3e-button-segment>
+          </m3e-segmented-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-segmented-button multi&gt;
+  &lt;m3e-button-segment checked&gt;8 oz&lt;/m3e-button-segment&gt;
+  &lt;m3e-button-segment checked&gt;12 oz&lt;/m3e-button-segment&gt;
+  &lt;!-- Additional segments omitted for brevity --&gt;
+&lt;/m3e-segmented-button&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+      <p>Use the <code>disabled</code> attribute to disable an individual segment.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-segmented-button>
+            <m3e-button-segment disabled> <m3e-icon slot="icon" name="palette"></m3e-icon>Design </m3e-button-segment>
+            <m3e-button-segment>
+              <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility
+            </m3e-button-segment>
+            <m3e-button-segment> <m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion </m3e-button-segment>
+            <m3e-button-segment> <m3e-icon slot="icon" name="description"></m3e-icon>Documentation </m3e-button-segment>
+          </m3e-segmented-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-segmented-button&gt;
+  &lt;m3e-button-segment disabled&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;palette&quot;&gt;&lt;/m3e-icon&gt;Design
+  &lt;/m3e-button-segment&gt;
+  &lt;!-- Additional segments omitted for brevity --&gt;
+&lt;/m3e-segmented-button&gt;</pre
+        >
+      </m3e-card>
+
+      <p>
+        You can also use the <code>disabled</code> attribute of <code>m3e-segmented-button</code> to disable the button
+        in its entirety.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-segmented-button disabled>
+            <m3e-button-segment> <m3e-icon slot="icon" name="palette"></m3e-icon>Design </m3e-button-segment>
+            <m3e-button-segment>
+              <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility
+            </m3e-button-segment>
+            <m3e-button-segment> <m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion </m3e-button-segment>
+            <m3e-button-segment> <m3e-icon slot="icon" name="description"></m3e-icon>Documentation </m3e-button-segment>
+          </m3e-segmented-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-segmented-button disabled&gt;
+  &lt;m3e-button-segment&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;palette&quot;&gt;&lt;/m3e-icon&gt;Design
+  &lt;/m3e-button-segment&gt;
+  &lt;!-- Additional segments omitted for brevity --&gt;
+&lt;/m3e-segmented-button&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Hiding the selection indicator</m3e-heading>
+      <p>
+        Use the <code>hide-selection-indicator</code> attribute of <code>m3e-segmented-button</code> to hide selection
+        indicators. If a segment has an icon via use of the <code>icon</code> slot, the icon is retained upon selection.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-segmented-button hide-selection-indicator>
+            <m3e-button-segment>Design</m3e-button-segment>
+            <m3e-button-segment>Accessibility</m3e-button-segment>
+            <m3e-button-segment checked>
+              <m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion
+            </m3e-button-segment>
+            <m3e-button-segment> <m3e-icon slot="icon" name="description"></m3e-icon>Documentation </m3e-button-segment>
+          </m3e-segmented-button>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-segmented-button hide-selection-indicator&gt;
+  &lt;!-- Segments omitted for brevity --&gt;
+&lt;/m3e-segmented-button&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Form Associated</m3e-heading>
+      <p>
+        Segmented buttons can participate in form submission as a
+        <a
+          href="https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-face"
+          target="_blank"
+          rel="noopener noreferrer"
+          >form-associated custom element</a
+        >
+        (FACE), contributing its state to the form data. The <code>name</code> attribute defines the key under which the
+        component's value is submitted in a form. The button's value is determined by selected segments. You can use the
+        <code>value</code> of a <code>m3e-button-segment</code> to control a segments's value. When multiple segments
+        are selected, form data will include multiple entries keyed by the same <code>name</code>.
+      </p>
+      <p>
+        The component honors the <code>disabled</code> state (on the segmented button itself) as a
+        <strong>property-only</strong> control. When disabled at runtime, it does <em>not</em> sprout a
+        <code>disabled</code> attribute into the DOM.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Segmented buttons are given the ARIA <code>role="radiogroup"</code> and segments are given
+        <code>role="radio"</code> for single-select buttons. For multi-select, buttons are given
+        <code>role="group"</code> and segments are given <code>role="button"</code>. When selected, the segments's
+        selection state is reflected using <code>aria-checked</code> for single-select buttons and
+        <code>aria-pressed</code> for multi-select buttons.
+      </p>
+      <p>
+        For disabled single-select segmented buttons, <code>aria-disabled</code> is not applied to the button. Instead,
+        the disabled state is reflected by applying <code>aria-disabled="true"</code> to each nested segment, ensuring
+        assistive technologies correctly interpret the non-interactive status of individual options. For disabled
+        multi-select segmented buttons, <code>aria-disabled</code> is applied to the button as well as individual
+        segments. When a segmented button is disabled at runtime, it does <em>not</em> sprout a
+        <code>disabled</code> attribute into the DOM.
+      </p>
+      <p>
+        Always provide an accessible label via <code>aria-label</code> or <code>aria-labelledby</code> for each
+        segmented button.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/segmented-button/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js and a11y.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer
+        only="m3e-button-segment"
+        src="https://cdn.jsdelivr.net/npm/@m3e/segmented-button@1.0.0-rc.3/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-segmented-button"
+        src="https://cdn.jsdelivr.net/npm/@m3e/segmented-button@1.0.0-rc.3/dist/custom-elements.json"
+      >
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>
