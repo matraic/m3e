@@ -42,10 +42,281 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Slider</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-slider</code> component enables users to select a numeric value from a continuous or discrete
+        range.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/slider</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+      <p>
+        The <code>m3e-slider</code> allows for the selection of a value from a range similar to
+        <code>&lt;input type="range"&gt;</code>. They require a <code>m3e-slider-thumb</code>, which is responsible for
+        rendering the interactive handle, managing pointer and keyboard input, and conveying current value semantics
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-slider>
+            <m3e-slider-thumb></m3e-slider-thumb>
+          </m3e-slider>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-slider&gt;
+  &lt;m3e-slider-thumb&gt;&lt;/m3e-slider-thumb&gt;
+&lt;/m3e-slider&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Selecting a value</m3e-heading>
+      <p>
+        By default the minimum value of the slider is <code>0</code>, the maximum value is <code>100</code>, and the
+        thumb moves in increments of <code>1</code>. These values can be changed by setting the <code>min</code>,
+        <code>max</code>, and <code>step</code> attributes respectively.
+      </p>
+      <p>
+        The thumb value is set to the minimum value unless otherwise specified using the <code>value</code> attribute of
+        the <code>m3e-slider-thumb</code>. When changed through user interaction, a cancellable <code>input</code> event
+        is emitted followed by a <code>change</code> event. To cancel value change, call
+        <code>preventDefault</code> during <code>input</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-slider min="1" max="5" step="0.5">
+            <m3e-slider-thumb value="1.5"></m3e-slider-thumb>
+          </m3e-slider>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-slider min=&quot;1&quot; max=&quot;5&quot; step=&quot;0.5&quot;&gt;
+  &lt;m3e-slider-thumb value=&quot;1.5&quot;&gt;&lt;/m3e-slider-thumb&gt;
+&lt;/m3e-slider&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Selecting a range</m3e-heading>
+      <p>A <code>m3e-slider</code> can be converted into a range slider by specifying two thumbs.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-slider>
+            <m3e-slider-thumb value="20"></m3e-slider-thumb>
+            <m3e-slider-thumb value="80"></m3e-slider-thumb>
+          </m3e-slider>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-slider&gt;
+  &lt;m3e-slider-thumb value=&quot;20&quot;&gt;&lt;/m3e-slider-thumb&gt;
+  &lt;m3e-slider-thumb value=&quot;80&quot;&gt;&lt;/m3e-slider-thumb&gt;
+&lt;/m3e-slider&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Negative value ranges</m3e-heading>
+      <p>Negative value ranges are supported by setting the <code>min</code> attribute to a negative value.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-slider min="-50">
+            <m3e-slider-thumb value="-20"></m3e-slider-thumb>
+          </m3e-slider>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-slider min=&quot;-50&quot;&gt;
+  &lt;m3e-slider-thumb value=&quot;-20&quot;&gt;&lt;/m3e-slider-thumb&gt;
+&lt;/m3e-slider&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Sizes</m3e-heading>
+      <p>
+        There are five size variants which can be used to add or remove emphasis:
+        <code>extra-small</code> (default), <code>small</code>, <code>medium</code>, <code>large</code>, and
+        <code>extra-large</code>. Use the <code>size</code> attribute to control a slider's size.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-slider size="extra-small">
+            <m3e-slider-thumb value="50"></m3e-slider-thumb>
+          </m3e-slider>
+          <m3e-slider size="small">
+            <m3e-slider-thumb value="50"></m3e-slider-thumb>
+          </m3e-slider>
+          <m3e-slider size="medium">
+            <m3e-slider-thumb value="50"></m3e-slider-thumb>
+          </m3e-slider>
+          <m3e-slider size="large">
+            <m3e-slider-thumb value="50"></m3e-slider-thumb>
+          </m3e-slider>
+          <m3e-slider size="extra-large">
+            <m3e-slider-thumb value="50"></m3e-slider-thumb>
+          </m3e-slider>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-slider size=&quot;extra-small&quot;&gt;
+  &lt;m3e-slider-thumb value=&quot;20&quot;&gt;&lt;/m3e-slider-thumb&gt;
+&lt;/m3e-slider&gt;
+&lt;!-- Additional sizes omitted for brevity --&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Labels</m3e-heading>
+      <p>
+        Use the <code>labelled</code> attribute of a <code>m3e-slider</code> to control whether to show thumb labels. By
+        default, the value of a thumb is used as the label text. You can control label formatting by setting the
+        <code>displayWith</code> property to a function that returns a label given a value.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-slider labelled>
+            <m3e-slider-thumb value="20"></m3e-slider-thumb>
+          </m3e-slider>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-slider labelled&gt;
+  &lt;m3e-slider-thumb value=&quot;20&quot;&gt;&lt;/m3e-slider-thumb&gt;
+&lt;/m3e-slider&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Tick marks</m3e-heading>
+      <p>
+        By default, tick marks are not presented. Use the <code>discrete</code> attribute to show them. You must also
+        specify a <code>step</code> larger than <code>1</code> for tick marks to show.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-slider discrete step="10">
+            <m3e-slider-thumb value="20"></m3e-slider-thumb>
+          </m3e-slider>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-slider discrete step=&quot;10&quot;&gt;
+  &lt;m3e-slider-thumb value=&quot;20&quot;&gt;&lt;/m3e-slider-thumb&gt;
+&lt;/m3e-slider&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+      <p>
+        Sliders can be disabled using the <code>disabled</code> attribute. If labelled, thumb labels are shown on hover.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-slider labelled disabled>
+            <m3e-slider-thumb value="20"></m3e-slider-thumb>
+          </m3e-slider>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-slider labelled disabled&gt;
+  &lt;m3e-slider-thumb value=&quot;20&quot;&gt;&lt;/m3e-slider-thumb&gt;
+&lt;/m3e-slider&gt;</pre
+        >
+      </m3e-card>
+      <p>While uncommon, individual thumbs can also be disabled while allowing another thumb to be enabled.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-slider labelled>
+            <m3e-slider-thumb value="20"></m3e-slider-thumb>
+            <m3e-slider-thumb disabled value="80"></m3e-slider-thumb>
+          </m3e-slider>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-slider labelled&gt;
+  &lt;m3e-slider-thumb value=&quot;20&quot;&gt;&lt;/m3e-slider-thumb&gt;
+  &lt;m3e-slider-thumb disabled value=&quot;80&quot;&gt;&lt;/m3e-slider-thumb&gt;
+&lt;/m3e-slider&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Sliders are not given an ARIA role, indicating that they are treated as neutral, non-semantic elements in the
+        accessibility tree unless explicitly referenced or annotated.
+      </p>
+      <p>
+        Thumbs are given ARIA <code>role="slider"</code> indicating that each functions as an independent value selector
+        within the range, conveying its current position via <code>aria-valuemin</code>, <code>aria-valuemax</code>, and
+        <code>aria-valuenow</code> attributes.
+      </p>
+      <p>
+        When disabled, <code>aria-disabled</code> is used to convey to assistive technologies that a thumbs are present
+        but intentionally non-interactive.
+      </p>
+      <p>
+        Always provide an accessible label via <code>aria-label</code> or <code>aria-labelledby</code> for each thumb.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/slider/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer only="m3e-slider" src="https://cdn.jsdelivr.net/npm/@m3e/slider@1.0.0-rc.3/dist/custom-elements.json">
+      </api-viewer>
+      <api-viewer
+        only="m3e-slider-thumb"
+        src="https://cdn.jsdelivr.net/npm/@m3e/slider@1.0.0-rc.3/dist/custom-elements.json"
+      >
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>
