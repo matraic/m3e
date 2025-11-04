@@ -78,9 +78,7 @@ export class M3eSlideGroupElement extends LitElement {
       width: unset;
       --m3e-icon-button-small-container-height: var(--m3e-slide-group-button-size, 2.5rem);
     }
-    :host([vertical]) .prev-button .icon {
-      transform: rotate(-90deg);
-    }
+    :host([vertical]) .prev-button .icon,
     :host([vertical]) .next-button .icon {
       transform: rotate(90deg);
     }
