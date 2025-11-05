@@ -30,6 +30,8 @@
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon-button@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toolbar@1.0.0-rc.3/dist/index.min.js"></script>
@@ -42,10 +44,247 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Toolbar</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>The <code>m3e-toolbar</code> component presents contextual actions, navigation, and controls.</p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/toolbar</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+      <p>
+        There are two toolbar appearance variants: <code>standard</code> (default) and <code>vibrant</code>. Use the
+        <code>variant</code> attribute to change the appearance.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-toolbar variant="standard">
+            <m3e-icon-button>
+              <m3e-icon name="arrow_back"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="arrow_forward"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button width="wide" variant="filled">
+              <m3e-icon name="add"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="picture_in_picture"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="more_vert"></m3e-icon>
+            </m3e-icon-button>
+          </m3e-toolbar>
+          <m3e-toolbar variant="vibrant">
+            <m3e-icon-button>
+              <m3e-icon name="arrow_back"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="arrow_forward"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button width="wide" variant="filled">
+              <m3e-icon name="add"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="picture_in_picture"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="more_vert"></m3e-icon>
+            </m3e-icon-button>
+          </m3e-toolbar>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-toolbar variant=&quot;standard&quot;&gt;
+  &lt;m3e-icon-button&gt;
+    &lt;m3e-icon name=&quot;arrow_back&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;m3e-icon-button&gt;
+    &lt;m3e-icon name=&quot;arrow_forward&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;m3e-icon-button width=&quot;wide&quot; variant=&quot;filled&quot;&gt;
+    &lt;m3e-icon name=&quot;add&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;m3e-icon-button&gt;
+    &lt;m3e-icon name=&quot;picture_in_picture&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;m3e-icon-button&gt;
+    &lt;m3e-icon name=&quot;more_vert&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-icon-button&gt;
+&lt;/m3e-toolbar&gt;
+&lt;m3e-toolbar variant=&quot;vibrant&quot;&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-toolbar&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Shapes</m3e-heading>
+      <p>
+        There are two shape variants: <code>square</code> (default) and <code>rounded</code>. Use the
+        <code>shape</code> attribute to change the appearance.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-toolbar variant="vibrant" shape="rounded">
+            <m3e-icon-button>
+              <m3e-icon name="arrow_back"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="arrow_forward"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button width="wide" variant="filled">
+              <m3e-icon name="add"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="picture_in_picture"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="more_vert"></m3e-icon>
+            </m3e-icon-button>
+          </m3e-toolbar>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-toolbar variant=&quot;vibrant&quot; shape=&quot;rounded&quot;&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-toolbar&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Elevation</m3e-heading>
+      <p>
+        Use the <code>elevated</code> attribute to elevate a toolbar to a visually prominent surface, distinguishing it
+        from the surrounding layout and signaling its importance or active context.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-toolbar variant="vibrant" shape="rounded" elevated>
+            <m3e-icon-button>
+              <m3e-icon name="arrow_back"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="arrow_forward"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button width="wide" variant="filled">
+              <m3e-icon name="add"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="picture_in_picture"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="more_vert"></m3e-icon>
+            </m3e-icon-button>
+          </m3e-toolbar>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-toolbar variant=&quot;vibrant&quot; shape=&quot;rounded&quot; elevated&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-toolbar&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Orientation</m3e-heading>
+      <p>
+        By default, toolbar are oriented horizontally. Use the <code>vertical</code> attribute to orient the toolbar
+        vertically, stacking its interactive elements from top to bottom rather than left to right. This is useful for
+        side panels, compact layouts, or contexts where vertical alignment enhances clarity or accessibility.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-toolbar variant="vibrant" shape="rounded" vertical>
+            <m3e-icon-button>
+              <m3e-icon name="arrow_back"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="arrow_forward"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button width="wide" variant="filled">
+              <m3e-icon name="add"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="picture_in_picture"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button>
+              <m3e-icon name="more_vert"></m3e-icon>
+            </m3e-icon-button>
+          </m3e-toolbar>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-toolbar variant=&quot;vibrant&quot; shape=&quot;rounded&quot; vertical&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-toolbar&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Toolbars are given ARIA <code>role="toolbar"</code> indicating that the element serves as a container for a
+        group of interactive controls, typically buttons, that perform actions related to a common context. This role
+        helps assistive technologies understand the grouping and purpose of the controls within, enhancing navigation
+        and discoverability.
+      </p>
+      <p>
+        Vertically oriented toolbars are given <code>aria-orientation="vertical"</code> to explicitly communicate their
+        layout direction to assistive technologies, enhancing navigation and spatial understanding for users relying on
+        screen readers or keyboard interaction.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/toolbar/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js and a11y.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer
+        only="m3e-toolbar"
+        src="https://cdn.jsdelivr.net/npm/@m3e/toolbar@1.0.0-rc.3/dist/custom-elements.json"
+      ></api-viewer>
     </m3e-theme>
   </body>
 </html>
