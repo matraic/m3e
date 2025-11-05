@@ -18,6 +18,7 @@
     />
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
+    <link href="switch.css" rel="stylesheet" />
     <script type="importmap">
       {
         "imports": {
@@ -35,17 +36,177 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/switch@1.0.0-rc.3/dist/index.min.js"></script>
   </head>
   <body id="body">
-    <m3e-theme strong-focus>
+    <m3e-theme strong-focus motion="expressive">
       <m3e-toc class="toc" for="body">
         <span slot="overline">On this page</span>
         <span slot="title">Switch</span>
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Switch</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>The <code>m3e-switch</code> component is nn on/off control that can be toggled by clicking.</p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/switch</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+      <p>
+        Use the <code>m3e-switch</code> component to create a switch (also known as a slide toggle). Use the
+        <code>checked</code> attribute to indicate whether the switch is "on". When clicked, a cancellable
+        <code>input</code> event is emitted followed by a <code>change</code> event. To cancel checked state changes,
+        call <code>preventDefault</code> during <code>input</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-switch checked></m3e-switch>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">&lt;m3e-switch checked&gt;&lt;/m3e-switch&gt;</pre>
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Labels</m3e-heading>
+      <p>Associate a label with a switch using the <code>label</code> element.</p>
+
+      <m3e-card variant="outlined">
+        <div slot="content" class="switch-box">
+          <label><m3e-switch></m3e-switch>&nbsp;Switch 1</label>
+          <m3e-switch id="switch2"></m3e-switch>
+          <label for="switch2">&nbsp;Switch 2</label>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;label&gt;&lt;m3e-switch&gt;&lt;/m3e-switch&gt;&nbsp;Switch 1&lt;/label&gt;
+&lt;m3e-switch id=&quot;switch2&quot;&gt;&lt;/m3e-switch&gt;
+&lt;label for=&quot;switch2&quot;&gt;&nbsp;Switch 2&lt;/label&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Icons</m3e-heading>
+      <p>
+        You can control the icons to present using the <code>icons</code> attribute. Supports values include
+        <code>none</code> (default), <code>selected</code>, and <code>both</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content" class="switch-box">
+          <m3e-switch icons="selected" checked></m3e-switch>
+          <m3e-switch icons="both"></m3e-switch>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-switch icons=&quot;selected&quot; checked&gt;&lt;/m3e-switch&gt;
+&lt;m3e-switch icons=&quot;both&quot;&gt;&lt;/m3e-switch&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Form Associated</m3e-heading>
+      <p>
+        This component participates in form submission as a
+        <a
+          href="https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-face"
+          target="_blank"
+          rel="noopener noreferrer"
+          >form-associated custom element</a
+        >
+        (FACE), contributing its state to the form data. The <code>name</code> attribute defines the key under which the
+        component's value is submitted in a form. When checked and not disabled, <code>value</code> (defaults to
+        <code>"on"</code>) is submitted.
+      </p>
+      <p>
+        The component honors the <code>disabled</code> state as a <strong>property-only</strong> control. When disabled
+        at runtime, it does <em>not</em> sprout a <code>disabled</code> attribute into the DOM.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+      <p>
+        Use the <code>disabled</code> attribute to disable a switch. Associated labels are automatically styled to show
+        disabled.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content" class="switch-box">
+          <label><m3e-switch disabled></m3e-switch>&nbsp;Disabled Switch 1</label>
+          <m3e-switch id="chk3" disabled></m3e-switch>
+          <label for="chk3">&nbsp;Disabled Switch 2</label>
+        </div>
+      </m3e-card>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;label&gt;&lt;m3e-switch disabled&gt;&lt;/m3e-switch&gt;Disabled Switch 1&lt;/label&gt;
+&lt;m3e-switch id=&quot;chk3&quot; disabled&gt;&lt;/m3e-switch&gt;
+&lt;label for=&quot;chk3&quot;&gt;Disabled Switch 2&lt;/label&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Switches are given the ARIA <code>role="switch"</code> aligning with their semantic purpose as binary state
+        toggles. This role communicates to assistive technologies that the component represents a two-state control,
+        similar to a checkbox but with a distinct interaction model.
+      </p>
+      <p>
+        The component manages and reflects its state via the <code>aria-checked</code> attribute, where
+        <code>aria-checked="true"</code> indicates the switch is checked (on), and
+        <code>aria-checked="false"</code> indicates it is unchecked (off).
+      </p>
+      <p>
+        When disabled using the <code>disabled</code> attribute, <code>aria-disabled="true"</code> is used to convey to
+        assistive technologies that the switch is disabled. When disabled at runtime, it does <em>not</em> sprout a
+        <code>disabled</code> attribute into the DOM.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/switch/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer
+        only="m3e-switch"
+        src="https://cdn.jsdelivr.net/npm/@m3e/switch@1.0.0-rc.3/dist/custom-elements.json"
+      ></api-viewer>
     </m3e-theme>
   </body>
 </html>

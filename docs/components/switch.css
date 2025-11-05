@@ -1,0 +1,8 @@
+.switch-box,
+.switch-box label {
+  display: flex;
+  align-items: center;
+}
+.switch-box label + m3e-switch {
+  margin-left: 1rem;
+}
