@@ -18,6 +18,7 @@
     />
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
+    <link href="toc.css" rel="stylesheet" />
     <script type="importmap">
       {
         "imports": {
@@ -41,10 +42,145 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">TOC</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>The <code>m3e-toc</code> component generates a hierarchical table of contents for in-page navigation.</p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/toc</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Generating a TOC</m3e-heading>
+      <p>
+        The <code>m3e-toc</code> component automatically generates a table of contents by scanning heading elements
+        (<code>h1</code> through <code>h6</code>, and <code>m3e-hading</code>) within a specified container. It creates
+        a navigable outline that reflects the document's structure, enabling users to quickly jump between sections.
+      </p>
+      <p>
+        To activate, set the <code>for</code> attribute to the ID of the container whose headings should be indexed. The
+        generated TOC updates reactively as headings are added, removed, or reordered.
+      </p>
+      <p>
+        Headers having the <code>m3e-toc-ignore</code> attribute will be ignored by the TOC generator. This is typically
+        used for page-level headings whose text is mirrored by the TOC's title.
+      </p>
+
+      <m3e-card variant="outlined">
+        <iframe slot="content" src="./toc-example.html"></iframe>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;div id=&quot;d1&quot;&gt;
+  &lt;m3e-toc for=&quot;d1&quot;&gt;
+    &lt;span slot=&quot;overline&quot;&gt;Overline&lt;/span&gt;
+    &lt;span slot=&quot;title&quot;&gt;Title&lt;/span&gt;
+  &lt;/m3e-toc&gt;
+  &lt;div&gt;
+    &lt;h2 id=&quot;h1&quot;&gt;Heading 1&lt;/h2&gt;
+    &lt;h3 id=&quot;h1.1&quot;&gt;Heading 1.1&lt;/h3&gt;
+    &lt;h4 id=&quot;h1.1.1&quot;&gt;Heading 1.1.1&lt;/h4&gt;
+    &lt;h3 id=&quot;h2&quot;&gt;Heading 1.2&lt;/h3&gt;
+    &lt;h2 id=&quot;h2.1&quot;&gt;Heading 2&lt;/h2&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Heading</m3e-heading>
+      <p>
+        Use the <code>overline</code> and <code>title</code> slots to provide heading content for a TOC. The overline is
+        limited to a single line and the title is limited to two lines. If content overflows, it will be truncated with
+        an ellipsis.
+      </p>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-toc for=&quot;d1&quot;&gt;
+    &lt;span slot=&quot;overline&quot;&gt;Overline&lt;/span&gt;
+    &lt;span slot=&quot;title&quot;&gt;Title&lt;/span&gt;
+  &lt;/m3e-toc&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Maximum depth</m3e-heading>
+      <p>
+        When generating a TOC, you can control the maximum depth of headers that appear in the TOC using the
+        <code>max-depth</code> attribute. By default, the maximum depth is 2.
+      </p>
+      <p>
+        The heading depth is determined by the highest-level heading found within the container. For example, if no
+        <code>h1</code> is present but an <code>h2</code> is, the depth starts at level 2.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        The <code>m3e-toc</code> component is marked with <code>role="navigation"</code> to signal its purpose as a
+        navigational landmark.
+      </p>
+      <p>
+        To ensure assistive technologies announce it meaningfully, TOCs should labeled using both the overline and title
+        via <code>aria-labelledby</code>. This dual-labeling approach preserves expressive hierarchy—where the overline
+        provides contextual framing (e.g., “On this page”) and the title conveys specific content.
+      </p>
+      <p>
+        Individual items are organized within an unordered list and given ARIA <code>role="link"</code> to convey their
+        interactive nature to assistive technologies. Each item also receives <code>tabindex="-1"</code> to make it
+        programmatically focusable without being included in the default tab order.
+      </p>
+      <p>
+        The active item receives <code>aria-current="true"</code> to indicate its current state within the document
+        context. This attribute helps assistive technologies convey that the linked section is currently in view,
+        enhancing orientation and navigational clarity for screen reader users.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/toc/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js and a11y.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer only="m3e-toc" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.3/dist/custom-elements.json">
+      </api-viewer>
+      <api-viewer only="m3e-toc-item" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.3/dist/custom-elements.json">
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>

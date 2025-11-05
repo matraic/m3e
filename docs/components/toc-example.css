@@ -1,0 +1,31 @@
+html {
+  overflow-y: auto;
+}
+body {
+  font-family: "Roboto";
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+#d1 {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
+  max-height: 300px;
+}
+#d1 > div {
+  position: absolute;
+}
+m3e-toc[for="d1"] {
+  position: sticky;
+  top: 0;
+  margin-left: auto;
+}
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 100px;
+}

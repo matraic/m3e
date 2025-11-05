@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>TOC Example for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="TOC Example for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="toc-example.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.3/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.0-rc.3/dist/a11y.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.3/dist/index.min.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <div id="d1">
+        <m3e-toc for="d1">
+          <span slot="overline">Overline</span>
+          <span slot="title">Title</span>
+        </m3e-toc>
+        <div>
+          <h2 id="h1">Heading 1</h2>
+          <h3 id="h1.1">Heading 1.1</h3>
+          <h4 id="h1.1.1">Heading 1.1.1</h4>
+          <h3 id="h2">Heading 1.2</h3>
+          <h2 id="h2.1">Heading 2</h2>
+        </div>
+      </div>
+    </m3e-theme>
+  </body>
+</html>
