@@ -46,7 +46,7 @@ import { addAriaReferencedId, removeAriaReferencedId, selectionManager } from "@
  * @slot icon - Renders an icon before the tab's label.
  *
  * @attr disabled - Whether the element is disabled.
- * @attr for - The query selector used to specify the element related to this element.
+ * @attr for - The identifier of the interactive control to which this element is attached.
  * @attr selected - Whether the element is selected.
  *
  * @fires input - Emitted when the selected state changes.

@@ -52,7 +52,7 @@ import { TocGenerator, TocNode } from "./TocGenerator";
  * @slot overline - Renders the overline of the table of contents.
  * @slot title - Renders the title of the table of contents.
  *
- * @attr for - The query selector used to specify the element related to this element.
+ * @attr for - The identifier of the interactive control to which this element is attached.
  * @attr max-depth - The maximum depth of the table of contents.
  *
  * @cssprop --m3e-toc-width - Width of the table of contents.

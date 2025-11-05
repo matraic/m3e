@@ -80,10 +80,10 @@ In addition, you must use an [import map](https://developer.mozilla.org/en-US/do
 
 #### ⚙️ Attributes
 
-| Attribute   | Type     | Default | Description                                              |
-| ----------- | -------- | ------- | -------------------------------------------------------- |
-| `for`       | `string` |         | Query selector for the element to generate the TOC from. |
-| `max-depth` | `number` | `2`     | The maximum depth of the table of contents.              |
+| Attribute   | Type     | Default | Description                                                                  |
+| ----------- | -------- | ------- | ---------------------------------------------------------------------------- |
+| `for`       | `string` |         | The identifier of the interactive control to which this element is attached. |
+| `max-depth` | `number` | `2`     | The maximum depth of the table of contents.                                  |
 
 #### 🧩 Slots
 

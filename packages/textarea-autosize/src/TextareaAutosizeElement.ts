@@ -35,7 +35,7 @@ import { debounce, HtmlFor, Role } from "@m3e/core";
  * @tag m3e-textarea-autosize
  *
  * @attr disabled - Whether auto-sizing is disabled.
- * @attr for - The query selector used to specify the element related to this element.
+ * @attr for - The identifier of the interactive control to which this element is attached.
  * @attr max-rows - The maximum amount of rows in the `textarea`.
  * @attr min-rows - The minimum amount of rows in the `textarea`.
  */

@@ -72,12 +72,12 @@ This section details the attributes available for the `m3e-textarea-autosize` co
 
 ### ⚙️ Attributes
 
-| Attribute  | Type      | Default | Description                                                             |
-| ---------- | --------- | ------- | ----------------------------------------------------------------------- |
-| `disabled` | `boolean` | `false` | Whether auto-sizing is disabled.                                        |
-| `for`      | `string`  |         | The query selector used to specify the element related to this element. |
-| `max-rows` | `number`  | `0`     | The maximum amount of rows in the `textarea`.                           |
-| `min-rows` | `number`  | `0`     | The minimum amount of rows in the `textarea`.                           |
+| Attribute  | Type      | Default | Description                                                                  |
+| ---------- | --------- | ------- | ---------------------------------------------------------------------------- |
+| `disabled` | `boolean` | `false` | Whether auto-sizing is disabled.                                             |
+| `for`      | `string`  |         | The identifier of the interactive control to which this element is attached. |
+| `max-rows` | `number`  | `0`     | The maximum amount of rows in the `textarea`.                                |
+| `min-rows` | `number`  | `0`     | The minimum amount of rows in the `textarea`.                                |
 
 ## 🤝 Contributing
 

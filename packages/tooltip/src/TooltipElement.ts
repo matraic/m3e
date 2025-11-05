@@ -46,7 +46,7 @@ const TOOLTIP_HIDE_DELAY = 200;
  * @slot - Renders the content of the tooltip.
  *
  * @attr disabled - Whether the element is disabled.
- * @attr for - The query selector used to specify the element related to this element.
+ * @attr for - The identifier of the interactive control to which this element is attached.
  * @attr hide-delay - The amount of time, in milliseconds, before hiding the tooltip.
  * @attr position - The position of the tooltip.
  * @attr show-delay - The amount of time, in milliseconds, before showing the tooltip.

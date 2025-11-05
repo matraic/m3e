@@ -74,13 +74,13 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### ⚙️ Attributes
 
-| Attribute    | Type      | Default | Description                                                             |
-| ------------ | --------- | ------- | ----------------------------------------------------------------------- |
-| `disabled`   | `boolean` | `false` | Whether the element is disabled.                                        |
-| `for`        | `string`  |         | The query selector used to specify the element related to this element. |
-| `hide-delay` | `number`  | `200`   | The amount of time, in milliseconds, before hiding the tooltip.         |
-| `position`   | `string`  | `"top"` | The position of the tooltip.                                            |
-| `show-delay` | `number`  | `0`     | The amount of time, in milliseconds, before showing the tooltip.        |
+| Attribute    | Type      | Default | Description                                                                  |
+| ------------ | --------- | ------- | ---------------------------------------------------------------------------- |
+| `disabled`   | `boolean` | `false` | Whether the element is disabled.                                             |
+| `for`        | `string`  |         | The identifier of the interactive control to which this element is attached. |
+| `hide-delay` | `number`  | `200`   | The amount of time, in milliseconds, before hiding the tooltip.              |
+| `position`   | `string`  | `"top"` | The position of the tooltip.                                                 |
+| `show-delay` | `number`  | `0`     | The amount of time, in milliseconds, before showing the tooltip.             |
 
 ### 🧩 Slots
 
