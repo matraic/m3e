@@ -182,15 +182,18 @@ export class M3eSliderElement extends LitElement {
       height: 100%;
       border-radius: inherit;
       outline: none;
+      touch-action: none;
     }
     .track {
       position: relative;
       flex: 1 1 auto;
+      touch-action: none;
     }
     .track-inactive,
     .track-active {
       position: absolute;
       height: 100%;
+      touch-action: none;
     }
     .track-active {
       margin-left: var(--_slider-active-track-offset, 0px);
@@ -211,10 +214,12 @@ export class M3eSliderElement extends LitElement {
       width: 100%;
       height: var(--m3e-slider-tick-size, 0.25rem);
       overflow: visible;
+      touch-action: none;
     }
     .tick {
       position: absolute;
       top: 0;
+      touch-action: none;
       left: calc(var(--m3e-slider-tick-size, 0.25rem) + calc(var(--m3e-slider-tick-size, 0.25rem) / 2));
       width: var(--m3e-slider-tick-size, 0.25rem);
       height: var(--m3e-slider-tick-size, 0.25rem);

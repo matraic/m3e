@@ -94,6 +94,7 @@ export class M3eSliderThumbElement extends Dirty(
       height: 3rem;
       left: 0;
       right: 0;
+      touch-action: none;
     }
     .wrapper {
       display: inline-flex;
