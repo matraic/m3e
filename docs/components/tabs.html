@@ -30,6 +30,9 @@
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon-button@1.0.0-rc.3/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/slide-group@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.0-rc.3/dist/index.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/tabs@1.0.0-rc.3/dist/index.min.js"></script>
@@ -42,10 +45,292 @@
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Tabs</m3e-heading>
-      <p>This page is under construction.</p>
+      <p>
+        The <code>m3e-tabs</code> component provides a structured navigation surface for organizing content into
+        distinct views, where only one view is visible at a time.
+      </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
       <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/tabs</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+      <p>
+        Use <code>m3e-tabs</code>, <code>m3e-tab</code>, and <code>m3e-tab-panel</code> to construct tabbed views. Both
+        <code>m3e-tab</code> and <code>m3e-tab-panel</code> must be direct children of <code>m3e-tabs</code>. To
+        associate a tab with its corresponding panel, set the <code>for</code> attribute on <code>m3e-tab</code> to
+        match the ID of the target <code>m3e-tab-panel</code>.
+      </p>
+      <p>
+        To select a tab, apply the <code>selected</code> attribute to a single <code>m3e-tab</code>. When a tab is
+        activated, a cancellable <code>input</code> event is emitted followed by a <code>change</code> event. To cancel
+        selection change, call <code>preventDefault</code> during <code>input</code>.Only one tab may be selected at a
+        time.
+      </p>
+      <p>
+        A tab's label is specified by its content. You can use the <code>icon</code> slot to render an icon before a
+        tab's label.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-tabs>
+            <m3e-tab selected for="videos"><m3e-icon slot="icon" name="videocam"></m3e-icon>Video</m3e-tab>
+            <m3e-tab for="photos"><m3e-icon slot="icon" name="photo"></m3e-icon>Photos</m3e-tab>
+            <m3e-tab for="audio"><m3e-icon slot="icon" name="music_note"></m3e-icon>Audio</m3e-tab>
+            <m3e-tab-panel id="videos">Videos</m3e-tab-panel>
+            <m3e-tab-panel id="photos">Photos</m3e-tab-panel>
+            <m3e-tab-panel id="audio">Audio</m3e-tab-panel>
+          </m3e-tabs>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-tabs&gt;
+  &lt;m3e-tab selected for=&quot;videos&quot;&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;videocam&quot;&gt;&lt;/m3e-icon&gt;Video
+  &lt;/m3e-tab&gt;
+  &lt;m3e-tab for=&quot;photos&quot;&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;photo&quot;&gt;&lt;/m3e-icon&gt;Photos
+  &lt;/m3e-tab&gt;
+  &lt;m3e-tab for=&quot;audio&quot;&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;music_note&quot;&gt;&lt;/m3e-icon&gt;Audio
+  &lt;/m3e-tab&gt;
+  &lt;m3e-tab-panel id=&quot;videos&quot;&gt;Videos&lt;/m3e-tab-panel&gt;
+  &lt;m3e-tab-panel id=&quot;photos&quot;&gt;Photos&lt;/m3e-tab-panel&gt;
+  &lt;m3e-tab-panel id=&quot;audio&quot;&gt;Audio&lt;/m3e-tab-panel&gt;
+&lt;/m3e-tabs&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+      <p>
+        Tabs come in the appearance variants: <code>primary</code> and <code>secondary</code> (default). Use the
+        <code>variant</code> attribute of <code>m3e-tabs</code> to change the appearance.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-tabs variant="primary">
+            <m3e-tab selected for="tab1"><m3e-icon slot="icon" name="videocam"></m3e-icon>Video</m3e-tab>
+            <m3e-tab for="tab2"><m3e-icon slot="icon" name="photo"></m3e-icon>Photos</m3e-tab>
+            <m3e-tab for="tab3"><m3e-icon slot="icon" name="music_note"></m3e-icon>Audio</m3e-tab>
+            <m3e-tab-panel id="tab1">Videos</m3e-tab-panel>
+            <m3e-tab-panel id="tab2">Photos</m3e-tab-panel>
+            <m3e-tab-panel id="tab3">Audio</m3e-tab-panel>
+          </m3e-tabs>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-tabs variant=&quot;primary&quot;&gt
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-tabs&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Stretching</m3e-heading>
+      <p>Use the <code>stretch</code> attribute to stretch tabs to fill the header.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-tabs stretch>
+            <m3e-tab selected for="tab7"><m3e-icon slot="icon" name="videocam"></m3e-icon>Video</m3e-tab>
+            <m3e-tab for="tab8"><m3e-icon slot="icon" name="photo"></m3e-icon>Photos</m3e-tab>
+            <m3e-tab for="tab9"><m3e-icon slot="icon" name="music_note"></m3e-icon>Audio</m3e-tab>
+            <m3e-tab-panel id="tab7">Videos</m3e-tab-panel>
+            <m3e-tab-panel id="tab8">Photos</m3e-tab-panel>
+            <m3e-tab-panel id="tab9">Audio</m3e-tab-panel>
+          </m3e-tabs>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-tabs stretch&gt
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-tabs&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Header positions</m3e-heading>
+      <p>
+        A tab's header can be positioned <code>before</code> (default) or <code>after</code> panels. Use the
+        <code>header-position</code> attribute to change the header position.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-tabs header-position="after">
+            <m3e-tab selected for="tab4"><m3e-icon slot="icon" name="videocam"></m3e-icon>Video</m3e-tab>
+            <m3e-tab for="tab5"><m3e-icon slot="icon" name="photo"></m3e-icon>Photos</m3e-tab>
+            <m3e-tab for="tab6"><m3e-icon slot="icon" name="music_note"></m3e-icon>Audio</m3e-tab>
+            <m3e-tab-panel id="tab4">Videos</m3e-tab-panel>
+            <m3e-tab-panel id="tab5">Photos</m3e-tab-panel>
+            <m3e-tab-panel id="tab6">Audio</m3e-tab-panel>
+          </m3e-tabs>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-tabs header-position=&quot;after&quot;&gt
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-tabs&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+      <p>Use the <code>disabled</code> attribute to disable individual tabs.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-tabs>
+            <m3e-tab selected for="tab10"><m3e-icon slot="icon" name="videocam"></m3e-icon>Video</m3e-tab>
+            <m3e-tab disabled for="tab11"><m3e-icon slot="icon" name="photo"></m3e-icon>Photos</m3e-tab>
+            <m3e-tab for="tab12"><m3e-icon slot="icon" name="music_note"></m3e-icon>Audio</m3e-tab>
+            <m3e-tab-panel id="tab10">Videos</m3e-tab-panel>
+            <m3e-tab-panel id="tab11">Photos</m3e-tab-panel>
+            <m3e-tab-panel id="tab12">Audio</m3e-tab-panel>
+          </m3e-tabs>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-tabs&gt;
+  &lt;m3e-tab selected for=&quot;videos&quot;&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;videocam&quot;&gt;&lt;/m3e-icon&gt;Video
+  &lt;/m3e-tab&gt;
+  &lt;m3e-tab disabled for=&quot;photos&quot;&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;photo&quot;&gt;&lt;/m3e-icon&gt;Photos
+  &lt;/m3e-tab&gt;
+  &lt;!-- Additional content omitted for brevity --&gt;
+&lt;/m3e-tabs&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Pagination</m3e-heading>
+      <p>
+        By default, directional pagination controls appear when the number of tabs exceeds the available horizontal
+        space. You can disable this using the <code>disable-pagination</code> attribute.
+      </p>
+      <p>
+        The following example demonstrates pagination behavior when tabs overflow. To observe it in action, reduce your
+        screen width until directional controls appear.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-tabs>
+            <m3e-tab>Tab 1</m3e-tab>
+            <m3e-tab>Tab 2</m3e-tab>
+            <m3e-tab>Tab 3</m3e-tab>
+            <m3e-tab>Tab 4</m3e-tab>
+            <m3e-tab>Tab 5</m3e-tab>
+            <m3e-tab>Tab 6</m3e-tab>
+            <m3e-tab>Tab 7</m3e-tab>
+            <m3e-tab>Tab 8</m3e-tab>
+            <m3e-tab>Tab 9</m3e-tab>
+            <m3e-tab>Tab 10</m3e-tab>
+            <m3e-tab>Tab 11</m3e-tab>
+            <m3e-tab>Tab 12</m3e-tab>
+            <m3e-tab>Tab 13</m3e-tab>
+            <m3e-tab>Tab 14</m3e-tab>
+            <m3e-tab>Tab 15</m3e-tab>
+            <m3e-tab>Tab 16</m3e-tab>
+            <m3e-tab>Tab 17</m3e-tab>
+            <m3e-tab>Tab 18</m3e-tab>
+            <m3e-tab>Tab 19</m3e-tab>
+            <m3e-tab>Tab 20</m3e-tab>
+          </m3e-tabs>
+        </div>
+      </m3e-card>
+      <br />
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Tabs implement the
+        <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank">ARIA Tabs design pattern</a> and are
+        composed of the <code>tablist</code>, <code>tab</code>, and <code>tabpanel</code> roles. The pattern includes
+        support for keyboard navigation, focus management, and accessible relationships between tabs and their
+        associated panels.
+      </p>
+      <p>
+        The <code>m3e-tabs</code> component hosts an internal <code>tablist</code> nested within the pagination
+        controls. It contains each <code>m3e-tab</code>, which is assigned the ARIA <code>role="tab"</code>.
+        Corresponding <code>m3e-tab-panel</code> elements are given the ARIA <code>role="tabpanel"</code>. Each tab is
+        linked to its associated panel using <code>aria-controls</code>, and the <code>aria-selected</code> attribute
+        communicates the selected state of a tab to assistive technologies. When a tab is disabled,
+        <code>aria-disabled="true"</code> communicates its inactive state.
+      </p>
+      <p>
+        Pagination buttons are intentionally excluded from the tab order and strong focus indicators are not supported.
+        This reduces focus noise and streamlines keyboard navigation.
+      </p>
+      <p>
+        Use the <code>previous-page-label</code> and <code>next-page-label</code> attributes to provide accessible
+        labels to pagination buttons.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/tabs/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        You also need a module script for <code>@m3e/icon-button</code> and <code>m3e/slide-group</code> due to these
+        being a dependency.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/icon-button/dist/index.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/slide-group/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include additional dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js and a11y.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer only="m3e-tab" src="https://cdn.jsdelivr.net/npm/@m3e/tabs@1.0.0-rc.3/dist/custom-elements.json">
+      </api-viewer>
+      <api-viewer
+        only="m3e-tab-panel"
+        src="https://cdn.jsdelivr.net/npm/@m3e/tabs@1.0.0-rc.3/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer only="m3e-tabs" src="https://cdn.jsdelivr.net/npm/@m3e/tabs@1.0.0-rc.3/dist/custom-elements.json">
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>
