@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { css, CSSResultGroup, html, LitElement, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import { DesignToken, ScrollController, Role } from "@m3e/core";
@@ -104,6 +104,8 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       box-shadow: var(--m3e-menu-container-elevation, ${DesignToken.elevation.level3});
       opacity: 0;
       display: none;
+    }
+    :host(:not(.-no-animate)) {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}, 
         transform ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard},
@@ -148,7 +150,7 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       }
     }
     @media (prefers-reduced-motion) {
-      :host {
+      :host(:not(.-no-animate)) {
         transition: none;
       }
     }
@@ -220,6 +222,7 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
     super.connectedCallback();
 
     this.tabIndex = -1;
+    this.classList.add("-no-animate");
     this.setAttribute("popover", "manual");
     this.addEventListener("keydown", this.#keyDownHandler);
     this.addEventListener("toggle", this.#toggleHandler);
@@ -345,6 +348,12 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<slot @slotchange="${this.#handleSlotChange}"></slot>`;
+  }
+
+  /** @inheritdoc */
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
+    super.firstUpdated(_changedProperties);
+    requestAnimationFrame(() => this.classList.remove("-no-animate"));
   }
 
   /** @private */
