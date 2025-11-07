@@ -38,6 +38,7 @@ export class PressedController extends MonitorControllerBase {
 
   /** @private */ readonly #pointerDownHandler = (e: PointerEvent) => this.#handlePointerDown(e);
   /** @private */ readonly #pointerUpHandler = (e: PointerEvent) => this.#handlePointerUp(e);
+  /** @private */ readonly #touchEndHandler = (e: TouchEvent) => this.#handleTouchEnd(e);
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);
   /** @private */ readonly #keyUpHandler = (e: KeyboardEvent) => this.#handleKeyUp(e);
 
@@ -58,12 +59,18 @@ export class PressedController extends MonitorControllerBase {
   /** @inheritdoc */
   override hostConnected(): void {
     document.addEventListener("pointerup", this.#pointerUpHandler, { capture: this.#capture });
+    document.addEventListener("touchend", this.#touchEndHandler, { capture: this.#capture });
+    document.addEventListener("touchcancel", this.#touchEndHandler, { capture: this.#capture });
+
     super.hostConnected();
   }
 
   /** @inheritdoc */
   override hostDisconnected(): void {
     document.removeEventListener("pointerup", this.#pointerUpHandler, { capture: this.#capture });
+    document.addEventListener("touchend", this.#touchEndHandler, { capture: this.#capture });
+    document.addEventListener("touchcancel", this.#touchEndHandler, { capture: this.#capture });
+
     super.hostDisconnected();
     this.#pressedTargets.clear();
   }
@@ -74,6 +81,7 @@ export class PressedController extends MonitorControllerBase {
    */
   protected override _observe(target: HTMLElement): void {
     target.addEventListener("pointerdown", this.#pointerDownHandler, { capture: this.#capture });
+
     if (this.#isPressedKey) {
       target.addEventListener("keydown", this.#keyDownHandler, { capture: this.#capture });
       target.addEventListener("keyup", this.#keyUpHandler, { capture: this.#capture });
@@ -114,6 +122,25 @@ export class PressedController extends MonitorControllerBase {
 
     const x = e.x;
     const y = e.y;
+
+    for (const target of this.#pressedTargets.keys()) {
+      const remainingTime = this.#minPressedDuration - (performance.now() - this.#pressedTargets.get(target)!);
+      if (remainingTime > 0) {
+        setTimeout(() => {
+          this.#pressedTargets.delete(target);
+          this.#callback(false, { x, y }, target);
+        }, remainingTime);
+      } else {
+        this.#pressedTargets.delete(target);
+        this.#callback(false, { x, y }, target);
+      }
+    }
+  }
+
+  /** @private */
+  #handleTouchEnd(e: TouchEvent): void {
+    const x = e.touches[0]?.clientX ?? 0;
+    const y = e.touches[0]?.clientY ?? 0;
 
     for (const target of this.#pressedTargets.keys()) {
       const remainingTime = this.#minPressedDuration - (performance.now() - this.#pressedTargets.get(target)!);
