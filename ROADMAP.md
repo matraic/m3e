@@ -1,4 +1,4 @@
-# 🛤️ M3E Roadmap
+# 📍 M3E Roadmap
 
 This roadmap presents the ongoing development, future direction, and past accomplishments of M3E.
 

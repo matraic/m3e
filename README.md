@@ -87,6 +87,10 @@ Below is a list of all packages in this monorepo, with a short summary and insta
 | [**@m3e/toolbar**](./packages/toolbar/README.md)                       | Presents contextual actions, navigation, and controls, supporting orientation, shape, and variant customization.                                                      | `npm install @m3e/toolbar`            |
 | [**@m3e/tooltip**](./packages/tooltip/README.md)                       | Provides contextual information in response to user interaction, positioned relative to a target element.                                                             | `npm install @m3e/tooltip`            |
 
+## 📍 Roadmap
+
+For a detailed view of current development, planned components, and past milestones, see the [M3E Roadmap](ROADMAP.md).
+
 ## 🤝 Contributing
 
 Contributions from the community are welcome! Please review the [Contributing Guidelines](CONTRIBUTING.md) and help us advance the future of expressive web design.
