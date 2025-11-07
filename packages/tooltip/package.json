@@ -26,9 +26,6 @@
     "lint": "npx eslint ./src",
     "clean": "rimraf dist"
   },
-  "dependencies": {
-    "@material/material-color-utilities": "^0.3.0"
-  },
   "peerDependencies": {
     "@m3e/core": "1.0.0-rc.4",
     "lit": "^3.3.0"

@@ -3,22 +3,14 @@ import { customElement, property } from "lit/decorators.js";
 
 import {
   argbFromHex,
-  CorePalette,
-  DynamicColor,
   DynamicScheme,
   Hct,
   hexFromArgb,
   MaterialDynamicColors,
-  SchemeContent,
-  SchemeExpressive,
-  SchemeFidelity,
-  SchemeFruitSalad,
-  SchemeMonochrome,
-  SchemeNeutral,
-  SchemeRainbow,
-  SchemeTonalSpot,
-  SchemeVibrant,
-} from "@material/material-color-utilities";
+  Platform,
+  SpecVersion,
+  Variant,
+} from "@materialx/material-color-utilities";
 
 import { DesignToken } from "@m3e/core";
 
@@ -89,6 +81,7 @@ export class M3eThemeElement extends LitElement {
    * @default "#6750A4"
    */
   @property() color = "#6750A4";
+
   /**
    * The color variant of the theme.
    * @default "content"
@@ -182,45 +175,58 @@ export class M3eThemeElement extends LitElement {
 
   /** @private */
   #createScheme(sourceColor: Hct): DynamicScheme {
+    let variant: Variant = Variant.CONTENT;
+
     switch (this.variant) {
-      case "content":
-        return new SchemeContent(sourceColor, this.isDark, this.#getContrastLevel());
       case "expressive":
-        return new SchemeExpressive(sourceColor, this.isDark, this.#getContrastLevel());
+        variant = Variant.EXPRESSIVE;
+        break;
       case "fidelity":
-        return new SchemeFidelity(sourceColor, this.isDark, this.#getContrastLevel());
+        variant = Variant.FIDELITY;
+        break;
       case "fruit-salad":
-        return new SchemeFruitSalad(sourceColor, this.isDark, this.#getContrastLevel());
+        variant = Variant.FRUIT_SALAD;
+        break;
       case "monochrome":
-        return new SchemeMonochrome(sourceColor, this.isDark, this.#getContrastLevel());
+        variant = Variant.MONOCHROME;
+        break;
       case "neutral":
-        return new SchemeNeutral(sourceColor, this.isDark, this.#getContrastLevel());
+        variant = Variant.NEUTRAL;
+        break;
       case "rainbow":
-        return new SchemeRainbow(sourceColor, this.isDark, this.#getContrastLevel());
+        variant = Variant.RAINBOW;
+        break;
       case "tonal-spot":
-        return new SchemeTonalSpot(sourceColor, this.isDark, this.#getContrastLevel());
+        variant = Variant.TONAL_SPOT;
+        break;
       case "vibrant":
-        return new SchemeVibrant(sourceColor, this.isDark, this.#getContrastLevel());
+        variant = Variant.VIBRANT;
+        break;
     }
+
+    return DynamicScheme.from({
+      sourceColorHct: sourceColor,
+      isDark: this.isDark,
+      contrastLevel: this.#getContrastLevel(),
+      variant: variant,
+      specVersion: SpecVersion.SPEC_2025,
+      platform: Platform.PHONE,
+    });
   }
 
   /** @private */
   #apply(): void {
     const color = argbFromHex(this.color);
-    const palette = CorePalette.of(color);
     const scheme = this.#createScheme(Hct.fromInt(color));
 
     let css = "";
 
-    for (const key in MaterialDynamicColors) {
-      if (!key.endsWith("PaletteKeyColor")) {
-        const dynamicColor: unknown = MaterialDynamicColors[key as keyof MaterialDynamicColors];
-        if (dynamicColor instanceof DynamicColor) {
-          css += `--md-sys-color-${key.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}: ${hexFromArgb(
-            dynamicColor.getArgb(scheme)
-          )};`;
-        }
-      }
+    for (const dynamicColor of new MaterialDynamicColors().allDynamicColors.filter(
+      (x) => !x.name.includes("palette")
+    )) {
+      css += `--md-sys-color-${dynamicColor.name.replace(/_/g, "-").toLowerCase()}: ${hexFromArgb(
+        dynamicColor.getArgb(scheme)
+      )};`;
     }
 
     if (this.motion === "expressive") {
@@ -233,7 +239,7 @@ export class M3eThemeElement extends LitElement {
     }
 
     css += `--md-sys-density-scale: ${this.density};`;
-    css += `--m3e-scrollbar-thumb-color: ${hexFromArgb(palette.n1.tone(60))};`;
+    css += `--m3e-scrollbar-thumb-color: ${hexFromArgb(scheme.neutralPalette.tone(60))};`;
     css += `--m3e-focus-ring-visibility: ${this.strongFocus ? "visible" : "hidden"};`;
 
     this.#styleSheet.replaceSync(`:host { ${css} }`);
