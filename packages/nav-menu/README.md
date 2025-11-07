@@ -204,7 +204,7 @@ This section details the attributes, slots, events, and CSS custom properties av
 | `--m3e-nav-menu-item-badge-font-size`                  | Font size for badge slot.                     |
 | `--m3e-nav-menu-item-badge-font-weight`                | Font weight for badge slot.                   |
 | `--m3e-nav-menu-item-badge-line-height`                | Line height for badge slot.                   |
-| `--m3e-nav-menu-badge-item-tracking`                   | Letter spacing for badge slot.                |
+| `--m3e-nav-menu-item-badge-tracking`                   | Letter spacing for badge slot.                |
 | `--m3e-nav-menu-divider-margin`                        | Margin for divider elements.                  |
 | `--m3e-nav-menu-item-vertical-inset`                   | Vertical margin for first/last child items.   |
 

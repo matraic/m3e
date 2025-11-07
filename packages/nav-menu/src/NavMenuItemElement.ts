@@ -130,7 +130,7 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  * @cssprop --m3e-nav-menu-item-badge-font-size - Font size for badge slot.
  * @cssprop --m3e-nav-menu-item-badge-font-weight - Font weight for badge slot.
  * @cssprop --m3e-nav-menu-item-badge-line-height - Line height for badge slot.
- * @cssprop --m3e-nav-menu-badge-item-tracking - Letter spacing for badge slot.
+ * @cssprop --m3e-nav-menu-item-badge-tracking - Letter spacing for badge slot.
  * @cssprop --m3e-nav-menu-divider-margin - Margin for divider elements.
  * @cssprop --m3e-nav-menu-item-vertical-inset - Vertical margin for first/last child items.
  */
@@ -191,7 +191,7 @@ export class M3eNavMenuItemElement extends Selected(
       font-size: var(--m3e-nav-menu-item-badge-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(--m3e-nav-menu-item-badge-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-nav-menu-item-badge-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
-      letter-spacing: var(--m3e-nav-menu-badge-item-tracking, ${DesignToken.typescale.standard.label.large.tracking});
+      letter-spacing: var(--m3e-nav-menu-item-badge-tracking, ${DesignToken.typescale.standard.label.large.tracking});
     }
     .toggle {
       transition: ${unsafeCSS(`transform var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
