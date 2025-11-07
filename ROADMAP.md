@@ -4,8 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 39 packages complete
-- Preparing for the initial 1.0.0 stable release
+- 1.0.0 stable release
 
 ## 🔮 Future
 
@@ -43,4 +42,5 @@ Planned components which have not yet entered development:
 
 ## 🏛️ Past Milestones
 
+- 1.0.0 stable release
 - 1.0.0 RC1 – RC4: Initial component development, testing, and documentation
