@@ -26,6 +26,7 @@ m3e-card + .example {
   top: 0;
   right: 0;
   max-height: 100vh;
+  max-height: 100dvh;
 }
 @media (max-width: 600px) {
   .toc {
