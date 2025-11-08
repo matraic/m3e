@@ -243,6 +243,9 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
    * @param {boolean} [restoreFocus=false] A value indicating whether to restore focus to the menu's trigger.
    */
   hide(restoreFocus: boolean = false): void {
+    this.#anchoringCleanup?.();
+    this.#anchoringCleanup = undefined;
+
     if (this.#trigger) {
       this.#trigger.ariaExpanded = "false";
       if (restoreFocus) {
