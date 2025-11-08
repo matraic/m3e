@@ -161,14 +161,16 @@ export class PressedController extends MonitorControllerBase {
     if (e.target !== e.currentTarget) return;
     const target = e.currentTarget as HTMLElement;
 
-    if (!this.#pressedTargets.has(target) && this.#isPressedKey?.(e.key)) {
+    if (this.#isPressedKey?.(e.key)) {
       if (e.key === " ") {
         e.preventDefault();
       }
 
-      this.#pressedTargets.set(target, performance.now());
-      const bounds = target.getBoundingClientRect();
-      this.#callback(true, { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 }, target);
+      if (!this.#pressedTargets.has(target)) {
+        this.#pressedTargets.set(target, performance.now());
+        const bounds = target.getBoundingClientRect();
+        this.#callback(true, { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 }, target);
+      }
     }
   }
 
