@@ -3,20 +3,17 @@ import { customElement, property } from "lit/decorators.js";
 
 import {
   argbFromHex,
+  CorePalette,
+  DynamicColor,
   DynamicScheme,
-  Hct,
   hexFromArgb,
   MaterialDynamicColors,
-  Platform,
-  SpecVersion,
-  Variant,
-} from "@materialx/material-color-utilities";
+} from "@material/material-color-utilities";
 
 import { DesignToken } from "@m3e/core";
 
 import { ColorScheme } from "./ColorScheme";
 import { ContrastLevel } from "./ContrastLevel";
-import { ThemeVariant } from "./ThemeVariant";
 import { MotionScheme } from "./MotionScheme";
 
 /**
@@ -51,7 +48,6 @@ import { MotionScheme } from "./MotionScheme";
  * @attr density - The density scale (0, -1, -2).
  * @attr scheme - The color scheme of the theme.
  * @attr strong-focus - Whether to enable strong focus indicators.
- * @attr variant - The color variant of the theme.
  *
  * @fires change - Dispatched when the theme changes.
  */
@@ -81,12 +77,6 @@ export class M3eThemeElement extends LitElement {
    * @default "#6750A4"
    */
   @property() color = "#6750A4";
-
-  /**
-   * The color variant of the theme.
-   * @default "content"
-   */
-  @property() variant: ThemeVariant = "content";
 
   /**
    * The color scheme of the theme.
@@ -174,59 +164,32 @@ export class M3eThemeElement extends LitElement {
   }
 
   /** @private */
-  #createScheme(sourceColor: Hct): DynamicScheme {
-    let variant: Variant = Variant.CONTENT;
-
-    switch (this.variant) {
-      case "expressive":
-        variant = Variant.EXPRESSIVE;
-        break;
-      case "fidelity":
-        variant = Variant.FIDELITY;
-        break;
-      case "fruit-salad":
-        variant = Variant.FRUIT_SALAD;
-        break;
-      case "monochrome":
-        variant = Variant.MONOCHROME;
-        break;
-      case "neutral":
-        variant = Variant.NEUTRAL;
-        break;
-      case "rainbow":
-        variant = Variant.RAINBOW;
-        break;
-      case "tonal-spot":
-        variant = Variant.TONAL_SPOT;
-        break;
-      case "vibrant":
-        variant = Variant.VIBRANT;
-        break;
-    }
-
-    return DynamicScheme.from({
-      sourceColorHct: sourceColor,
-      isDark: this.isDark,
-      contrastLevel: this.#getContrastLevel(),
-      variant: variant,
-      specVersion: SpecVersion.SPEC_2025,
-      platform: Platform.PHONE,
-    });
-  }
-
-  /** @private */
   #apply(): void {
     const color = argbFromHex(this.color);
-    const scheme = this.#createScheme(Hct.fromInt(color));
+    const palette = CorePalette.of(color);
+    const scheme = new DynamicScheme({
+      sourceColorArgb: color,
+      variant: 1,
+      contrastLevel: this.#getContrastLevel(),
+      isDark: this.isDark,
+      primaryPalette: palette.a1,
+      secondaryPalette: palette.a2,
+      tertiaryPalette: palette.a3,
+      neutralPalette: palette.n1,
+      neutralVariantPalette: palette.n2,
+    });
 
     let css = "";
 
-    for (const dynamicColor of new MaterialDynamicColors().allDynamicColors.filter(
-      (x) => !x.name.includes("palette")
-    )) {
-      css += `--md-sys-color-${dynamicColor.name.replace(/_/g, "-").toLowerCase()}: ${hexFromArgb(
-        dynamicColor.getArgb(scheme)
-      )};`;
+    for (const key in MaterialDynamicColors) {
+      if (!key.endsWith("PaletteKeyColor")) {
+        const dynamicColor: unknown = MaterialDynamicColors[key as keyof MaterialDynamicColors];
+        if (dynamicColor instanceof DynamicColor) {
+          css += `--md-sys-color-${key.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}: ${hexFromArgb(
+            dynamicColor.getArgb(scheme)
+          )};`;
+        }
+      }
     }
 
     if (this.motion === "expressive") {
