@@ -142,6 +142,9 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       width: var(--m3e-form-field-width, 14.5rem);
       color: var(--_form-field-color);
     }
+    :host(:not(.-disabled)) .base {
+      cursor: var(--_form-field-cursor);
+    }
     .base {
       display: flex;
       align-items: center;
@@ -827,6 +830,13 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       this.#control.form?.removeEventListener("reset", this.#formResetHandler);
     }
     this.#control = control;
+
+    if (["INPUT", "TEXTAREA"].includes(this.#control?.tagName ?? "")) {
+      this._base.style.setProperty("--_form-field-cursor", "text");
+    } else {
+      this._base.style.removeProperty("--_form-field-cursor");
+    }
+
     if (this.#control) {
       this.#controlMutationController.observe(this.#control);
       this.#control.addEventListener("invalid", this.#controlInvalidHandler);
