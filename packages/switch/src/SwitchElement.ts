@@ -176,7 +176,7 @@ export class M3eSwitchElement extends Labelled(
     super();
 
     new PressedController(this, {
-      isPressedKey: (key) => key === " " || key === "Enter",
+      isPressedKey: (key) => key === " ",
       callback: (pressed) => this._track?.classList.toggle("pressed", pressed && !this.disabled),
     });
   }

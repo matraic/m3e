@@ -249,7 +249,7 @@ export class M3eRadioElement extends Labelled(
     return html`<div class="base">
       <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"></m3e-state-layer>
       <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
-      <m3e-ripple class="ripple" centered disable-enter ?disabled="${this.disabled}"></m3e-ripple>
+      <m3e-ripple class="ripple" centered ?disabled="${this.disabled}"></m3e-ripple>
       <div class="touch" aria-hidden="true"></div>
       <div class="wrapper" aria-hidden="true">${this.#renderIcon()}</div>
     </div>`;

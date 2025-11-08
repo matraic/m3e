@@ -434,7 +434,7 @@ export class M3eButtonElement extends KeyboardClick(
     });
 
     new PressedController(this, {
-      isPressedKey: (key) => key === " " || key === "Enter",
+      isPressedKey: (key) => key === " ",
       minPressedDuration: 150,
       callback: (pressed) => {
         if (!this.disabled && !this.disabledInteractive) {

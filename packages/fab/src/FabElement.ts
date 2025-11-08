@@ -346,7 +346,7 @@ export class M3eFabElement extends KeyboardClick(
     super();
 
     new PressedController(this, {
-      isPressedKey: (key) => key === " " || key === "Enter",
+      isPressedKey: (key) => key === " ",
       callback: (pressed) => {
         if (!this.disabled && !this.disabledInteractive) {
           this._base?.classList.toggle("pressed", pressed);

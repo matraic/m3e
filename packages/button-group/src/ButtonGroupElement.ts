@@ -270,7 +270,7 @@ export class M3eButtonGroupElement extends Role(LitElement, "group") {
     target: null,
     capture: true,
     minPressedDuration: 150,
-    isPressedKey: (key) => key === " " || key === "Enter",
+    isPressedKey: (key) => key === " ",
     callback: (pressed) => {
       if (!this._base) return;
       if (!pressed || this.variant === "connected") {

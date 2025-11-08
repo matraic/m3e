@@ -17,8 +17,7 @@ import { DesignToken } from "../tokens";
  * The component can be attached to an interactive element using the `for` attribute or programmatically using the `attach` method.
  * The ripple is displayed when the interactive element is pressed and hidden when released.  This can be disabled using the `disabled` attribute.
  *
- * The pressed state actives either using both pointer and keyboard events. For keyboard events, `SPACE` and `ENTER` activate a ripple.
- * You can disabled whether the `ENTER` key actives a ripple using the `disable-enter` attribute.
+ * The pressed state actives either using both pointer and keyboard events. For keyboard events, `SPACE` activate a ripple.
  *
  * Alternately, you can use the `show` and `hide` methods to programmatically control the ripple.
  *
@@ -36,7 +35,6 @@ import { DesignToken } from "../tokens";
  * @tag m3e-ripple
  *
  * @attr centered - Whether the ripple always originates from the center of the element's bounds, rather than originating from the location of the click event.
- * @attr disable-enter - Whether the ripple is disabled when the enter key is pressed.
  * @attr disabled - Whether click events will not trigger the ripple.  Ripples can be still controlled manually by using the `show` and 'hide' methods.
  * @attr for - The identifier of the interactive control to which this element is attached.
  * @attr radius - The radius, in pixels, of the ripple.
@@ -125,7 +123,7 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
   /** @private */ readonly #pressedController = new PressedController(this, {
     target: null,
     minPressedDuration: 150,
-    isPressedKey: (key) => key === " " || (!this.disableEnter && key === "Enter"),
+    isPressedKey: (key) => key === " ",
     callback: (pressed, { x, y }) => this.#handlePressedChange(pressed, x, y),
   });
 
@@ -135,12 +133,6 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
    * @default false
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
-
-  /**
-   * Whether the ripple is disabled when the enter key is pressed.
-   * @default false
-   */
-  @property({ attribute: "disable-enter", type: Boolean, reflect: true }) disableEnter = false;
 
   /**
    * Whether the ripple always originates from the center of the element's bounds, rather

@@ -345,7 +345,7 @@ export class M3eSplitButtonElement extends Role(LitElement, "group") {
   /** @private */ readonly #pressedController = new PressedController(this, {
     target: null,
     capture: true,
-    isPressedKey: (key) => key === " " || key === "Enter",
+    isPressedKey: (key) => key === " ",
     callback: (pressed, _, target) => {
       switch (target) {
         case this.#leadingButton:

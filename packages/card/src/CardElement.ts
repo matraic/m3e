@@ -160,7 +160,7 @@ export class M3eCardElement extends KeyboardClick(
     super();
 
     new PressedController(this, {
-      isPressedKey: (key) => key === " " || key === "Enter",
+      isPressedKey: (key) => key === " ",
       callback: (pressed) => {
         if (this.actionable && !this.disabled && !this.disabledInteractive) {
           this._base?.classList.toggle("pressed", pressed);
