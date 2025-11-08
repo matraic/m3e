@@ -347,7 +347,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
   /** @private */
   #updateItemFocusVisible(item: M3eNavMenuItemElement, focused: boolean, focusVisible: boolean): void {
-    if (focused) {
+    if (focused && focusVisible) {
       item.stateLayer?.show("focused");
     } else {
       item.stateLayer?.hide("focused");
