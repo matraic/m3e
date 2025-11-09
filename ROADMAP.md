@@ -4,7 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 1.0.0 stable release
+- Stepper
 
 ## 🔮 Future
 
@@ -23,7 +23,6 @@ Components in early stages of development include:
 - Select
 - Skeleton Loader
 - Splitter
-- Stepper
 - Tree
 
 #### 🔮 Not Yet Started
