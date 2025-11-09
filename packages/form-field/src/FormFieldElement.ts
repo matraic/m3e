@@ -811,7 +811,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
   /** @private */
   #handleFormReset(): void {
     this._invalid = false;
-    this.notifyControlStateChange();
+    setTimeout(() => this.notifyControlStateChange());
   }
 
   /** @private */
