@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Color for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Color for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.2/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.2/dist/a11y.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.2/dist/index.min.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Color</span>
+      </m3e-toc>
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Color</m3e-heading>
+      <p>
+        M3E applies the
+        <a href="https://m3.material.io/styles/color/system/overview" target="_blank">Material Design 3 color system</a>
+        allowing you to create accessible and personalized color schemes that cascade to every component.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Design tokens</m3e-heading>
+      <p>
+        The <a href="https://m3.material.io/foundations/design-tokens/overview">Material Design 3 design tokens</a> are
+        implemented as custom CSS properties. Design tokens are named, platform-agnostic variables that represent visual
+        design decisions—such as color, typography, spacing, and elevation—in a reusable, consistent format.
+      </p>
+      <p>
+        Color tokens are surfaced using the standardized prefix <code>--md-sys-color-*</code> supporting use of the
+        <a href="https://material-foundation.github.io/material-theme-builder/">Material Theme Builder</a>.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Static color</m3e-heading>
+      <p>
+        Static colors refer to predefined, spec-aligned colors that do not automatically adapt to system settings. The
+        <code>--md-sys-color-*</code> custom CSS properties default to the <strong>baseline</strong> values for light
+        mode.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Dynamic color</m3e-heading>
+      <p>
+        Dynamic color refers to runtime-generated color schemes derived from a single source color, allowing
+        personalized theming that adapts to system settings.
+      </p>
+      <p>
+        M3E provides the <a href="../components/theme.html">Theme</a> component which applies dynamic color, expressive
+        motion, density, and strong focus indicators to nested, theme-aware elements. This component leverages the
+        <code>@material/material-color-utils</code> library to generates light and dark variants based on the content
+        strategy—mapping perceptually tuned tones to standard Material Design 3 roles like <i>primary</i>,
+        <i>surface</i>, and <i>outline</i>.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Forced colors</m3e-heading>
+      <p>
+        M3E honors <code>forced-colors</code> mode by dynamically adapting component styles to ensure legibility,
+        contrast, and semantic clarity in high-contrast environments.
+      </p>
+    </m3e-theme>
+  </body>
+</html>

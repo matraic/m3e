@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Density for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Density for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.2/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.2/dist/a11y.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.2/dist/index.min.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Density</span>
+      </m3e-toc>
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Density</m3e-heading>
+      <p>
+        Density refers to the spatial compactness of UI elements—how tightly components are arranged, how much padding
+        surrounds them, and how much content fits within a given layout. M3E applies the
+        <a hrf="https://m3.material.io/foundations/layout/understanding-layout/density" target="_blank"
+          >Material Design 3 density system</a
+        >
+        to adapt component layout, spacing, and touch targets across varied contexts—from spacious, touch-friendly
+        surfaces to compact, information-dense environments.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Design tokens</m3e-heading>
+      <p>
+        The <a href="https://m3.material.io/foundations/design-tokens/overview">Material Design 3 design tokens</a> are
+        implemented as custom CSS properties. Design tokens are named, platform-agnostic variables that represent visual
+        design decisions—such as color, typography, spacing, and elevation—in a reusable, consistent format.
+      </p>
+      <p>
+        Density tokens are surfaced using the standardized <code>--md-sys-density-scale</code> and
+        <code>--md-sys-density-size</code> custom CSS properties. M3E provides the
+        <a href="../components/theme.html">Theme</a> component which can be used to systematically control
+        <code>--md-sys-density-scale</code> using its <code>density</code> attribute.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Density-aware components</m3e-heading>
+      <p>
+        The following components support density scaling in M3E: <code>button</code>, <code>checkbox</code>,
+        <code>input chips</code>, <code>fab</code>, <code>form-field</code>, <code>icon button</code>,
+        <code>list</code>, <code>nav menu</code>, <code>radio</code>, <code>segmented button</code>, <code>tabs</code>,
+        and <code>toolbar</code>. Each component adapts its layout, spacing, and touch targets based on the active
+        density scale.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Touch surfaces</m3e-heading>
+      <p>
+        Touch surfaces maintain a minimum size of <code>48dp x 48dp</code>, ensuring accessible, tap-friendly targets
+        across all density settings. This threshold aligns with Material Design 3 guidelines and is enforced even in
+        compact layouts, preserving interaction clarity and usability for both mouse and touch input.
+      </p>
+    </m3e-theme>
+  </body>
+</html>

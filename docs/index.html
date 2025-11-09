@@ -21,21 +21,21 @@
       {
         "imports": {
           "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
-          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.1/dist/index.min.js",
-          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.1/dist/a11y.min.js",
-          "@m3e/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.1/dist/anchoring.min.js",
-          "@m3e/core/layout": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.1/dist/layout.min.js",
-          "@m3e/core/platform": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.1/dist/platform.min.js"
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.2/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.2/dist/a11y.min.js",
+          "@m3e/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.2/dist/anchoring.min.js",
+          "@m3e/core/layout": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.2/dist/layout.min.js",
+          "@m3e/core/platform": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.2/dist/platform.min.js"
         }
       }
     </script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/app-bar@1.0.1/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon-button@1.0.1/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.1/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/drawer-container@1.0.1/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/nav-menu@1.0.1/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/tooltip@1.0.1/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.1/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/app-bar@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon-button@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/drawer-container@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/nav-menu@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/tooltip@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.2/dist/index.min.js"></script>
     <script src="index.js"></script>
     <link href="index.css" rel="stylesheet" />
   </head>
@@ -48,7 +48,7 @@
           <m3e-drawer-toggle for="nav-drawer"></m3e-drawer-toggle>
         </m3e-icon-button>
         <span slot="title">M3E — Material 3 Expressive for Every Framework</span>
-        <span slot="subtitle">v1.0.1</span>
+        <span slot="subtitle">v1.0.2</span>
         <span slot="trailing-icon">
           <m3e-icon-button id="github-button" aria-label="Git" href="https://github.com/matraic/m3e">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98 96" fill="currentColor">
@@ -74,6 +74,26 @@
             <m3e-nav-menu-item>
               <m3e-icon slot="icon" name="package_2"></m3e-icon>
               <a slot="label" target="content-frame" href="getting-started/installation.html">Installation</a>
+            </m3e-nav-menu-item>
+          </m3e-nav-menu-item>
+          <m3e-nav-menu-item>
+            <m3e-icon slot="icon" name="palette"></m3e-icon>
+            <span slot="label">Styles</span>
+            <m3e-nav-menu-item>
+              <m3e-icon slot="icon" name="colorize"></m3e-icon>
+              <a slot="label" target="content-frame" href="styles/color.html">Color</a>
+            </m3e-nav-menu-item>
+            <m3e-nav-menu-item>
+              <m3e-icon slot="icon" name="density_medium"></m3e-icon>
+              <a slot="label" target="content-frame" href="styles/density.html">Density</a>
+            </m3e-nav-menu-item>
+            <m3e-nav-menu-item>
+              <m3e-icon slot="icon" name="animation"></m3e-icon>
+              <a slot="label" target="content-frame" href="styles/motion.html">Motion</a>
+            </m3e-nav-menu-item>
+            <m3e-nav-menu-item>
+              <m3e-icon slot="icon" name="text_fields"></m3e-icon>
+              <a slot="label" target="content-frame" href="styles/typography.html">Typography</a>
             </m3e-nav-menu-item>
           </m3e-nav-menu-item>
           <m3e-nav-menu-item open>

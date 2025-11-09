@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Typography for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Typography for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="overview.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.2/dist/index.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.2/dist/index.min.js"></script>
+  </head>
+  <body>
+    <m3e-theme strong-focus>
+      <m3e-heading variant="display" size="large" level="1">Typography</m3e-heading>
+      <p>
+        M3E applies the
+        <a href="https://m3.material.io/styles/typography" target="_blank">Material Design 3 typography system</a>
+        to encode visual hierarchy, editorial tone, and spatial rhythm across components. The system defines a
+        <strong>30-style type scale</strong>—comprising 15 baseline and 15 emphasized roles.
+      </p>
+      <p>
+        Typography tokens follow the prefix <code>--md-sys-typescale-*</code> for the
+        <strong>standard</strong> typescale and <code>--md-sys-typescale-emphasized-*</code> for
+        <strong>emphasized</strong>. Each typescale variant encodes font size, line height, weight, and tracking (or
+        letter spacing)—for example, <code>body-large</code> is encoded using
+        <code>--md-sys-typescale-body-large-font-size</code>, <code>--md-sys-typescale-body-large-font-weight</code>,
+        <code>--md-sys-typescale-body-large-line-height</code>, and
+        <code><code>--md-sys-typescale-body-large-tracking</code>.</code>
+      </p>
+      <p>
+        M3E components support the full semantic range of the Material 3 type system, including
+        <strong>standard</strong> and <strong>emphasized</strong> variants of: <code>display-large</code>,
+        <code>display-medium</code>, <code>display-small</code>, <code>headline-large</code>,
+        <code>headline-medium</code>, <code>headline-small</code>, <code>title-large</code>, <code>title-medium</code>,
+        <code>title-small</code>, <code>body-large</code>, <code>body-medium</code>, <code>body-small</code>,
+        <code>label-large</code>, <code>label-medium</code>, and <code>label-small</code>.
+      </p>
+      <p>
+        Each role is mapped to a tokenized style and applied contextually—for example, <code>label-large</code> for
+        buttons, <code>body-large</code> for list items, and <code>body-small</code> for form-field hints.
+      </p>
+    </m3e-theme>
+  </body>
+</html>
