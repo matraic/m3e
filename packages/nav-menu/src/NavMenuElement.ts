@@ -241,7 +241,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
       case " ":
         e.preventDefault();
 
-        if (item.ripple && !item.ripple.visible) {
+        if (e.key === " " && item.ripple && !item.ripple.visible) {
           item.ripple.show(0, 0, true);
         }
 
@@ -300,13 +300,8 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
   /** @private */
   #handleKeyUp(e: KeyboardEvent): void {
     const item = this[selectionManager].activeItem;
-    if (e.defaultPrevented || !item || item.disabled) return;
-
-    switch (e.key) {
-      case "Enter":
-      case " ":
-        item.ripple?.hide();
-        break;
+    if (!e.defaultPrevented && item && !item.disabled && e.key === " ") {
+      item.ripple?.hide();
     }
   }
 
