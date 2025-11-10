@@ -32,6 +32,7 @@
     "packages/slider",
     "packages/snackbar",
     "packages/split-button",
+    "packages/stepper",
     "packages/switch",
     "packages/tabs",
     "packages/theme",
