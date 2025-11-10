@@ -59,9 +59,9 @@ export class M3eNavBarElement extends Role(LitElement, "navigation") {
     }
   `;
 
-  /** @internal */ [selectionManager] = new SelectionManager<M3eNavItemElement>().disableRovingTabIndex();
-  /** @internal */ #breakpointUnobserve?: () => void;
-  /** @internal */ @state() private _mode?: Exclude<NavBarMode, "auto">;
+  /** @internal */ readonly [selectionManager] = new SelectionManager<M3eNavItemElement>().disableRovingTabIndex();
+  /** @private */ #breakpointUnobserve?: () => void;
+  /** @private */ @state() private _mode?: Exclude<NavBarMode, "auto">;
 
   /**
    * The mode in which items in the bar are presented.
