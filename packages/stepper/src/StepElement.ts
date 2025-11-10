@@ -380,8 +380,10 @@ export class M3eStepElement extends Selected(
     if (e.defaultPrevented || this.selected) return;
 
     this.selected = true;
-    if (this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
-      this.closest("m3e-stepper")?.moveTo(this.index);
+    if (
+      this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true })) &&
+      this.closest("m3e-stepper")?.moveTo(this.index)
+    ) {
       this.dispatchEvent(new Event("change", { bubbles: true }));
     } else {
       this.selected = false;
