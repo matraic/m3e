@@ -24,7 +24,6 @@ export abstract class StepperButtonElementBase extends AttachInternals(LitElemen
 
   /** @inheritdoc */
   override connectedCallback(): void {
-    this.role = this.role || "none";
     super.connectedCallback();
     this.parentElement?.addEventListener("click", this.#clickHandler);
   }

@@ -323,7 +323,6 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
 
   /** @inheritdoc */
   override connectedCallback(): void {
-    this.role = this.role || "none";
     super.connectedCallback();
     this.classList.toggle("-no-animate", true);
   }
