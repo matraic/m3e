@@ -1,6 +1,8 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement, state } from "lit/decorators.js";
 
+import { Role } from "@m3e/core";
+
 /**
  * A panel presented for a step in a wizard-like workflow.
  *
@@ -59,7 +61,7 @@ import { customElement, state } from "lit/decorators.js";
  * @cssprop --m3e-step-panel-actions-height - Minimum height of the slotted actions container.
  */
 @customElement("m3e-step-panel")
-export class M3eStepPanelElement extends LitElement {
+export class M3eStepPanelElement extends Role(LitElement, "tabpanel") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -87,7 +89,6 @@ export class M3eStepPanelElement extends LitElement {
 
   /** @inheritdoc */
   override connectedCallback(): void {
-    this.role = this.role || "tabpanel";
     this.slot = "panel";
 
     super.connectedCallback();
