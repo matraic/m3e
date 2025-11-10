@@ -26,7 +26,7 @@ import { DesignToken } from "../tokens";
  * @cssprop --m3e-slide-animation-duration - The duration of transitions between slotted items.
  */
 @customElement("m3e-slide")
-export class M3eSlide extends LitElement {
+export class M3eSlideElement extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -122,6 +122,6 @@ export class M3eSlide extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "m3e-slide": M3eSlide;
+    "m3e-slide": M3eSlideElement;
   }
 }
