@@ -73,53 +73,58 @@ export class M3eLoadingIndicatorElement extends Role(LitElement, "progressbar") 
       aspect-ratio: 1 / 1;
       width: calc(${LoadingIndicatorToken.activeIndicatorSize} * 0.842);
       transform-origin: center;
-      clip-path: var(--_polygon);
       transition: clip-path ${DesignToken.motion.spring.slowEffects};
       will-change: transform, clip-path;
+
+      --_polygon-soft-burst: polygon(${ShapePolygon["soft-burst"]});
+      --_polygon-7-sided-cookie: polygon(${ShapePolygon["7-sided-cookie"]});
+      --_polygon-pentagon: polygon(${ShapePolygon["pentagon"]});
+      --_polygon-pill: polygon(${ShapePolygon["pill"]});
+      --_polygon-very-sunny: polygon(${ShapePolygon["very-sunny"]});
+      --_polygon-4-sided-cookie: polygon(${ShapePolygon["4-sided-cookie"]});
+      --_polygon-oval: polygon(${ShapePolygon["oval"]});
     }
     .active-indicator.animate {
-      animation:
-        rotate 4998ms infinite,
-        noop 714ms steps(1, end) infinite;
-    }
-    @keyframes noop {
-      from {
-        opacity: 1;
-      }
-      to {
-        opacity: 1;
-      }
+      animation: rotate 4998ms infinite;
     }
     @keyframes rotate {
       0% {
+        clip-path: var(--_polygon-soft-burst);
         transform: rotate(0deg);
         animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
       }
       14% {
+        clip-path: var(--_polygon-7-sided-cookie);
         transform: rotate(154deg);
         animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
       }
       29% {
+        clip-path: var(--_polygon-pentagon);
         transform: rotate(309deg);
         animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
       }
       43% {
+        clip-path: var(--_polygon-pill);
         transform: rotate(463deg);
         animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
       }
       57% {
+        clip-path: var(--_polygon-very-sunny);
         transform: rotate(617deg);
         animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
       }
       71% {
+        clip-path: var(--_polygon-4-sided-cookie);
         transform: rotate(771deg);
         animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
       }
       83% {
+        clip-path: var(--_polygon-oval);
         transform: rotate(926deg);
         animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
       }
       100% {
+        clip-path: var(--_polygon-soft-burst);
         transform: rotate(1080deg);
       }
     }
@@ -132,31 +137,6 @@ export class M3eLoadingIndicatorElement extends Role(LitElement, "progressbar") 
 
   /** @private */
   @query(".active-indicator") private readonly _activeIndicator?: HTMLElement;
-
-  /** @private */
-  #shapes: Array<keyof typeof ShapePolygon> = [
-    "soft-burst",
-    "7-sided-cookie",
-    "pentagon",
-    "pill",
-    "very-sunny",
-    "4-sided-cookie",
-    "oval",
-  ];
-
-  /** @private */ #shapeIndex = 1;
-
-  readonly #animationIterationHandler = (e: AnimationEvent) => {
-    if (e.animationName === "noop") {
-      if (this._activeIndicator) {
-        this._activeIndicator?.style.setProperty(
-          "--_polygon",
-          `polygon(${ShapePolygon[this.#shapes[this.#shapeIndex]]})`
-        );
-      }
-      this.#shapeIndex = (this.#shapeIndex + 1) % this.#shapes.length;
-    }
-  };
 
   /**
    * The appearance variant of the indicator.
@@ -175,18 +155,12 @@ export class M3eLoadingIndicatorElement extends Role(LitElement, "progressbar") 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-
-    this._activeIndicator?.removeEventListener("animationiteration", this.#animationIterationHandler);
     this._activeIndicator?.classList.toggle("animate", false);
   }
 
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
-
-    this._activeIndicator?.style.setProperty("--_polygon", `polygon(${ShapePolygon[this.#shapes[0]]})`);
-
-    this._activeIndicator?.addEventListener("animationiteration", this.#animationIterationHandler);
     this._activeIndicator?.classList.toggle("animate", true);
   }
 
