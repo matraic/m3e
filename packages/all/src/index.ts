@@ -35,6 +35,7 @@ export * from "@m3e/slide-group";
 export * from "@m3e/slider";
 export * from "@m3e/snackbar";
 export * from "@m3e/split-button";
+export * from "@m3e/stepper";
 export * from "@m3e/switch";
 export * from "@m3e/tabs";
 export * from "@m3e/textarea-autosize";

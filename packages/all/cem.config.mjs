@@ -32,6 +32,7 @@ export default {
     "../segmented-button/src/**/*.ts",
     "../shape/src/**/*.ts",
     "../slide-group/src/**/*.ts",
+    "../stepper/src/**/*.ts",
     "../slider/src/**/*.ts",
     "../snackbar/src/**/*.ts",
     "../split-button/src/**/*.ts",

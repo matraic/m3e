@@ -58,6 +58,7 @@
     "@m3e/slider": "1.0.2",
     "@m3e/snackbar": "1.0.2",
     "@m3e/split-button": "1.0.2",
+    "@m3e/stepper": "1.0.2",
     "@m3e/switch": "1.0.2",
     "@m3e/tabs": "1.0.2",
     "@m3e/textarea-autosize": "1.0.2",
