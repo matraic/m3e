@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Stepper for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Stepper for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.2/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.2/dist/a11y.min.js",
+          "@m3e/core/layout": "https://cdn.jsdelivr.net/npm/@m3e/core@1.0.2/dist/layout.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon-button@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/button@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/form-field@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.0.2/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/stepper@1.0.2/dist/index.min.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Stepper</span>
+      </m3e-toc>
+
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Stepper</m3e-heading>
+      <p>
+        The <code>m3e-stepper</code> component provides a wizard-like workflow by dividing content into logical steps.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
+      <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/stepper</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+      <p>
+        Use <code>m3e-stepper</code>, <code>m3e-step</code>, and <code>m3e-step-panel</code> to construct a wizard-like
+        workflow. Both <code>m3e-step</code> and <code>m3e-step-panel</code> must be direct children of
+        <code>m3e-stepper</code>. To associate a step with its corresponding panel, set the <code>for</code> attribute
+        on <code>m3e-step</code> to match the ID of the target <code>m3e-step-panel</code>.
+      </p>
+      <p>
+        To select a step, apply the <code>selected</code> attribute to a single <code>m3e-step</code>. When a step is
+        activated, a cancellable <code>input</code> event is emitted followed by a <code>change</code> event. To cancel
+        selection change, call <code>preventDefault</code> during <code>input</code>. Only one step may be selected at a
+        time.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-stepper>
+            <m3e-step for="step1">Fill out your name</m3e-step>
+            <m3e-step for="step2">Fill out your address</m3e-step>
+            <m3e-step for="step3">Done</m3e-step>
+            <m3e-step-panel id="step1">
+              <form>
+                <m3e-form-field>
+                  <label slot="label" for="name">Name</label>
+                  <input name="name" id="name" required />
+                </m3e-form-field>
+              </form>
+              <div slot="actions">
+                <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
+              </div>
+            </m3e-step-panel>
+            <m3e-step-panel id="step2">
+              <form>
+                <m3e-form-field>
+                  <label slot="label" for="address">Address</label>
+                  <input name="address" id="address" required />
+                </m3e-form-field>
+              </form>
+              <div slot="actions">
+                <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
+                <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
+              </div>
+            </m3e-step-panel>
+            <m3e-step-panel id="step3">
+              Done
+              <div slot="actions">
+                <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
+                <m3e-button><m3e-stepper-reset>Reset</m3e-stepper-reset></m3e-button>
+              </div>
+            </m3e-step-panel>
+          </m3e-stepper>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-stepper&gt;
+  &lt;m3e-step for=&quot;step1&quot;&gt;Fill out your name&lt;/m3e-step&gt;
+  &lt;m3e-step for=&quot;step2&quot;&gt;Fill out your address&lt;/m3e-step&gt;
+  &lt;m3e-step for=&quot;step3&quot;&gt;Done&lt;/m3e-step&gt;
+  &lt;m3e-step-panel id=&quot;step1&quot;&gt;
+    &lt;form&gt;
+      &lt;m3e-form-field&gt;
+        &lt;label slot=&quot;label&quot; for=&quot;name&quot;&gt;Name&lt;/label&gt;
+        &lt;input name=&quot;name&quot; id=&quot;name&quot; required /&gt;
+      &lt;/m3e-form-field&gt;
+    &lt;/form&gt;
+    &lt;div slot=&quot;actions&quot;&gt;
+      &lt;m3e-button&gt;&lt;m3e-stepper-next&gt;Next&lt;/m3e-stepper-next&gt;&lt;/m3e-button&gt;
+    &lt;/div&gt;
+  &lt;/m3e-step-panel&gt;
+  &lt;m3e-step-panel id=&quot;step2&quot;&gt;
+    &lt;form&gt;
+      &lt;m3e-form-field&gt;
+        &lt;label slot=&quot;label&quot; for=&quot;address&quot;&gt;Address&lt;/label&gt;
+        &lt;input name=&quot;address&quot; id=&quot;address&quot; required /&gt;
+      &lt;/m3e-form-field&gt;
+    &lt;/form&gt;
+    &lt;div slot=&quot;actions&quot;&gt;
+      &lt;m3e-button&gt;&lt;m3e-stepper-previous&gt;Back&lt;/m3e-stepper-previous&gt;&lt;/m3e-button&gt;
+      &lt;m3e-button&gt;&lt;m3e-stepper-next&gt;Next&lt;/m3e-stepper-next&gt;&lt;/m3e-button&gt;
+    &lt;/div&gt;
+  &lt;/m3e-step-panel&gt;
+  &lt;m3e-step-panel id=&quot;step3&quot;&gt;
+    Done
+    &lt;div slot=&quot;actions&quot;&gt;
+      &lt;m3e-button&gt;&lt;m3e-stepper-previous&gt;Back&lt;/m3e-stepper-previous&gt;&lt;/m3e-button&gt;
+      &lt;m3e-button&gt;&lt;m3e-stepper-reset&gt;Reset&lt;/m3e-stepper-reset&gt;&lt;/m3e-button&gt;
+    &lt;/div&gt;
+  &lt;/m3e-step-panel&gt;
+&lt;/m3e-stepper&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Orientation</m3e-heading>
+      <p>
+        The <code>m3e-stepper</code> supports three orientations: <code>horizontal</code> (default),
+        <code>vertical</code>, and <code>auto</code>. Using <code>auto</code>, the orientation is responsive and
+        determined by viewport size. Use the <code>orientation</code> attribute to change a stepper's orientation.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-stepper orientation="vertical">
+            <m3e-step for="step4">Fill out your name</m3e-step>
+            <m3e-step for="step5">Fill out your address</m3e-step>
+            <m3e-step for="step6">Done</m3e-step>
+            <m3e-step-panel id="step4">
+              <form>
+                <m3e-form-field>
+                  <label slot="label" for="name2">Name</label>
+                  <input name="name2" id="name2" required />
+                </m3e-form-field>
+              </form>
+              <div slot="actions">
+                <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
+              </div>
+            </m3e-step-panel>
+            <m3e-step-panel id="step5">
+              <form>
+                <m3e-form-field>
+                  <label slot="label" for="address2">Address</label>
+                  <input name="address2" id="address2" required />
+                </m3e-form-field>
+              </form>
+              <div slot="actions">
+                <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
+                <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
+              </div>
+            </m3e-step-panel>
+            <m3e-step-panel id="step6">
+              Done
+              <div slot="actions">
+                <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
+                <m3e-button><m3e-stepper-reset>Reset</m3e-stepper-reset></m3e-button>
+              </div>
+            </m3e-step-panel>
+          </m3e-stepper>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-stepper orientation=&quot;vertical&quot;&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-stepper&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Header positions</m3e-heading>
+      <p>
+        When using a horizontal stepper, you can control where the stepper's content is positioned using the
+        <code>header-position</code> attribute. By default, the header is placed <code>above</code> content, but you can
+        change it to <code>below</code> to placed it under the content.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-stepper header-position="below">
+            <m3e-step for="step7">Fill out your name</m3e-step>
+            <m3e-step for="step8">Fill out your address</m3e-step>
+            <m3e-step for="step9">Done</m3e-step>
+            <m3e-step-panel id="step7">
+              <form>
+                <m3e-form-field>
+                  <label slot="label" for="name3">Name</label>
+                  <input name="name3" id="name3" required />
+                </m3e-form-field>
+              </form>
+              <div slot="actions">
+                <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
+              </div>
+            </m3e-step-panel>
+            <m3e-step-panel id="step8">
+              <form>
+                <m3e-form-field>
+                  <label slot="label" for="address3">Address</label>
+                  <input name="address3" id="address3" required />
+                </m3e-form-field>
+              </form>
+              <div slot="actions">
+                <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
+                <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
+              </div>
+            </m3e-step-panel>
+            <m3e-step-panel id="step9">
+              Done
+              <div slot="actions">
+                <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
+                <m3e-button><m3e-stepper-reset>Reset</m3e-stepper-reset></m3e-button>
+              </div>
+            </m3e-step-panel>
+          </m3e-stepper>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-stepper header-position=&quot;below&quot;&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-stepper&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Label positions</m3e-heading>
+      <p>
+        When using a horizontal stepper, you can control where the step's label is positioned using the
+        <code>label-position</code> attribute. By default, labels are placed <code>after</code> a step's icon, but you
+        can change it to <code>below</code> to placed it under the icon.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-stepper label-position="below">
+            <m3e-step for="step10">Fill out your name</m3e-step>
+            <m3e-step for="step11">Fill out your address</m3e-step>
+            <m3e-step for="step12">Done</m3e-step>
+            <m3e-step-panel id="step10">
+              <form>
+                <m3e-form-field>
+                  <label slot="label" for="name4">Name</label>
+                  <input name="name4" id="name4" required />
+                </m3e-form-field>
+              </form>
+              <div slot="actions">
+                <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
+              </div>
+            </m3e-step-panel>
+            <m3e-step-panel id="step11">
+              <form>
+                <m3e-form-field>
+                  <label slot="label" for="address4">Address</label>
+                  <input name="address4" id="address4" required />
+                </m3e-form-field>
+              </form>
+              <div slot="actions">
+                <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
+                <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
+              </div>
+            </m3e-step-panel>
+            <m3e-step-panel id="step12">
+              Done
+              <div slot="actions">
+                <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
+                <m3e-button><m3e-stepper-reset>Reset</m3e-stepper-reset></m3e-button>
+              </div>
+            </m3e-step-panel>
+          </m3e-stepper>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-stepper label-position=&quot;below&quot;&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-stepper&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Stepper buttons</m3e-heading>
+      <p>
+        Panels provide an <code>actions</code> slot for placing navigation controls. The
+        <code>m3e-stepper-previous</code>, <code>m3e-stepper-next</code>, and <code>m3e-stepper-reset</code> components
+        can be used to navigate steps. Using the <code>m3e-stepper-reset</code> will reset the stepper and any form
+        data.
+      </p>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-step-panel&gt;
+  &lt;div slot=&quot;actions&quot;&gt;
+    &lt;m3e-button&gt;&lt;m3e-stepper-previous&gt;Back&lt;/m3e-stepper-previous&gt;&lt;/m3e-button&gt;
+    &lt;m3e-button&gt;&lt;m3e-stepper-next&gt;Next&lt;/m3e-stepper-next&gt;&lt;/m3e-button&gt;
+  &lt;/div&gt;
+&lt;/m3e-step-panel&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Linear stepper</m3e-heading>
+      <p>
+        The <code>linear</code> attribute can be set on <code>m3e-stepper</code> to create a linear stepper that
+        requires the user to complete previous steps before proceeding to following steps.
+      </p>
+      <p>
+        Linear steppers require use of a <code>form</code> per step whose validity status determines whether a user can
+        move to the next step.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-stepper linear>
+            <m3e-step for="step13">Fill out your name</m3e-step>
+            <m3e-step for="step14">Fill out your address</m3e-step>
+            <m3e-step for="step15">Done</m3e-step>
+            <m3e-step-panel id="step13">
+              <form>
+                <m3e-form-field>
+                  <label slot="label" for="name5">Name</label>
+                  <input name="name5" id="name5" required />
+                </m3e-form-field>
+              </form>
+              <div slot="actions">
+                <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
+              </div>
+            </m3e-step-panel>
+            <m3e-step-panel id="step14">
+              <form>
+                <m3e-form-field>
+                  <label slot="label" for="address5">Address</label>
+                  <input name="address5" id="address5" required />
+                </m3e-form-field>
+              </form>
+              <div slot="actions">
+                <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
+                <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
+              </div>
+            </m3e-step-panel>
+            <m3e-step-panel id="step15">
+              Done
+              <div slot="actions">
+                <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
+                <m3e-button><m3e-stepper-reset>Reset</m3e-stepper-reset></m3e-button>
+              </div>
+            </m3e-step-panel>
+          </m3e-stepper>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-stepper linear&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-stepper&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Step types</m3e-heading>
+      <p>
+        Use the <code>optional</code> attribute on <code>m3e-step</code> to indicate that completion is not required.
+        When navigating away from an optional step, its nested <code>form</code> is still validated; however, an invalid
+        state will neither block progression nor visually mark the step header as invalid.
+      </p>
+      <p>
+        For linear steppers, use the <code>editable</code> attribute on <code>m3e-step</code> to allow a user to
+        navigate back to a previously completed step.
+      </p>
+      <p>
+        You can use the <code>completed</code> and <code>invalid</code> attributes to programmatically control whether a
+        step is completed or invalid.
+      </p>
+      <m3e-heading variant="headline" size="small" level="3">Step icons</m3e-heading>
+      <p>
+        You can override icons using the <code>icon</code>, <code>done-icon</code>, <code>edit-icon</code>, and
+        <code>error-icon</code>.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Hint and error text</m3e-heading>
+      <p>
+        You can use the <code>hint</code> and <code>error</code> slots of a <code>m3e-step</code> to specify hint text
+        or, when invalid, an error message. By default, optional steps have hint text of <code>(Optional)</code>.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Steppers implement the
+        <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank">ARIA Tabs design pattern</a> and are
+        composed of the <code>tablist</code>, <code>tab</code>, and <code>tabpanel</code> roles. The pattern includes
+        support for keyboard navigation, focus management, and accessible relationships between steps and their
+        associated panels.
+      </p>
+      <p>
+        The <code>m3e-stepper</code> component hosts an internal <code>tablist</code>. It contains each
+        <code>m3e-step</code>, which is assigned the ARIA <code>role="tab"</code>. Corresponding
+        <code>m3e-step-panel</code> elements are given the ARIA <code>role="tabpanel"</code>. Each step is linked to its
+        associated panel using <code>aria-controls</code>, and the <code>aria-selected</code> attribute communicates the
+        selected state of a step to assistive technologies. When a step is disabled,
+        <code>aria-disabled="true"</code> communicates its inactive state.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/stepper/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;,
+      &quot;@m3e/core/layout&quot;: &quot;/node_modules/@m3e/core/dist/layout.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js, a11y.min.js and layout.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer only="m3e-step" src="https://cdn.jsdelivr.net/npm/@m3e/stepper@1.0.2/dist/custom-elements.json">
+      </api-viewer>
+      <api-viewer only="m3e-step-panel" src="https://cdn.jsdelivr.net/npm/@m3e/stepper@1.0.2/dist/custom-elements.json">
+      </api-viewer>
+      <api-viewer only="m3e-stepper" src="https://cdn.jsdelivr.net/npm/@m3e/stepper@1.0.2/dist/custom-elements.json">
+      </api-viewer>
+      <api-viewer
+        only="m3e-stepper-previous"
+        src="https://cdn.jsdelivr.net/npm/@m3e/stepper@1.0.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-stepper-next"
+        src="https://cdn.jsdelivr.net/npm/@m3e/stepper@1.0.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-stepper-reset"
+        src="https://cdn.jsdelivr.net/npm/@m3e/stepper@1.0.2/dist/custom-elements.json"
+      >
+      </api-viewer>
+    </m3e-theme>
+  </body>
+</html>
