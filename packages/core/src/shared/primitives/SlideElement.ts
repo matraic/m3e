@@ -1,5 +1,5 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property, queryAssignedElements } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 
 import { DesignToken } from "../tokens";
 
@@ -68,7 +68,7 @@ export class M3eSlideElement extends LitElement {
     }
   `;
 
-  /** @private */ @queryAssignedElements({ flatten: true }) private readonly _items!: Element[];
+  /** @private */ #items = new Array<Element>();
 
   /**
    * The zero-based index of the visible item.
@@ -105,14 +105,27 @@ export class M3eSlideElement extends LitElement {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot @slotchange="${this.#updateItems}"></slot>`;
+    return html`<slot @slotchange="${this.#handleSlotChange}"></slot>`;
+  }
+
+  /** @private */
+  #handleSlotChange(e: Event): void {
+    const items = [...(e.target as HTMLSlotElement).assignedElements({ flatten: true })];
+    for (const removed of this.#items.filter((x) => !items.includes(x))) {
+      removed.classList.remove("-before");
+      removed.classList.remove("-after");
+      removed.removeAttribute("inert");
+    }
+
+    this.#items = items;
+    this.#updateItems();
   }
 
   /** @private */
   #updateItems(): void {
-    const selectedIndex = this.selectedIndex ?? this._items.length;
-    for (let i = 0; i < this._items.length; i++) {
-      const item = this._items[i];
+    const selectedIndex = this.selectedIndex ?? this.#items.length;
+    for (let i = 0; i < this.#items.length; i++) {
+      const item = this.#items[i];
       item.classList.toggle("-before", i < selectedIndex);
       item.classList.toggle("-after", i > selectedIndex);
       item.toggleAttribute("inert", i !== selectedIndex);
