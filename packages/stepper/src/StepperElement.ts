@@ -275,6 +275,10 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
       return true;
     }
 
+    if (this.steps[index]?.disabled) {
+      return false;
+    }
+
     if (index >= 0 && index < this.steps.length) {
       if (selectedStep) {
         const valid = this.#checkValidity();
