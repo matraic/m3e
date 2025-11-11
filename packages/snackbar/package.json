@@ -1,6 +1,6 @@
 {
   "name": "@m3e/snackbar",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Snackbar for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
@@ -27,9 +27,9 @@
     "clean": "rimraf dist"
   },
   "peerDependencies": {
-    "@m3e/core": "1.0.2",
-    "@m3e/button": "1.0.2",
-    "@m3e/icon-button": "1.0.2",
+    "@m3e/core": "1.0.3",
+    "@m3e/button": "1.0.3",
+    "@m3e/icon-button": "1.0.3",
     "lit": "^3.3.0"
   },
   "devDependencies": {
