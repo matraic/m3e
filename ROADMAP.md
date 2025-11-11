@@ -4,7 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 1.0.3 Release
+- 1.0.4 Release
 
 ## 🔮 Future
 
@@ -41,6 +41,7 @@ Planned components which have not yet entered development:
 
 ## 🏛️ Past Milestones
 
+- 1.0.4: Bug fixes
 - 1.0.3: Added @m3e/stepper
 - 1.0.1 - 1.0.2: Bug fixes
 - 1.0.0: Stable Release
