@@ -15,6 +15,9 @@ export const SwitchStyle = css`
     user-select: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
+  :host(:not([aria-disabled="true"])) {
+    cursor: pointer;
+  }
   .focus-ring {
     border-radius: ${SwitchToken.trackShape};
   }
