@@ -1,6 +1,6 @@
 {
   "name": "@m3e/chips",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Chips for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
@@ -32,9 +32,9 @@
     "clean": "rimraf dist"
   },
   "peerDependencies": {
-    "@m3e/core": "1.0.3",
-    "@m3e/icon-button": "1.0.3",
-    "@m3e/form-field": "1.0.3",
+    "@m3e/core": "1.0.4",
+    "@m3e/icon-button": "1.0.4",
+    "@m3e/form-field": "1.0.4",
     "lit": "^3.3.0"
   },
   "devDependencies": {
