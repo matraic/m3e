@@ -28,6 +28,7 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       user-select: none;
       flex: none;
       height: var(--m3e-menu-item-container-height, 3rem);
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:not(:focus-visible)) .base {
       --m3e-state-layer-focus-opacity: 0;

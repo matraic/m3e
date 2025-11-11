@@ -42,6 +42,7 @@ export class M3eTocItemElement extends Selected(Disabled(AttachInternals(Role(Li
       outline: none;
       border-radius: var(--m3e-toc-item-shape, ${DesignToken.shape.corner.largeIncreased});
       padding-block: var(--m3e-toc-item-padding-block, 0.5rem);
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:not(:disabled)) {
       cursor: pointer;

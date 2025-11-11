@@ -87,6 +87,11 @@ export function Labelled<T extends Constructor<LitElement & AttachInternalsMixin
       for (const label of this.labels ?? []) {
         label.style.userSelect = focusable ? "none" : "";
         label.style.cursor = !disabled && focusable ? "pointer" : "";
+        if (!disabled && focusable) {
+          label.style.setProperty("-webkit-tap-highlight-color", "rgba(0, 0, 0, 0)");
+        } else {
+          label.style.removeProperty("-webkit-tap-highlight-color");
+        }
 
         label.style.color = disabled
           ? `color-mix(in srgb, ${DesignToken.color.onSurface} 38%, transparent)`

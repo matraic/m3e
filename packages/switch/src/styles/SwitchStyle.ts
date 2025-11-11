@@ -12,6 +12,8 @@ export const SwitchStyle = css`
     outline: none;
     height: fit-content;
     width: fit-content;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
   .focus-ring {
     border-radius: ${SwitchToken.trackShape};

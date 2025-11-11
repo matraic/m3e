@@ -115,6 +115,8 @@ export class M3eCheckboxElement extends Labelled(
       width: fit-content;
       height: fit-content;
       vertical-align: middle;
+      user-select: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:not([aria-disabled="true"])) {
       cursor: pointer;

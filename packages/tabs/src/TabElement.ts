@@ -89,6 +89,7 @@ export class M3eTabElement extends Selected(
       line-height: var(--m3e-tab-line-height, ${DesignToken.typescale.standard.title.small.lineHeight});
       letter-spacing: var(--m3e-tab-tracking, ${DesignToken.typescale.standard.title.small.tracking});
       flex-grow: var(--_tab-grow);
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:not(:disabled)) {
       cursor: pointer;

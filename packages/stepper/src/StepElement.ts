@@ -132,10 +132,11 @@ export class M3eStepElement extends Selected(
       min-width: 0px;
       border-radius: var(--m3e-step-shape, ${DesignToken.shape.corner.medium});
       padding: var(--m3e-step-padding, 1.5rem);
+      user-select: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:not([aria-disabled="true"])) {
       cursor: pointer;
-      user-select: none;
     }
     .icon {
       flex: none;

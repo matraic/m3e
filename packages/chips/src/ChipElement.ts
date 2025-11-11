@@ -73,6 +73,7 @@ export class M3eChipElement extends LitElement {
       display: inline-block;
       vertical-align: middle;
       outline: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     .base {
       box-sizing: border-box;

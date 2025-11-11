@@ -115,6 +115,7 @@ export class M3eNavItemElement extends LinkButton(
       border-radius: var(--m3e-nav-item-shape, ${DesignToken.shape.corner.full});
       min-width: var(--_nav-item-min-width);
       align-self: var(--_nav-item-align-self);
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host([orientation="horizontal"]) {
       max-width: fit-content;

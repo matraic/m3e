@@ -11,6 +11,7 @@ export const IconButtonStyle: CSSResultGroup = css`
     display: inline-block;
     outline: none;
     user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
   .base {
     box-sizing: border-box;

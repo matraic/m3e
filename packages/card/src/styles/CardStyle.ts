@@ -37,8 +37,9 @@ export const CardStyle: CSSResult = css`
       border-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`
     )};
   }
-  :host([actionable]) .base {
+  :host([actionable]) {
     user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
   :host([actionable]:not(:disabled):not([disabled-interactive])) {
     cursor: pointer;

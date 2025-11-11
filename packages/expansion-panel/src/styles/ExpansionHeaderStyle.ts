@@ -13,6 +13,7 @@ export const ExpansionHeaderStyle = css`
     display: flex;
     border-radius: inherit;
     outline: none;
+    user-select: none;
     position: relative;
     height: ${ExpansionHeaderToken.collapsedHeight};
     padding-inline-start: ${ExpansionHeaderToken.paddingLeft};
@@ -25,6 +26,7 @@ export const ExpansionHeaderStyle = css`
         ${DesignToken.motion.easing.standard}`)};
 
     column-gap: ${ExpansionHeaderToken.spacing};
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
   :host(:not(:disabled)) {
     cursor: pointer;

@@ -85,6 +85,8 @@ export class M3eSliderElement extends LitElement {
       display: inline-block;
       vertical-align: middle;
       min-inline-size: var(--m3e-slider-min-width, 12.5rem);
+      user-select: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:not([disabled])) {
       cursor: pointer;

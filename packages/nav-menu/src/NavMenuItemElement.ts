@@ -146,11 +146,13 @@ export class M3eNavMenuItemElement extends Selected(
       display: block;
       flex: none;
       outline: none;
+      user-select: none;
       position: relative;
       font-size: var(--m3e-nav-menu-item-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(--m3e-nav-menu-item-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-nav-menu-item-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
       letter-spacing: var(--m3e-nav-menu-item-tracking, ${DesignToken.typescale.standard.label.large.tracking});
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     .base {
       display: flex;
