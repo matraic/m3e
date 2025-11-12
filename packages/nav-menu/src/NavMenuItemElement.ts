@@ -480,7 +480,7 @@ export class M3eNavMenuItemElement extends Selected(
     return html`<div class="base" @click="${this.#handleClick}">
         <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"></m3e-state-layer>
         <m3e-focus-ring class="focus-ring" inward ?disabled="${this.disabled}"></m3e-focus-ring>
-        <m3e-ripple class="ripple" centered ?disabled="${this.disabled}"></m3e-ripple>
+        <m3e-ripple class="ripple" ?disabled="${this.disabled}"></m3e-ripple>
         <div class="icon" aria-hidden="true">${this.#renderIcon()}</div>
         <div class="label">
           <slot name="label" @slotchange="${this.#handleSlotChange}"></slot>
