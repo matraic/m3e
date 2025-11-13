@@ -4,7 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 1.0.4 Release
+- Add multi-entry support to `@m3e/all` supporting tree-shaking and unified install
 
 ## 🔮 Future
 
