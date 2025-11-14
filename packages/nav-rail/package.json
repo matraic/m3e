@@ -1,6 +1,6 @@
 {
   "name": "@m3e/nav-rail",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Navigation Rail for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
@@ -27,8 +27,8 @@
     "clean": "rimraf dist"
   },
   "peerDependencies": {
-    "@m3e/core": "1.0.4",
-    "@m3e/nav-bar": "1.0.4",
+    "@m3e/core": "1.0.5",
+    "@m3e/nav-bar": "1.0.5",
     "lit": "^3.3.0"
   },
   "devDependencies": {
