@@ -4,7 +4,8 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- Add multi-entry support to `@m3e/all` supporting tree-shaking and unified install
+- Autocomplete
+- Select
 
 ## 🔮 Future
 
@@ -22,7 +23,7 @@ Components in early stages of development include:
 - Paginator
 - Select
 - Skeleton Loader
-- Splitter
+- Split Pane
 - Tree
 
 #### 🔮 Not Yet Started
@@ -41,6 +42,7 @@ Planned components which have not yet entered development:
 
 ## 🏛️ Past Milestones
 
+- 1.0.5: Bug fixed, converted @m3e/all to pure meta-package
 - 1.0.4: Bug fixes
 - 1.0.3: Added @m3e/stepper
 - 1.0.1 - 1.0.2: Bug fixes
