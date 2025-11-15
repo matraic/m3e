@@ -300,8 +300,12 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       margin-inline-end: 1rem;
       margin-inline-start: 0.75rem;
     }
+    .suffix {
+      margin-inline-end: 1rem;
+    }
     :host(.-with-suffix) .suffix {
       margin-inline-start: 0.25rem;
+      margin-inline-end: unset;
     }
     :host(.-with-suffix.-with-select) .suffix {
       margin-inline-start: unset;
