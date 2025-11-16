@@ -40,6 +40,23 @@ import { M3eOptionElement, M3eOptionMenuElement } from "@m3e/option";
  * visibility. Selection changes are communicated through standard form events, enabling predictable integration
  * with form submission and reactive state management systems.
  *
+ * @example
+ * The following demonstrates a `m3e-select` component wrapped in a `m3e-form-field` with a slotted label.
+ * The label is associated with the select via the `for` and `id` attributes, ensuring accessible form semantics.
+ * Each `m3e-option` defines an option within the dropdown.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="select">Choose your favorite fruit</label>
+ *   <m3e-select id="select">
+ *     <m3e-option>Apples</m3e-option>
+ *     <m3e-option>Oranges</m3e-option>
+ *     <m3e-option>Bananas</m3e-option>
+ *     <m3e-option>Grapes</m3e-option>
+ *   </m3e-select>
+ * </m3e-form-field>
+ * ```
+ *
  * @tag m3e-select
  *
  * @slot - Renders the options of the select.
