@@ -1,6 +1,7 @@
 import { ReactiveControllerHost } from "lit";
 
 import { MonitorControllerBase, MonitorControllerOptions } from "./MonitorControllerBase";
+import { forcedColorsActive } from "../utils";
 
 /** The callback function invoked when the focused state of an element changes. */
 export type FocusControllerCallback = (focused: boolean, focusVisible: boolean, target: HTMLElement) => void;
@@ -50,7 +51,7 @@ export class FocusController extends MonitorControllerBase {
   /** @private */
   #handleFocusIn(e: Event): void {
     const target = e.target as HTMLElement;
-    this.#callback(true, target.matches(":focus-visible") || matchMedia("(forced-colors: active)").matches, target);
+    this.#callback(true, target.matches(":focus-visible") || forcedColorsActive(), target);
   }
 
   /** @private */

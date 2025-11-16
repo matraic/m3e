@@ -21,6 +21,7 @@ import {
   Role,
   Focusable,
   prefersReducedMotion,
+  forcedColorsActive,
 } from "@m3e/core";
 
 import { ListKeyManager } from "@m3e/core/a11y";
@@ -546,8 +547,7 @@ export class M3eSelectElement
     if (this.#menu) {
       scrollIntoViewIfNeeded(option, this.#menu, { block: "start", behavior: "instant" });
 
-      const focusVisible =
-        !this.#ignoreFocusVisible && (this.matches(":focus-visible") || matchMedia("(forced-colors: active)").matches);
+      const focusVisible = !this.#ignoreFocusVisible && (this.matches(":focus-visible") || forcedColorsActive());
 
       this.options.forEach((x) => {
         const active = x === option && focusVisible;

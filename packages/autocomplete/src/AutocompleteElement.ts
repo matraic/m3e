@@ -1,7 +1,14 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { M3eTextHighlightElement, HtmlFor, prefersReducedMotion, scrollIntoViewIfNeeded } from "@m3e/core";
+import {
+  M3eTextHighlightElement,
+  HtmlFor,
+  prefersReducedMotion,
+  scrollIntoViewIfNeeded,
+  forcedColorsActive,
+} from "@m3e/core";
+
 import { ListKeyManager } from "@m3e/core/a11y";
 
 import type { M3eFormFieldElement } from "@m3e/form-field";
@@ -439,9 +446,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     if (this.#menu) {
       scrollIntoViewIfNeeded(option, this.#menu, { block: "start", behavior: "instant" });
 
-      const focusVisible =
-        !this.#ignoreFocusVisible &&
-        (this.#input.matches(":focus-visible") || matchMedia("(forced-colors: active)").matches);
+      const focusVisible = !this.#ignoreFocusVisible && (this.#input.matches(":focus-visible") || forcedColorsActive());
       this.options.forEach((x) => {
         const active = x === option && focusVisible;
         if (active) {

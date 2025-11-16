@@ -1,3 +1,4 @@
+export * from "./forcedColorsActive";
 export * from "./getTextContent";
 export * from "./guid";
 export * from "./hasAssignedNodes";
