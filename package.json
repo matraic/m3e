@@ -28,6 +28,7 @@
     "packages/progress-indicator",
     "packages/radio-group",
     "packages/segmented-button",
+    "packages/autocomplete",
     "packages/select",
     "packages/shape",
     "packages/slide-group",
