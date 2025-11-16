@@ -131,7 +131,7 @@ export class M3eSelectElement
 
   /** @private */ static __nextId = 0;
 
-  /** @private */ #list?: M3eOptionMenuElement;
+  /** @private */ #menu?: M3eOptionMenuElement;
   /** @private */ #ignoreKeyUp = false;
   /** @private */ #ignoreFocusVisible = false;
 
@@ -141,8 +141,8 @@ export class M3eSelectElement
   /** @private */ readonly #clickHandler = (e: Event) => this.#handleClick(e);
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);
   /** @private */ readonly #keyUpHandler = (e: KeyboardEvent) => this.#handleKeyUp(e);
-  /** @private */ readonly #listToggleHandler = (e: ToggleEvent) => this.#handleListToggle(e);
-  /** @private */ readonly #listPointerDownHandler = (e: MouseEvent) => this.#handleListPointerDown(e);
+  /** @private */ readonly #menuToggleHandler = (e: ToggleEvent) => this.#handleMenuToggle(e);
+  /** @private */ readonly #menuPointerDownHandler = (e: MouseEvent) => this.#handleMenuPointerDown(e);
 
   /** @private */ private readonly _listKeyManager = new ListKeyManager<M3eOptionElement>()
     .withWrap()
@@ -162,8 +162,8 @@ export class M3eSelectElement
     super();
     new ResizeController(this, {
       callback: () => {
-        if (this.#list) {
-          this.#list.style.minWidth = this.#minMenuWidth;
+        if (this.#menu) {
+          this.#menu.style.minWidth = this.#minMenuWidth;
         }
       },
     });
@@ -236,7 +236,7 @@ export class M3eSelectElement
   /** @inheritdoc */
   onContainerClick(): void {
     this.#ignoreFocusVisible = true;
-    this.#toggleList();
+    this.#toggleMenu();
     this.focus({ preventScroll: true });
   }
 
@@ -253,7 +253,7 @@ export class M3eSelectElement
       this.requestUpdate();
     }
 
-    this.#hideList();
+    this.#hideMenu();
 
     if (willChange) {
       this.dispatchEvent(new Event("change", { bubbles: true }));
@@ -331,7 +331,7 @@ export class M3eSelectElement
 
   /** @private */
   #handleSlotChange(): void {
-    if (this.#list) return;
+    if (this.#menu) return;
     const { added } = this._listKeyManager.setItems([...this.querySelectorAll("m3e-option")]);
     added.forEach((x) => {
       x.id = x.id || `${this.#id}-option-${this._listKeyManager.items.indexOf(x)}`;
@@ -343,7 +343,7 @@ export class M3eSelectElement
   /** @private */
   #handleClick(e: Event): void {
     if (e.defaultPrevented || this.disabled) return;
-    this.#toggleList();
+    this.#toggleMenu();
   }
 
   /** @private */
@@ -356,29 +356,29 @@ export class M3eSelectElement
       case "Enter":
         e.preventDefault();
         if (!this.multi) {
-          if (this.#list && this._listKeyManager.activeItem) {
+          if (this.#menu && this._listKeyManager.activeItem) {
             this.#selectOption(this._listKeyManager.activeItem);
           }
-          this.#toggleList();
-        } else if (!this.#list) {
+          this.#toggleMenu();
+        } else if (!this.#menu) {
           this.#ignoreKeyUp = true;
-          this.#toggleList();
+          this.#toggleMenu();
         }
 
         break;
 
       case "Escape":
       case "Tab":
-        this.#hideList();
+        this.#hideMenu();
         break;
 
       case "Down":
       case "ArrowDown":
-        if (this.multi && !this.#list) {
-          this.#toggleList();
+        if (this.multi && !this.#menu) {
+          this.#toggleMenu();
         } else {
           this._listKeyManager.onKeyDown(e);
-          if (!this.#list && this._listKeyManager.activeItem) {
+          if (!this.#menu && this._listKeyManager.activeItem) {
             this.#selectOption(this._listKeyManager.activeItem);
           }
         }
@@ -386,7 +386,7 @@ export class M3eSelectElement
 
       default:
         this._listKeyManager.onKeyDown(e);
-        if (!this.multi && !this.#list && this._listKeyManager.activeItem) {
+        if (!this.multi && !this.#menu && this._listKeyManager.activeItem) {
           this.#selectOption(this._listKeyManager.activeItem);
         }
         break;
@@ -407,7 +407,7 @@ export class M3eSelectElement
       case "Enter":
         if (!this.multi) return;
         e.preventDefault();
-        if (this.#list && this._listKeyManager.activeItem) {
+        if (this.#menu && this._listKeyManager.activeItem) {
           this.#selectOption(this._listKeyManager.activeItem);
         }
         break;
@@ -415,7 +415,7 @@ export class M3eSelectElement
   }
 
   /** @private */
-  #handleListPointerDown(e: MouseEvent): void {
+  #handleMenuPointerDown(e: MouseEvent): void {
     e.preventDefault();
     e.stopImmediatePropagation();
 
@@ -428,7 +428,7 @@ export class M3eSelectElement
       this._listKeyManager.setActiveItem(option);
 
       if (!this.multi) {
-        this.#hideList();
+        this.#hideMenu();
       } else {
         this.requestUpdate();
       }
@@ -436,14 +436,14 @@ export class M3eSelectElement
   }
 
   /** @private */
-  #handleListToggle(e: ToggleEvent): void {
-    if (!this.#list) return;
+  #handleMenuToggle(e: ToggleEvent): void {
+    if (!this.#menu) return;
 
     if (e.newState !== "closed") {
       const option = this.selected.find((x) => !x.disabled) ?? this._listKeyManager.items.find((x) => !x.disabled);
       this._listKeyManager.setActiveItem(option);
       if (option) {
-        scrollIntoViewIfNeeded(option, this.#list, { block: "start", behavior: "instant" });
+        scrollIntoViewIfNeeded(option, this.#menu, { block: "start", behavior: "instant" });
       }
       this.dispatchEvent(
         new ToggleEvent("toggle", {
@@ -453,25 +453,25 @@ export class M3eSelectElement
       );
     } else {
       if (prefersReducedMotion()) {
-        this.#destroyList(e);
+        this.#destroyMenu(e);
       } else {
         // NOTE: use transitionend is preferred but doesn't fire when used here.
         // This is a workaround until that is fixed.
-        setTimeout(() => this.#destroyList(e), 100);
+        setTimeout(() => this.#destroyMenu(e), 100);
       }
     }
   }
 
   /** @private */
-  #destroyList(e: ToggleEvent): void {
-    if (!this.#list) return;
+  #destroyMenu(e: ToggleEvent): void {
+    if (!this.#menu) return;
 
-    [...this.#list.childNodes].forEach((x) => this.append(x));
+    [...this.#menu.childNodes].forEach((x) => this.append(x));
 
-    this.#list.remove();
-    this.#list.removeEventListener("toggle", this.#listToggleHandler);
-    this.#list.removeEventListener("pointerdown", this.#listPointerDownHandler);
-    this.#list = undefined;
+    this.#menu.remove();
+    this.#menu.removeEventListener("toggle", this.#menuToggleHandler);
+    this.#menu.removeEventListener("pointerdown", this.#menuPointerDownHandler);
+    this.#menu = undefined;
 
     this.ariaExpanded = "false";
     this.removeAttribute("aria-controls");
@@ -490,35 +490,35 @@ export class M3eSelectElement
   }
 
   /** @private */
-  #toggleList(): void {
+  #toggleMenu(): void {
     if (this.disabled) return;
-    if (this.#list) {
-      this.#hideList();
+    if (this.#menu) {
+      this.#hideMenu();
     } else {
-      this.#showList();
+      this.#showMenu();
     }
   }
 
   /** @private */
-  #showList(): void {
-    if (this.#list) return;
+  #showMenu(): void {
+    if (this.#menu) return;
 
-    this.#list = document.createElement("m3e-option-menu");
+    this.#menu = document.createElement("m3e-option-menu");
     if (this.multi) {
-      this.#list.ariaMultiSelectable = "true";
+      this.#menu.ariaMultiSelectable = "true";
     }
 
-    this.#list.id = this.#listId;
-    this.#list.style.overflowX = "hidden";
-    this.#list.style.minWidth = this.#minMenuWidth;
-    this.#list.addEventListener("toggle", this.#listToggleHandler);
-    this.#list.addEventListener("pointerdown", this.#listPointerDownHandler);
+    this.#menu.id = this.#listId;
+    this.#menu.style.overflowX = "hidden";
+    this.#menu.style.minWidth = this.#minMenuWidth;
+    this.#menu.addEventListener("toggle", this.#menuToggleHandler);
+    this.#menu.addEventListener("pointerdown", this.#menuPointerDownHandler);
 
     for (const node of [...this.childNodes]) {
-      this.#list.append(node);
+      this.#menu.append(node);
     }
 
-    (this.#formField ?? this).insertAdjacentElement("afterend", this.#list);
+    (this.#formField ?? this).insertAdjacentElement("afterend", this.#menu);
 
     this.ariaExpanded = "true";
     this.setAttribute("aria-controls", this.#listId);
@@ -526,16 +526,16 @@ export class M3eSelectElement
     this.#formField?.notifyControlStateChange();
 
     setTimeout(() => {
-      this.#list?.show(this, this.#formField?.menuAnchor);
+      this.#menu?.show(this, this.#formField?.menuAnchor);
       this.classList.toggle("-open", true);
     });
   }
 
   /** @private */
-  #hideList(): void {
-    if (!this.#list) return;
+  #hideMenu(): void {
+    if (!this.#menu) return;
 
-    this.#list.hide();
+    this.#menu.hide();
     this.removeAttribute("aria-activedescendant");
     this.classList.toggle("-open", false);
   }
@@ -543,8 +543,8 @@ export class M3eSelectElement
   /** @private */
   #activateOption(option: M3eOptionElement): void {
     this.setAttribute("aria-activedescendant", option.id);
-    if (this.#list) {
-      scrollIntoViewIfNeeded(option, this.#list, { block: "start", behavior: "instant" });
+    if (this.#menu) {
+      scrollIntoViewIfNeeded(option, this.#menu, { block: "start", behavior: "instant" });
 
       const focusVisible = !this.#ignoreFocusVisible && this.matches(":focus-visible");
       this.options.forEach((x) => {
