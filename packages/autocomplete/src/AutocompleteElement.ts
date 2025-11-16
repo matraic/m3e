@@ -439,7 +439,9 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     if (this.#menu) {
       scrollIntoViewIfNeeded(option, this.#menu, { block: "start", behavior: "instant" });
 
-      const focusVisible = !this.#ignoreFocusVisible && this.#input.matches(":focus-visible");
+      const focusVisible =
+        !this.#ignoreFocusVisible &&
+        (this.#input.matches(":focus-visible") || matchMedia("(forced-colors: active)").matches);
       this.options.forEach((x) => {
         const active = x === option && focusVisible;
         if (active) {

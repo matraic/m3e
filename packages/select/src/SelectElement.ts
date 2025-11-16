@@ -546,7 +546,9 @@ export class M3eSelectElement
     if (this.#menu) {
       scrollIntoViewIfNeeded(option, this.#menu, { block: "start", behavior: "instant" });
 
-      const focusVisible = !this.#ignoreFocusVisible && this.matches(":focus-visible");
+      const focusVisible =
+        !this.#ignoreFocusVisible && (this.matches(":focus-visible") || matchMedia("(forced-colors: active)").matches);
+
       this.options.forEach((x) => {
         const active = x === option && focusVisible;
         if (active) {
