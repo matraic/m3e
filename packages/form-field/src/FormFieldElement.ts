@@ -616,6 +616,11 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       : typeof this.#control?.value == "string" && this.#control.value.length > 0;
   }
 
+  /** A reference to the element used to anchor dropdown menus. */
+  get menuAnchor() {
+    return this._base;
+  }
+
   /** A reference to the hosted form field control. */
   get control() {
     return this.#control;
@@ -839,6 +844,11 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       this._base.style.setProperty("--_form-field-cursor", "text");
     } else {
       this._base.style.removeProperty("--_form-field-cursor");
+    }
+
+    this.classList.toggle("-with-select", this.#control?.tagName === "M3E-SELECT");
+    if (this.classList.contains("-with-select")) {
+      this._base.style.setProperty("--_form-field-cursor", "pointer");
     }
 
     if (this.#control) {
