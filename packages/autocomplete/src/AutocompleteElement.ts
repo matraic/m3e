@@ -428,6 +428,10 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
     this.#formField?.notifyControlStateChange();
 
+    if (this._listKeyManager.activeItem && this.autoActivate) {
+      this.#activateOption(this._listKeyManager.activeItem, true);
+    }
+
     setTimeout(() => this.#menu?.show(this, this.#formField?.menuAnchor));
   }
 
@@ -438,7 +442,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   }
 
   /** @private */
-  #activateOption(option: M3eOptionElement): void {
+  #activateOption(option: M3eOptionElement, forceFocusVisible = false): void {
     if (!this.#input) return;
 
     this.#input.setAttribute("aria-activedescendant", option.id);
@@ -446,7 +450,10 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     if (this.#menu) {
       scrollIntoViewIfNeeded(option, this.#menu, { block: "start", behavior: "instant" });
 
-      const focusVisible = !this.#ignoreFocusVisible && (this.#input.matches(":focus-visible") || forcedColorsActive());
+      const focusVisible =
+        forceFocusVisible ||
+        (!this.#ignoreFocusVisible && (this.#input.matches(":focus-visible") || forcedColorsActive()));
+
       this.options.forEach((x) => {
         const active = x === option && focusVisible;
         if (active) {
