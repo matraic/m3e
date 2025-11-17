@@ -356,6 +356,7 @@ export class M3eSelectElement
       x.classList.toggle("-multi", this.multi);
       x.classList.toggle("-hide-selection-indicator", this.hideSelectionIndicator);
     });
+    this.#formField?.notifyControlStateChange();
   }
 
   /** @private */
