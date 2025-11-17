@@ -1,6 +1,6 @@
 {
   "name": "@m3e/button",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Button for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
@@ -27,7 +27,7 @@
     "clean": "rimraf dist"
   },
   "peerDependencies": {
-    "@m3e/core": "1.0.5",
+    "@m3e/core": "1.0.6",
     "lit": "^3.3.0"
   },
   "devDependencies": {

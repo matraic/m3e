@@ -9,7 +9,7 @@ body {
   padding-inline: 2rem;
 }
 #body {
-  padding-inline-end: 13.75rem;
+  padding-inline-end: 13rem;
 }
 m3e-heading + m3e-heading,
 m3e-heading + .install,
@@ -27,6 +27,7 @@ m3e-card + .example {
   right: 0;
   max-height: 100vh;
   max-height: 100dvh;
+  --m3e-toc-width: 11rem;
 }
 @media (max-width: 600px) {
   .toc {
