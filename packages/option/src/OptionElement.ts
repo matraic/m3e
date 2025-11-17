@@ -199,12 +199,15 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
 
-    if (changedProperties.has("selected") && this.selected && !this.classList.contains("-multi")) {
-      (this.closest("[role='listbox']") ?? this.closest("m3e-select"))?.querySelectorAll("m3e-option").forEach((x) => {
-        if (x !== this && x.selected) {
-          x.selected = false;
-        }
-      });
+    if (changedProperties.has("selected") && this.selected) {
+      const panel = this.closest("[role='listbox']") ?? this.closest("m3e-select");
+      if (panel && panel.ariaMultiSelectable !== "true" && !panel.hasAttribute("multi")) {
+        panel.querySelectorAll("m3e-option").forEach((x) => {
+          if (x !== this && x.selected) {
+            x.selected = false;
+          }
+        });
+      }
     }
   }
 
