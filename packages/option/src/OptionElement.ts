@@ -66,13 +66,13 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
       height: var(--m3e-option-container-height, 3rem);
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
-    :host(:not([aria-disabled="false"])) .base {
+    :host(:not([aria-disabled="true"])) .base {
       color: var(--m3e-option-color, ${DesignToken.color.onSurface});
       --m3e-state-layer-hover-color: var(--m3e-option-container-hover-color, ${DesignToken.color.onSurface});
       --m3e-state-layer-focus-color: var(--m3e-option-container-focus-color, ${DesignToken.color.onSurface});
       --m3e-ripple-color: var(--m3e-option-ripple-color, ${DesignToken.color.onSurface});
     }
-    :host(:not([aria-disabled="false"]):not(.-empty)[selected]) .base {
+    :host(:not([aria-disabled="true"]):not(.-empty)[selected]) .base {
       color: var(--m3e-option-selected-color, ${DesignToken.color.onSecondaryContainer});
       background-color: var(--m3e-option-selected-container-color, ${DesignToken.color.secondaryContainer});
       --m3e-state-layer-hover-color: var(
@@ -85,10 +85,10 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
       );
       --m3e-ripple-color: var(--m3e-option-selected-ripple-color, ${DesignToken.color.onSecondaryContainer});
     }
-    :host(:not([aria-disabled="false"])) {
+    :host(:not([aria-disabled="true"])) {
       cursor: pointer;
     }
-    :host([aria-disabled="false"]) .base {
+    :host([aria-disabled="true"]) .base {
       color: color-mix(
         in srgb,
         var(--m3e-option-disabled-color, ${DesignToken.color.onSurface}) var(--m3e-option-disabled-opacity, 38%),
@@ -152,7 +152,7 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
         background-color: Menu;
         color: MenuText;
       }
-      :host([aria-disabled="false"]) .base {
+      :host([aria-disabled="true"]) .base {
         color: GrayText;
       }
     }
