@@ -1,6 +1,6 @@
 # @m3e/option
 
-The `m3e-option`, `m3e-option-menu`, and `m3e-optgroup` components provide a complete solution for displaying selectable options in menus and lists. They follow Material Design 3 principles with comprehensive support for single and multiple selection, dynamic positioning, keyboard navigation, and extensive theming via CSS custom properties.
+The `m3e-option`, `m3e-option-panel`, and `m3e-optgroup` components provide a complete solution for displaying selectable options in menus and lists. They follow Material Design 3 principles with comprehensive support for single and multiple selection, dynamic positioning, keyboard navigation, and extensive theming via CSS custom properties.
 
 > **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
@@ -55,13 +55,13 @@ In addition, you must use an [import map](https://developer.mozilla.org/en-US/do
 ## 🗂️ Elements
 
 - `m3e-option` — A selectable item within a menu or list, providing visual feedback and selection state management.
-- `m3e-option-menu` — A temporary surface that presents a scrollable list of options anchored to a trigger element.
+- `m3e-option-panel` — A temporary surface that presents a scrollable list of options anchored to a trigger element.
 - `m3e-optgroup` — A container that groups related options under a customizable label with semantic structure.
 
 ## 🧪 Example
 
 ```html
-<m3e-option-menu>
+<m3e-option-panel>
   <m3e-option value="apple">Apple</m3e-option>
   <m3e-option value="banana">Banana</m3e-option>
   <m3e-optgroup>
@@ -69,7 +69,7 @@ In addition, you must use an [import map](https://developer.mozilla.org/en-US/do
     <m3e-option value="lemon">Lemon</m3e-option>
     <m3e-option value="orange">Orange</m3e-option>
   </m3e-optgroup>
-</m3e-option-menu>
+</m3e-option-panel>
 ```
 
 ## 📖 API Reference
@@ -118,9 +118,9 @@ This section details the attributes, slots, events and CSS custom properties ava
 | `--m3e-option-focus-ring-shape`               | The corner radius of the focus ring.              |
 | `--m3e-option-icon-size`                      | The size of the option icons.                     |
 
-### 🗂️ m3e-option-menu
+### 🗂️ m3e-option-panel
 
-This section details the attributes, slots, events and CSS custom properties available for the `m3e-option-menu` component.
+This section details the attributes, slots, events and CSS custom properties available for the `m3e-option-panel` component.
 
 #### 🔔 Events
 
@@ -137,16 +137,16 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                    | Description                                             |
-| ------------------------------------------- | ------------------------------------------------------- |
-| `--m3e-option-menu-container-shape`         | Controls the corner radius of the menu container.       |
-| `--m3e-option-menu-container-min-width`     | Minimum width of the menu container.                    |
-| `--m3e-option-menu-container-max-width`     | Maximum width of the menu container.                    |
-| `--m3e-option-menu-container-max-height`    | Maximum height of the menu container.                   |
-| `--m3e-option-menu-container-padding-block` | Vertical padding inside the menu container.             |
-| `--m3e-option-menu-container-color`         | Background color of the menu container.                 |
-| `--m3e-option-menu-container-elevation`     | Box shadow elevation of the menu container.             |
-| `--m3e-option-menu-divider-spacing`         | Vertical spacing around slotted `m3e-divider` elements. |
+| Property                                     | Description                                             |
+| -------------------------------------------- | ------------------------------------------------------- |
+| `--m3e-option-panel-container-shape`         | Controls the corner radius of the menu container.       |
+| `--m3e-option-panel-container-min-width`     | Minimum width of the menu container.                    |
+| `--m3e-option-panel-container-max-width`     | Maximum width of the menu container.                    |
+| `--m3e-option-panel-container-max-height`    | Maximum height of the menu container.                   |
+| `--m3e-option-panel-container-padding-block` | Vertical padding inside the menu container.             |
+| `--m3e-option-panel-container-color`         | Background color of the menu container.                 |
+| `--m3e-option-panel-container-elevation`     | Box shadow elevation of the menu container.             |
+| `--m3e-option-panel-divider-spacing`         | Vertical spacing around slotted `m3e-divider` elements. |
 
 ### 🗂️ m3e-optgroup
 

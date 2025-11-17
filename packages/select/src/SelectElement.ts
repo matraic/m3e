@@ -27,7 +27,7 @@ import {
 import { ListKeyManager } from "@m3e/core/a11y";
 
 import type { M3eFormFieldElement, FormFieldControl } from "@m3e/form-field";
-import { M3eOptionElement, M3eOptionMenuElement } from "@m3e/option";
+import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/option";
 
 /**
  * A form control that allows users to select a value from a set of predefined options.
@@ -149,7 +149,7 @@ export class M3eSelectElement
 
   /** @private */ static __nextId = 0;
 
-  /** @private */ #menu?: M3eOptionMenuElement;
+  /** @private */ #menu?: M3eOptionPanelElement;
   /** @private */ #ignoreKeyUp = false;
   /** @private */ #ignoreFocusVisible = false;
 
@@ -521,7 +521,7 @@ export class M3eSelectElement
   #showMenu(): void {
     if (this.#menu) return;
 
-    this.#menu = document.createElement("m3e-option-menu");
+    this.#menu = document.createElement("m3e-option-panel");
     if (this.multi) {
       this.#menu.ariaMultiSelectable = "true";
     }

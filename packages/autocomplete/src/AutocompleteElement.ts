@@ -12,7 +12,7 @@ import {
 import { ListKeyManager } from "@m3e/core/a11y";
 
 import type { M3eFormFieldElement } from "@m3e/form-field";
-import type { M3eOptionElement, M3eOptionMenuElement } from "@m3e/option";
+import type { M3eOptionElement, M3eOptionPanelElement } from "@m3e/option";
 
 /**
  * Enhances a text input with suggested options.
@@ -63,7 +63,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   /** @private */ readonly #id = `m3e-autocomplete-${M3eAutocompleteElement.__nextId}`;
   /** @private */ readonly #menuId = `${this.#id}-menu`;
   /** @private */ #ignoreFocusVisible = false;
-  /** @private */ #menu?: M3eOptionMenuElement;
+  /** @private */ #menu?: M3eOptionPanelElement;
   /** @private */ #textHighlight?: M3eTextHighlightElement;
   /** @private */ #ignoreHideMenuOnBlur = false;
 
@@ -405,7 +405,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
     this.#filterOptions();
 
-    this.#menu = document.createElement("m3e-option-menu");
+    this.#menu = document.createElement("m3e-option-panel");
     this.#menu.id = this.#menuId;
     this.#menu.style.overflowX = "hidden";
     this.#menu.style.minWidth = this.#minMenuWidth;
