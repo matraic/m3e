@@ -448,7 +448,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     this.#input.setAttribute("aria-activedescendant", option.id);
 
     if (this.#menu) {
-      scrollIntoViewIfNeeded(option, this.#menu, { block: "start", behavior: "instant" });
+      scrollIntoViewIfNeeded(option, this.#menu, { block: "nearest", behavior: "instant" });
 
       const focusVisible =
         forceFocusVisible ||
@@ -517,7 +517,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
       if (option) {
         this._listKeyManager.setActiveItem(option);
         if (this.#menu) {
-          scrollIntoViewIfNeeded(option, this.#menu, { block: "start", behavior: "instant" });
+          scrollIntoViewIfNeeded(option, this.#menu, { block: "nearest", behavior: "instant" });
         }
       }
     }

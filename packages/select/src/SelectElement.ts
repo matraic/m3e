@@ -461,7 +461,7 @@ export class M3eSelectElement
       const option = this.selected.find((x) => !x.disabled) ?? this._listKeyManager.items.find((x) => !x.disabled);
       this._listKeyManager.setActiveItem(option);
       if (option) {
-        scrollIntoViewIfNeeded(option, this.#menu, { block: "start", behavior: "instant" });
+        scrollIntoViewIfNeeded(option, this.#menu, { block: "nearest", behavior: "instant" });
       }
       this.dispatchEvent(
         new ToggleEvent("toggle", {
@@ -562,7 +562,7 @@ export class M3eSelectElement
   #activateOption(option: M3eOptionElement): void {
     this.setAttribute("aria-activedescendant", option.id);
     if (this.#menu) {
-      scrollIntoViewIfNeeded(option, this.#menu, { block: "start", behavior: "instant" });
+      scrollIntoViewIfNeeded(option, this.#menu, { block: "nearest", behavior: "instant" });
 
       const focusVisible = !this.#ignoreFocusVisible && (this.matches(":focus-visible") || forcedColorsActive());
 
