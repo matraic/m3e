@@ -4,8 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- Autocomplete
-- Select
+- 1.0.7 planning
 
 ## 🔮 Future
 
@@ -17,11 +16,9 @@ The following components are planned for future release.
 
 Components in early stages of development include:
 
-- Autocomplete
 - Avatar
 - Calendar
 - Paginator
-- Select
 - Skeleton Loader
 - Split Pane
 - Tree
@@ -42,7 +39,8 @@ Planned components which have not yet entered development:
 
 ## 🏛️ Past Milestones
 
-- 1.0.5: Bug fixed, converted @m3e/all to pure meta-package
+- 1.0.6: Added @m3e/autocomplete, @m3e/select, and @m3e/option
+- 1.0.5: Bug fixes, converted @m3e/all to pure meta-package
 - 1.0.4: Bug fixes
 - 1.0.3: Added @m3e/stepper
 - 1.0.1 - 1.0.2: Bug fixes
