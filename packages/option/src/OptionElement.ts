@@ -115,7 +115,7 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
       align-items: center;
       width: 100%;
       column-gap: var(--m3e-option-icon-label-space, 0.75rem);
-      padding-inline-start: var(--m3e-option-padding-start, 0.75rem);
+      padding-inline-start: var(--_option-padding-start, var(--m3e-option-padding-start, 0.75rem));
       padding-inline-end: var(--m3e-option-padding-end, 0.75rem);
       font-size: var(--m3e-option-label-text-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(--m3e-option-label-text-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
