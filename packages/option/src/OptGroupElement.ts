@@ -8,14 +8,14 @@ import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/core/a11y";
  * Groups options under a subheading.
  *
  * @description
- * The `m3e-option-group` component organizes related options within an option list,
+ * The `m3e-optgroup` component organizes related options within an option list,
  * providing visual and semantic grouping through a customizable label. It manages `aria-labelledby`
  * associations automatically and applies Material Design 3 typography and spacing conventions to
  * the group label. The component maintains proper semantic structure by utilizing the ARIA `group` role,
  * ensuring that assistive technologies correctly interpret the hierarchical relationship between the label
  * and contained options.
  *
- * @tag m3e-option-group
+ * @tag m3e-optgroup
  *
  * @slot - Renders the options of the group.
  * @slot label - Renders the label of the group.
@@ -29,8 +29,8 @@ import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/core/a11y";
  * @cssprop --m3e-option-padding-start - The left padding of the label.
  * @cssprop --m3e-option-color - The text color of the group label.
  */
-@customElement("m3e-option-group")
-export class M3eOptionGroupElement extends Role(LitElement, "group") {
+@customElement("m3e-optgroup")
+export class M3eOptGroupElement extends Role(LitElement, "group") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -51,7 +51,7 @@ export class M3eOptionGroupElement extends Role(LitElement, "group") {
   `;
 
   /** @private */ private static __nextId = 0;
-  /** @private */ #labelId = `m3e-option-group-label-${M3eOptionGroupElement.__nextId++}`;
+  /** @private */ #labelId = `m3e-optgroup-label-${M3eOptGroupElement.__nextId++}`;
   /** @private */ #label?: Element;
 
   /** @inheritdoc */
@@ -85,6 +85,6 @@ export class M3eOptionGroupElement extends Role(LitElement, "group") {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "m3e-option-group": M3eOptionGroupElement;
+    "m3e-optgroup": M3eOptGroupElement;
   }
 }

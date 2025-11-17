@@ -1,3 +1,3 @@
 export * from "./OptionElement";
-export * from "./OptionGroupElement";
+export * from "./OptGroupElement";
 export * from "./OptionMenuElement";

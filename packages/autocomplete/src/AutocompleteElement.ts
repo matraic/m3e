@@ -501,7 +501,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
       }
     }
 
-    const groups = this.#menu?.querySelectorAll("m3e-option-group") ?? this.querySelectorAll("m3e-option-group");
+    const groups = this.#menu?.querySelectorAll("m3e-optgroup") ?? this.querySelectorAll("m3e-optgroup");
     for (const group of groups) {
       const hidden = [...group.querySelectorAll("m3e-option")].every((x) => x.style.display === "none");
       group.style.display = hidden ? "none" : "";
