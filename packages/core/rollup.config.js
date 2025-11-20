@@ -1,6 +1,7 @@
 import resolve from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
+import babel from "@rollup/plugin-babel";
 
 const banner = `/**
  * @license MIT
@@ -27,7 +28,16 @@ export default [
       },
     ],
     external: ["lit"],
-    plugins: [resolve(), typescript()],
+    plugins: [
+      resolve(),
+      typescript(),
+      babel({
+        babelHelpers: "bundled",
+        extensions: [".ts", ".js"],
+        exclude: "node_modules/**",
+        rootMode: "upward",
+      }),
+    ],
   },
   {
     input: "src/a11y/index.ts",
@@ -47,7 +57,16 @@ export default [
       },
     ],
     external: ["lit"],
-    plugins: [resolve(), typescript()],
+    plugins: [
+      resolve(),
+      typescript(),
+      babel({
+        babelHelpers: "bundled",
+        extensions: [".ts", ".js"],
+        exclude: "node_modules/**",
+        rootMode: "upward",
+      }),
+    ],
   },
   {
     input: "src/anchoring/index.ts",
