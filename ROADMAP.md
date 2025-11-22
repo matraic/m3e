@@ -5,6 +5,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 ## 🟡 Current
 
 - 1.0.7 planning
+- @m3e/paginator
 
 ## 🔮 Future
 
@@ -18,7 +19,6 @@ Components in early stages of development include:
 
 - Avatar
 - Calendar
-- Paginator
 - Skeleton Loader
 - Split Pane
 - Tree

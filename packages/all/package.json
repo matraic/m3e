@@ -40,6 +40,7 @@
     "@m3e/nav-menu": "1.0.6",
     "@m3e/nav-rail": "1.0.6",
     "@m3e/option": "1.0.6",
+    "@m3e/paginator": "1.0.6",
     "@m3e/progress-indicator": "1.0.6",
     "@m3e/radio-group": "1.0.6",
     "@m3e/segmented-button": "1.0.6",

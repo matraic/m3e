@@ -43,6 +43,7 @@
     "packages/toc",
     "packages/toolbar",
     "packages/tooltip",
+    "packages/paginator",
     "packages/all"
   ],
   "scripts": {

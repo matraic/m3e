@@ -1,0 +1,38 @@
+{
+  "name": "@m3e/paginator",
+  "version": "1.0.6",
+  "description": "Paginator for M3E",
+  "author": "matraic <matraic@yahoo.com>",
+  "license": "MIT",
+  "homepage": "https://matraic.github.io/m3e/#/components/paginator.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matraic/m3e.git"
+  },
+  "keywords": [
+    "material design",
+    "web components",
+    "paginator"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "browser": "dist/index.min.js",
+  "unpkg": "dist/index.min.js",
+  "types": "dist/src/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "cem": "cem analyze --config cem.config.mjs",
+    "lint": "npx eslint ./src",
+    "clean": "rimraf dist"
+  },
+  "peerDependencies": {
+    "@m3e/core": "1.0.6",
+    "@m3e/form-field": "1.0.6",
+    "@m3e/select": "1.0.6",
+    "@m3e/icon-button": "1.0.6",
+    "@m3e/tooltip": "1.0.6",
+    "lit": "^3.3.0"
+  },
+  "customElements": "dist/custom-elements.json"
+}
