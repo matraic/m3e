@@ -153,12 +153,6 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
    */
   @property({ type: Number }) radius: number | null = null;
 
-  /**
-   * The element that triggers the ripple when click events are received.
-   * @default null
-   */
-  @property() trigger: string | HTMLElement | null = null;
-
   /** Whether the ripple is currently visible to the user. */
   get visible() {
     return this.#ripple !== null;
