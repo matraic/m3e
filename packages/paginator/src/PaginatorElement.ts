@@ -168,9 +168,9 @@ export class M3ePaginatorElement extends EventAttribute(Role(LitElement, "group"
 
   /**
    * A comma separated list of available page sizes.
-   * @default "5,10,25,50,100,all"
+   * @default "5,10,25,50,100"
    */
-  @property({ attribute: "page-sizes" }) pageSizes = "5,10,25,50,100,all";
+  @property({ attribute: "page-sizes" }) pageSizes = "5,10,25,50,100";
 
   /**
    * Whether to hide page size selection.
