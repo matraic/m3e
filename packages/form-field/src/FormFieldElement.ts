@@ -400,7 +400,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     }
     :host([variant="filled"]) .base {
       --_select-arrow-margin-top: calc(
-        0px - calc(1rem / max(calc(0 - calc(var(--m3e-density-scale, 0) + var(--m3e-density-scale, 0))), 1))
+        0px - calc(1rem / max(calc(0 - calc(var(--md-sys-density-scale, 0) + var(--md-sys-density-scale, 0))), 1))
       );
     }
     :host([variant="filled"]) .base::before {
