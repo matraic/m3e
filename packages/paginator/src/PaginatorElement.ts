@@ -75,8 +75,16 @@ export class M3ePaginatorElement extends EventAttribute(Role(LitElement, "group"
       font-weight: var(--m3e-paginator-font-weight, ${DesignToken.typescale.standard.body.small.fontWeight});
       line-height: var(--m3e-paginator-line-height, ${DesignToken.typescale.standard.body.small.lineHeight});
       letter-spacing: var(--m3e-paginator-tracking, ${DesignToken.typescale.standard.body.small.tracking});
-
-      --m3e-form-field-density-scale: -2;
+    }
+    .inner {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-inline: 0.5rem;
+      width: 100%;
+    }
+    .form-field {
+      --md-sys-density-scale: -2;
       --m3e-form-field-font-size: var(--m3e-paginator-font-size, ${DesignToken.typescale.standard.body.small.fontSize});
       --m3e-form-field-font-weight: var(
         --m3e-paginator-font-weight,
@@ -87,13 +95,6 @@ export class M3ePaginatorElement extends EventAttribute(Role(LitElement, "group"
         ${DesignToken.typescale.standard.body.small.lineHeight}
       );
       --m3e-form-field-tracking: var(--m3e-paginator-tracking, ${DesignToken.typescale.standard.body.small.tracking});
-    }
-    .inner {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding-inline: 0.5rem;
-      width: 100%;
     }
     .items-per-page-label {
       display: flex;
