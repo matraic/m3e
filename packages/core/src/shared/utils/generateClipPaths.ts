@@ -42,7 +42,7 @@ function parsePath(pathData: string) {
   });
 }
 
-export function samplePath(pathData: string, maxPoints: number): Point[] {
+function samplePath(pathData: string, maxPoints: number): Point[] {
   const segments = parsePath(pathData);
 
   let current: Point = { x: 0, y: 0 };
@@ -238,9 +238,9 @@ function normalizePointSets(sets: { x: number; y: number }[][]) {
 
 /**
  * Generates normalized clip paths from SVG path data.
- * @param paths The SVG path data to convert to normalized clip paths.
- * @param maxPoints The maximum number of points to which to normalize paths.
- * @returns The normalized clip paths.
+ * @param {string[]} paths The SVG path data to convert to normalized clip paths.
+ * @param {number} maxPoints The maximum number of points to which to normalize paths.
+ * @returns {string[]} The normalized clip paths.
  */
 export function generateClipPaths(paths: string[], maxPoints: number): string[] {
   return normalizePointSets(paths.map((x) => samplePath(x, maxPoints))).map((x) => pointsToPercentClipPath(x));
