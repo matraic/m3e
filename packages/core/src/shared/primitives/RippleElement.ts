@@ -76,12 +76,7 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
       border-radius: ${DesignToken.shape.corner.full};
       background-color: color-mix(in srgb, ${RippleToken.color} ${RippleToken.opacity}, transparent);
       will-change: background-color, opacity;
-    }
-    .ripple:not(.persistent) {
       animation: ripple ${RippleToken.enterDuration} linear;
-    }
-    .ripple.persistent {
-      animation: persistent-ripple ${RippleToken.enterDuration} linear;
     }
     .ripple.persistent.pressed {
       transform: scale(${RippleToken.scaleFactor});
@@ -89,11 +84,6 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
     .ripple.exit {
       transition: opacity ${RippleToken.exitDuration} cubic-bezier(0, 0, 0.2, 0.1);
       opacity: 0;
-    }
-    @keyframes persistent-ripple {
-      to {
-        transform: scale(${RippleToken.scaleFactor});
-      }
     }
     @keyframes ripple {
       to {
@@ -103,9 +93,6 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
     @media (prefers-reduced-motion) {
       .ripple {
         transform: scale(${RippleToken.scaleFactor});
-      }
-      .ripple:not(.persistent),
-      .ripple.persistent {
         animation-duration: 90ms;
       }
       .ripple.exit {
