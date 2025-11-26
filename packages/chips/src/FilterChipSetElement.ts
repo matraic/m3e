@@ -3,6 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 
 import { AttachInternals, Labelled, Dirty, Disabled, FormAssociated, formValue, Touched, Role } from "@m3e/core";
 import { SelectionManager, selectionManager } from "@m3e/core/a11y";
+import { M3eDirectionality } from "@m3e/core/bidi";
 
 import { M3eChipSetElement } from "./ChipSetElement";
 import { M3eFilterChipElement } from "./FilterChipElement";
@@ -48,10 +49,13 @@ import { M3eFilterChipElement } from "./FilterChipElement";
 export class M3eFilterChipSetElement extends Labelled(
   Dirty(Touched(FormAssociated(Disabled(AttachInternals(Role(M3eChipSetElement, "radiogroup"))))))
 ) {
+  /** @private */ #directionalitySubscription?: () => void;
+
   /** @internal */
   readonly [selectionManager] = new SelectionManager<M3eFilterChipElement>()
     .onActiveItemChange(() => this[selectionManager].activeItem?.focus())
-    .withWrap();
+    .withWrap()
+    .withDirectionality(M3eDirectionality.current);
 
   /**
    * Whether multiple chips can be selected.
@@ -99,6 +103,20 @@ export class M3eFilterChipSetElement extends Labelled(
       return data;
     }
     return <string | null>values;
+  }
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#directionalitySubscription = M3eDirectionality.observe(
+      () => (this[selectionManager].directionality = M3eDirectionality.current)
+    );
+  }
+
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.#directionalitySubscription?.();
   }
 
   /** @inheritdoc */

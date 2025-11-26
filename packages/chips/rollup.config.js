@@ -1,2 +1,9 @@
 import { createConfig } from "../../rollup.base.config.mjs";
-export default createConfig(["@m3e/core", "@m3e/core/a11y", "@m3e/icon-button", "@m3e/form-field", "lit"]);
+export default createConfig([
+  "@m3e/core",
+  "@m3e/core/a11y",
+  "@m3e/core/bidi",
+  "@m3e/icon-button",
+  "@m3e/form-field",
+  "lit",
+]);

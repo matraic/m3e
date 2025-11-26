@@ -16,6 +16,7 @@ import {
 } from "@m3e/core";
 
 import { ListKeyManager, ListManager } from "@m3e/core/a11y";
+import { M3eDirectionality } from "@m3e/core/bidi";
 import { FormFieldControl } from "@m3e/form-field";
 
 import { M3eChipSetElement } from "./ChipSetElement";
@@ -121,6 +122,7 @@ export class M3eInputChipSetElement
     `,
   ];
 
+  /** @private */ #directionalitySubscription?: () => void;
   /** @private */ readonly #inputChangeHandler = () => this.#handleInputChange();
   /** @private */ readonly #inputKeyDownHandler = (e: KeyboardEvent) => this.#handleInputKeyDown(e);
   /** @private */ readonly #focusHandler = () => this.#handleFocus();
@@ -133,7 +135,8 @@ export class M3eInputChipSetElement
   /** @private */ readonly #listKeyManager = new ListKeyManager<HTMLElement>()
     .onActiveItemChange(() => this.#listKeyManager.activeItem?.focus())
     .withHomeAndEnd()
-    .withSkipPredicate((x) => !x.hasAttribute("tabindex"));
+    .withSkipPredicate((x) => !x.hasAttribute("tabindex"))
+    .withDirectionality(M3eDirectionality.current);
 
   /** @private */ #ignoreInputChange = false;
   /** @private */ #input: HTMLInputElement | null = null;
@@ -183,6 +186,10 @@ export class M3eInputChipSetElement
     this.addEventListener("focus", this.#focusHandler);
     this.addEventListener("focusin", this.#focusInHandler);
     this.addEventListener("focusout", this.#focusOutHandler);
+
+    this.#directionalitySubscription = M3eDirectionality.observe(
+      () => (this.#listKeyManager.directionality = M3eDirectionality.current)
+    );
   }
 
   /** @inheritdoc */
@@ -192,6 +199,8 @@ export class M3eInputChipSetElement
     this.removeEventListener("focus", this.#focusHandler);
     this.removeEventListener("focusin", this.#focusInHandler);
     this.removeEventListener("focusout", this.#focusOutHandler);
+
+    this.#directionalitySubscription?.();
   }
 
   /** @inheritdoc */
