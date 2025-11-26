@@ -102,7 +102,6 @@ export class M3eNavMenuItemGroupElement extends Role(LitElement, "group") {
       this.#label = label;
 
       if (this.#label) {
-        this.#label.role = "none";
         this.#label.id = this.#label.id || this.#labelId;
         this.setAttribute("aria-labelledby", this.#label.id);
       } else {

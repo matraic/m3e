@@ -194,12 +194,6 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   }
 
   /** @inheritdoc */
-  override connectedCallback(): void {
-    this.role = this.role || "none";
-    super.connectedCallback();
-  }
-
-  /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="options" role="listbox">
       <slot @slotchange="${this.#handleSlotChange}"></slot>
