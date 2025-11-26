@@ -1,4 +1,11 @@
+import { M3eDirectionality } from "@m3e/core/bidi";
+
 window.addEventListener("DOMContentLoaded", () => {
+  M3eDirectionality.observe(() => {
+    const frame = document.querySelector("#content-frame");
+    frame.contentWindow.postMessage({ type: "direction-change", dir: M3eDirectionality.current }, "*");
+  });
+
   const frame = document.querySelector("#content-frame");
   frame.addEventListener("load", () => {
     const currentUrl = frame.contentWindow?.location.href.substring(document.baseURI.length);

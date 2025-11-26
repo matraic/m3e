@@ -24,7 +24,7 @@ m3e-card + .example {
 .toc {
   position: fixed;
   top: 0;
-  right: 0;
+  inset-inline-end: 0;
   max-height: 100vh;
   max-height: 100dvh;
   --m3e-toc-width: 11rem;

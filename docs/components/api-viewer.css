@@ -3,7 +3,7 @@ api-viewer::part(tab-panel) {
   background: unset;
 }
 api-viewer::part(tab-panel) {
-  border-left: 1px solid var(--md-sys-color-outline-variant);
+  border-inline-start: 1px solid var(--md-sys-color-outline-variant);
 }
 api-viewer::part(tab),
 api-viewer::part(button) {
