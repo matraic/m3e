@@ -65,6 +65,12 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
    */
   public skipPredicate: (item: T) => boolean = (item) => isDisabledMixin(item) && item.disabled;
 
+  /**
+   * The directionality.
+   * @default "ltr"
+   */
+  public directionality: "ltr" | "rtl" = "ltr";
+
   /** @inheritdoc */
   override setItems(items: T[]): { added: readonly T[]; removed: readonly T[] } {
     this.#typeahead?.setItems(items);
@@ -158,6 +164,16 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
   }
 
   /**
+   * Configures the directionality.
+   * @param {"ltr" | "rtl"} directionality The directionality.
+   * @returns {ListKeyManager<T>} The configured key manager.
+   */
+  withDirectionality(directionality: "ltr" | "rtl"): this {
+    this.directionality = directionality;
+    return this;
+  }
+
+  /**
    * Sets the active item depending on the key event passed in.
    * @param {KeyboardEvent} e The keyboard event to be used for determining which element should be active.
    */
@@ -171,7 +187,7 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
       case "ArrowLeft":
         if (modifierAllowed && !this.vertical) {
           e.preventDefault();
-          const prev = this.#findPrevious();
+          const prev = this.directionality === "ltr" ? this.#findPrevious() : this.#findNext();
           if (prev) {
             this.setActiveItem(prev);
           }
@@ -181,7 +197,7 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
       case "ArrowUp":
         if (modifierAllowed) {
           e.preventDefault();
-          const prev = this.#findPrevious();
+          const prev = this.directionality === "ltr" ? this.#findPrevious() : this.#findNext();
           if (prev) {
             this.setActiveItem(prev);
           }
@@ -193,7 +209,7 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
       case "ArrowRight":
         if (modifierAllowed && !this.vertical) {
           e.preventDefault();
-          const next = this.#findNext();
+          const next = this.directionality === "ltr" ? this.#findNext() : this.#findPrevious();
           if (next) {
             this.setActiveItem(next);
           }
@@ -204,7 +220,7 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
       case "ArrowDown":
         if (modifierAllowed) {
           e.preventDefault();
-          const next = this.#findNext();
+          const next = this.directionality === "ltr" ? this.#findNext() : this.#findPrevious();
           if (next) {
             this.setActiveItem(next);
           }
@@ -237,7 +253,7 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
       case "PageUp":
         if (modifierAllowed && this.pageUpAndDown) {
           e.preventDefault();
-          const prev = this.#findPreviousByIndex(
+          const prev = (this.directionality === "ltr" ? this.#findPreviousByIndex : this.#findNextByIndex)(
             this.activeItem ? Math.max(0, this.items.indexOf(this.activeItem) - this.pageDelta) : 0
           );
           if (prev) {
@@ -250,7 +266,7 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
       case "PageDown":
         if (modifierAllowed && this.pageUpAndDown) {
           e.preventDefault();
-          const next = this.#findNextByIndex(
+          const next = (this.directionality === "ltr" ? this.#findNextByIndex : this.#findPreviousByIndex)(
             this.activeItem
               ? Math.min(this.items.length - 1, this.items.indexOf(this.activeItem) + this.pageDelta)
               : this.items.length - 1
