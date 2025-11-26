@@ -354,10 +354,10 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     :host([variant="outlined"]) .outline-start {
       min-width: 0.75rem;
       border-top-style: solid;
-      border-left-style: solid;
+      border-inline-start-style: solid;
       border-bottom-style: solid;
-      border-radius: var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall}) 0 0
-        var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall});
+      border-start-start-radius: var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall});
+      border-end-start-radius: var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall});
     }
     :host([variant="outlined"]) .outline-notch {
       border-bottom-style: solid;
@@ -366,10 +366,10 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       flex-grow: 1;
       min-width: 1rem;
       border-top-style: solid;
-      border-right-style: solid;
+      border-inline-end-style: solid;
       border-bottom-style: solid;
-      border-radius: 0 var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall})
-        var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall}) 0;
+      border-start-end-radius: var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall});
+      border-end-end-radius: var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall});
     }
     :host([variant="outlined"].-with-prefix) .outline-start {
       min-width: calc(1.25rem + var(--_prefix-width, 0px) + 0.25rem);
