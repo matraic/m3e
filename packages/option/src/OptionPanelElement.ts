@@ -4,6 +4,7 @@ import { customElement } from "lit/decorators.js";
 
 import { DesignToken, ScrollController, Role } from "@m3e/core";
 import { positionAnchor } from "@m3e/core/anchoring";
+import { M3eDirectionality } from "@m3e/core/bidi";
 
 /**
  * Presents a list of options on a temporary surface.
@@ -157,13 +158,17 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
         position: "bottom-start",
         inline: true,
         flip: true,
-        shift: true,
       },
       (x, y, position) => {
         this.classList.toggle("-top", position.includes("top"));
         this.classList.toggle("-bottom", position.includes("bottom"));
 
-        this.style.left = `${x}px`;
+        if (M3eDirectionality.current === "rtl") {
+          this.style.right = `${window.innerWidth - x - (anchor ?? trigger).clientWidth}px`;
+        } else {
+          this.style.left = `${x}px`;
+        }
+
         this.style.top = `${y}px`;
       }
     );
