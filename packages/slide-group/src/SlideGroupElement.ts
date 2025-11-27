@@ -2,6 +2,7 @@ import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "
 import { customElement, property, query, state } from "lit/decorators.js";
 
 import { debounce, ResizeController } from "@m3e/core";
+import { M3eDirectionality } from "@m3e/core/bidi";
 
 /**
  * Presents pagination controls used to scroll overflowing content.
@@ -94,6 +95,8 @@ export class M3eSlideGroupElement extends LitElement {
     }
   `;
 
+  /** @private */ #directionalitySubscription?: () => void;
+
   /** @private */
   readonly #resizeController = new ResizeController(this, {
     target: null,
@@ -138,6 +141,18 @@ export class M3eSlideGroupElement extends LitElement {
   @property({ attribute: "next-page-label" }) nextPageLabel = "Next page";
 
   /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#directionalitySubscription = M3eDirectionality.observe(() => this.requestUpdate());
+  }
+
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.#directionalitySubscription?.();
+  }
+
+  /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
     this.#resizeController.observe(this.scrollContainer);
@@ -153,9 +168,13 @@ export class M3eSlideGroupElement extends LitElement {
       @click="${this.#pageStart}"
     >
       <slot name="prev-icon">
-        <svg class="icon" viewBox="0 -960 960 960" fill="currentColor">
-          <path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" />
-        </svg>
+        ${M3eDirectionality.current === "ltr" || this.vertical
+          ? html`<svg class="icon" viewBox="0 -960 960 960" fill="currentColor">
+              <path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" />
+            </svg>`
+          : html`<svg class="icon" viewBox="0 -960 960 960" fill="currentColor">
+              <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
+            </svg>`}
       </slot>
     </m3e-icon-button>`;
 
@@ -167,9 +186,13 @@ export class M3eSlideGroupElement extends LitElement {
       @click="${this.#pageEnd}"
     >
       <slot name="next-icon">
-        <svg class="icon" viewBox="0 -960 960 960" fill="currentColor">
-          <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
-        </svg>
+        ${M3eDirectionality.current === "ltr" || this.vertical
+          ? html`<svg class="icon" viewBox="0 -960 960 960" fill="currentColor">
+              <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
+            </svg>`
+          : html`<svg class="icon" viewBox="0 -960 960 960" fill="currentColor">
+              <path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" />
+            </svg>`}
       </slot>
     </m3e-icon-button>`;
 
