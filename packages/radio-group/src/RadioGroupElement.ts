@@ -16,6 +16,7 @@ import {
 } from "@m3e/core";
 
 import { SelectionManager, selectionManager } from "@m3e/core/a11y";
+import { M3eDirectionality } from "@m3e/core/bidi";
 
 import { M3eRadioElement } from "./RadioElement";
 
@@ -68,16 +69,20 @@ export class M3eRadioGroupElement extends Labelled(
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
-      display: inline;
+      display: inline-flex;
     }
   `;
 
+  /** @private */ #directionalitySubscription?: () => void;
   /** @private */ readonly #focusOutHandler = () => this.#handleChange();
 
   /** @internal */
-  readonly [selectionManager] = new SelectionManager<M3eRadioElement>().withWrap().onActiveItemChange(() => {
-    this[selectionManager].activeItem?.click();
-  });
+  readonly [selectionManager] = new SelectionManager<M3eRadioElement>()
+    .withWrap()
+    .withDirectionality(M3eDirectionality.current)
+    .onActiveItemChange(() => {
+      this[selectionManager].activeItem?.click();
+    });
 
   /** The radios in the group. */
   get radios(): readonly M3eRadioElement[] {
@@ -139,13 +144,19 @@ export class M3eRadioGroupElement extends Labelled(
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
+
     this.addEventListener("focusout", this.#focusOutHandler);
+    this.#directionalitySubscription = M3eDirectionality.observe(
+      () => (this[selectionManager].directionality = M3eDirectionality.current)
+    );
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
+
     this.removeEventListener("focusout", this.#focusOutHandler);
+    this.#directionalitySubscription?.();
   }
 
   /** @inheritdoc */
