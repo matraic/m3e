@@ -117,7 +117,7 @@ export class M3eButtonSegmentElement extends Dirty(
       border-color: var(--m3e-segmented-button-outline-color, ${DesignToken.color.outline});
       border-style: solid;
       border-radius: inherit;
-      border-left-style: var(--_segmented-button-left-border, solid);
+      border-inline-start-style: var(--_segmented-button-left-border, solid);
       transition: ${unsafeCSS(
         `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`
       )};
@@ -224,7 +224,7 @@ export class M3eButtonSegmentElement extends Dirty(
           var(--m3e-segmented-button-disabled-outline-opacity, 12%),
         transparent
       );
-      border-right-color: var(
+      border-inline-end-color: var(
         --_segmented-button-disabled-outline-color,
         color-mix(
           in srgb,

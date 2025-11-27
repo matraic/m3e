@@ -14,6 +14,7 @@ import {
 } from "@m3e/core";
 
 import { SelectionManager, selectionManager } from "@m3e/core/a11y";
+import { M3eDirectionality } from "@m3e/core/bidi";
 
 import { M3eButtonSegmentElement } from "./ButtonSegmentElement";
 
@@ -74,27 +75,24 @@ export class M3eSegmentedButtonElement extends Labelled(
       align-items: center;
     }
     ::slotted(:first-child) {
-      border-radius: var(
-        --m3e-segmented-button-start-shape,
-        ${DesignToken.shape.corner.full} ${DesignToken.shape.corner.none} ${DesignToken.shape.corner.none}
-          ${DesignToken.shape.corner.full}
-      );
+      border-start-start-radius: var(--m3e-segmented-button-start-shape, ${DesignToken.shape.corner.full});
+      border-end-start-radius: var(--m3e-segmented-button-start-shape, ${DesignToken.shape.corner.full});
     }
     ::slotted(:last-child) {
-      border-radius: var(
-        --m3e-segmented-button-end-shape,
-        ${DesignToken.shape.corner.none} ${DesignToken.shape.corner.full} ${DesignToken.shape.corner.full}
-          ${DesignToken.shape.corner.none}
-      );
+      border-start-end-radius: var(--m3e-segmented-button-end-shape, ${DesignToken.shape.corner.full});
+      border-end-end-radius: var(--m3e-segmented-button-end-shape, ${DesignToken.shape.corner.full});
     }
     ::slotted(:not(:first-child)) {
       --_segmented-button-left-border: none;
     }
   `;
 
+  /** @private */ #directionalitySubscription?: () => void;
+
   /** @internal */
   readonly [selectionManager] = new SelectionManager<M3eButtonSegmentElement>()
     .withWrap()
+    .withDirectionality(M3eDirectionality.current)
     .onActiveItemChange(() => this[selectionManager].activeItem?.click());
 
   /**
@@ -148,8 +146,18 @@ export class M3eSegmentedButtonElement extends Labelled(
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
+
     this[selectionManager].multi = this.multi;
     this[selectionManager].disableRovingTabIndex(this.multi);
+    this.#directionalitySubscription = M3eDirectionality.observe(
+      () => (this[selectionManager].directionality = M3eDirectionality.current)
+    );
+  }
+
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.#directionalitySubscription?.();
   }
 
   /** @inheritdoc */
