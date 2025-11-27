@@ -215,7 +215,7 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
       this,
       trigger,
       {
-        position: M3eDirectionality.current === "ltr" ? "top-end" : "top-start",
+        position: "top-end",
         inline: true,
         shift: true,
         flip: true,
@@ -224,7 +224,11 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
       (x, y, position) => {
         this.classList.toggle("-right", position.includes("end"));
         this.classList.toggle("-left", position.includes("start"));
-        this.style.left = `${x}px`;
+        if (M3eDirectionality.current === "rtl") {
+          this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
+        } else {
+          this.style.left = `${x}px`;
+        }
         this.style.top = `${y}px`;
       }
     );
