@@ -164,7 +164,7 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
         this.classList.toggle("-bottom", position.includes("bottom"));
 
         if (M3eDirectionality.current === "rtl") {
-          this.style.right = `${window.innerWidth - x - (anchor ?? trigger).clientWidth}px`;
+          this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
         } else {
           this.style.left = `${x}px`;
         }
