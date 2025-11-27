@@ -3,6 +3,7 @@ import { customElement, property, query, state } from "lit/decorators.js";
 
 import { AttachInternals, DesignToken, ResizeController } from "@m3e/core";
 import { SelectionManager, selectionManager } from "@m3e/core/a11y";
+import { M3eDirectionality } from "@m3e/core/bidi";
 
 import { TabVariant } from "./TabVariant";
 import { M3eTabElement } from "./TabElement";
@@ -171,6 +172,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
     }
   `;
 
+  /** @private */ #directionalitySubscription?: () => void;
   /** @private */ @query(".tablist") private readonly _tablist!: HTMLElement;
   /** @private */ @state() _selectedIndex: number | null = null;
 
@@ -178,7 +180,8 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
   readonly [selectionManager] = new SelectionManager<M3eTabElement>()
     .onSelectedItemsChange(() => this.#handleSelectedChange())
     .withHomeAndEnd()
-    .withWrap();
+    .withWrap()
+    .withDirectionality(M3eDirectionality.current);
 
   constructor() {
     super();
@@ -255,7 +258,19 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
+
     this.classList.toggle("-no-animate", true);
+    this.#directionalitySubscription = M3eDirectionality.observe(() => {
+      this.requestUpdate();
+      this[selectionManager].directionality = M3eDirectionality.current;
+    });
+  }
+
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.#directionalitySubscription?.();
   }
 
   /** @inheritdoc */
@@ -294,14 +309,22 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       ?disabled="${this.disablePagination}"
     >
       <slot name="prev-icon" slot="prev-icon">
-        <svg class="prev icon" viewBox="0 -960 960 960" fill="currentColor">
-          <path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" />
-        </svg>
+        ${M3eDirectionality.current === "ltr"
+          ? html`<svg class="prev icon" viewBox="0 -960 960 960" fill="currentColor">
+              <path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" />
+            </svg>`
+          : html`<svg class="next icon" viewBox="0 -960 960 960" fill="currentColor">
+              <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
+            </svg>`}
       </slot>
       <slot name="next-icon" slot="next-icon">
-        <svg class="next icon" viewBox="0 -960 960 960" fill="currentColor">
-          <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
-        </svg>
+        ${M3eDirectionality.current === "ltr"
+          ? html`<svg class="next icon" viewBox="0 -960 960 960" fill="currentColor">
+              <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
+            </svg>`
+          : html`<svg class="prev icon" viewBox="0 -960 960 960" fill="currentColor">
+              <path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" />
+            </svg>`}
       </slot>
       <div class="header" role="tablist">
         <div class="tabs">
