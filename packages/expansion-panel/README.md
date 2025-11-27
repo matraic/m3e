@@ -46,13 +46,14 @@ In addition, you must use an [import map](https://developer.mozilla.org/en-US/do
   {
     "imports": {
       "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
-      "@m3e/core": "/node_modules/@m3e/core/dist/index.js"
+      "@m3e/core": "/node_modules/@m3e/core/dist/index.js",
+      "@m3e/core/bidi": "/node_modules/@m3e/core/dist/bidi.js"
     }
   }
 </script>
 ```
 
-> For production, use index.min.js for faster load times.
+> For production, use index.min.js and bidi.min.js for faster load times.
 
 ## 🗂️ Elements
 

@@ -59,7 +59,7 @@ export const ExpansionHeaderStyle = css`
     transform: rotate(180deg);
   }
   :host([toggle-direction="horizontal"][aria-expanded="true"]) .toggle {
-    transform: rotate(90deg);
+    transform: rotate(var(--_expansion-header-horizontal-expanded-toggle-rotation, 90deg));
   }
   :host([toggle-position="before"]) .toggle {
     margin-inline-start: calc(0px - ${ExpansionHeaderToken.spacing});

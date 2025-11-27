@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 
-import { CSSResultGroup, html, LitElement } from "lit";
+import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 
 import { AttachInternals, Disabled, EventAttribute } from "@m3e/core";
+import { M3eDirectionality } from "@m3e/core/bidi";
 
 import { ExpansionTogglePosition } from "./ExpansionTogglePosition";
 import { ExpansionToggleDirection } from "./ExpansionToggleDirection";
@@ -94,6 +95,7 @@ export class M3eExpansionPanelElement extends EventAttribute(
   /** @private */ #id = M3eExpansionPanelElement.__nextId++;
   /** @private */ #contentId = `m3e-expansion-panel-${this.#id}-content`;
   /** @private */ #headerId = `m3e-expansion-panel-${this.#id}-header`;
+  /** @private */ #directionalitySubscription?: () => void;
 
   /** @private */ @query("m3e-expansion-header") private readonly _header?: M3eExpansionHeaderElement;
 
@@ -120,6 +122,27 @@ export class M3eExpansionPanelElement extends EventAttribute(
    * @default false
    */
   @property({ attribute: "hide-toggle", type: Boolean, reflect: true }) hideToggle = false;
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#directionalitySubscription = M3eDirectionality.observe(() => {
+      this.requestUpdate();
+      this.#updateHeaderToggleRotation();
+    });
+  }
+
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.#directionalitySubscription?.();
+  }
+
+  /** @inheritdoc */
+  override firstUpdated(_changedProperties: PropertyValues): void {
+    super.firstUpdated(_changedProperties);
+    this.#updateHeaderToggleRotation();
+  }
 
   /** @inheritdoc */
   protected override render(): unknown {
@@ -163,9 +186,13 @@ export class M3eExpansionPanelElement extends EventAttribute(
       ? html`<svg viewBox="0 -960 960 960" fill="currentColor">
           <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
         </svg>`
-      : html`<svg viewBox="0 -960 960 960" fill="currentColor">
-          <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
-        </svg>`;
+      : M3eDirectionality.current === "ltr"
+        ? html`<svg viewBox="0 -960 960 960" fill="currentColor">
+            <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
+          </svg>`
+        : html`<svg viewBox="0 -960 960 960" fill="currentColor">
+            <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
+          </svg>`;
   }
 
   /** @private */
@@ -216,6 +243,15 @@ export class M3eExpansionPanelElement extends EventAttribute(
   #handleCollapsibleEvent(e: Event): void {
     e.stopPropagation();
     this.dispatchEvent(new Event(e.type, { bubbles: true }));
+  }
+
+  /** @private */
+  #updateHeaderToggleRotation(): void {
+    if (M3eDirectionality.current === "rtl") {
+      this._header?.style.setProperty("--_expansion-header-horizontal-expanded-toggle-rotation", "-90deg");
+    } else {
+      this._header?.style.removeProperty("--_expansion-header-horizontal-expanded-toggle-rotation");
+    }
   }
 }
 
