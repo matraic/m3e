@@ -3,6 +3,7 @@ import { customElement, property } from "lit/decorators.js";
 
 import { DesignToken, Role, Vertical } from "@m3e/core";
 import { RovingTabIndexManager, M3eInteractivityChecker } from "@m3e/core/a11y";
+import { M3eDirectionality } from "@m3e/core/bidi";
 
 import { ToolbarVariant } from "./ToolbarVariant";
 import { ToolbarShape } from "./ToolbarShape";
@@ -124,7 +125,10 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
     }
   `;
 
-  /** @private */ #focusKeyManager = new RovingTabIndexManager().withHomeAndEnd();
+  /** @private */ #directionalitySubscription?: () => void;
+  /** @private */ #focusKeyManager = new RovingTabIndexManager()
+    .withHomeAndEnd()
+    .withDirectionality(M3eDirectionality.current);
 
   /**
    * The appearance variant of the toolbar.
@@ -143,6 +147,21 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
    * @default false
    */
   @property({ type: Boolean, reflect: true }) elevated = false;
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    this.#directionalitySubscription = M3eDirectionality.observe(
+      () => (this.#focusKeyManager.directionality = M3eDirectionality.current)
+    );
+  }
+
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.#directionalitySubscription?.();
+  }
 
   /** @inheritdoc */
   protected override update(changedProperties: PropertyValues<this>): void {
