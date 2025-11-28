@@ -44,13 +44,14 @@ In addition, you must use an [import map](https://developer.mozilla.org/en-US/do
       "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
       "@m3e/core": "/node_modules/@m3e/core/dist/index.js",
       "@m3e/core/a11y": "/node_modules/@m3e/core/dist/a11y.js",
-      "@m3e/core/anchoring": "/node_modules/@m3e/core/dist/anchoring.js"
+      "@m3e/core/anchoring": "/node_modules/@m3e/core/dist/anchoring.js",
+      "@m3e/core/bidi": "/node_modules/@m3e/core/dist/bidi.js"
     }
   }
 </script>
 ```
 
-> For production, use index.min.js, a11y.min.js, and anchoring.min.js for faster load times.
+> For production, use index.min.js, a11y.min.js, anchoring.min.js, and bidi.min.js for faster load times.
 
 ## 🗂️ Elements
 

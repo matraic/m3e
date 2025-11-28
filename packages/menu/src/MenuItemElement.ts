@@ -2,6 +2,7 @@ import { html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 
 import { hasAssignedNodes, HoverController, LinkButton, Role } from "@m3e/core";
+import { M3eDirectionality } from "@m3e/core/bidi";
 
 import type { M3eMenuElement } from "./MenuElement";
 import { MenuItemElementBase } from "./MenuItemElementBase";
@@ -149,9 +150,13 @@ export class M3eMenuItemElement extends LinkButton(Role(MenuItemElementBase, "me
     return html`<slot name="icon" aria-hidden="true" @slotchange="${this.#iconSlotChangeHandler}"></slot>
       <span class="content"><slot @slotchange="${this.#defaultSlotChangeHandler}"></slot></span>
       ${this._hasSubmenu
-        ? html`<svg class="trailing-icon" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor">
-            <path d="M400-280v-400l200 200-200 200Z" />
-          </svg>`
+        ? M3eDirectionality.current === "ltr"
+          ? html`<svg class="trailing-icon" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor">
+              <path d="M400-280v-400l200 200-200 200Z" />
+            </svg>`
+          : html`<svg class="trailing-icon" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor">
+              <path d="M560-280 360-480l200-200v400Z" />
+            </svg>`
         : html`<slot name="trailing-icon" aria-hidden="true" @slotchange="${this.#trailingIconSlotChangeHandler}">
           </slot>`}`;
   }
@@ -188,8 +193,20 @@ export class M3eMenuItemElement extends LinkButton(Role(MenuItemElementBase, "me
     switch (e.key) {
       case "Right":
       case "ArrowRight":
-        e.preventDefault();
-        this.submenu?.show(this);
+        if (M3eDirectionality.current === "ltr") {
+          e.preventDefault();
+          this.submenu?.show(this);
+        }
+
+        break;
+
+      case "Left":
+      case "ArrowLeft":
+        if (M3eDirectionality.current === "rtl") {
+          e.preventDefault();
+          this.submenu?.show(this);
+        }
+
         break;
     }
   }

@@ -5,6 +5,7 @@ import { customElement, property } from "lit/decorators.js";
 import { DesignToken, ScrollController, Role } from "@m3e/core";
 import { RovingTabIndexManager } from "@m3e/core/a11y";
 import { positionAnchor } from "@m3e/core/anchoring";
+import { M3eDirectionality } from "@m3e/core/bidi";
 
 import { M3eMenuItemElement } from "./MenuItemElement";
 import { MenuPositionX, MenuPositionY } from "./MenuPosition";
@@ -248,19 +249,24 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       this.hide();
     }
 
+    let positionX = this.positionX;
+    if (M3eDirectionality.current === "rtl") {
+      positionX = positionX === "before" ? "after" : "before";
+    }
+
     this.#anchorCleanup = await positionAnchor(
       this,
       trigger,
       {
         position: this.submenu
-          ? this.positionX === "before"
+          ? positionX === "before"
             ? "left-start"
             : "right-start"
           : this.positionY === "above"
-            ? this.positionX === "before"
+            ? positionX === "before"
               ? "top-end"
               : "top-start"
-            : this.positionX === "before"
+            : positionX === "before"
               ? "bottom-end"
               : "bottom-start",
         inline: true,
@@ -279,7 +285,11 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
           this.classList.toggle(Math.round(y) === Math.round(top) ? "-shift-down" : "-shift-up", true);
         }
 
-        this.style.left = `${x}px`;
+        if (M3eDirectionality.current === "rtl") {
+          this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
+        } else {
+          this.style.left = `${x}px`;
+        }
         this.style.top = `${y}px`;
       }
     );
@@ -372,10 +382,25 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
   /** @private */
   #handleKeyDown(e: KeyboardEvent): void {
     switch (e.key) {
+      case "Right":
+      case "ArrowRight":
+        if (M3eDirectionality.current === "rtl") {
+          e.preventDefault();
+          this.hide(true);
+        } else {
+          this.#listManager.onKeyDown(e);
+        }
+
+        break;
       case "Left":
       case "ArrowLeft":
-        e.preventDefault();
-        this.hide(true);
+        if (M3eDirectionality.current === "ltr") {
+          e.preventDefault();
+          this.hide(true);
+        } else {
+          this.#listManager.onKeyDown(e);
+        }
+
         break;
 
       case "Tab":
