@@ -38,7 +38,7 @@ export class M3eSlideElement extends LitElement {
       width: 100%;
       top: 0;
       transition: ${unsafeCSS(
-        `left var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard},
+        `inset-inline-start var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard},
         visibility var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard} allow-discrete`
       )};
     }
@@ -48,15 +48,15 @@ export class M3eSlideElement extends LitElement {
       position: absolute;
     }
     ::slotted(.-before) {
-      left: -100%;
+      inset-inline-start: -100%;
     }
     ::slotted(.-after) {
-      left: 100%;
+      inset-inline-start: 100%;
     }
     ::slotted(:not(.-before):not(.-after)) {
       visibility: visible;
       position: relative;
-      left: 0;
+      inset-inline-start: 0;
     }
     :host(.-no-animate) ::slotted(*) {
       transition: none;
