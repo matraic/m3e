@@ -129,15 +129,25 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
       top: 50%;
     }
-    :host(:not(.-vertical)[label-position="end"])
+    :host(:not(:dir(rtl)):not(.-vertical)[label-position="end"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
       left: 0;
       right: calc(100% - var(--m3e-step-padding, 1.5rem) + var(--m3e-step-divider-inset, 0.5rem));
     }
-    :host(:not(.-vertical)[label-position="end"])
+    :host(:dir(rtl):not(.-vertical)[label-position="end"])
+      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
+      right: 0;
+      left: calc(100% - var(--m3e-step-padding, 1.5rem) + var(--m3e-step-divider-inset, 0.5rem));
+    }
+    :host(:not(:dir(rtl)):not(.-vertical)[label-position="end"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
       left: calc(100% - var(--m3e-step-padding, 1.5rem) + var(--m3e-step-divider-inset, 0.5rem));
       right: 0;
+    }
+    :host(:dir(rtl):not(.-vertical)[label-position="end"])
+      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
+      right: calc(100% - var(--m3e-step-padding, 1.5rem) + var(--m3e-step-divider-inset, 0.5rem));
+      left: 0;
     }
     :host(:not(.-vertical)[label-position="below"]) ::slotted(.-m3e-step-divider)::before,
     :host(:not(.-vertical)[label-position="below"])
@@ -146,15 +156,25 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
       margin-block-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
     }
-    :host(:not(.-vertical)[label-position="below"])
+    :host(:not(:dir(rtl)):not(.-vertical)[label-position="below"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
       left: 0;
       right: calc(50% + calc(var(--m3e-step-icon-size, 1.5rem) / 2) + var(--m3e-step-divider-inset, 0.5rem));
     }
-    :host(:not(.-vertical)[label-position="below"])
+    :host(:dir(rtl):not(.-vertical)[label-position="below"])
+      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
+      right: 0;
+      left: calc(50% + calc(var(--m3e-step-icon-size, 1.5rem) / 2) + var(--m3e-step-divider-inset, 0.5rem));
+    }
+    :host(:not(:dir(rtl)):not(.-vertical)[label-position="below"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
       left: calc(50% + calc(var(--m3e-step-icon-size, 1.5rem) / 2) + var(--m3e-step-divider-inset, 0.5rem));
       right: 0;
+    }
+    :host(:dir(rtl):not(.-vertical)[label-position="below"])
+      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
+      right: calc(50% + calc(var(--m3e-step-icon-size, 1.5rem) / 2) + var(--m3e-step-divider-inset, 0.5rem));
+      left: 0;
     }
     :host(:not(.-vertical)[label-position="below"]) {
       --_step-direction: column;
@@ -362,17 +382,17 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    let panelIndex: number | null = null;
+    let panelIndex: number | undefined;
     if (this.selectedStep?.panel) {
       panelIndex = [...this.querySelectorAll("[slot='panel']")].indexOf(this.selectedStep.panel);
       if (panelIndex === -1) {
-        panelIndex = null;
+        panelIndex = undefined;
       }
     }
 
     if (!this[selectionManager].vertical) {
       return html`${this.headerPosition === "above" ? this.#renderHeader() : nothing}
-        <m3e-slide class="steps" .selectedIndex="${panelIndex}">
+        <m3e-slide class="steps" selected-index="${ifDefined(panelIndex)}">
           <slot name="panel"></slot>
         </m3e-slide>
         ${this.headerPosition === "below" ? this.#renderHeader() : nothing}`;
