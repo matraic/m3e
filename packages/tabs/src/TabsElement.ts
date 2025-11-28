@@ -1,5 +1,6 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 
 import { AttachInternals, DesignToken, ResizeController } from "@m3e/core";
 import { SelectionManager, selectionManager } from "@m3e/core/a11y";
@@ -284,16 +285,16 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    let panelIndex: number | null = null;
+    let panelIndex: number | undefined;
     if (this.selectedTab?.control) {
       panelIndex = [...this.querySelectorAll("[slot='panel']")].indexOf(this.selectedTab.control);
       if (panelIndex === -1) {
-        panelIndex = null;
+        panelIndex = undefined;
       }
     }
 
     return html` ${this.headerPosition === "before" ? this.#renderHeader() : nothing}
-      <m3e-slide class="tabs" .selectedIndex="${panelIndex}">
+      <m3e-slide class="tabs" selected-index="${ifDefined(panelIndex)}">
         <slot name="panel"></slot>
       </m3e-slide>
       ${this.headerPosition === "after" ? this.#renderHeader() : nothing}`;
