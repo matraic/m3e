@@ -84,26 +84,52 @@ export const SwitchHandleStyle = css`
       transparent
     );
   }
-  :host([checked]) .track:not(.pressed) .handle {
+  :host(:not(:dir(rtl))[checked]) .track:not(.pressed) .handle {
     transform: translateX(
       calc(${SwitchToken.trackWidth} - ${SwitchToken.selectedHandleWidth} - ${SwitchToken.trackOutlineWidth})
     );
   }
-  :host([checked]) .track.pressed .handle {
+  :host(:dir(rtl)[checked]) .track:not(.pressed) .handle {
+    transform: translateX(
+      calc(
+        0px - calc(${SwitchToken.trackWidth} - ${SwitchToken.selectedHandleWidth} - ${SwitchToken.trackOutlineWidth})
+      )
+    );
+  }
+  :host(:not(:dir(rtl))[checked]) .track.pressed .handle {
     transform: translateX(
       calc(${SwitchToken.trackWidth} - ${SwitchToken.pressedHandleWidth} - ${SwitchToken.trackOutlineWidth})
     );
   }
-  :host(:not([checked]):not([icons="both"])) .track:not(.pressed) .handle,
-  :host([aria-disabled="true"]:not([checked])) .handle {
+  :host(:dir(rtl)[checked]) .track.pressed .handle {
+    transform: translateX(
+      calc(0px - calc(${SwitchToken.trackWidth} - ${SwitchToken.pressedHandleWidth} - ${SwitchToken.trackOutlineWidth}))
+    );
+  }
+  :host(:not(:dir(rtl)):not([checked]):not([icons="both"])) .track:not(.pressed) .handle,
+  :host(:not(:dir(rtl))[aria-disabled="true"]:not([checked])) .handle {
     transform: translateX(
       calc(
         ${SwitchToken.trackOutlineWidth} + calc(${SwitchToken.pressedHandleWidth} - ${SwitchToken.withIconHandleWidth})
       )
     );
   }
-  :host(:not([aria-disabled="true"]):not([checked])[icons="both"]) .track:not(.pressed) .handle {
+  :host(:dir(rtl):not([checked]):not([icons="both"])) .track:not(.pressed) .handle,
+  :host(:dir(rtl)[aria-disabled="true"]:not([checked])) .handle {
+    transform: translateX(
+      calc(
+        0px - calc(
+            ${SwitchToken.trackOutlineWidth} +
+              calc(${SwitchToken.pressedHandleWidth} - ${SwitchToken.withIconHandleWidth})
+          )
+      )
+    );
+  }
+  :host(:not(:dir(rtl)):not([aria-disabled="true"]):not([checked])[icons="both"]) .track:not(.pressed) .handle {
     transform: translateX(${SwitchToken.trackOutlineWidth});
+  }
+  :host(:dir(rtl):not([aria-disabled="true"]):not([checked])[icons="both"]) .track:not(.pressed) .handle {
+    transform: translateX(calc(0px - ${SwitchToken.trackOutlineWidth}));
   }
   @media (forced-colors: active) {
     .handle {

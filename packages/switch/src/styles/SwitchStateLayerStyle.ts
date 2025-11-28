@@ -13,19 +13,21 @@ export const SwitchStateLayerStyle = css`
     border-radius: ${SwitchToken.stateLayerShape};
   }
   :host(:not([checked])[icons="both"]) .track:not(.pressed) .state-layer {
-    left: calc(0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.withIconHandleWidth}) / 2));
+    inset-inline-start: calc(0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.withIconHandleWidth}) / 2));
     top: calc(0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.withIconHandleHeight}) / 2));
   }
   :host(:not([checked]):not([icons="both"])) .track:not(.pressed) .state-layer {
-    left: calc(0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.unselectedHandleWidth}) / 2));
+    inset-inline-start: calc(
+      0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.unselectedHandleWidth}) / 2)
+    );
     top: calc(0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.unselectedHandleHeight}) / 2));
   }
   :host([checked]) .track:not(.pressed) .state-layer {
-    left: calc(0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.selectedHandleWidth}) / 2));
+    inset-inline-start: calc(0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.selectedHandleWidth}) / 2));
     top: calc(0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.selectedHandleHeight}) / 2));
   }
   .track.pressed .state-layer {
-    left: calc(0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.pressedHandleWidth}) / 2));
+    inset-inline-start: calc(0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.pressedHandleWidth}) / 2));
     top: calc(0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.pressedHandleWidth}) / 2));
   }
   :host(:not([checked])) .state-layer {
