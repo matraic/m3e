@@ -4,6 +4,7 @@ import { customElement, property, query } from "lit/decorators.js";
 import { M3eAriaDescriber } from "@m3e/core/a11y";
 import { M3ePlatform } from "@m3e/core/platform";
 import { positionAnchor } from "@m3e/core/anchoring";
+import { M3eDirectionality } from "@m3e/core/bidi";
 
 import {
   AttachInternals,
@@ -288,20 +289,36 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
     M3eTooltipElement.__openTooltips.filter((x) => x !== this).forEach((x) => x.hide());
 
     this._base.showPopover();
-    this.#anchorCleanup = await positionAnchor(this._base, this.control, {
-      position:
-        this.position === "above"
-          ? "top"
-          : this.position === "below"
-            ? "bottom"
-            : this.position === "before"
-              ? "left"
-              : "right",
-      inline: true,
-      flip: true,
-      shift: true,
-      offset: TOOLTIP_OFFSET,
-    });
+    this.#anchorCleanup = await positionAnchor(
+      this._base,
+      this.control,
+      {
+        position:
+          this.position === "above"
+            ? "top"
+            : this.position === "below"
+              ? "bottom"
+              : this.position === "before"
+                ? M3eDirectionality.current === "ltr"
+                  ? "left"
+                  : "right"
+                : M3eDirectionality.current === "ltr"
+                  ? "right"
+                  : "left",
+        inline: true,
+        flip: true,
+        shift: true,
+        offset: TOOLTIP_OFFSET,
+      },
+      (x, y) => {
+        if (M3eDirectionality.current === "rtl") {
+          this._base.style.right = `${window.innerWidth - x - this._base.clientWidth}px`;
+        } else {
+          this._base.style.left = `${x}px`;
+        }
+        this._base.style.top = `${y}px`;
+      }
+    );
 
     if (!M3eTooltipElement.__openTooltips.includes(this)) {
       M3eTooltipElement.__openTooltips.push(this);

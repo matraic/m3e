@@ -9,14 +9,14 @@ import { AnchorPosition } from "./AnchorPosition";
  * @param {HTMLElement} target The element to position.
  * @param {HTMLElement} anchor The element in which to anchor `target`.
  * @param {AnchorOptions} options Options that control positioning relative to the anchor.
- * @param {((x: number, y: number, position: AnchorPosition) => void) | undefined} update Callback used to position `target`.
+ * @param {((x: number, y: number, position: AnchorPosition) => void)} update Callback used to position `target`.
  * @returns {Promise<() => void>} Promise that resolves to a function used to stop updating target when the position of the anchor element changes.
  */
 export async function positionAnchor(
   target: HTMLElement,
   anchor: HTMLElement,
   options: AnchorOptions,
-  update?: (x: number, y: number, position: AnchorPosition) => void
+  update: (x: number, y: number, position: AnchorPosition) => void
 ): Promise<() => void> {
   async function computeAnchorPosition() {
     const middleware = new Array<Middleware>();
@@ -40,12 +40,7 @@ export async function positionAnchor(
       platform: { ...platform, getOffsetParent: (x) => platform.getOffsetParent(x, offsetParent) },
     });
 
-    if (!update) {
-      target.style.left = `${result.x}px`;
-      target.style.top = `${result.y}px`;
-    } else {
-      update(result.x, result.y, result.placement);
-    }
+    update(result.x, result.y, result.placement);
   }
 
   await computeAnchorPosition();
