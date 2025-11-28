@@ -87,7 +87,6 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
         fill: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
       }
       .buffer {
-        transform-origin: top left;
         transition: transform var(--_piece-animation-duration) ease;
         background-color: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
       }
@@ -99,8 +98,15 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
       }
       .fill {
         animation: none;
-        transform-origin: top left;
         transition: transform var(--_piece-animation-duration) ease;
+      }
+      :host(:not(:dir(rtl))) .buffer,
+      :host(:not(:dir(rtl))) .fill {
+        transform-origin: top left;
+      }
+      :host(:dir(rtl)) .buffer,
+      :host(:dir(rtl)) .fill {
+        transform-origin: top right;
       }
       .fill::after {
         animation: none;
@@ -119,8 +125,16 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
       :host([mode="indeterminate"]) .primary,
       :host([mode="query"]) .primary {
         backface-visibility: hidden;
+      }
+      :host(:not(:dir(rtl))[mode="indeterminate"]) .primary,
+      :host(:not(:dir(rtl))[mode="query"]) .primary {
         animation: primary-indeterminate-translate var(--_full-animation-duration) infinite linear;
         left: -145.166611%;
+      }
+      :host(:dir(rtl)[mode="indeterminate"]) .primary,
+      :host(:dir(rtl)[mode="query"]) .primary {
+        animation: primary-indeterminate-translate-rtl var(--_full-animation-duration) infinite linear;
+        left: 145.166611%;
       }
       :host([mode="indeterminate"]) .primary.fill::after,
       :host([mode="query"]) .primary.fill::after {
@@ -131,8 +145,16 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
       :host([mode="query"]) .secondary {
         display: block;
         backface-visibility: hidden;
+      }
+      :host(:not(:dir(rtl))[mode="indeterminate"]) .secondary,
+      :host(:not(:dir(rtl))[mode="query"]) .secondary {
         animation: secondary-indeterminate-translate var(--_full-animation-duration) infinite linear;
         left: -54.888891%;
+      }
+      :host(:dir(rtl)[mode="indeterminate"]) .secondary,
+      :host(:dir(rtl)[mode="query"]) .secondary {
+        animation: secondary-indeterminate-translate-rtl var(--_full-animation-duration) infinite linear;
+        left: 54.888891%;
       }
       :host([mode="indeterminate"]) .secondary.fill::after,
       :host([mode="query"]) .secondary.fill::after {
@@ -150,7 +172,12 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
       :host([mode="buffer"]) .background {
         display: block;
         backface-visibility: hidden;
+      }
+      :host(:not(:dir(rtl))[mode="buffer"]) .background {
         animation: background-scroll var(--_piece-animation-duration) infinite linear;
+      }
+      :host(:dir(rtl)[mode="buffer"]) .background {
+        animation: background-scroll-rtl var(--_piece-animation-duration) infinite linear;
       }
       @keyframes primary-indeterminate-translate {
         0% {
@@ -166,6 +193,22 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
         }
         100% {
           transform: translateX(200.611057%);
+        }
+      }
+      @keyframes primary-indeterminate-translate-rtl {
+        0% {
+          transform: translateX(0);
+        }
+        20% {
+          animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
+          transform: translateX(0);
+        }
+        59.15% {
+          animation-timing-function: cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);
+          transform: translateX(-83.67142%);
+        }
+        100% {
+          transform: translateX(-200.611057%);
         }
       }
       @keyframes primary-indeterminate-scale {
@@ -201,6 +244,23 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
           transform: translateX(160.277782%);
         }
       }
+      @keyframes secondary-indeterminate-translate-rtl {
+        0% {
+          animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
+          transform: translateX(0);
+        }
+        25% {
+          animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
+          transform: translateX(-37.651913%);
+        }
+        48.35% {
+          animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
+          transform: translateX(-84.386165%);
+        }
+        100% {
+          transform: translateX(-160.277782%);
+        }
+      }
       @keyframes secondary-indeterminate-scale {
         0% {
           animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
@@ -221,6 +281,11 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
       @keyframes background-scroll {
         to {
           transform: translateX(calc(calc(0px - 0.25rem) * 2));
+        }
+      }
+      @keyframes background-scroll-rtl {
+        to {
+          transform: translateX(calc(0px - calc(calc(0px - 0.25rem) * 2)));
         }
       }
       @media (forced-colors: active) {
