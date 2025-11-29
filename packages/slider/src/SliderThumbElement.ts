@@ -129,7 +129,7 @@ export class M3eSliderThumbElement extends Dirty(
       width: var(--m3e-slider-label-width, 3rem);
       height: var(--_m3e-slider-label-height, 2.75rem);
       top: calc(0px - var(--_m3e-slider-label-height, 2.75rem) - var(--_m3e-slider-label-margin, 0.25rem));
-      left: calc(0px - 100%);
+      inset-inline-start: calc(0px - 100%);
       border-radius: var(--m3e-slider-label-shape, ${DesignToken.shape.corner.full});
       background-color: var(--m3e-slider-label-container-color, ${DesignToken.color.inverseSurface});
       color: var(--m3e-slider-label-color, ${DesignToken.color.inverseOnSurface});

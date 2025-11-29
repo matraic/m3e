@@ -3,6 +3,7 @@ import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 import { DesignToken, prefersReducedMotion, ResizeController, safeStyleMap } from "@m3e/core";
+import { M3eDirectionality } from "@m3e/core/bidi";
 
 import { M3eSliderThumbElement } from "./SliderThumbElement";
 import { SliderSize } from "./SliderSize";
@@ -95,8 +96,8 @@ export class M3eSliderElement extends LitElement {
     :host([size="small"]) {
       height: var(--m3e-slider-small-height, 2.75rem);
     }
-    :host([size="extra-small"]) .base,
-    :host([size="small"]) .base {
+    :host(:not(:dir(rtl))[size="extra-small"]) .base,
+    :host(:not(:dir(rtl))[size="small"]) .base {
       --_slider-active-track-shape: var(--m3e-slider-small-active-track-shape, ${DesignToken.shape.corner.smallStart});
       --_slider-inactive-track-start-shape: var(
         --m3e-slider-small-inactive-active-track-start-shape,
@@ -105,6 +106,18 @@ export class M3eSliderElement extends LitElement {
       --_slider-inactive-track-end-shape: var(
         --m3e-slider-small-inactive-track-end-shape,
         ${DesignToken.shape.corner.smallEnd}
+      );
+    }
+    :host(:dir(rtl)[size="extra-small"]) .base,
+    :host(:dir(rtl)[size="small"]) .base {
+      --_slider-active-track-shape: var(--m3e-slider-small-active-track-shape, ${DesignToken.shape.corner.smallEnd});
+      --_slider-inactive-track-start-shape: var(
+        --m3e-slider-small-inactive-active-track-start-shape,
+        ${DesignToken.shape.corner.smallEnd}
+      );
+      --_slider-inactive-track-end-shape: var(
+        --m3e-slider-small-inactive-track-end-shape,
+        ${DesignToken.shape.corner.smallStart}
       );
     }
     :host([size="extra-small"]) .track {
@@ -116,7 +129,7 @@ export class M3eSliderElement extends LitElement {
     :host([size="medium"]) {
       height: var(--m3e-slider-medium-height, 3.25rem);
     }
-    :host([size="medium"]) .base {
+    :host(:not(:dir(rtl))[size="medium"]) .base {
       --_slider-active-track-shape: var(
         --m3e-slider-medium-active-track-shape,
         ${DesignToken.shape.corner.mediumStart}
@@ -130,13 +143,24 @@ export class M3eSliderElement extends LitElement {
         ${DesignToken.shape.corner.mediumEnd}
       );
     }
+    :host(:dir(rtl)[size="medium"]) .base {
+      --_slider-active-track-shape: var(--m3e-slider-medium-active-track-shape, ${DesignToken.shape.corner.mediumEnd});
+      --_slider-inactive-track-start-shape: var(
+        --m3e-slider-medium-inactive-active-track-start-shape,
+        ${DesignToken.shape.corner.mediumEnd}
+      );
+      --_slider-inactive-track-end-shape: var(
+        --m3e-slider-medium-inactive-track-end-shape,
+        ${DesignToken.shape.corner.mediumStart}
+      );
+    }
     :host([size="medium"]) .track {
       height: var(--m3e-slider-medium-track-height, 2.5rem);
     }
     :host([size="large"]) {
       height: var(--m3e-slider-large-height, 4.25rem);
     }
-    :host([size="large"]) .base {
+    :host(:not(:dir(rtl))[size="large"]) .base {
       --_slider-active-track-shape: var(--m3e-slider-large-active-track-shape, ${DesignToken.shape.corner.largeStart});
       --_slider-inactive-track-start-shape: var(
         --m3e-slider-large-inactive-active-track-start-shape,
@@ -147,13 +171,24 @@ export class M3eSliderElement extends LitElement {
         ${DesignToken.shape.corner.largeEnd}
       );
     }
+    :host(:dir(rtl)[size="large"]) .base {
+      --_slider-active-track-shape: var(--m3e-slider-large-active-track-shape, ${DesignToken.shape.corner.largeEnd});
+      --_slider-inactive-track-start-shape: var(
+        --m3e-slider-large-inactive-active-track-start-shape,
+        ${DesignToken.shape.corner.largeEnd}
+      );
+      --_slider-inactive-track-end-shape: var(
+        --m3e-slider-large-inactive-track-end-shape,
+        ${DesignToken.shape.corner.largeStart}
+      );
+    }
     :host([size="large"]) .track {
       height: var(--m3e-slider-large-track-height, 3.5rem);
     }
     :host([size="extra-large"]) {
       height: var(--m3e-slider-extra-large-height, 6.75rem);
     }
-    :host([size="extra-large"]) .base {
+    :host(:not(:dir(rtl))[size="extra-large"]) .base {
       --_slider-active-track-shape: var(
         --m3e-slider-extra-large-active-track-shape,
         ${DesignToken.shape.corner.extraLargeStart}
@@ -167,13 +202,27 @@ export class M3eSliderElement extends LitElement {
         ${DesignToken.shape.corner.extraLargeEnd}
       );
     }
+    :host(:dir(rtl)[size="extra-large"]) .base {
+      --_slider-active-track-shape: var(
+        --m3e-slider-extra-large-active-track-shape,
+        ${DesignToken.shape.corner.extraLargeEnd}
+      );
+      --_slider-inactive-track-start-shape: var(
+        --m3e-slider-extra-large-inactive-active-track-start-shape,
+        ${DesignToken.shape.corner.extraLargeEnd}
+      );
+      --_slider-inactive-track-end-shape: var(
+        --m3e-slider-extra-large-inactive-track-end-shape,
+        ${DesignToken.shape.corner.extraLargeStart}
+      );
+    }
     :host([size="extra-large"]) .track {
       height: var(--m3e-slider-extra-large-track-height, 6rem);
     }
     :host(.-animating) .track-active,
     :host(.-animating) .track-inactive.start,
     :host(.-animating) .track-inactive.end {
-      transition: ${unsafeCSS(`margin-left ${DesignToken.motion.spring.fastEffects},
+      transition: ${unsafeCSS(`margin-inline-start ${DesignToken.motion.spring.fastEffects},
         width ${DesignToken.motion.spring.fastEffects}`)};
     }
     .base {
@@ -198,7 +247,7 @@ export class M3eSliderElement extends LitElement {
       touch-action: none;
     }
     .track-active {
-      margin-left: var(--_slider-active-track-offset, 0px);
+      margin-inline-start: var(--_slider-active-track-offset, 0px);
       width: var(--_slider-active-track-size, 0px);
       border-radius: var(--_slider-active-track-middle-shape, var(--_slider-active-track-shape));
     }
@@ -207,7 +256,7 @@ export class M3eSliderElement extends LitElement {
       border-radius: var(--_slider-inactive-track-start-shape);
     }
     .track-inactive.end {
-      margin-left: var(--_slider-inactive-track-after-offset, 0px);
+      margin-inline-start: var(--_slider-inactive-track-after-offset, 0px);
       width: var(--_slider-inactive-track-after-size, 0px);
       border-radius: var(--_slider-inactive-track-end-shape);
     }
@@ -222,7 +271,7 @@ export class M3eSliderElement extends LitElement {
       position: absolute;
       top: 0;
       touch-action: none;
-      left: calc(var(--m3e-slider-tick-size, 0.25rem) + calc(var(--m3e-slider-tick-size, 0.25rem) / 2));
+      inset-inline-start: calc(var(--m3e-slider-tick-size, 0.25rem) + calc(var(--m3e-slider-tick-size, 0.25rem) / 2));
       width: var(--m3e-slider-tick-size, 0.25rem);
       height: var(--m3e-slider-tick-size, 0.25rem);
       border-radius: var(--m3e-slider-tick-shape, ${DesignToken.shape.corner.full});
@@ -304,6 +353,8 @@ export class M3eSliderElement extends LitElement {
       }
     }
   `;
+
+  /** @private */ #directionalitySubscription?: () => void;
 
   /** @private */
   @query(".base") private readonly _base?: HTMLElement;
@@ -393,6 +444,22 @@ export class M3eSliderElement extends LitElement {
   }
 
   /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    this.#directionalitySubscription = M3eDirectionality.observe(() => {
+      this.#updateDimensions(true);
+      this.requestUpdate();
+    });
+  }
+
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.#directionalitySubscription?.();
+  }
+
+  /** @inheritdoc */
   protected override updated(_changedProperties: PropertyValues<this>): void {
     super.updated(_changedProperties);
 
@@ -427,7 +494,7 @@ export class M3eSliderElement extends LitElement {
     return html`<div
       class="tick ${tick.active ? "active" : "inactive"}"
       style="${safeStyleMap({
-        transform: `translate(${this.#pointFromValue(tick.value)}px, 0)`,
+        transform: `translate(${M3eDirectionality.current === "rtl" ? -this.#pointFromValue(tick.value) : this.#pointFromValue(tick.value)}px, 0)`,
       })}"
     ></div>`;
   }
@@ -469,7 +536,10 @@ export class M3eSliderElement extends LitElement {
 
   /** @private */
   #valueFromPoint(e: PointerEvent): number {
-    const pos = e.clientX - this.#cachedLeft;
+    const pos =
+      M3eDirectionality.current === "rtl"
+        ? this.#cachedLeft + this.#cachedWidth - e.clientX
+        : e.clientX - this.#cachedLeft;
     const step = this.step === 0 ? 1 : this.step;
     const numSteps = Math.floor((this.max - this.min) / step);
     const percentage = pos / this.#cachedWidth;
@@ -494,7 +564,7 @@ export class M3eSliderElement extends LitElement {
 
     const lowerValue = this.lowerThumb.value ?? this.min;
     const lowerPos = this.#pointFromValue(lowerValue);
-    this.lowerThumb.style.transform = `translate(${lowerPos}px, 0)`;
+    this.lowerThumb.style.transform = `translate(${M3eDirectionality.current === "rtl" ? -lowerPos : lowerPos}px, 0)`;
 
     if (!this.upperThumb) {
       this._base?.classList.toggle("range", false);
@@ -509,7 +579,7 @@ export class M3eSliderElement extends LitElement {
     } else {
       const upperValue = this.upperThumb.value ?? lowerValue;
       const upperPos = this.#pointFromValue(upperValue);
-      this.upperThumb.style.transform = `translate(${upperPos}px, 0)`;
+      this.upperThumb.style.transform = `translate(${M3eDirectionality.current === "rtl" ? -upperPos : upperPos}px, 0)`;
 
       this._base?.classList.toggle("range", true);
       this._base?.style.setProperty("--_slider-inactive-track-before-size", `${lowerPos}px`);
@@ -559,6 +629,7 @@ export class M3eSliderElement extends LitElement {
     }
 
     const value = this.#valueFromPoint(e);
+
     if (!this.upperThumb) {
       if (!this.lowerThumb.disabled) {
         this.#changeThumb(this.lowerThumb, value, true);
@@ -591,6 +662,7 @@ export class M3eSliderElement extends LitElement {
     }
   }
 
+  /** @private */
   #handlePointerMove(e: PointerEvent): void {
     if (!(e.target instanceof HTMLElement) || !e.target.hasPointerCapture(e.pointerId) || !this.#activeThumb) return;
 
@@ -657,12 +729,21 @@ export class M3eSliderElement extends LitElement {
         break;
 
       case "PageUp":
-        this.#changeThumb(this.#activeThumb, Math.min(max, value + (this.step > 1 ? this.step : 10)));
+        if (M3eDirectionality.current === "ltr") {
+          this.#changeThumb(this.#activeThumb, Math.min(max, value + (this.step > 1 ? this.step : 10)));
+        } else {
+          this.#changeThumb(this.#activeThumb, Math.max(min, value - (this.step > 1 ? this.step : 10)));
+        }
+
         e.preventDefault();
         break;
 
       case "PageDown":
-        this.#changeThumb(this.#activeThumb, Math.max(min, value - (this.step > 1 ? this.step : 10)));
+        if (M3eDirectionality.current === "ltr") {
+          this.#changeThumb(this.#activeThumb, Math.max(min, value - (this.step > 1 ? this.step : 10)));
+        } else {
+          this.#changeThumb(this.#activeThumb, Math.min(max, value + (this.step > 1 ? this.step : 10)));
+        }
         e.preventDefault();
         break;
 
@@ -670,15 +751,26 @@ export class M3eSliderElement extends LitElement {
       case "ArrowDown":
       case "Left":
       case "ArrowLeft":
-        this.#changeThumb(this.#activeThumb, Math.max(min, value - this.step));
+        if (M3eDirectionality.current === "ltr") {
+          this.#changeThumb(this.#activeThumb, Math.max(min, value - this.step));
+        } else {
+          this.#changeThumb(this.#activeThumb, Math.min(max, value + this.step));
+        }
+
         e.preventDefault();
+
         break;
 
       case "Up":
       case "ArrowUp":
       case "Right":
       case "ArrowRight":
-        this.#changeThumb(this.#activeThumb, Math.min(max, value + this.step));
+        if (M3eDirectionality.current === "ltr") {
+          this.#changeThumb(this.#activeThumb, Math.min(max, value + this.step));
+        } else {
+          this.#changeThumb(this.#activeThumb, Math.max(min, value - this.step));
+        }
+
         e.preventDefault();
         break;
 
