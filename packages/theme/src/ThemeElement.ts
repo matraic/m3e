@@ -70,7 +70,7 @@ export class M3eThemeElement extends LitElement {
   /** @private */ #dark?: MediaQueryList;
   /** @private */ #forcedColor?: MediaQueryList;
 
-  /** @private */ readonly #colorSchemeChangeHandler = () => this.#apply();
+  /** @private */ readonly #colorSchemeChangeHandler = () => this.#apply(true);
 
   /**
    * The hex color from which to derive dynamic color palettes.
@@ -149,7 +149,10 @@ export class M3eThemeElement extends LitElement {
   /** @inheritdoc */
   protected override updated(_changedProperties: PropertyValues<this>): void {
     super.updated(_changedProperties);
-    this.#apply();
+    this.#apply(
+      this.#firstUpdated &&
+        ["color", "scheme", "contrast"].some((x) => _changedProperties.has(<keyof M3eThemeElement>x))
+    );
   }
 
   /** @inheritdoc */
@@ -164,7 +167,7 @@ export class M3eThemeElement extends LitElement {
   }
 
   /** @private */
-  #apply(): void {
+  #apply(forceReflow: boolean): void {
     const color = argbFromHex(this.color);
     const palette = CorePalette.of(color);
     const scheme = new DynamicScheme({
@@ -229,6 +232,9 @@ export class M3eThemeElement extends LitElement {
 
     if (this.#firstUpdated) {
       this.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+    if (forceReflow) {
+      void document.body.offsetHeight;
     }
   }
 
