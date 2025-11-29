@@ -20,7 +20,7 @@ body {
 m3e-toc[for="d1"] {
   position: sticky;
   top: 0;
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 h2,
 h3,
