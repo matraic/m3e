@@ -3,6 +3,7 @@ import { customElement } from "lit/decorators.js";
 
 import { DesignToken, FocusController, PressedController, Role, scrollIntoViewIfNeeded } from "@m3e/core";
 import { SelectionManager, selectionManager } from "@m3e/core/a11y";
+import { M3eDirectionality } from "@m3e/core/bidi";
 
 import { M3eNavMenuItemElement } from "./NavMenuItemElement";
 
@@ -261,33 +262,37 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
       case "Left":
       case "ArrowLeft":
         e.preventDefault();
-        if (item.hasChildItems && item.open) {
-          item.collapse();
-        } else {
-          const parent = item.parentItem;
-          if (parent) {
-            parent.collapse();
-            this[selectionManager].setActiveItem(parent);
+        if (M3eDirectionality.current === "ltr") {
+          if (item.hasChildItems && item.open) {
+            item.collapse();
+          } else {
+            const parent = item.parentItem;
+            if (parent) {
+              parent.collapse();
+              this[selectionManager].setActiveItem(parent);
+            }
           }
+        } else if (item.hasChildItems && !item.open) {
+          item.expand();
         }
+
         break;
 
       case "Right":
       case "ArrowRight":
-        if (item.hasChildItems) {
-          if (!item.open) {
-            e.preventDefault();
-            item.expand();
+        e.preventDefault();
+        if (M3eDirectionality.current === "rtl") {
+          if (item.hasChildItems && item.open) {
+            item.collapse();
           } else {
-            try {
-              this[selectionManager].vertical = false;
-              this[selectionManager].onKeyDown(e);
-            } finally {
-              this[selectionManager].vertical = true;
+            const parent = item.parentItem;
+            if (parent) {
+              parent.collapse();
+              this[selectionManager].setActiveItem(parent);
             }
           }
-        } else {
-          e.preventDefault();
+        } else if (item.hasChildItems && !item.open) {
+          item.expand();
         }
         break;
 
