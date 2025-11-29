@@ -68,21 +68,18 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
       position: absolute;
       z-index: 1;
     }
-    :host([for]:not([dir])) {
-      visibility: hidden;
-    }
     :host([for][position^="above"]) {
       margin-block-start: var(--_badge-offset, 0px);
     }
     :host([for][position^="below"]) {
       margin-block-start: calc(0px - var(--_badge-offset, 0px));
     }
-    :host([for][position$="before"][dir="ltr"]),
-    :host([for][position$="after"][dir="rtl"]) {
+    :host(:not(:dir(rtl))[for][position$="before"]),
+    :host(:dir(rtl)[for][position$="after"]) {
       margin-left: var(--_badge-offset, 0px);
     }
-    :host([for][position$="before"][dir="rtl"]),
-    :host([for][position$="after"][dir="ltr"]) {
+    :host(:dir(rtl)[for][position$="before"]),
+    :host(:not(:dir(rtl))[for][position$="after"]) {
       margin-left: calc(0px - var(--_badge-offset, 0px));
     }
     :host([size="small"]) {
@@ -182,7 +179,6 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
   #detach(): void {
     this.#anchorCleanup?.();
     this.#anchorCleanup = undefined;
-    this.dir = "";
   }
 
   /** @private */
@@ -217,16 +213,15 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
     }
 
     this.#anchorCleanup = await positionAnchor(this, this.control, { position }, (x, y) => {
-      this.dir = M3eDirectionality.current;
       if (this.position.includes("before") && this.position !== "before") {
-        if (this.dir == "rtl") {
+        if (M3eDirectionality.current === "rtl") {
           x += this.clientWidth;
         } else {
           x -= this.clientWidth;
         }
       }
       if (this.position.includes("after") && this.position !== "after") {
-        if (this.dir == "rtl") {
+        if (M3eDirectionality.current === "rtl") {
           x -= this.clientWidth;
         } else {
           x += this.clientWidth;
