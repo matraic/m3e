@@ -226,8 +226,10 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
         this.classList.toggle("-left", position.includes("start"));
         if (M3eDirectionality.current === "rtl") {
           this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
+          this.style.left = "";
         } else {
           this.style.left = `${x}px`;
+          this.style.right = "";
         }
         this.style.top = `${y}px`;
       }

@@ -165,8 +165,10 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
 
         if (M3eDirectionality.current === "rtl") {
           this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
+          this.style.left = "";
         } else {
           this.style.left = `${x}px`;
+          this.style.right = "";
         }
 
         this.style.top = `${y}px`;

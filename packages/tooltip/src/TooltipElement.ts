@@ -313,8 +313,10 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
       (x, y) => {
         if (M3eDirectionality.current === "rtl") {
           this._base.style.right = `${window.innerWidth - x - this._base.clientWidth}px`;
+          this._base.style.left = "";
         } else {
           this._base.style.left = `${x}px`;
+          this._base.style.right = "";
         }
         this._base.style.top = `${y}px`;
       }
