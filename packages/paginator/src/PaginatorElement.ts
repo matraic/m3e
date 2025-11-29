@@ -99,7 +99,7 @@ export class M3ePaginatorElement extends EventAttribute(Role(LitElement, "group"
     .items-per-page-label {
       display: flex;
       align-items: center;
-      margin-right: 0.5rem;
+      margin-inline-end: 0.5rem;
     }
     .form-field {
       min-width: auto;
