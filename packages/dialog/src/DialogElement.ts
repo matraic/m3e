@@ -95,7 +95,7 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
     }
     .base::backdrop {
       background-color: color-mix(in srgb, var(--m3e-dialog-scrim-color, ${DesignToken.color.scrim}) 0%, transparent);
-      margin-right: -20px;
+      margin-inline-end: -20px;
     }
     .base:not([open]) {
       visibility: hidden;
@@ -186,7 +186,7 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
       margin-bottom: 1.5rem;
     }
     .close {
-      margin-left: 0.5rem;
+      margin-inline-start: 0.5rem;
     }
     ::slotted([slot="close-icon"]),
     .close-icon {
