@@ -63,11 +63,12 @@
             </svg>
           </m3e-icon-button>
           <m3e-tooltip for="github-button">Github</m3e-tooltip>
-          <m3e-icon-button id="settings-button" aria-label="Settings" toggle>
+          <!--<m3e-icon-button id="settings-button" aria-label="Settings" toggle>
             <m3e-icon name="settings"></m3e-icon>
             <m3e-drawer-toggle for="settings-drawer"></m3e-drawer-toggle>
           </m3e-icon-button>
           <m3e-tooltip for="settings-button">Settings</m3e-tooltip>
+        -->
         </span>
       </m3e-app-bar>
       <m3e-drawer-container class="docs-drawer-container" start start-mode="auto" end-mode="auto">
@@ -179,6 +180,11 @@
             <m3e-nav-menu-item>
               <a slot="label" target="content-frame" href="components/nav-rail.html">Nav Rail</a>
             </m3e-nav-menu-item>
+            <!--
+            <m3e-nav-menu-item>
+              <a slot="label" target="content-frame" href="components/paginator.html">Paginator</a>
+            </m3e-nav-menu-item>
+          -->
             <m3e-nav-menu-item>
               <a slot="label" target="content-frame" href="components/progress-indicator.html">Progress Indicator</a>
             </m3e-nav-menu-item>
@@ -235,6 +241,7 @@
         <main>
           <iframe id="content-frame" class="docs-frame" title="Main content" name="content-frame"></iframe>
         </main>
+        <!--
         <div id="settings-drawer" role="complementary" slot="end">
           <m3e-heading id="color-header" variant="label" size="large">Color</m3e-heading>
           <input id="color" type="color" aria-labelledby="color-header" />
@@ -265,6 +272,7 @@
             </m3e-button-segment>
           </m3e-segmented-button>
         </div>
+        -->
       </m3e-drawer-container>
     </m3e-theme>
   </body>

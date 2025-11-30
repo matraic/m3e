@@ -23,22 +23,28 @@ window.addEventListener("DOMContentLoaded", () => {
   frame.src = allowedPathRegex.test(requestedPath) ? requestedPath : "getting-started/overview.html";
 
   const color = document.querySelector("#color");
-  color.value = document.querySelector("m3e-theme").color;
-  color.addEventListener("change", () => {
-    document.querySelector("m3e-theme").color = color.value;
-    frame.contentWindow.postMessage({ type: "color-change", color: color.value }, "*");
-  });
+  if (color) {
+    color.value = document.querySelector("m3e-theme").color;
+    color.addEventListener("change", () => {
+      document.querySelector("m3e-theme").color = color.value;
+      frame.contentWindow.postMessage({ type: "color-change", color: color.value }, "*");
+    });
+  }
 
   const colorSchemeButton = document.querySelector("#color-scheme-button");
-  colorSchemeButton?.addEventListener("change", () => {
-    document.querySelector("m3e-theme").scheme = colorSchemeButton.value;
+  if (colorSchemeButton) {
+    colorSchemeButton?.addEventListener("change", () => {
+      document.querySelector("m3e-theme").scheme = colorSchemeButton.value;
 
-    const frame = document.querySelector("#content-frame");
-    frame.contentWindow.postMessage({ type: "color-scheme-change", scheme: colorSchemeButton.value }, "*");
-  });
+      const frame = document.querySelector("#content-frame");
+      frame.contentWindow.postMessage({ type: "color-scheme-change", scheme: colorSchemeButton.value }, "*");
+    });
+  }
 
   const directionalityButton = document.querySelector("#directionality-button");
-  directionalityButton?.addEventListener("change", () => {
-    document.documentElement.dir = directionalityButton.value;
-  });
+  if (directionalityButton) {
+    directionalityButton?.addEventListener("change", () => {
+      document.documentElement.dir = directionalityButton.value;
+    });
+  }
 });
