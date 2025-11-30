@@ -40,12 +40,12 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   :host(.-start-over) ::slotted([slot="start"]) {
     position: absolute;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
   }
   :host(.-end-over) ::slotted([slot="end"]) {
     position: absolute;
     top: 0;
-    right: 0;
+    inset-inline-end: 0;
   }
   :host(:not([start])) ::slotted([slot="start"]) {
     visibility: hidden;
