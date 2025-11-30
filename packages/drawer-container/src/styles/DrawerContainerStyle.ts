@@ -52,7 +52,6 @@ export const DrawerContainerStyle: CSSResultGroup = css`
     margin-inline-start: calc(0px - ${DrawerContainerToken.containerWidth});
   }
   :host([start]) ::slotted([slot="start"]) {
-    visibility: visible;
     margin-inline-start: 0;
   }
   :host(:not([end])) ::slotted([slot="end"]) {
@@ -61,7 +60,6 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   }
   :host([end]) ::slotted([slot="end"]) {
     margin-inline-end: 0;
-    visibility: visible;
   }
   .content {
     flex: 1 1 auto;
@@ -93,7 +91,6 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   :host(.-end-push[end]) .scrim,
   :host(.-start-over[start]) .scrim,
   :host(.-end-over[end]) .scrim {
-    visibility: visible;
     opacity: ${DrawerContainerToken.scrimOpacity};
   }
   :host(.-start-push) ::slotted([slot="start"]),
