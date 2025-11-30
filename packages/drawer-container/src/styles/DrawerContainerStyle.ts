@@ -91,6 +91,7 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   :host(.-end-push[end]) .scrim,
   :host(.-start-over[start]) .scrim,
   :host(.-end-over[end]) .scrim {
+    visibility: visible;
     opacity: ${DrawerContainerToken.scrimOpacity};
   }
   :host(.-start-push) ::slotted([slot="start"]),
