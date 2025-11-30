@@ -19,13 +19,37 @@ main {
   flex: none;
   z-index: 4;
 }
-.docs-drawer-container {
-  flex: 1 1 auto;
-}
 .docs-frame {
   display: block;
   background: transparent;
   height: 100%;
   width: 100%;
   border: none;
+}
+#settings-drawer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+}
+#settings-drawer > m3e-segmented-button {
+  width: fit-content;
+}
+input[type="color"] {
+  appearance: none;
+  border: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  outline-color: var(--md-sys-color-secondary);
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
 }
