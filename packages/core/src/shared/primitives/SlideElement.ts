@@ -54,7 +54,6 @@ export class M3eSlideElement extends LitElement {
       inset-inline-start: 100%;
     }
     ::slotted(:not(.-before):not(.-after)) {
-      visibility: visible;
       position: relative;
       inset-inline-start: 0;
     }

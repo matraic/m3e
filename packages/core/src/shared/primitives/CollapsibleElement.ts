@@ -50,9 +50,6 @@ export class M3eCollapsibleElement extends EventAttribute(LitElement, "opening",
     :host(:not(.-closing):not([open])) {
       visibility: hidden;
     }
-    :host([open]) {
-      visibility: visible;
-    }
     :host(:not([open])) {
       min-height: unset !important;
       padding-top: 0px !important;
