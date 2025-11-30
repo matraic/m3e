@@ -1,6 +1,6 @@
 # @m3e/paginator
 
-The `m3e-paginator` component is a compact, accessible paginator control for navigating paged data sets. It provides semantic first/previous/next/last navigation controls and an optional page-size selector that integrates with Material design tokens and `m3e-form-field` variants to ensure consistent typography, density, and spacing across applications.
+The `m3e-paginator` component is a compact, accessible paginator control for navigating paged data sets. It provides semantic first/previous/next/last navigation controls and an optional page-size selector.
 
 > **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
@@ -55,13 +55,14 @@ In addition, you must use an [import map](https://developer.mozilla.org/en-US/do
       "@m3e/core": "/node_modules/@m3e/core/dist/index.js",
       "@m3e/core/a11y": "/node_modules/@m3e/core/dist/a11y.js",
       "@m3e/core/anchoring": "/node_modules/@m3e/core/dist/anchoring.js",
+      "@m3e/core/bidi": "/node_modules/@m3e/core/dist/bidi.js",
       "@m3e/core/platform": "/node_modules/@m3e/core/dist/platform.js"
     }
   }
 </script>
 ```
 
-> For production, use index.min.js, a11y.min.js, anchoring.min.js, and platform.min.js for faster load times.
+> For production, use index.min.js, a11y.min.js, anchoring.min.js, bidi.min.js, and platform.min.js for faster load times.
 
 ## 🗂️ Elements
 
