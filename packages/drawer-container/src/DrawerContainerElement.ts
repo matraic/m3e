@@ -130,14 +130,14 @@ export class M3eDrawerContainerElement extends LitElement {
       }
     }
 
-    if (changedProperties.has("end")) {
-      if (this.end && this.start && this._startMode !== "side") {
-        this.start = false;
-        this.dispatchEvent(new Event("change", { bubbles: true }));
-      }
-    } else if (changedProperties.has("start")) {
+    if (changedProperties.has("start")) {
       if (this.start && this.end && this._endMode !== "side") {
         this.end = false;
+        this.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    } else if (changedProperties.has("end")) {
+      if (this.end && this.start && this._startMode !== "side") {
+        this.start = false;
         this.dispatchEvent(new Event("change", { bubbles: true }));
       }
     }
