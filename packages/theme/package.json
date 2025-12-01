@@ -1,6 +1,6 @@
 {
   "name": "@m3e/theme",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Theme for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
@@ -31,7 +31,7 @@
     "@material/material-color-utilities": "^0.3.0"
   },
   "peerDependencies": {
-    "@m3e/core": "1.1.0",
+    "@m3e/core": "1.1.1",
     "lit": "^3.3.0"
   },
   "customElements": "dist/custom-elements.json"
