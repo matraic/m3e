@@ -182,7 +182,6 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
           this._activeIndicator.style.visibility = "hidden";
         } else {
           scrollIntoViewIfNeeded(item, this, { block: "nearest", behavior: "smooth" });
-          this._activeIndicator.style.top = `${item.offsetTop}px`;
           this._activeIndicator.style.height = `${item.clientHeight}px`;
           this._activeIndicator.style.visibility = item.clientHeight == 0 ? "hidden" : "";
 
@@ -345,7 +344,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   #handleClick(e: Event): void {
     if (e.target instanceof M3eTocItemElement && !e.target.disabled && e.target.node?.element) {
       this.#ignoreScroll = true;
-      e.target.node.element.scrollIntoView({ block: "start", inline: "start", behavior: "smooth" });
+      e.target.node.element.scrollIntoView({ block: "start", behavior: "smooth" });
       this.#selectionManager.updateActiveItem(e.target);
       this.#selectionManager.select(e.target);
     }
