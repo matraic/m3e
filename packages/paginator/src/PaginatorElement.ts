@@ -124,6 +124,10 @@ export class M3ePaginatorElement extends EventAttribute(Role(LitElement, "group"
       width: 1em;
       font-size: var(--m3e-icon-button-medium-icon-size, 1.5rem) !important;
     }
+
+    :host(:dir(rtl)) svg {
+      transform: rotate(180deg);
+    }
   `;
 
   /* @private */ private static __nextId = 0;
