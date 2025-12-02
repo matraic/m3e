@@ -15,6 +15,7 @@ export interface FocusControllerOptions extends MonitorControllerOptions {
 /** A `ReactiveController` used to monitor the focused state of one or more elements. */
 export class FocusController extends MonitorControllerBase {
   /** @private */ readonly #callback: FocusControllerCallback;
+  /** @private */ readonly #keyDownHandler = (e: Event) => this.#handleKeyDown(e);
   /** @private */ readonly #focusInHandler = (e: Event) => this.#handleFocusIn(e);
   /** @private */ readonly #focusOutHandler = (e: Event) => this.#handleFocusOut(e);
 
@@ -33,7 +34,7 @@ export class FocusController extends MonitorControllerBase {
    * @param {HTMLElement} target The element to start observing.
    */
   protected override _observe(target: HTMLElement): void {
-    target.addEventListener("keydown", this.#focusInHandler);
+    target.addEventListener("keydown", this.#keyDownHandler);
     target.addEventListener("focusin", this.#focusInHandler);
     target.addEventListener("focusout", this.#focusOutHandler);
   }
@@ -43,9 +44,16 @@ export class FocusController extends MonitorControllerBase {
    * @param {HTMLElement} target The element to stop observing.
    */
   protected override _unobserve(target: HTMLElement): void {
-    target.removeEventListener("keydown", this.#focusInHandler);
+    target.removeEventListener("keydown", this.#keyDownHandler);
     target.removeEventListener("focusin", this.#focusInHandler);
     target.removeEventListener("focusout", this.#focusOutHandler);
+  }
+
+  /** @private */
+  #handleKeyDown(e: Event): void {
+    if ((<HTMLElement>e.target).matches(":focus-within")) {
+      this.#handleFocusIn(e);
+    }
   }
 
   /** @private */
