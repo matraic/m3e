@@ -8,7 +8,7 @@
  */
 
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import { DesignToken, EventAttribute, Role } from "@m3e/core";
@@ -285,6 +285,19 @@ export class M3ePaginatorElement extends EventAttribute(Role(LitElement, "group"
   }
 
   /** @inheritdoc */
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+
+    if (changedProperties.has("pageIndex")) {
+      const pageSizes = this.#parsePageSizes();
+      if (!pageSizes.includes(this.pageSize)) {
+        this.pageSizes = [...pageSizes, this.pageSize].join(",");
+        this.pageSizes = this.#parsePageSizes().join(",");
+      }
+    }
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="outer">
       <div class="inner">${this.#renderPageSize()} ${this.#renderRangeActions()}</div>
@@ -325,13 +338,7 @@ export class M3ePaginatorElement extends EventAttribute(Role(LitElement, "group"
       .filter((x) => x !== "")
       .map((x) => (x === "all" ? x : Number(x)));
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const numericSizes: Array<number> = <any>sizes.filter((x) => x !== "all");
-
-    if (this.pageSize !== "all" && numericSizes.indexOf(this.pageSize) === -1) {
-      numericSizes.push(this.pageSize);
-    }
-
+    const numericSizes = <Array<number>>sizes.filter((x) => x !== "all");
     numericSizes.sort((a, b) => a - b);
     return sizes.some((x) => x === "all") ? [...numericSizes, "all"] : numericSizes;
   }
