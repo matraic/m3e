@@ -115,6 +115,14 @@ export class M3eThemeElement extends LitElement {
       case "dark":
         return true;
       default: // auto
+        if (this.parentElement instanceof HTMLBodyElement) {
+          switch (document.documentElement.style.colorScheme) {
+            case "light":
+              return false;
+            case "dark":
+              return true;
+          }
+        }
         return this.#dark?.matches ?? false;
     }
   }
@@ -212,6 +220,24 @@ export class M3eThemeElement extends LitElement {
 
     if (this.parentElement instanceof HTMLBodyElement) {
       const computedStyle = getComputedStyle(this);
+
+      switch (this.scheme) {
+        case "light":
+          document.documentElement.style.colorScheme = "light";
+          break;
+
+        case "dark":
+          document.documentElement.style.colorScheme = "dark";
+          break;
+
+        default:
+          switch (document.documentElement.style.colorScheme) {
+            case "light":
+            case "dark":
+              document.documentElement.style.colorScheme = "light dark";
+              break;
+          }
+      }
 
       if (this.#forcedColor?.matches) {
         this.parentElement.style.backgroundColor =
