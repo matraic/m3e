@@ -7,6 +7,7 @@ window.addEventListener("DOMContentLoaded", () => {
     theme.scheme = parentTheme.scheme;
     theme.color = parentTheme.color;
   }
+  document.body.classList.add("loaded");
 });
 
 window.addEventListener("message", (e) => {

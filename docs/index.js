@@ -8,6 +8,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const frame = document.querySelector("#content-frame");
   frame.addEventListener("load", () => {
+    const scheme = document.querySelector("m3e-theme").scheme;
+    switch (document.querySelector("m3e-theme").scheme) {
+      case "light":
+      case "dark":
+        frame.contentDocument.documentElement.style.colorScheme = scheme;
+        break;
+    }
+
     const currentUrl = frame.contentWindow?.location.href.substring(document.baseURI.length);
     history.replaceState({}, "", "#/" + currentUrl);
 
@@ -34,10 +42,17 @@ window.addEventListener("DOMContentLoaded", () => {
   const colorSchemeButton = document.querySelector("#color-scheme-button");
   if (colorSchemeButton) {
     colorSchemeButton?.addEventListener("change", () => {
-      document.querySelector("m3e-theme").scheme = colorSchemeButton.value;
+      const theme = document.querySelector("m3e-theme");
+      theme.scheme = colorSchemeButton.value;
 
       const frame = document.querySelector("#content-frame");
-      frame.contentWindow.postMessage({ type: "color-scheme-change", scheme: colorSchemeButton.value }, "*");
+      switch (theme.scheme) {
+        case "light":
+        case "dark":
+          frame.contentDocument.documentElement.style.colorScheme = theme.scheme;
+          break;
+      }
+      frame.contentWindow.postMessage({ type: "color-scheme-change", scheme: theme.scheme }, "*");
     });
   }
 
