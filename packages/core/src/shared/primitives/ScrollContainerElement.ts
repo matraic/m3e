@@ -119,7 +119,7 @@ export class M3eScrollContainerElement extends LitElement {
     if (changedProperties.has("dividers")) {
       this.removeEventListener("scroll", this.#scrollHandler);
       if (this.dividers !== "none") {
-        this.addEventListener("scroll", this.#scrollHandler);
+        this.addEventListener("scroll", this.#scrollHandler, { passive: true });
       }
     }
   }

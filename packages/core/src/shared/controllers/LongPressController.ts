@@ -40,7 +40,7 @@ export class LongPressController extends MonitorControllerBase {
    * @param {HTMLElement} target The element to start observing.
    */
   protected override _observe(target: HTMLElement): void {
-    target.addEventListener("touchstart", this.#touchStartHandler);
+    target.addEventListener("touchstart", this.#touchStartHandler, { passive: true });
     target.addEventListener("touchend", this.#touchEndOrCancelHandler);
     target.addEventListener("touchcancel", this.#touchEndOrCancelHandler);
   }

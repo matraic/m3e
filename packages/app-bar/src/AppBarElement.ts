@@ -139,7 +139,7 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
       control.addEventListener("load", this.#frameLoadHandler);
       this.#handleFrameLoad();
     } else {
-      control.addEventListener("scroll", this.#scrollHandler);
+      control.addEventListener("scroll", this.#scrollHandler, { passive: true });
     }
   }
 
@@ -278,7 +278,7 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
   /** @private */
   #handleFrameLoad(): void {
     if (this.control instanceof HTMLIFrameElement) {
-      this.control.contentDocument?.addEventListener("scroll", this.#scrollHandler);
+      this.control.contentDocument?.addEventListener("scroll", this.#scrollHandler, { passive: true });
       this._base?.classList.toggle("-on-scroll", this.#getFrameScrollTop(this.control) > 0);
     }
   }
