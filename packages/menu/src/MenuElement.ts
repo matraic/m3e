@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 
 import { DesignToken, ScrollController, Role } from "@m3e/core";
 import { RovingTabIndexManager } from "@m3e/core/a11y";
@@ -89,13 +89,10 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
   static override styles: CSSResultGroup = css`
     :host {
       position: absolute;
-      flex-direction: column;
       padding: unset;
       margin: unset;
       border: unset;
-      overflow-y: auto;
-      scrollbar-width: ${DesignToken.scrollbar.thinWidth};
-      scrollbar-color: ${DesignToken.scrollbar.color};
+      overflow: hidden;
       border-radius: var(--m3e-menu-container-shape, ${DesignToken.shape.corner.extraSmall});
       min-width: var(--m3e-menu-container-min-width, 7rem);
       max-width: var(--m3e-menu-container-max-width, 17.5rem);
@@ -106,19 +103,20 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       opacity: 0;
       display: none;
     }
+    .content {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      overflow-y: auto;
+      scrollbar-width: ${DesignToken.scrollbar.thinWidth};
+      scrollbar-color: ${DesignToken.scrollbar.color};
+    }
     :host(:not(.-no-animate)) {
       transition: ${unsafeCSS(
-        `opacity ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}, 
-        transform ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard},
-        overlay ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard} allow-discrete,
-        display ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard} allow-discrete`
+        `opacity ${DesignToken.motion.duration.medium1} ${DesignToken.motion.easing.standard}, 
+        overlay ${DesignToken.motion.duration.medium1} ${DesignToken.motion.easing.standard} allow-discrete,
+        display ${DesignToken.motion.duration.medium1} ${DesignToken.motion.easing.standard} allow-discrete`
       )};
-    }
-    :host(:not([submenu])) {
-      transform: scaleY(0.8);
-    }
-    :host(:not([submenu]):popover-open) {
-      transform: scaleY(1);
     }
     :host::backdrop {
       background-color: transparent;
@@ -146,9 +144,6 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       :host(:popover-open) {
         opacity: 0;
       }
-      :host(:not([submenu]):popover-open) {
-        transform: scaleY(0.8);
-      }
     }
     @media (prefers-reduced-motion) {
       :host(:not(.-no-animate)) {
@@ -163,6 +158,8 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       }
     }
   `;
+
+  /** @private */ @state() _open = false;
 
   /** @private */ #trigger?: HTMLElement;
   /** @private */ #anchorCleanup?: () => void;
@@ -249,6 +246,10 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       this.hide();
     }
 
+    if (this.submenu) {
+      this.classList.remove("-no-animate");
+    }
+
     let positionX = this.positionX;
     if (M3eDirectionality.current === "rtl") {
       positionX = positionX === "before" ? "after" : "before";
@@ -295,7 +296,7 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
     );
 
     this.showPopover();
-
+    this._open = true;
     this.#trigger = trigger;
     this.#trigger.ariaExpanded = "true";
     this.#scrollController.observe(this.#trigger);
@@ -304,15 +305,20 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
   /**
    * Hides the menu.
    * @param {boolean} [restoreFocus=false] A value indicating whether to restore focus to the menu's trigger.
+   * @param {boolean} [quick=false] A value indicating whether the quickly hide the menu.
    */
-  hide(restoreFocus: boolean = false): void {
+  hide(restoreFocus: boolean = false, quick: boolean = !this.submenu): void {
     for (const item of this.#listManager.items) {
       const submenu = (<M3eMenuItemElement>item).submenu;
       if (submenu && submenu.isOpen) {
-        submenu.hide();
+        if (quick) {
+          submenu.classList.add("-no-animate");
+        }
+        submenu.hide(false, quick);
       }
     }
 
+    this._open = false;
     this.hidePopover();
 
     if (this.#trigger) {
@@ -357,7 +363,9 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot @slotchange="${this.#handleSlotChange}"></slot>`;
+    return html`<m3e-collapsible class="content" ?open="${this._open || this.submenu}">
+      <slot @slotchange="${this.#handleSlotChange}"></slot>
+    </m3e-collapsible>`;
   }
 
   /** @inheritdoc */
