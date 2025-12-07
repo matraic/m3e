@@ -58,6 +58,13 @@ export class M3eCollapsibleElement extends EventAttribute(LitElement, "opening",
     :host(.-no-animate) {
       transition-duration: 0ms;
     }
+    :host(.-opening),
+    :host(.-closing) {
+      overflow-y: hidden !important;
+    }
+    :host(.-overflows) {
+      scrollbar-gutter: stable;
+    }
     ::slotted(*) {
       --m3e-collapsible-animation-duration: initial;
     }
@@ -96,6 +103,13 @@ export class M3eCollapsibleElement extends EventAttribute(LitElement, "opening",
 
     if (this.open) {
       this.#hasOpened = true;
+
+      if (!prefersReducedMotion()) {
+        this.#autoSize();
+        this.classList.toggle("-overflows", this.clientHeight < this.scrollHeight);
+        this.#clearSize();
+      }
+
       this.classList.toggle("-closing", false);
       this.classList.toggle("-opening", true);
       this.dispatchEvent(new Event("opening"));
@@ -105,6 +119,7 @@ export class M3eCollapsibleElement extends EventAttribute(LitElement, "opening",
       this.#actualSize();
 
       if (prefersReducedMotion()) {
+        this.#autoSize();
         this.classList.toggle("-opening", false);
         this.dispatchEvent(new Event("opened"));
       } else {
