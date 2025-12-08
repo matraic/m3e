@@ -337,11 +337,11 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
   /** Resets the stepper to its initial state, clearing any form data. */
   reset(): void {
     this.steps.forEach((x) => x.reset());
-    const firstStep = this.steps.find((x) => !x.disabled);
-    if (firstStep) {
-      this.moveTo(this.steps.indexOf(firstStep));
-    } else {
-      this.moveTo(-1);
+    const index = this.steps.findIndex((x) => !x.disabled);
+    if (index !== this._selectedIndex) {
+      this._selectedIndex = index;
+      this[selectionManager].select(this.selectedStep);
+      this.dispatchEvent(new Event("change", { bubbles: true }));
     }
   }
 
