@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" style="overflow-y: auto">
+  <head>
+    <title>Calendar for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Calendar for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "../../core/dist/index.min.js",
+          "@m3e/core/a11y": "../../core/dist/a11y.min.js",
+          "@m3e/core/anchoring": "../../core/dist/anchoring.min.js",
+          "@m3e/core/bidi": "../../core/dist/bidi.min.js",
+          "@m3e/core/platform": "../../core/dist/platform.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="../../icon/dist/index.min.js"></script>
+    <script type="module" src="../../button/dist/index.min.js"></script>
+    <script type="module" src="../../icon-button/dist/index.min.js"></script>
+    <script type="module" src="../../tooltip/dist/index.min.js"></script>
+    <script type="module" src="../../theme/dist/index.min.js"></script>
+    <script type="module" src="../dist/index.min.js"></script>
+    <script src="index.js"></script>
+    <style>
+      body {
+        font-family: "Roboto";
+      }
+      *:not(:defined) {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <m3e-theme strong-focus>
+      <m3e-calendar></m3e-calendar>
+      <m3e-calendar range-start="2025-11-25"></m3e-calendar>
+      <m3e-calendar start-at="2025-08-23" min-date="2025-08-23" max-date="2025-08-30"></m3e-calendar>
+      <m3e-calendar id="special"></m3e-calendar>
+      <m3e-calendar id="blackout"></m3e-calendar>
+    </m3e-theme>
+  </body>
+</html>

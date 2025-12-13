@@ -1,0 +1,37 @@
+{
+  "name": "@m3e/calendar",
+  "version": "1.1.2",
+  "description": "Calendar for M3E",
+  "author": "matraic <matraic@yahoo.com>",
+  "license": "MIT",
+  "homepage": "https://matraic.github.io/m3e/#/components/calendar.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matraic/m3e.git"
+  },
+  "keywords": [
+    "material design",
+    "web components",
+    "calendar"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "browser": "dist/index.min.js",
+  "unpkg": "dist/index.min.js",
+  "types": "dist/src/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "cem": "cem analyze --config cem.config.mjs",
+    "lint": "npx eslint ./src",
+    "clean": "rimraf dist"
+  },
+  "peerDependencies": {
+    "@m3e/core": "1.1.2",
+    "@m3e/button": "1.1.2",
+    "@m3e/icon-button": "1.1.2",
+    "@m3e/tooltip": "1.1.2",
+    "lit": "^3.3.0"
+  },
+  "customElements": "dist/custom-elements.json"
+}
