@@ -563,7 +563,10 @@ export class M3eNavMenuItemElement extends Selected(
           (drawerContainer.classList.contains(`-${drawer.slot}-push`) ||
             drawerContainer.classList.contains(`-${drawer.slot}-over`))
         ) {
-          setTimeout(() => drawerContainer.removeAttribute(drawer.slot), 300);
+          setTimeout(() => {
+            drawerContainer.removeAttribute(drawer.slot);
+            drawerContainer.dispatchEvent(new Event("change", { bubbles: true }));
+          }, 300);
         }
       }
     } else {
