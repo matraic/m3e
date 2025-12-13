@@ -4,6 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
+- Completed calendar
 - Planning
 
 ## 🔮 Future
@@ -17,7 +18,6 @@ The following components are planned for future release.
 Components in early stages of development include:
 
 - Avatar
-- Calendar
 - Skeleton Loader
 - Split Pane
 - Tree
