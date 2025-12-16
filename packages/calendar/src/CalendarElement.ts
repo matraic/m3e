@@ -40,6 +40,12 @@ const monthsPerRow = 4;
  * @attr range-start - Start of a date range.
  * @attr start-at - A date specifying the period (month or year) to start the calendar in.
  * @attr start-view - The initial view used to select a date.
+ * @attr previous-month-label - The accessible label given to the button used to move to the previous month.
+ * @attr next-month-label - The accessible label given to the button used to move to the next month.
+ * @attr previous-year-label - The accessible label given to the button used to move to the previous year.
+ * @attr next-year-label - The accessible label given to the button used to move to the next year.
+ * @attr previous-multi-year-label - The accessible label given to the button used to move to the previous 24 years.
+ * @attr next-multi-year-label - The accessible label given to the button used to move to the next 24 years.
  *
  * @fires change - Emitted when the selected date changes.
  *
