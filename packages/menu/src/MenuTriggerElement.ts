@@ -1,7 +1,6 @@
-import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { HtmlFor } from "@m3e/core";
+import { ActionElementBase, HtmlFor } from "@m3e/core";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/core/a11y";
 
 import type { M3eMenuElement } from "./MenuElement";
@@ -65,34 +64,10 @@ import type { M3eMenuElement } from "./MenuElement";
  * @slot - Renders the contents of the trigger.
  */
 @customElement("m3e-menu-trigger")
-export class M3eMenuTriggerElement extends HtmlFor(LitElement) {
-  /** The styles of the element. */
-  static override styles: CSSResultGroup = css`
-    :host {
-      display: contents;
-    }
-    ::slotted(.material-icons) {
-      font-size: inherit !important;
-    }
-  `;
-
-  /** @private */ readonly #clickHandler = async (e: Event) => this.#handleClick(e);
-
+export class M3eMenuTriggerElement extends HtmlFor(ActionElementBase) {
   /** The menu triggered by the element. */
   get menu(): M3eMenuElement | null {
     return this.control?.tagName === "M3E-MENU" ? <M3eMenuElement>this.control : null;
-  }
-
-  /** @inheritdoc */
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.parentElement?.addEventListener("click", this.#clickHandler);
-  }
-
-  /** @inheritdoc */
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.parentElement?.removeEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */
@@ -130,13 +105,8 @@ export class M3eMenuTriggerElement extends HtmlFor(LitElement) {
   }
 
   /** @inheritdoc */
-  protected override render(): unknown {
-    return html`<slot></slot>`;
-  }
-
-  /** @private */
-  #handleClick(e: Event): void {
-    if (!e.defaultPrevented && this.parentElement) {
+  override _onClick(): void {
+    if (this.parentElement) {
       if (this.parentElement.tagName === "M3E-MENU-ITEM") {
         this.menu?.show(this.parentElement);
       } else {

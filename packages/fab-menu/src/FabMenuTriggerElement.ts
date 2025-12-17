@@ -1,7 +1,6 @@
-import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { HtmlFor } from "@m3e/core";
+import { ActionElementBase, HtmlFor } from "@m3e/core";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/core/a11y";
 
 import { M3eFabMenuElement } from "./FabMenuElement";
@@ -30,47 +29,21 @@ import { M3eFabMenuElement } from "./FabMenuElement";
  * @tag m3e-fab-menu-trigger
  */
 @customElement("m3e-fab-menu-trigger")
-export class M3eFabMenuTriggerElement extends HtmlFor(LitElement) {
-  /** The styles of the element. */
-  static override styles: CSSResultGroup = css`
-    :host {
-      display: contents;
-    }
-    ::slotted(.material-icons) {
-      font-size: inherit !important;
-    }
-  `;
-
-  /** @private */ readonly #clickHandler = async (e: Event) => this.#handleClick(e);
-
+export class M3eFabMenuTriggerElement extends HtmlFor(ActionElementBase) {
   /** The menu triggered by the element. */
   get menu(): M3eFabMenuElement | null {
     return this.control instanceof M3eFabMenuElement ? this.control : null;
   }
 
   /** @inheritdoc */
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.parentElement?.addEventListener("click", this.#clickHandler);
-  }
-
-  /** @inheritdoc */
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.parentElement?.removeEventListener("click", this.#clickHandler);
-  }
-
-  /** @inheritdoc */
   override attach(control: HTMLElement): void {
     super.attach(control);
 
-    if (control instanceof M3eFabMenuElement) {
-      if (this.parentElement) {
-        this.parentElement.ariaHasPopup = "menu";
-        this.parentElement.ariaExpanded = "false";
-        if (control.id) {
-          addAriaReferencedId(this.parentElement, "aria-controls", control.id);
-        }
+    if (this.parentElement && control instanceof M3eFabMenuElement) {
+      this.parentElement.ariaHasPopup = "menu";
+      this.parentElement.ariaExpanded = "false";
+      if (control.id) {
+        addAriaReferencedId(this.parentElement, "aria-controls", control.id);
       }
     }
   }
@@ -89,13 +62,8 @@ export class M3eFabMenuTriggerElement extends HtmlFor(LitElement) {
   }
 
   /** @inheritdoc */
-  protected override render(): unknown {
-    return html`<slot></slot>`;
-  }
-
-  /** @private */
-  #handleClick(e: Event): void {
-    if (!e.defaultPrevented && this.parentElement) {
+  override _onClick(): void {
+    if (this.parentElement) {
       this.menu?.toggle(this.parentElement);
     }
   }

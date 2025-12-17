@@ -1,7 +1,6 @@
-import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { AttachInternals, HtmlFor } from "@m3e/core";
+import { ActionElementBase, HtmlFor } from "@m3e/core";
 
 import { M3eDialogElement } from "./DialogElement";
 
@@ -10,27 +9,12 @@ import { M3eDialogElement } from "./DialogElement";
  * @tag m3e-dialog-trigger
  */
 @customElement("m3e-dialog-trigger")
-export class M3eDialogTriggerElement extends HtmlFor(AttachInternals(LitElement)) {
-  /** The styles of the element. */
-  static override styles: CSSResultGroup = css`
-    :host {
-      display: contents;
-    }
-  `;
-
-  /** @private */
-  #clickHandler = (e: Event) => {
-    if (!e.defaultPrevented && this.control instanceof M3eDialogElement) {
-      this.control.show();
-    }
-  };
-
+export class M3eDialogTriggerElement extends HtmlFor(ActionElementBase) {
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
 
     if (this.parentElement) {
-      this.parentElement.addEventListener("click", this.#clickHandler);
       this.parentElement.ariaHasPopup = "dialog";
     }
   }
@@ -40,14 +24,15 @@ export class M3eDialogTriggerElement extends HtmlFor(AttachInternals(LitElement)
     super.disconnectedCallback();
 
     if (this.parentElement) {
-      this.parentElement.removeEventListener("click", this.#clickHandler);
       this.parentElement.ariaHasPopup = null;
     }
   }
 
   /** @inheritdoc */
-  protected override render(): unknown {
-    return html`<slot></slot>`;
+  override _onClick(): void {
+    if (this.control instanceof M3eDialogElement) {
+      this.control.show();
+    }
   }
 }
 

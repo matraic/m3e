@@ -1,7 +1,7 @@
-import { css, CSSResultGroup, html, LitElement } from "lit";
+import { LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { HtmlFor } from "@m3e/core";
+import { ActionElementBase, HtmlFor } from "@m3e/core";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/core/a11y";
 
 import { M3eDrawerContainerElement } from "./DrawerContainerElement";
@@ -31,31 +31,8 @@ import { M3eDrawerContainerElement } from "./DrawerContainerElement";
  * @tag m3e-drawer-toggle
  */
 @customElement("m3e-drawer-toggle")
-export class M3eDrawerToggleElement extends HtmlFor(LitElement) {
-  /** The styles of the element. */
-  static override styles: CSSResultGroup = css`
-    :host {
-      display: contents;
-    }
-    ::slotted(.material-icons) {
-      font-size: inherit !important;
-    }
-  `;
-
-  /** @private */ readonly #clickHandler = (e: Event) => this.#handleClick(e);
+export class M3eDrawerToggleElement extends HtmlFor(ActionElementBase) {
   /** @private */ readonly #drawerContainerChangeHandler = () => this.#handleDrawerContainerChange();
-
-  /** @inheritdoc */
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.parentElement?.addEventListener("click", this.#clickHandler);
-  }
-
-  /** @inheritdoc */
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.parentElement?.removeEventListener("click", this.#clickHandler);
-  }
 
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
@@ -88,13 +65,8 @@ export class M3eDrawerToggleElement extends HtmlFor(LitElement) {
   }
 
   /** @inheritdoc */
-  protected override render(): unknown {
-    return html`<slot></slot>`;
-  }
-
-  /** @private */
-  #handleClick(e: Event): void {
-    if (!e.defaultPrevented && this.control && this.parentElement) {
+  override _onClick(): void {
+    if (this.control && this.parentElement) {
       const container = this.control.closest("m3e-drawer-container");
       if (container) {
         if (this.control.slot === "start") {

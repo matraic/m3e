@@ -1,7 +1,7 @@
-import { css, CSSResultGroup, html, LitElement } from "lit";
+import { LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { HtmlFor, MutationController } from "@m3e/core";
+import { ActionElementBase, HtmlFor, MutationController } from "@m3e/core";
 
 import { M3eNavRailElement } from "./NavRailElement";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/core/a11y";
@@ -35,35 +35,12 @@ import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/core/a11y";
  * @tag m3e-nav-rail-toggle
  */
 @customElement("m3e-nav-rail-toggle")
-export class M3eNavRailToggleElement extends HtmlFor(LitElement) {
-  /** The styles of the element. */
-  static override styles: CSSResultGroup = css`
-    :host {
-      display: contents;
-    }
-    ::slotted(.material-icons) {
-      font-size: inherit !important;
-    }
-  `;
-
-  /** @private */ readonly #clickHandler = (e: Event) => this.#handleClick(e);
+export class M3eNavRailToggleElement extends HtmlFor(ActionElementBase) {
   /** @private */ readonly #mutationController = new MutationController(this, {
     target: null,
     config: { attributeFilter: ["class"] },
     callback: () => this.#updateToggle(),
   });
-
-  /** @inheritdoc */
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.parentElement?.addEventListener("click", this.#clickHandler);
-  }
-
-  /** @inheritdoc */
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.parentElement?.removeEventListener("click", this.#clickHandler);
-  }
 
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
@@ -94,13 +71,8 @@ export class M3eNavRailToggleElement extends HtmlFor(LitElement) {
   }
 
   /** @inheritdoc */
-  protected override render(): unknown {
-    return html`<slot></slot>`;
-  }
-
-  /** @private */
-  #handleClick(e: Event): void {
-    if (!e.defaultPrevented && this.control instanceof M3eNavRailElement) {
+  override _onClick(): void {
+    if (this.control instanceof M3eNavRailElement) {
       this.control.currentMode = this.control.currentMode === "compact" ? "expanded" : "compact";
     }
   }

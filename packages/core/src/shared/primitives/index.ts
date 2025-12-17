@@ -1,3 +1,4 @@
+export * from "./ActionElementBase";
 export * from "./CollapsibleElement";
 export * from "./ElevationElement";
 export * from "./ElevationLevel";
