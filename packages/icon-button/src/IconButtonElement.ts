@@ -20,6 +20,7 @@ import {
   hasAssignedNodes,
   debounce,
   ResizeController,
+  prefersReducedMotion,
 } from "@m3e/core";
 
 import { IconButtonSize } from "./IconButtonSize";
@@ -305,12 +306,8 @@ export class M3eIconButtonElement extends KeyboardClick(
 
     new FocusController(this, {
       callback: (focused) => {
-        if (!this.disabledInteractive && this._base) {
-          if (focused) {
-            this.#updateButtonShape();
-          } else if (!this.grouped) {
-            this._base?.style.removeProperty("--_button-shape");
-          }
+        if (!this.disabledInteractive && !focused && !this.grouped) {
+          this._base?.style.removeProperty("--_button-shape");
         }
       },
     });
@@ -320,28 +317,15 @@ export class M3eIconButtonElement extends KeyboardClick(
       minPressedDuration: 150,
       callback: (pressed) => {
         if (!this.disabled && !this.disabledInteractive) {
-          this.classList.toggle("-pressed", pressed);
-          this.classList.toggle("-resting", !pressed);
-
-          const group = this.closest("m3e-button-group");
-          if (group) {
-            const clientWidth = this.getBoundingClientRect().width;
-            const buttons = [...group.querySelectorAll<HTMLElement>("m3e-button,m3e-icon-button")];
-            const index = buttons.indexOf(this);
-
-            for (let i = 0; i < buttons.length; i++) {
-              const button = buttons[i];
-              if (i === index - 1) {
-                button.style.setProperty("--_adjacent-button-width", `${clientWidth}px`);
-                button.classList.toggle("-adjacent-pressed", pressed);
-              } else if (i === index + 1) {
-                button.style.setProperty("--_adjacent-button-width", `${clientWidth}px`);
-                button.classList.toggle("-adjacent-pressed", pressed);
-              } else {
-                button.style.removeProperty("--_adjacent-button-width");
-                button.classList.remove("-adjacent-pressed");
-              }
+          if (pressed) {
+            this.#updateButtonShape();
+            if (prefersReducedMotion()) {
+              this.#handlePressedChange(true);
+            } else {
+              requestAnimationFrame(() => this.#handlePressedChange(true));
             }
+          } else {
+            this.#handlePressedChange(false);
           }
         }
       },
@@ -477,6 +461,33 @@ export class M3eIconButtonElement extends KeyboardClick(
       const adjustedShape = this.clientHeight / 2;
       if (adjustedShape < shape || force) {
         this._base?.style.setProperty("--_button-shape", `${adjustedShape}px`);
+      }
+    }
+  }
+
+  /** @private */
+  #handlePressedChange(pressed: boolean): void {
+    this.classList.toggle("-pressed", pressed);
+    this.classList.toggle("-resting", !pressed);
+
+    const group = this.closest("m3e-button-group");
+    if (group) {
+      const clientWidth = this.getBoundingClientRect().width;
+      const buttons = [...group.querySelectorAll<HTMLElement>("m3e-button,m3e-icon-button")];
+      const index = buttons.indexOf(this);
+
+      for (let i = 0; i < buttons.length; i++) {
+        const button = buttons[i];
+        if (i === index - 1) {
+          button.style.setProperty("--_adjacent-button-width", `${clientWidth}px`);
+          button.classList.toggle("-adjacent-pressed", pressed);
+        } else if (i === index + 1) {
+          button.style.setProperty("--_adjacent-button-width", `${clientWidth}px`);
+          button.classList.toggle("-adjacent-pressed", pressed);
+        } else {
+          button.style.removeProperty("--_adjacent-button-width");
+          button.classList.remove("-adjacent-pressed");
+        }
       }
     }
   }
