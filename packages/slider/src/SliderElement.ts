@@ -664,7 +664,14 @@ export class M3eSliderElement extends LitElement {
 
   /** @private */
   #handlePointerMove(e: PointerEvent): void {
-    if (!(e.target instanceof HTMLElement) || !e.target.hasPointerCapture(e.pointerId) || !this.#activeThumb) return;
+    if (
+      !(e.target instanceof HTMLElement) ||
+      !e.target.hasPointerCapture(e.pointerId) ||
+      !this.#activeThumb ||
+      this.#activeThumb.disabled
+    ) {
+      return;
+    }
 
     const value = this.#valueFromPoint(e);
     let min = this.min;
@@ -693,7 +700,7 @@ export class M3eSliderElement extends LitElement {
       e.target.releasePointerCapture(e.pointerId);
     }
 
-    if (this.#activeThumb) {
+    if (this.#activeThumb && !this.#activeThumb.disabled) {
       this.#activeThumb.focus();
     }
   }

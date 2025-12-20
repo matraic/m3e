@@ -1,11 +1,4 @@
-import {
-  css,
-  CSSResultGroup,
-  html,
-  LitElement,
-  PropertyValues,
-  unsafeCSS,
-} from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 
 import {
@@ -72,11 +65,7 @@ import {
  */
 @customElement("m3e-slider-thumb")
 export class M3eSliderThumbElement extends Dirty(
-  Touched(
-    FormAssociated(
-      Focusable(Disabled(AttachInternals(Role(LitElement, "slider"))))
-    )
-  )
+  Touched(FormAssociated(Focusable(Disabled(AttachInternals(Role(LitElement, "slider"))))))
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -87,10 +76,7 @@ export class M3eSliderThumbElement extends Dirty(
       outline: none;
       top: 0;
       bottom: 0;
-      border-radius: var(
-        --m3e-slider-thumb-shape,
-        ${DesignToken.shape.corner.full}
-      );
+      border-radius: var(--m3e-slider-thumb-shape, ${DesignToken.shape.corner.full});
       user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
@@ -117,10 +103,7 @@ export class M3eSliderThumbElement extends Dirty(
       justify-content: center;
       height: 100%;
       border-radius: inherit;
-      width: calc(
-        var(--m3e-slider-thumb-width, 0.25rem) +
-          calc(var(--m3e-slider-thumb-padding, 0.375em) * 2)
-      );
+      width: calc(var(--m3e-slider-thumb-width, 0.25rem) + calc(var(--m3e-slider-thumb-padding, 0.375em) * 2));
     }
     .focus-ring {
       --m3e-focus-ring-growth-factor: 1.5;
@@ -145,41 +128,15 @@ export class M3eSliderThumbElement extends Dirty(
       )};
       width: var(--m3e-slider-label-width, 3rem);
       height: var(--_m3e-slider-label-height, 2.75rem);
-      top: calc(
-        0px - var(--_m3e-slider-label-height, 2.75rem) - var(
-            --_m3e-slider-label-margin,
-            0.25rem
-          )
-      );
+      top: calc(0px - var(--_m3e-slider-label-height, 2.75rem) - var(--_m3e-slider-label-margin, 0.25rem));
       inset-inline-start: calc(0px - 100%);
-      border-radius: var(
-        --m3e-slider-label-shape,
-        ${DesignToken.shape.corner.full}
-      );
-      background-color: var(
-        --m3e-slider-label-container-color,
-        ${DesignToken.color.inverseSurface}
-      );
-      color: var(
-        --m3e-slider-label-color,
-        ${DesignToken.color.inverseOnSurface}
-      );
-      font-size: var(
-        --m3e-slider-label-font-size,
-        ${DesignToken.typescale.standard.label.medium.fontSize}
-      );
-      font-weight: var(
-        --m3e-slider-label-font-weight,
-        ${DesignToken.typescale.standard.label.medium.fontWeight}
-      );
-      line-height: var(
-        --m3e-slider-label-line-height,
-        ${DesignToken.typescale.standard.label.medium.lineHeight}
-      );
-      letter-spacing: var(
-        --m3e-slider-label-tracking,
-        ${DesignToken.typescale.standard.label.medium.tracking}
-      );
+      border-radius: var(--m3e-slider-label-shape, ${DesignToken.shape.corner.full});
+      background-color: var(--m3e-slider-label-container-color, ${DesignToken.color.inverseSurface});
+      color: var(--m3e-slider-label-color, ${DesignToken.color.inverseOnSurface});
+      font-size: var(--m3e-slider-label-font-size, ${DesignToken.typescale.standard.label.medium.fontSize});
+      font-weight: var(--m3e-slider-label-font-weight, ${DesignToken.typescale.standard.label.medium.fontWeight});
+      line-height: var(--m3e-slider-label-line-height, ${DesignToken.typescale.standard.label.medium.lineHeight});
+      letter-spacing: var(--m3e-slider-label-tracking, ${DesignToken.typescale.standard.label.medium.tracking});
     }
     @starting-style {
       .label {
@@ -191,25 +148,17 @@ export class M3eSliderThumbElement extends Dirty(
       height: 100%;
       width: var(--m3e-slider-thumb-width, 0.25rem);
       border-radius: inherit;
-      transition: ${unsafeCSS(
-        `width ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`
-      )};
+      transition: ${unsafeCSS(`width ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
     }
     :host(:active:not([aria-disabled="true"])) .handle {
       width: var(--m3e-slider-thumb-pressed-width, 0.125rem);
     }
     :host(:not([aria-disabled="true"])) .handle {
-      background-color: var(
-        --m3e-slider-thumb-color,
-        ${DesignToken.color.primary}
-      );
+      background-color: var(--m3e-slider-thumb-color, ${DesignToken.color.primary});
     }
     :host([aria-disabled="true"]) .handle {
       opacity: var(--m3e-slider-thumb-disabled-opacity, 38%);
-      background-color: var(
-        --m3e-slider-thumb-disabled-color,
-        ${DesignToken.color.onSurface}
-      );
+      background-color: var(--m3e-slider-thumb-disabled-color, ${DesignToken.color.onSurface});
     }
     @media (prefers-reduced-motion) {
       .label {
@@ -248,11 +197,7 @@ export class M3eSliderThumbElement extends Dirty(
 
   /** @internal */
   get #labelText(): string {
-    return (
-      this.closest("m3e-slider")?.displayWith?.(this.value) ??
-      this.value?.toString() ??
-      ""
-    );
+    return this.closest("m3e-slider")?.displayWith?.(this.value) ?? this.value?.toString() ?? "";
   }
 
   /** @inheritdoc */
@@ -269,9 +214,7 @@ export class M3eSliderThumbElement extends Dirty(
   }
 
   /** @inheritdoc */
-  protected override firstUpdated(
-    _changedProperties: PropertyValues<this>
-  ): void {
+  protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
     super.firstUpdated(_changedProperties);
     this._focusRing?.attach(this);
   }
@@ -289,10 +232,7 @@ export class M3eSliderThumbElement extends Dirty(
   protected override render(): unknown {
     return html`<div class="label" aria-hidden="true">${this.#labelText}</div>
       <div class="base">
-        <m3e-focus-ring
-          class="focus-ring"
-          ?disabled="${this.disabled}"
-        ></m3e-focus-ring>
+        <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
         <div class="touch" aria-hidden="true"></div>
         <div class="wrapper">
           <div class="handle"></div>
