@@ -9,4 +9,9 @@ window.addEventListener("DOMContentLoaded", () => {
   if (blackoutCalendar) {
     blackoutCalendar.blackoutDates = (date) => [0, 6].includes(date.getDay());
   }
+
+  const range = document.querySelector("[range-start]");
+  if (range) {
+    range.blackoutDates = (date) => [0, 6].includes(date.getDay());
+  }
 });

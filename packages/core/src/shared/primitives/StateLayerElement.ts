@@ -30,7 +30,8 @@ import { StateLayerToken } from "./StateLayerToken";
  *
  * @tag m3e-state-layer
  *
- * @attr disabled - Whether hover and focus event will not trigger the state layer.Whether hover and focus event will not trigger the state layer. State layers can still be controlled manually using the `show` and `hide` methods.
+ * @attr disabled - Whether hover and focus events will not trigger the state layer. State layers can still be controlled manually using the `show` and `hide` methods.
+ * @attr disable-hover - Whether hover events will not trigger the state layer. State layers can still be controlled manually using the `show` and `hide` methods.
  *
  * @cssprop --m3e-state-layer-duration - Duration of state layer changes.
  * @cssprop --m3e-state-layer-easing - Easing curve of state layer changes.
@@ -93,11 +94,18 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
   /** @private */ @query(".layer") private readonly _layer?: HTMLElement;
 
   /**
-   * Whether hover and focus event will not trigger the state layer. State layers can still
+   * Whether hover and focus events will not trigger the state layer. State layers can still
    * be controlled manually using the `show` and `hide` methods.
    * @default false
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
+
+  /**
+   * Whether hover events will not trigger the state layer. State layers can still
+   * be controlled manually using the `show` and `hide` methods.
+   * @default false
+   */
+  @property({ attribute: "disable-hover", type: Boolean, reflect: true }) disableHover = false;
 
   /**
    * Launches a manual state layer.
@@ -153,6 +161,9 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
       this.hide("hover");
       this.hide("focused");
     }
+    if (_changedProperties.has("disableHover") && this.disableHover) {
+      this.hide("hover");
+    }
   }
 
   /** @inheritdoc */
@@ -162,7 +173,7 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
 
   /** @private */
   #handleHoverChange(hovering: boolean): void {
-    if (!this.disabled) {
+    if (!this.disabled && !this.disableHover) {
       if (hovering) {
         this.show("hover");
       } else {

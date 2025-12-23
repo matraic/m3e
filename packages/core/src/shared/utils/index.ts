@@ -1,3 +1,4 @@
+export * from "./focusWhenReady";
 export * from "./forcedColorsActive";
 export * from "./generateClipPaths";
 export * from "./getTextContent";
