@@ -42,9 +42,6 @@ export abstract class CalendarViewElementBase extends LitElement {
       text-align: center;
       padding: unset;
     }
-    th {
-      height: 2.5rem;
-    }
     td {
       box-sizing: border-box;
       height: 3rem;

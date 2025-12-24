@@ -37,6 +37,9 @@ export class M3eYearViewElement extends CalendarViewElementBase {
       th {
         height: 1rem;
       }
+      td {
+        padding-inline: 0.375rem;
+      }
       tbody {
         font-size: var(--m3e-calendar-item-font-size, ${DesignToken.typescale.standard.body.medium.fontSize});
         font-weight: var(--m3e-calendar-item-font-weight, ${DesignToken.typescale.standard.body.medium.fontWeight});

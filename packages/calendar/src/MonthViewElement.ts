@@ -43,6 +43,11 @@ export class M3eMonthViewElement extends CalendarViewElementBase {
         line-height: var(--m3e-calendar-weekday-line-height, ${DesignToken.typescale.standard.title.small.lineHeight});
         letter-spacing: var(--m3e-calendar-weekday-tracking, ${DesignToken.typescale.standard.title.small.tracking});
       }
+      th {
+        height: 1.5rem;
+        padding-block-start: 1.875rem;
+        padding-block-end: 1rem;
+      }
       tbody {
         font-size: var(--m3e-calendar-date-font-size, ${DesignToken.typescale.standard.body.medium.fontSize});
         font-weight: var(--m3e-calendar-date-font-weight, ${DesignToken.typescale.standard.body.medium.fontWeight});
