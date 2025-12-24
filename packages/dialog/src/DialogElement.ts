@@ -3,7 +3,7 @@ import { css, CSSResultGroup, html, LitElement, nothing, unsafeCSS } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { DesignToken, EventAttribute, prefersReducedMotion } from "@m3e/core";
+import { DesignToken, EventAttribute, focusWhenReady } from "@m3e/core";
 import {} from "@m3e/core/a11y";
 
 /**
@@ -297,13 +297,7 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
     const focusable = this.querySelector<HTMLElement>("[autofocus]");
 
     if (focusable) {
-      if (!prefersReducedMotion()) {
-        this._base.addEventListener("transitionend", () => focusable.focus(), {
-          once: true,
-        });
-      } else {
-        focusable.focus();
-      }
+      focusWhenReady(focusable);
     }
 
     this.dispatchEvent(new Event("opened"));
