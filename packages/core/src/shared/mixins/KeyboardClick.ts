@@ -13,23 +13,31 @@ import { isDisabledInteractiveMixin } from "./DisabledInteractive";
  */
 export function KeyboardClick<T extends Constructor<LitElement>>(base: T, allowEnter: boolean = true): T {
   abstract class _KeyboardClickMixin extends base {
+    /** @private */ #keyPressed = false;
+
     /** @private */
+    readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);
     readonly #keyUpHandler = (e: KeyboardEvent) => this.#handleKeyUp(e);
+    readonly #focusOutHandler = () => (this.#keyPressed = false);
 
     /** @inheritdoc */
     override connectedCallback(): void {
       super.connectedCallback();
+      this.addEventListener("keydown", this.#keyDownHandler);
       this.addEventListener("keyup", this.#keyUpHandler);
+      this.addEventListener("focusout", this.#focusOutHandler);
     }
 
     /** @inheritdoc */
     override disconnectedCallback(): void {
       super.disconnectedCallback();
+      this.removeEventListener("keydown", this.#keyDownHandler);
       this.removeEventListener("keyup", this.#keyUpHandler);
+      this.removeEventListener("focusout", this.#focusOutHandler);
     }
 
     /** @private */
-    #handleKeyUp(e: KeyboardEvent): void {
+    #handleKeyDown(e: KeyboardEvent): void {
       if (
         e.defaultPrevented ||
         e.target !== e.currentTarget ||
@@ -40,15 +48,29 @@ export function KeyboardClick<T extends Constructor<LitElement>>(base: T, allowE
       }
 
       if (e.key === " " || (allowEnter && e.key === "Enter")) {
-        // NOTE: the dispatched click event will not be trusted since it is synthetic.
-        this.dispatchEvent(
-          new MouseEvent("click", {
-            cancelable: true,
-            bubbles: true,
-            composed: true,
-          })
-        );
+        this.#keyPressed = true;
       }
+    }
+
+    /** @private */
+    #handleKeyUp(e: KeyboardEvent): void {
+      if (
+        e.defaultPrevented ||
+        e.target !== e.currentTarget ||
+        (isDisabledMixin(this) && this.disabled) ||
+        (isDisabledInteractiveMixin(this) && this.disabledInteractive) ||
+        !this.#keyPressed
+      ) {
+        return;
+      }
+      // NOTE: the dispatched click event will not be trusted since it is synthetic.
+      this.dispatchEvent(
+        new MouseEvent("click", {
+          cancelable: true,
+          bubbles: true,
+          composed: true,
+        })
+      );
     }
   }
 
