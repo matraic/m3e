@@ -108,6 +108,7 @@ export class M3eNavBarElement extends Role(LitElement, "navigation") {
           this._updateItems();
         });
       } else {
+        this._mode = undefined;
         this._updateItems();
       }
     }
