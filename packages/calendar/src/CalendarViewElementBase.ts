@@ -34,7 +34,7 @@ export abstract class CalendarViewElementBase extends LitElement {
     table {
       border-collapse: collapse;
       border-spacing: 0;
-      width: 17.75rem;
+      width: calc(3rem * 7);
     }
     td,
     th {
@@ -47,9 +47,9 @@ export abstract class CalendarViewElementBase extends LitElement {
     }
     td {
       box-sizing: border-box;
-      height: 2.375rem;
-      padding-inline: 0.1875rem;
-      padding-block: 0.125rem;
+      height: 3rem;
+      padding: 0.25rem;
+      position: relative;
     }
     .item,
     .item > span {

@@ -28,6 +28,9 @@ export class M3eYearViewElement extends CalendarViewElementBase {
   static override styles: CSSResultGroup = [
     CalendarViewElementBase.styles,
     css`
+      .item {
+        height: 2.25rem;
+      }
       .touch {
         width: 100%;
       }

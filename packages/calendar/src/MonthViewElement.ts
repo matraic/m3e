@@ -58,21 +58,27 @@ export class M3eMonthViewElement extends CalendarViewElementBase {
       td:not(:has(.item[aria-disabled])).range-end .state-layer {
         background-color: var(--m3e-calendar-item-selected-container-color, ${DesignToken.color.primary});
       }
-      td:not(:has(.item[aria-disabled])).range,
-      td:not(:has(.item[aria-disabled])).range-start-range,
-      td:not(:has(.item[aria-disabled])).range-end {
+      td:not(:has(.item[aria-disabled])).range::before,
+      td:not(:has(.item[aria-disabled])).range-start-range::before,
+      td:not(:has(.item[aria-disabled])).range-end::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0.25rem;
+        bottom: 0.25rem;
         background-color: var(--m3e-calendar-range-container-color, ${DesignToken.color.primaryContainer});
       }
       td:not(:has(.item[aria-disabled])):not(.selected).range {
         color: var(--m3e-calendar-range-color, ${DesignToken.color.onPrimaryContainer});
       }
-      td:not(:has(.item[aria-disabled])).range-start {
-        border-start-start-radius: ${DesignToken.shape.corner.full};
-        border-end-start-radius: ${DesignToken.shape.corner.full};
+      td:not(:has(.item[aria-disabled])).range-start::before {
+        inset-inline-start: 50%;
+        width: 50%;
       }
-      td:not(:has(.item[aria-disabled])).range-end {
-        border-start-end-radius: ${DesignToken.shape.corner.full};
-        border-end-end-radius: ${DesignToken.shape.corner.full};
+      td:not(:has(.item[aria-disabled])).range-end::before {
+        inset-inline-end: 50%;
+        width: 50%;
       }
       td:not(:has(.item[aria-disabled])).range-highlight-start .item::after,
       td:not(:has(.item[aria-disabled])).range-highlight .item::after,
