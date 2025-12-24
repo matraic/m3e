@@ -748,7 +748,15 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
               : nothing}
           </span>
         </div>
-        <div class="suffix" @click="${this.#stopPropagation}">
+        <div
+          class="suffix"
+          @click="${this.#stopPropagation}"
+          @focusin="${this.#stopPropagation}"
+          @focusout="${this.#stopPropagation}"
+          @pointerdown="${this.#stopPropagation}"
+          @keydown="${this.#stopPropagation}"
+          @keyup="${this.#stopPropagation}"
+        >
           <slot name="suffix" @slotchange="${this.#handleSuffixSlotChange}"></slot>
         </div>
       </div>
