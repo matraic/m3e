@@ -372,6 +372,7 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
           this.#updateDisplayOrder();
         });
       } else {
+        this._orientation = undefined;
         this.#updateDisplayOrder();
       }
     }
