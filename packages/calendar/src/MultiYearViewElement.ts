@@ -34,6 +34,9 @@ export class M3eMultiYearViewElement extends CalendarViewElementBase {
       .touch {
         width: 100%;
       }
+      th {
+        height: 1rem;
+      }
       tbody {
         font-size: var(--m3e-calendar-item-font-size, ${DesignToken.typescale.standard.body.medium.fontSize});
         font-weight: var(--m3e-calendar-item-font-weight, ${DesignToken.typescale.standard.body.medium.fontWeight});
