@@ -185,9 +185,9 @@ export class M3eMonthViewElement extends CalendarViewElementBase {
         <tr>
           ${weekdays.map(
             (x) =>
-              html`<th scope="col" id="weekday-${x.id}-month-${month}">
+              html`<th scope="col">
                 <span class="visually-hidden">${x.long}</span>
-                <span aria-hidden="true">${x.narrow}</span>
+                <div id="weekday-${x.id}-month-${month}" aria-hidden="true">${x.narrow}</div>
                 <m3e-tooltip for="weekday-${x.id}-month-${month}">${x.long}</m3e-tooltip>
               </th>`
           )}
