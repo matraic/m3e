@@ -75,25 +75,19 @@ export abstract class CalendarViewElementBase extends LitElement {
     td:not(:has(.item[aria-disabled])).selected {
       color: var(--m3e-calendar-item-selected-color, ${DesignToken.color.onPrimary});
       --m3e-ripple-color: var(--m3e-calendar-item-selected-ripple-color, ${DesignToken.color.onPrimary});
-      --m3e-state-layer-hover-color: var(--m3e-calendar-item-selected-ripple-color, ${DesignToken.color.onPrimary});
-      --m3e-state-layer-focus-color: var(--m3e-calendar-item-selected-ripple-color, ${DesignToken.color.onPrimary});
+      --m3e-state-layer-hover-color: var(--m3e-calendar-item-selected-hover-color, ${DesignToken.color.onPrimary});
+      --m3e-state-layer-focus-color: var(--m3e-calendar-item-selected-focus-color, ${DesignToken.color.onPrimary});
     }
     td:not(:has(.item[aria-disabled])).selected .state-layer {
       background-color: var(--m3e-calendar-item-selected-container-color, ${DesignToken.color.primary});
     }
-    td.current:not(.selected):not(.range-start):not(.range-end) .state-layer {
+    td.current:not(.selected):not(.special):not(.range-start):not(.range-end) {
+      color: var(--m3e-calendar-item-current-outline-color, ${DesignToken.color.primary});
+    }
+    td.current:not(.selected):not(.special):not(.range-start):not(.range-end) .state-layer {
       border-style: solid;
       border-width: var(--m3e-calendar-item-current-outline-thickness, 0.0625rem);
       border-color: var(--m3e-calendar-item-current-outline-color, ${DesignToken.color.primary});
-    }
-    td:not(:has(.item[aria-disabled])):not(.selected):not(.range-start):not(.range-end).special {
-      color: var(--m3e-calendar-special-date-color, ${DesignToken.color.onSecondary});
-      --m3e-ripple-color: var(--m3e-calendar-item-selected-ripple-color, ${DesignToken.color.onSecondary});
-      --m3e-state-layer-hover-color: var(--m3e-calendar-item-selected-ripple-color, ${DesignToken.color.onSecondary});
-      --m3e-state-layer-focus-color: var(--m3e-calendar-item-selected-ripple-color, ${DesignToken.color.onSecondary});
-    }
-    td:not(:has(.item[aria-disabled])):not(.selected):not(.range-start):not(.range-end).special .state-layer {
-      background-color: var(--m3e-calendar-special-date-container-color, ${DesignToken.color.secondary});
     }
     td:has(.item[aria-disabled]) {
       color: color-mix(

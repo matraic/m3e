@@ -74,10 +74,15 @@ import { maxYearOfPage, minYearOfPage, parseDate } from "./utils";
  * @cssprop --m3e-calendar-item-selected-color - Text color for selected date items.
  * @cssprop --m3e-calendar-item-selected-container-color - Background color for selected date items.
  * @cssprop --m3e-calendar-item-selected-ripple-color - Ripple color used when interacting with selected date items.
+ * @cssprop --m3e-calendar-item-selected-hover-color - Hover color used when interacting with selected date items.
+ * @cssprop --m3e-calendar-item-selected-focus-color - Focus color used when interacting with selected date items.
  * @cssprop --m3e-calendar-item-current-outline-thickness - Outline thickness used to indicate the current date.
  * @cssprop --m3e-calendar-item-current-outline-color - Outline color used to indicate the current date.
- * @cssprop --m3e-calendar-special-date-color - Text color for dates marked as special.
- * @cssprop --m3e-calendar-special-date-container-color - Background color for dates marked as special.
+ * @cssprop --m3e-calendar-item-special-color - Text color for dates marked as special.
+ * @cssprop --m3e-calendar-item-special-container-color - Background color for dates marked as special.
+ * @cssprop --m3e-calendar-item-special-ripple-color - Ripple color used when interacting with dates marked as special.
+ * @cssprop --m3e-calendar-item-special-hover-color - Hover color used when interacting with dates marked as special.
+ * @cssprop --m3e-calendar-item-special-focus-color - Focus color used when interacting with dates marked as special.
  * @cssprop --m3e-calendar-range-container-color - Background color applied to the selected date range.
  * @cssprop --m3e-calendar-range-color - Text color for dates within a selected range.
  * @cssprop --m3e-calendar-item-disabled-color - Color used for disabled date items.

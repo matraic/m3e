@@ -54,6 +54,21 @@ export class M3eMonthViewElement extends CalendarViewElementBase {
         line-height: var(--m3e-calendar-date-line-height, ${DesignToken.typescale.standard.body.medium.lineHeight});
         letter-spacing: var(--m3e-calendar-date-tracking, ${DesignToken.typescale.standard.body.medium.tracking});
       }
+      td:not(:has(.item[aria-disabled])):not(.selected):not(.range-start):not(.range-end).special {
+        color: var(--m3e-calendar-item-special-color, ${DesignToken.color.onTertiaryContainer});
+        --m3e-ripple-color: var(--m3e-calendar-item-special-ripple-color, ${DesignToken.color.onTertiaryContainer});
+        --m3e-state-layer-hover-color: var(
+          --m3e-calendar-item-special-hover-color,
+          ${DesignToken.color.onTertiaryContainer}
+        );
+        --m3e-state-layer-focus-color: var(
+          --m3e-calendar-item-special-focus-color,
+          ${DesignToken.color.onTertiaryContainer}
+        );
+      }
+      td:not(:has(.item[aria-disabled])):not(.selected):not(.range-start):not(.range-end).special .state-layer {
+        background-color: var(--m3e-calendar-item-special-container-color, ${DesignToken.color.tertiaryContainer});
+      }
       td:not(:has(.item[aria-disabled])).range-start,
       td:not(:has(.item[aria-disabled])).range-end {
         color: var(--m3e-calendar-item-selected-color, ${DesignToken.color.onPrimary});
