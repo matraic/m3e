@@ -33,6 +33,7 @@ import { M3eDrawerContainerElement } from "./DrawerContainerElement";
 @customElement("m3e-drawer-toggle")
 export class M3eDrawerToggleElement extends HtmlFor(ActionElementBase) {
   /** @private */ readonly #drawerContainerChangeHandler = () => this.#handleDrawerContainerChange();
+  /** @private */ #togglingDrawer = false;
 
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
@@ -45,7 +46,7 @@ export class M3eDrawerToggleElement extends HtmlFor(ActionElementBase) {
     const container = control.closest("m3e-drawer-container");
     if (container) {
       container.addEventListener("change", this.#drawerContainerChangeHandler);
-      this.#updateToggle(container);
+      this.#updateToggle(container, true);
     }
   }
 
@@ -66,31 +67,46 @@ export class M3eDrawerToggleElement extends HtmlFor(ActionElementBase) {
 
   /** @inheritdoc */
   override _onClick(): void {
-    if (this.control && this.parentElement) {
+    this.#toggleDrawer();
+  }
+
+  /** @private */
+  #handleDrawerContainerChange(): void {
+    if (this.control && !this.#togglingDrawer) {
       const container = this.control.closest("m3e-drawer-container");
       if (container) {
+        this.#updateToggle(container, true);
+      }
+    }
+  }
+
+  /** @private */
+  async #toggleDrawer(): Promise<void> {
+    if (!this.parentElement || !this.control) {
+      return;
+    }
+
+    const container = this.control.closest("m3e-drawer-container");
+    if (container) {
+      this.#togglingDrawer = true;
+      try {
         if (this.control.slot === "start") {
           container.start = !container.start;
         } else if (this.control.slot === "end") {
           container.end = !container.end;
         }
-        this.#updateToggle(container);
+        if (container.isUpdatePending) {
+          await container.updateComplete;
+        }
+        await this.#updateToggle(container, false);
+      } finally {
+        this.#togglingDrawer = false;
       }
     }
   }
 
   /** @private */
-  #handleDrawerContainerChange(): void {
-    if (this.control) {
-      const container = this.control.closest("m3e-drawer-container");
-      if (container) {
-        this.#updateToggle(container);
-      }
-    }
-  }
-
-  /** @private */
-  async #updateToggle(container: M3eDrawerContainerElement): Promise<void> {
+  async #updateToggle(container: M3eDrawerContainerElement, syncToggle: boolean): Promise<void> {
     if (!this.parentElement || !this.control) {
       return;
     }
@@ -104,7 +120,7 @@ export class M3eDrawerToggleElement extends HtmlFor(ActionElementBase) {
 
     this.parentElement.ariaExpanded = `${selected}`;
 
-    if (this.parentElement.hasAttribute("toggle")) {
+    if (syncToggle && this.parentElement.hasAttribute("toggle")) {
       this.parentElement.toggleAttribute("selected", selected);
     }
 
