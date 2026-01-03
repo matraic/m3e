@@ -4,8 +4,8 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- Completed calendar
-- Planning
+- Datepicker
+- Wavy progress indicator variants
 
 ## 🔮 Future
 
@@ -27,7 +27,6 @@ Components in early stages of development include:
 Planned components which have not yet entered development:
 
 - Bottom Sheet
-- Date Picker
 - Inputs (Numeric, Masked)
 - Time Picker
 
