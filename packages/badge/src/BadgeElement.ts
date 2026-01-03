@@ -133,6 +133,12 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
   @property({ reflect: true }) position: BadgePosition = "above-after";
 
   /** @inheritdoc */
+  override attach(control: HTMLElement): void {
+    super.attach(control);
+    this.#attach();
+  }
+
+  /** @inheritdoc */
   override detach(): void {
     super.detach();
     this.#detach();

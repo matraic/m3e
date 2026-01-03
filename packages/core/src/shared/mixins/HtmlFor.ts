@@ -3,6 +3,7 @@ import { property } from "lit/decorators.js";
 
 import { Constructor } from "./Constructor";
 import { hasKeys } from "./hasKeys";
+import { resolveElementById } from "../utils";
 
 /** Defines functionality for an attached element associated with an interactive control. */
 export interface HtmlForMixin {
@@ -65,14 +66,18 @@ export function HtmlFor<T extends Constructor<LitElement>>(base: T): Constructor
 
       if (changedProperties.has("htmlFor")) {
         if (this.htmlFor) {
-          const control = (this.getRootNode() as ParentNode)?.querySelector(`#${this.htmlFor}`);
-          if (control !== this.control) {
-            if (this.control) {
-              this.detach();
-            }
-            if (control instanceof HTMLElement) {
-              this.attach(control);
-            }
+          const root = this.getRootNode() as ParentNode;
+          if (root) {
+            resolveElementById(this.htmlFor).then((control) => {
+              if (control !== this.control) {
+                if (this.control) {
+                  this.detach();
+                }
+                if (control instanceof HTMLElement) {
+                  this.attach(control);
+                }
+              }
+            });
           }
         } else if (this.control && this[_firstUpdated]) {
           this.detach();
