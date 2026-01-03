@@ -68,7 +68,7 @@ export function HtmlFor<T extends Constructor<LitElement>>(base: T): Constructor
         if (this.htmlFor) {
           const root = this.getRootNode() as ParentNode;
           if (root) {
-            resolveElementById(this.htmlFor).then((control) => {
+            resolveElementById(this.htmlFor, root).then((control) => {
               if (control !== this.control) {
                 if (this.control) {
                   this.detach();
