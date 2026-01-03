@@ -4,6 +4,7 @@ export * from "./generateClipPaths";
 export * from "./getTextContent";
 export * from "./guid";
 export * from "./hasAssignedNodes";
+export * from "./interceptProperty";
 export * from "./prefersReducedMotion";
 export * from "./resolveElementById";
 export * from "./scrollIntoViewIfNeeded";

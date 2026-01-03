@@ -17,6 +17,7 @@ import {
   getTextContent,
   hasAssignedNodes,
   HoverController,
+  interceptProperty,
   isReadOnlyMixin,
   MutationController,
   PressedController,
@@ -541,6 +542,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
   `;
 
   /** @private */ #control: FormFieldControl | null = null;
+  /** @private */ #removeValueInterceptor?: () => void;
   /** @private */ readonly #formResetHandler = () => this.#handleFormReset();
   /** @private */ readonly #controlInvalidHandler = () => this.#handleControlInvalid();
 
@@ -845,6 +847,8 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       this.#controlMutationController.unobserve(this.#control);
       this.#control.removeEventListener("invalid", this.#controlInvalidHandler);
       this.#control.form?.removeEventListener("reset", this.#formResetHandler);
+      this.#removeValueInterceptor?.();
+      this.#removeValueInterceptor = undefined;
     }
     this.#control = control;
 
@@ -870,6 +874,13 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       }
 
       this.notifyControlStateChange();
+
+      this.#removeValueInterceptor = interceptProperty(this.#control, "value", {
+        set: (value, setter) => {
+          setter(value);
+          this.notifyControlStateChange(true);
+        },
+      });
     }
   }
 
