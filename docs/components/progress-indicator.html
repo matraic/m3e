@@ -57,7 +57,8 @@
       <m3e-heading variant="headline" size="small" level="3">Circular</m3e-heading>
       <p>
         Use the <code>m3e-circular-progress-indicator</code> to present a circular indicator of progress and activity.
-        This component supports two modes: determinate and indeterminate.
+        This component supports two modes (determinate and indeterminate) and two appearance variants (<code>flat</code>
+        and <code>wavy</code>). Use the <code>variant</code> attribute to change the appearance.
       </p>
       <m3e-heading variant="title" size="medium" level="4">Determinate</m3e-heading>
       <p>
@@ -68,11 +69,13 @@
       <m3e-card variant="outlined">
         <div slot="content">
           <m3e-circular-progress-indicator value="25">25</m3e-circular-progress-indicator>
+          <m3e-circular-progress-indicator variant="wavy" value="25">25</m3e-circular-progress-indicator>
         </div>
       </m3e-card>
       <m3e-card variant="filled" class="example">
         <pre slot="content">
-&lt;m3e-circular-progress-indicator value=&quot;25&quot;&gt;25&lt;/m3e-circular-progress-indicator&gt;</pre
+&lt;m3e-circular-progress-indicator value=&quot;25&quot;&gt;25&lt;/m3e-circular-progress-indicator&gt;
+&lt;m3e-circular-progress-indicator variant=&quot;wavy&quot; value=&quot;25&quot;&gt;25&lt;/m3e-circular-progress-indicator&gt;</pre
         >
       </m3e-card>
 
@@ -84,11 +87,13 @@
       <m3e-card variant="outlined">
         <div slot="content">
           <m3e-circular-progress-indicator indeterminate></m3e-circular-progress-indicator>
+          <m3e-circular-progress-indicator variant="wavy" indeterminate></m3e-circular-progress-indicator>
         </div>
       </m3e-card>
       <m3e-card variant="filled" class="example">
         <pre slot="content">
-&lt;m3e-circular-progress-indicator indeterminate&gt;&lt;/m3e-circular-progress-indicator&gt;</pre
+&lt;m3e-circular-progress-indicator indeterminate&gt;&lt;/m3e-circular-progress-indicator&gt;
+&lt;m3e-circular-progress-indicator variant=&quot;wavy&quot; indeterminate&gt;&lt;/m3e-circular-progress-indicator&gt;</pre
         >
       </m3e-card>
 
@@ -98,7 +103,10 @@
         activity. This component supports four modes: <code>determinate</code> (default), <code>indeterminate</code>,
         <code>buffer</code>, and <code>query</code>.
       </p>
-      <p>Use the <code>mode</code> attribute to change the mode.</p>
+      <p>
+        Use the <code>mode</code> attribute to change the mode. As with a circular indicator, use
+        <code>variant</code> to set the appearance to either <code>flat</code> (default) or <code>wavy</code>.
+      </p>
 
       <m3e-heading variant="title" size="medium" level="4">Determinate</m3e-heading>
       <p>
@@ -106,14 +114,21 @@
         <code>value</code> attribute to indicate completion percentage and use <code>max</code> to specify the total
         number of steps or units of progress. This is the default mode.
       </p>
+      <p>
+        When using the <code>wavy</code> variant, the indicator transitions to the flat appearance automatically when
+        progress reaches 100%.
+      </p>
       <m3e-card variant="outlined">
         <div slot="content">
           <m3e-linear-progress-indicator value="25"></m3e-linear-progress-indicator>
+          <br />
+          <m3e-linear-progress-indicator variant="wavy" value="25"></m3e-linear-progress-indicator>
         </div>
       </m3e-card>
       <m3e-card variant="filled" class="example">
         <pre slot="content">
-&lt;m3e-linear-progress-indicator value=&quot;25&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
+&lt;m3e-linear-progress-indicator value=&quot;25&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;
+&lt;m3e-linear-progress-indicator variant=&quot;wavy&quot; value=&quot;25&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
         >
       </m3e-card>
 
@@ -125,11 +140,14 @@
       <m3e-card variant="outlined">
         <div slot="content">
           <m3e-linear-progress-indicator mode="indeterminate"></m3e-linear-progress-indicator>
+          <br />
+          <m3e-linear-progress-indicator variant="wavy" mode="indeterminate"></m3e-linear-progress-indicator>
         </div>
       </m3e-card>
       <m3e-card variant="filled" class="example">
         <pre slot="content">
-&lt;m3e-linear-progress-indicator mode=&quot;indeterminate&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
+&lt;m3e-linear-progress-indicator mode=&quot;indeterminate&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;
+&lt;m3e-linear-progress-indicator variant=&quot;wavy&quot; mode=&quot;indeterminate&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
         >
       </m3e-card>
 
@@ -139,14 +157,26 @@
         <code>value</code> determines the progress of the primary bar while the <code>buffer-value</code> attribute is
         used to show buffering progress.
       </p>
+      <p>
+        As with <code>determinate</code> mode, when using the <code>wavy</code> variant, the indicator transitions to
+        the flat appearance automatically when progress reaches 100%.
+      </p>
       <m3e-card variant="outlined">
         <div slot="content">
           <m3e-linear-progress-indicator mode="buffer" value="10" buffer-value="25"></m3e-linear-progress-indicator>
+          <br />
+          <m3e-linear-progress-indicator
+            variant="wavy"
+            mode="buffer"
+            value="10"
+            buffer-value="25"
+          ></m3e-linear-progress-indicator>
         </div>
       </m3e-card>
       <m3e-card variant="filled" class="example">
         <pre slot="content">
-&lt;m3e-linear-progress-indicator mode=&quot;buffer&quot; value=&quot;10&quot; buffer-value=&quot;25&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
+&lt;m3e-linear-progress-indicator mode=&quot;buffer&quot; value=&quot;10&quot; buffer-value=&quot;25&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;
+&lt;m3e-linear-progress-indicator variant=&quot;wavy&quot; mode=&quot;buffer&quot; value=&quot;10&quot; buffer-value=&quot;25&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
         >
       </m3e-card>
 
@@ -159,11 +189,14 @@
       <m3e-card variant="outlined">
         <div slot="content">
           <m3e-linear-progress-indicator mode="query"></m3e-linear-progress-indicator>
+          <br />
+          <m3e-linear-progress-indicator variant="wavy" mode="query"></m3e-linear-progress-indicator>
         </div>
       </m3e-card>
       <m3e-card variant="filled" class="example">
         <pre slot="content">
-&lt;m3e-linear-progress-indicator mode=&quot;query&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
+&lt;m3e-linear-progress-indicator mode=&quot;query&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;
+&lt;m3e-linear-progress-indicator variant=&quot;wavy&quot; mode=&quot;query&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
         >
       </m3e-card>
 

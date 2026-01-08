@@ -4,7 +4,6 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- Completed wavy progress indicator variants
 - Datepicker
 
 ## 🔮 Future
@@ -37,6 +36,7 @@ Planned components which have not yet entered development:
 
 ## 🏛️ Past Milestones
 
+- 1.1.3: Bug fixes, added wavy appearance variant to @m3e/progress-indicator
 - 1.1.1 - 1.1.2: Bug fixes
 - 1.1.0: Added @m3e/paginator, bundle size reductions, RTL layout fixes
 - 1.0.6: Added @m3e/autocomplete, @m3e/select, and @m3e/option
