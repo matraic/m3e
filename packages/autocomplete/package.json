@@ -27,8 +27,8 @@
     "clean": "rimraf dist"
   },
   "peerDependencies": {
-    "@m3e/core": "1.1.2",
-    "@m3e/option": "1.1.2",
+    "@m3e/core": "^1.1.2",
+    "@m3e/option": "^1.1.2",
     "lit": "^3.3.0"
   },
   "customElements": "dist/custom-elements.json"
