@@ -4,8 +4,8 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
+- Completed wavy progress indicator variants
 - Datepicker
-- Wavy progress indicator variants
 
 ## 🔮 Future
 

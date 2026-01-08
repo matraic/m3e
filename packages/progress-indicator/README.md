@@ -88,12 +88,15 @@ This section details the attributes and CSS custom properties available for the 
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                    | Description                                          |
-| ------------------------------------------- | ---------------------------------------------------- |
-| `--m3e-linear-progress-indicator-thickness` | Thickness (height) of the progress bar.              |
-| `--m3e-linear-progress-indicator-shape`     | Border radius of the progress bar.                   |
-| `--m3e-progress-indicator-track-color`      | Track color of the progress bar (background/buffer). |
-| `--m3e-progress-indicator-color`            | Color of the progress indicator (foreground).        |
+| Property                                                        | Description                                           |
+| --------------------------------------------------------------- | ----------------------------------------------------- |
+| `--m3e-linear-progress-indicator-thickness`                     | Thickness (height) of the progress bar.               |
+| `--m3e-linear-progress-indicator-shape`                         | Border radius of the progress bar.                    |
+| `--m3e-progress-indicator-track-color`                          | Track color of the progress bar (background/buffer).  |
+| `--m3e-progress-indicator-color`                                | Color of the progress indicator (foreground).         |
+| `--m3e-linear-wavy-progress-indicator-amplitude`                | Amplitude of the `wavy` variant.                      |
+| `--m3e-linear-wavy-progress-indicator-wavelength`               | Wavelength of the `wavy` variant.                     |
+| `--m3e-linear-wavy-indeterminate-progress-indicator-wavelength` | Wavelength of the indeterminate/query `wavy` variant. |
 
 ### 🗂️ m3e-circular-progress-indicator
 
@@ -103,10 +106,8 @@ This section details the attributes, slots, and CSS custom properties available 
 
 | Attribute     | Type      | Default | Description                                                        |
 | ------------- | --------- | ------- | ------------------------------------------------------------------ |
-| diameter      | `number`  | `40`    | The diameter, in pixels, of the progress spinner.                  |
 | indeterminate | `boolean` | `false` | Whether to show something is happening without conveying progress. |
 | max           | `number`  | `100`   | The maximum progress value.                                        |
-| stroke-width  | `number`  | `10`    | The stroke width, in pixels, of the progress spinner.              |
 | value         | `number`  | `0`     | A fractional value, between 0 and `max`, indicating progress.      |
 
 #### 🧩 Slots
@@ -117,10 +118,15 @@ This section details the attributes, slots, and CSS custom properties available 
 
 #### 🎛️ CSS Custom Properties
 
-| Property                               | Description                                          |
-| -------------------------------------- | ---------------------------------------------------- |
-| `--m3e-progress-indicator-track-color` | Track color of the progress bar (background/buffer). |
-| `--m3e-progress-indicator-color`       | Color of the progress indicator (foreground).        |
+| Property                                            | Description                                         |
+| --------------------------------------------------- | --------------------------------------------------- |
+| `--m3e-circular-flat-progress-indicator-diameter`   | Diameter of the `flat` variant.                     |
+| `--m3e-circular-wavy-progress-indicator-diameter`   | Diameter of the `wavy` variant.                     |
+| `--m3e-circular-wavy-progress-indicator-amplitude`  | Amplitude of the `wavy` variant.                    |
+| `--m3e-circular-wavy-progress-indicator-wavelength` | Wavelength of the `wavy` variant.                   |
+| `--m3e-circular-progress-indicator-thickness`       | Thickness of the progress indicator.                |
+| `--m3e-progress-indicator-track-color`              | Track color of the progress indicator (background). |
+| `--m3e-progress-indicator-color`                    | Color of the progress indicator (foreground).       |
 
 ## 🤝 Contributing
 

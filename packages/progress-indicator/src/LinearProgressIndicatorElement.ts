@@ -1,16 +1,7 @@
-/**
- * Adapted from Angular Material Progress Bar
- * Source: https://github.com/angular/components/blob/main/src/material/progress-bar/progress-bar.ts
- *
- * @license MIT
- * Copyright (c) 2025 Google LLC
- * See LICENSE file in the project root for full license text.
- */
-
-import { css, CSSResultGroup, html } from "lit";
+import { css, CSSResultGroup, html, nothing, PropertyValues, svg } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { DesignToken, safeStyleMap } from "@m3e/core";
+import { DesignToken, ResizeController, resolveFragmentUrl, safeStyleMap } from "@m3e/core";
 
 import { LinearProgressMode } from "./LinearProgressMode";
 import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
@@ -42,11 +33,15 @@ import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
  * @attr max - The maximum progress value.
  * @attr mode - The mode of the progress bar.
  * @attr value - A fractional value, between 0 and `max`, indicating progress.
+ * @attr variant - The appearance of the indicator.
  *
  * @cssprop --m3e-linear-progress-indicator-thickness - Thickness (height) of the progress bar.
  * @cssprop --m3e-linear-progress-indicator-shape - Border radius of the progress bar.
  * @cssprop --m3e-progress-indicator-track-color - Track color of the progress bar (background/buffer).
  * @cssprop --m3e-progress-indicator-color - Color of the progress indicator (foreground).
+ * @cssprop --m3e-linear-wavy-progress-indicator-amplitude - Amplitude of the `wavy` variant.
+ * @cssprop --m3e-linear-wavy-progress-indicator-wavelength - Wavelength of the `wavy` variant.
+ * @cssprop --m3e-linear-wavy-indeterminate-progress-indicator-wavelength - Wavelength of the indeterminate/query `wavy` variant.
  */
 @customElement("m3e-linear-progress-indicator")
 export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorBase {
@@ -56,249 +51,295 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
     css`
       :host {
         display: block;
-        height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
-        overflow: hidden;
         position: relative;
-        transform: opacity var(--_piece-animation-duration) linear;
-        border-radius: var(--m3e-linear-progress-indicator-shape, ${DesignToken.shape.corner.extraSmall});
-
-        --_piece-animation-duration: 250ms;
-        --_full-animation-duration: 2000ms;
-      }
-      :host([mode="indeterminate"]),
-      :host([mode="query"]) {
-        content-visibility: auto;
       }
       .progress {
-        pointer-events: none;
-      }
-      .progress,
-      .wrapper {
+        width: 100%;
         height: 100%;
+        position: relative;
+        align-items: center;
+        border-radius: var(--m3e-linear-progress-indicator-shape, ${DesignToken.shape.corner.extraSmall});
       }
-      .element,
-      .fill::after {
+      .stroke,
+      .amplitude-and-wavelength {
+        visibility: hidden;
         position: absolute;
+      }
+      .stroke {
+        width: 100%;
+        height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+      }
+      .amplitude-and-wavelength {
+        height: var(--m3e-linear-wavy-progress-indicator-amplitude, 0.1875rem);
+        width: var(--m3e-linear-wavy-progress-indicator-wavelength, 2.5rem);
+      }
+      :host([mode="indeterminate"]) .amplitude-and-wavelength,
+      :host([mode="query"]) .amplitude-and-wavelength {
+        width: var(--m3e-linear-wavy-indeterminate-progress-indicator-wavelength, 1.5rem);
+      }
+      .primary,
+      .secondary,
+      .stop {
+        height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+        border-radius: inherit;
+      }
+      .stop {
+        aspect-ratio: 1;
+        flex: none;
+      }
+      :host([variant="flat"]) {
+        height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+      }
+      :host([variant="wavy"]) {
+        height: calc(
+          var(--m3e-linear-progress-indicator-thickness, 0.25rem) +
+            calc(var(--m3e-linear-wavy-progress-indicator-amplitude, 0.1875rem) * 2)
+        );
+      }
+      :host([variant="wavy"]) .primary,
+      :host([variant="wavy"]) .secondary {
+        position: relative;
+        height: 100%;
+        overflow: hidden;
+      }
+      :host([variant="wavy"]) .complete {
+        position: absolute;
+        margin: auto;
+        top: calc(50% - calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) / 2));
+        left: 0;
+        right: 0;
+        height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+        border-radius: inherit;
+      }
+      :host([variant="wavy"]) .secondary {
+        height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+      }
+      .wave {
+        position: absolute;
+        display: block;
+      }
+      .primary .wave,
+      .secondary .wave {
+        margin-inline-start: calc(0px - var(--m3e-linear-wavy-progress-indicator-wavelength, 2.5rem));
+      }
+      :host([variant="wavy"][mode="determinate"]) .primary path,
+      :host([variant="wavy"][mode="buffer"]) .primary path {
+        animation: wave-slide 1.5s linear infinite;
+      }
+      @keyframes wave-slide {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(calc(0px - var(--m3e-linear-wavy-progress-indicator-wavelength, 2.5rem)));
+        }
+      }
+      :host([mode="determinate"]) .progress,
+      :host([mode="buffer"]) .progress {
+        display: flex;
+        overflow: hidden;
+      }
+      :host([mode="determinate"]) .primary,
+      :host([mode="buffer"]) .primary {
+        width: var(--_value, 0px);
+        flex: none;
+      }
+      :host([mode="determinate"]) .gap,
+      :host([mode="buffer"]) .gap {
+        flex-basis: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+        flex-shrink: 1;
+      }
+      :host([mode="determinate"]) .secondary,
+      :host([mode="buffer"]) .buffer {
+        flex: 1 1 auto;
+      }
+      :host([mode="buffer"]) .buffer {
+        flex-shrink: 5;
         height: 100%;
         width: 100%;
-      }
-      .background {
-        width: calc(100% + 0.625rem);
-        fill: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
-      }
-      .buffer {
-        transition: transform var(--_piece-animation-duration) ease;
         background-color: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
+        mask-image: radial-gradient(
+          circle,
+          black 0,
+          black calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) / 2),
+          transparent calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) / 2)
+        );
+        mask-size: calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) * 2) 100%;
+        mask-repeat: repeat;
+        animation: buffer 250ms linear infinite;
       }
-      .primary {
-        transform: scale3d(calc(var(--_value, 0) / var(--_max)), 1, 1);
+      :host(:dir(rtl)[mode="buffer"]) .buffer {
+        transform: scaleX(-1);
       }
-      .secondary {
-        display: none;
+      @keyframes buffer {
+        from {
+          mask-position: 0 0;
+        }
+        to {
+          mask-position: calc(-1 * calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) * 2)) 0;
+        }
       }
-      .fill {
-        animation: none;
-        transition: transform var(--_piece-animation-duration) ease;
-      }
-      :host(:not(:dir(rtl))) .buffer,
-      :host(:not(:dir(rtl))) .fill {
-        transform-origin: top left;
-      }
-      :host(:dir(rtl)) .buffer,
-      :host(:dir(rtl)) .fill {
-        transform-origin: top right;
-      }
-      .fill::after {
-        animation: none;
-        content: "";
-        display: inline-block;
-        left: 0;
-        background-color: var(--m3e-progress-indicator-color, ${DesignToken.color.primary});
-      }
-      :host([mode="query"]) {
-        transform: rotateZ(180deg);
-      }
-      :host([mode="indeterminate"]) .fill,
-      :host([mode="query"]) .fill {
-        transition: none;
+      :host([mode="buffer"]) .secondary {
+        width: var(--_buffer-value, 0px);
+        flex: none;
       }
       :host([mode="indeterminate"]) .primary,
       :host([mode="query"]) .primary {
-        backface-visibility: hidden;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        border-radius: inherit;
+        animation: indeterminate-primary 2.1s infinite linear;
       }
-      :host(:not(:dir(rtl))[mode="indeterminate"]) .primary,
-      :host(:not(:dir(rtl))[mode="query"]) .primary {
-        animation: primary-indeterminate-translate var(--_full-animation-duration) infinite linear;
-        left: -145.166611%;
-      }
-      :host(:dir(rtl)[mode="indeterminate"]) .primary,
-      :host(:dir(rtl)[mode="query"]) .primary {
-        animation: primary-indeterminate-translate-rtl var(--_full-animation-duration) infinite linear;
-        left: 145.166611%;
-      }
-      :host([mode="indeterminate"]) .primary.fill::after,
-      :host([mode="query"]) .primary.fill::after {
-        backface-visibility: hidden;
-        animation: primary-indeterminate-scale var(--_full-animation-duration) infinite linear;
+      :host([variant="wavy"][mode="indeterminate"]) .primary,
+      :host([variant="wavy"][mode="query"]) .primary {
+        animation-name: wavy-indeterminate-primary;
       }
       :host([mode="indeterminate"]) .secondary,
       :host([mode="query"]) .secondary {
-        display: block;
-        backface-visibility: hidden;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        border-radius: inherit;
+        animation: indeterminate-secondary 2.1s infinite linear;
+        animation-delay: 1.15s;
+        animation-fill-mode: backwards;
       }
-      :host(:not(:dir(rtl))[mode="indeterminate"]) .secondary,
-      :host(:not(:dir(rtl))[mode="query"]) .secondary {
-        animation: secondary-indeterminate-translate var(--_full-animation-duration) infinite linear;
-        left: -54.888891%;
+      :host([variant="wavy"][mode="indeterminate"]) .secondary,
+      :host([variant="wavy"][mode="query"]) .secondary {
+        animation-name: wavy-indeterminate-secondary;
       }
-      :host(:dir(rtl)[mode="indeterminate"]) .secondary,
-      :host(:dir(rtl)[mode="query"]) .secondary {
-        animation: secondary-indeterminate-translate-rtl var(--_full-animation-duration) infinite linear;
-        left: 54.888891%;
+      :host([mode="indeterminate"]) .progress,
+      :host([mode="query"]) .progress {
+        overflow: hidden;
+        position: relative;
       }
-      :host([mode="indeterminate"]) .secondary.fill::after,
-      :host([mode="query"]) .secondary.fill::after {
-        backface-visibility: hidden;
-        animation: secondary-indeterminate-scale var(--_full-animation-duration) infinite linear;
+      :host(:not(:dir(rtl))[mode="query"]) .progress,
+      :host(:dir(rtl)[mode="indeterminate"]) .progress {
+        transform: scaleX(-1);
       }
-      :host([mode="determinate"]) .background,
-      :host([mode="indeterminate"]) .background,
-      :host([mode="query"]) .background {
-        fill: transparent !important;
+      :host([variant="flat"]) .primary,
+      :host([variant="flat"][mode="indeterminate"]) .secondary,
+      :host([variant="flat"][mode="query"]) .secondary,
+      :host([variant="wavy"]) .complete,
+      .stop {
+        background-color: var(--m3e-progress-indicator-color, ${DesignToken.color.primary});
       }
-      :host([mode="buffer"]) .buffer {
-        transform: scale3d(calc(var(--_buffer-value, 0) / var(--_max)), 1, 1);
+      :host([variant="wavy"]) .progress {
+        color: var(--m3e-progress-indicator-color, ${DesignToken.color.primary});
       }
-      :host([mode="buffer"]) .background {
-        display: block;
-        backface-visibility: hidden;
+      :host([mode="determinate"]) .secondary,
+      :host([mode="buffer"]) .secondary,
+      :host([mode="indeterminate"]) .track,
+      :host([mode="query"]) .track {
+        background-color: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
       }
-      :host(:not(:dir(rtl))[mode="buffer"]) .background {
-        animation: background-scroll var(--_piece-animation-duration) infinite linear;
+      :host([mode="indeterminate"]) .track,
+      :host([mode="query"]) .track {
+        position: absolute;
+        margin: auto;
+        top: calc(50% - calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) / 2));
+        left: 0;
+        right: 0;
+        height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+        border-radius: inherit;
       }
-      :host(:dir(rtl)[mode="buffer"]) .background {
-        animation: background-scroll-rtl var(--_piece-animation-duration) infinite linear;
-      }
-      @keyframes primary-indeterminate-translate {
+      @keyframes indeterminate-primary {
         0% {
-          transform: translateX(0);
+          left: -145.167%;
+          width: 8%;
         }
         20% {
-          animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
-          transform: translateX(0);
+          left: -113.333%;
+          width: 48%;
         }
-        59.15% {
-          animation-timing-function: cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);
-          transform: translateX(83.67142%);
+        60% {
+          left: 56.333%;
+          width: 78%;
         }
         100% {
-          transform: translateX(200.611057%);
+          left: 100%;
+          width: 8%;
         }
       }
-      @keyframes primary-indeterminate-translate-rtl {
+      @keyframes indeterminate-secondary {
         0% {
-          transform: translateX(0);
+          left: -54.888%;
+          width: 8%;
         }
         20% {
-          animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
-          transform: translateX(0);
+          left: -20%;
+          width: 48%;
         }
-        59.15% {
-          animation-timing-function: cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);
-          transform: translateX(-83.67142%);
+        60% {
+          left: 60%;
+          width: 78%;
         }
         100% {
-          transform: translateX(-200.611057%);
+          left: 160%;
+          width: 8%;
         }
       }
-      @keyframes primary-indeterminate-scale {
+      @keyframes wavy-indeterminate-primary {
         0% {
-          transform: scaleX(0.08);
+          transform: translateX(-145.167%);
+          width: 8%;
         }
-        36.65% {
-          animation-timing-function: cubic-bezier(0.334731, 0.12482, 0.785844, 1);
-          transform: scaleX(0.08);
+        20% {
+          transform: translateX(-113.333%);
+          width: 48%;
         }
-        69.15% {
-          animation-timing-function: cubic-bezier(0.06, 0.11, 0.6, 1);
-          transform: scaleX(0.661479);
+        60% {
+          transform: translateX(56.333%);
+          width: 78%;
         }
         100% {
-          transform: scaleX(0.08);
+          transform: translateX(100%);
+          width: 8%;
         }
       }
-      @keyframes secondary-indeterminate-translate {
+      @keyframes wavy-indeterminate-secondary {
         0% {
-          animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
-          transform: translateX(0);
+          transform: translateX(-54.888%);
+          width: 8%;
         }
-        25% {
-          animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
-          transform: translateX(37.651913%);
+        20% {
+          transform: translateX(-20%);
+          width: 48%;
         }
-        48.35% {
-          animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
-          transform: translateX(84.386165%);
-        }
-        100% {
-          transform: translateX(160.277782%);
-        }
-      }
-      @keyframes secondary-indeterminate-translate-rtl {
-        0% {
-          animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
-          transform: translateX(0);
-        }
-        25% {
-          animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
-          transform: translateX(-37.651913%);
-        }
-        48.35% {
-          animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
-          transform: translateX(-84.386165%);
+        60% {
+          transform: translateX(60%);
+          width: 78%;
         }
         100% {
-          transform: translateX(-160.277782%);
-        }
-      }
-      @keyframes secondary-indeterminate-scale {
-        0% {
-          animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
-          transform: scaleX(0.08);
-        }
-        19.15% {
-          animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
-          transform: scaleX(0.457104);
-        }
-        44.15% {
-          animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
-          transform: scaleX(0.72796);
-        }
-        100% {
-          transform: scaleX(0.08);
-        }
-      }
-      @keyframes background-scroll {
-        to {
-          transform: translateX(calc(calc(0px - 0.25rem) * 2));
-        }
-      }
-      @keyframes background-scroll-rtl {
-        to {
-          transform: translateX(calc(0px - calc(calc(0px - 0.25rem) * 2)));
+          transform: translateX(160%);
+          width: 8%;
         }
       }
       @media (forced-colors: active) {
-        .background {
-          fill: GrayText;
+        .progress {
+          --m3e-progress-indicator-track-color: GrayText;
+          --m3e-progress-indicator-color: CanvasText;
         }
       }
     `,
   ];
 
-  /** @private */ private static __nextPatternId = 0;
-  /** @private */ #patternId = `m3e-progress-pattern-${M3eLinearProgressIndicatorElement.__nextPatternId++}`;
-  /** @private */ #patternFill = "";
+  /** @private */ private static __nextMaskId = 0;
+  /** @private */ #maskId = `m3e-linear-progress-mask-${M3eLinearProgressIndicatorElement.__nextMaskId++}`;
+
+  /** @private */ #strokeWidth = 0;
+  /** @private */ #amplitude = 0;
+  /** @private */ #wavelength = 0;
+
+  /** @private */ readonly #resizeController = new ResizeController(this, {
+    skipInitial: true,
+    target: null,
+    callback: () => {
+      this.#updateStroke();
+      this.#updateAmplitudeAndWavelength();
+    },
+  });
 
   /**
    * The mode of the progress bar.
@@ -313,41 +354,167 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
   @property({ attribute: "buffer-value", type: Number, reflect: true }) bufferValue = 0;
 
   /** @inheritdoc */
-  override connectedCallback(): void {
-    super.connectedCallback();
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
+    super.firstUpdated(_changedProperties);
 
-    // Prefix the SVG reference with the current path, otherwise they will not work
-    // in Safari if the page has a <base> tag.
+    this.#updateStroke();
+    this.#updateAmplitudeAndWavelength();
 
-    const location = document?.location ?? null;
-    const path = location ? (location.pathname + location.search).split("#")[0] : "";
-    this.#patternFill = `url(${path}#${this.#patternId})`;
+    const stroke = this.shadowRoot?.querySelector<HTMLElement>(".stroke");
+    if (stroke) {
+      this.#resizeController.observe(stroke);
+    }
+
+    const amplitudeAndWavelength = this.shadowRoot?.querySelector<HTMLElement>(".amplitude-and-wavelength");
+    if (amplitudeAndWavelength) {
+      this.#resizeController.observe(amplitudeAndWavelength);
+    }
+  }
+
+  /** @inheritdoc */
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+
+    if (changedProperties.has("mode")) {
+      this.ariaValueNow = this.mode === "indeterminate" || this.mode === "query" ? null : `${this.value}`;
+    }
+  }
+
+  /** @inheritdoc */
+  protected override updated(_changedProperties: PropertyValues<this>): void {
+    super.updated(_changedProperties);
+
+    if (_changedProperties.has("value") || _changedProperties.has("bufferValue") || _changedProperties.has("max")) {
+      const progress = this.shadowRoot?.querySelector<HTMLElement>(".progress");
+      progress?.style.setProperty("--_value", `${(this.value / this.max) * 100}%`);
+      progress?.style.setProperty("--_buffer-value", `${(this.bufferValue / this.max) * 100}%`);
+    }
   }
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="progress" aria-hidden="true">
-      <div
-        class="wrapper"
-        style=${safeStyleMap({
-          "--_value": `${this.value}`,
-          "--_buffer-value": `${this.bufferValue}`,
-          "--_max": `${this.max}`,
-        })}
+    const clampedValue = Math.max(0, Math.min(this.value, this.max));
+    const activeWidth = (clampedValue / this.max) * this.clientWidth;
+    const waveWidth =
+      this.mode === "indeterminate" || this.mode === "query" ? this.clientWidth : activeWidth + this.#wavelength * 3;
+
+    const wave =
+      this.variant === "wavy" && this.#strokeWidth > 0 && this.#amplitude > 0 && this.#wavelength > 0
+        ? this.#drawWavyPath(waveWidth)
+        : undefined;
+
+    return html`<div
+        class="progress"
+        aria-hidden="true"
+        style="${safeStyleMap({
+          "--_translate-x": `-${activeWidth}px`,
+        })}"
       >
-        <svg width="100%" height="4" class="background element">
-          <defs>
-            <pattern id="${this.#patternId}" x="4" y="0" width="8" height="4" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="2" />
-            </pattern>
-          </defs>
-          <rect fill="${this.#patternFill}" width="100%" height="100%" />
-        </svg>
-        <div class="buffer element"></div>
-        <div class="primary fill element"></div>
-        <div class="secondary fill element"></div>
+        <div
+          class="track"
+          style="${safeStyleMap({
+            maskImage:
+              (this.mode === "indeterminate" || this.mode === "query") && wave
+                ? resolveFragmentUrl(`${this.#maskId}-inverse`)
+                : "",
+          })}"
+        ></div>
+        ${(this.mode === "determinate" || this.mode === "buffer") && this.value <= 0
+          ? nothing
+          : html`<div class="primary">
+                ${wave && (this.mode === "determinate" || this.mode === "buffer")
+                  ? this.#renderWave(waveWidth, wave.height, wave.viewBox, wave.path)
+                  : nothing}
+              </div>
+              ${this.mode === "determinate" || this.mode === "buffer" ? html`<div class="gap"></div>` : nothing}`}
+        ${this.mode !== "buffer" || this.bufferValue > 0 ? html`<div class="secondary"></div>` : nothing}
+        ${this.mode === "buffer" && this.bufferValue > 0 ? html`<div class="gap"></div>` : nothing}
+        ${this.mode === "buffer" ? html`<div class="buffer"></div>` : nothing}
+        ${(this.mode === "determinate" || this.mode === "buffer") && this.value > 0
+          ? html`<div class="gap"></div>
+              <div class="stop"></div>`
+          : nothing}
+        ${wave && !(this.mode === "determinate" || this.mode === "buffer")
+          ? this.#renderWave(waveWidth, wave.height, wave.viewBox, wave.path)
+          : nothing}
       </div>
-    </div>`;
+      ${this.#renderResizeObservedElements()}`;
+  }
+
+  /** @private */
+  #renderWave(width: number, height: number, viewBox: string, path: string): unknown {
+    const masked = this.mode === "indeterminate" || this.mode === "query";
+    if (!masked && this.value / this.max === 1) {
+      return html`<div class="complete"></div>`;
+    }
+    return html`<svg class="wave" width="${width}" height="${height}" viewBox="${viewBox}" preserveAspectRatio="none">
+      ${masked
+        ? svg`
+        <mask id="${this.#maskId}" maskUnits="userSpaceOnUse">
+          <rect width="${width}" height="${height}" fill="black" />
+          <rect class="primary" height="${height}" fill="white" />
+          <rect class="secondary" height="${height}" fill="white" />
+        </mask>
+        <mask id="${`${this.#maskId}-inverse`}" maskUnits="userSpaceOnUse">
+          <rect width="${width}" height="${height}" fill="white" />
+          <rect class="primary" height="${height}" fill="black" />
+          <rect class="secondary" height="${height}" fill="black" />
+        </mask>`
+        : nothing}
+      <g mask="${masked ? resolveFragmentUrl(this.#maskId) : ""}">
+        <path d="${path}" stroke="currentColor" stroke-width=${this.#strokeWidth} fill="none" stroke-linecap="round" />
+      </g>
+    </svg>`;
+  }
+
+  /** @private */
+  #renderResizeObservedElements(): unknown {
+    return html`<div class="stroke" aria-hidden="true"></div>
+      <div class="amplitude-and-wavelength" aria-hidden="true"></div>`;
+  }
+
+  /** @private */
+  #updateStroke(): void {
+    const element = this.shadowRoot?.querySelector<HTMLElement>(".stroke");
+    if (element) {
+      this.#strokeWidth = element.clientHeight;
+    }
+  }
+
+  /** @private */
+  #updateAmplitudeAndWavelength(): void {
+    const element = this.shadowRoot?.querySelector<HTMLElement>(".amplitude-and-wavelength");
+    if (element) {
+      this.#amplitude = element.clientHeight;
+      this.#wavelength = element.clientWidth;
+    }
+  }
+
+  /** @private */
+  #drawWavyPath(width: number, phase: number = 0) {
+    const amplitude = this.#amplitude + this.#strokeWidth / 2;
+    const y = amplitude;
+
+    const path: string[] = [];
+    const step = this.#wavelength / 2;
+    let x = 0;
+
+    path.push(`M ${x},${y}`);
+
+    while (x <= width) {
+      const endX = x + step;
+      const endY = y + amplitude * Math.sin((2 * Math.PI * endX) / this.#wavelength + phase);
+      const cpX = x + step / 2;
+      const cpY = y + amplitude * Math.sin((2 * Math.PI * (x + step / 2)) / this.#wavelength + phase);
+
+      path.push(`Q ${cpX},${cpY} ${endX},${endY}`);
+      x += step;
+    }
+
+    const padding = 1;
+    const viewBox = `0 ${-padding} ${width} ${amplitude * 2 + padding * 2}`;
+
+    return { path: path.join(" "), viewBox, height: this.#strokeWidth + this.#amplitude * 2, padding };
   }
 }
 

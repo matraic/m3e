@@ -1,3 +1,4 @@
+export * from "./AnimationLoopController";
 export * from "./FocusController";
 export * from "./HoverController";
 export * from "./IntersectionController";

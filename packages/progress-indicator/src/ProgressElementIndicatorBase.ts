@@ -3,6 +3,8 @@ import { property } from "lit/decorators.js";
 
 import { AttachInternals, Role } from "@m3e/core";
 
+import { ProgressIndicatorVariant } from "./ProgressIndicatorVariant";
+
 /** A base implementation for an element used to convey progress. This class must be inherited. */
 export abstract class ProgressElementIndicatorBase extends AttachInternals(Role(LitElement, "progressbar"), true) {
   /** The styles of the element. */
@@ -26,6 +28,12 @@ export abstract class ProgressElementIndicatorBase extends AttachInternals(Role(
    * @default 100
    */
   @property({ type: Number }) max = 100;
+
+  /**
+   * The appearance of the indicator.
+   * @default "flat"
+   */
+  @property({ reflect: true }) variant: ProgressIndicatorVariant = "flat";
 
   /** @inheritdoc */
   override connectedCallback(): void {

@@ -7,4 +7,5 @@ export * from "./hasAssignedNodes";
 export * from "./interceptProperty";
 export * from "./prefersReducedMotion";
 export * from "./resolveElementById";
+export * from "./resolveFragmentUrl";
 export * from "./scrollIntoViewIfNeeded";
