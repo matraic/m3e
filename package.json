@@ -44,7 +44,6 @@
     "packages/toolbar",
     "packages/tooltip",
     "packages/paginator",
-    "packages/calendar",
     "packages/all"
   ],
   "scripts": {
