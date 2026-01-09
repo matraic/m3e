@@ -230,12 +230,21 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
       }
       :host([mode="determinate"]) .secondary,
       :host([mode="buffer"]) .secondary,
-      :host([mode="indeterminate"]) .track,
-      :host([mode="query"]) .track {
+      :host([variant="flat"][mode="indeterminate"]) .track,
+      :host([variant="flat"][mode="query"]) .track {
         background-color: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
       }
-      :host([mode="indeterminate"]) .track,
-      :host([mode="query"]) .track {
+      :host([variant="wavy"][mode="indeterminate"]) .track,
+      :host([variant="wavy"][mode="query"]) .track {
+        color: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
+      }
+      :host([variant="wavy"][mode="indeterminate"]) .track,
+      :host([variant="wavy"][mode="query"]) .track {
+        y: calc(50% - calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) / 2));
+        border-radius: inherit;
+      }
+      :host([variant="flat"][mode="indeterminate"]) .track,
+      :host([variant="flat"][mode="query"]) .track {
         position: absolute;
         margin: auto;
         top: calc(50% - calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) / 2));
@@ -410,15 +419,7 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
           "--_translate-x": `-${activeWidth}px`,
         })}"
       >
-        <div
-          class="track"
-          style="${safeStyleMap({
-            maskImage:
-              (this.mode === "indeterminate" || this.mode === "query") && wave
-                ? resolveFragmentUrl(`${this.#maskId}-inverse`)
-                : "",
-          })}"
-        ></div>
+        ${!wave ? html`<div class="track"></div>` : nothing}
         ${(this.mode === "determinate" || this.mode === "buffer") && this.value <= 0
           ? nothing
           : html`<div class="primary">
@@ -459,11 +460,14 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
           <rect width="${width}" height="${height}" fill="white" />
           <rect class="primary" height="${height}" fill="black" />
           <rect class="secondary" height="${height}" fill="black" />
-        </mask>`
-        : nothing}
-      <g mask="${masked ? resolveFragmentUrl(this.#maskId) : ""}">
-        <path d="${path}" stroke="currentColor" stroke-width=${this.#strokeWidth} fill="none" stroke-linecap="round" />
-      </g>
+        </mask>
+        <g mask="${resolveFragmentUrl(this.#maskId)}">
+          <path d="${path}" stroke="currentColor" stroke-width=${this.#strokeWidth} fill="none" stroke-linecap="round" />
+        </g>
+        <g mask="${resolveFragmentUrl(`${this.#maskId}-inverse`)}">
+          <rect class="track" width="100%" height="${this.#strokeWidth}" fill="currentColor" />
+        </g>`
+        : svg`<path d="${path}" stroke="currentColor" stroke-width=${this.#strokeWidth} fill="none" stroke-linecap="round" />`}
     </svg>`;
   }
 
