@@ -89,6 +89,7 @@ export class M3eTextareaAutosizeElement extends HtmlFor(Role(LitElement, "none")
       control.addEventListener("blur", this.#focusHandler);
       control.addEventListener("input", this.#inputHandler);
       window.addEventListener("resize", this.#windowResizeHandler);
+      this.resizeToFitContent(true);
     }
   }
 
