@@ -127,11 +127,11 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
         animation: wavy-spin ${WAVY_INDETERMINATE_DURATION}s linear infinite;
       }
       .left {
-        overflow: hidden;
+        clip-path: inset(0);
         inset: 0 50% 0 0;
       }
       .right {
-        overflow: hidden;
+        clip-path: inset(0);
         inset: 0 0 0 50%;
       }
       .circle {
