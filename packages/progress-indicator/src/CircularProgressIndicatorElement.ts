@@ -59,7 +59,6 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
         position: relative;
         align-items: center;
         justify-content: center;
-        contain: strict;
       }
       .progress {
         --_arc-duration: 1333ms;
@@ -109,9 +108,6 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
       }
       :host([variant="wavy"]) {
         width: var(--m3e-circular-wavy-progress-indicator-diameter, 3rem);
-      }
-      :host([variant="flat"][indeterminate]) {
-        content-visibility: auto;
       }
       :host([variant="flat"][indeterminate]) .progress {
         animation: linear infinite linear-rotate;
@@ -333,7 +329,7 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
       return html`<div class="progress" aria-hidden="true">
           <div class="spinner">
             <div class="left">
-              <svg viewBox="${left.viewBox}" class="circle">
+              <svg width="${left.size}" height="${left.size}" viewBox="${left.viewBox}" class="circle">
                 <path
                   class="active-track"
                   d="${left.path}"
@@ -345,7 +341,7 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
               </svg>
             </div>
             <div class="right">
-              <svg viewBox="${right.viewBox}" class="circle">
+              <svg width="${right.size}" height="${right.size}" viewBox="${right.viewBox}" class="circle">
                 <path
                   class="active-track"
                   d="${right.path}"
@@ -371,7 +367,7 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
     const inactive = this.#drawArc({ gap: degrees > 0 ? this.#strokeWidth : 0, startAngle: degrees, endAngle: 360 });
 
     return html`<div class="progress" aria-hidden="true">
-        <svg viewBox="${active.viewBox}">
+        <svg width="${active.size}" height="${active.size}" viewBox="${active.viewBox}">
           ${degrees > 0
             ? svg`<path
             class="active-track"
@@ -609,8 +605,9 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
     const end = this.#polarToCartesian(circle, startAngle);
 
     const path = `M ${start.x} ${start.y} A ${circle.r} ${circle.r} 0 ${endAngle - startAngle <= 180 ? "0" : "1"} 0 ${end.x} ${end.y}`;
-    const viewBox = `0 0 ${this.#diameter + circle.padding * 2} ${this.#diameter + circle.padding * 2}`;
-    return { path, viewBox };
+    const size = this.#diameter + circle.padding * 2;
+    const viewBox = `0 0 ${size} ${size}`;
+    return { path, viewBox, size: size - circle.padding * 2 };
   }
 
   /** @private */
