@@ -36,6 +36,7 @@ Planned components which have not yet entered development:
 
 ## 🏛️ Past Milestones
 
+- 1.1.4 - 1.1.6: Bug fixes
 - 1.1.3: Bug fixes, added wavy appearance variant to @m3e/progress-indicator
 - 1.1.1 - 1.1.2: Bug fixes
 - 1.1.0: Added @m3e/paginator, bundle size reductions, RTL layout fixes
