@@ -17,6 +17,15 @@ window.addEventListener("message", (e) => {
       break;
 
     case "color-scheme-change":
+      switch (e.data.scheme) {
+        case "light":
+        case "dark":
+          document.documentElement.style.colorScheme = e.data.scheme;
+          break;
+        default:
+          document.documentElement.style.colorScheme = "";
+          break;
+      }
       document.querySelector("m3e-theme").scheme = e.data.scheme;
       break;
 

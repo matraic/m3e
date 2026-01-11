@@ -43,15 +43,19 @@ window.addEventListener("DOMContentLoaded", () => {
   if (colorSchemeButton) {
     colorSchemeButton?.addEventListener("change", () => {
       const theme = document.querySelector("m3e-theme");
-      theme.scheme = colorSchemeButton.value;
 
       const frame = document.querySelector("#content-frame");
-      switch (theme.scheme) {
+      switch (colorSchemeButton.value) {
         case "light":
         case "dark":
-          frame.contentDocument.documentElement.style.colorScheme = theme.scheme;
+          document.documentElement.style.colorScheme = frame.contentDocument.documentElement.style.colorScheme =
+            colorSchemeButton.value;
+          break;
+        default:
+          document.documentElement.style.colorScheme = frame.contentDocument.documentElement.style.colorScheme = "";
           break;
       }
+      theme.scheme = colorSchemeButton.value;
       frame.contentWindow.postMessage({ type: "color-scheme-change", scheme: theme.scheme }, "*");
     });
   }
