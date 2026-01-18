@@ -51,6 +51,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * @slot trailing-supporting-text - Renders the trailing supporting text of the list item.
  * @slot toggle-icon - Renders a custom icon for the expand/collapse toggle.
  * @slot items - Container for child list items displayed when expanded.
+ * @slot trailing-icon - This component does not expose the base trailing icon slot.
  *
  * @attr disabled - Whether the element is disabled.
  * @attr open - Whether the item is expanded.
@@ -145,7 +146,7 @@ export class M3eExpandableListItem extends M3eListItemElement {
       transition: ${unsafeCSS(
         `margin-bottom 
         var(--m3e-expandable-list-item-bounce-duration, ${DesignToken.motion.duration.medium1})
-        ${DesignToken.motion.easing.standard}`
+        ${DesignToken.motion.easing.standard}`,
       )};
     }
     .toggle-container {
