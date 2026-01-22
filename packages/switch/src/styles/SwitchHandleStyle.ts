@@ -20,7 +20,7 @@ export const SwitchHandleStyle = css`
       `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard},
       transform var(--_switch-handle-effect),
       width ${DesignToken.motion.spring.fastEffects},
-      height ${DesignToken.motion.spring.fastEffects}`
+      height ${DesignToken.motion.spring.fastEffects}`,
     )};
   }
   .track:not(.pressed) .handle {
@@ -86,13 +86,15 @@ export const SwitchHandleStyle = css`
   }
   :host(:not(:dir(rtl))[checked]) .track:not(.pressed) .handle {
     transform: translateX(
-      calc(${SwitchToken.trackWidth} - ${SwitchToken.selectedHandleWidth} - ${SwitchToken.trackOutlineWidth})
+      calc(${SwitchToken.trackWidth} - ${SwitchToken.selectedHandleWidth} - calc(${SwitchToken.trackOutlineWidth} * 2))
     );
   }
   :host(:dir(rtl)[checked]) .track:not(.pressed) .handle {
     transform: translateX(
       calc(
-        0px - calc(${SwitchToken.trackWidth} - ${SwitchToken.selectedHandleWidth} - ${SwitchToken.trackOutlineWidth})
+        0px - calc(
+            ${SwitchToken.trackWidth} - ${SwitchToken.selectedHandleWidth} - calc(${SwitchToken.trackOutlineWidth} * 2)
+          )
       )
     );
   }
@@ -136,7 +138,7 @@ export const SwitchHandleStyle = css`
       transition: ${unsafeCSS(
         `transform var(--_switch-handle-effect),
       width ${DesignToken.motion.spring.fastEffects},
-      height ${DesignToken.motion.spring.fastEffects}`
+      height ${DesignToken.motion.spring.fastEffects}`,
       )};
     }
     :host(:not([aria-disabled="true"]):not([checked]):not(:focus):not(:hover)) .track:not(.pressed) .handle,

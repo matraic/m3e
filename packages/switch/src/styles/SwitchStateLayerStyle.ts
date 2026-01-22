@@ -1,4 +1,6 @@
-import { css } from "lit";
+import { css, unsafeCSS } from "lit";
+
+import { DesignToken } from "@m3e/core";
 
 import { SwitchToken } from "./SwitchToken";
 
@@ -11,6 +13,11 @@ export const SwitchStateLayerStyle = css`
     width: ${SwitchToken.stateLayerSize};
     height: ${SwitchToken.stateLayerSize};
     border-radius: ${SwitchToken.stateLayerShape};
+    transition: ${unsafeCSS(
+      `top ${DesignToken.motion.spring.fastEffects},
+          left ${DesignToken.motion.spring.fastEffects},
+          right ${DesignToken.motion.spring.fastEffects}`,
+    )};
   }
   :host(:not([checked])[icons="both"]) .track:not(.pressed) .state-layer {
     inset-inline-start: calc(0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.withIconHandleWidth}) / 2));
