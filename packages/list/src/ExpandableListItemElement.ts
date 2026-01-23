@@ -42,16 +42,13 @@ import { M3eListItemElement } from "./ListItemElement";
  * @tag m3e-expandable-list-item
  *
  * @slot - Renders the content of the list item.
- * @slot video - Renders the leading video of the list item.
- * @slot image - Renders the leading image of the list item.
- * @slot avatar - Renders the leading avatar of the list item.
- * @slot leading-icon - Renders the leading icon of the list item.
+ * @slot leading - Renders the leading content of the list item.
  * @slot overline - Renders the overline of the list item.
  * @slot supporting-text - Renders the supporting text of the list item.
- * @slot trailing-supporting-text - Renders the trailing supporting text of the list item.
+ * @slot trailing-text - Renders the trailing supporting text of the list item.
  * @slot toggle-icon - Renders a custom icon for the expand/collapse toggle.
  * @slot items - Container for child list items displayed when expanded.
- * @slot trailing-icon - This component does not expose the base trailing icon slot.
+ * @slot trailing - This component does not expose the base trailing slot.
  *
  * @attr disabled - Whether the element is disabled.
  * @attr open - Whether the item is expanded.
@@ -61,7 +58,6 @@ import { M3eListItemElement } from "./ListItemElement";
  * @fires closing - Emitted when the item begins to close.
  * @fires closed - Emitted when the item has closed.
  *
- * @cssprop --m3e-expandable-list-item-toggle-icon-container-height - Height of the toggle icon container.
  * @cssprop --m3e-expandable-list-item-toggle-icon-container-width - Width of the toggle icon container.
  * @cssprop --m3e-expandable-list-item-toggle-icon-container-shape - Border radius of the toggle icon container.
  * @cssprop --m3e-expandable-list-item-toggle-icon-size - Size of the toggle icon.
@@ -69,7 +65,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-expandable-list-item-bounce-duration - Duration of the bounce animation when expanding.
  * @cssprop --m3e-expandable-list-item-bounce-factor - Multiplication factor for the bounce effect.
  * @cssprop --m3e-expandable-list-item-expand-duration - Duration of the expand/collapse animation.
- * @cssprop --m3e-list-item-spacing - Horizontal gap between elements.
+ * @cssprop --m3e-list-item-between-space - Horizontal gap between elements.
  * @cssprop --m3e-list-item-padding-inline - Horizontal padding for the list item.
  * @cssprop --m3e-list-item-padding-block - Vertical padding for the list item.
  * @cssprop --m3e-list-item-height - Minimum height of the list item.
@@ -85,17 +81,17 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-supporting-text-font-weight - Font weight for supporting text slot.
  * @cssprop --m3e-list-item-supporting-text-line-height - Line height for supporting text slot.
  * @cssprop --m3e-list-item-supporting-text-tracking - Letter spacing for supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-font-size - Font size for trailing supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-font-weight - Font weight for trailing supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-line-height - Line height for trailing supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-tracking - Letter spacing for trailing supporting text slot.
+ * @cssprop --m3e-list-item-trailing-text-font-size - Font size for trailing supporting text slot.
+ * @cssprop --m3e-list-item-trailing-text-font-weight - Font weight for trailing supporting text slot.
+ * @cssprop --m3e-list-item-trailing-text-line-height - Line height for trailing supporting text slot.
+ * @cssprop --m3e-list-item-trailing-text-tracking - Letter spacing for trailing supporting text slot.
  * @cssprop --m3e-list-item-icon-size - Size for leading/trailing icons.
  * @cssprop --m3e-list-item-label-text-color - Color for the main content.
  * @cssprop --m3e-list-item-overline-color - Color for the overline slot.
  * @cssprop --m3e-list-item-supporting-text-color - Color for the supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-color - Color for the trailing supporting text slot.
- * @cssprop --m3e-list-item-leading-icon-color - Color for the leading icon.
- * @cssprop --m3e-list-item-trailing-icon-color - Color for the trailing icon.
+ * @cssprop --m3e-list-item-trailing-text-color - Color for the trailing supporting text slot.
+ * @cssprop --m3e-list-item-leading-color - Color for the leading content.
+ * @cssprop --m3e-list-item-trailing-color - Color for the trailing content.
  * @cssprop --m3e-list-item-container-color - Background color of the list item.
  * @cssprop --m3e-list-item-container-shape - Border radius of the list item.
  * @cssprop --m3e-list-item-hover-container-shape - Border radius of the list item on hover.
@@ -106,35 +102,28 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-image-width - Width of the image slot.
  * @cssprop --m3e-list-item-image-height - Height of the image slot.
  * @cssprop --m3e-list-item-image-shape - Border radius of the image slot.
- * @cssprop --m3e-list-item-avatar-size - Size of the avatar slot.
- * @cssprop --m3e-list-item-avatar-shape - Border radius of the avatar slot.
- * @cssprop --m3e-list-item-avatar-font-size - Font size for avatar slot.
- * @cssprop --m3e-list-item-avatar-font-weight - Font weight for avatar slot.
- * @cssprop --m3e-list-item-avatar-line-height - Line height for avatar slot.
- * @cssprop --m3e-list-item-avatar-tracking - Letter spacing for avatar slot.
- * @cssprop --m3e-list-item-avatar-color - Background color of the avatar slot.
- * @cssprop --m3e-list-item-avatar-label-color - Text color of the avatar slot.
  * @cssprop --m3e-list-item-disabled-label-text-color - Color for the main content when disabled.
  * @cssprop --m3e-list-item-disabled-label-text-opacity - Opacity for the main content when disabled.
  * @cssprop --m3e-list-item-disabled-overline-color - Color for the overline slot when disabled.
  * @cssprop --m3e-list-item-disabled-overline-opacity - Opacity for the overline slot when disabled.
  * @cssprop --m3e-list-item-disabled-supporting-text-color - Color for the supporting text slot when disabled.
  * @cssprop --m3e-list-item-disabled-supporting-text-opacity - Opacity for the supporting text slot when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-supporting-text-color - Color for the trailing supporting text slot when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-supporting-text-opacity - Opacity for the trailing supporting text slot when disabled.
- * @cssprop --m3e-list-item-disabled-leading-icon-color - Color for the leading icon when disabled.
- * @cssprop --m3e-list-item-disabled-leading-icon-opacity - Opacity for the leading icon when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-icon-color - Color for the trailing icon when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-icon-opacity - Opacity for the trailing icon when disabled.
+ * @cssprop --m3e-list-item-disabled-trailing-text-color - Color for the trailing supporting text slot when disabled.
+ * @cssprop --m3e-list-item-disabled-trailing-text-opacity - Opacity for the trailing supporting text slot when disabled.
+ * @cssprop --m3e-list-item-disabled-leading-color - Color for the leading icon when disabled.
+ * @cssprop --m3e-list-item-disabled-leading-opacity - Opacity for the leading icon when disabled.
+ * @cssprop --m3e-list-item-disabled-trailing-color - Color for the trailing icon when disabled.
+ * @cssprop --m3e-list-item-disabled-trailing-opacity - Opacity for the trailing icon when disabled.
  * @cssprop --m3e-list-item-hover-state-layer-color - Color for the hover state layer.
  * @cssprop --m3e-list-item-hover-state-layer-opacity - Opacity for the hover state layer.
  * @cssprop --m3e-list-item-focus-state-layer-color - Color for the focus state layer.
  * @cssprop --m3e-list-item-focus-state-layer-opacity - Opacity for the focus state layer.
  * @cssprop --m3e-list-item-pressed-state-layer-color - Color for the pressed state layer.
  * @cssprop --m3e-list-item-pressed-state-layer-opacity - Opacity for the pressed state layer.
- * @cssprop --m3e-segmented-list-container-shape - Border radius of the segmented list container shape.
- * @cssprop --m3e-segmented-list-segment-gap - Gap between list item segments.
- * @cssprop --m3e-list-item-leading-media-top-offset - Top offset for leading media in multiline items.
+ * @cssprop --m3e-expressive-list-container-shape - Border radius of the segmented list container shape.
+ * @cssprop --m3e-list-segmented-gap - Gap between list item segments.
+ * @cssprop --m3e-list-item-three-line-top-offset - Top offset for media in three line items.
+ * @cssprop --m3e-list-item-disabled-media-opacity - Opacity for media when disabled.
  */
 @customElement("m3e-expandable-list-item")
 export class M3eExpandableListItem extends M3eListItemElement {
@@ -153,10 +142,12 @@ export class M3eExpandableListItem extends M3eListItemElement {
       display: flex;
       align-items: center;
       justify-content: center;
-      vertical-align: middle;
-      height: var(--m3e-expandable-list-item-toggle-icon-container-height, 2.5rem);
+      align-self: stretch;
       width: var(--m3e-expandable-list-item-toggle-icon-container-width, 2rem);
       border-radius: var(--m3e-expandable-list-item-toggle-icon-container-shape, ${DesignToken.shape.corner.full});
+      transition: ${unsafeCSS(
+        `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
+      )};
     }
     .toggle {
       display: flex;
@@ -164,7 +155,7 @@ export class M3eExpandableListItem extends M3eListItemElement {
       justify-content: center;
       vertical-align: middle;
       font-size: var(--m3e-expandable-list-item-toggle-icon-size, 1.5rem);
-      transition: ${unsafeCSS(`transform ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}`)};
+      transition: ${unsafeCSS(`transform ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`)};
     }
     .toggle svg,
     ::slotted(svg[slot="toggle-icon"]) {
@@ -181,20 +172,11 @@ export class M3eExpandableListItem extends M3eListItemElement {
       transform: rotate(180deg);
     }
     :host([open]) .header {
-      border-top-left-radius: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
-      border-top-right-radius: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
-    }
-    :host([open]) .header:not(.opening) {
-      margin-bottom: var(--m3e-segmented-list-segment-gap, 0.125rem);
+      --_list-item-top-container-shape: var(--m3e-expressive-list-container-shape, ${DesignToken.shape.corner.large});
+      margin-bottom: var(--m3e-list-segmented-gap, 0.125rem);
     }
     :host([open]) .header.opening {
-      margin-bottom: calc(
-        var(--m3e-segmented-list-segment-gap, 0.125rem) * var(--m3e-expandable-list-item-bounce-factor, 4)
-      );
-    }
-    ::slotted(.-last) {
-      border-bottom-left-radius: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
-      border-bottom-right-radius: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
+      margin-bottom: calc(var(--m3e-list-segmented-gap, 0.125rem) * var(--m3e-expandable-list-item-bounce-factor, 4));
     }
     :host,
     ::slotted([slot="items"]) {
@@ -204,12 +186,55 @@ export class M3eExpandableListItem extends M3eListItemElement {
       box-sizing: border-box;
     }
     ::slotted([slot="items"]) {
-      row-gap: var(--m3e-segmented-list-segment-gap, 0.125rem);
+      row-gap: var(--m3e-list-segmented-gap, 0.125rem);
     }
     .items {
       --m3e-collapsible-animation-duration: var(
         --m3e-expandable-list-item-expand-duration,
         ${DesignToken.motion.duration.medium1}
+      );
+      --m3e-list-item-container-color: var(--m3e-expressive-list-item-container-color, ${DesignToken.color.surface});
+      --m3e-list-item-container-shape: var(
+        --m3e-expressive-list-item-container-shape,
+        ${DesignToken.shape.corner.extraSmall}
+      );
+      --m3e-list-item-hover-container-shape: var(
+        --m3e-expressive-list-item-hover-container-shape,
+        ${DesignToken.shape.corner.medium}
+      );
+      --m3e-list-item-focus-container-shape: var(
+        --m3e-expressive-list-item-focus-container-shape,
+        ${DesignToken.shape.corner.large}
+      );
+      --m3e-list-item-selected-container-shape: var(
+        --m3e-expressive-list-item-selected-container-shape,
+        ${DesignToken.shape.corner.large}
+      );
+      --m3e-list-item-one-line-top-space: var(--m3e-expressive-list-item-top-space, 0.625rem);
+      --m3e-list-item-one-line-bottom-space: var(--m3e-expressive-list-item-bottom-space, 0.625rem);
+      --m3e-list-item-two-line-top-space: var(--m3e-expressive-list-item-top-space, 0.625rem);
+      --m3e-list-item-two-line-bottom-space: var(--m3e-expressive-list-item-bottom-space, 0.625rem);
+      --m3e-list-item-three-line-top-space: var(--m3e-expressive-list-item-top-space, 0.625rem);
+      --m3e-list-item-three-line-bottom-space: var(--m3e-expressive-list-item-bottom-space, 0.625rem);
+      --m3e-list-item-video-shape: var(--m3e-expressive-list-item-video-shape, ${DesignToken.shape.corner.small});
+      --m3e-list-item-image-shape: var(--m3e-expressive-list-item-image-shape, ${DesignToken.shape.corner.small});
+      --m3e-list-item-between-space: var(--m3e-expressive-list-item-spacing, 0.75rem);
+    }
+    :host([open]) .header {
+      --_list-item-hover-top-container-shape: var(
+        --m3e-expressive-list-container-shape,
+        ${DesignToken.shape.corner.large}
+      );
+      --_list-item-hover-bottom-container-shape: var(
+        --m3e-expressive-list-item-container-shape,
+        ${DesignToken.shape.corner.extraSmall}
+      );
+    }
+    :host([open]) .header,
+    :host([open]) .items {
+      --m3e-list-item-container-color: var(
+        --m3e-expandable-list-item-expanded-container-color,
+        ${DesignToken.color.surface}
       );
     }
     @media (forced-colors: active) {
@@ -217,11 +242,12 @@ export class M3eExpandableListItem extends M3eListItemElement {
         transition: none;
       }
       :host([open]) .header.opening {
-        margin-bottom: var(--m3e-segmented-list-segment-gap, 0.125rem);
+        margin-bottom: var(--m3e-list-segmented-gap, 0.125rem);
       }
     }
     @media (prefers-reduced-motion) {
       .header,
+      .toggle-container,
       .toggle {
         transition: none;
       }
@@ -264,15 +290,12 @@ export class M3eExpandableListItem extends M3eListItemElement {
         aria-controls="${this.#contentId}"
         @click="${this.#handleHeaderClick}"
       >
-        <slot name="video" slot="video" @slotchange="${this._handleVideoSlotChange}"></slot>
-        <slot name="image" slot="image" @slotchange="${this._handleImageSlotChange}"></slot>
-        <slot name="avatar" slot="avatar" @slotchange="${this._handleAvatarSlotChange}"></slot>
-        <slot name="leading-icon" slot="leading-icon" @slotchange="${this._handleLeadingIconSlotChange}"></slot>
+        <slot name="leading" slot="leading"></slot>
         <slot name="overline" slot="overline"></slot>
         <slot></slot>
         <slot name="supporting-text" slot="supporting-text"></slot>
-        <slot name="trailing-supporting-text" slot="trailing-supporting-text"></slot>
-        <div class="toggle-container" slot="trailing-icon" aria-hidden="true">
+        <slot name="trailing-text" slot="trailing-text"></slot>
+        <div class="toggle-container" slot="trailing" aria-hidden="true">
           <div class="toggle">
             <slot name="toggle-icon">
               <svg viewBox="0 -960 960 960" fill="currentColor">
@@ -312,6 +335,7 @@ export class M3eExpandableListItem extends M3eListItemElement {
     ["opening", "opened", "closing", "closed"].forEach((x) => {
       this.button?.classList.toggle(x, e.type === x);
     });
+
     this.dispatchEvent(new Event(e.type, { bubbles: true }));
   }
 
@@ -321,7 +345,17 @@ export class M3eExpandableListItem extends M3eListItemElement {
       .assignedElements({ flatten: true })
       .flatMap((x) => [...x.childNodes].filter((x) => x instanceof M3eListItemElement));
 
-    this.#items.forEach((x, i) => x.classList.toggle("-last", i === this.#items.length - 1));
+    this.#items.forEach((x, i) => {
+      if (i == this.#items.length - 1) {
+        x.style.setProperty(
+          "--_list-item-bottom-container-shape",
+          `var(--m3e-expressive-list-container-shape, ${DesignToken.shape.corner.large})`,
+        );
+      } else {
+        x.style.removeProperty("--_list-item-bottom-container-shape");
+      }
+    });
+
     this.closest<M3eListElement>("m3e-list, m3e-action-list, m3e-selection-list")?.notifyItemsChange();
   }
 }

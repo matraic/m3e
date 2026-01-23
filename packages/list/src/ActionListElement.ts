@@ -25,13 +25,13 @@ import { M3eListItemElement } from "./ListItemElement";
  *
  * @cssprop --m3e-list-divider-inset-start-size - Start inset for dividers within the list.
  * @cssprop --m3e-list-divider-inset-end-size - End inset for dividers within the list.
- * @cssprop --m3e-segmented-list-segment-gap - Gap between list item segments in segmented variant.
- * @cssprop --m3e-segmented-list-container-shape - Border radius of the segmented list container.
- * @cssprop --m3e-segmented-list-item-container-color - Background color of items in segmented variant.
- * @cssprop --m3e-segmented-list-item-container-shape - Border radius of items in segmented variant.
- * @cssprop --m3e-segmented-list-item-hover-container-shape - Border radius of items in segmented variant on hover.
- * @cssprop --m3e-segmented-list-item-focus-container-shape - Border radius of items in segmented variant on focus.
- * @cssprop --m3e-segmented-list-item-selected-container-shape - Border radius of items in segmented variant when selected.
+ * @cssprop --m3e-list-segmented-gap - Gap between list items in segmented variant.
+ * @cssprop --m3e-expressive-list-container-shape - Border radius of the expressive list container.
+ * @cssprop --m3e-expressive-list-item-container-color - Background color of items in expressive variant.
+ * @cssprop --m3e-expressive-list-item-container-shape - Border radius of items in expressive variant.
+ * @cssprop --m3e-expressive-list-item-hover-container-shape - Border radius of items in expressive variant on hover.
+ * @cssprop --m3e-expressive-list-item-focus-container-shape - Border radius of items in expressive variant on focus.
+ * @cssprop --m3e-expressive-list-item-selected-container-shape - Border radius of items in expressive variant when selected.
  */
 @customElement("m3e-action-list")
 export class M3eActionListElement extends M3eListElement {
@@ -54,7 +54,7 @@ export class M3eActionListElement extends M3eListElement {
           }
 
           const ancestor = expandable.closest<M3eExpandableListItem | M3eActionListElement>(
-            "m3e-expandable-list-item,m3e-action-list"
+            "m3e-expandable-list-item,m3e-action-list",
           );
           if (ancestor instanceof M3eExpandableListItem) {
             expandable = ancestor;
@@ -81,7 +81,7 @@ export class M3eActionListElement extends M3eListElement {
   override async notifyItemsChange(): Promise<void> {
     const items = [
       ...this.querySelectorAll<M3eListActionElement | M3eExpandableListItem>(
-        "m3e-list-action,m3e-expandable-list-item"
+        "m3e-list-action,m3e-expandable-list-item",
       ),
     ];
 
@@ -96,7 +96,7 @@ export class M3eActionListElement extends M3eListElement {
     }
 
     const { added } = this[selectionManager].setItems(
-      items.map((x) => (x instanceof M3eExpandableListItem ? x.button : x.button))
+      items.map((x) => (x instanceof M3eExpandableListItem ? x.button : x.button)),
     );
 
     if (!this[selectionManager].activeItem) {

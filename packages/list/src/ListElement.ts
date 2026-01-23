@@ -27,7 +27,7 @@ import { M3eListItemElement } from "./ListItemElement";
  *    <span slot="overline">Overline</span>
  *    Headline
  *    <span slot="supporting-text">Supporting text</span>
- *    <span slot="trailing-supporting-text">100+</span>
+ *    <span slot="trailing-text">100+</span>
  *    <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
  *  </m3e-list-item>
  * </m3e-list>
@@ -41,13 +41,13 @@ import { M3eListItemElement } from "./ListItemElement";
  *
  * @cssprop --m3e-list-divider-inset-start-size - Start inset for dividers within the list.
  * @cssprop --m3e-list-divider-inset-end-size - End inset for dividers within the list.
- * @cssprop --m3e-segmented-list-segment-gap - Gap between list item segments in segmented variant.
- * @cssprop --m3e-segmented-list-container-shape - Border radius of the segmented list container.
- * @cssprop --m3e-segmented-list-item-container-color - Background color of items in segmented variant.
- * @cssprop --m3e-segmented-list-item-container-shape - Border radius of items in segmented variant.
- * @cssprop --m3e-segmented-list-item-hover-container-shape - Border radius of items in segmented variant on hover.
- * @cssprop --m3e-segmented-list-item-focus-container-shape - Border radius of items in segmented variant on focus.
- * @cssprop --m3e-segmented-list-item-selected-container-shape - Border radius of items in segmented variant when selected.
+ * @cssprop --m3e-list-segmented-gap - Gap between list items in segmented variant.
+ * @cssprop --m3e-expressive-list-container-shape - Border radius of the expressive list container.
+ * @cssprop --m3e-expressive-list-item-container-color - Background color of items in expressive variant.
+ * @cssprop --m3e-expressive-list-item-container-shape - Border radius of items in expressive variant.
+ * @cssprop --m3e-expressive-list-item-hover-container-shape - Border radius of items in expressive variant on hover.
+ * @cssprop --m3e-expressive-list-item-focus-container-shape - Border radius of items in expressive variant on focus.
+ * @cssprop --m3e-expressive-list-item-selected-container-shape - Border radius of items in expressive variant when selected.
  */
 @customElement("m3e-list")
 export class M3eListElement extends Role(LitElement, "list") {
@@ -62,63 +62,62 @@ export class M3eListElement extends Role(LitElement, "list") {
       --m3e-divider-inset-start-size: var(--m3e-list-divider-inset-start-size, 1rem);
       --m3e-divider-inset-end-size: var(--m3e-list-divider-inset-end-size, 1.5rem);
     }
-    :host([variant="segmented"]) {
-      row-gap: var(--m3e-segmented-list-segment-gap, 0.125rem);
-      --m3e-list-item-container-color: var(--m3e-segmented-list-item-container-color, ${DesignToken.color.surface});
+    :host([variant="baseline"]) {
+      --_list-item-leading-video-outset: var(--m3e-list-item-leading-space, 1rem);
+      --_list-item-leading-trailing-outset: var(--m3e-list-item-trailing-space, 1rem);
+    }
+    :host([segmented]) {
+      row-gap: var(--m3e-list-segmented-gap, 0.125rem);
+    }
+    :host([variant="expressive"]) {
+      --m3e-list-item-container-color: var(--m3e-expressive-list-item-container-color, ${DesignToken.color.surface});
       --m3e-list-item-container-shape: var(
-        --m3e-segmented-list-item-container-shape,
+        --m3e-expressive-list-item-container-shape,
         ${DesignToken.shape.corner.extraSmall}
       );
       --m3e-list-item-hover-container-shape: var(
-        --m3e-segmented-list-item-hover-container-shape,
+        --m3e-expressive-list-item-hover-container-shape,
         ${DesignToken.shape.corner.medium}
       );
       --m3e-list-item-focus-container-shape: var(
-        --m3e-segmented-list-item-focus-container-shape,
+        --m3e-expressive-list-item-focus-container-shape,
         ${DesignToken.shape.corner.large}
       );
       --m3e-list-item-selected-container-shape: var(
-        --m3e-segmented-list-item-selected-container-shape,
+        --m3e-expressive-list-item-selected-container-shape,
+        ${DesignToken.shape.corner.large}
+      );
+      --m3e-list-item-video-shape: var(--m3e-expressive-list-item-video-shape, ${DesignToken.shape.corner.small});
+      --m3e-list-item-image-shape: var(--m3e-expressive-list-item-image-shape, ${DesignToken.shape.corner.small});
+      --m3e-list-item-between-space: var(--m3e-expressive-list-item-spacing, 0.75rem);
+    }
+    :host([variant="expressive"]) ::slotted(.-first) {
+      --_list-item-top-container-shape: var(--m3e-expressive-list-container-shape, ${DesignToken.shape.corner.large});
+    }
+    :host([variant="expressive"]) ::slotted(.-last) {
+      --_list-item-bottom-container-shape: var(
+        --m3e-expressive-list-container-shape,
         ${DesignToken.shape.corner.large}
       );
     }
-    :host([variant="segmented"]) ::slotted(.-first) {
-      --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
-    }
-    :host([variant="segmented"]) ::slotted(.-last) {
-      --_list-item-bottom-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
-    }
-    :host([variant="segmented"]) ::slotted(m3e-divider) {
+    :host([segmented]) ::slotted(m3e-divider) {
       display: none;
-    }
-    :host(.-has-video),
-    :host(.-has-image),
-    :host(.-has-avatar),
-    :host(.-has-leading-icon) {
-      --_list-item-reserved-leading-display: block;
-    }
-    :host(.-has-video) {
-      --_list-item-reserved-leading-size: var(--m3e-list-item-video-width, 6.25rem);
-    }
-    :host(.-has-image) {
-      --_list-item-reserved-leading-size: var(--m3e-list-item-image-width, 3.5rem);
-    }
-    :host(.-has-avatar) {
-      --_list-item-reserved-leading-size: var(--m3e-list-item-avatar-size, 2.5rem);
-    }
-    :host(.-has-leading-icon) {
-      --_list-item-reserved-leading-size: var(--m3e-list-item-icon-size, 1.5rem);
     }
   `;
 
   /** @private */ #items = new Array<M3eListItemElement>();
-  /** @private */ #leadingSlots = { video: 0, image: 0, avatar: 0, icon: 0 };
 
   /**
    * The appearance variant of the list.
-   * @default "standard"
+   * @default "expressive"
    */
-  @property() variant: ListVariant = "standard";
+  @property({ reflect: true }) variant: ListVariant = "expressive";
+
+  /**
+   * Whether items in the list are separated by a gap.
+   * @default false
+   */
+  @property({ type: Boolean, reflect: true }) segmented = false;
 
   /** The items of the list. */
   get items(): ReadonlyArray<M3eListItemElement> {
@@ -149,31 +148,6 @@ export class M3eListElement extends Role(LitElement, "list") {
    * Notifies the list that items have changed.
    */
   notifyItemsChange(): void {}
-
-  /**
-   * @internal
-   * Notifies the list of a change to leading content slotted in a list item.
-   * @param type The type of leading slot that changed.
-   * @param {boolean} hasContent Whether content exists for the slot.
-   */
-  notifyItemLeadingSlotChange(slot: "video" | "image" | "avatar" | "icon", hasContent: boolean) {
-    this.#leadingSlots[slot] += hasContent ? 1 : -1;
-    let leadingSlot: "video" | "image" | "avatar" | "icon" | undefined = undefined;
-    if (this.#leadingSlots.video > 0) {
-      leadingSlot = "video";
-    } else if (this.#leadingSlots.image > 0) {
-      leadingSlot = "image";
-    } else if (this.#leadingSlots.avatar > 0) {
-      leadingSlot = "avatar";
-    } else if (this.#leadingSlots.icon > 0) {
-      leadingSlot = "icon";
-    }
-
-    this.classList.toggle("-has-video", leadingSlot == "video");
-    this.classList.toggle("-has-image", leadingSlot == "image");
-    this.classList.toggle("-has-avatar", leadingSlot == "avatar");
-    this.classList.toggle("-has-leading-icon", leadingSlot == "icon");
-  }
 }
 
 declare global {

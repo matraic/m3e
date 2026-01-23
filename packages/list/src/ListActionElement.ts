@@ -1,13 +1,12 @@
 import { css, CSSResultGroup, html } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 
 import { LinkButton } from "@m3e/core";
-
 import { selectionManager } from "@m3e/core/a11y";
 
 import { M3eListItemElement } from "./ListItemElement";
 import { M3eListItemButtonElement } from "./ListItemButtonElement";
-import { ifDefined } from "lit/directives/if-defined.js";
 
 /**
  * An item in a list that performs an action.
@@ -20,14 +19,11 @@ import { ifDefined } from "lit/directives/if-defined.js";
  * @tag m3e-list-action
  *
  * @slot - Renders the content of the list item.
- * @slot video - Renders the leading video of the list item.
- * @slot image - Renders the leading image of the list item.
- * @slot avatar - Renders the leading avatar of the list item.
- * @slot leading-icon - Renders the leading icon of the list item.
+ * @slot leading - Renders the leading content of the list item.
  * @slot overline - Renders the overline of the list item.
  * @slot supporting-text - Renders the supporting text of the list item.
- * @slot trailing-supporting-text - Renders the trailing supporting text of the list item.
- * @slot trailing-icon - Renders the trailing icon of the list item.
+ * @slot trailing-text - Renders the trailing supporting text of the list item.
+ * @slot trailing - Renders the trailing content of the list item.
  *
  * @attr disabled - Whether the element is disabled.
  * @attr download - A value indicating whether the `target` of the link button will be downloaded, optionally specifying the new name of the file.
@@ -37,7 +33,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
  *
  * @fires click - Emitted when the element is clicked.
  *
- * @cssprop --m3e-list-item-spacing - Horizontal gap between elements.
+ * @cssprop --m3e-list-item-between-space - Horizontal gap between elements.
  * @cssprop --m3e-list-item-padding-inline - Horizontal padding for the list item.
  * @cssprop --m3e-list-item-padding-block - Vertical padding for the list item.
  * @cssprop --m3e-list-item-height - Minimum height of the list item.
@@ -53,17 +49,17 @@ import { ifDefined } from "lit/directives/if-defined.js";
  * @cssprop --m3e-list-item-supporting-text-font-weight - Font weight for supporting text slot.
  * @cssprop --m3e-list-item-supporting-text-line-height - Line height for supporting text slot.
  * @cssprop --m3e-list-item-supporting-text-tracking - Letter spacing for supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-font-size - Font size for trailing supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-font-weight - Font weight for trailing supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-line-height - Line height for trailing supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-tracking - Letter spacing for trailing supporting text slot.
+ * @cssprop --m3e-list-item-trailing-text-font-size - Font size for trailing supporting text slot.
+ * @cssprop --m3e-list-item-trailing-text-font-weight - Font weight for trailing supporting text slot.
+ * @cssprop --m3e-list-item-trailing-text-line-height - Line height for trailing supporting text slot.
+ * @cssprop --m3e-list-item-trailing-text-tracking - Letter spacing for trailing supporting text slot.
  * @cssprop --m3e-list-item-icon-size - Size for leading/trailing icons.
  * @cssprop --m3e-list-item-label-text-color - Color for the main content.
  * @cssprop --m3e-list-item-overline-color - Color for the overline slot.
  * @cssprop --m3e-list-item-supporting-text-color - Color for the supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-color - Color for the trailing supporting text slot.
- * @cssprop --m3e-list-item-leading-icon-color - Color for the leading icon.
- * @cssprop --m3e-list-item-trailing-icon-color - Color for the trailing icon.
+ * @cssprop --m3e-list-item-trailing-text-color - Color for the trailing supporting text slot.
+ * @cssprop --m3e-list-item-leading-color - Color for the leading content.
+ * @cssprop --m3e-list-item-trailing-color - Color for the trailing content.
  * @cssprop --m3e-list-item-container-color - Background color of the list item.
  * @cssprop --m3e-list-item-container-shape - Border radius of the list item.
  * @cssprop --m3e-list-item-hover-container-shape - Border radius of the list item on hover.
@@ -74,33 +70,26 @@ import { ifDefined } from "lit/directives/if-defined.js";
  * @cssprop --m3e-list-item-image-width - Width of the image slot.
  * @cssprop --m3e-list-item-image-height - Height of the image slot.
  * @cssprop --m3e-list-item-image-shape - Border radius of the image slot.
- * @cssprop --m3e-list-item-avatar-size - Size of the avatar slot.
- * @cssprop --m3e-list-item-avatar-shape - Border radius of the avatar slot.
- * @cssprop --m3e-list-item-avatar-font-size - Font size for avatar slot.
- * @cssprop --m3e-list-item-avatar-font-weight - Font weight for avatar slot.
- * @cssprop --m3e-list-item-avatar-line-height - Line height for avatar slot.
- * @cssprop --m3e-list-item-avatar-tracking - Letter spacing for avatar slot.
- * @cssprop --m3e-list-item-avatar-color - Background color of the avatar slot.
- * @cssprop --m3e-list-item-avatar-label-color - Text color of the avatar slot.
  * @cssprop --m3e-list-item-disabled-label-text-color - Color for the main content when disabled.
  * @cssprop --m3e-list-item-disabled-label-text-opacity - Opacity for the main content when disabled.
  * @cssprop --m3e-list-item-disabled-overline-color - Color for the overline slot when disabled.
  * @cssprop --m3e-list-item-disabled-overline-opacity - Opacity for the overline slot when disabled.
  * @cssprop --m3e-list-item-disabled-supporting-text-color - Color for the supporting text slot when disabled.
  * @cssprop --m3e-list-item-disabled-supporting-text-opacity - Opacity for the supporting text slot when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-supporting-text-color - Color for the trailing supporting text slot when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-supporting-text-opacity - Opacity for the trailing supporting text slot when disabled.
- * @cssprop --m3e-list-item-disabled-leading-icon-color - Color for the leading icon when disabled.
- * @cssprop --m3e-list-item-disabled-leading-icon-opacity - Opacity for the leading icon when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-icon-color - Color for the trailing icon when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-icon-opacity - Opacity for the trailing icon when disabled.
+ * @cssprop --m3e-list-item-disabled-trailing-text-color - Color for the trailing supporting text slot when disabled.
+ * @cssprop --m3e-list-item-disabled-trailing-text-opacity - Opacity for the trailing supporting text slot when disabled.
+ * @cssprop --m3e-list-item-disabled-leading-color - Color for the leading icon when disabled.
+ * @cssprop --m3e-list-item-disabled-leading-opacity - Opacity for the leading icon when disabled.
+ * @cssprop --m3e-list-item-disabled-trailing-color - Color for the trailing icon when disabled.
+ * @cssprop --m3e-list-item-disabled-trailing-opacity - Opacity for the trailing icon when disabled.
  * @cssprop --m3e-list-item-hover-state-layer-color - Color for the hover state layer.
  * @cssprop --m3e-list-item-hover-state-layer-opacity - Opacity for the hover state layer.
  * @cssprop --m3e-list-item-focus-state-layer-color - Color for the focus state layer.
  * @cssprop --m3e-list-item-focus-state-layer-opacity - Opacity for the focus state layer.
  * @cssprop --m3e-list-item-pressed-state-layer-color - Color for the pressed state layer.
  * @cssprop --m3e-list-item-pressed-state-layer-opacity - Opacity for the pressed state layer.
- * @cssprop --m3e-list-item-leading-media-top-offset - Top offset for leading media in multiline items.
+ * @cssprop --m3e-list-item-three-line-top-offset - Top offset for media in three line items.
+ * @cssprop --m3e-list-item-disabled-media-opacity - Opacity for media when disabled.
  */
 @customElement("m3e-list-action")
 export class M3eListActionElement extends LinkButton(M3eListItemElement) {
@@ -134,15 +123,12 @@ export class M3eListActionElement extends LinkButton(M3eListItemElement) {
       rel="${ifDefined(this.rel || undefined)}"
       @click="${this.#handleClick}"
     >
-      <slot name="video" slot="video" @slotchange="${this._handleVideoSlotChange}"></slot>
-      <slot name="image" slot="image" @slotchange="${this._handleImageSlotChange}"></slot>
-      <slot name="avatar" slot="avatar" @slotchange="${this._handleAvatarSlotChange}"></slot>
-      <slot name="leading-icon" slot="leading-icon" @slotchange="${this._handleLeadingIconSlotChange}"></slot>
+      <slot name="leading" slot="leading"></slot>
       <slot name="overline" slot="overline"></slot>
       <slot></slot>
       <slot name="supporting-text" slot="supporting-text"></slot>
-      <slot name="trailing-supporting-text" slot="trailing-supporting-text"></slot>
-      <slot name="trailing-icon" slot="trailing-icon"></slot>
+      <slot name="trailing-text" slot="trailing-text"></slot>
+      <slot name="trailing" slot="trailing"></slot>
     </m3e-list-item-button>`;
   }
 

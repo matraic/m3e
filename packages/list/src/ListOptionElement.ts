@@ -32,14 +32,11 @@ import { M3eListItemElement } from "./ListItemElement";
  * @tag m3e-list-option
  *
  * @slot - Renders the content of the list item.
- * @slot video - Renders the leading video of the list item.
- * @slot image - Renders the leading image of the list item.
- * @slot avatar - Renders the leading avatar of the list item.
- * @slot leading-icon - Renders the leading icon of the list item.
+ * @slot leading - Renders the leading content of the list item.
  * @slot overline - Renders the overline of the list item.
  * @slot supporting-text - Renders the supporting text of the list item.
- * @slot trailing-supporting-text - Renders the trailing supporting text of the list item.
- * @slot trailing-icon - Renders the trailing icon of the list item.
+ * @slot trailing-text - Renders the trailing supporting text of the list item.
+ * @slot trailing - Renders the trailing content of the list item.
  *
  * @attr disabled - Whether the element is disabled.
  * @attr selected - Whether the element is selected.
@@ -48,7 +45,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * @fires change - Emitted when the selected state changes.
  * @fires click - Emitted when the element is clicked.
  *
- * @cssprop --m3e-list-item-spacing - Horizontal gap between elements.
+ * @cssprop --m3e-list-item-between-space - Horizontal gap between elements.
  * @cssprop --m3e-list-item-padding-inline - Horizontal padding for the list item.
  * @cssprop --m3e-list-item-padding-block - Vertical padding for the list item.
  * @cssprop --m3e-list-item-height - Minimum height of the list item.
@@ -64,17 +61,17 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-supporting-text-font-weight - Font weight for supporting text slot.
  * @cssprop --m3e-list-item-supporting-text-line-height - Line height for supporting text slot.
  * @cssprop --m3e-list-item-supporting-text-tracking - Letter spacing for supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-font-size - Font size for trailing supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-font-weight - Font weight for trailing supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-line-height - Line height for trailing supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-tracking - Letter spacing for trailing supporting text slot.
+ * @cssprop --m3e-list-item-trailing-text-font-size - Font size for trailing supporting text slot.
+ * @cssprop --m3e-list-item-trailing-text-font-weight - Font weight for trailing supporting text slot.
+ * @cssprop --m3e-list-item-trailing-text-line-height - Line height for trailing supporting text slot.
+ * @cssprop --m3e-list-item-trailing-text-tracking - Letter spacing for trailing supporting text slot.
  * @cssprop --m3e-list-item-icon-size - Size for leading/trailing icons.
  * @cssprop --m3e-list-item-label-text-color - Color for the main content.
  * @cssprop --m3e-list-item-overline-color - Color for the overline slot.
  * @cssprop --m3e-list-item-supporting-text-color - Color for the supporting text slot.
- * @cssprop --m3e-list-item-trailing-supporting-text-color - Color for the trailing supporting text slot.
- * @cssprop --m3e-list-item-leading-icon-color - Color for the leading icon.
- * @cssprop --m3e-list-item-trailing-icon-color - Color for the trailing icon.
+ * @cssprop --m3e-list-item-trailing-text-color - Color for the trailing supporting text slot.
+ * @cssprop --m3e-list-item-leading-color - Color for the leading content.
+ * @cssprop --m3e-list-item-trailing-color - Color for the trailing content.
  * @cssprop --m3e-list-item-container-color - Background color of the list item.
  * @cssprop --m3e-list-item-container-shape - Border radius of the list item.
  * @cssprop --m3e-list-item-hover-container-shape - Border radius of the list item on hover.
@@ -85,26 +82,18 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-image-width - Width of the image slot.
  * @cssprop --m3e-list-item-image-height - Height of the image slot.
  * @cssprop --m3e-list-item-image-shape - Border radius of the image slot.
- * @cssprop --m3e-list-item-avatar-size - Size of the avatar slot.
- * @cssprop --m3e-list-item-avatar-shape - Border radius of the avatar slot.
- * @cssprop --m3e-list-item-avatar-font-size - Font size for avatar slot.
- * @cssprop --m3e-list-item-avatar-font-weight - Font weight for avatar slot.
- * @cssprop --m3e-list-item-avatar-line-height - Line height for avatar slot.
- * @cssprop --m3e-list-item-avatar-tracking - Letter spacing for avatar slot.
- * @cssprop --m3e-list-item-avatar-color - Background color of the avatar slot.
- * @cssprop --m3e-list-item-avatar-label-color - Text color of the avatar slot.
  * @cssprop --m3e-list-item-disabled-label-text-color - Color for the main content when disabled.
  * @cssprop --m3e-list-item-disabled-label-text-opacity - Opacity for the main content when disabled.
  * @cssprop --m3e-list-item-disabled-overline-color - Color for the overline slot when disabled.
  * @cssprop --m3e-list-item-disabled-overline-opacity - Opacity for the overline slot when disabled.
  * @cssprop --m3e-list-item-disabled-supporting-text-color - Color for the supporting text slot when disabled.
  * @cssprop --m3e-list-item-disabled-supporting-text-opacity - Opacity for the supporting text slot when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-supporting-text-color - Color for the trailing supporting text slot when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-supporting-text-opacity - Opacity for the trailing supporting text slot when disabled.
- * @cssprop --m3e-list-item-disabled-leading-icon-color - Color for the leading icon when disabled.
- * @cssprop --m3e-list-item-disabled-leading-icon-opacity - Opacity for the leading icon when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-icon-color - Color for the trailing icon when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-icon-opacity - Opacity for the trailing icon when disabled.
+ * @cssprop --m3e-list-item-disabled-trailing-text-color - Color for the trailing supporting text slot when disabled.
+ * @cssprop --m3e-list-item-disabled-trailing-text-opacity - Opacity for the trailing supporting text slot when disabled.
+ * @cssprop --m3e-list-item-disabled-leading-color - Color for the leading icon when disabled.
+ * @cssprop --m3e-list-item-disabled-leading-opacity - Opacity for the leading icon when disabled.
+ * @cssprop --m3e-list-item-disabled-trailing-color - Color for the trailing icon when disabled.
+ * @cssprop --m3e-list-item-disabled-trailing-opacity - Opacity for the trailing icon when disabled.
  * @cssprop --m3e-list-item-hover-state-layer-color - Color for the hover state layer.
  * @cssprop --m3e-list-item-hover-state-layer-opacity - Opacity for the hover state layer.
  * @cssprop --m3e-list-item-focus-state-layer-color - Color for the focus state layer.
@@ -114,9 +103,9 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-selected-label-text-color - Selected color for the main content.
  * @cssprop --m3e-list-item-selected-overline-color - Selected color for the overline slot.
  * @cssprop --m3e-list-item-selected-supporting-text-color - Selected color for the supporting text slot.
- * @cssprop --m3e-list-item-selected-trailing-supporting-text-color - Selected color for the trailing supporting text slot.
- * @cssprop --m3e-list-item-selected-leading-icon-color - Selected color for the leading icon.
- * @cssprop --m3e-list-item-selected-trailing-icon-color - Selected color for the trailing icon.
+ * @cssprop --m3e-list-item-selected-trailing-text-color - Selected color for the trailing supporting text slot.
+ * @cssprop --m3e-list-item-selected-leading-color - Selected color for the leading content.
+ * @cssprop --m3e-list-item-selected-trailing-color - Selected color for the trailing content.
  * @cssprop --m3e-list-item-selected-container-color - Selected background color of the list item.
  * @cssprop --m3e-list-item-selected-container-shape - Selected border radius of the list item.
  * @cssprop --m3e-list-item-selected-disabled-container-color - Selected background color when disabled.
@@ -127,11 +116,12 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-selected-focus-state-layer-opacity - Opacity for the focus state layer when selected.
  * @cssprop --m3e-list-item-selected-pressed-state-layer-color - Color for the pressed state layer when selected.
  * @cssprop --m3e-list-item-selected-pressed-state-layer-opacity - Opacity for the pressed state layer when selected.
- * @cssprop --m3e-list-item-leading-media-top-offset - Top offset for leading media in multiline items.
+ * @cssprop --m3e-list-item-three-line-top-offset - Top offset for media in three line items.
+ * @cssprop --m3e-list-item-disabled-media-opacity - Opacity for media when disabled.
  */
 @customElement("m3e-list-option")
 export class M3eListOptionElement extends KeyboardClick(
-  Focusable(Selected(Disabled(AttachInternals(Role(M3eListItemElement, "option"), true))))
+  Focusable(Selected(Disabled(AttachInternals(Role(M3eListItemElement, "option"), true)))),
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = [
@@ -153,6 +143,10 @@ export class M3eListOptionElement extends KeyboardClick(
       :host(:not(:disabled)) {
         cursor: pointer;
       }
+      :host(.-three-line) .indicator {
+        align-self: flex-start;
+        margin-top: var(--m3e-list-item-three-line-top-offset, 0.25rem);
+      }
       :host([selected]) {
         border-radius: var(--m3e-list-item-selected-container-shape, ${DesignToken.shape.corner.none});
       }
@@ -165,14 +159,14 @@ export class M3eListOptionElement extends KeyboardClick(
       :host([selected]:not(:disabled)) ::slotted([slot="supporting-text"]) {
         color: var(--m3e-list-item-selected-supporting-text-color, ${DesignToken.color.onSecondaryContainer});
       }
-      :host([selected]:not(:disabled)) ::slotted([slot="trailing-supporting-text"]) {
-        color: var(--m3e-list-item-selected-trailing-supporting-text-color, ${DesignToken.color.onSecondaryContainer});
+      :host([selected]:not(:disabled)) ::slotted([slot="trailing-text"]) {
+        color: var(--m3e-list-item-selected-trailing-text-color, ${DesignToken.color.onSecondaryContainer});
       }
-      :host([selected]:not(:disabled)) ::slotted([slot="leading-icon"]) {
-        color: var(--m3e-list-item-selected-leading-icon-color, ${DesignToken.color.onSecondaryContainer});
+      :host([selected]:not(:disabled)) ::slotted([slot="leading"]) {
+        color: var(--m3e-list-item-selected-leading-color, ${DesignToken.color.onSecondaryContainer});
       }
-      :host([selected]:not(:disabled)) ::slotted([slot="trailing-icon"]) {
-        color: var(--m3e-list-item-selected-trailing-icon-color, ${DesignToken.color.onSecondaryContainer});
+      :host([selected]:not(:disabled)) ::slotted([slot="trailing"]) {
+        color: var(--m3e-list-item-selected-trailing-color, ${DesignToken.color.onSecondaryContainer});
       }
       :host([selected]:not(:disabled)) {
         background-color: var(--m3e-list-item-selected-container-color, ${DesignToken.color.secondaryContainer});
@@ -211,16 +205,16 @@ export class M3eListOptionElement extends KeyboardClick(
         );
       }
       :host(.-hide-selection) .indicator,
-      :host(:not(.-hide-selection)) ::slotted([slot="trailing-icon"]) {
+      :host(:not(.-hide-selection)) ::slotted([slot="trailing"]) {
         display: none;
       }
       @media (forced-colors: active) {
         :host([selected]:not(:disabled)) .base,
         :host([selected]:not(:disabled)) ::slotted([slot="overline"]),
         :host([selected]:not(:disabled)) ::slotted([slot="supporting-text"]),
-        :host([selected]:not(:disabled)) ::slotted([slot="trailing-supporting-text"]),
-        :host([selected]:not(:disabled)) ::slotted([slot="leading-icon"]),
-        :host([selected]:not(:disabled)) ::slotted([slot="trailing-icon"]) {
+        :host([selected]:not(:disabled)) ::slotted([slot="trailing-text"]),
+        :host([selected]:not(:disabled)) ::slotted([slot="leading"]),
+        :host([selected]:not(:disabled)) ::slotted([slot="trailing"]) {
           color: HighlightText;
           forced-color-adjust: none;
         }
@@ -284,17 +278,14 @@ export class M3eListOptionElement extends KeyboardClick(
     return html`<m3e-state-layer class="state-layer" ?disabled="${this.disabled}"> </m3e-state-layer>
       <m3e-focus-ring class="focus-ring" inward ?disabled="${this.disabled}"></m3e-focus-ring>
       <m3e-ripple class="ripple" ?disabled="${this.disabled}"></m3e-ripple>
-      <slot name="video" @slotchange="${this._handleVideoSlotChange}"></slot>
-      <slot name="image" @slotchange="${this._handleImageSlotChange}"></slot>
-      <slot name="avatar" @slotchange="${this._handleAvatarSlotChange}"></slot>
-      <slot name="leading-icon" @slotchange="${this._handleLeadingIconSlotChange}"></slot>
+      <slot name="leading"></slot>
       <div class="base">
         <slot name="overline"></slot>
         <slot @slotchange="${this.#handleSlotChange}"></slot>
         <slot name="supporting-text"></slot>
       </div>
-      <slot name="trailing-supporting-text"></slot>
-      <slot name="trailing-icon"></slot>
+      <slot name="trailing-text"></slot>
+      <slot name="trailing"></slot>
       <div class="indicator">
         ${this.closest("m3e-selection-list")?.multi
           ? html`<m3e-pseudo-checkbox ?checked="${this.selected}" ?disabled="${this.disabled}"></m3e-pseudo-checkbox>`

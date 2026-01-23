@@ -28,6 +28,7 @@
     <script type="module" src="../../icon/dist/index.min.js"></script>
     <script type="module" src="../../theme/dist/index.min.js"></script>
     <script type="module" src="../../icon-button/dist/index.min.js"></script>
+    <script type="module" src="../../avatar/dist/index.min.js"></script>
     <script type="module" src="../dist/index.min.js"></script>
     <style>
       body {
@@ -37,169 +38,275 @@
       :not(:defined) {
         display: none;
       }
-      .container {
-        box-sizing: border-box;
-        padding: 1rem;
-        height: 100%;
-        width: 100%;
-        overflow-y: auto;
-        background-color: var(--md-sys-color-surface-container-lowest);
-      }
     </style>
   </head>
   <body>
-    <m3e-theme strong-focus scheme="dark">
-      <div class="container">
-        <m3e-list>
-          <m3e-list-item>
-            Test
-            <m3e-icon-button slot="trailing-icon">
-              <m3e-icon name="arrow_right"></m3e-icon>
-            </m3e-icon-button>
-          </m3e-list-item>
-        </m3e-list>
+    <m3e-theme strong-focus>
+      <m3e-list>
+        <m3e-list-item> Label text </m3e-list-item>
+        <m3e-list-item>
+          <m3e-icon slot="leading" name="person"></m3e-icon>
+          Label text
+          <span slot="supporting-text">Supporting text</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-item>
+        <m3e-list-item>
+          <m3e-icon slot="leading" name="person"></m3e-icon>
+          <span slot="overline">Overline</span>
+          Label text
+          <span slot="supporting-text">Supporting text</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-item>
+      </m3e-list>
+      <br /><br />
+      <m3e-list>
+        <m3e-list-item>
+          <m3e-avatar slot="leading">AB</m3e-avatar>
+          Label text
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-item>
+        <m3e-list-item>
+          <m3e-avatar slot="leading">AB</m3e-avatar>
+          Label text
+          <span slot="supporting-text">Supporting text</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-item>
+        <m3e-list-item>
+          <m3e-avatar slot="leading">AB</m3e-avatar>
+          <span slot="overline">Overline</span>
+          Label text
+          <span slot="supporting-text">Supporting text</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-item>
+      </m3e-list>
+      <m3e-list>
+        <m3e-list-item>
+          <img slot="leading" src="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480" />
+          Label text
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-item>
+        <m3e-list-item>
+          <img slot="leading" src="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480" />
+          Label text
+          <span slot="supporting-text">Supporting text</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-item>
+        <m3e-list-item>
+          <img slot="leading" src="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480" />
+          <span slot="overline">Overline</span>
+          Label text
+          <span slot="supporting-text">Supporting text</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-item>
+      </m3e-list>
+      <br /><br />
 
-        <m3e-action-list variant="segmented">
-          <m3e-list-action disabled>
-            <span slot="avatar">AB</span>
-            <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-            Headline
-            <span slot="trailing-supporting-text">100+</span>
-            <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
-          </m3e-list-action>
-          <m3e-expandable-list-item>
-            <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-            Pick up supplies
-            <span slot="supporting-text">Due monday</span>
-            <div slot="items">
-              <m3e-list-action>
-                Dry-erase board
-                <span slot="supporting-text">$35.99</span>
-              </m3e-list-action>
-              <m3e-list-action>
-                Markers
-                <span slot="supporting-text">$8.99</span>
-              </m3e-list-action>
-            </div>
-          </m3e-expandable-list-item>
-          <m3e-expandable-list-item>
-            Headline
-            <div slot="items">
-              <m3e-list-action>
-                <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-                <span slot="overline">Overline</span>
-                Headline
-                <span slot="supporting-text">Supporting text</span>
-                <span slot="trailing-supporting-text">100+</span>
-                <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
-              </m3e-list-action>
-              <m3e-list-action>
-                <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-                <span slot="overline">Overline</span>
-                Headline
-                <span slot="supporting-text">Supporting text</span>
-                <span slot="trailing-supporting-text">100+</span>
-                <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
-              </m3e-list-action>
-              <m3e-list-action>
-                <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-                <span slot="overline">Overline</span>
-                Headline
-                <span slot="supporting-text">Supporting text</span>
-                <span slot="trailing-supporting-text">100+</span>
-                <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
-              </m3e-list-action>
-              <m3e-list-action>
-                <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-                <span slot="overline">Overline</span>
-                Headline
-                <span slot="supporting-text">Supporting text</span>
-                <span slot="trailing-supporting-text">100+</span>
-                <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
-              </m3e-list-action>
-              <m3e-list-action>
-                <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-                <span slot="overline">Overline</span>
-                Headline
-                <span slot="supporting-text">Supporting text</span>
-                <span slot="trailing-supporting-text">100+</span>
-                <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
-              </m3e-list-action>
-              <m3e-list-action>
-                <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-                <span slot="overline">Overline</span>
-                Headline
-                <span slot="supporting-text">Supporting text</span>
-                <span slot="trailing-supporting-text">100+</span>
-                <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
-              </m3e-list-action>
-            </div>
-          </m3e-expandable-list-item>
-          <m3e-list-action>
-            <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-            <span slot="overline">Overline</span>
-            Headline
-            <span slot="supporting-text">Supporting text</span>
-            <span slot="trailing-supporting-text">100+</span>
-            <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
-          </m3e-list-action>
-        </m3e-action-list>
-        <br /><br />
-        <m3e-action-list>
-          <m3e-list-action>
-            <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-            <span slot="overline">Overline</span>
-            Headline
-            <span slot="supporting-text">Supporting text</span>
-            <span slot="trailing-supporting-text">100+</span>
-            <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
-          </m3e-list-action>
-          <m3e-list-action>
-            <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-            <span slot="overline">Overline</span>
-            Headline
-            <span slot="supporting-text">Supporting text</span>
-            <span slot="trailing-supporting-text">100+</span>
-            <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
-          </m3e-list-action>
-          <m3e-list-action disabled href="https://www.google.com" target="_blank">
-            <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-            <span slot="overline">Overline</span>
-            Headline
-            <span slot="supporting-text">Supporting text</span>
-            <span slot="trailing-supporting-text">100+</span>
-            <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
-          </m3e-list-action>
-        </m3e-action-list>
+      <m3e-list>
+        <m3e-list-item>
+          <video
+            slot="leading"
+            autoplay
+            loop
+            poster="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480"
+            preload="auto"
+          >
+            <source
+              src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.webm"
+              type="video/webm"
+            />
+            <source
+              src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.mp4"
+              type="video/mp4"
+            />
+          </video>
+          Label text
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-item>
+        <m3e-list-item>
+          <video
+            slot="leading"
+            autoplay
+            loop
+            poster="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480"
+            preload="auto"
+          >
+            <source
+              src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.webm"
+              type="video/webm"
+            />
+            <source
+              src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.mp4"
+              type="video/mp4"
+            />
+          </video>
+          Label text
+          <span slot="supporting-text">Supporting text</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-item>
+        <m3e-list-item>
+          <video
+            slot="leading"
+            autoplay
+            loop
+            poster="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480"
+            preload="auto"
+          >
+            <source
+              src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.webm"
+              type="video/webm"
+            />
+            <source
+              src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <span slot="overline">Overline</span>
+          Label text
+          <span slot="supporting-text">Supporting text</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-item>
+      </m3e-list>
 
-        <br /><br />
-        <m3e-selection-list multi variant="segmented">
-          <m3e-list-option selected>
-            <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-            <span slot="overline">Overline</span>
-            Headline
-            <span slot="supporting-text">Supporting text</span>
-            <span slot="trailing-supporting-text">100+</span>
-            <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
-          </m3e-list-option>
-          <m3e-list-option>
-            <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-            <span slot="overline">Overline</span>
-            Headline
-            <span slot="supporting-text">Supporting text</span>
-            <span slot="trailing-supporting-text">100+</span>
-            <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
-          </m3e-list-option>
-          <m3e-list-option disabled selected>
-            <m3e-icon slot="leading-icon" name="person"></m3e-icon>
-            <span slot="overline">Overline</span>
-            Headline
-            <span slot="supporting-text">Supporting text</span>
-            <span slot="trailing-supporting-text">100+</span>
-            <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
-          </m3e-list-option>
-        </m3e-selection-list>
-      </div>
+      <m3e-action-list>
+        <m3e-list-action disabled>
+          <m3e-avatar slot="leading">AB</m3e-avatar>
+          <span slot="overline">Overline</span>
+          Headline
+          <span slot="trailing-text">100+</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-action>
+        <m3e-expandable-list-item>
+          <m3e-icon slot="leading" name="person"></m3e-icon>
+          Pick up supplies
+          <span slot="supporting-text">Due monday</span>
+          <div slot="items">
+            <m3e-list-action>
+              Dry-erase board
+              <span slot="supporting-text">$35.99</span>
+            </m3e-list-action>
+            <m3e-list-action>
+              Markers
+              <span slot="supporting-text">$8.99</span>
+            </m3e-list-action>
+          </div>
+        </m3e-expandable-list-item>
+        <m3e-expandable-list-item>
+          Headline
+          <div slot="items">
+            <m3e-list-action>
+              <m3e-icon slot="leading" name="person"></m3e-icon>
+              <span slot="overline">Overline</span>
+              Headline
+              <span slot="supporting-text">Supporting text</span>
+              <span slot="trailing-text">100+</span>
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-action>
+            <m3e-list-action>
+              <m3e-icon slot="leading" name="person"></m3e-icon>
+              <span slot="overline">Overline</span>
+              Headline
+              <span slot="supporting-text">Supporting text</span>
+              <span slot="trailing-text">100+</span>
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-action>
+            <m3e-list-action>
+              <m3e-icon slot="leading" name="person"></m3e-icon>
+              <span slot="overline">Overline</span>
+              Headline
+              <span slot="supporting-text">Supporting text</span>
+              <span slot="trailing-text">100+</span>
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-action>
+            <m3e-list-action>
+              <m3e-icon slot="leading" name="person"></m3e-icon>
+              <span slot="overline">Overline</span>
+              Headline
+              <span slot="supporting-text">Supporting text</span>
+              <span slot="trailing-text">100+</span>
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-action>
+            <m3e-list-action>
+              <m3e-icon slot="leading" name="person"></m3e-icon>
+              <span slot="overline">Overline</span>
+              Headline
+              <span slot="supporting-text">Supporting text</span>
+              <span slot="trailing-text">100+</span>
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-action>
+            <m3e-list-action>
+              <m3e-icon slot="leading" name="person"></m3e-icon>
+              <span slot="overline">Overline</span>
+              Headline
+              <span slot="supporting-text">Supporting text</span>
+              <span slot="trailing-text">100+</span>
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-action>
+          </div>
+        </m3e-expandable-list-item>
+        <m3e-list-action>
+          <m3e-icon slot="leading" name="person"></m3e-icon>
+          <span slot="overline">Overline</span>
+          Headline
+          <span slot="supporting-text">Supporting text</span>
+          <span slot="trailing-text">100+</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-action>
+      </m3e-action-list>
+      <br /><br />
+      <m3e-action-list>
+        <m3e-list-action>
+          <m3e-icon slot="leading" name="person"></m3e-icon>
+          <span slot="overline">Overline</span>
+          Headline
+          <span slot="supporting-text">Supporting text</span>
+          <span slot="trailing-text">100+</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-action>
+        <m3e-list-action>
+          <m3e-icon slot="leading" name="person"></m3e-icon>
+          <span slot="overline">Overline</span>
+          Headline
+          <span slot="supporting-text">Supporting text</span>
+          <span slot="trailing-text">100+</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-action>
+        <m3e-list-action disabled href="https://www.google.com" target="_blank">
+          <m3e-icon slot="leading" name="person"></m3e-icon>
+          <span slot="overline">Overline</span>
+          Headline
+          <span slot="supporting-text">Supporting text</span>
+          <span slot="trailing-text">100+</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-action>
+      </m3e-action-list>
+
+      <br /><br />
+      <m3e-selection-list multi>
+        <m3e-list-option selected>
+          <m3e-icon slot="leading" name="person"></m3e-icon>
+          <span slot="overline">Overline</span>
+          Headline
+          <span slot="supporting-text">Supporting text</span>
+          <span slot="trailing-text">100+</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-option>
+        <m3e-list-option>
+          <m3e-icon slot="leading" name="person"></m3e-icon>
+          <span slot="overline">Overline</span>
+          Headline
+          <span slot="supporting-text">Supporting text</span>
+          <span slot="trailing-text">100+</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-option>
+        <m3e-list-option disabled selected>
+          <m3e-icon slot="leading" name="person"></m3e-icon>
+          <span slot="overline">Overline</span>
+          Headline
+          <span slot="supporting-text">Supporting text</span>
+          <span slot="trailing-text">100+</span>
+          <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+        </m3e-list-option>
+      </m3e-selection-list>
     </m3e-theme>
   </body>
 </html>
