@@ -100,6 +100,7 @@ export class M3eListElement extends Role(LitElement, "list") {
         ${DesignToken.shape.corner.large}
       );
     }
+    :host([variant="expressive"]) ::slotted(m3e-divider),
     :host([segmented]) ::slotted(m3e-divider) {
       display: none;
     }
