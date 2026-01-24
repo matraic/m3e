@@ -35,7 +35,6 @@ import { M3eListItemElement } from "./ListItemElement";
  * @slot leading - Renders the leading content of the list item.
  * @slot overline - Renders the overline of the list item.
  * @slot supporting-text - Renders the supporting text of the list item.
- * @slot trailing-text - Renders the trailing supporting text of the list item.
  * @slot trailing - Renders the trailing content of the list item.
  *
  * @attr disabled - Whether the element is disabled.
@@ -69,7 +68,6 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-label-text-color - Color for the main content.
  * @cssprop --m3e-list-item-overline-color - Color for the overline slot.
  * @cssprop --m3e-list-item-supporting-text-color - Color for the supporting text slot.
- * @cssprop --m3e-list-item-trailing-text-color - Color for the trailing supporting text slot.
  * @cssprop --m3e-list-item-leading-color - Color for the leading content.
  * @cssprop --m3e-list-item-trailing-color - Color for the trailing content.
  * @cssprop --m3e-list-item-container-color - Background color of the list item.
@@ -88,8 +86,6 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-disabled-overline-opacity - Opacity for the overline slot when disabled.
  * @cssprop --m3e-list-item-disabled-supporting-text-color - Color for the supporting text slot when disabled.
  * @cssprop --m3e-list-item-disabled-supporting-text-opacity - Opacity for the supporting text slot when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-text-color - Color for the trailing supporting text slot when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-text-opacity - Opacity for the trailing supporting text slot when disabled.
  * @cssprop --m3e-list-item-disabled-leading-color - Color for the leading icon when disabled.
  * @cssprop --m3e-list-item-disabled-leading-opacity - Opacity for the leading icon when disabled.
  * @cssprop --m3e-list-item-disabled-trailing-color - Color for the trailing icon when disabled.
@@ -103,7 +99,6 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-selected-label-text-color - Selected color for the main content.
  * @cssprop --m3e-list-item-selected-overline-color - Selected color for the overline slot.
  * @cssprop --m3e-list-item-selected-supporting-text-color - Selected color for the supporting text slot.
- * @cssprop --m3e-list-item-selected-trailing-text-color - Selected color for the trailing supporting text slot.
  * @cssprop --m3e-list-item-selected-leading-color - Selected color for the leading content.
  * @cssprop --m3e-list-item-selected-trailing-color - Selected color for the trailing content.
  * @cssprop --m3e-list-item-selected-container-color - Selected background color of the list item.
@@ -159,9 +154,6 @@ export class M3eListOptionElement extends KeyboardClick(
       :host([selected]:not(:disabled)) ::slotted([slot="supporting-text"]) {
         color: var(--m3e-list-item-selected-supporting-text-color, ${DesignToken.color.onSecondaryContainer});
       }
-      :host([selected]:not(:disabled)) ::slotted([slot="trailing-text"]) {
-        color: var(--m3e-list-item-selected-trailing-text-color, ${DesignToken.color.onSecondaryContainer});
-      }
       :host([selected]:not(:disabled)) ::slotted([slot="leading"]) {
         color: var(--m3e-list-item-selected-leading-color, ${DesignToken.color.onSecondaryContainer});
       }
@@ -212,7 +204,6 @@ export class M3eListOptionElement extends KeyboardClick(
         :host([selected]:not(:disabled)) .base,
         :host([selected]:not(:disabled)) ::slotted([slot="overline"]),
         :host([selected]:not(:disabled)) ::slotted([slot="supporting-text"]),
-        :host([selected]:not(:disabled)) ::slotted([slot="trailing-text"]),
         :host([selected]:not(:disabled)) ::slotted([slot="leading"]),
         :host([selected]:not(:disabled)) ::slotted([slot="trailing"]) {
           color: HighlightText;
@@ -284,7 +275,6 @@ export class M3eListOptionElement extends KeyboardClick(
         <slot @slotchange="${this.#handleSlotChange}"></slot>
         <slot name="supporting-text"></slot>
       </div>
-      <slot name="trailing-text"></slot>
       <slot name="trailing"></slot>
       <div class="indicator">
         ${this.closest("m3e-selection-list")?.multi

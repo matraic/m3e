@@ -25,7 +25,6 @@ import { computeLineCount, DesignToken, ResizeController, Role } from "@m3e/core
  *    <span slot="overline">Overline</span>
  *    Headline
  *    <span slot="supporting-text">Supporting text</span>
- *    <span slot="trailing-text">100+</span>
  *    <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
  *  </m3e-list-item>
  * </m3e-list>
@@ -37,7 +36,6 @@ import { computeLineCount, DesignToken, ResizeController, Role } from "@m3e/core
  * @slot leading - Renders the leading content of the list item.
  * @slot overline - Renders the overline of the list item.
  * @slot supporting-text - Renders the supporting text of the list item.
- * @slot trailing-text - Renders the trailing supporting text of the list item.
  * @slot trailing - Renders the trailing content of the list item.
  *
  * @cssprop --m3e-list-item-between-space - Horizontal gap between elements.
@@ -71,7 +69,6 @@ import { computeLineCount, DesignToken, ResizeController, Role } from "@m3e/core
  * @cssprop --m3e-list-item-label-text-color - Color for the main content.
  * @cssprop --m3e-list-item-overline-color - Color for the overline slot.
  * @cssprop --m3e-list-item-supporting-text-color - Color for the supporting text slot.
- * @cssprop --m3e-list-item-trailing-text-color - Color for the trailing supporting text slot.
  * @cssprop --m3e-list-item-leading-color - Color for the leading content.
  * @cssprop --m3e-list-item-trailing-color - Color for the trailing content.
  * @cssprop --m3e-list-item-container-color - Background color of the list item.
@@ -196,7 +193,7 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
       line-height: var(--m3e-list-item-line-height, ${DesignToken.typescale.standard.body.large.lineHeight});
       letter-spacing: var(--m3e-list-item-tracking, ${DesignToken.typescale.standard.body.large.tracking});
     }
-    ::slotted([slot="trailing-text"]) {
+    ::slotted(span[slot="trailing"]) {
       white-space: nowrap;
       font-size: var(--m3e-list-item-trailing-text-font-size, ${DesignToken.typescale.standard.label.small.fontSize});
       font-weight: var(
@@ -262,9 +259,6 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
     :host(:not(:disabled)) ::slotted([slot="supporting-text"]) {
       color: var(--m3e-list-item-supporting-text-color, ${DesignToken.color.onSurfaceVariant});
     }
-    :host(:not(:disabled)) ::slotted([slot="trailing-text"]) {
-      color: var(--m3e-list-item-trailing-text-color, ${DesignToken.color.onSurfaceVariant});
-    }
     :host(:not(:disabled)) ::slotted([slot="trailing"]) {
       color: var(--m3e-list-item-trailing-color, ${DesignToken.color.onSurfaceVariant});
     }
@@ -297,14 +291,6 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
         in srgb,
         var(--m3e-list-item-disabled-supporting-text-color, ${DesignToken.color.onSurface})
           var(--m3e-list-item-disabled-supporting-text-opacity, 38%),
-        transparent
-      );
-    }
-    :host(:disabled) ::slotted([slot="trailing-text"]) {
-      color: color-mix(
-        in srgb,
-        var(--m3e-list-item-disabled-trailing-text-color, ${DesignToken.color.onSurface})
-          var(--m3e-list-item-disabled-trailing-text-opacity, 38%),
         transparent
       );
     }
@@ -348,7 +334,6 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
       :host(:disabled) .base,
       :host(:disabled) ::slotted([slot="overline"]),
       :host(:disabled) ::slotted([slot="supporting-text"]),
-      :host(:disabled) ::slotted([slot="trailing-text"]),
       :host(:disabled) ::slotted([slot="trailing"]) {
         color: GrayText;
       }
@@ -381,7 +366,6 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
         <slot></slot>
         <slot name="supporting-text"></slot>
       </div>
-      <slot name="trailing-text"></slot>
       <slot name="trailing"></slot>`;
   }
 

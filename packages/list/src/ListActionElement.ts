@@ -22,7 +22,6 @@ import { M3eListItemButtonElement } from "./ListItemButtonElement";
  * @slot leading - Renders the leading content of the list item.
  * @slot overline - Renders the overline of the list item.
  * @slot supporting-text - Renders the supporting text of the list item.
- * @slot trailing-text - Renders the trailing supporting text of the list item.
  * @slot trailing - Renders the trailing content of the list item.
  *
  * @attr disabled - Whether the element is disabled.
@@ -57,7 +56,6 @@ import { M3eListItemButtonElement } from "./ListItemButtonElement";
  * @cssprop --m3e-list-item-label-text-color - Color for the main content.
  * @cssprop --m3e-list-item-overline-color - Color for the overline slot.
  * @cssprop --m3e-list-item-supporting-text-color - Color for the supporting text slot.
- * @cssprop --m3e-list-item-trailing-text-color - Color for the trailing supporting text slot.
  * @cssprop --m3e-list-item-leading-color - Color for the leading content.
  * @cssprop --m3e-list-item-trailing-color - Color for the trailing content.
  * @cssprop --m3e-list-item-container-color - Background color of the list item.
@@ -76,8 +74,6 @@ import { M3eListItemButtonElement } from "./ListItemButtonElement";
  * @cssprop --m3e-list-item-disabled-overline-opacity - Opacity for the overline slot when disabled.
  * @cssprop --m3e-list-item-disabled-supporting-text-color - Color for the supporting text slot when disabled.
  * @cssprop --m3e-list-item-disabled-supporting-text-opacity - Opacity for the supporting text slot when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-text-color - Color for the trailing supporting text slot when disabled.
- * @cssprop --m3e-list-item-disabled-trailing-text-opacity - Opacity for the trailing supporting text slot when disabled.
  * @cssprop --m3e-list-item-disabled-leading-color - Color for the leading icon when disabled.
  * @cssprop --m3e-list-item-disabled-leading-opacity - Opacity for the leading icon when disabled.
  * @cssprop --m3e-list-item-disabled-trailing-color - Color for the trailing icon when disabled.
@@ -127,7 +123,6 @@ export class M3eListActionElement extends LinkButton(M3eListItemElement) {
       <slot name="overline" slot="overline"></slot>
       <slot></slot>
       <slot name="supporting-text" slot="supporting-text"></slot>
-      <slot name="trailing-text" slot="trailing-text"></slot>
       <slot name="trailing" slot="trailing"></slot>
     </m3e-list-item-button>`;
   }
