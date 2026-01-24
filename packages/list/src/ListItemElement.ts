@@ -138,24 +138,6 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
     :host(.-three-line) {
       align-items: flex-start;
     }
-    :host(:not(:disabled):not([selected]):hover:not(:focus-visible)) {
-      border-top-left-radius: var(
-        --_list-item-hover-top-container-shape,
-        var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.none})
-      );
-      border-top-right-radius: var(
-        --_list-item-hover-top-container-shape,
-        var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.none})
-      );
-      border-bottom-left-radius: var(
-        --_list-item-hover-bottom-container-shape,
-        var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.none})
-      );
-      border-bottom-right-radius: var(
-        --_list-item-hover-bottom-container-shape,
-        var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.none})
-      );
-    }
     :host(:not(:disabled):not([selected]):focus-visible) {
       border-radius: var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.none});
     }
