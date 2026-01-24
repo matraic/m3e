@@ -22,6 +22,8 @@ import { M3eListOptionElement } from "./ListOptionElement";
  *
  * @slot - Renders the items of the list.
  *
+ * @attr hide-selection-indicator - Whether to hide the selection indicator.
+ * @attr multi - Whether multiple items can be selected.
  * @attr variant - The appearance variant of the list.
  *
  * @fires input - Emitted when the selected state of an option changes.
