@@ -117,7 +117,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-pressed-state-layer-color - Color for the pressed state layer.
  * @cssprop --m3e-list-item-pressed-state-layer-opacity - Opacity for the pressed state layer.
  * @cssprop --m3e-expressive-list-container-shape - Border radius of the segmented list container shape.
- * @cssprop --m3e-list-segmented-gap - Gap between list item segments.
+ * @cssprop --m3e-segmented-list-segment-gap - Gap between list item segments.
  * @cssprop --m3e-list-item-three-line-top-offset - Top offset for media in three line items.
  * @cssprop --m3e-list-item-disabled-media-opacity - Opacity for media when disabled.
  */
@@ -169,10 +169,12 @@ export class M3eExpandableListItem extends M3eListItemElement {
     }
     :host([open]) .header {
       --_list-item-top-container-shape: var(--m3e-expressive-list-container-shape, ${DesignToken.shape.corner.large});
-      margin-bottom: var(--m3e-list-segmented-gap, 0.125rem);
+      margin-bottom: var(--m3e-segmented-list-segment-gap, 0.125rem);
     }
     :host([open]) .header.opening {
-      margin-bottom: calc(var(--m3e-list-segmented-gap, 0.125rem) * var(--m3e-expandable-list-item-bounce-factor, 4));
+      margin-bottom: calc(
+        var(--m3e-segmented-list-segment-gap, 0.125rem) * var(--m3e-expandable-list-item-bounce-factor, 4)
+      );
     }
     :host,
     ::slotted([slot="items"]) {
@@ -182,39 +184,39 @@ export class M3eExpandableListItem extends M3eListItemElement {
       box-sizing: border-box;
     }
     ::slotted([slot="items"]) {
-      row-gap: var(--m3e-list-segmented-gap, 0.125rem);
+      row-gap: var(--m3e-segmented-list-segment-gap, 0.125rem);
     }
     .items {
       --m3e-collapsible-animation-duration: var(
         --m3e-expandable-list-item-expand-duration,
         ${DesignToken.motion.duration.medium1}
       );
-      --m3e-list-item-container-color: var(--m3e-expressive-list-item-container-color, ${DesignToken.color.surface});
+      --m3e-list-item-container-color: var(--m3e-segmented-list-item-container-color, ${DesignToken.color.surface});
       --m3e-list-item-container-shape: var(
-        --m3e-expressive-list-item-container-shape,
+        --m3e-segmented-list-item-container-shape,
         ${DesignToken.shape.corner.extraSmall}
       );
       --m3e-list-item-hover-container-shape: var(
-        --m3e-expressive-list-item-hover-container-shape,
+        --m3e-segmented-list-item-hover-container-shape,
         ${DesignToken.shape.corner.medium}
       );
       --m3e-list-item-focus-container-shape: var(
-        --m3e-expressive-list-item-focus-container-shape,
+        --m3e-segmented-list-item-focus-container-shape,
         ${DesignToken.shape.corner.large}
       );
       --m3e-list-item-selected-container-shape: var(
-        --m3e-expressive-list-item-selected-container-shape,
+        --m3e-segmented-list-item-selected-container-shape,
         ${DesignToken.shape.corner.large}
       );
-      --m3e-list-item-one-line-top-space: var(--m3e-expressive-list-item-top-space, 0.625rem);
-      --m3e-list-item-one-line-bottom-space: var(--m3e-expressive-list-item-bottom-space, 0.625rem);
-      --m3e-list-item-two-line-top-space: var(--m3e-expressive-list-item-top-space, 0.625rem);
-      --m3e-list-item-two-line-bottom-space: var(--m3e-expressive-list-item-bottom-space, 0.625rem);
-      --m3e-list-item-three-line-top-space: var(--m3e-expressive-list-item-top-space, 0.625rem);
-      --m3e-list-item-three-line-bottom-space: var(--m3e-expressive-list-item-bottom-space, 0.625rem);
-      --m3e-list-item-video-shape: var(--m3e-expressive-list-item-video-shape, ${DesignToken.shape.corner.small});
-      --m3e-list-item-image-shape: var(--m3e-expressive-list-item-image-shape, ${DesignToken.shape.corner.small});
-      --m3e-list-item-between-space: var(--m3e-expressive-list-item-spacing, 0.75rem);
+      --m3e-list-item-one-line-top-space: var(--m3e-segmented-list-item-top-space, 0.625rem);
+      --m3e-list-item-one-line-bottom-space: var(--m3e-segmented-list-item-bottom-space, 0.625rem);
+      --m3e-list-item-two-line-top-space: var(--m3e-segmented-list-item-top-space, 0.625rem);
+      --m3e-list-item-two-line-bottom-space: var(--m3e-segmented-list-item-bottom-space, 0.625rem);
+      --m3e-list-item-three-line-top-space: var(--m3e-segmented-list-item-top-space, 0.625rem);
+      --m3e-list-item-three-line-bottom-space: var(--m3e-segmented-list-item-bottom-space, 0.625rem);
+      --m3e-list-item-video-shape: var(--m3e-segmented-list-item-video-shape, ${DesignToken.shape.corner.small});
+      --m3e-list-item-image-shape: var(--m3e-segmented-list-item-image-shape, ${DesignToken.shape.corner.small});
+      --m3e-list-item-between-space: var(--m3e-segmented-list-item-spacing, 0.75rem);
     }
     :host([open]) .header {
       --_list-item-hover-top-container-shape: var(
@@ -222,7 +224,7 @@ export class M3eExpandableListItem extends M3eListItemElement {
         ${DesignToken.shape.corner.large}
       );
       --_list-item-hover-bottom-container-shape: var(
-        --m3e-expressive-list-item-container-shape,
+        --m3e-segmented-list-item-container-shape,
         ${DesignToken.shape.corner.extraSmall}
       );
     }
@@ -238,7 +240,7 @@ export class M3eExpandableListItem extends M3eListItemElement {
         transition: none;
       }
       :host([open]) .header.opening {
-        margin-bottom: var(--m3e-list-segmented-gap, 0.125rem);
+        margin-bottom: var(--m3e-segmented-list-segment-gap, 0.125rem);
       }
     }
     @media (prefers-reduced-motion) {

@@ -245,7 +245,7 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
       color: var(--m3e-list-item-trailing-color, ${DesignToken.color.onSurfaceVariant});
     }
     :host(:not(:disabled)) {
-      background-color: var(--m3e-list-item-container-color, ${DesignToken.color.surface});
+      background-color: var(--m3e-list-item-container-color, transparent);
     }
     :host(:disabled) ::slotted(video),
     :host(:disabled) ::slotted(img),

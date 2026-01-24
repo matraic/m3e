@@ -29,13 +29,13 @@ import { M3eListOptionElement } from "./ListOptionElement";
  *
  * @cssprop --m3e-list-divider-inset-start-size - Start inset for dividers within the list.
  * @cssprop --m3e-list-divider-inset-end-size - End inset for dividers within the list.
- * @cssprop --m3e-list-segmented-gap - Gap between list items in segmented variant.
+ * @cssprop --m3e-segmented-list-segment-gap - Gap between list items in segmented variant.
  * @cssprop --m3e-expressive-list-container-shape - Border radius of the expressive list container.
- * @cssprop --m3e-expressive-list-item-container-color - Background color of items in expressive variant.
- * @cssprop --m3e-expressive-list-item-container-shape - Border radius of items in expressive variant.
- * @cssprop --m3e-expressive-list-item-hover-container-shape - Border radius of items in expressive variant on hover.
- * @cssprop --m3e-expressive-list-item-focus-container-shape - Border radius of items in expressive variant on focus.
- * @cssprop --m3e-expressive-list-item-selected-container-shape - Border radius of items in expressive variant when selected.
+ * @cssprop --m3e-segmented-list-item-container-color - Background color of items in expressive variant.
+ * @cssprop --m3e-segmented-list-item-container-shape - Border radius of items in expressive variant.
+ * @cssprop --m3e-segmented-list-item-hover-container-shape - Border radius of items in expressive variant on hover.
+ * @cssprop --m3e-segmented-list-item-focus-container-shape - Border radius of items in expressive variant on focus.
+ * @cssprop --m3e-segmented-list-item-selected-container-shape - Border radius of items in expressive variant when selected.
  */
 @customElement("m3e-selection-list")
 export class M3eSelectionListElement extends Labelled(
