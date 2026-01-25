@@ -99,17 +99,17 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                             | Description                                                 |
-| ---------------------------------------------------- | ----------------------------------------------------------- |
-| `--m3e-list-divider-inset-start-size`                | Start inset for dividers within the list.                   |
-| `--m3e-list-divider-inset-end-size`                  | End inset for dividers within the list.                     |
-| `--m3e-segmented-list-segment-gap`                   | Gap between list items in segmented variant.                |
-| `--m3e-segmented-list-container-shape`               | Border radius of the segmented list container.              |
-| `--m3e-segmented-list-item-container-color`          | Background color of items in expressive variant.            |
-| `--m3e-segmented-list-item-container-shape`          | Border radius of items in expressive variant.               |
-| `--m3e-segmented-list-item-hover-container-shape`    | Border radius of items in expressive variant on hover.      |
-| `--m3e-segmented-list-item-focus-container-shape`    | Border radius of items in expressive variant on focus.      |
-| `--m3e-segmented-list-item-selected-container-shape` | Border radius of items in expressive variant when selected. |
+| Property                                             | Description                                                |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| `--m3e-list-divider-inset-start-size`                | Start inset for dividers within the list.                  |
+| `--m3e-list-divider-inset-end-size`                  | End inset for dividers within the list.                    |
+| `--m3e-segmented-list-segment-gap`                   | Gap between list items in segmented variant.               |
+| `--m3e-segmented-list-container-shape`               | Border radius of the segmented list container.             |
+| `--m3e-segmented-list-item-container-color`          | Background color of items in segmented variant.            |
+| `--m3e-segmented-list-item-container-shape`          | Border radius of items in segmented variant.               |
+| `--m3e-segmented-list-item-hover-container-shape`    | Border radius of items in segmented variant on hover.      |
+| `--m3e-segmented-list-item-focus-container-shape`    | Border radius of items in segmented variant on focus.      |
+| `--m3e-segmented-list-item-selected-container-shape` | Border radius of items in segmented variant when selected. |
 
 ### 🗂️ m3e-list-item
 
@@ -410,17 +410,17 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                             | Description                                                 |
-| ---------------------------------------------------- | ----------------------------------------------------------- |
-| `--m3e-list-divider-inset-start-size`                | Start inset for dividers within the list.                   |
-| `--m3e-list-divider-inset-end-size`                  | End inset for dividers within the list.                     |
-| `--m3e-segmented-list-segment-gap`                   | Gap between list items in segmented variant.                |
-| `--m3e-segmented-list-container-shape`               | Border radius of the segmented list container.              |
-| `--m3e-segmented-list-item-container-color`          | Background color of items in expressive variant.            |
-| `--m3e-segmented-list-item-container-shape`          | Border radius of items in expressive variant.               |
-| `--m3e-segmented-list-item-hover-container-shape`    | Border radius of items in expressive variant on hover.      |
-| `--m3e-segmented-list-item-focus-container-shape`    | Border radius of items in expressive variant on focus.      |
-| `--m3e-segmented-list-item-selected-container-shape` | Border radius of items in expressive variant when selected. |
+| Property                                             | Description                                                |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| `--m3e-list-divider-inset-start-size`                | Start inset for dividers within the list.                  |
+| `--m3e-list-divider-inset-end-size`                  | End inset for dividers within the list.                    |
+| `--m3e-segmented-list-segment-gap`                   | Gap between list items in segmented variant.               |
+| `--m3e-segmented-list-container-shape`               | Border radius of the segmented list container.             |
+| `--m3e-segmented-list-item-container-color`          | Background color of items in segmented variant.            |
+| `--m3e-segmented-list-item-container-shape`          | Border radius of items in segmented variant.               |
+| `--m3e-segmented-list-item-hover-container-shape`    | Border radius of items in segmented variant on hover.      |
+| `--m3e-segmented-list-item-focus-container-shape`    | Border radius of items in segmented variant on focus.      |
+| `--m3e-segmented-list-item-selected-container-shape` | Border radius of items in segmented variant when selected. |
 
 ### 🗂️ m3e-selection-list
 
@@ -449,17 +449,17 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                             | Description                                                 |
-| ---------------------------------------------------- | ----------------------------------------------------------- |
-| `--m3e-list-divider-inset-start-size`                | Start inset for dividers within the list.                   |
-| `--m3e-list-divider-inset-end-size`                  | End inset for dividers within the list.                     |
-| `--m3e-segmented-list-segment-gap`                   | Gap between list items in segmented variant.                |
-| `--m3e-segmented-list-container-shape`               | Border radius of the segmented list container.              |
-| `--m3e-segmented-list-item-container-color`          | Background color of items in expressive variant.            |
-| `--m3e-segmented-list-item-container-shape`          | Border radius of items in expressive variant.               |
-| `--m3e-segmented-list-item-hover-container-shape`    | Border radius of items in expressive variant on hover.      |
-| `--m3e-segmented-list-item-focus-container-shape`    | Border radius of items in expressive variant on focus.      |
-| `--m3e-segmented-list-item-selected-container-shape` | Border radius of items in expressive variant when selected. |
+| Property                                             | Description                                                |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| `--m3e-list-divider-inset-start-size`                | Start inset for dividers within the list.                  |
+| `--m3e-list-divider-inset-end-size`                  | End inset for dividers within the list.                    |
+| `--m3e-segmented-list-segment-gap`                   | Gap between list items in segmented variant.               |
+| `--m3e-segmented-list-container-shape`               | Border radius of the segmented list container.             |
+| `--m3e-segmented-list-item-container-color`          | Background color of items in segmented variant.            |
+| `--m3e-segmented-list-item-container-shape`          | Border radius of items in segmented variant.               |
+| `--m3e-segmented-list-item-hover-container-shape`    | Border radius of items in segmented variant on hover.      |
+| `--m3e-segmented-list-item-focus-container-shape`    | Border radius of items in segmented variant on focus.      |
+| `--m3e-segmented-list-item-selected-container-shape` | Border radius of items in segmented variant when selected. |
 
 ### 🗂️ m3e-expandable-list-item
 

@@ -3,7 +3,6 @@ import { customElement, query } from "lit/decorators.js";
 
 import {
   AttachInternals,
-  DesignToken,
   Disabled,
   Focusable,
   KeyboardClick,
@@ -47,24 +46,6 @@ export class M3eListItemButtonElement extends KeyboardClick(
         right: 0px;
         bottom: 0px;
         z-index: 1;
-      }
-      :host(:not(:disabled):not([selected]):hover:not(:focus-visible)) {
-        border-top-left-radius: var(
-          --_list-item-hover-top-container-shape,
-          var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.none})
-        );
-        border-top-right-radius: var(
-          --_list-item-hover-top-container-shape,
-          var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.none})
-        );
-        border-bottom-left-radius: var(
-          --_list-item-hover-bottom-container-shape,
-          var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.none})
-        );
-        border-bottom-right-radius: var(
-          --_list-item-hover-bottom-container-shape,
-          var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.none})
-        );
       }
     `,
   ];

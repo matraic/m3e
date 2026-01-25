@@ -80,6 +80,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-image-width - Width of the image slot.
  * @cssprop --m3e-list-item-image-height - Height of the image slot.
  * @cssprop --m3e-list-item-image-shape - Border radius of the image slot.
+ * @cssprop --m3e-list-item-disabled-container-color - Background color of the list item when disabled.
  * @cssprop --m3e-list-item-disabled-label-text-color - Color for the main content when disabled.
  * @cssprop --m3e-list-item-disabled-label-text-opacity - Opacity for the main content when disabled.
  * @cssprop --m3e-list-item-disabled-overline-color - Color for the overline slot when disabled.
@@ -142,26 +143,11 @@ export class M3eListOptionElement extends KeyboardClick(
         align-self: flex-start;
         margin-top: var(--m3e-list-item-three-line-top-offset, 0.25rem);
       }
-      :host([selected]) {
-        border-radius: var(--m3e-list-item-selected-container-shape, ${DesignToken.shape.corner.none});
-      }
-      :host(:not(:disabled):not([selected]):hover:not(:focus-visible)) {
-        border-top-left-radius: var(
-          --_list-item-hover-top-container-shape,
-          var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.none})
-        );
-        border-top-right-radius: var(
-          --_list-item-hover-top-container-shape,
-          var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.none})
-        );
-        border-bottom-left-radius: var(
-          --_list-item-hover-bottom-container-shape,
-          var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.none})
-        );
-        border-bottom-right-radius: var(
-          --_list-item-hover-bottom-container-shape,
-          var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.none})
-        );
+      :host([selected]),
+      :host([selected]) .state-layer,
+      :host([selected]) .ripple,
+      :host([selected]) .focus-ring {
+        border-radius: var(--m3e-list-item-selected-container-shape, ${DesignToken.shape.corner.large});
       }
       :host([selected]:not(:disabled)) .base {
         color: var(--m3e-list-item-selected-label-text-color, ${DesignToken.color.onSecondaryContainer});

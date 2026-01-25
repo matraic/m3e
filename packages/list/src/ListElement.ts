@@ -43,11 +43,12 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-divider-inset-end-size - End inset for dividers within the list.
  * @cssprop --m3e-segmented-list-segment-gap - Gap between list items in segmented variant.
  * @cssprop --m3e-segmented-list-container-shape - Border radius of the segmented list container.
- * @cssprop --m3e-segmented-list-item-container-color - Background color of items in expressive variant.
- * @cssprop --m3e-segmented-list-item-container-shape - Border radius of items in expressive variant.
- * @cssprop --m3e-segmented-list-item-hover-container-shape - Border radius of items in expressive variant on hover.
- * @cssprop --m3e-segmented-list-item-focus-container-shape - Border radius of items in expressive variant on focus.
- * @cssprop --m3e-segmented-list-item-selected-container-shape - Border radius of items in expressive variant when selected.
+ * @cssprop --m3e-segmented-list-item-container-color - Background color of items in segmented variant.
+ * @cssprop --m3e-segmented-list-item-disabled-container-color - Background color of disabled items in segmented variant.
+ * @cssprop --m3e-segmented-list-item-container-shape - Border radius of items in segmented variant.
+ * @cssprop --m3e-segmented-list-item-hover-container-shape - Border radius of items in segmented variant on hover.
+ * @cssprop --m3e-segmented-list-item-focus-container-shape - Border radius of items in segmented variant on focus.
+ * @cssprop --m3e-segmented-list-item-selected-container-shape - Border radius of items in segmented variant when selected.
  */
 @customElement("m3e-list")
 export class M3eListElement extends Role(LitElement, "list") {
@@ -63,15 +64,20 @@ export class M3eListElement extends Role(LitElement, "list") {
       --m3e-divider-inset-start-size: var(--m3e-list-divider-inset-start-size, 1rem);
       --m3e-divider-inset-end-size: var(--m3e-list-divider-inset-end-size, 1.5rem);
     }
-    :host([variant="baseline"]) {
+    :host([variant="standard"]) {
       --_list-item-leading-video-outset: var(--m3e-list-item-leading-space, 1rem);
       --_list-item-leading-trailing-outset: var(--m3e-list-item-trailing-space, 1rem);
+      --_expandable-list-item-expanded-toggle-icon-container-color: transparent;
     }
     :host([variant="segmented"]) {
       row-gap: var(--m3e-segmented-list-segment-gap, 0.125rem);
     }
     :host([variant="segmented"]) {
       --m3e-list-item-container-color: var(--m3e-segmented-list-item-container-color, ${DesignToken.color.surface});
+      --m3e-list-item-disabled-container-color: var(
+        --m3e-segmented-list-item-disabled-container-color,
+        ${DesignToken.color.surface}
+      );
       --m3e-list-item-container-shape: var(
         --m3e-segmented-list-item-container-shape,
         ${DesignToken.shape.corner.extraSmall}
@@ -91,6 +97,7 @@ export class M3eListElement extends Role(LitElement, "list") {
       --m3e-list-item-video-shape: var(--m3e-segmented-list-item-video-shape, ${DesignToken.shape.corner.small});
       --m3e-list-item-image-shape: var(--m3e-segmented-list-item-image-shape, ${DesignToken.shape.corner.small});
       --m3e-list-item-between-space: var(--m3e-segmented-list-item-spacing, 0.75rem);
+      --_expandable-list-item-items-segment-gap: var(--m3e-segmented-list-segment-gap, 0.125rem);
     }
     :host([variant="segmented"]) ::slotted(.-first) {
       --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});

@@ -138,8 +138,45 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
     :host(.-three-line) {
       align-items: flex-start;
     }
-    :host(:not(:disabled):not([selected]):focus-visible) {
-      border-radius: var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.none});
+    :host(:not(:disabled):not([selected]:not(:hover)):focus-visible) .state-layer,
+    :host(:not(:disabled):not([selected]:not(:hover)):focus-visible) .ripple,
+    :host(:not(:disabled):not([selected]:not(:hover)):focus-visible) .focus-ring {
+      border-top-left-radius: var(
+        --_list-item-top-container-shape,
+        var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
+      );
+      border-top-right-radius: var(
+        --_list-item-top-container-shape,
+        var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
+      );
+      border-bottom-left-radius: var(
+        --_list-item-bottom-container-shape,
+        var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
+      );
+      border-bottom-right-radius: var(
+        --_list-item-bottom-container-shape,
+        var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
+      );
+    }
+    :host(:not(:disabled):not([selected])) .state-layer,
+    :host(:not(:disabled):not([selected])) .ripple,
+    :host(:not(:disabled):not([selected])) .focus-ring {
+      border-top-left-radius: var(
+        --_list-item-top-container-shape,
+        var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.medium})
+      );
+      border-top-right-radius: var(
+        --_list-item-top-container-shape,
+        var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.medium})
+      );
+      border-bottom-left-radius: var(
+        --_list-item-bottom-container-shape,
+        var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.medium})
+      );
+      border-bottom-right-radius: var(
+        --_list-item-bottom-container-shape,
+        var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.medium})
+      );
     }
     .base {
       flex: 1 1 auto;
@@ -251,7 +288,10 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
       color: var(--m3e-list-item-trailing-color, ${DesignToken.color.onSurfaceVariant});
     }
     :host(:not(:disabled)) {
-      background-color: var(--m3e-list-item-container-color, transparent);
+      background-color: var(--_list-item-container-color, var(--m3e-list-item-container-color, transparent));
+    }
+    :host(:disabled) {
+      background-color: var(--m3e-list-item-disabled-container-color, transparent);
     }
     :host(:disabled) ::slotted(video),
     :host(:disabled) ::slotted(img),
