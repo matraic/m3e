@@ -116,7 +116,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-focus-state-layer-opacity - Opacity for the focus state layer.
  * @cssprop --m3e-list-item-pressed-state-layer-color - Color for the pressed state layer.
  * @cssprop --m3e-list-item-pressed-state-layer-opacity - Opacity for the pressed state layer.
- * @cssprop --m3e-expressive-list-container-shape - Border radius of the segmented list container shape.
+ * @cssprop --m3e-segmented-list-container-shape - Border radius of the segmented list container shape.
  * @cssprop --m3e-segmented-list-segment-gap - Gap between list item segments.
  * @cssprop --m3e-list-item-three-line-top-offset - Top offset for media in three line items.
  * @cssprop --m3e-list-item-disabled-media-opacity - Opacity for media when disabled.
@@ -168,7 +168,7 @@ export class M3eExpandableListItem extends M3eListItemElement {
       transform: rotate(180deg);
     }
     :host([open]) .header {
-      --_list-item-top-container-shape: var(--m3e-expressive-list-container-shape, ${DesignToken.shape.corner.large});
+      --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
       margin-bottom: var(--m3e-segmented-list-segment-gap, 0.125rem);
     }
     :host([open]) .header.opening {
@@ -220,7 +220,7 @@ export class M3eExpandableListItem extends M3eListItemElement {
     }
     :host([open]) .header {
       --_list-item-hover-top-container-shape: var(
-        --m3e-expressive-list-container-shape,
+        --m3e-segmented-list-container-shape,
         ${DesignToken.shape.corner.large}
       );
       --_list-item-hover-bottom-container-shape: var(
@@ -346,7 +346,7 @@ export class M3eExpandableListItem extends M3eListItemElement {
       if (i == this.#items.length - 1) {
         x.style.setProperty(
           "--_list-item-bottom-container-shape",
-          `var(--m3e-expressive-list-container-shape, ${DesignToken.shape.corner.large})`,
+          `var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large})`,
         );
       } else {
         x.style.removeProperty("--_list-item-bottom-container-shape");

@@ -42,7 +42,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-divider-inset-start-size - Start inset for dividers within the list.
  * @cssprop --m3e-list-divider-inset-end-size - End inset for dividers within the list.
  * @cssprop --m3e-segmented-list-segment-gap - Gap between list items in segmented variant.
- * @cssprop --m3e-expressive-list-container-shape - Border radius of the expressive list container.
+ * @cssprop --m3e-segmented-list-container-shape - Border radius of the segmented list container.
  * @cssprop --m3e-segmented-list-item-container-color - Background color of items in expressive variant.
  * @cssprop --m3e-segmented-list-item-container-shape - Border radius of items in expressive variant.
  * @cssprop --m3e-segmented-list-item-hover-container-shape - Border radius of items in expressive variant on hover.
@@ -92,13 +92,10 @@ export class M3eListElement extends Role(LitElement, "list") {
       --m3e-list-item-between-space: var(--m3e-segmented-list-item-spacing, 0.75rem);
     }
     :host([variant="segmented"]) ::slotted(.-first) {
-      --_list-item-top-container-shape: var(--m3e-expressive-list-container-shape, ${DesignToken.shape.corner.large});
+      --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
     }
     :host([variant="segmented"]) ::slotted(.-last) {
-      --_list-item-bottom-container-shape: var(
-        --m3e-expressive-list-container-shape,
-        ${DesignToken.shape.corner.large}
-      );
+      --_list-item-bottom-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
     }
     :host([variant="segmented"]) ::slotted(m3e-divider) {
       display: none;
