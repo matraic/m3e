@@ -58,6 +58,7 @@ export class M3eListElement extends Role(LitElement, "list") {
       flex-direction: column;
       overflow-y: auto;
       box-sizing: border-box;
+      padding-block: var(--m3e-list-block-padding, 0px);
 
       --m3e-divider-inset-start-size: var(--m3e-list-divider-inset-start-size, 1rem);
       --m3e-divider-inset-end-size: var(--m3e-list-divider-inset-end-size, 1.5rem);

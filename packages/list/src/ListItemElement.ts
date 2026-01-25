@@ -175,7 +175,8 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
       line-height: var(--m3e-list-item-line-height, ${DesignToken.typescale.standard.body.large.lineHeight});
       letter-spacing: var(--m3e-list-item-tracking, ${DesignToken.typescale.standard.body.large.tracking});
     }
-    ::slotted(span[slot="trailing"]) {
+    ::slotted(span[slot="trailing"]),
+    ::slotted([slot="trailing-supporting-text"]) {
       white-space: nowrap;
       font-size: var(--m3e-list-item-trailing-text-font-size, ${DesignToken.typescale.standard.label.small.fontSize});
       font-weight: var(
@@ -226,10 +227,13 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
       border-radius: var(--m3e-list-item-image-shape, ${DesignToken.shape.corner.none});
     }
     ::slotted(m3e-icon[slot="leading"]),
-    ::slotted(m3e-icon[slot="trailing"]) {
+    ::slotted(m3e-icon[slot="leading-icon"]),
+    ::slotted(m3e-icon[slot="trailing"]),
+    ::slotted(m3e-icon[slot="trailing-icon"]) {
       --m3e-icon-size: var(--m3e-list-item-icon-size, 1.5rem);
     }
-    :host(:not(:disabled)) ::slotted(m3e-icon[slot="leading"]) {
+    :host(:not(:disabled)) ::slotted(m3e-icon[slot="leading"]),
+    :host(:not(:disabled)) ::slotted(m3e-icon[slot="leading-icon"]) {
       color: var(--m3e-list-item-leading-color, ${DesignToken.color.onSurfaceVariant});
     }
     :host(:not(:disabled)) .base {
@@ -241,7 +245,9 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
     :host(:not(:disabled)) ::slotted([slot="supporting-text"]) {
       color: var(--m3e-list-item-supporting-text-color, ${DesignToken.color.onSurfaceVariant});
     }
-    :host(:not(:disabled)) ::slotted([slot="trailing"]) {
+    :host(:not(:disabled)) ::slotted([slot="trailing"]),
+    :host(:not(:disabled)) ::slotted([slot="trailing-supporting-text"]),
+    :host(:not(:disabled)) ::slotted([slot="trailing-icon"]) {
       color: var(--m3e-list-item-trailing-color, ${DesignToken.color.onSurfaceVariant});
     }
     :host(:not(:disabled)) {
@@ -276,7 +282,8 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
         transparent
       );
     }
-    :host(:disabled) ::slotted([slot="leading"]) {
+    :host(:disabled) ::slotted([slot="leading"]),
+    :host(:disabled) ::slotted([slot="leading-icon"]) {
       color: color-mix(
         in srgb,
         var(--m3e-list-item-disabled-leading-color, ${DesignToken.color.onSurface})
@@ -284,7 +291,9 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
         transparent
       );
     }
-    :host(:disabled) ::slotted([slot="trailing"]) {
+    :host(:disabled) ::slotted([slot="trailing"]),
+    :host(:disabled) ::slotted([slot="trailing-supporting-text"]),
+    :host(:disabled) ::slotted([slot="trailing-icon"]) {
       color: color-mix(
         in srgb,
         var(--m3e-list-item-disabled-trailing-color, ${DesignToken.color.onSurface})
@@ -313,10 +322,13 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
     }
     @media (forced-colors: active) {
       :host(:disabled) ::slotted([slot="leading"]),
+      :host(:disabled) ::slotted([slot="leading-icon"]),
       :host(:disabled) .base,
       :host(:disabled) ::slotted([slot="overline"]),
       :host(:disabled) ::slotted([slot="supporting-text"]),
-      :host(:disabled) ::slotted([slot="trailing"]) {
+      :host(:disabled) ::slotted([slot="trailing"]),
+      :host(:disabled) ::slotted([slot="trailing-supporting-text"]),
+      :host(:disabled) ::slotted([slot="trailing-icon"]) {
         color: GrayText;
       }
     }
@@ -342,13 +354,18 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot name="leading"></slot>
+    return html`<slot name="leading">
+        <slot name="leading-icon"></slot>
+      </slot>
       <div class="base">
         <slot name="overline"></slot>
         <slot></slot>
         <slot name="supporting-text"></slot>
       </div>
-      <slot name="trailing"></slot>`;
+      <slot name="trailing">
+        <slot name="trailing-supporting-text"></slot>
+        <slot name="trailing-icon"></slot>
+      </slot>`;
   }
 
   /** @private */
