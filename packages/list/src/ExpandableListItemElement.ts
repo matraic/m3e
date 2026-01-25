@@ -184,6 +184,8 @@ export class M3eExpandableListItem extends M3eListItemElement {
       box-sizing: border-box;
     }
     ::slotted([slot="items"]) {
+      --_list-item-top-container-shape: initial;
+      --_list-item-bottom-container-shape: initial;
       row-gap: var(--m3e-segmented-list-segment-gap, 0.125rem);
     }
     .items {
