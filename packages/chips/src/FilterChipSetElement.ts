@@ -47,7 +47,7 @@ import { M3eFilterChipElement } from "./FilterChipElement";
  */
 @customElement("m3e-filter-chip-set")
 export class M3eFilterChipSetElement extends Labelled(
-  Dirty(Touched(FormAssociated(Disabled(AttachInternals(Role(M3eChipSetElement, "radiogroup"))))))
+  Dirty(Touched(FormAssociated(Disabled(AttachInternals(Role(M3eChipSetElement, "radiogroup")))))),
 ) {
   /** @private */ #directionalitySubscription?: () => void;
 
@@ -79,9 +79,9 @@ export class M3eFilterChipSetElement extends Labelled(
     return this[selectionManager]?.selectedItems ?? [];
   }
 
-  /** The selected value(s) of the set. */
+  /** The selected (enabled) value(s) of the set. */
   get value(): string | readonly string[] | null {
-    const values = this.selected.map((x) => x.value);
+    const values = this.selected.filter((x) => !x.disabled).map((x) => x.value);
     switch (values.length) {
       case 0:
         return null;
@@ -109,7 +109,7 @@ export class M3eFilterChipSetElement extends Labelled(
   override connectedCallback(): void {
     super.connectedCallback();
     this.#directionalitySubscription = M3eDirectionality.observe(
-      () => (this[selectionManager].directionality = M3eDirectionality.current)
+      () => (this[selectionManager].directionality = M3eDirectionality.current),
     );
   }
 

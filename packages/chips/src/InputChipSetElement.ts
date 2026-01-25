@@ -62,8 +62,8 @@ import { M3eInputChipElement } from "./InputChipElement";
 export class M3eInputChipSetElement
   extends RequiredConstraintValidation(
     Required(
-      ConstraintValidation(Dirty(Touched(FormAssociated(Disabled(AttachInternals(Role(M3eChipSetElement, "grid")))))))
-    )
+      ConstraintValidation(Dirty(Touched(FormAssociated(Disabled(AttachInternals(Role(M3eChipSetElement, "grid"))))))),
+    ),
   )
   implements FormFieldControl
 {
@@ -88,7 +88,7 @@ export class M3eInputChipSetElement
             transition: none !important;
           }
         }
-      `.toString()
+      `.toString(),
     );
 
     document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
@@ -151,7 +151,7 @@ export class M3eInputChipSetElement
 
   /** The values of the set. */
   get value(): readonly string[] | null {
-    const values = this.chips.map((x) => x.value);
+    const values = this.chips.filter((x) => !x.disabled).map((x) => x.value);
     return values.length == 0 ? null : values;
   }
 
@@ -188,7 +188,7 @@ export class M3eInputChipSetElement
     this.addEventListener("focusout", this.#focusOutHandler);
 
     this.#directionalitySubscription = M3eDirectionality.observe(
-      () => (this.#listKeyManager.directionality = M3eDirectionality.current)
+      () => (this.#listKeyManager.directionality = M3eDirectionality.current),
     );
   }
 
@@ -261,7 +261,7 @@ export class M3eInputChipSetElement
     });
 
     this.#listKeyManager.setItems(
-      this.#listManager.items.flatMap((x) => (x.removeButton ? [x.cell, x.removeButton] : [x.cell]))
+      this.#listManager.items.flatMap((x) => (x.removeButton ? [x.cell, x.removeButton] : [x.cell])),
     );
     if (!this.#listKeyManager.activeItem) {
       this.#listKeyManager.updateActiveItem(this.#listKeyManager.items.find((x) => x.hasAttribute("tabindex")));

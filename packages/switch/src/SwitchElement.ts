@@ -136,10 +136,10 @@ export class M3eSwitchElement extends Labelled(
   Dirty(
     Touched(
       ConstraintValidation(
-        Checked(FormAssociated(KeyboardClick(Focusable(Disabled(AttachInternals(Role(LitElement, "switch")))))))
-      )
-    )
-  )
+        Checked(FormAssociated(KeyboardClick(Focusable(Disabled(AttachInternals(Role(LitElement, "switch"))))))),
+      ),
+    ),
+  ),
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = [
@@ -195,7 +195,7 @@ export class M3eSwitchElement extends Labelled(
 
   /** @inheritdoc @private */
   override get [formValue](): string | File | FormData | null {
-    return !this.checked ? null : this.value;
+    return this.checked && !this.disabled ? this.value : null;
   }
 
   /** @inheritdoc */

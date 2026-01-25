@@ -65,7 +65,7 @@ import { M3eButtonSegmentElement } from "./ButtonSegmentElement";
  */
 @customElement("m3e-segmented-button")
 export class M3eSegmentedButtonElement extends Labelled(
-  Dirty(Touched(FormAssociated(Disabled(AttachInternals(Role(LitElement, "radiogroup"))))))
+  Dirty(Touched(FormAssociated(Disabled(AttachInternals(Role(LitElement, "radiogroup")))))),
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -117,9 +117,9 @@ export class M3eSegmentedButtonElement extends Labelled(
     return this[selectionManager]?.selectedItems ?? [];
   }
 
-  /** The selected value(s) of the button. */
+  /** The selected (enabled) value(s) of the button. */
   get value(): string | readonly string[] | null {
-    const values = this.selected.map((x) => x.value);
+    const values = this.selected.filter((x) => !x.disabled).map((x) => x.value);
     switch (values.length) {
       case 0:
         return null;
@@ -150,7 +150,7 @@ export class M3eSegmentedButtonElement extends Labelled(
     this[selectionManager].multi = this.multi;
     this[selectionManager].disableRovingTabIndex(this.multi);
     this.#directionalitySubscription = M3eDirectionality.observe(
-      () => (this[selectionManager].directionality = M3eDirectionality.current)
+      () => (this[selectionManager].directionality = M3eDirectionality.current),
     );
   }
 

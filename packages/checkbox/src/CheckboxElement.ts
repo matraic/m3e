@@ -99,13 +99,13 @@ export class M3eCheckboxElement extends Labelled(
         Required(
           ConstraintValidation(
             CheckedIndeterminate(
-              FormAssociated(KeyboardClick(Focusable(Disabled(AttachInternals(Role(LitElement, "checkbox")))), false))
-            )
-          )
-        )
-      )
-    )
-  )
+              FormAssociated(KeyboardClick(Focusable(Disabled(AttachInternals(Role(LitElement, "checkbox")))), false)),
+            ),
+          ),
+        ),
+      ),
+    ),
+  ),
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -286,7 +286,7 @@ export class M3eCheckboxElement extends Labelled(
 
   /** @inheritdoc @private */
   override get [formValue](): string | File | FormData | null {
-    return !this.checked || this.indeterminate ? null : this.value;
+    return this.checked && !this.disabled && !this.indeterminate ? this.value : null;
   }
 
   /** @inheritdoc */

@@ -80,9 +80,9 @@ import { selectionManager } from "@m3e/core/a11y";
 export class M3eRadioElement extends Labelled(
   Dirty(
     Touched(
-      Checked(KeyboardClick(Focusable(FormAssociated(Disabled(AttachInternals(Role(LitElement, "radio"), true))))))
-    )
-  )
+      Checked(KeyboardClick(Focusable(FormAssociated(Disabled(AttachInternals(Role(LitElement, "radio"), true)))))),
+    ),
+  ),
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -204,7 +204,7 @@ export class M3eRadioElement extends Labelled(
 
   /** @inheritdoc @internal */
   override get [formValue](): string | File | FormData | null {
-    return this.checked ? this.value : null;
+    return this.checked && !this.disabled ? this.value : null;
   }
 
   /** @inheritdoc */

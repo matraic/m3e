@@ -74,9 +74,9 @@ export class M3eSelectionListElement extends Labelled(
     return this[selectionManager]?.selectedItems ?? [];
   }
 
-  /** The selected value(s) of the set. */
+  /** The selected (enabled) value(s) of the set. */
   get value(): string | readonly string[] | null {
-    const values = this.selected.map((x) => x.value);
+    const values = this.selected.filter((x) => !x.disabled).map((x) => x.value);
     switch (values.length) {
       case 0:
         return null;

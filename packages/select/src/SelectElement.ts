@@ -88,11 +88,11 @@ export class M3eSelectElement
       RequiredConstraintValidation(
         Dirty(
           Touched(
-            Required(ConstraintValidation(FormAssociated(Disabled(AttachInternals(Role(LitElement, "combobox"))))))
-          )
-        )
-      )
-    )
+            Required(ConstraintValidation(FormAssociated(Disabled(AttachInternals(Role(LitElement, "combobox")))))),
+          ),
+        ),
+      ),
+    ),
   )
   implements FormFieldControl
 {
@@ -209,9 +209,9 @@ export class M3eSelectElement
     return this._listKeyManager?.items ?? [];
   }
 
-  /** The selected value(s). */
+  /** The selected (enabled) value(s). */
   get value(): string | readonly string[] | null {
-    const values = this.selected.map((x) => x.value);
+    const values = this.selected.filter((x) => !x.disabled).map((x) => x.value);
     switch (values.length) {
       case 0:
         return null;
@@ -468,7 +468,7 @@ export class M3eSelectElement
         new ToggleEvent("toggle", {
           oldState: e.oldState,
           newState: e.newState,
-        })
+        }),
       );
     } else {
       if (prefersReducedMotion()) {
@@ -504,7 +504,7 @@ export class M3eSelectElement
       new ToggleEvent("toggle", {
         oldState: e.oldState,
         newState: e.newState,
-      })
+      }),
     );
   }
 
@@ -609,25 +609,25 @@ export interface M3eSelectElement {
   addEventListener<K extends keyof M3eSelectElementEventMap>(
     type: K,
     listener: (this: M3eSelectElement, ev: M3eSelectElementEventMap[K]) => void,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   addEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   removeEventListener<K extends keyof M3eSelectElementEventMap>(
     type: K,
     listener: (this: M3eSelectElement, ev: M3eSelectElementEventMap[K]) => void,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 
   removeEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 }
 
