@@ -116,7 +116,7 @@ import { M3eListItemElement } from "./ListItemElement";
  */
 @customElement("m3e-list-option")
 export class M3eListOptionElement extends KeyboardClick(
-  Focusable(Selected(Disabled(AttachInternals(Role(M3eListItemElement, "option"))))),
+  Focusable(Selected(Disabled(AttachInternals(Role(M3eListItemElement, "option"), true)))),
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = [
