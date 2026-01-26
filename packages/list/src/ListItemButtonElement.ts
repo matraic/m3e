@@ -47,6 +47,9 @@ export class M3eListItemButtonElement extends KeyboardClick(
         bottom: 0px;
         z-index: 1;
       }
+      slot[name="trailing"] {
+        align-self: var(--_list-item-button-trailing-align-self, auto);
+      }
     `,
   ];
 

@@ -133,6 +133,7 @@ export class M3eExpandableListItem extends M3eListItemElement {
         var(--m3e-expandable-list-item-bounce-duration, ${DesignToken.motion.duration.medium1})
         ${DesignToken.motion.easing.standard}`,
       )};
+      --_list-item-button-trailing-align-self: stretch;
     }
     .toggle-container {
       display: flex;
