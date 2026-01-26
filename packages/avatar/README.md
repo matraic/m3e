@@ -1,6 +1,6 @@
 # @m3e/avatar
 
-The `m3e-avatar` component component is a reusable identity primitive that displays visual or textual representation with consistent sizing, shape, and typography.
+The `m3e-avatar` component is a reusable identity primitive that displays visual or textual representation with consistent sizing, shape, and typography.
 
 > **This package is part of [M3E](https://github.com/matraic/m3e) monorepo**, a unified suite of Material 3 web components. [Explore the docs](https://matraic.github.io/m3e) to see them in action.
 
