@@ -255,7 +255,7 @@ export class M3eExpandableListItem extends M3eListItemElement {
         aria-controls="${this.#contentId}"
         @click="${this.#handleHeaderClick}"
       >
-        <slot name="leading" slot="leading"></slot>
+        <slot name="leading" slot="leading" @slotchange="${this._handleLeadingSlotChange}"></slot>
         <slot name="overline" slot="overline"></slot>
         <slot></slot>
         <slot name="supporting-text" slot="supporting-text"></slot>

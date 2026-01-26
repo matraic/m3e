@@ -5,6 +5,7 @@ import { DesignToken, Role } from "@m3e/core";
 
 import { ListVariant } from "./ListVariant";
 import { M3eListItemElement } from "./ListItemElement";
+import { ListItemContentType } from "./ListItemContentType";
 
 /**
  * A list of items.
@@ -66,7 +67,7 @@ export class M3eListElement extends Role(LitElement, "list") {
     }
     :host([variant="standard"]) {
       --_list-item-leading-video-outset: var(--m3e-list-item-leading-space, 1rem);
-      --_list-item-leading-trailing-outset: var(--m3e-list-item-trailing-space, 1rem);
+      --_list-item-trailing-video-outset: var(--m3e-list-item-trailing-space, 1rem);
       --_expandable-list-item-expanded-toggle-icon-container-color: transparent;
     }
     :host([variant="segmented"]) {
@@ -108,9 +109,31 @@ export class M3eListElement extends Role(LitElement, "list") {
     :host([variant="segmented"]) ::slotted(m3e-divider) {
       display: none;
     }
+    :host(.-has-leading-video) {
+      --_list-item-leading-reserved-display: block;
+      --_list-item-leading-reserved-space: var(--m3e-list-item-video-width, 6.25rem);
+    }
+    :host([variant="standard"].-has-leading-video) {
+      --_list-item-leading-reserved-outset: var(--m3e-list-item-leading-space, 1rem);
+      --_list-item-trailing-reserved-outset: var(--m3e-list-item-trailing-space, 1rem);
+    }
+    :host(.-has-leading-image) {
+      --_list-item-leading-reserved-display: block;
+      --_list-item-leading-reserved-space: var(--m3e-list-item-image-width, 3.5rem);
+    }
+    :host(.-has-leading-avatar) {
+      --_list-item-leading-reserved-display: block;
+      --_list-item-leading-reserved-space: var(--m3e-avatar-size, 2.5rem);
+    }
+    :host(.-has-leading-icon) {
+      --_list-item-leading-reserved-display: block;
+      --_list-item-leading-reserved-space: var(--m3e-list-item-icon-size, 1.5rem);
+    }
   `;
 
   /** @private */ #items = new Array<M3eListItemElement>();
+  /** @private */ #leadingContentTypes = { video: 0, image: 0, avatar: 0, icon: 0, text: 0 };
+  /** @private */ #trailingContentTypes = { video: 0, image: 0, avatar: 0, icon: 0, text: 0 };
 
   /**
    * The appearance variant of the list.
@@ -121,6 +144,36 @@ export class M3eListElement extends Role(LitElement, "list") {
   /** The items of the list. */
   get items(): ReadonlyArray<M3eListItemElement> {
     return this.#items;
+  }
+
+  /** The type of leading content. */
+  get leadingContentType(): ListItemContentType {
+    return this.#leadingContentTypes.video > 0
+      ? "video"
+      : this.#leadingContentTypes.image > 0
+        ? "image"
+        : this.#leadingContentTypes.avatar > 0
+          ? "avatar"
+          : this.#leadingContentTypes.icon > 0
+            ? "icon"
+            : this.#leadingContentTypes.text > 0
+              ? "text"
+              : undefined;
+  }
+
+  /** The type of trailing content. */
+  get trailingContentType(): ListItemContentType {
+    return this.#trailingContentTypes.video > 0
+      ? "video"
+      : this.#trailingContentTypes.image > 0
+        ? "image"
+        : this.#trailingContentTypes.avatar > 0
+          ? "avatar"
+          : this.#trailingContentTypes.icon > 0
+            ? "icon"
+            : this.#trailingContentTypes.text > 0
+              ? "text"
+              : undefined;
   }
 
   /** @inheritdoc */
@@ -147,6 +200,40 @@ export class M3eListElement extends Role(LitElement, "list") {
    * Notifies the list that items have changed.
    */
   notifyItemsChange(): void {}
+
+  /**
+   * @internal
+   * Notifies the list that the leading content of an item has changed.
+   */
+  notifyLeadingContentTypeChange(oldType: ListItemContentType, newType: ListItemContentType): void {
+    if (oldType) {
+      this.#leadingContentTypes[oldType]--;
+    }
+    if (newType) {
+      this.#leadingContentTypes[newType]++;
+    }
+
+    ["video", "image", "avatar", "icon"].forEach((x) => {
+      this.classList.toggle(`-has-leading-${x}`, this.leadingContentType === x);
+    });
+  }
+
+  /**
+   * @internal
+   * Notifies the list that the trailing content of an item has changed.
+   */
+  notifyTrailingContentTypeChange(oldType: ListItemContentType, newType: ListItemContentType): void {
+    if (oldType) {
+      this.#trailingContentTypes[oldType]--;
+    }
+    if (newType) {
+      this.#trailingContentTypes[newType]--;
+    }
+
+    ["video", "image", "avatar", "icon"].forEach((x) => {
+      this.classList.toggle(`-has-trailing-${x}`, this.trailingContentType === x);
+    });
+  }
 }
 
 declare global {

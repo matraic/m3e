@@ -3,6 +3,9 @@ import { customElement } from "lit/decorators.js";
 
 import { computeLineCount, DesignToken, ResizeController, Role } from "@m3e/core";
 
+import type { M3eListElement } from "./ListElement";
+import { ListItemContentType } from "./ListItemContentType";
+
 /**
  * An item in a list.
  *
@@ -212,6 +215,25 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
       line-height: var(--m3e-list-item-line-height, ${DesignToken.typescale.standard.body.large.lineHeight});
       letter-spacing: var(--m3e-list-item-tracking, ${DesignToken.typescale.standard.body.large.tracking});
     }
+    :host(.-has-leading) slot[name="leading"],
+    :host(.-has-trailing) slot[name="trailing"] {
+      display: flex;
+      justify-content: center;
+    }
+    :host(:not(.-has-leading)) slot[name="leading"] {
+      display: var(--_list-item-leading-reserved-display, contents);
+    }
+    :host(:not(.-has-trailing)) slot[name="trailing"] {
+      display: var(--_list-item-trailing-reserved-display, contents);
+    }
+    slot[name="leading"] {
+      min-width: var(--_list-item-leading-reserved-space, 0px);
+      margin-inline-start: calc(0px - var(--_list-item-leading-reserved-outset, 0px));
+    }
+    slot[name="trailing"] {
+      min-width: var(--_list-item-trailing-reserved-space, 0px);
+      margin-inline-end: calc(0px - var(--_list-item-trailing-reserved-outset, 0px));
+    }
     ::slotted(span[slot="trailing"]),
     ::slotted([slot="trailing-supporting-text"]) {
       white-space: nowrap;
@@ -382,6 +404,19 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
   /** @private */
   #resizeController = new ResizeController(this, { target: null, callback: () => this.#updateMultiline() });
 
+  /** @private */ #leadingContentType: ListItemContentType;
+  /** @private */ #trailingContentType: ListItemContentType;
+
+  /** The type of leading content. */
+  get leadingContentType(): ListItemContentType {
+    return this.#leadingContentType;
+  }
+
+  /** The type of trailing content. */
+  get trailingContentType(): ListItemContentType {
+    return this.#trailingContentType;
+  }
+
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
@@ -394,17 +429,17 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot name="leading">
-        <slot name="leading-icon"></slot>
+    return html`<slot name="leading" @slotchange="${this._handleLeadingSlotChange}">
+        <slot name="leading-icon" @slotchange="${this._handleLeadingSlotChange}"></slot>
       </slot>
       <div class="base">
         <slot name="overline"></slot>
         <slot></slot>
         <slot name="supporting-text"></slot>
       </div>
-      <slot name="trailing">
-        <slot name="trailing-supporting-text"></slot>
-        <slot name="trailing-icon"></slot>
+      <slot name="trailing" @slotchange="${this._handleTrailingSlotChange}">
+        <slot name="trailing-supporting-text" @slotchange="${this._handleTrailingSlotChange}"></slot>
+        <slot name="trailing-icon" @slotchange="${this._handleTrailingSlotChange}"></slot>
       </slot>`;
   }
 
@@ -415,6 +450,42 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
     this.classList.toggle("-one-line", lines <= 1);
     this.classList.toggle("-two-line", lines == 2);
     this.classList.toggle("-three-line", lines > 2);
+  }
+
+  /** @internal */
+  protected _handleLeadingSlotChange(e: Event): void {
+    const contentType = this.#leadingContentType;
+    this.#leadingContentType = this.#getSlotContentType(e.target as HTMLSlotElement);
+    this.classList.toggle("-has-leading", this.#leadingContentType !== undefined);
+    if (contentType !== this.#leadingContentType) {
+      this.closest<M3eListElement>("m3e-list,m3e-action-list,m3e-selection-list")?.notifyLeadingContentTypeChange(
+        contentType,
+        this.#leadingContentType,
+      );
+    }
+  }
+
+  /** @internal */
+  protected _handleTrailingSlotChange(e: Event): void {
+    const contentType = this.#trailingContentType;
+    this.#trailingContentType = this.#getSlotContentType(e.target as HTMLSlotElement);
+    this.classList.toggle("-has-trailing", this.#trailingContentType !== undefined);
+    if (contentType !== this.#trailingContentType) {
+      this.closest<M3eListElement>("m3e-list,m3e-action-list,m3e-selection-list")?.notifyTrailingContentTypeChange(
+        contentType,
+        this.#trailingContentType,
+      );
+    }
+  }
+
+  /** @private */
+  #getSlotContentType(slot: HTMLSlotElement): ListItemContentType {
+    const elements = slot.assignedElements({ flatten: true });
+    if (elements.some((x) => x.tagName === "VIDEO")) return "video";
+    if (elements.some((x) => x.tagName === "IMG")) return "image";
+    if (elements.some((x) => x.tagName === "M3E-AVATAR")) return "avatar";
+    if (elements.some((x) => x.tagName === "M3E-ICON")) return "icon";
+    return elements.length > 0 ? "text" : undefined;
   }
 }
 

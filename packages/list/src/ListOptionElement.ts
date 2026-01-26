@@ -273,13 +273,13 @@ export class M3eListOptionElement extends KeyboardClick(
     return html`<m3e-state-layer class="state-layer" ?disabled="${this.disabled}"> </m3e-state-layer>
       <m3e-focus-ring class="focus-ring" inward ?disabled="${this.disabled}"></m3e-focus-ring>
       <m3e-ripple class="ripple" ?disabled="${this.disabled}"></m3e-ripple>
-      <slot name="leading"></slot>
+      <slot name="leading" @slotchange="${this._handleLeadingSlotChange}"></slot>
       <div class="base">
         <slot name="overline"></slot>
         <slot @slotchange="${this.#handleSlotChange}"></slot>
         <slot name="supporting-text"></slot>
       </div>
-      <slot name="trailing"></slot>
+      <slot name="trailing" @slotchange="${this._handleTrailingSlotChange}"></slot>
       <div class="indicator">
         ${this.closest("m3e-selection-list")?.multi
           ? html`<m3e-pseudo-checkbox ?checked="${this.selected}" ?disabled="${this.disabled}"></m3e-pseudo-checkbox>`

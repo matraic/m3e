@@ -120,11 +120,11 @@ export class M3eListActionElement extends LinkButton(M3eListItemElement) {
       rel="${ifDefined(this.rel || undefined)}"
       @click="${this.#handleClick}"
     >
-      <slot name="leading" slot="leading"></slot>
+      <slot name="leading" slot="leading" @slotchange="${this._handleLeadingSlotChange}"></slot>
       <slot name="overline" slot="overline"></slot>
       <slot></slot>
       <slot name="supporting-text" slot="supporting-text"></slot>
-      <slot name="trailing" slot="trailing"></slot>
+      <slot name="trailing" slot="trailing" @slotchange="${this._handleTrailingSlotChange}"></slot>
     </m3e-list-item-button>`;
   }
 
