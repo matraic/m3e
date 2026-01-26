@@ -105,10 +105,10 @@ export class M3eListElement extends Role(LitElement, "list") {
       );
     }
     :host([variant="segmented"]) ::slotted(.-first),
-    :host([variant="segmented"]) ::slotted(.-last.-has-previous-open:not([open])) {
+    :host([variant="segmented"]) ::slotted(.-has-previous-open:not([open])) {
       --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
     }
-    :host([variant="segmented"]) ::slotted(.-first.-has-next-open:not([open])),
+    :host([variant="segmented"]) ::slotted(.-has-next-open:not([open])),
     :host([variant="segmented"]) ::slotted(.-last) {
       --_list-item-bottom-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
     }
