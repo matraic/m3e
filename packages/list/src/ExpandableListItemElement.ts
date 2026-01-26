@@ -1,11 +1,11 @@
-import { css, CSSResultGroup, html, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, PropertyValues, unsafeCSS } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 
 import { DesignToken } from "@m3e/core";
 import { selectionManager } from "@m3e/core/a11y";
 
+import type { M3eListElement } from "./ListElement";
 import { M3eListItemButtonElement } from "./ListItemButtonElement";
-import { M3eListElement } from "./ListElement";
 import { M3eListItemElement } from "./ListItemElement";
 
 /**
@@ -168,7 +168,7 @@ export class M3eExpandableListItem extends M3eListItemElement {
       transform: rotate(180deg);
     }
     :host([open]) .header {
-      --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
+      --_list-item-top-container-shape: var(--_expandable-list-item-expanded-top-shape, initial);
       --_list-item-bottom-container-shape: initial;
       margin-bottom: var(--_expandable-list-item-items-segment-gap, 0px);
     }
@@ -243,6 +243,26 @@ export class M3eExpandableListItem extends M3eListItemElement {
   /** The direct child items of this item. */
   get items(): ReadonlyArray<M3eListItemElement> {
     return this.#items;
+  }
+
+  /** @inheritdoc */
+  protected override updated(_changedProperties: PropertyValues<this>): void {
+    super.updated(_changedProperties);
+
+    if (_changedProperties.has("open")) {
+      for (let sibling = this.previousElementSibling; sibling; sibling = sibling.previousElementSibling) {
+        if (sibling instanceof M3eListItemElement) {
+          sibling.classList.toggle("-has-next-open", this.open);
+          break;
+        }
+      }
+      for (let sibling = this.nextElementSibling; sibling; sibling = sibling.nextElementSibling) {
+        if (sibling instanceof M3eListItemElement) {
+          sibling.classList.toggle("-has-previous-open", this.open);
+          break;
+        }
+      }
+    }
   }
 
   /** @inheritdoc */

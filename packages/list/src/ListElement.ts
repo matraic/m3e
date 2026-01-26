@@ -99,10 +99,16 @@ export class M3eListElement extends Role(LitElement, "list") {
       --m3e-list-item-image-shape: var(--m3e-segmented-list-item-image-shape, ${DesignToken.shape.corner.small});
       --m3e-list-item-between-space: var(--m3e-segmented-list-item-spacing, 0.75rem);
       --_expandable-list-item-items-segment-gap: var(--m3e-segmented-list-segment-gap, 0.125rem);
+      --_expandable-list-item-expanded-top-shape: var(
+        --m3e-segmented-list-container-shape,
+        ${DesignToken.shape.corner.large}
+      );
     }
-    :host([variant="segmented"]) ::slotted(.-first) {
+    :host([variant="segmented"]) ::slotted(.-first),
+    :host([variant="segmented"]) ::slotted(.-last.-has-previous-open:not([open])) {
       --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
     }
+    :host([variant="segmented"]) ::slotted(.-first.-has-next-open:not([open])),
     :host([variant="segmented"]) ::slotted(.-last) {
       --_list-item-bottom-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
     }
