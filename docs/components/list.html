@@ -22,31 +22,33 @@
       {
         "imports": {
           "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
-          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.1.6/dist/index.min.js",
-          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.1.6/dist/a11y.min.js"
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.1.7/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.1.7/dist/a11y.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.1.6/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.1.6/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.1.6/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/divider@1.1.6/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.1.6/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.1.6/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/list@1.1.6/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.1.7/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.1.7/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.1.7/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/divider@1.1.7/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.1.7/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.1.7/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/list@1.1.7/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/avatar@1.1.7/dist/index.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body id="body">
     <m3e-theme strong-focus>
-      <m3e-toc class="toc" for="body">
+      <m3e-toc class="toc" for="body" max-depth="4">
         <span slot="overline">On this page</span>
         <span slot="title">List</span>
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">List</m3e-heading>
       <p>
-        The <code>m3e-list</code> component provides a list container for organizing and displaying multiple list items.
+        The <code>@m3e/list</code> package provides expressive, accessible components for organizing and displaying
+        lists of items.
       </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
@@ -55,33 +57,32 @@
       <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
       <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
 
-      <m3e-heading variant="headline" size="small" level="3">Anatomy</m3e-heading>
+      <m3e-heading variant="headline" size="small" level="3">Lists</m3e-heading>
       <p>
         To create a list of items, use the <code>m3e-list</code> component with one or more
         <code>m3e-list-item</code> components nested inside it.
       </p>
+      <m3e-heading variant="title" size="medium" level="4">Anatomy</m3e-heading>
       <p>
         The <code>m3e-list-item</code> component provides a modular layout for structured content blocks. It exposes the
         following named slots:
       </p>
       <ul>
         <li><code>(default)</code> — Renders the content of the list item.</li>
-        <li><code>leading-icon</code> — Renders the leading icon of the list item.</li>
+        <li><code>leading</code> — Renders the leading content of the list item.</li>
         <li><code>overline</code> — Renders the overline of the list item.</li>
         <li><code>supporting-text</code> — Renders the supporting text of the list item.</li>
-        <li><code>trailing-supporting-text</code> — Renders the trailing supporting text of the list item.</li>
-        <li><code>trailing-icon</code> — Renders the trailing icon of the list item.</li>
+        <li><code>trailing</code> — Renders the trailing content of the list item.</li>
       </ul>
       <m3e-card variant="outlined">
         <div slot="content">
           <m3e-list>
             <m3e-list-item>
-              <m3e-icon slot="leading-icon" name="person"></m3e-icon>
+              <m3e-icon slot="leading" name="person"></m3e-icon>
               <span slot="overline">Overline</span>
               Headline
               <span slot="supporting-text">Supporting text</span>
-              <span slot="trailing-supporting-text">100+</span>
-              <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
+              <span slot="trailing">100+</span>
             </m3e-list-item>
           </m3e-list>
         </div>
@@ -90,22 +91,311 @@
         <pre slot="content">
 &lt;m3e-list&gt;
   &lt;m3e-list-item&gt;
-    &lt;m3e-icon slot=&quot;leading-icon&quot; name=&quot;person&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;m3e-icon slot=&quot;leading&quot; name=&quot;person&quot;&gt;&lt;/m3e-icon&gt;
     &lt;span slot=&quot;overline&quot;&gt;Overline&lt;/span&gt;
     Headline
     &lt;span slot=&quot;supporting-text&quot;&gt;Supporting text&lt;/span&gt;
-    &lt;span slot=&quot;trailing-supporting-text&quot;&gt;100+&lt;/span&gt;
-    &lt;m3e-icon slot=&quot;trailing-icon&quot; name=&quot;arrow_right&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;span slot=&quot;trailing&quot;&gt;100+&lt;/span&gt;
   &lt;/m3e-list-item&gt;
 &lt;/m3e-list&gt;</pre
         >
       </m3e-card>
 
-      <m3e-heading variant="headline" size="small" level="3">Dividers</m3e-heading>
+      <m3e-heading variant="title" size="medium" level="4">Variants</m3e-heading>
+      <p>
+        There are two appearance variants <code>standard</code> (default) and <code>segmented</code>. Use the
+        <code>variant</code> attribute to control a list's appearance.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-list variant="outlined">
+            <m3e-list-item>Item 1</m3e-list-item>
+            <m3e-list-item>Item 2</m3e-list-item>
+            <m3e-list-item>Item 3</m3e-list-item>
+          </m3e-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-list&gt;
+  &lt;m3e-list-item&gt;Item 1&lt;/m3e-list-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-list&gt;</pre
+        >
+      </m3e-card>
+
+      <p>The following presents the segmented variant inside a filled card in order to illustrate color and shape.</p>
+
+      <m3e-card>
+        <div slot="content">
+          <m3e-list variant="segmented">
+            <m3e-list-item>Item 1</m3e-list-item>
+            <m3e-list-item>Item 2</m3e-list-item>
+            <m3e-list-item>Item 3</m3e-list-item>
+          </m3e-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-list variant=&quot;segmented&quot;&gt;
+  &lt;m3e-list-item&gt;Item 1&lt;/m3e-list-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-list&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Multiline items</m3e-heading>
+      <p>
+        List items are responsive containers that automatically adapt their height and internal spacing according to the
+        item's line count, ensuring correct layout for one-line, two-line, and three-line configurations.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-list>
+            <m3e-list-item>Label text</m3e-list-item>
+            <m3e-list-item>
+              Label text
+              <span slot="supporting-text">Supporting text</span>
+            </m3e-list-item>
+            <m3e-list-item>
+              <span slot="overline">Overline</span>
+              Label text
+              <span slot="supporting-text">Supporting text</span>
+            </m3e-list-item>
+          </m3e-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-list&gt;
+  &lt;m3e-list-item&gt;Label text&lt;/m3e-list-item&gt;
+  &lt;m3e-list-item&gt;
+    Label text
+    &lt;span slot=&quot;supporting-text&quot;&gt;Supporting text&lt;/span&gt;
+  &lt;/m3e-list-item&gt;
+  &lt;m3e-list-item&gt;
+    &lt;span slot=&quot;overline&quot;&gt;Overline&lt;/span&gt;
+    Label text
+    &lt;span slot=&quot;supporting-text&quot;&gt;Supporting text&lt;/span&gt;
+  &lt;/m3e-list-item&gt;
+&lt;/m3e-list&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Media content</m3e-heading>
+      <p>
+        List items automatically size and position leading and trailing media—such as videos, images, avatars, and
+        icons—according to the item's detected line count, reserving space when needed to keep visuals consistently
+        aligned across one-, two-, and three-line configurations.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-list>
+            <m3e-list-item>
+              <m3e-icon slot="leading" name="stars"></m3e-icon>
+              Label text
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-item>
+            <m3e-list-item>
+              <m3e-icon slot="leading" name="stars"></m3e-icon>
+              Label text
+              <span slot="supporting-text">Supporting text</span>
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-item>
+            <m3e-list-item>
+              <m3e-icon slot="leading" name="stars"></m3e-icon>
+              <span slot="overline">Overline</span>
+              Label text
+              <span slot="supporting-text">Supporting text</span>
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-item>
+            <m3e-list-item>Label text</m3e-list-item>
+          </m3e-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-list&gt;
+  &lt;m3e-list-item&gt;
+    &lt;m3e-icon slot=&quot;leading&quot; name=&quot;stars&quot;&gt;&lt;/m3e-icon&gt;
+    Label text
+    &lt;m3e-icon slot=&quot;trailing&quot; name=&quot;arrow_right&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-list-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-list&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-list>
+            <m3e-list-item>
+              <m3e-avatar slot="leading">AB</m3e-avatar>
+              Label text
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-item>
+            <m3e-list-item>
+              <m3e-avatar slot="leading">AB</m3e-avatar>
+              Label text
+              <span slot="supporting-text">Supporting text</span>
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-item>
+            <m3e-list-item>
+              <m3e-avatar slot="leading">AB</m3e-avatar>
+              <span slot="overline">Overline</span>
+              Label text
+              <span slot="supporting-text">Supporting text</span>
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-item>
+            <m3e-list-item>Label text</m3e-list-item>
+          </m3e-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-list&gt;
+  &lt;m3e-list-item&gt;
+    &lt;m3e-avatar slot=&quot;leading&quot;&gt;AB&lt;/m3e-avatar&gt;
+    Label text
+    &lt;m3e-icon slot=&quot;trailing&quot; name=&quot;arrow_right&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-list-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-list&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-list>
+            <m3e-list-item>
+              <img slot="leading" src="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480" />
+              Label text
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-item>
+            <m3e-list-item>
+              <img slot="leading" src="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480" />
+              Label text
+              <span slot="supporting-text">Supporting text</span>
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-item>
+            <m3e-list-item>
+              <img slot="leading" src="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480" />
+              <span slot="overline">Overline</span>
+              Label text
+              <span slot="supporting-text">Supporting text</span>
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-item>
+            <m3e-list-item>Label text</m3e-list-item>
+          </m3e-list>
+        </div>
+      </m3e-card>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-list&gt;
+  &lt;m3e-list-item&gt;
+    &lt;img slot=&quot;leading&quot; src=&quot;[YOUR IMAGE URL HERE]&quot; /&gt;
+    Label text
+    &lt;m3e-icon slot=&quot;trailing&quot; name=&quot;arrow_right&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-list-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-list&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-list>
+            <m3e-list-item>
+              <video
+                slot="leading"
+                autoplay
+                loop
+                poster="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480"
+                preload="auto"
+              >
+                <source
+                  src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.webm"
+                  type="video/webm"
+                />
+                <source
+                  src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              Label text
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-item>
+            <m3e-list-item>
+              <video
+                slot="leading"
+                autoplay
+                loop
+                poster="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480"
+                preload="auto"
+              >
+                <source
+                  src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.webm"
+                  type="video/webm"
+                />
+                <source
+                  src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              Label text
+              <span slot="supporting-text">Supporting text</span>
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-item>
+            <m3e-list-item>
+              <video
+                slot="leading"
+                autoplay
+                loop
+                poster="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480"
+                preload="auto"
+              >
+                <source
+                  src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.webm"
+                  type="video/webm"
+                />
+                <source
+                  src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <span slot="overline">Overline</span>
+              Label text
+              <span slot="supporting-text">Supporting text</span>
+              <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+            </m3e-list-item>
+            <m3e-list-item>Label text</m3e-list-item>
+          </m3e-list>
+        </div>
+      </m3e-card>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-list&gt;
+  &lt;m3e-list-item&gt;
+    &lt;video slot=&quot;leading&quot; autoplay loop poster=&quot;[YOUR IMAGE URL HERE]&quot; preload=&quot;auto&quot;&gt;
+      &lt;source src=&quot;[YOUR VIDEO URL HERE]&quot; type=&quot;video/mp4&quot;/&gt;
+    &lt;/video&gt;
+    Label text
+    &lt;m3e-icon slot=&quot;trailing&quot; name=&quot;arrow_right&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-list-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-list&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Dividers</m3e-heading>
       <p>
         The following example illustrates use of the <code>m3e-divider</code> to provide separators between items in a
         <code>m3e-list</code>. For more information on dividers, see <a href="../components/divider.html">Divider</a>.
       </p>
+      <p>Dividers are only supported for the standard variant and are automatically hidden for segmented lists.</p>
+
       <m3e-card variant="outlined">
         <div slot="content">
           <m3e-list>
@@ -128,7 +418,9 @@
 &lt;/m3e-list&gt;</pre
         >
       </m3e-card>
+
       <p>Dividers can also be inset using the <code>inset</code> attribute of a <code>m3e-divider</code>.</p>
+
       <m3e-card variant="outlined">
         <div slot="content">
           <m3e-list>
@@ -150,10 +442,505 @@
         >
       </m3e-card>
 
+      <m3e-heading variant="headline" size="small" level="3">Action lists</m3e-heading>
+      <p>
+        Use the <code>m3e-action-list</code> and <code>m3e-list-action</code> to create a list where each item performs
+        a single action. Action lists support the same appearance variants as <code>m3e-list</code> and
+        <code>m3e-list-action</code> supports the same slots as <code>m3e-list-item</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-action-list>
+            <m3e-list-action>Action 1</m3e-list-action>
+            <m3e-list-action>Action 2</m3e-list-action>
+            <m3e-list-action>Action 3</m3e-list-action>
+          </m3e-action-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-action-list&gt;
+  &lt;m3e-list-action&gt;Action 1&lt;/m3e-list-action&gt;
+  &lt;!-- Additional actions omitted for brevity --&gt;
+&lt;/m3e-action-list&gt;
+</pre
+        >
+      </m3e-card>
+
+      <p>The following presents the segmented variant inside a filled card in order to illustrate color and shape.</p>
+      <m3e-card>
+        <div slot="content">
+          <m3e-action-list variant="segmented">
+            <m3e-list-action>Action 1</m3e-list-action>
+            <m3e-list-action>Action 2</m3e-list-action>
+            <m3e-list-action>Action 3</m3e-list-action>
+          </m3e-action-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-action-list variant=&quot;segmented&quot;&gt;
+  &lt;m3e-list-action&gt;Action 1&lt;/m3e-list-action&gt;
+  &lt;!-- Additional actions omitted for brevity --&gt;
+&lt;/m3e-action-list&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Disabling</m3e-heading>
+
+      <p>Individual list actions can be disabled using the <code>disabled</code> attribute.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-action-list>
+            <m3e-list-action disabled> Disabled action 1</m3e-list-action>
+            <m3e-list-action>Action 2</m3e-list-action>
+            <m3e-list-action>Action 3</m3e-list-action>
+          </m3e-action-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-action-list&gt;
+  &lt;m3e-list-action disabled&gt;Disabled action 1&lt;/m3e-list-action&gt;
+  &lt;!-- Additional actions omitted for brevity --&gt;
+&lt;/m3e-action-list&gt;
+</pre
+        >
+      </m3e-card>
+
+      <p>The following presents the segmented variant inside a filled card in order to illustrate color and shape.</p>
+      <m3e-card>
+        <div slot="content">
+          <m3e-action-list variant="segmented">
+            <m3e-list-action disabled> Disabled action 1</m3e-list-action>
+            <m3e-list-action>Action 2</m3e-list-action>
+            <m3e-list-action>Action 3</m3e-list-action>
+          </m3e-action-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-action-list variant=&quot;segmented&quot;&gt;
+  &lt;m3e-list-action disabled&gt;Disabled action 1&lt;/m3e-list-action&gt;
+  &lt;!-- Additional actions omitted for brevity --&gt;
+&lt;/m3e-action-list&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Links</m3e-heading>
+      <p>
+        List actions can also behave like links by specifying a URL using the <code>href</code> attribute. You can also
+        specify <code>target</code>, <code>rel</code> and <code>download</code> similar to native anchor tags.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-action-list>
+            <m3e-list-action href="https://www.google.com" target="_blank">Google</m3e-list-action>
+          </m3e-action-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-action-list&gt;
+  &lt;m3e-list-action href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;Google&lt;/m3e-list-action&gt;
+&lt;/m3e-action-list&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Nested lists</m3e-heading>
+      <p>
+        Both <code>m3e-list</code> and <code>m3e-action-list</code> can use an <code>m3e-expandable-list-item</code> to
+        present hierarchical content that can be expanded or collapsed. The
+        <code>m3e-expandable-list-item</code> provides a disclosure-style header that toggles the visibility of a nested
+        list, allowing related actions or items to be grouped without overwhelming the parent list.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-action-list>
+            <m3e-expandable-list-item>
+              <m3e-icon slot="leading" name="stars"></m3e-icon>
+              List item
+              <div slot="items">
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+              </div>
+            </m3e-expandable-list-item>
+            <m3e-expandable-list-item>
+              <m3e-icon slot="leading" name="stars"></m3e-icon>
+              List item
+              <div slot="items">
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+              </div>
+            </m3e-expandable-list-item>
+            <m3e-expandable-list-item>
+              <m3e-icon slot="leading" name="stars"></m3e-icon>
+              List item
+              <div slot="items">
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+              </div>
+            </m3e-expandable-list-item>
+          </m3e-action-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-action-list&gt;
+  &lt;m3e-expandable-list-item&gt;
+    &lt;m3e-icon slot=&quot;leading&quot; name=&quot;stars&quot;&gt;&lt;/m3e-icon&gt;
+    List item
+    &lt;div slot=&quot;items&quot;&gt;
+      &lt;m3e-list-action&gt;
+        &lt;m3e-icon slot=&quot;leading&quot; name=&quot;stars&quot;&gt;&lt;/m3e-icon&gt;
+        List item
+      &lt;/m3e-list-action&gt;
+      &lt;!-- Additional actions omitted for brevity --&gt;
+    &lt;/div&gt;
+  &lt;/m3e-expandable-list-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-action-list&gt;
+</pre
+        >
+      </m3e-card>
+
+      <p>The following presents the segmented variant inside a filled card in order to illustrate color and shape.</p>
+      <m3e-card>
+        <div slot="content">
+          <m3e-action-list variant="segmented">
+            <m3e-expandable-list-item>
+              <m3e-icon slot="leading" name="stars"></m3e-icon>
+              List item
+              <div slot="items">
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+              </div>
+            </m3e-expandable-list-item>
+            <m3e-expandable-list-item>
+              <m3e-icon slot="leading" name="stars"></m3e-icon>
+              List item
+              <div slot="items">
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+              </div>
+            </m3e-expandable-list-item>
+            <m3e-expandable-list-item>
+              <m3e-icon slot="leading" name="stars"></m3e-icon>
+              List item
+              <div slot="items">
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+                <m3e-list-action>
+                  <m3e-icon slot="leading" name="stars"></m3e-icon>
+                  List item
+                </m3e-list-action>
+              </div>
+            </m3e-expandable-list-item>
+          </m3e-action-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-action-list variant=&quot;segmented&quot;&gt;
+  &lt;m3e-expandable-list-item&gt;
+    &lt;m3e-icon slot=&quot;leading&quot; name=&quot;stars&quot;&gt;&lt;/m3e-icon&gt;
+    List item
+    &lt;div slot=&quot;items&quot;&gt;
+      &lt;m3e-list-action&gt;
+        &lt;m3e-icon slot=&quot;leading&quot; name=&quot;stars&quot;&gt;&lt;/m3e-icon&gt;
+        List item
+      &lt;/m3e-list-action&gt;
+      &lt;!-- Additional actions omitted for brevity --&gt;
+    &lt;/div&gt;
+  &lt;/m3e-expandable-list-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-action-list&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Selection lists</m3e-heading>
+      <p>
+        Use the <code>m3e-selection-list</code> and <code>m3e-list-option</code> to create a list for selecting values,
+        where each item performs a single option. Selection lists support the same appearance variants as
+        <code>m3e-list</code> and <code>m3e-list-option</code> supports the same slots as <code>m3e-list-item</code>.
+        However, the selection indicator will replaces content in the <code>trailing</code> slot unless selection
+        indicators are hidden.
+      </p>
+      <p>
+        Use the <code>selected</code> attribute to control the selected state of a <code>m3e-list-option</code>. When
+        clicked, a cancellable <code>input</code> event is emitted followed by a <code>change</code> event. To cancel
+        selection change, call <code>preventDefault</code> during <code>input</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-selection-list>
+            <m3e-list-option>Option 1</m3e-list-option>
+            <m3e-list-option>Option 2</m3e-list-option>
+            <m3e-list-option>Option 3</m3e-list-option>
+          </m3e-selection-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-selection-list&gt;
+  &lt;m3e-list-option&gt;Option 1&lt;/m3e-list-option&gt;
+  &lt;!-- Additional options omitted for brevity --&gt;
+&lt;/m3e-selection-list&gt;
+</pre
+        >
+      </m3e-card>
+
+      <p>The following presents the segmented variant inside a filled card in order to illustrate color and shape.</p>
+      <m3e-card>
+        <div slot="content">
+          <m3e-selection-list variant="segmented">
+            <m3e-list-option>Option 1</m3e-list-option>
+            <m3e-list-option>Option 2</m3e-list-option>
+            <m3e-list-option>Option 3</m3e-list-option>
+          </m3e-selection-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-selection-list variant=&quot;segmented&quot;&gt;
+  &lt;m3e-list-option&gt;Option 1&lt;/m3e-list-option&gt;
+  &lt;!-- Additional options omitted for brevity --&gt;
+&lt;/m3e-selection-list&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Multiple selection</m3e-heading>
+      <p>
+        Selection lists support both single-select and multi-select modes. Use the
+        <code>multi</code> attribute to allow multiple options to be selected simultaneously.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-selection-list multi>
+            <m3e-list-option>Option 1</m3e-list-option>
+            <m3e-list-option>Option 2</m3e-list-option>
+            <m3e-list-option>Option 3</m3e-list-option>
+          </m3e-selection-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-selection-list multi&gt;
+  &lt;m3e-list-option&gt;Option 1&lt;/m3e-list-option&gt;
+  &lt;!-- Additional options omitted for brevity --&gt;
+&lt;/m3e-selection-list&gt;
+</pre
+        >
+      </m3e-card>
+
+      <p>The following presents the segmented variant inside a filled card in order to illustrate color and shape.</p>
+      <m3e-card>
+        <div slot="content">
+          <m3e-selection-list variant="segmented" multi>
+            <m3e-list-option>Option 1</m3e-list-option>
+            <m3e-list-option>Option 2</m3e-list-option>
+            <m3e-list-option>Option 3</m3e-list-option>
+          </m3e-selection-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-selection-list variant=&quot;segmented&quot; multi&gt;
+  &lt;m3e-list-option&gt;Option 1&lt;/m3e-list-option&gt;
+  &lt;!-- Additional options omitted for brevity --&gt;
+&lt;/m3e-selection-list&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Hiding the selection indicator</m3e-heading>
+      <p>
+        Use the <code>hide-selection-indicator</code> attribute of <code>m3e-selection-list</code> to hide selection
+        indicators. If an option has an icon via use of the <code>trailing</code> slot, the icon is presented.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-selection-list multi hide-selection-indicator>
+            <m3e-list-option selected>Option 1<m3e-icon slot="trailing" name="bookmark"></m3e-icon></m3e-list-option>
+            <m3e-list-option>Option 2<m3e-icon slot="trailing" name="bookmark"></m3e-icon></m3e-list-option>
+            <m3e-list-option>Option 3<m3e-icon slot="trailing" name="bookmark"></m3e-icon></m3e-list-option>
+          </m3e-selection-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-selection-list multi hide-selection-indicator&gt;
+  &lt;m3e-list-option selected&gt;Option 1&lt;m3e-icon slot=&quot;trailing&quot; name=&quot;bookmark&quot;&gt;&lt;/m3e-icon&gt;&lt;/m3e-list-option&gt;
+  &lt;m3e-list-option&gt;Option 2&lt;m3e-icon slot=&quot;trailing&quot; name=&quot;bookmark&quot;&gt;&lt;/m3e-icon&gt;&lt;/m3e-list-option&gt;
+  &lt;m3e-list-option&gt;Option 3&lt;m3e-icon slot=&quot;trailing&quot; name=&quot;bookmark&quot;&gt;&lt;/m3e-icon&gt;&lt;/m3e-list-option&gt;
+&lt;/m3e-selection-list&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Disabling</m3e-heading>
+
+      <p>
+        Individual list options can be disabled using the <code>disabled</code> attribute and can be selected and
+        disabled.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-selection-list multi>
+            <m3e-list-option disabled>Option 1</m3e-list-option>
+            <m3e-list-option selected disabled>Option 2</m3e-list-option>
+            <m3e-list-option>Option 3</m3e-list-option>
+          </m3e-selection-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-selection-list multi&gt;
+  &lt;m3e-list-option disabled&gt;Option 1&lt;/m3e-list-option&gt;
+  &lt;m3e-list-option selected disabled&gt;Option 1&lt;/m3e-list-option&gt;
+  &lt;!-- Additional options omitted for brevity --&gt;
+&lt;/m3e-selection-list&gt;
+</pre
+        >
+      </m3e-card>
+
+      <p>The following presents the segmented variant inside a filled card in order to illustrate color and shape.</p>
+      <m3e-card>
+        <div slot="content">
+          <m3e-selection-list variant="segmented" multi>
+            <m3e-list-option disabled>Option 1</m3e-list-option>
+            <m3e-list-option selected disabled>Option 2</m3e-list-option>
+            <m3e-list-option>Option 3</m3e-list-option>
+          </m3e-selection-list>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-selection-list variant=&quot;segmented&quot; multi&gt;
+  &lt;m3e-list-option disabled&gt;Option 1&lt;/m3e-list-option&gt;
+  &lt;m3e-list-option selected disabled&gt;Option 1&lt;/m3e-list-option&gt;
+  &lt;!-- Additional options omitted for brevity --&gt;
+&lt;/m3e-selection-list&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Form Associated</m3e-heading>
+      <p>
+        Selection lists can participate in form submission as a
+        <a
+          href="https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-face"
+          target="_blank"
+          rel="noopener noreferrer"
+          >form-associated custom element</a
+        >
+        (FACE), contributing its state to the form data. The <code>name</code> attribute defines the key under which the
+        component's value is submitted in a form. The list's value is determined by selected options. You can use the
+        <code>value</code> of a <code>m3e-list-option</code> to control a option's value. When multiple options are
+        selected, form data will include multiple entries keyed by the same <code>name</code>.
+      </p>
+      <p>
+        The component honors the <code>disabled</code> state (on the option itself) as a
+        <strong>property-only</strong> control. When disabled at runtime, it does <em>not</em> sprout a
+        <code>disabled</code> attribute into the DOM.
+      </p>
+
       <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
       <p>
         Lists are given the ARIA <code>role="list"</code> and list items are given <code>role="listitem"</code> to
         ensure that assistive technologies can correctly interpret the structure and semantics of the content.
+      </p>
+      <p>
+        Action lists are given the ARIA <code>role="list"</code> and list actions are given
+        <code>role="listitem"</code> to ensure that assistive technologies can correctly interpret the structure and
+        semantics of the content. Each list action includes a nested interactive element with ARIA
+        <code>role="button"</code>. When <code>href</code> is specified, the ARIA role <code>link</code> is used instead
+        of <code>button</code> to convey the list action provides an interactive reference to a resource. In addition,
+        the component presents an internal anchor, hidden from assistive technologies, used to invoke native browser
+        features such a context menu options and tooltips. When disabled using the <code>disabled</code> attribute,
+        <code>aria-disabled="true"</code> is applied to the nested interactive element in order to convey to assistive
+        technologies that the action is disabled.
+      </p>
+      <p>
+        Selection lists are given the ARIA <code>role="listbox"</code> and options are given
+        <code>role="option"</code> to ensure that assistive technologies recognize the widget as a selectable list and
+        expose the correct interaction model to users. The <code>aria-selected</code> attribute reflects whether an
+        option is currently selected. When an option is selected, <code>aria-selected="true"</code> is exposed to
+        assistive technologies; otherwise, it is <code>"false"</code>. When disabled using the
+        <code>disabled</code> attribute, <code>aria-disabled="true"</code> is applied to the option in order to convey
+        to assistive technologies that the option is disabled. When multi-select is enabled through the
+        <code>multi</code> attribute, <code>aria-multiselectable="true"</code> is applied to the selection list
+        indicating multiple options can be selected.
+      </p>
+      <p>
+        Expandable list items use ARIA <code>role="listitem"></code> and emulate the behavior of the native
+        <code>details</code> and <code>summary</code> elements. Inside each item, the header is assigned
+        <code>role="button"></code> along with an <code>aria-controls</code> attribute referencing the item's internal
+        content wrapper. The content wrapper is given <code>role="list"></code> to represent the nested list of child
+        items. The header's <code>aria-expanded</code> attribute reflects the current expanded or collapsed state of the
+        item.
       </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
@@ -186,13 +973,14 @@
   {
     &quot;imports&quot;: {
       &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
-      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;
     }
   }
 &lt;/script&gt;</pre
         >
       </m3e-card>
-      <p>For production, use index.min.js for faster load times.</p>
+      <p>For production, use index.min.js and a11y.min.js for faster load times.</p>
 
       <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
       <p>
@@ -201,10 +989,13 @@
       </p>
       <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
 
-      <api-viewer only="m3e-list" src="https://cdn.jsdelivr.net/npm/@m3e/list@1.1.6/dist/custom-elements.json">
-      </api-viewer>
-      <api-viewer only="m3e-list-item" src="https://cdn.jsdelivr.net/npm/@m3e/list@1.1.6/dist/custom-elements.json">
-      </api-viewer>
+      <api-viewer only="m3e-list" src="../../packages/list/dist/custom-elements.json"> </api-viewer>
+      <api-viewer only="m3e-list-item" src="../../packages/list/dist/custom-elements.json"> </api-viewer>
+      <api-viewer only="m3e-action-list" src="../../packages/list/dist/custom-elements.json"> </api-viewer>
+      <api-viewer only="m3e-list-action" src="../../packages/list/dist/custom-elements.json"> </api-viewer>
+      <api-viewer only="m3e-selection-list" src="../../packages/list/dist/custom-elements.json"> </api-viewer>
+      <api-viewer only="m3e-list-option" src="../../packages/list/dist/custom-elements.json"> </api-viewer>
+      <api-viewer only="m3e-expandable-list-item" src="../../packages/list/dist/custom-elements.json"> </api-viewer>
     </m3e-theme>
   </body>
 </html>
