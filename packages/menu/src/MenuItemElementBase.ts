@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { query } from "lit/decorators.js";
 
 import {
@@ -18,7 +18,7 @@ import type { M3eMenuElement } from "./MenuElement";
 
 /** A base implementation for an item of a menu. This class must be inherited. */
 export abstract class MenuItemElementBase extends KeyboardClick(
-  Focusable(AttachInternals(Disabled(LitElement), true))
+  Focusable(AttachInternals(Disabled(LitElement), true)),
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -27,7 +27,7 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       outline: none;
       user-select: none;
       flex: none;
-      height: var(--m3e-menu-item-container-height, 3rem);
+      height: var(--m3e-menu-item-container-height, 2.75rem);
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:not(:focus-visible)) .base {
@@ -41,22 +41,33 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       --m3e-state-layer-focus-color: var(--m3e-menu-item-container-focus-color, ${DesignToken.color.onSurface});
       --m3e-ripple-color: var(--m3e-menu-item-ripple-color, ${DesignToken.color.onSurface});
     }
-    :host(:not(:disabled)[checked]) .base,
+
     :host(:not(:disabled)[aria-expanded="true"]) .base {
-      color: var(--m3e-menu-selected-color, ${DesignToken.color.onSecondaryContainer});
-      background-color: var(--m3e-menu-selected-container-color, ${DesignToken.color.secondaryContainer});
+      background-color: color-mix(
+        in srgb,
+        var(--m3e-menu-item-active-state-layer-color, ${DesignToken.color.onSurface})
+          var(--m3e-menu-active-state-layer-opacity, 8%),
+        transparent
+      );
     }
-    :host([checked]) .base,
-    :host([aria-expanded="true"]) .base {
+    :host([aria-expanded="true"]) .state-layer {
+      display: none;
+    }
+
+    :host(:not(:disabled)[checked]) .base {
+      color: var(--m3e-menu-item-selected-color, ${DesignToken.color.onTertiaryContainer});
+      background-color: var(--m3e-menu-item-selected-container-color, ${DesignToken.color.tertiaryContainer});
+    }
+    :host([checked]) .base {
       --m3e-state-layer-hover-color: var(
         --m3e-menu-item-selected-container-hover-color,
-        ${DesignToken.color.onSecondaryContainer}
+        ${DesignToken.color.onTertiaryContainer}
       );
       --m3e-state-layer-focus-color: var(
         --m3e-menu-item-selected-container-focus-color,
-        ${DesignToken.color.onSecondaryContainer}
+        ${DesignToken.color.onTertiaryContainer}
       );
-      --m3e-ripple-color: var(--m3e-menu-item-selected-ripple-color, ${DesignToken.color.onSecondaryContainer});
+      --m3e-ripple-color: var(--m3e-menu-item-selected-ripple-color, ${DesignToken.color.onTertiaryContainer});
     }
     :host(:not(:disabled)) {
       cursor: pointer;
@@ -68,6 +79,7 @@ export abstract class MenuItemElementBase extends KeyboardClick(
         transparent
       );
     }
+
     .base {
       box-sizing: border-box;
       vertical-align: middle;
@@ -76,6 +88,19 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       position: relative;
       width: 100%;
       height: 100%;
+      border-radius: var(--m3e-menu-item-shape, ${DesignToken.shape.corner.extraSmall});
+      transition: ${unsafeCSS(`border-radius ${DesignToken.motion.spring.fastEffects}`)};
+    }
+    :host(.-first) .base {
+      border-top-left-radius: var(--_menu-item-top-shape);
+      border-top-right-radius: var(--_menu-item-top-shape);
+    }
+    :host(.-last) .base {
+      border-bottom-left-radius: var(--_menu-item-bottom-shape);
+      border-bottom-right-radius: var(--_menu-item-bottom-shape);
+    }
+    :host([checked]) .base {
+      border-radius: var(--m3e-menu-item-selected-shape, ${DesignToken.shape.corner.medium});
     }
     .touch {
       position: absolute;
@@ -84,9 +109,10 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       right: 0;
     }
     .wrapper {
+      flex: 1 1 auto;
       display: inline-flex;
       align-items: center;
-      column-gap: var(--m3e-menu-item-icon-label-space, 0.75rem);
+      column-gap: var(--m3e-menu-item-icon-label-space, 0.5rem);
       padding-inline-start: var(--m3e-menu-item-padding-start, 0.75rem);
       padding-inline-end: var(--m3e-menu-item-padding-end, 0.75rem);
       font-size: var(--m3e-menu-item-label-text-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
@@ -114,7 +140,7 @@ export abstract class MenuItemElementBase extends KeyboardClick(
     .trailing-icon {
       flex: none;
       width: 1em;
-      font-size: var(--m3e-menu-item-icon-size, 1.5rem) !important;
+      font-size: var(--m3e-menu-item-icon-size, 1.25rem) !important;
     }
     @media (forced-colors: active) {
       .base {
