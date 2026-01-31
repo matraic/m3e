@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, LitElement } from "lit";
+import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import { DesignToken, Role } from "@m3e/core";
@@ -47,51 +47,50 @@ export class M3eDividerElement extends Role(LitElement, "separator") {
       width: var(--m3e-divider-thickness, 1px);
       height: 100%;
     }
-    :host::before {
-      content: "";
+    .line {
       box-sizing: border-box;
       position: absolute;
     }
-    :host(:not([vertical]))::before {
+    :host(:not([vertical])) .line {
       border-bottom: var(--m3e-divider-thickness, 1px) solid
         var(--m3e-divider-color, ${DesignToken.color.outlineVariant});
       height: inherit;
     }
-    :host([vertical])::before {
+    :host([vertical]) .line {
       border-right: var(--m3e-divider-thickness, 1px) solid
         var(--m3e-divider-color, ${DesignToken.color.outlineVariant});
       width: inherit;
     }
-    :host([vertical][inset])::before,
-    :host([vertical][inset-start])::before {
+    :host([vertical][inset]) .line,
+    :host([vertical][inset-start]) .line {
       top: var(--m3e-divider-inset-start-size, var(--m3e-divider-inset-size, 1rem));
     }
-    :host(:not([vertical])[inset])::before,
-    :host(:not([vertical])[inset-start])::before {
+    :host(:not([vertical])[inset]) .line,
+    :host(:not([vertical])[inset-start]) .line {
       left: var(--m3e-divider-inset-start-size, var(--m3e-divider-inset-size, 1rem));
     }
-    :host([vertical][inset])::before,
-    :host([vertical][inset-end])::before {
+    :host([vertical][inset]) .line,
+    :host([vertical][inset-end]) .line {
       bottom: var(--m3e-divider-inset-end-size, var(--m3e-divider-inset-size, 1rem));
     }
-    :host(:not([vertical])[inset])::before,
-    :host(:not([vertical])[inset-end])::before {
+    :host(:not([vertical])[inset]) .line,
+    :host(:not([vertical])[inset-end]) .line {
       right: var(--m3e-divider-inset-end-size, var(--m3e-divider-inset-size, 1rem));
     }
-    :host([vertical]:not([inset]):not([inset-start]))::before {
+    :host([vertical]:not([inset]):not([inset-start])) .line {
       top: 0;
     }
-    :host(:not([vertical]):not([inset]):not([inset-start]))::before {
+    :host(:not([vertical]):not([inset]):not([inset-start])) .line {
       left: 0;
     }
-    :host([vertical]:not([inset]):not([inset-end]))::before {
+    :host([vertical]:not([inset]):not([inset-end])) .line {
       bottom: 0;
     }
-    :host(:not([vertical]):not([inset]):not([inset-end]))::before {
+    :host(:not([vertical]):not([inset]):not([inset-end])) .line {
       right: 0;
     }
     @media (forced-colors: active) {
-      :host::before {
+      .line {
         border-color: GrayText;
       }
     }
@@ -120,6 +119,11 @@ export class M3eDividerElement extends Role(LitElement, "separator") {
    * @default false
    */
   @property({ attribute: "inset-end", type: Boolean, reflect: true }) insetEnd = false;
+
+  /** @inheritdoc */
+  protected override render(): unknown {
+    return html`<div class="line"></div>`;
+  }
 }
 
 declare global {
