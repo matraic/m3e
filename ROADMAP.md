@@ -4,8 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- Menu expressive updates (standard and vibrant variants)
-- Select / Autocomplete expressive updates (matching standard menu updates)
+- Planning
 
 ## 🔮 Future
 

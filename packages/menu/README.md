@@ -117,11 +117,10 @@ This section details the attributes, events, slots and CSS custom properties ava
 
 #### ⚙️ Attributes
 
-| Attribute    | Type                        | Default      | Description                              |
-| ------------ | --------------------------- | ------------ | ---------------------------------------- |
-| `position-x` | `"before"` \| `"after"`     | `"after"`    | The position of the menu, on the x-axis. |
-| `position-y` | `"above"` \| `"below"`      | `"below"`    | The position of the menu, on the y-axis. |
-| `variant`    | `"standard"` \| `"vibrant"` | `"standard"` | The appearance variant of the menu.      |
+| Attribute    | Type                    | Default   | Description                              |
+| ------------ | ----------------------- | --------- | ---------------------------------------- |
+| `position-x` | `"before"` \| `"after"` | `"after"` | The position of the menu, on the x-axis. |
+| `position-y` | `"above"` \| `"below"`  | `"below"` | The position of the menu, on the y-axis. |
 
 #### 🔔 Events
 
@@ -138,18 +137,16 @@ This section details the attributes, events, slots and CSS custom properties ava
 
 #### 🎛️ CSS Custom Properties
 
-| Property                             | Description                                                   |
-| ------------------------------------ | ------------------------------------------------------------- |
-| `--m3e-menu-container-shape`         | Controls the corner radius of the menu container.             |
-| `--m3e-menu-active-container-shape`  | Controls the corner radius of the menu container when active. |
-| `--m3e-menu-container-min-width`     | Minimum width of the menu container.                          |
-| `--m3e-menu-container-max-width`     | Maximum width of the menu container.                          |
-| `--m3e-menu-container-max-height`    | Maximum height of the menu container.                         |
-| `--m3e-menu-container-padding-block` | Vertical padding inside the menu container.                   |
-| `--m3e-menu-container-color`         | Background color of the menu container.                       |
-| `--m3e-menu-container-elevation`     | Box shadow elevation of the menu container.                   |
-| `--m3e-vibrant-menu-container-color` | Background color of the menu container for vibrant variant.   |
-| `--m3e-menu-divider-spacing`         | Vertical spacing around slotted `m3e-divider` elements.       |
+| Property                             | Description                                             |
+| ------------------------------------ | ------------------------------------------------------- |
+| `--m3e-menu-container-shape`         | Controls the corner radius of the menu container.       |
+| `--m3e-menu-container-min-width`     | Minimum width of the menu container.                    |
+| `--m3e-menu-container-max-width`     | Maximum width of the menu container.                    |
+| `--m3e-menu-container-max-height`    | Maximum height of the menu container.                   |
+| `--m3e-menu-container-padding-block` | Vertical padding inside the menu container.             |
+| `--m3e-menu-container-color`         | Background color of the menu container.                 |
+| `--m3e-menu-container-elevation`     | Box shadow elevation of the menu container.             |
+| `--m3e-menu-divider-spacing`         | Vertical spacing around slotted `m3e-divider` elements. |
 
 ### 🗂️ m3e-menu-item
 
@@ -175,42 +172,29 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                                 | Description                                                        |
-| -------------------------------------------------------- | ------------------------------------------------------------------ |
-| `--m3e-menu-item-container-height`                       | Height of the menu item container.                                 |
-| `--m3e-menu-item-color`                                  | Text color for unselected, enabled menu items.                     |
-| `--m3e-menu-item-container-hover-color`                  | State layer hover color for unselected items.                      |
-| `--m3e-menu-item-container-focus-color`                  | State layer focus color for unselected items.                      |
-| `--m3e-menu-item-ripple-color`                           | Ripple color for unselected items.                                 |
-| `--m3e-menu-item-selected-color`                         | Text color for selected items.                                     |
-| `--m3e-menu-item-selected-container-color`               | Background color for selected items.                               |
-| `--m3e-menu-item-selected-container-hover-color`         | State layer hover color for selected items.                        |
-| `--m3e-menu-item-selected-container-focus-color`         | State layer focus color for selected items.                        |
-| `--m3e-menu-item-selected-ripple-color`                  | Ripple color for selected items.                                   |
-| `--m3e-menu-item-active-state-layer-color`               | State layer color for expanded items.                              |
-| `--m3e-menu-item-active-state-layer-opacity`             | State layer opacity for expanded items.                            |
-| `--m3e-menu-item-disabled-color`                         | Base color for disabled items.                                     |
-| `--m3e-menu-item-disabled-opacity`                       | Opacity percentage for disabled item color mix.                    |
-| `--m3e-vibrant-menu-item-color`                          | Text color for unselected, enabled menu items for vibrant variant. |
-| `--m3e-vibrant-menu-item-container-hover-color`          | State layer hover color for unselected items for vibrant variant.  |
-| `--m3e-vibrant-menu-item-container-focus-color`          | State layer focus color for unselected items for vibrant variant.  |
-| `--m3e-vibrant-menu-item-ripple-color`                   | Ripple color for unselected items for vibrant variant.             |
-| `--m3e-vibrant-menu-item-selected-color`                 | Text color for selected items for vibrant variant.                 |
-| `--m3e-vibrant-menu-item-selected-container-color`       | Background color for selected items for vibrant variant.           |
-| `--m3e-vibrant-menu-item-selected-container-hover-color` | State layer hover color for selected items for vibrant variant.    |
-| `--m3e-vibrant-menu-item-selected-container-focus-color` | State layer focus color for selected items for vibrant variant.    |
-| `--m3e-vibrant-menu-item-selected-ripple-color`          | Ripple color for selected items for vibrant variant.               |
-| `--m3e-vibrant-menu-item-active-state-layer-color`       | State layer color for expanded items for vibrant variant.          |
-| `--m3e-vibrant-menu-item-disabled-color`                 | Base color for disabled items for vibrant variant.                 |
-| `--m3e-menu-item-icon-label-space`                       | Horizontal gap between icon and content.                           |
-| `--m3e-menu-item-padding-start`                          | Start padding for the item wrapper.                                |
-| `--m3e-menu-item-padding-end`                            | End padding for the item wrapper.                                  |
-| `--m3e-menu-item-label-text-font-size`                   | Font size for menu item text.                                      |
-| `--m3e-menu-item-label-text-font-weight`                 | Font weight for menu item text.                                    |
-| `--m3e-menu-item-label-text-line-height`                 | Line height for menu item text.                                    |
-| `--m3e-menu-item-label-text-tracking`                    | Letter spacing for menu item text.                                 |
-| `--m3e-menu-item-focus-ring-shape`                       | Border radius for the focus ring.                                  |
-| `--m3e-menu-item-icon-size`                              | Font size for leading and trailing icons.                          |
+| Property                                         | Description                                      |
+| ------------------------------------------------ | ------------------------------------------------ |
+| `--m3e-menu-item-container-height`               | Height of the menu item container.               |
+| `--m3e-menu-item-color`                          | Text color for unselected, enabled menu items.   |
+| `--m3e-menu-item-container-hover-color`          | State layer hover color for unselected items.    |
+| `--m3e-menu-item-container-focus-color`          | State layer focus color for unselected items.    |
+| `--m3e-menu-item-ripple-color`                   | Ripple color for unselected items.               |
+| `--m3e-menu-selected-color`                      | Text color for selected or expanded items.       |
+| `--m3e-menu-selected-container-color`            | Background color for selected or expanded items. |
+| `--m3e-menu-item-selected-container-hover-color` | State layer hover color for selected items.      |
+| `--m3e-menu-item-selected-container-focus-color` | State layer focus color for selected items.      |
+| `--m3e-menu-item-selected-ripple-color`          | Ripple color for selected items.                 |
+| `--m3e-menu-item-disabled-color`                 | Base color for disabled items.                   |
+| `--m3e-menu-item-disabled-opacity`               | Opacity percentage for disabled item color mix.  |
+| `--m3e-menu-item-icon-label-space`               | Horizontal gap between icon and content.         |
+| `--m3e-menu-item-padding-start`                  | Start padding for the item wrapper.              |
+| `--m3e-menu-item-padding-end`                    | End padding for the item wrapper.                |
+| `--m3e-menu-item-label-text-font-size`           | Font size for menu item text.                    |
+| `--m3e-menu-item-label-text-font-weight`         | Font weight for menu item text.                  |
+| `--m3e-menu-item-label-text-line-height`         | Line height for menu item text.                  |
+| `--m3e-menu-item-label-text-tracking`            | Letter spacing for menu item text.               |
+| `--m3e-menu-item-focus-ring-shape`               | Border radius for the focus ring.                |
+| `--m3e-menu-item-icon-size`                      | Font size for leading and trailing icons.        |
 
 ### 🗂️ m3e-menu-item-checkbox
 
@@ -233,42 +217,29 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                                 | Description                                                        |
-| -------------------------------------------------------- | ------------------------------------------------------------------ |
-| `--m3e-menu-item-container-height`                       | Height of the menu item container.                                 |
-| `--m3e-menu-item-color`                                  | Text color for unselected, enabled menu items.                     |
-| `--m3e-menu-item-container-hover-color`                  | State layer hover color for unselected items.                      |
-| `--m3e-menu-item-container-focus-color`                  | State layer focus color for unselected items.                      |
-| `--m3e-menu-item-ripple-color`                           | Ripple color for unselected items.                                 |
-| `--m3e-menu-item-selected-color`                         | Text color for selected items.                                     |
-| `--m3e-menu-item-selected-container-color`               | Background color for selected items.                               |
-| `--m3e-menu-item-selected-container-hover-color`         | State layer hover color for selected items.                        |
-| `--m3e-menu-item-selected-container-focus-color`         | State layer focus color for selected items.                        |
-| `--m3e-menu-item-selected-ripple-color`                  | Ripple color for selected items.                                   |
-| `--m3e-menu-item-active-state-layer-color`               | State layer color for expanded items.                              |
-| `--m3e-menu-item-active-state-layer-opacity`             | State layer opacity for expanded items.                            |
-| `--m3e-menu-item-disabled-color`                         | Base color for disabled items.                                     |
-| `--m3e-menu-item-disabled-opacity`                       | Opacity percentage for disabled item color mix.                    |
-| `--m3e-vibrant-menu-item-color`                          | Text color for unselected, enabled menu items for vibrant variant. |
-| `--m3e-vibrant-menu-item-container-hover-color`          | State layer hover color for unselected items for vibrant variant.  |
-| `--m3e-vibrant-menu-item-container-focus-color`          | State layer focus color for unselected items for vibrant variant.  |
-| `--m3e-vibrant-menu-item-ripple-color`                   | Ripple color for unselected items for vibrant variant.             |
-| `--m3e-vibrant-menu-item-selected-color`                 | Text color for selected items for vibrant variant.                 |
-| `--m3e-vibrant-menu-item-selected-container-color`       | Background color for selected items for vibrant variant.           |
-| `--m3e-vibrant-menu-item-selected-container-hover-color` | State layer hover color for selected items for vibrant variant.    |
-| `--m3e-vibrant-menu-item-selected-container-focus-color` | State layer focus color for selected items for vibrant variant.    |
-| `--m3e-vibrant-menu-item-selected-ripple-color`          | Ripple color for selected items for vibrant variant.               |
-| `--m3e-vibrant-menu-item-active-state-layer-color`       | State layer color for expanded items for vibrant variant.          |
-| `--m3e-vibrant-menu-item-disabled-color`                 | Base color for disabled items for vibrant variant.                 |
-| `--m3e-menu-item-icon-label-space`                       | Horizontal gap between icon and content.                           |
-| `--m3e-menu-item-padding-start`                          | Start padding for the item wrapper.                                |
-| `--m3e-menu-item-padding-end`                            | End padding for the item wrapper.                                  |
-| `--m3e-menu-item-label-text-font-size`                   | Font size for menu item text.                                      |
-| `--m3e-menu-item-label-text-font-weight`                 | Font weight for menu item text.                                    |
-| `--m3e-menu-item-label-text-line-height`                 | Line height for menu item text.                                    |
-| `--m3e-menu-item-label-text-tracking`                    | Letter spacing for menu item text.                                 |
-| `--m3e-menu-item-focus-ring-shape`                       | Border radius for the focus ring.                                  |
-| `--m3e-menu-item-icon-size`                              | Font size for leading and trailing icons.                          |
+| Property                                         | Description                                      |
+| ------------------------------------------------ | ------------------------------------------------ |
+| `--m3e-menu-item-container-height`               | Height of the menu item container.               |
+| `--m3e-menu-item-color`                          | Text color for unselected, enabled menu items.   |
+| `--m3e-menu-item-container-hover-color`          | State layer hover color for unselected items.    |
+| `--m3e-menu-item-container-focus-color`          | State layer focus color for unselected items.    |
+| `--m3e-menu-item-ripple-color`                   | Ripple color for unselected items.               |
+| `--m3e-menu-selected-color`                      | Text color for selected or expanded items.       |
+| `--m3e-menu-selected-container-color`            | Background color for selected or expanded items. |
+| `--m3e-menu-item-selected-container-hover-color` | State layer hover color for selected items.      |
+| `--m3e-menu-item-selected-container-focus-color` | State layer focus color for selected items.      |
+| `--m3e-menu-item-selected-ripple-color`          | Ripple color for selected items.                 |
+| `--m3e-menu-item-disabled-color`                 | Base color for disabled items.                   |
+| `--m3e-menu-item-disabled-opacity`               | Opacity percentage for disabled item color mix.  |
+| `--m3e-menu-item-icon-label-space`               | Horizontal gap between icon and content.         |
+| `--m3e-menu-item-padding-start`                  | Start padding for the item wrapper.              |
+| `--m3e-menu-item-padding-end`                    | End padding for the item wrapper.                |
+| `--m3e-menu-item-label-text-font-size`           | Font size for menu item text.                    |
+| `--m3e-menu-item-label-text-font-weight`         | Font weight for menu item text.                  |
+| `--m3e-menu-item-label-text-line-height`         | Line height for menu item text.                  |
+| `--m3e-menu-item-label-text-tracking`            | Letter spacing for menu item text.               |
+| `--m3e-menu-item-focus-ring-shape`               | Border radius for the focus ring.                |
+| `--m3e-menu-item-icon-size`                      | Font size for leading and trailing icons.        |
 
 ### 🗂️ m3e-menu-item-radio
 
@@ -291,42 +262,29 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                                 | Description                                                        |
-| -------------------------------------------------------- | ------------------------------------------------------------------ |
-| `--m3e-menu-item-container-height`                       | Height of the menu item container.                                 |
-| `--m3e-menu-item-color`                                  | Text color for unselected, enabled menu items.                     |
-| `--m3e-menu-item-container-hover-color`                  | State layer hover color for unselected items.                      |
-| `--m3e-menu-item-container-focus-color`                  | State layer focus color for unselected items.                      |
-| `--m3e-menu-item-ripple-color`                           | Ripple color for unselected items.                                 |
-| `--m3e-menu-item-selected-color`                         | Text color for selected items.                                     |
-| `--m3e-menu-item-selected-container-color`               | Background color for selected items.                               |
-| `--m3e-menu-item-selected-container-hover-color`         | State layer hover color for selected items.                        |
-| `--m3e-menu-item-selected-container-focus-color`         | State layer focus color for selected items.                        |
-| `--m3e-menu-item-selected-ripple-color`                  | Ripple color for selected items.                                   |
-| `--m3e-menu-item-active-state-layer-color`               | State layer color for expanded items.                              |
-| `--m3e-menu-item-active-state-layer-opacity`             | State layer opacity for expanded items.                            |
-| `--m3e-menu-item-disabled-color`                         | Base color for disabled items.                                     |
-| `--m3e-menu-item-disabled-opacity`                       | Opacity percentage for disabled item color mix.                    |
-| `--m3e-vibrant-menu-item-color`                          | Text color for unselected, enabled menu items for vibrant variant. |
-| `--m3e-vibrant-menu-item-container-hover-color`          | State layer hover color for unselected items for vibrant variant.  |
-| `--m3e-vibrant-menu-item-container-focus-color`          | State layer focus color for unselected items for vibrant variant.  |
-| `--m3e-vibrant-menu-item-ripple-color`                   | Ripple color for unselected items for vibrant variant.             |
-| `--m3e-vibrant-menu-item-selected-color`                 | Text color for selected items for vibrant variant.                 |
-| `--m3e-vibrant-menu-item-selected-container-color`       | Background color for selected items for vibrant variant.           |
-| `--m3e-vibrant-menu-item-selected-container-hover-color` | State layer hover color for selected items for vibrant variant.    |
-| `--m3e-vibrant-menu-item-selected-container-focus-color` | State layer focus color for selected items for vibrant variant.    |
-| `--m3e-vibrant-menu-item-selected-ripple-color`          | Ripple color for selected items for vibrant variant.               |
-| `--m3e-vibrant-menu-item-active-state-layer-color`       | State layer color for expanded items for vibrant variant.          |
-| `--m3e-vibrant-menu-item-disabled-color`                 | Base color for disabled items for vibrant variant.                 |
-| `--m3e-menu-item-icon-label-space`                       | Horizontal gap between icon and content.                           |
-| `--m3e-menu-item-padding-start`                          | Start padding for the item wrapper.                                |
-| `--m3e-menu-item-padding-end`                            | End padding for the item wrapper.                                  |
-| `--m3e-menu-item-label-text-font-size`                   | Font size for menu item text.                                      |
-| `--m3e-menu-item-label-text-font-weight`                 | Font weight for menu item text.                                    |
-| `--m3e-menu-item-label-text-line-height`                 | Line height for menu item text.                                    |
-| `--m3e-menu-item-label-text-tracking`                    | Letter spacing for menu item text.                                 |
-| `--m3e-menu-item-focus-ring-shape`                       | Border radius for the focus ring.                                  |
-| `--m3e-menu-item-icon-size`                              | Font size for leading and trailing icons.                          |
+| Property                                         | Description                                      |
+| ------------------------------------------------ | ------------------------------------------------ |
+| `--m3e-menu-item-container-height`               | Height of the menu item container.               |
+| `--m3e-menu-item-color`                          | Text color for unselected, enabled menu items.   |
+| `--m3e-menu-item-container-hover-color`          | State layer hover color for unselected items.    |
+| `--m3e-menu-item-container-focus-color`          | State layer focus color for unselected items.    |
+| `--m3e-menu-item-ripple-color`                   | Ripple color for unselected items.               |
+| `--m3e-menu-selected-color`                      | Text color for selected or expanded items.       |
+| `--m3e-menu-selected-container-color`            | Background color for selected or expanded items. |
+| `--m3e-menu-item-selected-container-hover-color` | State layer hover color for selected items.      |
+| `--m3e-menu-item-selected-container-focus-color` | State layer focus color for selected items.      |
+| `--m3e-menu-item-selected-ripple-color`          | Ripple color for selected items.                 |
+| `--m3e-menu-item-disabled-color`                 | Base color for disabled items.                   |
+| `--m3e-menu-item-disabled-opacity`               | Opacity percentage for disabled item color mix.  |
+| `--m3e-menu-item-icon-label-space`               | Horizontal gap between icon and content.         |
+| `--m3e-menu-item-padding-start`                  | Start padding for the item wrapper.              |
+| `--m3e-menu-item-padding-end`                    | End padding for the item wrapper.                |
+| `--m3e-menu-item-label-text-font-size`           | Font size for menu item text.                    |
+| `--m3e-menu-item-label-text-font-weight`         | Font weight for menu item text.                  |
+| `--m3e-menu-item-label-text-line-height`         | Line height for menu item text.                  |
+| `--m3e-menu-item-label-text-tracking`            | Letter spacing for menu item text.               |
+| `--m3e-menu-item-focus-ring-shape`               | Border radius for the focus ring.                |
+| `--m3e-menu-item-icon-size`                      | Font size for leading and trailing icons.        |
 
 ### 🗂️ m3e-menu-item-group
 

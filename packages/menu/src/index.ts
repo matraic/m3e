@@ -5,4 +5,3 @@ export * from "./MenuItemGroupElement";
 export * from "./MenuItemRadioElement";
 export * from "./MenuPosition";
 export * from "./MenuTriggerElement";
-export * from "./MenuVariant";

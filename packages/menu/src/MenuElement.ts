@@ -10,7 +10,6 @@ import { M3eDirectionality } from "@m3e/core/bidi";
 import { M3eMenuItemElement } from "./MenuItemElement";
 import { MenuPositionX, MenuPositionY } from "./MenuPosition";
 import { MenuItemElementBase } from "./MenuItemElementBase";
-import { MenuVariant } from "./MenuVariant";
 
 /**
  * Presents a list of choices on a temporary surface.
@@ -71,20 +70,17 @@ import { MenuVariant } from "./MenuVariant";
  *
  * @attr position-x - The position of the menu, on the x-axis.
  * @attr position-y - The position of the menu, on the y-axis.
- * @attr variant - The appearance variant of the menu.
  *
  * @fires beforetoggle - Dispatched before the toggle state changes.
  * @fires toggle - Dispatched after the toggle state has changed.
  *
  * @cssprop --m3e-menu-container-shape - Controls the corner radius of the menu container.
- * @cssprop --m3e-menu-active-container-shape - Controls the corner radius of the menu container when active.
  * @cssprop --m3e-menu-container-min-width - Minimum width of the menu container.
  * @cssprop --m3e-menu-container-max-width - Maximum width of the menu container.
  * @cssprop --m3e-menu-container-max-height - Maximum height of the menu container.
  * @cssprop --m3e-menu-container-padding-block - Vertical padding inside the menu container.
  * @cssprop --m3e-menu-container-color - Background color of the menu container.
  * @cssprop --m3e-menu-container-elevation - Box shadow elevation of the menu container.
- * @cssprop --m3e-vibrant-menu-container-color - Background color of the menu container for vibrant variant.
  * @cssprop --m3e-menu-divider-spacing - Vertical spacing around slotted `m3e-divider` elements.
  */
 @customElement("m3e-menu")
@@ -94,43 +90,28 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
     :host {
       position: absolute;
       flex-direction: column;
-      row-gap: var(--m3e-menu-gap, 0.125rem);
       padding: unset;
       margin: unset;
       border: unset;
       overflow-y: auto;
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
+      border-radius: var(--m3e-menu-container-shape, ${DesignToken.shape.corner.extraSmall});
       min-width: var(--m3e-menu-container-min-width, 7rem);
       max-width: var(--m3e-menu-container-max-width, 17.5rem);
       max-height: var(--m3e-menu-container-max-height, 17.5rem);
-      padding-block: var(--m3e-menu-container-padding-block, 0.25rem);
-      padding-inline: var(--m3e-menu-container-inline-block, 0.25rem);
+      padding-block: var(--m3e-menu-container-padding-block, 0.5rem);
+      background-color: var(--m3e-menu-container-color, ${DesignToken.color.surfaceContainer});
       box-shadow: var(--m3e-menu-container-elevation, ${DesignToken.elevation.level3});
       opacity: 0;
       display: none;
-    }
-    :host(:not(.-active)) {
-      border-radius: var(--m3e-menu-container-shape, ${DesignToken.shape.corner.small});
-    }
-    :host(.-active) {
-      border-radius: var(--m3e-menu-active-container-shape, ${DesignToken.shape.corner.large});
-    }
-    :host(:not(.-active)) slot {
-      --_menu-item-top-shape: var(--m3e-menu-container-shape, ${DesignToken.shape.corner.small});
-      --_menu-item-bottom-shape: var(--m3e-menu-container-shape, ${DesignToken.shape.corner.small});
-    }
-    :host(.-active) slot {
-      --_menu-item-top-shape: var(--m3e-menu-active-container-shape, ${DesignToken.shape.corner.large});
-      --_menu-item-bottom-shape: var(--m3e-menu-active-container-shape, ${DesignToken.shape.corner.large});
     }
     :host(:not(.-no-animate)) {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}, 
         transform ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard},
         overlay ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard} allow-discrete,
-        display ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard} allow-discrete,
-        border-radius ${DesignToken.motion.spring.fastEffects}`,
+        display ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard} allow-discrete`
       )};
     }
     :host(:not([submenu])) {
@@ -160,48 +141,6 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
     }
     ::slotted(m3e-divider) {
       margin-block: var(--m3e-menu-divider-spacing, 0.5rem);
-    }
-    :host([variant="vibrant"]) {
-      background-color: var(--m3e-vibrant-menu-container-color, ${DesignToken.color.tertiaryContainer});
-      --m3e-menu-item-color: var(--m3e-vibrant-menu-item-color, ${DesignToken.color.onTertiaryContainer});
-      --m3e-menu-item-container-hover-color: var(
-        --m3e-vibrant-menu-item-container-hover-color,
-        ${DesignToken.color.onTertiaryContainer}
-      );
-      --m3e-menu-item-container-focus-color: var(
-        --m3e-vibrant-menu-item-container-focus-color,
-        ${DesignToken.color.onTertiaryContainer}
-      );
-      --m3e-menu-item-ripple-color: var(--m3e-vibrant-menu-item-ripple-color, ${DesignToken.color.onTertiaryContainer});
-      --m3e-menu-item-active-state-layer-color: var(
-        --m3e-vibrant-menu-item-active-state-layer-color,
-        ${DesignToken.color.onTertiaryContainer}
-      );
-      --m3e-menu-item-selected-color: var(--m3e-vibrant-menu-item-selected-color, ${DesignToken.color.onTertiary});
-      --m3e-menu-item-selected-container-color: var(
-        --m3e-vibrant-menu-item-selected-container-color,
-        ${DesignToken.color.tertiary}
-      );
-
-      --m3e-menu-item-selected-container-hover-color: var(
-        --m3e-vibrant-menu-item-selected-container-hover-color,
-        ${DesignToken.color.onTertiary}
-      );
-      --m3e-menu-item-container-selected-focus-color: var(
-        --m3e-vibrant-menu-item-selected-container-focus-color,
-        ${DesignToken.color.onTertiary}
-      );
-      --m3e-menu-item-selected-ripple-color: var(
-        --m3e-vibrant-menu-item-selected-ripple-color,
-        ${DesignToken.color.onTertiary}
-      );
-      --m3e-menu-item-disabled-color: var(
-        --m3e-vibrant-menu-item-disabled-color,
-        ${DesignToken.color.onTertiaryContainer}
-      );
-    }
-    :host([variant="standard"]) {
-      background-color: var(--m3e-menu-container-color, ${DesignToken.color.surfaceContainer});
     }
     @starting-style {
       :host(:popover-open) {
@@ -265,12 +204,6 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
    * @default "below"
    */
   @property({ attribute: "position-y" }) positionY: MenuPositionY = "below";
-
-  /**
-   * The appearance variant of the menu.
-   * @default "standard"
-   */
-  @property({ reflect: true }) variant: MenuVariant = "standard";
 
   /** The items of the menu. */
   get items(): ReadonlyArray<MenuItemElementBase> {
@@ -358,19 +291,9 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
           this.style.left = `${x}px`;
         }
         this.style.top = `${y}px`;
-      },
+      }
     );
 
-    let parent: M3eMenuElement | null | undefined = trigger.closest("m3e-menu");
-    if (parent) {
-      this.variant = parent.variant;
-      while (parent) {
-        parent.classList.remove("-active");
-        parent = parent.#trigger?.closest("m3e-menu");
-      }
-    }
-
-    this.classList.add("-active");
     this.showPopover();
 
     this.#trigger = trigger;
@@ -390,7 +313,6 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       }
     }
 
-    this.classList.remove("-active");
     this.hidePopover();
 
     if (this.#trigger) {
@@ -399,7 +321,6 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
         this.#trigger.focus();
       }
       this.#scrollController.unobserve(this.#trigger);
-      this.#trigger.closest("m3e-menu")?.classList.add("-active");
       this.#trigger = undefined;
     }
   }
@@ -450,17 +371,12 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
     const { added } = this.#listManager.setItems(
       [
         ...this.querySelectorAll<MenuItemElementBase>("m3e-menu-item,m3e-menu-item-checkbox,m3e-menu-item-radio"),
-      ].filter((x) => x.closest("m3e-menu") === this),
+      ].filter((x) => x.closest("m3e-menu") === this)
     );
 
     if (!this.#listManager.activeItem) {
       this.#listManager.updateActiveItem(added.find((x) => !x.disabled));
     }
-
-    this.#listManager.items.forEach((x, i) => {
-      x.classList.toggle("-first", i === 0);
-      x.classList.toggle("-last", i === this.#listManager.items.length - 1);
-    });
   }
 
   /** @private */
@@ -537,25 +453,25 @@ export interface M3eMenuElement {
   addEventListener<K extends keyof M3eMenuElementEventMap>(
     type: K,
     listener: (this: M3eMenuElement, ev: M3eMenuElementEventMap[K]) => void,
-    options?: boolean | AddEventListenerOptions,
+    options?: boolean | AddEventListenerOptions
   ): void;
 
   addEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions,
+    options?: boolean | AddEventListenerOptions
   ): void;
 
   removeEventListener<K extends keyof M3eMenuElementEventMap>(
     type: K,
     listener: (this: M3eMenuElement, ev: M3eMenuElementEventMap[K]) => void,
-    options?: boolean | EventListenerOptions,
+    options?: boolean | EventListenerOptions
   ): void;
 
   removeEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions,
+    options?: boolean | EventListenerOptions
   ): void;
 }
 
