@@ -105,30 +105,35 @@ import { FloatLabelType } from "./FloatLabelType";
 @customElement("m3e-form-field")
 export class M3eFormFieldElement extends AttachInternals(LitElement) {
   static {
-    const lightDomStyle = new CSSStyleSheet();
-    lightDomStyle.replaceSync(
-      css`
-        m3e-form-field input::placeholder,
-        m3e-form-field textarea::placeholder {
-          user-select: none;
-          color: currentColor;
-          transition: opacity ${DesignToken.motion.duration.extraLong1};
-        }
-        m3e-form-field[float-label="auto"]:not(.-float-label).-with-label input::placeholder,
-        m3e-form-field[float-label="auto"]:not(.-float-label).-with-label textarea::placeholder {
-          opacity: 0;
-          transition: opacity 0s;
-        }
-        @media (prefers-reduced-motion) {
+    if (document) {
+      const lightDomStyle = new CSSStyleSheet();
+      lightDomStyle.replaceSync(
+        css`
           m3e-form-field input::placeholder,
           m3e-form-field textarea::placeholder {
-            transition: none !important;
+            user-select: none;
+            color: currentColor;
+            transition: opacity ${DesignToken.motion.duration.extraLong1};
           }
-        }
-      `.toString()
-    );
+          m3e-form-field[float-label="auto"]:not(.-float-label).-with-label input::placeholder,
+          m3e-form-field[float-label="auto"]:not(.-float-label).-with-label textarea::placeholder {
+            opacity: 0;
+            transition: opacity 0s;
+          }
+          m3e-form-field[variant="outlined"] m3e-input-chip-set {
+            margin-block: calc(calc(3.5rem + ${DesignToken.density.calc(-2)}) / 4);
+          }
+          @media (prefers-reduced-motion) {
+            m3e-form-field input::placeholder,
+            m3e-form-field textarea::placeholder {
+              transition: none !important;
+            }
+          }
+        `.toString(),
+      );
 
-    document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
+      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
+    }
   }
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -206,7 +211,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       transition: ${unsafeCSS(
         `top ${DesignToken.motion.duration.short4}, 
         font-size ${DesignToken.motion.duration.short4}, 
-        line-height ${DesignToken.motion.duration.short4}`
+        line-height ${DesignToken.motion.duration.short4}`,
       )};
     }
     :host(.-with-select) .label {
@@ -242,7 +247,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short4}, 
         margin-top ${DesignToken.motion.duration.short4}, 
-        margin-bottom ${DesignToken.motion.duration.short4}`
+        margin-bottom ${DesignToken.motion.duration.short4}`,
       )};
     }
     :host([hide-subscript="auto"]:not(.-invalid):focus-within) .subscript,
@@ -281,9 +286,6 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     ::slotted(m3e-input-chip-set) {
       flex: 1 1 auto;
       min-width: 0;
-    }
-    :host([variant="outlined"]) ::slotted(m3e-input-chip-set) {
-      margin-block: calc(calc(3.5rem + ${DesignToken.density.calc(-2)}) / 4);
     }
     :host([float-label="auto"]:not(.-float-label):not(.-pressed)) .label {
       font-size: inherit;

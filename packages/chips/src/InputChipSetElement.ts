@@ -68,30 +68,32 @@ export class M3eInputChipSetElement
   implements FormFieldControl
 {
   static {
-    const lightDomStyle = new CSSStyleSheet();
-    lightDomStyle.replaceSync(
-      css`
-        m3e-input-chip-set [slot="input"]::placeholder {
-          user-select: none;
-          color: currentColor;
-          transition: opacity ${DesignToken.motion.duration.extraLong1};
-        }
-        m3e-input-chip-set:not(:focus-within) [slot="input"]::placeholder {
-          opacity: 0;
-          transition: 0s;
-        }
-        m3e-input-chip-set:hover [slot="input"]::placeholder {
-          transition: 0s;
-        }
-        @media (prefers-reduced-motion) {
+    if (document) {
+      const lightDomStyle = new CSSStyleSheet();
+      lightDomStyle.replaceSync(
+        css`
           m3e-input-chip-set [slot="input"]::placeholder {
-            transition: none !important;
+            user-select: none;
+            color: currentColor;
+            transition: opacity ${DesignToken.motion.duration.extraLong1};
           }
-        }
-      `.toString(),
-    );
+          m3e-input-chip-set:not(:focus-within) [slot="input"]::placeholder {
+            opacity: 0;
+            transition: 0s;
+          }
+          m3e-input-chip-set:hover [slot="input"]::placeholder {
+            transition: 0s;
+          }
+          @media (prefers-reduced-motion) {
+            m3e-input-chip-set [slot="input"]::placeholder {
+              transition: none !important;
+            }
+          }
+        `.toString(),
+      );
 
-    document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
+      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
+    }
   }
 
   /** The styles of the element. */
