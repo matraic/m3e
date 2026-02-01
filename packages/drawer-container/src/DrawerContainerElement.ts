@@ -123,7 +123,7 @@ export class M3eDrawerContainerElement extends LitElement {
 
       if (this.startMode === "auto" || this.endMode === "auto") {
         this.#breakpointUnobserve = M3eBreakpointObserver.observe([Breakpoint.XSmall, Breakpoint.Small], (matches) =>
-          this.#updateMode(matches, true)
+          this.#updateMode(matches, true),
         );
       } else {
         this.#updateMode();
@@ -145,9 +145,11 @@ export class M3eDrawerContainerElement extends LitElement {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<m3e-focus-trap ?disabled="${!this.start || this._startMode === "side" || this.#disableStartFocusTrap}">
-        <slot name="start" @slotchange="${this.#handleStartSlotChange}"></slot>
-      </m3e-focus-trap>
+    return html`<div class="start">
+        <m3e-focus-trap ?disabled="${!this.start || this._startMode === "side" || this.#disableStartFocusTrap}">
+          <slot name="start" @slotchange="${this.#handleStartSlotChange}"></slot>
+        </m3e-focus-trap>
+      </div>
       <div
         class="content"
         .inert="${(this._startMode !== "side" || this._endMode !== "side") && (this.start || this.end)}"
@@ -155,9 +157,11 @@ export class M3eDrawerContainerElement extends LitElement {
         <slot></slot>
       </div>
       <div class="scrim" @click="${this.#handleScrimClick}"></div>
-      <m3e-focus-trap ?disabled="${!this.end || this._endMode === "side" || this.#disableEndFocusTrap}">
-        <slot name="end" @slotchange="${this.#handleEndSlotChange}"></slot>
-      </m3e-focus-trap>`;
+      <div class="end">
+        <m3e-focus-trap ?disabled="${!this.end || this._endMode === "side" || this.#disableEndFocusTrap}">
+          <slot name="end" @slotchange="${this.#handleEndSlotChange}"></slot>
+        </m3e-focus-trap>
+      </div>`;
   }
 
   /** @private */

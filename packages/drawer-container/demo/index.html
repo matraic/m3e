@@ -22,7 +22,8 @@
           "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
           "@m3e/core": "../../core/dist/index.min.js",
           "@m3e/core/a11y": "../../core/dist/a11y.min.js",
-          "@m3e/core/layout": "../../core/dist/layout.min.js"
+          "@m3e/core/layout": "../../core/dist/layout.min.js",
+          "@m3e/core/bidi": "../../core/dist/bidi.min.js"
         }
       }
     </script>
@@ -49,6 +50,14 @@
       }
       *:not(:defined) {
         visibility: hidden;
+      }
+      *,
+      ::before,
+      ::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border: 0 solid;
       }
     </style>
   </head>

@@ -19,46 +19,49 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   .content {
     height: 100%;
   }
-  ::slotted([slot="start"]),
-  ::slotted([slot="end"]) {
-    display: block;
+  .start,
+  .end {
     height: 100%;
     z-index: 3;
     outline: none;
     box-sizing: border-box;
     flex: none;
-    width: ${DrawerContainerToken.containerWidth};
     background-color: ${DrawerContainerToken.containerColor};
     box-shadow: ${DrawerContainerToken.containerElevation};
     transition: ${unsafeCSS(
       `margin ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard},
       visibility ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard} allow-discrete,
       background-color ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard},
-      box-shadow ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard}`
+      box-shadow ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard}`,
     )};
   }
-  :host(.-start-over) ::slotted([slot="start"]) {
+  ::slotted([slot="start"]),
+  ::slotted([slot="end"]) {
+    height: 100%;
+    width: ${DrawerContainerToken.containerWidth};
+  }
+  :host(.-start-over) .start {
     position: absolute;
     top: 0;
     inset-inline-start: 0;
   }
-  :host(.-end-over) ::slotted([slot="end"]) {
+  :host(.-end-over) .end {
     position: absolute;
     top: 0;
     inset-inline-end: 0;
   }
-  :host(:not([start])) ::slotted([slot="start"]) {
+  :host(:not([start])) .start {
     visibility: hidden;
     margin-inline-start: calc(0px - ${DrawerContainerToken.containerWidth});
   }
-  :host([start]) ::slotted([slot="start"]) {
+  :host([start]) .start {
     margin-inline-start: 0;
   }
-  :host(:not([end])) ::slotted([slot="end"]) {
+  :host(:not([end])) .end {
     visibility: hidden;
     margin-inline-end: calc(0px - ${DrawerContainerToken.containerWidth});
   }
-  :host([end]) ::slotted([slot="end"]) {
+  :host([end]) .end {
     margin-inline-end: 0;
   }
   .content {
@@ -79,7 +82,7 @@ export const DrawerContainerStyle: CSSResultGroup = css`
     visibility: hidden;
     transition: ${unsafeCSS(
       `opacity ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard}, 
-        visibility ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard} allow-discrete`
+        visibility ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard} allow-discrete`,
     )};
   }
   @starting-style {
@@ -94,81 +97,81 @@ export const DrawerContainerStyle: CSSResultGroup = css`
     visibility: visible;
     opacity: ${DrawerContainerToken.scrimOpacity};
   }
-  :host(.-start-push) ::slotted([slot="start"]),
-  :host(.-start-over) ::slotted([slot="start"]) {
+  :host(.-start-push) .start,
+  :host(.-start-over) .start {
     border-start-end-radius: ${DrawerContainerToken.cornerShape};
     border-end-end-radius: ${DrawerContainerToken.cornerShape};
   }
-  :host(.-end-push) ::slotted([slot="end"]),
-  :host(.-end-over) ::slotted([slot="end"]) {
+  :host(.-end-push) .end,
+  :host(.-end-over) .end {
     border-start-start-radius: ${DrawerContainerToken.cornerShape};
     border-end-start-radius: ${DrawerContainerToken.cornerShape};
   }
-  :host(.-start-push) ::slotted([slot="start"]),
-  :host(.-end-push) ::slotted([slot="end"]),
-  :host(.-start-over) ::slotted([slot="start"]),
-  :host(.-end-over) ::slotted([slot="end"]) {
+  :host(.-start-push) .start,
+  :host(.-end-push) .end,
+  :host(.-start-over) .start,
+  :host(.-end-over) .end {
     background-color: ${DrawerContainerToken.modalContainerColor};
     box-shadow: ${DrawerContainerToken.modalContainerElevation};
   }
-  :host([start-divider]) ::slotted([slot="start"]) {
+  :host([start-divider]) .start {
     border-inline-end-color: transparent;
     border-inline-end-width: ${DrawerContainerToken.dividerThickness};
     border-inline-end-style: solid;
     box-sizing: border-box;
   }
-  :host([start-divider].-start-side[start]:not(.-end-push[end]):not(.-end-over[end])) ::slotted([slot="start"]) {
+  :host([start-divider].-start-side[start]:not(.-end-push[end]):not(.-end-over[end])) .start {
     border-inline-end-color: ${DrawerContainerToken.dividerColor};
   }
-  :host([end-divider]) ::slotted([slot="end"]) {
+  :host([end-divider]) .end {
     border-inline-start-color: transparent;
     border-inline-start-width: ${DrawerContainerToken.dividerThickness};
     border-inline-start-style: solid;
     box-sizing: border-box;
   }
-  :host([end-divider].-end-side[end]:not(.-start-push[start]):not(.-start-over[start])) ::slotted([slot="end"]) {
+  :host([end-divider].-end-side[end]:not(.-start-push[start]):not(.-start-over[start])) .end {
     border-inline-start-color: ${DrawerContainerToken.dividerColor};
   }
   @media (forced-colors: active) {
-    ::slotted([slot="start"]),
-    ::slotted([slot="end"]) {
+    .start,
+    .end {
       background-color: Canvas;
       box-shadow: unset;
       transition: ${unsafeCSS(
         `margin ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard},
-      visibility ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard} allow-discrete`
+      visibility ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
-    :host(.-start-push) ::slotted([slot="start"]),
-    :host(.-end-push) ::slotted([slot="end"]),
-    :host(.-start-over) ::slotted([slot="start"]),
-    :host(.-end-over) ::slotted([slot="end"]) {
+    :host(.-start-push) .start,
+    :host(.-end-push) .end,
+    :host(.-start-over) .start,
+    :host(.-end-over) .end {
       background-color: Canvas;
       box-shadow: unset;
       border-color: CanvasText;
     }
-    ::slotted([slot="start"]),
-    ::slotted([slot="end"]) {
+    .start,
+    .end {
       border-style: solid;
       border-color: Canvas;
       border-width: 1px;
     }
-    ::slotted([slot="start"]) {
+    .start {
       border-inline-start-style: none;
     }
-    ::slotted([slot="end"]) {
+    .end {
       border-inline-end-style: none;
     }
-    :host([start-divider].-start-side[start]:not(.-end-push[end]):not(.-end-over[end])) ::slotted([slot="start"]) {
+    :host([start-divider].-start-side[start]:not(.-end-push[end]):not(.-end-over[end])) .start {
       border-inline-end-color: GrayText;
     }
-    :host([end-divider].-end-side[end]:not(.-start-push[start]):not(.-start-over[start])) ::slotted([slot="end"]) {
+    :host([end-divider].-end-side[end]:not(.-start-push[start]):not(.-start-over[start])) .end {
       border-inline-start-color: GrayText;
     }
   }
   @media (prefers-reduced-motion) {
-    ::slotted([slot="start"]),
-    ::slotted([slot="end"]),
+    .start,
+    .end,
     .scrim {
       transition: none;
     }
