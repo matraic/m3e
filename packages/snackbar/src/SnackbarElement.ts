@@ -28,6 +28,20 @@ import { DesignToken, Role } from "@m3e/core";
  */
 @customElement("m3e-snackbar")
 export class M3eSnackbarElement extends Role(LitElement, "status") {
+  static {
+    if (document) {
+      const lightDomStyle = new CSSStyleSheet();
+      lightDomStyle.replaceSync(
+        css`
+          m3e-snackbar {
+            margin-inline: auto;
+          }
+        `.toString(),
+      );
+
+      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
+    }
+  }
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -35,16 +49,8 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
       top: calc(100vh - var(--_snackbar-height, 0px) - var(--m3e-snackbar-margin, 1rem));
       display: inline-flex;
       align-items: center;
-      padding: unset;
-      margin: unset;
-      margin-inline: auto;
-      border: unset;
-      border-radius: var(--m3e-snackbar-container-shape, ${DesignToken.shape.corner.extraSmall});
-      background-color: var(--m3e-snackbar-container-color, ${DesignToken.color.inverseSurface});
-      padding: var(--m3e-snackbar-padding, 0 1rem 0 1rem);
       min-width: var(--m3e-snackbar-min-width, 21.5rem);
       max-width: var(--m3e-snackbar-max-width, 42rem);
-      box-sizing: border-box;
       visibility: hidden;
       opacity: 0;
       transform: scale(0.8);
@@ -52,7 +58,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
         `opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
         transform ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
         overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete,
-        visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`
+        visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
     :host::backdrop {
@@ -69,11 +75,14 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
         transform: scale(0.8);
       }
     }
-    :host([dismissible]) {
-      padding-inline-end: 0.5rem;
-    }
-    .contents {
-      display: contents;
+    .base {
+      display: inline-flex;
+      align-items: center;
+      flex: 1 1 auto;
+      box-sizing: border-box;
+      padding: var(--m3e-snackbar-padding, 0 1rem 0 1rem);
+      border-radius: var(--m3e-snackbar-container-shape, ${DesignToken.shape.corner.extraSmall});
+      background-color: var(--m3e-snackbar-container-color, ${DesignToken.color.inverseSurface});
       font-size: var(--m3e-snackbar-supporting-text-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(
         --m3e-snackbar-supporting-text-font-weight,
@@ -142,6 +151,9 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
         --m3e-snackbar-close-icon-color,
         ${DesignToken.color.inverseOnSurface}
       );
+    }
+    :host([dismissible]) .base {
+      padding-inline-end: 0.5rem;
     }
     .supporting-text {
       flex: 1 1 auto;
@@ -226,7 +238,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
 
   /** @inheritdoc */
   protected override render() {
-    return html`<div class="contents">
+    return html`<div class="base">
       <span class="supporting-text"><slot></slot></span>
       ${this.#renderActionButton()} ${this.#renderCloseButton()}
     </div>`;
@@ -297,25 +309,25 @@ export interface M3eSnackbarElement {
   addEventListener<K extends keyof M3eSnackbarElementEventMap>(
     type: K,
     listener: (this: M3eSnackbarElement, ev: M3eSnackbarElementEventMap[K]) => void,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   addEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   removeEventListener<K extends keyof M3eSnackbarElementEventMap>(
     type: K,
     listener: (this: M3eSnackbarElement, ev: M3eSnackbarElementEventMap[K]) => void,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 
   removeEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 }
 
