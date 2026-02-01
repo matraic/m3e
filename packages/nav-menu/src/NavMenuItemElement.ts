@@ -137,8 +137,8 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
 @customElement("m3e-nav-menu-item")
 export class M3eNavMenuItemElement extends Selected(
   Disabled(
-    EventAttribute(AttachInternals(Role(LitElement, "treeitem"), true), "opening", "opened", "closing", "closed")
-  )
+    EventAttribute(AttachInternals(Role(LitElement, "treeitem"), true), "opening", "opened", "closing", "closed"),
+  ),
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -146,13 +146,7 @@ export class M3eNavMenuItemElement extends Selected(
       display: block;
       flex: none;
       outline: none;
-      user-select: none;
       position: relative;
-      font-size: var(--m3e-nav-menu-item-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
-      font-weight: var(--m3e-nav-menu-item-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
-      line-height: var(--m3e-nav-menu-item-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
-      letter-spacing: var(--m3e-nav-menu-item-tracking, ${DesignToken.typescale.standard.label.large.tracking});
-      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     .base {
       display: flex;
@@ -161,9 +155,15 @@ export class M3eNavMenuItemElement extends Selected(
       padding-inline: var(--m3e-nav-menu-item-padding, 1.5rem);
       height: calc(var(--m3e-nav-menu-item-height, 3.5rem) + ${DesignToken.density.calc(-3)});
       column-gap: var(--m3e-nav-menu-item-spacing, 0.75rem);
+      font-size: var(--m3e-nav-menu-item-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
+      font-weight: var(--m3e-nav-menu-item-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
+      line-height: var(--m3e-nav-menu-item-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
+      letter-spacing: var(--m3e-nav-menu-item-tracking, ${DesignToken.typescale.standard.label.large.tracking});
+      user-select: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       transition: ${unsafeCSS(
         `color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard},
-        background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`
+        background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
       )};
     }
     .base,
@@ -592,25 +592,25 @@ export interface M3eNavMenuItemElement {
   addEventListener<K extends keyof M3eNavMenuItemElementEventMap>(
     type: K,
     listener: (this: M3eNavMenuItemElement, ev: M3eNavMenuItemElementEventMap[K]) => void,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   addEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   removeEventListener<K extends keyof M3eNavMenuItemElementEventMap>(
     type: K,
     listener: (this: M3eNavMenuItemElement, ev: M3eNavMenuItemElementEventMap[K]) => void,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 
   removeEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 }
 

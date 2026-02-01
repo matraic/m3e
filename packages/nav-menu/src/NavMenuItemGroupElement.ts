@@ -52,17 +52,20 @@ export class M3eNavMenuItemGroupElement extends Role(LitElement, "group") {
     :host {
       display: contents;
     }
-    ::slotted([slot="label"]) {
+    :host(:not(.-has-label)) .label {
+      display: none;
+    }
+    .label {
       margin-inline-start: var(--m3e-nav-menu-item-group-label-inset, 1rem);
       margin-block-end: var(--m3e-nav-menu-item-group-label-space, 1rem);
       flex: none;
     }
-    :host(.-divided) ::slotted([slot="label"]) {
+    :host(.-divided) .label {
       margin-block-start: calc(
         var(--m3e-nav-menu-item-group-label-space, 1rem) - var(--m3e-nav-menu-divider-margin, 0.25rem)
       );
     }
-    :host(:not(.-divided)) ::slotted([slot="label"]) {
+    :host(:not(.-divided)) .label {
       margin-block-start: var(--m3e-nav-menu-item-group-label-space, 1rem);
     }
   `;
@@ -85,7 +88,10 @@ export class M3eNavMenuItemGroupElement extends Role(LitElement, "group") {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot name="label" @slotchange="${this.#handleLabelSlotChange}"></slot><slot></slot>`;
+    return html`<div class="label">
+        <slot name="label" @slotchange="${this.#handleLabelSlotChange}"></slot>
+      </div>
+      <slot></slot>`;
   }
 
   /** @private */
@@ -108,6 +114,7 @@ export class M3eNavMenuItemGroupElement extends Role(LitElement, "group") {
         this.removeAttribute("aria-labelledby");
       }
     }
+    this.classList.toggle("-has-label", this.#label !== undefined);
   }
 }
 

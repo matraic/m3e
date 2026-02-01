@@ -82,26 +82,44 @@ import { M3eNavMenuItemElement } from "./NavMenuItemElement";
  */
 @customElement("m3e-nav-menu")
 export class M3eNavMenuElement extends Role(LitElement, "tree") {
+  static {
+    if (document) {
+      const lightDomStyle = new CSSStyleSheet();
+      lightDomStyle.replaceSync(
+        css`
+          m3e-nav-menu > m3e-divider {
+            margin-block: var(--m3e-nav-menu-divider-margin, 0.25rem);
+            flex: none;
+          }
+        `.toString(),
+      );
+
+      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
+    }
+  }
+
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
-      display: flex;
-      flex-direction: column;
+      display: block;
       outline: none;
       overflow-y: auto;
       overflow-x: hidden;
-      position: relative;
       min-height: 0;
+      scrollbar-width: ${DesignToken.scrollbar.width};
+      scrollbar-color: ${DesignToken.scrollbar.color};
+    }
+    .base {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      min-height: inherit;
+      box-sizing: border-box;
       padding-block-start: var(--m3e-nav-menu-padding-top, 0.5rem);
       padding-block-end: var(--m3e-nav-menu-padding-bottom, 0.5rem);
       padding-inline-start: var(--m3e-nav-menu-padding-left, 0.75rem);
       padding-inline-end: var(--m3e-nav-menu-padding-right, 0.75rem);
-      scrollbar-width: ${DesignToken.scrollbar.width};
-      scrollbar-color: ${DesignToken.scrollbar.color};
-    }
-    ::slotted(m3e-divider) {
-      margin-block: var(--m3e-nav-menu-divider-margin, 0.25rem);
-      flex: none;
     }
   `;
 
@@ -209,12 +227,14 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot @slotchange="${this.#handleSlotChange}"></slot>`;
+    return html`<div class="base">
+      <slot @slotchange="${this.#handleSlotChange}"></slot>
+    </div>`;
   }
 
   /** @private */
   #handleSlotChange(): void {
-    for (const divider of this.querySelectorAll("m3e-divider")) {
+    for (const divider of this.querySelectorAll<HTMLElement>("m3e-divider")) {
       divider.ariaHidden = "true";
     }
     const { added } = this[selectionManager].setItems([...this.querySelectorAll("m3e-nav-menu-item")]);
