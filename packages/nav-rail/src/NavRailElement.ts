@@ -54,15 +54,40 @@ import { M3eNavBarElement, NavItemOrientation } from "@m3e/nav-bar";
  */
 @customElement("m3e-nav-rail")
 export class M3eNavRailElement extends M3eNavBarElement {
+  static {
+    if (document) {
+      const lightDomStyle = new CSSStyleSheet();
+      lightDomStyle.replaceSync(
+        css`
+          m3e-nav-rail > m3e-icon-button,
+          m3e-nav-rail > m3e-fab {
+            margin-block-end: var(--m3e-nav-rail-button-item-space, 1rem);
+          }
+          m3e-nav-rail:not(.-compact) > m3e-icon-button {
+            margin-inline-start: var(--m3e-nav-rail-expanded-icon-button-inset, 0.5rem);
+          }
+        `.toString(),
+      );
+
+      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
+    }
+  }
+
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
-      display: flex;
-      flex-direction: column;
+      display: block;
       overflow-x: hidden;
       overflow-y: auto;
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
+    }
+    .base {
+      display: flex;
+      width: 100%;
+      min-width: inherit;
+      max-width: inherit;
+      flex-direction: column;
       padding-block-start: var(--m3e-nav-rail-top-space, 2.75rem);
       padding-block-end: var(--m3e-nav-rail-bottom-space, 0.5rem);
     }
@@ -73,9 +98,11 @@ export class M3eNavRailElement extends M3eNavBarElement {
       align-self: center;
     }
     :host(:not(.-compact)) {
-      padding-inline: var(--m3e-nav-rail-expanded-inline-padding, 1.25rem);
       min-width: var(--m3e-nav-rail-expanded-min-width, 13.75rem);
       max-width: var(--m3e-nav-rail-expanded-max-width, 22.5rem);
+    }
+    :host(:not(.-compact)) .base {
+      padding-inline: var(--m3e-nav-rail-expanded-inline-padding, 1.25rem);
       align-items: flex-start;
       --m3e-horizontal-nav-item-active-indicator-height: var(--m3e-nav-rail-expanded-item-height, 3.5rem);
       --_nav-item-align-self: stretch;
@@ -84,15 +111,8 @@ export class M3eNavRailElement extends M3eNavBarElement {
     ::slotted(*) {
       flex: none;
     }
-    ::slotted(m3e-icon-button),
-    ::slotted(m3e-fab) {
-      margin-block-end: var(--m3e-nav-rail-button-item-space, 1rem);
-    }
     :host(.-compact) ::slotted(m3e-icon-button) {
       align-self: center;
-    }
-    :host(:not(.-compact)) ::slotted(m3e-icon-button) {
-      margin-inline-start: var(--m3e-nav-rail-expanded-icon-button-inset, 0.5rem);
     }
   `;
 

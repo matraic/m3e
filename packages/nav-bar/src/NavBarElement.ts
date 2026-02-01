@@ -46,15 +46,22 @@ export class M3eNavBarElement extends Role(LitElement, "navigation") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
-      display: flex;
+      display: block;
       overflow-x: auto;
       overflow-y: hidden;
-      align-items: stretch;
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
       min-height: var(--m3e-nav-bar-height, 4rem);
-      background-color: var(--m3e-nav-bar-container-color, ${DesignToken.color.surfaceContainer});
+    }
+    .base {
+      display: flex;
+      align-items: stretch;
       justify-content: center;
+      box-sizing: border-box;
+      min-height: inherit;
+      height: inherit;
+      width: 100%;
+      background-color: var(--m3e-nav-bar-container-color, ${DesignToken.color.surfaceContainer});
       --_nav-item-min-width: var(--m3e-nav-bar-vertical-item-width, 7rem);
     }
   `;
@@ -119,7 +126,9 @@ export class M3eNavBarElement extends Role(LitElement, "navigation") {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot @change="${this.#handleChange}" @slotchange="${this.#handleSlotChange}"></slot>`;
+    return html`<div class="base">
+      <slot @change="${this.#handleChange}" @slotchange="${this.#handleSlotChange}"></slot>
+    </div>`;
   }
 
   /** @private */
