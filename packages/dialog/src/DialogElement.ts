@@ -105,7 +105,7 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
         `opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasized}, 
         transform ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasized},
         overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasized} allow-discrete,
-        visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasized} allow-discrete`
+        visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasized} allow-discrete`,
       )};
     }
     .base[open] {
@@ -116,14 +116,14 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
         `opacity ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.emphasized}, 
         transform ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.emphasized},
         overlay ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.emphasized} allow-discrete,
-        visibility ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.emphasized} allow-discrete`
+        visibility ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.emphasized} allow-discrete`,
       )};
     }
     .base:not([open])::backdrop {
       transition: ${unsafeCSS(
         `background-color ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
         overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete,
-        visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`
+        visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
     .base[open]::backdrop {
@@ -135,7 +135,7 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
       transition: ${unsafeCSS(
         `background-color ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard}, 
         overlay ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard} allow-discrete,
-        visibility ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard} allow-discrete`
+        visibility ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
     @starting-style {
@@ -171,12 +171,14 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
       line-height: var(--m3e-dialog-content-line-height, ${DesignToken.typescale.standard.body.medium.lineHeight});
       letter-spacing: var(--m3e-dialog-content-tracking, ${DesignToken.typescale.standard.body.medium.tracking});
     }
+    .actions {
+      padding: 1.5rem;
+    }
     ::slotted([slot="actions"]) {
       flex: none;
       display: flex;
       align-items: center;
       min-height: 1.5rem;
-      padding: 1.5rem;
       column-gap: 0.5rem;
     }
     ::slotted([slot="actions"][end]) {
@@ -184,6 +186,9 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
     }
     :host(:not(.-has-actions)) .content {
       margin-bottom: 1.5rem;
+    }
+    :host(:not(.-has-actions)) .actions {
+      display: none;
     }
     .close {
       margin-inline-start: 0.5rem;
@@ -355,7 +360,9 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
         <m3e-scroll-container class="content" dividers="${this._hasActions ? "above-below" : "above"}">
           <slot></slot>
         </m3e-scroll-container>
-        <slot name="actions" @slotchange="${this.#handleActionsSlotChange}"></slot>
+        <div class="actions">
+          <slot name="actions" @slotchange="${this.#handleActionsSlotChange}"></slot>
+        </div>
       </m3e-focus-trap>
     </dialog>`;
   }
@@ -430,25 +437,25 @@ export interface M3eDialogElement {
   addEventListener<K extends keyof M3eDialogElementEventMap>(
     type: K,
     listener: (this: M3eDialogElement, ev: M3eDialogElementEventMap[K]) => void,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   addEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   removeEventListener<K extends keyof M3eDialogElementEventMap>(
     type: K,
     listener: (this: M3eDialogElement, ev: M3eDialogElementEventMap[K]) => void,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 
   removeEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 }
 
