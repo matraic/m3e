@@ -43,7 +43,7 @@ import { ExpansionHeaderStyle } from "./styles";
  */
 @customElement("m3e-expansion-header")
 export class M3eExpansionHeaderElement extends KeyboardClick(
-  Focusable(Disabled(AttachInternals(Role(LitElement, "button"), true)))
+  Focusable(Disabled(AttachInternals(Role(LitElement, "button"), true))),
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = ExpansionHeaderStyle;
@@ -77,13 +77,15 @@ export class M3eExpansionHeaderElement extends KeyboardClick(
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
+    return html`<div class="base">
+      <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
       <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"></m3e-state-layer>
       ${this.togglePosition === "before" ? this.#renderToggle() : nothing}
       <div class="content">
         <slot></slot>
       </div>
-      ${this.togglePosition === "after" ? this.#renderToggle() : nothing}`;
+      ${this.togglePosition === "after" ? this.#renderToggle() : nothing}
+    </div>`;
   }
 
   /** @private */

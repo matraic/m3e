@@ -12,25 +12,27 @@ import { ExpansionHeaderToken } from "./ExpansionHeaderToken";
 export const ExpansionPanelStyle = css`
   :host {
     display: block;
+  }
+  .base {
     background-color: ${ExpansionPanelToken.containerColor};
     transition: ${unsafeCSS(`box-shadow var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
         ${DesignToken.motion.easing.standard}`)};
   }
-  :host(:not(:disabled)) {
+  :host(:not(:disabled)) .base {
     color: ${ExpansionPanelToken.textColor};
   }
-  :host(:disabled) {
+  :host(:disabled) .base {
     color: color-mix(
       in srgb,
       ${ExpansionPanelToken.disabledTextColor} ${ExpansionPanelToken.disabledTextOpacity},
       transparent
     );
   }
-  :host(:not([open])) {
+  :host(:not([open])) .base {
     box-shadow: ${ExpansionPanelToken.collapsedElevation};
     border-radius: ${ExpansionPanelToken.collapsedShape};
   }
-  :host([open]) {
+  :host([open]) .base {
     box-shadow: ${ExpansionPanelToken.expandedElevation};
     border-radius: ${ExpansionPanelToken.expandedShape};
     margin-block: ${ExpansionPanelToken.expandedSpace};
@@ -53,32 +55,37 @@ export const ExpansionPanelStyle = css`
   .content {
     padding: ${ExpansionPanelToken.contentPadding};
   }
-  ::slotted([slot="actions"]) {
-    flex: none;
-    display: flex;
-    align-items: center;
-    column-gap: ${ExpansionPanelToken.actionsSpacing};
+  :host(:not(.-has-actions)) .actions {
+    display: none;
+  }
+  .actions {
     padding: ${ExpansionPanelToken.actionsPadding};
     border-top-style: solid;
     border-top-width: ${ExpansionPanelToken.actionsDividerThickness};
     border-top-color: ${ExpansionPanelToken.actionsDividerColor};
   }
+  ::slotted([slot="actions"]) {
+    flex: none;
+    display: flex;
+    align-items: center;
+    column-gap: ${ExpansionPanelToken.actionsSpacing};
+  }
   ::slotted([slot="actions"][end]) {
     justify-content: flex-end;
   }
   @media (prefers-reduced-motion) {
-    :host {
+    .base {
       transition: none;
     }
   }
   @media (forced-colors: active) {
-    :host {
+    .base {
       border: 1px solid CanvasText;
     }
-    :host(:disabled) {
+    :host(:disabled) .base {
       color: GrayText;
     }
-    ::slotted([slot="actions"]) {
+    .actions {
       border-top-color: GrayText;
     }
   }

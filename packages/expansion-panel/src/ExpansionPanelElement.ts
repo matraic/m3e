@@ -3,7 +3,7 @@
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 
-import { AttachInternals, Disabled, EventAttribute } from "@m3e/core";
+import { AttachInternals, Disabled, EventAttribute, hasAssignedNodes } from "@m3e/core";
 import { M3eDirectionality } from "@m3e/core/bidi";
 
 import { ExpansionTogglePosition } from "./ExpansionTogglePosition";
@@ -86,7 +86,7 @@ export class M3eExpansionPanelElement extends EventAttribute(
   "opening",
   "opened",
   "closing",
-  "closed"
+  "closed",
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = ExpansionPanelStyle;
@@ -146,7 +146,8 @@ export class M3eExpansionPanelElement extends EventAttribute(
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html` <m3e-expansion-header
+    return html`<div class="base">
+      <m3e-expansion-header
         id="${this.#headerId}"
         toggle-direction="${this.toggleDirection}"
         toggle-position="${this.togglePosition}"
@@ -176,8 +177,11 @@ export class M3eExpansionPanelElement extends EventAttribute(
         <div class="content">
           <slot></slot>
         </div>
-        <slot name="actions"></slot>
-      </m3e-collapsible>`;
+        <div class="actions">
+          <slot name="actions" @slotchange="${this.#handleActionsSlotChange}"></slot>
+        </div>
+      </m3e-collapsible>
+    </div>`;
   }
 
   /** @private */
@@ -246,6 +250,11 @@ export class M3eExpansionPanelElement extends EventAttribute(
   }
 
   /** @private */
+  #handleActionsSlotChange(e: Event): void {
+    this.classList.toggle("-has-actions", hasAssignedNodes(e.target as HTMLSlotElement));
+  }
+
+  /** @private */
   #updateHeaderToggleRotation(): void {
     if (M3eDirectionality.current === "rtl") {
       this._header?.style.setProperty("--_expansion-header-horizontal-expanded-toggle-rotation", "-90deg");
@@ -266,25 +275,25 @@ export interface M3eExpansionPanelElement {
   addEventListener<K extends keyof M3eExpansionPanelElementEventMap>(
     type: K,
     listener: (this: M3eExpansionPanelElement, ev: M3eExpansionPanelElementEventMap[K]) => void,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   addEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   removeEventListener<K extends keyof M3eExpansionPanelElementEventMap>(
     type: K,
     listener: (this: M3eExpansionPanelElement, ev: M3eExpansionPanelElementEventMap[K]) => void,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 
   removeEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 }
 

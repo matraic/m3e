@@ -10,26 +10,36 @@ import { ExpansionHeaderToken } from "./ExpansionHeaderToken";
  */
 export const ExpansionHeaderStyle = css`
   :host {
+    display: block;
+    border-radius: inherit;
+    outline: none;
+    transition: ${unsafeCSS(`height var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
+        ${DesignToken.motion.easing.standard}`)};
+  }
+  .base {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
     display: flex;
     border-radius: inherit;
     outline: none;
     user-select: none;
     position: relative;
-    height: ${ExpansionHeaderToken.collapsedHeight};
     padding-inline-start: ${ExpansionHeaderToken.paddingLeft};
     padding-inline-end: ${ExpansionHeaderToken.paddingRight};
     font-size: ${ExpansionHeaderToken.fontSize};
     font-weight: ${ExpansionHeaderToken.fontWeight};
     line-height: ${ExpansionHeaderToken.lineHeight};
     letter-spacing: ${ExpansionHeaderToken.tracking};
-    transition: ${unsafeCSS(`height var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
-        ${DesignToken.motion.easing.standard}`)};
 
     column-gap: ${ExpansionHeaderToken.spacing};
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
   :host(:not(:disabled)) {
     cursor: pointer;
+  }
+  :host(:not([aria-expanded="true"])) {
+    height: ${ExpansionHeaderToken.collapsedHeight};
   }
   :host([aria-expanded="true"]) {
     height: ${ExpansionHeaderToken.expandedHeight};
