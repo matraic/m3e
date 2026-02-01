@@ -51,7 +51,13 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
-      display: inline-flex;
+      display: inline-block;
+      vertical-align: baseline;
+    }
+    .base {
+      width: 100%;
+      height: 100%;
+      display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
@@ -68,48 +74,78 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
       position: absolute;
       z-index: 1;
     }
-    :host([for][position^="above"]) {
-      margin-block-start: var(--_badge-offset, 0px);
+    :host([for][position="above"]) {
+      transform: translateY(var(--_badge-offset, 0px));
     }
-    :host([for][position^="below"]) {
-      margin-block-start: calc(0px - var(--_badge-offset, 0px));
+    :host([for][position="above-after"]:not(:dir(rtl))) {
+      transform: translate3d(calc(0px - var(--_badge-offset, 0px)), var(--_badge-offset, 0px), 0);
     }
-    :host(:not(:dir(rtl))[for][position$="before"]),
-    :host(:dir(rtl)[for][position$="after"]) {
-      margin-left: var(--_badge-offset, 0px);
+    :host([for][position="above-after"]:dir(rtl)) {
+      transform: translate3d(var(--_badge-offset, 0px), var(--_badge-offset, 0px), 0);
     }
-    :host(:dir(rtl)[for][position$="before"]),
-    :host(:not(:dir(rtl))[for][position$="after"]) {
-      margin-left: calc(0px - var(--_badge-offset, 0px));
+    :host([for][position="above-before"]:not(:dir(rtl))) {
+      transform: translate3d(var(--_badge-offset, 0px), var(--_badge-offset, 0px), 0);
+    }
+    :host([for][position="above-before"]:dir(rtl)) {
+      transform: translate3d(calc(0px - var(--_badge-offset, 0px)), var(--_badge-offset, 0px), 0);
+    }
+    :host([for][position="below"]) {
+      transform: translateY(calc(0px - var(--_badge-offset, 0px)));
+    }
+    :host([for][position="below-after"]:not(:dir(rtl))) {
+      transform: translate3d(calc(0px - var(--_badge-offset, 0px)), calc(0px - var(--_badge-offset, 0px)), 0);
+    }
+    :host([for][position="below-after"]:dir(rtl)) {
+      transform: translate3d(var(--_badge-offset, 0px), calc(0px - var(--_badge-offset, 0px)), 0);
+    }
+    :host([for][position="below-before"]:not(:dir(rtl))) {
+      transform: translate3d(var(--_badge-offset, 0px), calc(0px - var(--_badge-offset, 0px)), 0);
+    }
+    :host([for][position="below-before"]:dir(rtl)) {
+      transform: translate3d(calc(0px - var(--_badge-offset, 0px)), calc(0px - var(--_badge-offset, 0px)), 0);
+    }
+    :host([for][position="before"]:not(:dir(rtl))),
+    :host([for][position="after"]:dir(rtl)) {
+      transform: translateX(var(--_badge-offset, 0px));
+    }
+    :host([for][position="before"]:dir(rtl)),
+    :host([for][position="after"]:not(:dir(rtl))) {
+      transform: translateX(calc(0px - var(--_badge-offset, 0px)));
     }
     :host([size="small"]) {
       height: var(--m3e-badge-small-size, 0.375rem);
       max-height: var(--m3e-badge-small-size, 0.375rem);
       width: var(--m3e-badge-small-size, 0.375rem);
       min-width: var(--m3e-badge-small-size, 0.375rem);
-      font-size: 0;
       --_badge-offset: var(--m3e-badge-small-offset, 0.375rem);
+    }
+    :host([size="small"]) .base {
+      font-size: 0;
     }
     :host([size="medium"]) {
       height: var(--m3e-badge-medium-size, 1.375rem);
       min-width: var(--m3e-badge-medium-size, 1.375rem);
+      --_badge-offset: var(--m3e-badge-small-offset, 0.75rem);
+    }
+    :host([size="medium"]) .base {
       font-size: var(--m3e-badge-medium-font-size, ${DesignToken.typescale.standard.label.small.fontSize});
       font-weight: var(--m3e-badge-medium-font-weight, ${DesignToken.typescale.standard.label.small.fontWeight});
       line-height: var(--m3e-badge-medium-line-height, ${DesignToken.typescale.standard.label.small.lineHeight});
       letter-spacing: var(--m3e-badge-medium-tracking, ${DesignToken.typescale.standard.label.small.tracking});
-      --_badge-offset: var(--m3e-badge-small-offset, 0.75rem);
     }
     :host([size="large"]) {
       height: var(--m3e-badge-large-size, 1.75rem);
       min-width: var(--m3e-badge-large-size, 1.75rem);
+      --_badge-offset: var(--m3e-badge-small-offset, 1rem);
+    }
+    :host([size="large"]) .base {
       font-size: var(--m3e-badge-large-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(--m3e-badge-large-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-badge-large-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
       letter-spacing: var(--m3e-badge-large-tracking, ${DesignToken.typescale.standard.label.large.tracking});
-      --_badge-offset: var(--m3e-badge-small-offset, 1rem);
     }
     @media (forced-colors: active) {
-      :host {
+      .base {
         background-color: ButtonFace;
         color: ButtonText;
         outline: 1px solid ButtonText;
@@ -167,7 +203,9 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot @slotchange="${this.#handleSlotChange}"> <span aria-hidden="true">&nbsp;</span></slot>`;
+    return html`<div class="base">
+      <slot @slotchange="${this.#handleSlotChange}"> <span aria-hidden="true">&nbsp;</span></slot>
+    </div>`;
   }
 
   /** @internal */
@@ -177,7 +215,7 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
       "--_badge-padding",
       this.textContent && this.textContent.length > 2
         ? `0 ${this.size === "medium" ? "0.25rem" : this.size === "large" ? "0.5rem" : "0"}`
-        : ""
+        : "",
     );
   }
 
