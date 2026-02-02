@@ -125,11 +125,11 @@ export class M3eListOptionElement extends KeyboardClick(
     css`
       :host {
         outline: none;
+        user-select: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       }
       .base {
         position: relative;
-        user-select: none;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       }
       .indicator {
         min-width: 1.5rem;

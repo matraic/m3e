@@ -30,11 +30,11 @@ export class M3eListItemButtonElement extends KeyboardClick(
     css`
       :host {
         outline: none;
+        user-select: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       }
       .base {
         position: relative;
-        user-select: none;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       }
       :host(:not(:disabled)) {
         cursor: pointer;
