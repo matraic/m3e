@@ -13,6 +13,8 @@ export const ExpansionHeaderStyle = css`
     display: block;
     border-radius: inherit;
     outline: none;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     transition: ${unsafeCSS(`height var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
         ${DesignToken.motion.easing.standard}`)};
   }
@@ -23,7 +25,6 @@ export const ExpansionHeaderStyle = css`
     display: flex;
     border-radius: inherit;
     outline: none;
-    user-select: none;
     position: relative;
     padding-inline-start: ${ExpansionHeaderToken.paddingLeft};
     padding-inline-end: ${ExpansionHeaderToken.paddingRight};
@@ -31,9 +32,7 @@ export const ExpansionHeaderStyle = css`
     font-weight: ${ExpansionHeaderToken.fontWeight};
     line-height: ${ExpansionHeaderToken.lineHeight};
     letter-spacing: ${ExpansionHeaderToken.tracking};
-
     column-gap: ${ExpansionHeaderToken.spacing};
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
   :host(:not(:disabled)) {
     cursor: pointer;
