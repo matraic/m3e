@@ -19,7 +19,7 @@ import {
 
 import { CardVariant } from "./CardVariant";
 
-import { CardStyle, CardVariantStyle } from "./styles";
+import { CardLightDomStyle, CardStyle, CardVariantStyle } from "./styles";
 import { CardOrientation } from "./CardOrientation";
 
 /**
@@ -143,8 +143,15 @@ import { CardOrientation } from "./CardOrientation";
  */
 @customElement("m3e-card")
 export class M3eCardElement extends KeyboardClick(
-  LinkButton(FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(LitElement), true)))))
+  LinkButton(FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(LitElement), true))))),
 ) {
+  static {
+    if (document) {
+      const lightDomStyle = new CSSStyleSheet();
+      lightDomStyle.replaceSync(CardLightDomStyle.toString());
+      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
+    }
+  }
   /** The styles of the element. */
   static override styles: CSSResultGroup = [CardVariantStyle, CardStyle];
 

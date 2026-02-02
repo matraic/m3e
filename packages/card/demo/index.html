@@ -33,15 +33,32 @@
       *:not(:defined) {
         display: none;
       }
+      *,
+      ::before,
+      ::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border: 0 solid;
+      }
     </style>
   </head>
   <body>
     <m3e-theme strong-focus>
+      <m3e-card variant="filled">Content with no padding</m3e-card>
+      <br />
       <m3e-card variant="filled"><div slot="content">Filled card</div></m3e-card>
       <br />
       <m3e-card variant="elevated"><div slot="content">Elevated card</div></m3e-card>
       <br />
       <m3e-card variant="outlined"><div slot="content">Outlined card</div></m3e-card>
+      <br />
+      <m3e-card>
+        <div slot="header">Header</div>
+        <div slot="content">Content</div>
+        <div slot="actions">Actions</div>
+        <div slot="footer">Footer</div>
+      </m3e-card>
       <br />
       <m3e-card style="width: 200px; height: 200px" inline>
         <img slot="header" src="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480" />

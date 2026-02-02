@@ -6,6 +6,51 @@ import { CardToken } from "./CardToken";
 import { CardVariantToken } from "./CardVariantToken";
 
 /**
+ * Baseline styles for `M3eCardElement` exposed via Light-DOM.
+ * @internal
+ */
+export const CardLightDomStyle: CSSResult = css`
+  m3e-card[orientation="vertical"] > [slot="content"] {
+    margin-inline: ${CardToken.padding};
+  }
+  m3e-card[orientation="vertical"] > [slot="content"]:first-child {
+    margin-block-start: ${CardToken.padding};
+  }
+  m3e-card[orientation="vertical"] > [slot="content"]:last-child {
+    margin-block-end: ${CardToken.padding};
+  }
+  m3e-card[orientation="horizontal"] > [slot="content"] {
+    margin-block: ${CardToken.padding};
+  }
+  m3e-card[orientation="horizontal"] > [slot="content"]:first-child {
+    margin-inline-start: ${CardToken.padding};
+  }
+  m3e-card[orientation="horizontal"] > [slot="content"]:last-child {
+    margin-inline-end: ${CardToken.padding};
+  }
+  m3e-card[orientation="vertical"] > [slot="header"]:not(img):not(video) {
+    margin-inline: ${CardToken.padding};
+    margin-block-start: ${CardToken.padding};
+  }
+  m3e-card[orientation="horizontal"] > [slot="header"]:not(img):not(video) {
+    margin-inline-start: ${CardToken.padding};
+    margin-block: ${CardToken.padding};
+  }
+  m3e-card > [slot="actions"] {
+    margin-inline: ${CardToken.padding};
+    margin-block: ${CardToken.padding};
+  }
+  m3e-card[orientation="vertical"] > [slot="footer"] {
+    margin-inline: ${CardToken.padding};
+    margin-block-end: ${CardToken.padding};
+  }
+  m3e-card[orientation="horizontal"] > [slot="footer"] {
+    margin-block: ${CardToken.padding};
+    margin-inline-end: ${CardToken.padding};
+  }
+`;
+
+/**
  * Baseline styles for `M3eCardElement`.
  * @internal
  */
@@ -34,7 +79,7 @@ export const CardStyle: CSSResult = css`
     border-radius: ${CardToken.shape};
     transition: ${unsafeCSS(
       `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard},
-      border-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`
+      border-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
     )};
   }
   :host([actionable]) {
@@ -58,32 +103,6 @@ export const CardStyle: CSSResult = css`
   ::slotted([slot="content"]) {
     flex: 1 1 auto;
   }
-  :host([orientation="vertical"]) ::slotted([slot="content"]) {
-    margin-inline: ${CardToken.padding};
-  }
-  :host([orientation="vertical"]) ::slotted([slot="content"]:first-child) {
-    margin-block-start: ${CardToken.padding};
-  }
-  :host([orientation="vertical"]) ::slotted([slot="content"]:last-child) {
-    margin-block-end: ${CardToken.padding};
-  }
-  :host([orientation="horizontal"]) ::slotted([slot="content"]) {
-    margin-block: ${CardToken.padding};
-  }
-  :host([orientation="horizontal"]) ::slotted([slot="content"]:first-child) {
-    margin-inline-start: ${CardToken.padding};
-  }
-  :host([orientation="horizontal"]) ::slotted([slot="content"]:last-child) {
-    margin-inline-end: ${CardToken.padding};
-  }
-  :host([orientation="vertical"]) ::slotted([slot="header"]:not(img):not(video)) {
-    margin-inline: ${CardToken.padding};
-    margin-block-start: ${CardToken.padding};
-  }
-  :host([orientation="horizontal"]) ::slotted([slot="header"]:not(img):not(video)) {
-    margin-inline-start: ${CardToken.padding};
-    margin-block: ${CardToken.padding};
-  }
   ::slotted(img),
   ::slotted(video) {
     inset: 0;
@@ -93,20 +112,8 @@ export const CardStyle: CSSResult = css`
   ::slotted(video[slot="header"]) {
     border-radius: ${CardToken.shape};
   }
-  ::slotted([slot="actions"]) {
-    margin-inline: ${CardToken.padding};
-    margin-block: ${CardToken.padding};
-  }
   ::slotted([slot="actions"][end]) {
     justify-content: flex-end;
-  }
-  :host([orientation="vertical"]) ::slotted([slot="footer"]) {
-    margin-inline: ${CardToken.padding};
-    margin-block-end: ${CardToken.padding};
-  }
-  :host([orientation="horizontal"]) ::slotted([slot="footer"]) {
-    margin-block: ${CardToken.padding};
-    margin-inline-end: ${CardToken.padding};
   }
   ::slotted([slot="header"]),
   ::slotted([slot="actions"]),
