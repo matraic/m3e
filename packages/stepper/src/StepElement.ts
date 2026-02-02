@@ -127,13 +127,17 @@ export class M3eStepElement extends Selected(
   static override styles: CSSResultGroup = css`
     :host {
       display: block;
-      position: relative;
       outline: none;
       min-width: 0px;
-      border-radius: var(--m3e-step-shape, ${DesignToken.shape.corner.medium});
-      padding: var(--m3e-step-padding, 1.5rem);
+      position: relative;
       user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+    .base {
+      min-width: inherit;
+      position: relative;
+      border-radius: var(--m3e-step-shape, ${DesignToken.shape.corner.medium});
+      padding: var(--m3e-step-padding, 1.5rem);
     }
     :host(:not([aria-disabled="true"])) {
       cursor: pointer;
@@ -330,7 +334,8 @@ export class M3eStepElement extends Selected(
     const hint = html`<slot name="hint">${this.optional ? html`<span class="hint">(Optional)</span>` : nothing}</slot>`;
     const error = html`<slot name="error">${hint}</slot>`;
 
-    return html` <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"></m3e-state-layer>
+    return html`<div class="base">
+      <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"></m3e-state-layer>
       <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
       <m3e-ripple class="ripple" ?disabled="${this.disabled}"></m3e-ripple>
       <div class="wrapper">
@@ -339,7 +344,8 @@ export class M3eStepElement extends Selected(
           <slot></slot>
           ${this.invalid ? error : hint}
         </div>
-      </div>`;
+      </div>
+    </div>`;
   }
 
   /** @private */

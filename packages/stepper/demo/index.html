@@ -37,13 +37,21 @@
       *:not(:defined) {
         display: none;
       }
+      *,
+      ::before,
+      ::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border: 0 solid;
+      }
     </style>
   </head>
   <body>
     <m3e-theme strong-focus>
       <m3e-stepper label-position="end">
         <m3e-step for="step1">Fill out your name</m3e-step>
-        <m3e-step for="step2" disabled>Fill out your address</m3e-step>
+        <m3e-step for="step2">Fill out your address</m3e-step>
         <m3e-step for="step3">Done</m3e-step>
         <m3e-step-panel id="step1">
           <form>

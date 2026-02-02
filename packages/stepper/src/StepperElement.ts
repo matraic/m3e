@@ -78,6 +78,54 @@ import { StepperOrientation } from "./StepperOrientation";
  */
 @customElement("m3e-stepper")
 export class M3eStepperElement extends AttachInternals(LitElement) {
+  static {
+    if (document) {
+      const lightDomStyle = new CSSStyleSheet();
+      lightDomStyle.replaceSync(
+        css`
+          m3e-stepper:not(.-vertical) > .-m3e-step-divider::before {
+            border-bottom-width: var(--m3e-step-divider-thickness, 1px);
+            border-bottom-style: solid;
+            border-bottom-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
+          }
+          m3e-stepper:not(.-vertical) > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
+          m3e-stepper:not(.-vertical) > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
+            border-bottom-width: var(--m3e-step-divider-thickness, 1px);
+            border-bottom-style: solid;
+            border-bottom-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
+          }
+          m3e-stepper:not(.-vertical)[label-position="end"] > .-m3e-step-divider {
+            margin-block: auto;
+          }
+          m3e-stepper:not(.-vertical)[label-position="below"] > .-m3e-step-divider::before,
+          m3e-stepper:not(.-vertical)[label-position="below"]
+            > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
+          m3e-stepper:not(.-vertical)[label-position="below"]
+            > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
+            margin-block-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
+          }
+          m3e-stepper.-vertical > [slot="panel"] {
+            margin-inline-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
+          }
+          m3e-stepper.-vertical > [slot="panel"]:not(:last-of-type) {
+            border-inline-start-width: var(--m3e-step-divider-thickness, 1px);
+            border-inline-start-style: solid;
+            border-inline-start-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
+          }
+          m3e-stepper.-vertical > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
+          m3e-stepper.-vertical > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
+            margin-inline-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
+            border-inline-start-width: var(--m3e-step-divider-thickness, 1px);
+            border-inline-start-style: solid;
+            border-inline-start-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
+          }
+        `.toString(),
+      );
+
+      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
+    }
+  }
+
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -100,9 +148,6 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
       position: absolute;
       left: 0;
       right: 0;
-      border-bottom-width: var(--m3e-step-divider-thickness, 1px);
-      border-bottom-style: solid;
-      border-bottom-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
     }
     :host(:not(.-vertical):not([label-position="below"])) ::slotted(.-m3e-step-divider)::before {
       top: 50%;
@@ -116,12 +161,6 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
       display: block;
       position: absolute;
       top: 0;
-      border-bottom-width: var(--m3e-step-divider-thickness, 1px);
-      border-bottom-style: solid;
-      border-bottom-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
-    }
-    :host(:not(.-vertical)[label-position="end"]) ::slotted(.-m3e-step-divider) {
-      margin-block: auto;
     }
     :host(:not(.-vertical)[label-position="end"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before,
@@ -148,13 +187,6 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
       right: calc(100% - var(--m3e-step-padding, 1.5rem) + var(--m3e-step-divider-inset, 0.5rem));
       left: 0;
-    }
-    :host(:not(.-vertical)[label-position="below"]) ::slotted(.-m3e-step-divider)::before,
-    :host(:not(.-vertical)[label-position="below"])
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before,
-    :host(:not(.-vertical)[label-position="below"])
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
-      margin-block-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
     }
     :host(:not(:dir(rtl)):not(.-vertical)[label-position="below"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
@@ -186,24 +218,12 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
     :host(.-vertical) ::slotted([slot="step"]:not(.-m3e-step-divider)) {
       flex: none;
     }
-    :host(.-vertical) ::slotted([slot="panel"]) {
-      margin-inline-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
-    }
-    :host(.-vertical) ::slotted([slot="panel"]:not(:last-of-type)) {
-      border-inline-start-width: var(--m3e-step-divider-thickness, 1px);
-      border-inline-start-style: solid;
-      border-inline-start-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
-    }
     :host(.-vertical) ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before,
     :host(.-vertical) ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
       content: "";
       display: block;
       position: absolute;
       left: 0;
-      margin-inline-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
-      border-inline-start-width: var(--m3e-step-divider-thickness, 1px);
-      border-inline-start-style: solid;
-      border-inline-start-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
     }
     :host(.-vertical) ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
       top: 0;
