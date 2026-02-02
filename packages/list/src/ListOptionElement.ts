@@ -124,8 +124,10 @@ export class M3eListOptionElement extends KeyboardClick(
     M3eListItemElement.styles,
     css`
       :host {
-        position: relative;
         outline: none;
+      }
+      .base {
+        position: relative;
         user-select: none;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       }
@@ -143,7 +145,7 @@ export class M3eListOptionElement extends KeyboardClick(
         align-self: flex-start;
         margin-top: var(--m3e-list-item-three-line-top-offset, 0.25rem);
       }
-      :host([selected]),
+      :host([selected]) .base,
       :host([selected]) .state-layer,
       :host([selected]) .ripple,
       :host([selected]) .focus-ring {
@@ -164,10 +166,10 @@ export class M3eListOptionElement extends KeyboardClick(
       :host([selected]:not(:disabled)) ::slotted([slot="trailing"]) {
         color: var(--m3e-list-item-selected-trailing-color, ${DesignToken.color.onSecondaryContainer});
       }
-      :host([selected]:not(:disabled)) {
+      :host([selected]:not(:disabled)) .base {
         background-color: var(--m3e-list-item-selected-container-color, ${DesignToken.color.secondaryContainer});
       }
-      :host([selected]:disabled) {
+      :host([selected]:disabled) .base {
         background-color: color-mix(
           in srgb,
           var(--m3e-list-item-selected-disabled-container-color, ${DesignToken.color.onSurface})
@@ -205,7 +207,7 @@ export class M3eListOptionElement extends KeyboardClick(
         display: none;
       }
       @media (forced-colors: active) {
-        :host([selected]:not(:disabled)) .base,
+        :host([selected]:not(:disabled)) .content,
         :host([selected]:not(:disabled)) ::slotted([slot="overline"]),
         :host([selected]:not(:disabled)) ::slotted([slot="supporting-text"]),
         :host([selected]:not(:disabled)) ::slotted([slot="leading"]),
@@ -213,7 +215,7 @@ export class M3eListOptionElement extends KeyboardClick(
           color: HighlightText;
           forced-color-adjust: none;
         }
-        :host([selected]:not(:disabled)) {
+        :host([selected]:not(:disabled)) .base {
           background-color: Highlight;
         }
       }
@@ -270,11 +272,12 @@ export class M3eListOptionElement extends KeyboardClick(
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<m3e-state-layer class="state-layer" ?disabled="${this.disabled}"> </m3e-state-layer>
+    return html`<div class="base">
+      <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"> </m3e-state-layer>
       <m3e-focus-ring class="focus-ring" inward ?disabled="${this.disabled}"></m3e-focus-ring>
       <m3e-ripple class="ripple" ?disabled="${this.disabled}"></m3e-ripple>
       <slot name="leading" @slotchange="${this._handleLeadingSlotChange}"></slot>
-      <div class="base">
+      <div class="content">
         <slot name="overline"></slot>
         <slot @slotchange="${this.#handleSlotChange}"></slot>
         <slot name="supporting-text"></slot>
@@ -284,7 +287,8 @@ export class M3eListOptionElement extends KeyboardClick(
         ${this.closest("m3e-selection-list")?.multi
           ? html`<m3e-pseudo-checkbox ?checked="${this.selected}" ?disabled="${this.disabled}"></m3e-pseudo-checkbox>`
           : html`<m3e-pseudo-radio ?checked="${this.selected}" ?disabled="${this.disabled}"></m3e-pseudo-radio>`}
-      </div>`;
+      </div>
+    </div>`;
   }
 
   /** @private */

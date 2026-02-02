@@ -125,6 +125,9 @@ import { M3eListItemElement } from "./ListItemElement";
 export class M3eExpandableListItem extends M3eListItemElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
+    :host {
+      display: block;
+    }
     .header {
       width: 100%;
       margin-bottom: 0px;
@@ -185,14 +188,14 @@ export class M3eExpandableListItem extends M3eListItemElement {
         var(--m3e-list-item-container-color, transparent)
       );
     }
-    :host,
+    .base,
     ::slotted([slot="items"]) {
-      flex: none;
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
     }
     ::slotted([slot="items"]) {
+      flex: none;
       --_list-item-top-container-shape: initial;
       --_list-item-bottom-container-shape: initial;
       row-gap: var(--_expandable-list-item-items-segment-gap, 0px);
@@ -268,7 +271,8 @@ export class M3eExpandableListItem extends M3eListItemElement {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<m3e-list-item-button
+    return html`<div class="base">
+      <m3e-list-item-button
         id="${this.#headerId}"
         class="header"
         ?disabled="${this.disabled}"
@@ -303,7 +307,8 @@ export class M3eExpandableListItem extends M3eListItemElement {
         @closed="${this.#handleCollapsibleEvent}"
       >
         <slot name="items" @slotchange="${this.#handleSlotChange}"></slot>
-      </m3e-collapsible>`;
+      </m3e-collapsible>
+    </div>`;
   }
 
   /** @private */

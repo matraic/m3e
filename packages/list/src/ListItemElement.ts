@@ -94,8 +94,12 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
-      flex: none;
+      display: block;
+    }
+    .base {
       display: flex;
+      min-height: inherit;
+      width: 100%;
       box-sizing: border-box;
       column-gap: var(--m3e-list-item-between-space, 1rem);
       padding-inline-start: var(--m3e-list-item-leading-space, 1rem);
@@ -121,24 +125,30 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
       )};
     }
     :host(.-one-line) {
-      padding-block-start: var(--m3e-list-item-one-line-top-space, 0.5rem);
-      padding-block-end: var(--m3e-list-item-one-line-bottom-space, 0.5rem);
       min-height: calc(var(--m3e-list-item-one-line-height, 3.5rem) + ${DesignToken.density.calc(-3)});
     }
+    :host(.-one-line) .base {
+      padding-block-start: var(--m3e-list-item-one-line-top-space, 0.5rem);
+      padding-block-end: var(--m3e-list-item-one-line-bottom-space, 0.5rem);
+    }
     :host(.-two-line) {
-      padding-block-start: var(--m3e-list-item-two-line-top-space, 0.5rem);
-      padding-block-end: var(--m3e-list-item-two-line-bottom-space, 0.5rem);
       min-height: calc(var(--m3e-list-item-two-line-height, 4.5rem) + ${DesignToken.density.calc(-3)});
     }
+    :host(.-two-line) .base {
+      padding-block-start: var(--m3e-list-item-two-line-top-space, 0.5rem);
+      padding-block-end: var(--m3e-list-item-two-line-bottom-space, 0.5rem);
+    }
     :host(.-three-line) {
-      padding-block-start: var(--m3e-list-item-three-line-top-space, 0.75rem);
-      padding-block-end: var(--m3e-list-item-three-line-bottom-space, 0.75rem);
       min-height: calc(var(--m3e-list-item-three-line-height, 5.5rem) + ${DesignToken.density.calc(-3)});
     }
-    :host(:not(.-three-line)) {
+    :host(.-three-line) .base {
+      padding-block-start: var(--m3e-list-item-three-line-top-space, 0.75rem);
+      padding-block-end: var(--m3e-list-item-three-line-bottom-space, 0.75rem);
+    }
+    :host(:not(.-three-line)) .base {
       align-items: center;
     }
-    :host(.-three-line) {
+    :host(.-three-line) .base {
       align-items: flex-start;
     }
     :host(:not(:disabled):not([selected]:not(:hover)):focus-visible) .state-layer,
@@ -181,7 +191,7 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
         var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.medium})
       );
     }
-    .base {
+    .content {
       flex: 1 1 auto;
       display: flex;
       flex-direction: column;
@@ -295,7 +305,7 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
     :host(:not(:disabled)) ::slotted(m3e-icon[slot="leading-icon"]) {
       color: var(--m3e-list-item-leading-color, ${DesignToken.color.onSurfaceVariant});
     }
-    :host(:not(:disabled)) .base {
+    :host(:not(:disabled)) .content {
       color: var(--m3e-list-item-label-text-color, ${DesignToken.color.onSurface});
     }
     :host(:not(:disabled)) ::slotted([slot="overline"]) {
@@ -309,10 +319,10 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
     :host(:not(:disabled)) ::slotted([slot="trailing-icon"]) {
       color: var(--m3e-list-item-trailing-color, ${DesignToken.color.onSurfaceVariant});
     }
-    :host(:not(:disabled)) {
+    :host(:not(:disabled)) .base {
       background-color: var(--_list-item-container-color, var(--m3e-list-item-container-color, transparent));
     }
-    :host(:disabled) {
+    :host(:disabled) .base {
       background-color: var(--m3e-list-item-disabled-container-color, transparent);
     }
     :host(:disabled) ::slotted(video),
@@ -320,7 +330,7 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
     :host(:disabled) ::slotted(m3e-avatar) {
       opacity: var(--m3e-list-item-disabled-media-opacity, 38%);
     }
-    :host(:disabled) .base {
+    :host(:disabled) .content {
       color: color-mix(
         in srgb,
         var(--m3e-list-item-disabled-label-text-color, ${DesignToken.color.onSurface})
@@ -385,7 +395,7 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
     @media (forced-colors: active) {
       :host(:disabled) ::slotted([slot="leading"]),
       :host(:disabled) ::slotted([slot="leading-icon"]),
-      :host(:disabled) .base,
+      :host(:disabled) .content,
       :host(:disabled) ::slotted([slot="overline"]),
       :host(:disabled) ::slotted([slot="supporting-text"]),
       :host(:disabled) ::slotted([slot="trailing"]),
@@ -395,7 +405,7 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
       }
     }
     @media (prefers-reduced-motion) {
-      :host {
+      .base {
         transition: none;
       }
     }
@@ -421,18 +431,23 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
 
-    const base = this.shadowRoot?.querySelector<HTMLElement>(".base");
-    if (base) {
-      this.#resizeController.observe(base);
+    const content = this.shadowRoot?.querySelector<HTMLElement>(".content");
+    if (content) {
+      this.#resizeController.observe(content);
     }
   }
 
   /** @inheritdoc */
   protected override render(): unknown {
+    return html`<div class="base">${this._renderBase()}</div>`;
+  }
+
+  /** @internal */
+  protected _renderBase(): unknown {
     return html`<slot name="leading" @slotchange="${this._handleLeadingSlotChange}">
         <slot name="leading-icon" @slotchange="${this._handleLeadingSlotChange}"></slot>
       </slot>
-      <div class="base">
+      <div class="content">
         <slot name="overline"></slot>
         <slot></slot>
         <slot name="supporting-text"></slot>
@@ -445,8 +460,8 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
 
   /** @private */
   #updateMultiline(): void {
-    const base = this.shadowRoot?.querySelector<HTMLElement>(".base") ?? null;
-    const lines = base === null ? 0 : computeLineCount(base);
+    const content = this.shadowRoot?.querySelector<HTMLElement>(".content") ?? null;
+    const lines = content === null ? 0 : computeLineCount(content);
     this.classList.toggle("-one-line", lines <= 1);
     this.classList.toggle("-two-line", lines == 2);
     this.classList.toggle("-three-line", lines > 2);

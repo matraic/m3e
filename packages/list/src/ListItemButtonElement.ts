@@ -29,8 +29,10 @@ export class M3eListItemButtonElement extends KeyboardClick(
     M3eListItemElement.styles,
     css`
       :host {
-        position: relative;
         outline: none;
+      }
+      .base {
+        position: relative;
         user-select: none;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       }
@@ -65,10 +67,12 @@ export class M3eListItemButtonElement extends KeyboardClick(
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<m3e-state-layer class="state-layer" ?disabled="${this.disabled}"> </m3e-state-layer>
+    return html`<div class="base">
+      <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"> </m3e-state-layer>
       <m3e-focus-ring class="focus-ring" inward ?disabled="${this.disabled}"></m3e-focus-ring>
       <m3e-ripple class="ripple" ?disabled="${this.disabled}"></m3e-ripple>
-      ${this[renderPseudoLink]()} ${super.render()}`;
+      ${this[renderPseudoLink]()} ${super._renderBase()}
+    </div>`;
   }
 }
 
