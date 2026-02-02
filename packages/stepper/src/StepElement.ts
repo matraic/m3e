@@ -121,7 +121,7 @@ import { M3eStepPanelElement } from "./StepPanelElement";
  */
 @customElement("m3e-step")
 export class M3eStepElement extends Selected(
-  KeyboardClick(Focusable(HtmlFor(Disabled(AttachInternals(Role(LitElement, "tab"))))))
+  KeyboardClick(Focusable(HtmlFor(Disabled(AttachInternals(Role(LitElement, "tab")))))),
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -279,14 +279,18 @@ export class M3eStepElement extends Selected(
     if (control instanceof M3eStepPanelElement) {
       control.id = control.id || `m3e-step-panel-${M3eStepElement.__nextId++}`;
       addAriaReferencedId(this, "aria-controls", control.id);
+      control.style.order = this.style.order;
     }
     super.attach(control);
   }
 
   /** @inheritdoc */
   override detach(): void {
-    if (this.control?.id) {
-      removeAriaReferencedId(this, "aria-controls", this.control.id);
+    if (this.control) {
+      this.control.style.order = "";
+      if (this.control.id) {
+        removeAriaReferencedId(this, "aria-controls", this.control.id);
+      }
     }
 
     super.detach();
