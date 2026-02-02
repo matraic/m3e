@@ -140,13 +140,36 @@ export class M3eNavMenuItemElement extends Selected(
     EventAttribute(AttachInternals(Role(LitElement, "treeitem"), true), "opening", "opened", "closing", "closed"),
   ),
 ) {
+  static {
+    if (document) {
+      const lightDomStyle = new CSSStyleSheet();
+      lightDomStyle.replaceSync(
+        css`
+          m3e-nav-menu-item > m3e-divider {
+            margin-block: var(--m3e-nav-menu-divider-margin, 0.25rem);
+            flex: none;
+          }
+          m3e-nav-menu-item > m3e-nav-menu-item:first-of-type {
+            margin-block-start: var(--m3e-nav-menu-item-vertical-inset, 0.25rem);
+          }
+          m3e-nav-menu-item > m3e-nav-menu-item:last-of-type {
+            margin-block-end: var(--m3e-nav-menu-item-vertical-inset, 0.25rem);
+          }
+        `.toString(),
+      );
+
+      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
+    }
+  }
+
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
       display: block;
       flex: none;
       outline: none;
-      position: relative;
+      user-select: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     .base {
       display: flex;
@@ -159,8 +182,6 @@ export class M3eNavMenuItemElement extends Selected(
       font-weight: var(--m3e-nav-menu-item-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-nav-menu-item-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
       letter-spacing: var(--m3e-nav-menu-item-tracking, ${DesignToken.typescale.standard.label.large.tracking});
-      user-select: none;
-      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       transition: ${unsafeCSS(
         `color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard},
         background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
@@ -282,15 +303,6 @@ export class M3eNavMenuItemElement extends Selected(
     }
     ::slotted(a[slot="label"]) {
       all: unset;
-    }
-    ::slotted(m3e-divider) {
-      margin-block: var(--m3e-nav-menu-divider-margin, 0.25rem);
-    }
-    ::slotted(m3e-nav-menu-item:first-of-type) {
-      margin-block-start: var(--m3e-nav-menu-item-vertical-inset, 0.25rem);
-    }
-    ::slotted(m3e-nav-menu-item:last-of-type) {
-      margin-block-end: var(--m3e-nav-menu-item-vertical-inset, 0.25rem);
     }
     @media (prefers-reduced-motion) {
       .base,
