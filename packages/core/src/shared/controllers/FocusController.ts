@@ -22,6 +22,10 @@ export class FocusController extends MonitorControllerBase {
   /** @private */ readonly #touchStartHandler = () => (this.#touch = true);
   /** @private */ readonly #touchEndHandler = () => (this.#touch = false);
 
+  /** @private */ #hadKeydown = false;
+  /** @private */ readonly #windowKeyDownHandler = () => (this.#hadKeydown = true);
+  /** @private */ readonly #windowPointerDownHandler = () => (this.#hadKeydown = false);
+
   /**
    * Initializes a new instance of this class.
    * @param {ReactiveControllerHost & HTMLElement} host The host element to which this controller will be added.
@@ -30,6 +34,22 @@ export class FocusController extends MonitorControllerBase {
   constructor(host: ReactiveControllerHost & HTMLElement, options: FocusControllerOptions) {
     super(host, options);
     this.#callback = options.callback;
+  }
+
+  /** @inheritdoc */
+  override hostConnected(): void {
+    super.hostConnected();
+
+    window?.addEventListener("keydown", this.#windowKeyDownHandler, { capture: true, passive: true });
+    window?.addEventListener("pointerdown", this.#windowPointerDownHandler, { capture: true });
+  }
+
+  /** @inheritdoc */
+  override hostDisconnected(): void {
+    super.hostDisconnected();
+
+    window?.removeEventListener("keydown", this.#windowKeyDownHandler, { capture: true });
+    window?.removeEventListener("pointerdown", this.#windowPointerDownHandler, { capture: true });
   }
 
   /**
@@ -70,7 +90,7 @@ export class FocusController extends MonitorControllerBase {
   #handleFocusIn(e: Event): void {
     if (this.#touch) return;
     const target = e.currentTarget as HTMLElement;
-    this.#callback(true, target.matches(":focus-visible") || forcedColorsActive(), target);
+    this.#callback(true, target.matches(":focus-visible") || this.#hadKeydown || forcedColorsActive(), target);
   }
 
   /** @private */
