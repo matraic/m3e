@@ -52,6 +52,9 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
       min-width: var(--m3e-snackbar-min-width, 21.5rem);
       max-width: var(--m3e-snackbar-max-width, 42rem);
       visibility: hidden;
+      border: none;
+      margin: 0;
+      padding: 0;
       opacity: 0;
       transform: scale(0.8);
       transition: ${unsafeCSS(
