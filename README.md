@@ -105,3 +105,7 @@ Contributions from the community are welcome! Please review the [Contributing Gu
 ## 📄 License
 
 This project is licensed under the MIT License.
+
+## 🧪 Testing
+
+Testing for this project is supported by BrowserStack.
