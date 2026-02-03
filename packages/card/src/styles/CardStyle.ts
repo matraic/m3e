@@ -6,51 +6,6 @@ import { CardToken } from "./CardToken";
 import { CardVariantToken } from "./CardVariantToken";
 
 /**
- * Baseline styles for `M3eCardElement` exposed via Light-DOM.
- * @internal
- */
-export const CardLightDomStyle: CSSResult = css`
-  m3e-card[orientation="vertical"] > [slot="content"] {
-    margin-inline: ${CardToken.padding};
-  }
-  m3e-card[orientation="vertical"] > [slot="content"]:first-child {
-    margin-block-start: ${CardToken.padding};
-  }
-  m3e-card[orientation="vertical"] > [slot="content"]:last-child {
-    margin-block-end: ${CardToken.padding};
-  }
-  m3e-card[orientation="horizontal"] > [slot="content"] {
-    margin-block: ${CardToken.padding};
-  }
-  m3e-card[orientation="horizontal"] > [slot="content"]:first-child {
-    margin-inline-start: ${CardToken.padding};
-  }
-  m3e-card[orientation="horizontal"] > [slot="content"]:last-child {
-    margin-inline-end: ${CardToken.padding};
-  }
-  m3e-card[orientation="vertical"] > [slot="header"]:not(img):not(video) {
-    margin-inline: ${CardToken.padding};
-    margin-block-start: ${CardToken.padding};
-  }
-  m3e-card[orientation="horizontal"] > [slot="header"]:not(img):not(video) {
-    margin-inline-start: ${CardToken.padding};
-    margin-block: ${CardToken.padding};
-  }
-  m3e-card > [slot="actions"] {
-    margin-inline: ${CardToken.padding};
-    margin-block: ${CardToken.padding};
-  }
-  m3e-card[orientation="vertical"] > [slot="footer"] {
-    margin-inline: ${CardToken.padding};
-    margin-block-end: ${CardToken.padding};
-  }
-  m3e-card[orientation="horizontal"] > [slot="footer"] {
-    margin-block: ${CardToken.padding};
-    margin-inline-end: ${CardToken.padding};
-  }
-`;
-
-/**
  * Baseline styles for `M3eCardElement`.
  * @internal
  */
@@ -137,6 +92,61 @@ export const CardStyle: CSSResult = css`
   :host([orientation="horizontal"]) ::slotted(img),
   :host([orientation="horizontal"]) ::slotted(video) {
     aspect-ratio: 16 / 9;
+  }
+  .has-content:not(.has-default) slot[name="content"],
+  .has-content.has-default slot:not([name]) {
+    display: inherit;
+    flex-direction: inherit;
+    flex: 1 1 auto;
+  }
+  .has-header slot[name="header"],
+  .has-actions slot[name="actions"],
+  .has-footer slot[name="footer"] {
+    display: inherit;
+    flex-direction: inherit;
+    flex: none;
+  }
+  :host([orientation="vertical"]) .has-content:not(.has-default) slot[name="content"] {
+    margin-inline: ${CardToken.padding};
+  }
+  :host([orientation="vertical"]) .has-content:not(.has-default):not(.has-header) slot[name="content"] {
+    margin-block-start: ${CardToken.padding};
+  }
+  :host([orientation="vertical"])
+    .has-content:not(.has-default):not(.has-actions):not(.has-footer)
+    slot[name="content"] {
+    margin-block-end: ${CardToken.padding};
+  }
+  :host([orientation="horizontal"]) .has-content:not(.has-default) slot[name="content"] {
+    margin-block: ${CardToken.padding};
+  }
+  :host([orientation="horizontal"]) .has-content:not(.has-default):not(.has-header) slot[name="content"] {
+    margin-inline-start: ${CardToken.padding};
+  }
+  :host([orientation="horizontal"])
+    .has-content:not(.has-default):not(.has-actions):not(.has-footer)
+    slot[name="content"] {
+    margin-inline-end: ${CardToken.padding};
+  }
+  :host([orientation="vertical"]) .has-header:not(.has-header-media) slot[name="header"] {
+    margin-inline: ${CardToken.padding};
+    margin-block-start: ${CardToken.padding};
+  }
+  :host([orientation="horizontal"]) .has-header:not(.has-header-media) slot[name="header"] {
+    margin-inline-start: ${CardToken.padding};
+    margin-block: ${CardToken.padding};
+  }
+  .has-actions slot[name="actions"] {
+    margin-inline: ${CardToken.padding};
+    margin-block: ${CardToken.padding};
+  }
+  :host([orientation="vertical"]) .has-footer slot[name="footer"] {
+    margin-inline: ${CardToken.padding};
+    margin-block-end: ${CardToken.padding};
+  }
+  :host([orientation="horizontal"]) .has-footer slot[name="footer"] {
+    margin-block: ${CardToken.padding};
+    margin-inline-end: ${CardToken.padding};
   }
   a {
     all: unset;

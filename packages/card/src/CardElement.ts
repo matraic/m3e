@@ -15,11 +15,12 @@ import {
   M3eStateLayerElement,
   PressedController,
   KeyboardClick,
+  hasAssignedNodes,
 } from "@m3e/core";
 
 import { CardVariant } from "./CardVariant";
 
-import { CardLightDomStyle, CardStyle, CardVariantStyle } from "./styles";
+import { CardStyle, CardVariantStyle } from "./styles";
 import { CardOrientation } from "./CardOrientation";
 
 /**
@@ -145,13 +146,6 @@ import { CardOrientation } from "./CardOrientation";
 export class M3eCardElement extends KeyboardClick(
   LinkButton(FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(LitElement), true))))),
 ) {
-  static {
-    if (document) {
-      const lightDomStyle = new CSSStyleSheet();
-      lightDomStyle.replaceSync(CardLightDomStyle.toString());
-      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
-    }
-  }
   /** The styles of the element. */
   static override styles: CSSResultGroup = [CardVariantStyle, CardStyle];
 
@@ -236,11 +230,55 @@ export class M3eCardElement extends KeyboardClick(
         ?disabled="${!this.actionable || this.disabled || this.disabledInteractive}"
       ></m3e-ripple>
       ${this[renderPseudoLink]()}
-      <slot name="header"></slot>
-      <slot name="content"><slot></slot></slot>
-      <slot name="actions"></slot>
-      <slot name="footer"></slot>
+      <slot name="header" @slotchange="${this.#handleHeaderSlotChange}"></slot>
+      <slot name="content" @slotchange="${this.#handleContentSlotChange}">
+        <slot @slotchange="${this.#handleDefaultSlotChange}"></slot>
+      </slot>
+      <slot name="actions" @slotchange="${this.#handleActionsSlotChange}"></slot>
+      <slot name="footer" @slotchange="${this.#handleFooterSlotChange}"></slot>
     </div>`;
+  }
+
+  /** @private */
+  #handleHeaderSlotChange(e: Event): void {
+    const assignedNodes = (e.target as HTMLSlotElement).assignedNodes({ flatten: true });
+    const base = this.shadowRoot?.querySelector(".base");
+    base?.classList.toggle("has-header", assignedNodes.length > 0);
+    base?.classList.toggle(
+      "has-header-media",
+      assignedNodes.some((x) => x instanceof HTMLElement && (x.tagName === "IMG" || x.tagName === "VIDEO")),
+    );
+  }
+
+  /** @private */
+  #handleContentSlotChange(): void {
+    this.shadowRoot
+      ?.querySelector(".base")
+      ?.classList.toggle("has-content", this.querySelector("[slot='content']") !== null);
+  }
+
+  /** @private */
+  #handleDefaultSlotChange(e: Event): void {
+    this.shadowRoot
+      ?.querySelector(".base")
+      ?.classList.toggle(
+        "has-default",
+        hasAssignedNodes(e.target as HTMLSlotElement) && this.querySelector("[slot='content']") === null,
+      );
+  }
+
+  /** @private */
+  #handleActionsSlotChange(e: Event): void {
+    this.shadowRoot
+      ?.querySelector(".base")
+      ?.classList.toggle("has-actions", hasAssignedNodes(e.target as HTMLSlotElement));
+  }
+
+  /** @private */
+  #handleFooterSlotChange(e: Event): void {
+    this.shadowRoot
+      ?.querySelector(".base")
+      ?.classList.toggle("has-footer", hasAssignedNodes(e.target as HTMLSlotElement));
   }
 
   /** @inheritdoc */
