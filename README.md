@@ -108,4 +108,4 @@ This project is licensed under the MIT License.
 
 ## 🧪 Testing
 
-Testing for this project is supported by BrowserStack.
+This project is tested with BrowserStack
