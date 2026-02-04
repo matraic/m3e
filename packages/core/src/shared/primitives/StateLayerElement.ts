@@ -88,7 +88,7 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
   /** @private */
   readonly #focusController = new FocusController(this, {
     target: null,
-    callback: (focused, focusVisible) => this.#handleFocusChange(focused && focusVisible),
+    callback: (_, focusVisible) => this.#handleFocusChange(focusVisible),
   });
 
   /** @private */ @query(".layer") private readonly _layer?: HTMLElement;
@@ -183,9 +183,9 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
   }
 
   /** @private */
-  #handleFocusChange(focused: boolean): void {
+  #handleFocusChange(focusVisible: boolean): void {
     if (!this.disabled) {
-      if (focused) {
+      if (focusVisible) {
         this.show("focused");
       } else {
         this.hide("focused");
