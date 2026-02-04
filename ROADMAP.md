@@ -37,7 +37,7 @@ Planned components which have not yet entered development:
 
 ## 🏛️ Past Milestones
 
-- 1.1.8 - 1.1.10: Bug fixes
+- 1.1.8 - 1.1.11: Bug fixes
 - 1.1.7: Bug fixes, added @m3e/avatar, @m3e/list enhancements (selection, actions, expressive updates)
 - 1.1.4 - 1.1.6: Bug fixes
 - 1.1.3: Bug fixes, added wavy appearance variant to @m3e/progress-indicator
