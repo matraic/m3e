@@ -176,7 +176,7 @@ function rotateArray<T>(arr: T[], offset: number) {
 }
 
 function bestCircularShift(target: { x: number; y: number }[], source: { x: number; y: number }[]) {
-  const n = target.length;
+  const n = Math.min(source.length, target.length);
   let bestK = 0;
   let bestScore = Infinity;
   for (let k = 0; k < n; k++) {
