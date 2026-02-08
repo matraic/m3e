@@ -39,11 +39,11 @@ export function KeyboardClick<T extends Constructor<LitElement>>(base: T, allowE
     /** @private */
     #handleKeyDown(e: KeyboardEvent): void {
       if (
-        e.defaultPrevented ||
         e.target !== e.currentTarget ||
         (isDisabledMixin(this) && this.disabled) ||
         (isDisabledInteractiveMixin(this) && this.disabledInteractive)
       ) {
+        this.#keyPressed = false;
         return;
       }
 
@@ -55,21 +55,24 @@ export function KeyboardClick<T extends Constructor<LitElement>>(base: T, allowE
     /** @private */
     #handleKeyUp(e: KeyboardEvent): void {
       if (
-        e.defaultPrevented ||
         e.target !== e.currentTarget ||
         (isDisabledMixin(this) && this.disabled) ||
         (isDisabledInteractiveMixin(this) && this.disabledInteractive) ||
         !this.#keyPressed
       ) {
+        this.#keyPressed = false;
         return;
       }
+
+      this.#keyPressed = false;
+
       // NOTE: the dispatched click event will not be trusted since it is synthetic.
       this.dispatchEvent(
         new MouseEvent("click", {
           cancelable: true,
           bubbles: true,
           composed: true,
-        })
+        }),
       );
     }
   }
