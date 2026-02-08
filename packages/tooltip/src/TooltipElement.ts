@@ -110,7 +110,7 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
         `opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
         transform ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard},
         overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete,
-        visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`
+        visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
     :host(.-multiline) .base {
@@ -150,7 +150,7 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
     }
   `;
 
-  /** @private */ private static readonly __openTooltips = new Array<M3eTooltipElement>();
+  /** @private */ private static __openTooltips = new Array<M3eTooltipElement>();
 
   /** @private */ @query(".base") private readonly _base!: HTMLElement;
   /** @private */ #message?: string | null;
@@ -286,6 +286,8 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
   async show(): Promise<void> {
     if (!this.control || this.disabled || (isDisabledMixin(this.control) && this.control.disabled)) return;
 
+    console.log(M3eTooltipElement.__openTooltips);
+
     M3eTooltipElement.__openTooltips.filter((x) => x !== this).forEach((x) => x.hide());
 
     this._base.showPopover();
@@ -319,7 +321,7 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
           this._base.style.right = "";
         }
         this._base.style.top = `${y}px`;
-      }
+      },
     );
 
     if (!M3eTooltipElement.__openTooltips.includes(this)) {
@@ -333,6 +335,8 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
     this.#anchorCleanup?.();
     this.#anchorCleanup = undefined;
     this.#hoverController.clearDelays();
+
+    M3eTooltipElement.__openTooltips = [...M3eTooltipElement.__openTooltips].filter((x) => x !== this);
   }
 
   /** @private */
