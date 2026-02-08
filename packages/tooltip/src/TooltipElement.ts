@@ -9,6 +9,7 @@ import { M3eDirectionality } from "@m3e/core/bidi";
 import {
   AttachInternals,
   DesignToken,
+  getTextContent,
   HoverController,
   HtmlFor,
   isDisabledMixin,
@@ -340,17 +341,20 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
   }
 
   /** @private */
-  #handleSlotChange(): void {
+  #handleSlotChange(e: Event): void {
+    const message = getTextContent(e.target as HTMLSlotElement, true);
     if (this.isConnected && this.control) {
       if (this.#message) {
         M3eAriaDescriber.removeDescription(this.control, this.#message);
       }
 
-      this.#message = this.textContent;
+      this.#message = message;
 
       if (this.#message) {
         M3eAriaDescriber.describe(this.control, this.#message);
       }
+    } else {
+      this.#message = message;
     }
   }
 
