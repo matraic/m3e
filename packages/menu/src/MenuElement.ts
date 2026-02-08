@@ -235,7 +235,7 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       :host {
         background-color: Menu;
         color: MenuText;
-        border: 1px solid CanvasText;
+        outline: 1px solid MenuText;
       }
     }
   `;

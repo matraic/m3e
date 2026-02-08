@@ -178,7 +178,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
         color: CanvasText;
         border-radius: ${DesignToken.shape.corner.small};
         box-sizing: border-box;
-        border: 1px solid CanvasText;
+        outline: 1px solid CanvasText;
       }
     }
   `;

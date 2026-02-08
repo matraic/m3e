@@ -131,7 +131,7 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
       :host {
         background-color: Menu;
         color: MenuText;
-        border: 1px solid CanvasText;
+        outline: 1px solid MenuText;
       }
     }
   `;

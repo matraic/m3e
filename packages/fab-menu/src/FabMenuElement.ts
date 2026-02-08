@@ -84,7 +84,7 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
         `opacity ${DesignToken.motion.spring.fastEffects}, 
         transform ${DesignToken.motion.spring.fastSpatial},
         overlay ${DesignToken.motion.spring.fastEffects} allow-discrete,
-        display ${DesignToken.motion.spring.fastEffects} allow-discrete`
+        display ${DesignToken.motion.spring.fastEffects} allow-discrete`,
       )};
     }
     .base {
@@ -155,7 +155,7 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
     @media (forced-colors: active) {
       :host {
         border-radius: ${DesignToken.shape.corner.medium};
-        border: 1px solid MenuText;
+        outline: 1px solid MenuText;
         background-color: Menu;
       }
     }
@@ -232,7 +232,7 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
           this.style.right = "";
         }
         this.style.top = `${y}px`;
-      }
+      },
     );
 
     this.showPopover();
@@ -378,25 +378,25 @@ export interface M3eFabMenuElement {
   addEventListener<K extends keyof M3eFabMenuElementEventMap>(
     type: K,
     listener: (this: M3eFabMenuElement, ev: M3eFabMenuElementEventMap[K]) => void,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   addEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   removeEventListener<K extends keyof M3eFabMenuElementEventMap>(
     type: K,
     listener: (this: M3eFabMenuElement, ev: M3eFabMenuElementEventMap[K]) => void,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 
   removeEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 }
 
