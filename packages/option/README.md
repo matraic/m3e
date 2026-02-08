@@ -117,6 +117,10 @@ This section details the attributes, slots, events and CSS custom properties ava
 | `--m3e-option-label-text-tracking`            | The letter spacing of the option label.           |
 | `--m3e-option-focus-ring-shape`               | The corner radius of the focus ring.              |
 | `--m3e-option-icon-size`                      | The size of the option icons.                     |
+| `--m3e-option-shape`                          | Base shape of the option.                         |
+| `--m3e-option-selected-shape`                 | Shape used for a selected option.                 |
+| `--m3e-option-first-child-shape`              | Shape for the first option in list.               |
+| `--m3e-option-last-child-shape`               | Shape for the last option in a list.              |
 
 ### 🗂️ m3e-option-panel
 
@@ -137,16 +141,20 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                     | Description                                             |
-| -------------------------------------------- | ------------------------------------------------------- |
-| `--m3e-option-panel-container-shape`         | Controls the corner radius of the menu container.       |
-| `--m3e-option-panel-container-min-width`     | Minimum width of the menu container.                    |
-| `--m3e-option-panel-container-max-width`     | Maximum width of the menu container.                    |
-| `--m3e-option-panel-container-max-height`    | Maximum height of the menu container.                   |
-| `--m3e-option-panel-container-padding-block` | Vertical padding inside the menu container.             |
-| `--m3e-option-panel-container-color`         | Background color of the menu container.                 |
-| `--m3e-option-panel-container-elevation`     | Box shadow elevation of the menu container.             |
-| `--m3e-option-panel-divider-spacing`         | Vertical spacing around slotted `m3e-divider` elements. |
+| Property                                            | Description                                             |
+| --------------------------------------------------- | ------------------------------------------------------- |
+| `--m3e-option-panel-container-shape`                | Corner radius of the panel container.                   |
+| `--m3e-option-panel-container-min-width`            | Minimum width of the panel container.                   |
+| `--m3e-option-panel-container-max-width`            | Maximum width of the panel container.                   |
+| `--m3e-option-panel-container-max-height`           | Maximum height of the panel container.                  |
+| `--m3e-option-panel-container-padding-block`        | Vertical padding inside the panel container.            |
+| `--m3e-option-panel-container-padding-inline`       | Horizontal padding inside the panel container.          |
+| `--m3e-option-panel-container-color`                | Background color of the panel container.                |
+| `--m3e-option-panel-container-elevation`            | Box shadow elevation of the panel container.            |
+| `--m3e-option-panel-gap`                            | Vertical spacing between option items.                  |
+| `--m3e-option-panel-divider-spacing`                | Vertical spacing around slotted `m3e-divider` elements. |
+| `--m3e-option-panel-text-highlight-container-color` | Background color used for text highlight matches.       |
+| `--m3e-option-panel-text-highlight-color`           | Text color used for text highlight matches.             |
 
 ### 🗂️ m3e-optgroup
 

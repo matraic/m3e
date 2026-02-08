@@ -321,6 +321,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
   /** @private */
   #handleMenuPointerDown(e: PointerEvent): void {
+    if (e.button === 2) return;
     e.preventDefault();
     e.stopImmediatePropagation();
 
@@ -352,7 +353,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
         new ToggleEvent("toggle", {
           oldState: e.oldState,
           newState: e.newState,
-        })
+        }),
       );
     } else {
       if (prefersReducedMotion()) {
@@ -389,7 +390,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
       new ToggleEvent("toggle", {
         oldState: e.oldState,
         newState: e.newState,
-      })
+      }),
     );
   }
 
@@ -481,6 +482,10 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     if (!this.#input) return;
 
     const term = this.#input.value.toLocaleLowerCase();
+
+    let first = false;
+    let last: M3eOptionElement | undefined;
+
     for (const option of this.options) {
       const value = option.value.toLocaleLowerCase();
       const hidden = !value.includes(term);
@@ -488,6 +493,17 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
       if (hidden) {
         this.#deactivateOption(option);
+        option.classList.remove("-first");
+        option.classList.remove("-last");
+      } else if (!first) {
+        option.classList.add("-first");
+        first = true;
+        option.classList.add("-last");
+        last = option;
+      } else {
+        last?.classList.remove("-last");
+        option.classList.add("-last");
+        last = option;
       }
 
       if (option.selected && value !== term) {

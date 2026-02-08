@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 
 import {
@@ -53,6 +53,11 @@ import { typeaheadLabel } from "@m3e/core/a11y";
  * @cssprop --m3e-option-label-text-tracking - The letter spacing of the option label.
  * @cssprop --m3e-option-focus-ring-shape - The corner radius of the focus ring.
  * @cssprop --m3e-option-icon-size - The size of the option icons.
+ * @cssprop --m3e-option-shape - Base shape of the option.
+ * @cssprop --m3e-option-selected-shape - Shape used for a selected option.
+ * @cssprop --m3e-option-first-child-shape - Shape for the first option in a list.
+ * @cssprop --m3e-option-last-child-shape - Shape for the last option in a list.
+
  */
 @customElement("m3e-option")
 export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option"))) {
@@ -63,7 +68,7 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
       outline: none;
       user-select: none;
       flex: none;
-      height: var(--m3e-option-container-height, 3rem);
+      height: var(--m3e-option-container-height, 2.75rem);
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:not([aria-disabled="true"])) .base {
@@ -73,17 +78,17 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
       --m3e-ripple-color: var(--m3e-option-ripple-color, ${DesignToken.color.onSurface});
     }
     :host(:not([aria-disabled="true"]):not(.-empty)[selected]) .base {
-      color: var(--m3e-option-selected-color, ${DesignToken.color.onSecondaryContainer});
-      background-color: var(--m3e-option-selected-container-color, ${DesignToken.color.secondaryContainer});
+      color: var(--m3e-option-selected-color, ${DesignToken.color.onTertiaryContainer});
+      background-color: var(--m3e-option-selected-container-color, ${DesignToken.color.tertiaryContainer});
       --m3e-state-layer-hover-color: var(
         --m3e-option-selected-container-hover-color,
-        ${DesignToken.color.onSecondaryContainer}
+        ${DesignToken.color.onTertiaryContainer}
       );
       --m3e-state-layer-focus-color: var(
         --m3e-option-selected-container-focus-color,
-        ${DesignToken.color.onSecondaryContainer}
+        ${DesignToken.color.onTertiaryContainer}
       );
-      --m3e-ripple-color: var(--m3e-option-selected-ripple-color, ${DesignToken.color.onSecondaryContainer});
+      --m3e-ripple-color: var(--m3e-option-selected-ripple-color, ${DesignToken.color.onTertiaryContainer});
     }
     :host(:not([aria-disabled="true"])) {
       cursor: pointer;
@@ -103,6 +108,24 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
       position: relative;
       width: 100%;
       height: 100%;
+      border-radius: var(--m3e-option-shape, ${DesignToken.shape.corner.extraSmall});
+      transition: ${unsafeCSS(`border-radius ${DesignToken.motion.spring.fastEffects}`)};
+    }
+    :host([selected]:not(.-first)) .base {
+      border-top-left-radius: var(--m3e-option-selected-shape, ${DesignToken.shape.corner.medium});
+      border-top-right-radius: var(--m3e-option-selected-shape, ${DesignToken.shape.corner.medium});
+    }
+    :host([selected]:not(.-last)) .base {
+      border-bottom-left-radius: var(--m3e-option-selected-shape, ${DesignToken.shape.corner.medium});
+      border-bottom-right-radius: var(--m3e-option-selected-shape, ${DesignToken.shape.corner.medium});
+    }
+    :host(.-first) .base {
+      border-top-left-radius: var(--m3e-option-first-child-shape, ${DesignToken.shape.corner.medium});
+      border-top-right-radius: var(--m3e-option-first-child-shape, ${DesignToken.shape.corner.medium});
+    }
+    :host(.-last) .base {
+      border-bottom-left-radius: var(--m3e-option-last-child-shape, ${DesignToken.shape.corner.medium});
+      border-bottom-right-radius: var(--m3e-option-last-child-shape, ${DesignToken.shape.corner.medium});
     }
     .touch {
       position: absolute;
@@ -111,10 +134,12 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
       right: 0;
     }
     .wrapper {
+      flex: 1 1 auto;
       display: inline-flex;
       align-items: center;
       width: 100%;
-      column-gap: var(--m3e-option-icon-label-space, 0.75rem);
+      overflow: hidden;
+      column-gap: var(--m3e-option-icon-label-space, 0.5rem);
       padding-inline-start: var(--_option-padding-start, var(--m3e-option-padding-start, 0.75rem));
       padding-inline-end: var(--m3e-option-padding-end, 0.75rem);
       font-size: var(--m3e-option-label-text-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
@@ -123,28 +148,26 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
       letter-spacing: var(--m3e-option-label-text-tracking, ${DesignToken.typescale.standard.label.large.tracking});
     }
     .focus-ring {
-      border-radius: var(--m3e-option-focus-ring-shape, ${DesignToken.shape.corner.medium});
+      border-radius: var(--m3e-option-focus-ring-shape, inherit);
     }
-    .content {
-      flex: 1 1 auto;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    .icon {
+      margin-inline-start: calc(0px - var(--m3e-option-icon-label-space, 0.5rem));
+      transition: ${unsafeCSS(
+        `margin-inline-start ${DesignToken.motion.spring.fastEffects}, width ${DesignToken.motion.spring.fastEffects}`,
+      )};
     }
-    ::slotted([slot="icon"]),
-    ::slotted([slot="trailing-icon"]),
-    .trailing-icon {
+    :host([selected]) .icon {
+      margin-inline-start: 0;
+      width: var(--m3e-option-icon-size, 1.25rem);
+    }
+    .icon {
       flex: none;
-      width: 1em;
-      font-size: var(--m3e-option-icon-size, 1.5rem) !important;
+      width: 0px;
+      font-size: var(--m3e-option-icon-size, 1.25rem);
     }
-    :host(.-empty) .leading-icon,
-    :host(.-empty) .trailing-icon,
-    :host(:not(.-multi):not([selected])) .trailing-icon,
-    :host(.-multi) .trailing-icon,
-    :host(:not(.-multi)) .leading-icon,
-    :host(.-hide-selection-indicator) .leading-icon,
-    :host(.-hide-selection-indicator) .trailing-icon {
+    :host(.-empty) .icon,
+    :host(.-hide-selection-indicator) .icon,
+    :host(:not([selected])) .check {
       display: none;
     }
     @media (forced-colors: active) {
@@ -154,6 +177,12 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
       }
       :host([aria-disabled="true"]) .base {
         color: GrayText;
+      }
+    }
+    @media (prefers-reduced-motion) {
+      .icon,
+      .base {
+        transition: none;
       }
     }
   `;
@@ -215,18 +244,16 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
   override render(): unknown {
     return html`<div class="base">
       <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"></m3e-state-layer>
-      <m3e-focus-ring class="focus-ring" inward ?disabled="${this.disabled}"></m3e-focus-ring>
+      <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
       <m3e-ripple class="ripple" ?disabled="${this.disabled}"></m3e-ripple>
       <div class="touch" aria-hidden="true"></div>
       <div class="wrapper">
-        <m3e-pseudo-checkbox class="leading-icon" ?checked="${this.selected}" ?disabled="${this.disabled}">
-        </m3e-pseudo-checkbox>
-        <m3e-text-overflow class="label"><slot @slotchange="${this.#handleSlotChange}"></slot></m3e-text-overflow>
-        <div class="trailing-icon">
-          <svg class="check" viewBox="0 -960 960 960" aria-hidden="true">
+        <div class="icon" aria-hidden="true">
+          <svg class="check" viewBox="0 -960 960 960">
             <path fill="currentColor" d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
           </svg>
         </div>
+        <m3e-text-overflow class="label"><slot @slotchange="${this.#handleSlotChange}"></slot></m3e-text-overflow>
       </div>
     </div>`;
   }

@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { Checked, hasAssignedNodes, Role } from "@m3e/core";
+import { Checked, DesignToken, hasAssignedNodes, prefersReducedMotion, Role } from "@m3e/core";
 
 import { M3eMenuItemElement } from "./MenuItemElement";
 import { MenuItemElementBase } from "./MenuItemElementBase";
@@ -45,13 +45,26 @@ import { MenuItemElementBase } from "./MenuItemElementBase";
  * @cssprop --m3e-menu-item-container-hover-color - State layer hover color for unselected items.
  * @cssprop --m3e-menu-item-container-focus-color - State layer focus color for unselected items.
  * @cssprop --m3e-menu-item-ripple-color - Ripple color for unselected items.
- * @cssprop --m3e-menu-selected-color - Text color for selected or expanded items.
- * @cssprop --m3e-menu-selected-container-color - Background color for selected or expanded items.
+ * @cssprop --m3e-menu-item-selected-color - Text color for selected items.
+ * @cssprop --m3e-menu-item-selected-container-color - Background color for selected items.
  * @cssprop --m3e-menu-item-selected-container-hover-color - State layer hover color for selected items.
  * @cssprop --m3e-menu-item-selected-container-focus-color - State layer focus color for selected items.
  * @cssprop --m3e-menu-item-selected-ripple-color - Ripple color for selected items.
+ * @cssprop --m3e-menu-item-active-state-layer-color - State layer color for expanded items.
+ * @cssprop --m3e-menu-item-active-state-layer-opacity - State layer opacity for expanded items.
  * @cssprop --m3e-menu-item-disabled-color - Base color for disabled items.
  * @cssprop --m3e-menu-item-disabled-opacity - Opacity percentage for disabled item color mix.
+ * @cssprop --m3e-vibrant-menu-item-color - Text color for unselected, enabled menu items for vibrant variant.
+ * @cssprop --m3e-vibrant-menu-item-container-hover-color - State layer hover color for unselected items for vibrant variant.
+ * @cssprop --m3e-vibrant-menu-item-container-focus-color - State layer focus color for unselected items for vibrant variant.
+ * @cssprop --m3e-vibrant-menu-item-ripple-color - Ripple color for unselected items for vibrant variant.
+ * @cssprop --m3e-vibrant-menu-item-selected-color - Text color for selected items for vibrant variant.
+ * @cssprop --m3e-vibrant-menu-item-selected-container-color - Background color for selected items for vibrant variant.
+ * @cssprop --m3e-vibrant-menu-item-selected-container-hover-color - State layer hover color for selected items for vibrant variant.
+ * @cssprop --m3e-vibrant-menu-item-selected-container-focus-color - State layer focus color for selected items for vibrant variant.
+ * @cssprop --m3e-vibrant-menu-item-selected-ripple-color - Ripple color for selected items for vibrant variant.
+ * @cssprop --m3e-vibrant-menu-item-active-state-layer-color - State layer color for expanded items for vibrant variant.
+ * @cssprop --m3e-vibrant-menu-item-disabled-color - Base color for disabled items for vibrant variant
  * @cssprop --m3e-menu-item-icon-label-space - Horizontal gap between icon and content.
  * @cssprop --m3e-menu-item-padding-start - Start padding for the item wrapper.
  * @cssprop --m3e-menu-item-padding-end - End padding for the item wrapper.
@@ -61,6 +74,10 @@ import { MenuItemElementBase } from "./MenuItemElementBase";
  * @cssprop --m3e-menu-item-label-text-tracking - Letter spacing for menu item text.
  * @cssprop --m3e-menu-item-focus-ring-shape - Border radius for the focus ring.
  * @cssprop --m3e-menu-item-icon-size - Font size for leading and trailing icons.
+ * @cssprop --m3e-menu-item-shape - Base shape of the menu item.
+ * @cssprop --m3e-menu-item-selected-shape - Shape used for a selected menu item.
+ * @cssprop --m3e-menu-item-first-child-shape - Shape for the first menu item in a menu.
+ * @cssprop --m3e-menu-item-last-child-shape - Shape for the last menu item in a menu.
  */
 @customElement("m3e-menu-item-checkbox")
 export class M3eMenuItemCheckboxElement extends Checked(Role(MenuItemElementBase, "menuitemcheckbox")) {
@@ -72,13 +89,14 @@ export class M3eMenuItemCheckboxElement extends Checked(Role(MenuItemElementBase
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: margin-inline-start ${DesignToken.motion.spring.fastEffects};
       }
       :host(:not(.-with-icon)) .icon {
         margin-inline-start: calc(0px - var(--m3e-menu-item-icon-label-space, 0.75rem));
       }
       .check {
         width: 1em;
-        font-size: var(--m3e-menu-item-icon-size, 1.5rem) !important;
+        font-size: var(--m3e-menu-item-icon-size, 1.25rem) !important;
       }
       :host(:not([checked])) .check {
         display: none;
@@ -88,6 +106,11 @@ export class M3eMenuItemCheckboxElement extends Checked(Role(MenuItemElementBase
       }
       :host([checked]) ::slotted([slot="icon"]) {
         display: none !important;
+      }
+      @media (prefers-reduced-motion) {
+        .icon {
+          transition: none;
+        }
       }
     `,
   ];
@@ -147,7 +170,11 @@ export class M3eMenuItemCheckboxElement extends Checked(Role(MenuItemElementBase
       this.performUpdate();
 
       if (!this.#spacePressed) {
-        this.menu?.hideAll(true);
+        if (!prefersReducedMotion()) {
+          setTimeout(() => this.menu?.hideAll(true), 150);
+        } else {
+          this.menu?.hideAll(true);
+        }
       }
     }
   }

@@ -21,17 +21,37 @@ import { M3eDirectionality } from "@m3e/core/bidi";
  * @fires beforetoggle - Dispatched before the toggle state changes.
  * @fires toggle - Dispatched after the toggle state has changed.
  *
- * @cssprop --m3e-option-panel-container-shape - Controls the corner radius of the menu container.
- * @cssprop --m3e-option-panel-container-min-width - Minimum width of the menu container.
- * @cssprop --m3e-option-panel-container-max-width - Maximum width of the menu container.
- * @cssprop --m3e-option-panel-container-max-height - Maximum height of the menu container.
- * @cssprop --m3e-option-panel-container-padding-block - Vertical padding inside the menu container.
- * @cssprop --m3e-option-panel-container-color - Background color of the menu container.
- * @cssprop --m3e-option-panel-container-elevation - Box shadow elevation of the menu container.
+ * @cssprop --m3e-option-panel-container-shape - Corner radius of the panel container.
+ * @cssprop --m3e-option-panel-container-min-width - Minimum width of the panel container.
+ * @cssprop --m3e-option-panel-container-max-width - Maximum width of the panel container.
+ * @cssprop --m3e-option-panel-container-max-height - Maximum height of the panel container.
+ * @cssprop --m3e-option-panel-container-padding-block - Vertical padding inside the panel container.
+ * @cssprop --m3e-option-panel-container-padding-inline - Horizontal padding inside the panel container.
+ * @cssprop --m3e-option-panel-container-color - Background color of the panel container.
+ * @cssprop --m3e-option-panel-container-elevation - Box shadow elevation of the panel container.
+ * @cssprop --m3e-option-panel-gap - Vertical spacing between option items.
  * @cssprop --m3e-option-panel-divider-spacing - Vertical spacing around slotted `m3e-divider` elements.
+ * @cssprop --m3e-option-panel-text-highlight-container-color - Background color used for text highlight matches.
+ * @cssprop --m3e-option-panel-text-highlight-color - Text color used for text highlight matches.
+
  */
 @customElement("m3e-option-panel")
 export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
+  static {
+    if (document) {
+      const lightDomStyle = new CSSStyleSheet();
+      lightDomStyle.replaceSync(
+        css`
+          m3e-option-panel > m3e-divider {
+            margin-block: var(--m3e-option-panel-divider-spacing, 0.5rem);
+          }
+        `.toString(),
+      );
+
+      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
+    }
+  }
+
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -43,22 +63,41 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
       overflow-y: auto;
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
-      border-radius: var(--m3e-option-panel-container-shape, ${DesignToken.shape.corner.extraSmall});
+      scroll-padding-block: calc(
+        var(--m3e-focus-ring-thickness, 0.1875rem) + var(--m3e-option-panel-container-padding-block, 0.25rem)
+      );
+      border-radius: var(--m3e-option-panel-container-shape, ${DesignToken.shape.corner.large});
       min-width: var(--m3e-option-panel-container-min-width, 7rem);
       max-width: var(--m3e-option-panel-container-max-width, 17.5rem);
       max-height: var(--m3e-option-panel-container-max-height, 17.5rem);
-      padding-block: var(--m3e-option-panel-container-padding-block, 0.5rem);
       background-color: var(--m3e-option-panel-container-color, ${DesignToken.color.surfaceContainer});
       box-shadow: var(--m3e-option-panel-container-elevation, ${DesignToken.elevation.level3});
       opacity: 0;
       display: none;
+    }
+    .base {
+      display: flex;
+      flex-direction: column;
+      row-gap: var(--m3e-option-panel-gap, 0.125rem);
+      min-width: inherit;
+      max-width: inherit;
+      padding-block: var(--m3e-option-panel-container-padding-block, 0.25rem);
+      padding-inline: var(--m3e-option-panel-container-padding-inline, 0.25rem);
+      --m3e-text-highlight-container-color: var(
+        --m3e-option-panel-text-highlight-container-color,
+        ${DesignToken.color.tertiaryContainer}
+      );
+      --m3e-text-highlight-color: var(
+        --m3e-option-panel-text-highlight-color,
+        ${DesignToken.color.onTertiaryContainer}
+      );
     }
     :host(:not(.-no-animate)) {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}, 
         transform ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard},
         overlay ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard} allow-discrete,
-        display ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard} allow-discrete`
+        display ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
     :host {
@@ -66,7 +105,7 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
     }
     :host(:popover-open) {
       transform: scaleY(1);
-      display: inline-flex;
+      display: block;
       opacity: 1;
     }
     :host::backdrop {
@@ -77,9 +116,6 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
     }
     :host(.-top) {
       transform-origin: bottom;
-    }
-    ::slotted(m3e-divider) {
-      margin-block: var(--m3e-option-panel-divider-spacing, 0.5rem);
     }
     @starting-style {
       :host(:popover-open) {
@@ -172,7 +208,7 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
         }
 
         this.style.top = `${y}px`;
-      }
+      },
     );
 
     this.showPopover();
@@ -215,14 +251,23 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
   }
 
   /** @inheritdoc */
-  protected override render(): unknown {
-    return html`<slot></slot>`;
-  }
-
-  /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
     requestAnimationFrame(() => this.classList.remove("-no-animate"));
+  }
+
+  /** @inheritdoc */
+  protected override render(): unknown {
+    return html`<div class="base"><slot @slotchange="${this.#handleSlotChange}"></slot></div>`;
+  }
+
+  /** @private */
+  #handleSlotChange(): void {
+    const options = [...this.querySelectorAll("m3e-option")];
+    options.forEach((x, i) => {
+      x.classList.toggle("-first", i === 0);
+      x.classList.toggle("-last", i === options.length - 1);
+    });
   }
 
   /** @private */
@@ -244,25 +289,25 @@ export interface M3eOptionPanelElement {
   addEventListener<K extends keyof M3eOptionPanelElementEventMap>(
     type: K,
     listener: (this: M3eOptionPanelElement, ev: M3eOptionPanelElementEventMap[K]) => void,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   addEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   removeEventListener<K extends keyof M3eOptionPanelElementEventMap>(
     type: K,
     listener: (this: M3eOptionPanelElement, ev: M3eOptionPanelElementEventMap[K]) => void,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 
   removeEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 }
 

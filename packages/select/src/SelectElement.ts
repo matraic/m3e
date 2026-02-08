@@ -353,7 +353,6 @@ export class M3eSelectElement
     const { added } = this._listKeyManager.setItems([...this.querySelectorAll("m3e-option")]);
     added.forEach((x) => {
       x.id = x.id || `${this.#id}-option-${this._listKeyManager.items.indexOf(x)}`;
-      x.classList.toggle("-multi", this.multi);
       x.classList.toggle("-hide-selection-indicator", this.hideSelectionIndicator);
     });
     this.#formField?.notifyControlStateChange();
@@ -378,7 +377,15 @@ export class M3eSelectElement
           if (this.#menu && this._listKeyManager.activeItem) {
             this.#selectOption(this._listKeyManager.activeItem);
           }
-          this.#toggleMenu();
+          if (this.#menu?.isOpen) {
+            if (!prefersReducedMotion()) {
+              setTimeout(() => this.#hideMenu(), 150);
+            } else {
+              this.#hideMenu();
+            }
+          } else {
+            this.#showMenu();
+          }
         } else if (!this.#menu) {
           this.#ignoreKeyUp = true;
           this.#toggleMenu();
@@ -435,6 +442,7 @@ export class M3eSelectElement
 
   /** @private */
   #handleMenuPointerDown(e: MouseEvent): void {
+    if (e.button === 2) return;
     e.preventDefault();
     e.stopImmediatePropagation();
 
@@ -447,7 +455,11 @@ export class M3eSelectElement
       this._listKeyManager.setActiveItem(option);
 
       if (!this.multi) {
-        this.#hideMenu();
+        if (!prefersReducedMotion()) {
+          setTimeout(() => this.#hideMenu(), 150);
+        } else {
+          this.#hideMenu();
+        }
       } else {
         this.requestUpdate();
       }

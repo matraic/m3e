@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { query } from "lit/decorators.js";
 
 import {
@@ -27,7 +27,7 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       outline: none;
       user-select: none;
       flex: none;
-      height: var(--m3e-menu-item-container-height, 3rem);
+      height: var(--m3e-menu-item-container-height, 2.75rem);
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:not(:disabled):not([aria-expanded="true"])) .base {
@@ -38,22 +38,33 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       --m3e-state-layer-focus-color: var(--m3e-menu-item-container-focus-color, ${DesignToken.color.onSurface});
       --m3e-ripple-color: var(--m3e-menu-item-ripple-color, ${DesignToken.color.onSurface});
     }
-    :host(:not(:disabled)[checked]) .base,
+
     :host(:not(:disabled)[aria-expanded="true"]) .base {
-      color: var(--m3e-menu-selected-color, ${DesignToken.color.onSecondaryContainer});
-      background-color: var(--m3e-menu-selected-container-color, ${DesignToken.color.secondaryContainer});
+      background-color: color-mix(
+        in srgb,
+        var(--m3e-menu-item-active-state-layer-color, ${DesignToken.color.onSurface})
+          var(--m3e-menu-active-state-layer-opacity, 8%),
+        transparent
+      );
     }
-    :host([checked]) .base,
-    :host([aria-expanded="true"]) .base {
+    :host([aria-expanded="true"]) .state-layer {
+      display: none;
+    }
+
+    :host(:not(:disabled)[checked]) .base {
+      color: var(--m3e-menu-item-selected-color, ${DesignToken.color.onTertiaryContainer});
+      background-color: var(--m3e-menu-item-selected-container-color, ${DesignToken.color.tertiaryContainer});
+    }
+    :host([checked]) .base {
       --m3e-state-layer-hover-color: var(
         --m3e-menu-item-selected-container-hover-color,
-        ${DesignToken.color.onSecondaryContainer}
+        ${DesignToken.color.onTertiaryContainer}
       );
       --m3e-state-layer-focus-color: var(
         --m3e-menu-item-selected-container-focus-color,
-        ${DesignToken.color.onSecondaryContainer}
+        ${DesignToken.color.onTertiaryContainer}
       );
-      --m3e-ripple-color: var(--m3e-menu-item-selected-ripple-color, ${DesignToken.color.onSecondaryContainer});
+      --m3e-ripple-color: var(--m3e-menu-item-selected-ripple-color, ${DesignToken.color.onTertiaryContainer});
     }
     :host(:not(:disabled)) {
       cursor: pointer;
@@ -65,6 +76,7 @@ export abstract class MenuItemElementBase extends KeyboardClick(
         transparent
       );
     }
+
     .base {
       box-sizing: border-box;
       vertical-align: middle;
@@ -73,6 +85,24 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       position: relative;
       width: 100%;
       height: 100%;
+      border-radius: var(--m3e-menu-item-shape, ${DesignToken.shape.corner.extraSmall});
+      transition: ${unsafeCSS(`border-radius ${DesignToken.motion.spring.fastEffects}`)};
+    }
+    :host([checked]:not(.-first)) .base {
+      border-top-left-radius: var(--m3e-menu-item-selected-shape, ${DesignToken.shape.corner.medium});
+      border-top-right-radius: var(--m3e-menu-item-selected-shape, ${DesignToken.shape.corner.medium});
+    }
+    :host([checked]:not(.-last)) .base {
+      border-bottom-left-radius: var(--m3e-menu-item-selected-shape, ${DesignToken.shape.corner.medium});
+      border-bottom-right-radius: var(--m3e-menu-item-selected-shape, ${DesignToken.shape.corner.medium});
+    }
+    :host(.-first) .base {
+      border-top-left-radius: var(--m3e-menu-item-first-child-shape, ${DesignToken.shape.corner.medium});
+      border-top-right-radius: var(--m3e-menu-item-first-child-shape, ${DesignToken.shape.corner.medium});
+    }
+    :host(.-last) .base {
+      border-bottom-left-radius: var(--m3e-menu-item-last-child-shape, ${DesignToken.shape.corner.medium});
+      border-bottom-right-radius: var(--m3e-menu-item-last-child-shape, ${DesignToken.shape.corner.medium});
     }
     .touch {
       position: absolute;
@@ -81,9 +111,10 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       right: 0;
     }
     .wrapper {
+      flex: 1 1 auto;
       display: inline-flex;
       align-items: center;
-      column-gap: var(--m3e-menu-item-icon-label-space, 0.75rem);
+      column-gap: var(--m3e-menu-item-icon-label-space, 0.5rem);
       padding-inline-start: var(--m3e-menu-item-padding-start, 0.75rem);
       padding-inline-end: var(--m3e-menu-item-padding-end, 0.75rem);
       font-size: var(--m3e-menu-item-label-text-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
@@ -98,7 +129,7 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       letter-spacing: var(--m3e-menu-item-label-text-tracking, ${DesignToken.typescale.standard.label.large.tracking});
     }
     .focus-ring {
-      border-radius: var(--m3e-menu-item-focus-ring-shape, ${DesignToken.shape.corner.medium});
+      border-radius: var(--m3e-menu-item-focus-ring-shape, inherit);
     }
     .content {
       flex: 1 1 auto;
@@ -111,7 +142,12 @@ export abstract class MenuItemElementBase extends KeyboardClick(
     .trailing-icon {
       flex: none;
       width: 1em;
-      font-size: var(--m3e-menu-item-icon-size, 1.5rem) !important;
+      font-size: var(--m3e-menu-item-icon-size, 1.25rem) !important;
+    }
+    @media (prefers-reduced-motion) {
+      .base {
+        transition: none;
+      }
     }
     @media (forced-colors: active) {
       .base {
@@ -143,7 +179,7 @@ export abstract class MenuItemElementBase extends KeyboardClick(
   override render(): unknown {
     return html`<div class="base">
       <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"></m3e-state-layer>
-      <m3e-focus-ring class="focus-ring" inward ?disabled="${this.disabled}"></m3e-focus-ring>
+      <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
       <m3e-ripple class="ripple" ?disabled="${this.disabled}"></m3e-ripple>
       <div class="touch" aria-hidden="true"></div>
       ${isLinkButtonMixin(this) ? this[renderPseudoLink]() : nothing}
