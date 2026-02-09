@@ -6,6 +6,8 @@ import { ActionElementBase } from "@m3e/core";
  * An element, nested within a clickable element, used to close a parenting dialog.
  * @tag m3e-dialog-action
  *
+ * @slot - Renders the content of the action.
+ *
  * @attr return-value - The value to return from the dialog.
  */
 @customElement("m3e-dialog-action")
