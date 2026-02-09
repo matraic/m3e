@@ -44,6 +44,9 @@ import { M3eFabMenuItemElement } from "./FabMenuItemElement";
  *
  * @attr variant - The appearance variant of the menu.
  *
+ * @fires beforetoggle - Dispatched before the toggle state changes.
+ * @fires toggle - Dispatched after the toggle state has changed.
+ *
  * @cssprop --m3e-fab-menu-spacing - Vertical gap between menu items.
  * @cssprop --m3e-fab-menu-max-width - Maximum width of the menu.
  * @cssprop --m3e-primary-fab-color - Foreground color for primary variant items.

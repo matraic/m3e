@@ -17,7 +17,8 @@ import { DesignToken, Role } from "@m3e/core";
  * @attr dismissible - Whether a button is presented that can be used to close the snackbar.
  * @attr duration - The length of time, in milliseconds, to wait before automatically dismissing the snackbar.
  *
- * @fires toggle - Emitted when the opened state of the snackbar changes.
+ * @fires beforetoggle - Dispatched before the toggle state changes.
+ * @fires toggle - Dispatched after the toggle state has changed.
  *
  * @cssprop --m3e-snackbar-margin - Vertical offset from the bottom of the viewport.
  * @cssprop --m3e-snackbar-container-shape - Border radius of the snackbar container.
