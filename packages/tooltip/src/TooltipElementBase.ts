@@ -161,7 +161,6 @@ export abstract class TooltipElementBase extends HtmlFor(LitElement) {
 
     TooltipElementBase.__openTooltips.filter((x) => x !== this).forEach((x) => x.hide());
 
-    this._base.showPopover();
     this.#anchorCleanup = await positionAnchor(
       this._base,
       this.control,
@@ -174,6 +173,8 @@ export abstract class TooltipElementBase extends HtmlFor(LitElement) {
       },
       (x, y) => this._updatePosition(this._base, x, y),
     );
+
+    this._base.showPopover();
 
     if (!TooltipElementBase.__openTooltips.includes(this)) {
       TooltipElementBase.__openTooltips.push(this);
