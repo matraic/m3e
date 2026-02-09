@@ -1,29 +1,13 @@
-import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { css, CSSResultGroup, html, unsafeCSS } from "lit";
+import { customElement, property } from "lit/decorators.js";
 
+import { DesignToken, getTextContent } from "@m3e/core";
 import { M3eAriaDescriber } from "@m3e/core/a11y";
-import { M3ePlatform } from "@m3e/core/platform";
-import { positionAnchor } from "@m3e/core/anchoring";
+import { AnchorPosition } from "@m3e/core/anchoring";
 import { M3eDirectionality } from "@m3e/core/bidi";
 
-import {
-  AttachInternals,
-  DesignToken,
-  getTextContent,
-  HoverController,
-  HtmlFor,
-  isDisabledMixin,
-  LongPressController,
-} from "@m3e/core";
-
 import { TooltipPosition } from "./TooltipPosition";
-import { TooltipTouchGestures } from "./TooltipTouchGestures";
-
-/** The space, in pixels, between the tooltip and anchor. */
-const TOOLTIP_OFFSET = 4;
-
-/** The default time, in milliseconds, before hiding a tooltip. */
-const TOOLTIP_HIDE_DELAY = 200;
+import { TooltipElementBase } from "./TooltipElementBase";
 
 /**
  * Adds additional context to a button or other UI element.
@@ -67,7 +51,7 @@ const TOOLTIP_HIDE_DELAY = 200;
  * @cssprop --m3e-tooltip-supporting-text-tracking - Letter spacing of supporting text.
  */
 @customElement("m3e-tooltip")
-export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
+export class M3eTooltipElement extends TooltipElementBase {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -151,45 +135,7 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
     }
   `;
 
-  /** @private */ private static __openTooltips = new Array<M3eTooltipElement>();
-
-  /** @private */ @query(".base") private readonly _base!: HTMLElement;
   /** @private */ #message?: string | null;
-  /** @private */ #for: HTMLElement | null = null;
-  /** @private */ #anchorCleanup?: () => void;
-
-  /** @private */ readonly #clickHandler = () => this.hide();
-
-  /** @private */
-  readonly #hoverController = new HoverController(this, {
-    target: null,
-    endDelay: TOOLTIP_HIDE_DELAY,
-    callback: (hovering) => {
-      if (hovering) {
-        this.show();
-      } else {
-        this.hide();
-      }
-    },
-  });
-
-  /** @private */
-  readonly #longPressController = new LongPressController(this, {
-    target: null,
-    callback: (pressed) => {
-      if (pressed) {
-        this.show();
-      } else {
-        this.hide();
-      }
-    },
-  });
-
-  /**
-   * Whether the element is disabled.
-   * @default false
-   */
-  @property({ type: Boolean, reflect: true }) disabled = false;
 
   /**
    * The position of the tooltip.
@@ -197,33 +143,20 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
    */
   @property() position: TooltipPosition = "below";
 
-  /**
-   * The amount of time, in milliseconds, before showing the tooltip.
-   * @default 0
-   */
-  @property({ attribute: "show-delay", type: Number }) get showDelay(): number {
-    return this.#hoverController.startDelay;
+  /** @inheritdoc */
+  protected get _anchorPosition(): AnchorPosition {
+    return this.position === "above"
+      ? "top"
+      : this.position === "below"
+        ? "bottom"
+        : this.position === "before"
+          ? M3eDirectionality.current === "ltr"
+            ? "left"
+            : "right"
+          : M3eDirectionality.current === "ltr"
+            ? "right"
+            : "left";
   }
-  set showDelay(value: number) {
-    this.#hoverController.startDelay = value;
-  }
-
-  /**
-   * The amount of time, in milliseconds, before hiding the tooltip.
-   * @default 200
-   */
-  @property({ attribute: "hide-delay", type: Number }) get hideDelay(): number {
-    return this.#hoverController.endDelay;
-  }
-  set hideDelay(value: number) {
-    this.#hoverController.endDelay = value;
-  }
-
-  /**
-   * The mode in which to handle touch gestures.
-   * @default "auto"
-   */
-  @property({ attribute: "touch-gestures" }) touchGestures: TooltipTouchGestures = "auto";
 
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
@@ -232,28 +165,12 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
     if (this.#message) {
       M3eAriaDescriber.describe(control, this.#message);
     }
-
-    if (M3ePlatform.iOS || M3ePlatform.Android) {
-      this.#longPressController.observe(control);
-      this.#disableNativeGesturesIfNecessary();
-    } else {
-      this.#hoverController.observe(control);
-    }
-
-    control.addEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */
   override detach(): void {
-    if (this.control) {
-      if (this.#message) {
-        M3eAriaDescriber.removeDescription(this.control, this.#message);
-      }
-
-      this.#hoverController.unobserve(this.control);
-      this.#longPressController.observe(this.control);
-      this.control.removeEventListener("click", this.#clickHandler);
-      this.hide();
+    if (this.control && this.#message) {
+      M3eAriaDescriber.removeDescription(this.control, this.#message);
     }
     super.detach();
   }
@@ -265,79 +182,22 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
   }
 
   /** @inheritdoc */
-  protected override update(changedProperties: PropertyValues<this>): void {
-    super.update(changedProperties);
-
-    if (changedProperties.has("disabled") && this.disabled) {
-      this.hide();
-    }
-  }
-
-  /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base" popover="manual" @toggle="${this.#handleToggle}">
       <slot @slotchange="${this.#handleSlotChange}"></slot>
     </div>`;
   }
 
-  /**
-   * Manually shows the tooltip.
-   * @returns {Promise<void>} A `Promise` that resolves when the tooltip is shown.
-   */
-  async show(): Promise<void> {
-    if (!this.control || this.disabled || (isDisabledMixin(this.control) && this.control.disabled)) return;
-
-    console.log(M3eTooltipElement.__openTooltips);
-
-    M3eTooltipElement.__openTooltips.filter((x) => x !== this).forEach((x) => x.hide());
-
-    this._base.showPopover();
-    this.#anchorCleanup = await positionAnchor(
-      this._base,
-      this.control,
-      {
-        position:
-          this.position === "above"
-            ? "top"
-            : this.position === "below"
-              ? "bottom"
-              : this.position === "before"
-                ? M3eDirectionality.current === "ltr"
-                  ? "left"
-                  : "right"
-                : M3eDirectionality.current === "ltr"
-                  ? "right"
-                  : "left",
-        inline: true,
-        flip: true,
-        shift: true,
-        offset: TOOLTIP_OFFSET,
-      },
-      (x, y) => {
-        if (M3eDirectionality.current === "rtl") {
-          this._base.style.right = `${window.innerWidth - x - this._base.clientWidth}px`;
-          this._base.style.left = "";
-        } else {
-          this._base.style.left = `${x}px`;
-          this._base.style.right = "";
-        }
-        this._base.style.top = `${y}px`;
-      },
-    );
-
-    if (!M3eTooltipElement.__openTooltips.includes(this)) {
-      M3eTooltipElement.__openTooltips.push(this);
+  /** @inheritdoc */
+  protected _updatePosition(base: HTMLElement, x: number, y: number): void {
+    if (M3eDirectionality.current === "rtl") {
+      base.style.right = `${window.innerWidth - x - base.clientWidth}px`;
+      base.style.left = "";
+    } else {
+      base.style.left = `${x}px`;
+      base.style.right = "";
     }
-  }
-
-  /** Manually hides the tooltip. */
-  hide(): void {
-    this._base.hidePopover();
-    this.#anchorCleanup?.();
-    this.#anchorCleanup = undefined;
-    this.#hoverController.clearDelays();
-
-    M3eTooltipElement.__openTooltips = [...M3eTooltipElement.__openTooltips].filter((x) => x !== this);
+    base.style.top = `${y}px`;
   }
 
   /** @private */
@@ -363,31 +223,6 @@ export class M3eTooltipElement extends HtmlFor(AttachInternals(LitElement)) {
     if (e.newState === "open") {
       const multiline = this._base.getBoundingClientRect().height > parseFloat(getComputedStyle(this._base).minHeight);
       this.classList.toggle("-multiline", multiline);
-    }
-  }
-
-  /** @private */
-  #disableNativeGesturesIfNecessary() {
-    if (this.touchGestures !== "off" && this.#for) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const style: any = this.#for.style;
-
-      // If gestures are set to `auto`, we don't disable text selection on inputs and
-      // textareas, because it prevents the user from typing into them on iOS Safari.
-
-      if (this.touchGestures === "on" || (this.#for.nodeName !== "INPUT" && this.#for.nodeName !== "TEXTAREA")) {
-        style.userSelect = style.msUserSelect = style.webkitUserSelect = style.MozUserSelect = "none";
-      }
-
-      // If we have `auto` gestures and the element uses native HTML dragging,
-      // we don't set `-webkit-user-drag` because it prevents the native behavior.
-
-      if (this.touchGestures === "on" || !this.#for.draggable) {
-        style.webkitUserDrag = "none";
-      }
-
-      style.touchAction = "none";
-      style.webkitTapHighlightColor = "transparent";
     }
   }
 }
