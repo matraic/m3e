@@ -22,35 +22,36 @@
       {
         "imports": {
           "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
-          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.1.11/dist/index.min.js",
-          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.1.11/dist/a11y.min.js",
-          "@m3e/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/core@1.1.11/dist/anchoring.min.js",
-          "@m3e/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/core@1.1.11/dist/bidi.min.js",
-          "@m3e/core/platform": "https://cdn.jsdelivr.net/npm/@m3e/core@1.1.11/dist/platform.min.js"
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.2.0/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.2.0/dist/a11y.min.js",
+          "@m3e/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/core@1.2.0/dist/anchoring.min.js",
+          "@m3e/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/core@1.2.0/dist/bidi.min.js",
+          "@m3e/core/platform": "https://cdn.jsdelivr.net/npm/@m3e/core@1.2.0/dist/platform.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.1.11/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.1.11/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.1.11/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon-button@1.1.11/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.1.11/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.1.11/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/tooltip@1.1.11/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.2.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.2.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.2.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/button@1.2.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon-button@1.2.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.2.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.2.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/tooltip@1.2.0/dist/index.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body id="body">
     <m3e-theme strong-focus>
-      <m3e-toc class="toc" for="body">
+      <m3e-toc class="toc" for="body" max-depth="4">
         <span slot="overline">On this page</span>
         <span slot="title">Tooltip</span>
       </m3e-toc>
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Tooltip</m3e-heading>
       <p>
-        The <code>m3e-tooltip</code> adds additional context displayed when the user hovers over or longpresses an
-        element.
+        The <code>@m3e/tooltip</code> package provides plain and rich tooltip components for delivering contextual
+        guidance, from simple hover descriptions to multi-line, expressive content anchored to a control.
       </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
@@ -59,10 +60,10 @@
       <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
       <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
 
-      <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+      <m3e-heading variant="headline" size="small" level="3">Plain tooltip</m3e-heading>
       <p>
-        Use the <code>m3e-tooltip</code> component to define a tooltip, and apply the <code>for</code> attribute to
-        associate it with a specific UI element.
+        Use the <code>m3e-tooltip</code> component to define a plain tooltip, and apply the <code>for</code> attribute
+        to associate it with a specific UI element.
       </p>
       <m3e-card variant="outlined">
         <div slot="content">
@@ -81,7 +82,7 @@
         >
       </m3e-card>
 
-      <m3e-heading variant="headline" size="small" level="3">Positioning</m3e-heading>
+      <m3e-heading variant="title" size="medium" level="4">Positioning</m3e-heading>
       <p>
         By default, tooltips are positioned below the element. You can control a tooltip's position using the
         <code>position</code> attribute. Supported values include <code>above</code>, <code>below</code> (default),
@@ -89,7 +90,7 @@
         BIDI-aware, adapting to left-to-right and right-to-left text directions.
       </p>
 
-      <m3e-heading variant="headline" size="small" level="3">Delays</m3e-heading>
+      <m3e-heading variant="title" size="medium" level="4">Delays</m3e-heading>
       <p>
         Use the <code>show-delay</code> and <code>hide-delay</code> attributes to control the amount of time, in
         milliseconds, to show or hide a tooltip. The following snippet illustrates the default delays.
@@ -103,7 +104,7 @@
         >
       </m3e-card>
 
-      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+      <m3e-heading variant="title" size="medium" level="4">Disabling</m3e-heading>
       <p>Use the <code>disabled</code> attribute to disable a tooltip from showing.</p>
       <m3e-card variant="filled" class="example">
         <pre slot="content">
@@ -114,7 +115,7 @@
         >
       </m3e-card>
 
-      <m3e-heading variant="headline" size="small" level="3">Touch gestures</m3e-heading>
+      <m3e-heading variant="title" size="medium" level="4">Touch gestures</m3e-heading>
       <p>
         On touch devices, tooltips use a long-press gesture to show and hide. This can conflict with native browser
         gestures, such as text selection or drag interactions. To mitigate this, tooltips disables native gestures on
@@ -136,12 +137,101 @@
         </li>
       </ul>
 
+      <m3e-heading variant="headline" size="small" level="3">Rich tooltip</m3e-heading>
+      <p>
+        Use the <code>m3e-rich-tooltip</code> component to define a rich tooltip, and apply the
+        <code>for</code> attribute to associate it with a specific UI element. The <code>subhead</code> slot specifies
+        the subhead content and the default slot specifies supplementary text.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-icon-button id="button2">
+            <m3e-icon name="settings"></m3e-icon>
+          </m3e-icon-button>
+          <m3e-rich-tooltip for="button2">
+            <span slot="subhead">New settings available</span>
+            Now you can adjust the uploaded image quality, and upgrade your available storage space.
+          </m3e-rich-tooltip>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-icon-button id=&quot;button&quot;&gt;
+  &lt;m3e-icon name=&quot;settings&quot;&gt;&lt;/m3e-icon&gt;
+&lt;/m3e-icon-button&gt;
+&lt;m3e-rich-tooltip for=&quot;button&quot;&gt;
+  &lt;span slot=&quot;subhead&quot;&gt;New settings available&lt;/span&gt;
+  Now you can adjust the uploaded image quality, and upgrade your available storage space.
+&lt;/m3e-rich-tooltip&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Actions</m3e-heading>
+      <p>
+        Including interactive content in a rich tooltip promotes it to dialog-like behavior. The surface becomes
+        dismissible and keyboard-navigable, and must be opened through an explicit user action on the trigger.
+      </p>
+      <p>
+        You can include actions in a rich tooltip using the <code>actions</code> slot. In addition, use the
+        <code>m3e-rich-tooltip-action</code> component, nested in a clickable element, to dismiss the tooltip. By
+        default, focus is returned to the trigger. Use the <code>disable-restore-focus</code> attribute of a
+        <code>m3e-rich-tooltip-action</code> to disable this behavior.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-icon-button id="button3">
+            <m3e-icon name="settings"></m3e-icon>
+          </m3e-icon-button>
+          <m3e-rich-tooltip for="button3">
+            <span slot="subhead">New settings available</span>
+            Now you can adjust the uploaded image quality, and upgrade your available storage space.
+            <div slot="actions">
+              <m3e-button>
+                <m3e-rich-tooltip-action>Learn more</m3e-rich-tooltip-action>
+              </m3e-button>
+            </div>
+          </m3e-rich-tooltip>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-icon-button id=&quot;button&quot;&gt;
+  &lt;m3e-icon name=&quot;settings&quot;&gt;&lt;/m3e-icon&gt;
+&lt;/m3e-icon-button&gt;
+&lt;m3e-rich-tooltip for=&quot;button&quot;&gt;
+  &lt;span slot=&quot;subhead&quot;&gt;New settings available&lt;/span&gt;
+  Now you can adjust the uploaded image quality, and upgrade your available storage space.
+  &lt;div slot=&quot;actions&quot;&gt;
+    &lt;m3e-button&gt;
+      &lt;m3e-rich-tooltip-action&gt;Learn more&lt;/m3e-rich-tooltip-action&gt;
+    &lt;/m3e-button&gt;
+  &lt;/div&gt;
+&lt;/m3e-rich-tooltip&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Positioning</m3e-heading>
+      <p>
+        By default, rich tooltips are positioned below and after the element. You can control a tooltip's position using
+        the
+        <code>position</code> attribute. Supported values include <code>above-before</code>,
+        <code>above-after</code>,<code>below-before</code>, <code>below-after</code> (default), <code>before</code>,
+        <code>after</code>, <code>above</code> and <code>below</code>. Positions are BIDI-aware, adapting to
+        left-to-right and right-to-left text directions.
+      </p>
+
       <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
       <p>
-        Tooltips add an <code>aria-describedby</code> description that provides a reference to a visually hidden element
-        containing the tooltip's message. This allows screen readers to announce the tooltip's contents when the user
-        focuses on the tooltip's trigger. The element referenced by <code>aria-describedby</code> is not the tooltip
-        itself, but an invisible copy of its content that remains present in the DOM.
+        Plain and non-interactive tooltips add an <code>aria-describedby</code> description that provides a reference to
+        a visually hidden element containing the tooltip's message. This allows screen readers to announce the tooltip's
+        contents when the user focuses on the tooltip's trigger. The element referenced by
+        <code>aria-describedby</code> is not the tooltip itself, but an invisible copy of its content that remains
+        present in the DOM.
+      </p>
+      <p>
+        Interactive rich tooltips add <code>aria-haspopup="dialog"</code> to their trigger to correctly expose a
+        dialog-like popup to assistive technologies. In addition, the tooltip's internal popover is given ARIA
+        <code>role="dialog"</code> and is automatically labelled by tooltip's <code>subhead</code>.
       </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
@@ -197,7 +287,7 @@
       <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
       <api-viewer
         only="m3e-tooltip"
-        src="https://cdn.jsdelivr.net/npm/@m3e/tooltip@1.1.11/dist/custom-elements.json"
+        src="https://cdn.jsdelivr.net/npm/@m3e/tooltip@1.2.0/dist/custom-elements.json"
       ></api-viewer>
     </m3e-theme>
   </body>

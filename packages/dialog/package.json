@@ -1,6 +1,6 @@
 {
   "name": "@m3e/dialog",
-  "version": "1.1.11",
+  "version": "1.2.0",
   "description": "Dialog for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
@@ -27,8 +27,8 @@
     "clean": "rimraf dist"
   },
   "peerDependencies": {
-    "@m3e/core": "^1.1.3",
-    "@m3e/icon-button": "^1.1.3",
+    "@m3e/core": "^1.2.0",
+    "@m3e/icon-button": "^1.2.0",
     "lit": "^3.3.0"
   },
   "customElements": "dist/custom-elements.json"

@@ -4,7 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- Planning
+- 1.2.0 Release
 
 ## 🔮 Future
 
@@ -14,10 +14,13 @@ The following components are planned for future release.
 
 #### 🛠️ In Progress
 
-Components in early stages of development include:
+Components in nearing completion include:
 
 - Calendar
 - Datepicker
+
+Components in early stages of development include:
+
 - Skeleton Loader
 - Split Pane
 - Tree
@@ -27,7 +30,7 @@ Components in early stages of development include:
 Planned components which have not yet entered development:
 
 - Bottom Sheet
-- Inputs (Numeric, Masked)
+- Inputs (Numeric, Masked, Date, Datetime)
 - Time Picker
 
 ### 📜 Building with AI
@@ -37,6 +40,7 @@ Planned components which have not yet entered development:
 
 ## 🏛️ Past Milestones
 
+- 1.2.0 - Bug fixes, @m3e/menu enhancements (expressive updates), @m3e/tooltip rich tooltip
 - 1.1.8 - 1.1.11: Bug fixes
 - 1.1.7: Bug fixes, added @m3e/avatar, @m3e/list enhancements (selection, actions, expressive updates)
 - 1.1.4 - 1.1.6: Bug fixes

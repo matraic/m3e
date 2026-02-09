@@ -22,22 +22,22 @@
       {
         "imports": {
           "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
-          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.1.11/dist/index.min.js",
-          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.1.11/dist/a11y.min.js",
-          "@m3e/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/core@1.1.11/dist/anchoring.min.js",
-          "@m3e/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/core@1.1.11/dist/bidi.min.js"
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.2.0/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.2.0/dist/a11y.min.js",
+          "@m3e/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/core@1.2.0/dist/anchoring.min.js",
+          "@m3e/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/core@1.2.0/dist/bidi.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.1.11/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.1.11/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/button@1.1.11/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.1.11/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/divider@1.1.11/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.1.11/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.1.11/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.1.11/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.2.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.2.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/button@1.2.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icon@1.2.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/divider@1.2.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.2.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.2.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.2.0/dist/index.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body id="body">
@@ -82,6 +82,35 @@
   &lt;m3e-menu-trigger for=&quot;menu1&quot;&gt;Menu&lt;/m3e-menu-trigger&gt;
 &lt;/m3e-button&gt;
 &lt;m3e-menu id=&quot;menu1&quot;&gt;
+  &lt;m3e-menu-item&gt;Item 1&lt;/m3e-menu-item&gt;
+  &lt;m3e-menu-item&gt;Item 2&lt;/m3e-menu-item&gt;
+&lt;/m3e-menu&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+      <p>
+        There are two appearance variants: <code>standard</code> (default) and <code>vibrant</code>. Use the
+        <code>variant</code> attribute to change the appearance.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-menu-trigger for="vmenu1">Vibrant menu</m3e-menu-trigger>
+          </m3e-button>
+          <m3e-menu id="vmenu1" variant="vibrant">
+            <m3e-menu-item>Item 1</m3e-menu-item>
+            <m3e-menu-item>Item 2</m3e-menu-item>
+          </m3e-menu>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button&gt;
+  &lt;m3e-menu-trigger for=&quot;menu1&quot;&gt;Menu&lt;/m3e-menu-trigger&gt;
+&lt;/m3e-button&gt;
+&lt;m3e-menu id=&quot;menu1&quot; variant=&quot;vibrant&quot;&gt;
   &lt;m3e-menu-item&gt;Item 1&lt;/m3e-menu-item&gt;
   &lt;m3e-menu-item&gt;Item 2&lt;/m3e-menu-item&gt;
 &lt;/m3e-menu&gt;</pre
@@ -439,25 +468,25 @@
       </p>
       <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
 
-      <api-viewer only="m3e-menu" src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.1.11/dist/custom-elements.json">
+      <api-viewer only="m3e-menu" src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.2.0/dist/custom-elements.json">
       </api-viewer>
-      <api-viewer only="m3e-menu-trigger" src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.1.11/dist/custom-elements.json">
+      <api-viewer only="m3e-menu-trigger" src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.2.0/dist/custom-elements.json">
       </api-viewer>
-      <api-viewer only="m3e-menu-item" src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.1.11/dist/custom-elements.json">
+      <api-viewer only="m3e-menu-item" src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.2.0/dist/custom-elements.json">
       </api-viewer>
       <api-viewer
         only="m3e-menu-item-checkbox"
-        src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.1.11/dist/custom-elements.json"
+        src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.2.0/dist/custom-elements.json"
       >
       </api-viewer>
       <api-viewer
         only="m3e-menu-item-radio"
-        src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.1.11/dist/custom-elements.json"
+        src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.2.0/dist/custom-elements.json"
       >
       </api-viewer>
       <api-viewer
         only="m3e-menu-item-group"
-        src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.1.11/dist/custom-elements.json"
+        src="https://cdn.jsdelivr.net/npm/@m3e/menu@1.2.0/dist/custom-elements.json"
       >
       </api-viewer>
     </m3e-theme>
