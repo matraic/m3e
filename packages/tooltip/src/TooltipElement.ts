@@ -88,14 +88,14 @@ export class M3eTooltipElement extends TooltipElementBase {
         --m3e-tooltip-supporting-text-tracking,
         ${DesignToken.typescale.standard.body.small.tracking}
       );
-      visibility: hidden;
+      display: none;
       opacity: 0;
       transform: scale(0.8);
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
         transform ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard},
         overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete,
-        visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
+        display ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
     :host(.-multiline) .base {
@@ -104,13 +104,8 @@ export class M3eTooltipElement extends TooltipElementBase {
     .base::backdrop {
       background-color: transparent;
     }
-    .base:not(:popover-open) {
-      visibility: hidden;
-      opacity: 0;
-      transform: scale(0.8);
-    }
     .base:popover-open {
-      visibility: visible;
+      display: block;
       opacity: 1;
       transform: scale(1);
     }

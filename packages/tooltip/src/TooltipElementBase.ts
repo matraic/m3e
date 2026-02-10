@@ -163,9 +163,6 @@ export abstract class TooltipElementBase extends HtmlFor(LitElement) {
 
     this._base.showPopover();
 
-    // Force Safari to finish layout
-    this._base.getBoundingClientRect();
-
     this.#anchorCleanup = await positionAnchor(
       this._base,
       this.control,

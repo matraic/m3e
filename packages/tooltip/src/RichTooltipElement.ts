@@ -82,7 +82,6 @@ export class M3eRichTooltipElement extends TooltipElementBase {
       display: contents;
     }
     .base {
-      display: flex;
       flex-direction: column;
       position: absolute;
       padding: unset;
@@ -95,14 +94,14 @@ export class M3eRichTooltipElement extends TooltipElementBase {
       overflow: visible;
       border-radius: var(--m3e-rich-tooltip-shape, ${DesignToken.shape.corner.medium});
       background-color: var(--m3e-rich-tooltip-container-color, ${DesignToken.color.surfaceContainer});
-      visibility: hidden;
+      display: none;
       opacity: 0;
       transform: scale(0.8);
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
             transform ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard},
             overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete,
-            visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
+            display ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
     .base:not(.has-actions) {
@@ -111,13 +110,8 @@ export class M3eRichTooltipElement extends TooltipElementBase {
     .base::backdrop {
       background-color: transparent;
     }
-    .base:not(:popover-open) {
-      visibility: hidden;
-      opacity: 0;
-      transform: scale(0.8);
-    }
     .base:popover-open {
-      visibility: visible;
+      display: flex;
       opacity: 1;
       transform: scale(1);
     }
