@@ -299,7 +299,6 @@ export class M3eExpandableListItem extends M3eListItemElement {
         class="items"
         role="list"
         aria-labelledby="${this.#headerId}"
-        aria-hidden="${!this.open}"
         ?open="${this.open}"
         @opening="${this.#handleCollapsibleEvent}"
         @opened="${this.#handleCollapsibleEvent}"

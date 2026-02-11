@@ -167,7 +167,6 @@ export class M3eExpansionPanelElement extends EventAttribute(
         id="${this.#contentId}"
         role="region"
         aria-labelledby="${this.#headerId}"
-        aria-hidden="${!this.open}"
         ?open="${this.open}"
         @opening="${this.#handleCollapsibleEvent}"
         @opened="${this.#handleCollapsibleEvent}"
