@@ -151,9 +151,7 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
     :host(.-three-line) .base {
       align-items: flex-start;
     }
-    :host(:not(:disabled):not([selected]:not(:hover)):focus-visible) .state-layer,
-    :host(:not(:disabled):not([selected]:not(:hover)):focus-visible) .ripple,
-    :host(:not(:disabled):not([selected]:not(:hover)):focus-visible) .focus-ring {
+    :host(:not(:disabled):not([selected]:not(:hover)):focus-visible) .base {
       border-top-left-radius: var(
         --_list-item-top-container-shape,
         var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
@@ -171,9 +169,7 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
         var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
       );
     }
-    :host(:not(:disabled):not([selected])) .state-layer,
-    :host(:not(:disabled):not([selected])) .ripple,
-    :host(:not(:disabled):not([selected])) .focus-ring {
+    :host(:not(:disabled):not([selected]):hover) .base {
       border-top-left-radius: var(
         --_list-item-top-container-shape,
         var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.medium})
