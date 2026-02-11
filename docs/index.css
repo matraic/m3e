@@ -30,6 +30,7 @@ main {
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
+  box-sizing: border-box;
   padding-inline: 1rem;
   padding-block: 0.5rem;
 }
