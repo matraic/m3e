@@ -877,13 +877,24 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
 
       this.notifyControlStateChange();
 
-      this.#removeValueInterceptor = interceptProperty(this.#control, "value", {
-        set: (value, setter) => {
-          setter(value);
-          this.notifyControlStateChange(true);
-        },
-      });
+      const tagname = this.#control.tagName.toLowerCase();
+      if (tagname.startsWith("m3e-") && !customElements.get(tagname)) {
+        customElements.whenDefined(tagname).then(() => this.#bindValueInterceptor());
+      } else {
+        this.#bindValueInterceptor();
+      }
     }
+  }
+
+  /** @private */
+  #bindValueInterceptor(): void {
+    if (!this.#control) return;
+    this.#removeValueInterceptor = interceptProperty(this.#control, "value", {
+      set: (value, setter) => {
+        setter(value);
+        this.notifyControlStateChange(true);
+      },
+    });
   }
 
   /** @private */
