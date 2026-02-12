@@ -182,7 +182,13 @@ export class M3eInputChipSetElement
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this.closest("m3e-form-field")?.notifyControlStateChange();
+    if (!customElements.get("m3e-form-field")) {
+      customElements.whenDefined("m3e-form-field").then(() => {
+        this.closest("m3e-form-field")?.notifyControlStateChange();
+      });
+    } else {
+      this.closest("m3e-form-field")?.notifyControlStateChange();
+    }
 
     this.#tabindex = Number.parseInt(this.getAttribute("tabindex") ?? "0");
     this.addEventListener("focus", this.#focusHandler);
