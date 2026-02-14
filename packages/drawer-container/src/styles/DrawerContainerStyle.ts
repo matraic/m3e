@@ -21,7 +21,10 @@ export const DrawerContainerStyle: CSSResultGroup = css`
     bottom: 0;
     z-index: 3;
     outline: none;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: ${DesignToken.scrollbar.thinWidth};
+    scrollbar-color: ${DesignToken.scrollbar.color};
     box-sizing: border-box;
     background-color: ${DrawerContainerToken.containerColor};
     box-shadow: ${DrawerContainerToken.containerElevation};
