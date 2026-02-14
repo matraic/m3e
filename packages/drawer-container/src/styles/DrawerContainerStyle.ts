@@ -10,64 +10,71 @@ import { DrawerContainerToken } from "./DrawerContainerToken";
  */
 export const DrawerContainerStyle: CSSResultGroup = css`
   :host {
-    display: flex;
-    flex-direction: row;
     position: relative;
     overflow: hidden;
     flex: 1 1 auto;
   }
-  .content {
-    height: 100%;
-  }
   .start,
   .end {
-    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
     z-index: 3;
     outline: none;
+    overflow: auto;
     box-sizing: border-box;
-    flex: none;
     background-color: ${DrawerContainerToken.containerColor};
     box-shadow: ${DrawerContainerToken.containerElevation};
     transition: ${unsafeCSS(
-      `margin ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard},
+      `margin-inline ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard},
       visibility ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard} allow-discrete,
       background-color ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard},
       box-shadow ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard}`,
     )};
   }
-  ::slotted([slot="start"]),
-  ::slotted([slot="end"]) {
-    height: 100%;
-    width: ${DrawerContainerToken.containerWidth};
-  }
-  :host(.-start-over) .start {
-    position: absolute;
-    top: 0;
+  .start {
     inset-inline-start: 0;
   }
-  :host(.-end-over) .end {
-    position: absolute;
-    top: 0;
+  .end {
     inset-inline-end: 0;
   }
   :host(:not([start])) .start {
     visibility: hidden;
-    margin-inline-start: calc(0px - ${DrawerContainerToken.containerWidth});
+    margin-inline-start: calc(0px - var(--_start-drawer-size, ${DrawerContainerToken.containerWidth}));
   }
   :host([start]) .start {
     margin-inline-start: 0;
   }
   :host(:not([end])) .end {
     visibility: hidden;
-    margin-inline-end: calc(0px - ${DrawerContainerToken.containerWidth});
+    margin-inline-end: calc(0px - var(--_end-drawer-size, ${DrawerContainerToken.containerWidth}));
   }
   :host([end]) .end {
     margin-inline-end: 0;
   }
+  ::slotted([slot="start"]),
+  ::slotted([slot="end"]) {
+    height: 100%;
+    width: ${DrawerContainerToken.containerWidth};
+    box-sizing: border-box;
+  }
   .content {
-    flex: 1 1 auto;
     position: relative;
     height: 100%;
+    overflow: auto;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    transition: ${unsafeCSS(
+      `margin-inline ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard}`,
+    )};
+  }
+  :host(.-start-push[start]) .content,
+  :host(.-start-side[start]) .content {
+    margin-inline-start: var(--_start-drawer-size, ${DrawerContainerToken.containerWidth});
+  }
+  :host(.-end-push[end]) .content,
+  :host(.-end-side[end]) .content {
+    margin-inline-end: var(--_end-drawer-size, ${DrawerContainerToken.containerWidth});
   }
   .scrim {
     display: block;
@@ -132,6 +139,11 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   :host([end-divider].-end-side[end]:not(.-start-push[start]):not(.-start-over[start])) .end {
     border-inline-start-color: ${DrawerContainerToken.dividerColor};
   }
+  :host(.-no-animate) .start,
+  :host(.-no-animate) .end,
+  :host(.-no-animate) .content {
+    transition: none;
+  }
   @media (forced-colors: active) {
     .start,
     .end {
@@ -172,6 +184,7 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   @media (prefers-reduced-motion) {
     .start,
     .end,
+    .content,
     .scrim {
       transition: none;
     }

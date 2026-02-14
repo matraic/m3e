@@ -1,7 +1,7 @@
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 
-import { hasAssignedNodes } from "@m3e/core";
+import { hasAssignedNodes, ResizeController } from "@m3e/core";
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/core/layout";
 
 import { DrawerMode } from "./DrawerMode";
@@ -70,6 +70,13 @@ export class M3eDrawerContainerElement extends LitElement {
   /** @private */ #disableStartFocusTrap = false;
   /** @private */ #disableEndFocusTrap = false;
 
+  /** @private */
+  #resizeController = new ResizeController(this, {
+    target: null,
+    skipInitial: true,
+    callback: (entries) => this.#handleDrawerResize(entries),
+  });
+
   /**
    * Whether the start drawer is open.
    * @default false
@@ -107,6 +114,12 @@ export class M3eDrawerContainerElement extends LitElement {
   @property({ attribute: "end-divider", type: Boolean, reflect: true }) endDivider = false;
 
   /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.classList.add("-no-animate");
+  }
+
+  /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
@@ -141,6 +154,16 @@ export class M3eDrawerContainerElement extends LitElement {
         this.dispatchEvent(new Event("change", { bubbles: true }));
       }
     }
+  }
+
+  /** @inheritdoc */
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
+    super.firstUpdated(_changedProperties);
+
+    let drawer = this.shadowRoot?.querySelector<HTMLElement>(".start");
+    if (drawer) this.#resizeController.observe(drawer);
+    drawer = this.shadowRoot?.querySelector(".end");
+    if (drawer) this.#resizeController.observe(drawer);
   }
 
   /** @inheritdoc */
@@ -183,6 +206,27 @@ export class M3eDrawerContainerElement extends LitElement {
   /** @private */
   #handleEndSlotChange(e: Event): void {
     this.#disableEndFocusTrap = !hasAssignedNodes(<HTMLSlotElement>e.target);
+  }
+
+  /** @private */
+  #handleDrawerResize(entries: ResizeObserverEntry[]): void {
+    for (const entry of entries) {
+      const borderSize: ResizeObserverSize = Array.isArray(entry.borderBoxSize)
+        ? entry.borderBoxSize[0]
+        : entry.borderBoxSize;
+
+      if (entry.target.classList.contains("start")) {
+        this.style.setProperty("--_start-drawer-size", `${borderSize.inlineSize}px`);
+      } else if (entry.target.classList.contains("end")) {
+        this.style.setProperty("--_end-drawer-size", `${borderSize.inlineSize}px`);
+      }
+    }
+
+    if (this.classList.contains("-no-animate")) {
+      // Force synchronous layout flush
+      void this.offsetTop;
+      this.classList.remove("-no-animate");
+    }
   }
 
   /** @inheritdoc */
