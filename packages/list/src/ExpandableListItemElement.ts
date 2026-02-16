@@ -250,6 +250,21 @@ export class M3eExpandableListItem extends M3eListItemElement {
   }
 
   /** @inheritdoc */
+  override focus(options?: FocusOptions): void {
+    this.button?.focus(options);
+  }
+
+  /** @inheritdoc */
+  override blur(): void {
+    this.button?.blur();
+  }
+
+  /** @inheritdoc */
+  override click(): void {
+    this.button?.click();
+  }
+
+  /** @inheritdoc */
   protected override updated(_changedProperties: PropertyValues<this>): void {
     super.updated(_changedProperties);
 

@@ -110,6 +110,21 @@ export class M3eListActionElement extends LinkButton(M3eListItemElement) {
   @property({ type: Boolean, reflect: true }) disabled = false;
 
   /** @inheritdoc */
+  override focus(options?: FocusOptions): void {
+    this.button?.focus(options);
+  }
+
+  /** @inheritdoc */
+  override blur(): void {
+    this.button?.blur();
+  }
+
+  /** @inheritdoc */
+  override click(): void {
+    this.button?.click();
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     return html`<m3e-list-item-button
       class="button"
