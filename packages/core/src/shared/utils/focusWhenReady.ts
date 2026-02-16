@@ -7,8 +7,13 @@
 export async function focusWhenReady(element: HTMLElement, timeout: number = 200): Promise<boolean> {
   element.focus();
 
+  function isFocused(element: HTMLElement): boolean {
+    const root = element.getRootNode();
+    return root instanceof ShadowRoot ? root.activeElement === element : document.activeElement === element;
+  }
+
   const start = performance.now();
-  while (element.shadowRoot?.activeElement !== element) {
+  while (!isFocused(element)) {
     if (!element.isConnected || performance.now() - start > timeout) {
       return false;
     }
