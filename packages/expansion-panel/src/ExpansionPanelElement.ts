@@ -124,6 +124,21 @@ export class M3eExpansionPanelElement extends EventAttribute(
   @property({ attribute: "hide-toggle", type: Boolean, reflect: true }) hideToggle = false;
 
   /** @inheritdoc */
+  override focus(options?: FocusOptions): void {
+    this._header?.focus(options);
+  }
+
+  /** @inheritdoc */
+  override blur(): void {
+    this._header?.blur();
+  }
+
+  /** @inheritdoc */
+  override click(): void {
+    this._header?.click();
+  }
+
+  /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
     this.#directionalitySubscription = M3eDirectionality.observe(() => {
