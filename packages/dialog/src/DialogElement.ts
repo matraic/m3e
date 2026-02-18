@@ -3,7 +3,7 @@ import { css, CSSResultGroup, html, LitElement, nothing, unsafeCSS } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { DesignToken, EventAttribute, focusWhenReady } from "@m3e/core";
+import { DesignToken, EventAttribute, focusWhenReady, ScrollLockController } from "@m3e/core";
 import {} from "@m3e/core/a11y";
 
 /**
@@ -228,6 +228,8 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
   /** @private */ @query(".base") private readonly _base!: HTMLDialogElement;
   /** @private */ @query(".content") private readonly _content!: HTMLDialogElement;
 
+  /** @private */ readonly #scrollLockController = new ScrollLockController(this);
+
   /**
    * Whether the dialog is an alert.
    * @default false
@@ -297,6 +299,7 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
       return;
     }
 
+    this.#scrollLockController.lock();
     this._base.showModal();
     this._content.scrollTop = 0;
     const focusable = this.querySelector<HTMLElement>("[autofocus]");
@@ -320,6 +323,8 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
     }
 
     await this.updateComplete;
+
+    this.#scrollLockController.unlock();
 
     if (!this._base.open) {
       this.open = false;

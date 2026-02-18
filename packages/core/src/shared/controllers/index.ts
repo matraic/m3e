@@ -7,3 +7,4 @@ export * from "./MutationController";
 export * from "./PressedController";
 export * from "./ResizeController";
 export * from "./ScrollController";
+export * from "./ScrollLockController";
