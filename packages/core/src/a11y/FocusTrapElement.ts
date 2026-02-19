@@ -41,10 +41,19 @@ export class M3eFocusTrapElement extends Disabled(LitElement) {
 
   /** @private */
   #onFocus(e: FocusEvent): void {
+    function matchesRelatedTarget(relatedTarget: EventTarget | null, test: HTMLElement | null): boolean {
+      return (
+        relatedTarget === test ||
+        (relatedTarget instanceof HTMLElement &&
+          relatedTarget.shadowRoot !== null &&
+          relatedTarget.shadowRoot.contains(test))
+      );
+    }
+
     const [first, last] = this.#getFirstAndLastFocusableChild();
     const isFirst = e?.target === this._firstTrap;
-    const fromFirst = e.relatedTarget === first;
-    const fromLast = e.relatedTarget === last;
+    const fromFirst = matchesRelatedTarget(e.relatedTarget, first);
+    const fromLast = matchesRelatedTarget(e.relatedTarget, last);
     const fromOutside = !fromFirst && !fromLast;
 
     if ((!isFirst && fromLast) || (isFirst && fromOutside)) {
@@ -79,7 +88,7 @@ export class M3eFocusTrapElement extends Disabled(LitElement) {
   #walkTree(
     root: Element,
     parents: readonly Element[],
-    callback: (element: Element, parents: readonly Element[]) => void
+    callback: (element: Element, parents: readonly Element[]) => void,
   ): void {
     parents = [...parents, root];
 
@@ -103,7 +112,7 @@ export class M3eFocusTrapElement extends Disabled(LitElement) {
   #walkShadowRoot(
     root: Element,
     parents: readonly Element[],
-    callback: (element: Element, parents: readonly Element[]) => void
+    callback: (element: Element, parents: readonly Element[]) => void,
   ): void {
     for (const node of root.shadowRoot?.childNodes ?? []) {
       if (node.nodeType !== Node.ELEMENT_NODE) continue;
@@ -118,7 +127,7 @@ export class M3eFocusTrapElement extends Disabled(LitElement) {
   #walkSlot(
     slot: HTMLSlotElement,
     parents: readonly Element[],
-    callback: (element: Element, parents: readonly Element[]) => void
+    callback: (element: Element, parents: readonly Element[]) => void,
   ) {
     for (const node of slot.assignedElements()) {
       callback(node, parents);
