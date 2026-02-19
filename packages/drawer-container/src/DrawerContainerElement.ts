@@ -3,6 +3,7 @@ import { customElement, property, state } from "lit/decorators.js";
 
 import { hasAssignedNodes, ResizeController } from "@m3e/core";
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/core/layout";
+import "@m3e/core/a11y";
 
 import { DrawerMode } from "./DrawerMode";
 
