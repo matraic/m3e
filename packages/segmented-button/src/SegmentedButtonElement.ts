@@ -74,15 +74,15 @@ export class M3eSegmentedButtonElement extends Labelled(
       vertical-align: middle;
       align-items: center;
     }
-    ::slotted(:first-child) {
+    ::slotted(.-first) {
       border-start-start-radius: var(--m3e-segmented-button-start-shape, ${DesignToken.shape.corner.full});
       border-end-start-radius: var(--m3e-segmented-button-start-shape, ${DesignToken.shape.corner.full});
     }
-    ::slotted(:last-child) {
+    ::slotted(.-last) {
       border-start-end-radius: var(--m3e-segmented-button-end-shape, ${DesignToken.shape.corner.full});
       border-end-end-radius: var(--m3e-segmented-button-end-shape, ${DesignToken.shape.corner.full});
     }
-    ::slotted(:not(:first-child)) {
+    ::slotted(:not(.-first)) {
       --_segmented-button-left-border: none;
     }
   `;
@@ -197,6 +197,10 @@ export class M3eSegmentedButtonElement extends Labelled(
   #handleSlotChange() {
     const { added } = this[selectionManager].setItems([...this.querySelectorAll("m3e-button-segment")]);
     added.forEach((x) => x.classList.toggle("-hide-selection", this.hideSelectionIndicator));
+    this[selectionManager].items.forEach((segment, i) => {
+      segment.classList.toggle("-first", i == 0);
+      segment.classList.toggle("-last", i == this[selectionManager].items.length - 1);
+    });
   }
 
   /** @private */
