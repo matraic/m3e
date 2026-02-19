@@ -4,7 +4,7 @@ import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 import { DesignToken, EventAttribute, focusWhenReady, ScrollLockController } from "@m3e/core";
-import {} from "@m3e/core/a11y";
+import "@m3e/core/a11y";
 
 /**
  * A dialog that provides important prompts in a user flow.
