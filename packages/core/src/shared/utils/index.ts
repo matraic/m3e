@@ -1,3 +1,4 @@
+export * from "./computeCssSize";
 export * from "./computeLineCount";
 export * from "./focusWhenReady";
 export * from "./forcedColorsActive";
@@ -10,3 +11,4 @@ export * from "./prefersReducedMotion";
 export * from "./resolveElementById";
 export * from "./resolveFragmentUrl";
 export * from "./scrollIntoViewIfNeeded";
+export * from "./VelocityTracker";

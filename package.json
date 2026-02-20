@@ -4,6 +4,7 @@
     "packages/app-bar",
     "packages/avatar",
     "packages/badge",
+    "packages/bottom-sheet",
     "packages/button",
     "packages/card",
     "packages/checkbox",
