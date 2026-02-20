@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Bottom Sheet for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Badge for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.3.0/dist/index.min.js",
+          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.3.0/dist/a11y.min.js",
+          "@m3e/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/core@1.3.0/dist/anchoring.min.js",
+          "@m3e/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/core@1.3.0/dist/bidi.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.3.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.3.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.3.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/button@1.3.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/list@1.3.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.3.0/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/bottom-sheet@1.3.0/dist/index.min.js"></script>
+    <script src="../main.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body" max-depth="4">
+        <span slot="overline">On this page</span>
+        <span slot="title">Bottom Sheet</span>
+      </m3e-toc>
+
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Bottom Sheet</m3e-heading>
+      <p>
+        The <code>m3e-bottom-sheet</code> component is a sheet used to show secondary content anchored to the bottom of
+        the screen.
+      </p>
+      <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
+      <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/bottom-sheet</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+      <p>
+        <strong>NOTE: this page is presented in a nested <code>iframe</code>.</strong>
+      </p>
+      <ul>
+        <li>The modal bottom sheet scrim will only overlay the current window.</li>
+        <li>The bottom sheet is positioned relative the current window.</li>
+      </ul>
+
+      <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+      <p>
+        Use the <code>m3e-bottom-sheet</code> to present content anchored to the bottom of the screen. Bottom sheets are
+        closed by default. You can open a sheet using a <code>m3e-bottom-sheet-trigger</code> nested inside any
+        clickable element. You can also open a sheet declaratively with the <code>open</code> attribute or
+        programmatically with the <code>show</code> method. To close a sheet, use a
+        <code>m3e-bottom-sheet-action</code> inside a clickable element, remove the <code>open</code> attribute, or call
+        the <code>hide</code> method programmatically.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-bottom-sheet-trigger for="bottomSheet"> Open bottom sheet </m3e-bottom-sheet-trigger>
+          </m3e-button>
+          <m3e-bottom-sheet id="bottomSheet">
+            <m3e-action-list>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Keep</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Add to a note</span>
+              </m3e-list-action>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Docs</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Embed in a document</span>
+              </m3e-list-action>
+            </m3e-action-list>
+          </m3e-bottom-sheet>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button&gt;
+  &lt;m3e-bottom-sheet-trigger for=&quot;bottomSheet&quot;&gt;
+    Open bottom sheet
+  &lt;/m3e-bottom-sheet-trigger&gt;
+&lt;/m3e-button&gt;
+&lt;m3e-bottom-sheet id=&quot;bottomSheet&quot;&gt;
+  &lt;m3e-action-list&gt;
+    &lt;m3e-list-action&gt;
+      &lt;m3e-bottom-sheet-action&gt;Google Keep&lt;/m3e-bottom-sheet-action&gt;
+      &lt;span slot=&quot;supporting-text&quot;&gt;Add to a note&lt;/span&gt;
+    &lt;/m3e-list-action&gt;
+    &lt;m3e-list-action&gt;
+      &lt;m3e-bottom-sheet-action&gt;Google Docs&lt;/m3e-bottom-sheet-action&gt;
+      &lt;span slot=&quot;supporting-text&quot;&gt;Embed in a document&lt;/span&gt;
+    &lt;/m3e-list-action&gt;
+  &lt;/m3e-action-list&gt;
+&lt;/m3e-bottom-sheet&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Lifecycle events</m3e-heading>
+      <p>
+        Bottom sheets emit four lifecycle events that reflect their transition between open and closed states. These
+        events fire whether the sheet is opened programmatically, by a trigger, by keyboard interaction, or through user
+        gestures.
+      </p>
+      <ul>
+        <li>
+          <code>opening</code> — Fired when the sheet begins opening. This event is cancelable, allowing you to prevent
+          the sheet from opening by calling <code>event.preventDefault()</code>.
+        </li>
+        <li><code>opened</code> — Fired after the sheet finishes opening and reaches its initial detent.</li>
+        <li>
+          <code>closing</code> — Fired when the sheet begins closing. This event is also cancelable, allowing you to
+          intercept or block dismissal (for example, to confirm unsaved changes).
+        </li>
+        <li><code>closed</code> — Fired after the sheet finishes closing and is fully hidden.</li>
+      </ul>
+      <p>
+        These events give you full control over the sheet's lifecycle, including validation, analytics, and custom
+        behaviors during open and close transitions.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+      <p>
+        Bottom sheets come in two variants: <strong>standard</strong> and <strong>modal</strong>. Both share the same
+        anatomy and resizing behavior, but they differ in how they interact with the rest of the page. A standard bottom
+        sheet is non-blocking. It sits above the page without trapping focus or preventing interaction with the
+        underlying UI. A modal bottom sheet blocks interaction with the rest of the page until dismissed. It presents a
+        backdrop (scrim), traps focus, supports autofocus on open, and restores focus to the trigger when closed.
+      </p>
+      <p>
+        Bottom sheets are standard by default. Add the <code>modal</code> attribute to <code>m3e-bottom-sheet</code> to
+        create a modal bottom sheet.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-bottom-sheet-trigger for="bottomSheet2"> Open modal bottom sheet </m3e-bottom-sheet-trigger>
+          </m3e-button>
+          <m3e-bottom-sheet id="bottomSheet2" modal>
+            <m3e-action-list>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Keep</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Add to a note</span>
+              </m3e-list-action>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Docs</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Embed in a document</span>
+              </m3e-list-action>
+            </m3e-action-list>
+          </m3e-bottom-sheet>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-bottom-sheet id=&quot;bottomSheet&quot; modal&gt;
+    &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-bottom-sheet&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Modal behavior</m3e-heading>
+      <p>
+        When opened in modal mode, the bottom sheet behaves like a dialog and takes exclusive control of user
+        interaction. Focus moves into the sheet automatically, and if any element inside the sheet has the
+        <code>autofocus</code> attribute, it receives focus first. While the sheet is open, the rest of the document
+        becomes inert, preventing keyboard and assistive-technology users from interacting with content behind the
+        sheet. Page scrolling is also locked to keep the underlying layout stable.
+      </p>
+      <p>
+        Modal sheets display a scrim behind the sheet. Activating the scrim triggers a cancelable
+        <code>cancel</code> event, allowing the sheet to close unless the you intercept it. When the sheet closes, focus
+        is restored to the trigger that opened it, ensuring users return to their previous position in the page without
+        losing context.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Drag handles</m3e-heading>
+      <p>
+        Bottom sheets support an optional drag handle at the top edge of the sheet. The handle consists of two parts:
+      </p>
+      <ul>
+        <li><strong>A draggable bar</strong> — a visual affordance that indicates the sheet can be dragged.</li>
+        <li>
+          <strong>A handle button</strong> — an interactive control used to cycle detents, expand to full height, or
+          close the sheet when no detents are defined.
+        </li>
+      </ul>
+      <p>
+        Add the <code>handle</code> attribute to <code>m3e-bottom-sheet</code> to display the drag handle and use the
+        <code>handle-label</code> attribute to provide an accessible label (defaults to "Drag handle").
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-bottom-sheet-trigger for="bottomSheet3"> Open draggable modal bottom sheet </m3e-bottom-sheet-trigger>
+          </m3e-button>
+          <m3e-bottom-sheet id="bottomSheet3" modal handle>
+            <m3e-action-list>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Keep</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Add to a note</span>
+              </m3e-list-action>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Docs</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Embed in a document</span>
+              </m3e-list-action>
+            </m3e-action-list>
+          </m3e-bottom-sheet>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-bottom-sheet id=&quot;bottomSheet&quot; modal handle&gt;
+    &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-bottom-sheet&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Detents</m3e-heading>
+      <p>
+        Detents define the vertical positions a bottom sheet can rest at. A sheet may have no detents, a single detent,
+        or multiple detents. Detents control how the sheet resizes, how it responds to drag gestures, and how the handle
+        button behaves.
+      </p>
+      <p>
+        Detents are declared using the <code>detents</code> attribute on <code>m3e-bottom-sheet</code>. Each detent
+        represents a target height the sheet can snap to.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-bottom-sheet-trigger for="bottomSheet4">
+              Open draggable modal bottom sheet with detents
+            </m3e-bottom-sheet-trigger>
+          </m3e-button>
+          <m3e-bottom-sheet id="bottomSheet4" modal handle detents="fit half full">
+            <m3e-action-list>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Keep</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Add to a note</span>
+              </m3e-list-action>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Docs</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Embed in a document</span>
+              </m3e-list-action>
+            </m3e-action-list>
+          </m3e-bottom-sheet>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-bottom-sheet id=&quot;bottomSheet&quot; modal handle detents=&quot;fit half full&quot;&gt;
+    &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-bottom-sheet&gt;</pre
+        >
+      </m3e-card>
+      <m3e-heading variant="title" size="medium" level="4">Types of detents</m3e-heading>
+      <p>
+        Bottom sheets support two kinds of detents: <strong>named detents</strong> and
+        <strong>unit-based detents</strong>. Both define the vertical positions the sheet can snap to, but they serve
+        different purposes.
+      </p>
+      <p>
+        Named detents are semantic height presets including <code>collapsed</code>, <code>fit</code>, <code>half</code>,
+        and <code>full</code> that map to familiar bottom-sheet behaviors. They provide predictable, expressive sizing
+        without requiring you to think in pixels or percentages.
+      </p>
+      <p>
+        Unit-based detents use explicit measurements (percentages or pixels) to give you precise control over the
+        sheet's height. These behave just like named detents but allow for custom layouts and fine-tuned sizing.
+      </p>
+      <p>
+        You can mix and match named and unit-based detents in any order. The sheet snaps between them based on drag
+        gestures, velocity, and the order in which they are declared.
+      </p>
+
+      <m3e-heading variant="title" size="medium" level="4">Initial height</m3e-heading>
+      <p>The initial height defines the sheet's entry point into the interaction model. For example:</p>
+      <ul>
+        <li>Starting at <code>collapsed</code> creates a “peek” experience.</li>
+        <li>Starting at <code>fit</code> shows content immediately.</li>
+        <li>Starting at <code>half</code> or <code>full</code> creates a more immersive modal feel.</li>
+      </ul>
+      <p>
+        When a bottom sheet opens, it snaps to its initial detent. By default, this is the first detent listed in the
+        <code>detents</code> attribute. You can override this by setting the <code>detent</code> attribute (zero-based
+        index), which selects the detent the sheet should open to.
+      </p>
+
+      <p>In the following example, the sheet opens at <code>half</code> instead of <code>fit</code>.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-bottom-sheet-trigger for="bottomSheet7">
+              Open draggable modal bottom sheet with detents at half
+            </m3e-bottom-sheet-trigger>
+          </m3e-button>
+          <m3e-bottom-sheet id="bottomSheet7" modal handle detents="fit half full" detent="1">
+            <m3e-action-list>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Keep</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Add to a note</span>
+              </m3e-list-action>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Docs</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Embed in a document</span>
+              </m3e-list-action>
+            </m3e-action-list>
+          </m3e-bottom-sheet>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-bottom-sheet id=&quot;bottomSheet&quot; modal handle detents=&quot;fit half full&quot; detent=&quot;1&quot;&gt;
+    &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-bottom-sheet&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        You can also set the initial detent on a <code>m3e-bottom-sheet-trigger</code> using its
+        <code>detent</code> attribute, allowing each trigger to open the sheet at a different height.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-bottom-sheet-trigger for="bottomSheet8" detent="1">
+              Open draggable modal bottom sheet with detents at half via trigger
+            </m3e-bottom-sheet-trigger>
+          </m3e-button>
+          <m3e-bottom-sheet id="bottomSheet8" modal handle detents="fit half full">
+            <m3e-action-list>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Keep</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Add to a note</span>
+              </m3e-list-action>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Docs</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Embed in a document</span>
+              </m3e-list-action>
+            </m3e-action-list>
+          </m3e-bottom-sheet>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-button&gt;
+  &lt;m3e-bottom-sheet-trigger for=&quot;bottomSheet&quot; detent=&quot;1&quot;&gt;
+    Open draggable modal bottom sheet with detents at half via trigger
+  &lt;/m3e-bottom-sheet-trigger&gt;
+&lt;/m3e-button&gt;
+&lt;m3e-bottom-sheet id=&quot;bottomSheet&quot; modal handle detents=&quot;fit half full&quot;&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-bottom-sheet&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Collapsed height</m3e-heading>
+      <p>
+        The collapsed state always includes the sheet's header. This ensures the sheet remains visible, discoverable,
+        and interactive even at its lowest detent. You can optionally reveal a portion of the content area beneath the
+        header by setting the <code>--m3e-bottom-sheet-peek-height</code> CSS custom property. This value applies only
+        to the content area and defaults to <code>0px</code>, meaning the collapsed state shows the header alone.
+      </p>
+      <p>
+        When the sheet is collapsed, the content area is always marked inert. This applies whenever the sheet's rendered
+        height falls at or below the combined height of the header and the configured peek height. In this state, only
+        the header is interactive; the content cannot receive focus, pointer events, or screen-reader navigation. This
+        prevents users from interacting with partially hidden elements and ensures the collapsed state behaves as a
+        non-interactive preview. The content becomes interactive again only after the sheet expands above the collapsed
+        height.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-bottom-sheet-trigger for="bottomSheet9">
+              Open draggable modal bottom sheet with detents at collapsed with custom peek
+            </m3e-bottom-sheet-trigger>
+          </m3e-button>
+          <m3e-bottom-sheet
+            id="bottomSheet9"
+            modal
+            handle
+            detents="collapsed fit half full"
+            style="--m3e-bottom-sheet-peek-height: 36px"
+          >
+            <m3e-action-list>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Keep</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Add to a note</span>
+              </m3e-list-action>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Docs</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Embed in a document</span>
+              </m3e-list-action>
+            </m3e-action-list>
+          </m3e-bottom-sheet>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-bottom-sheet 
+  id=&quot;bottomSheet&quot;
+  modal 
+  handle 
+  detents=&quot;collapsed fit half full&quot;
+  style=&quot;--m3e-bottom-sheet-peek-height: 36px&quot;&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-bottom-sheet&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Hideability</m3e-heading>
+      <p>
+        A bottom sheet is hideable when it can be dismissed by dragging downward past its lowest detent. This allows the
+        sheet to behave like a modal dialog or a temporary surface that can be fully removed from view. You enable this
+        behavior by adding the <code>hideable</code> attribute to <code>m3e-bottom-sheet</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-bottom-sheet-trigger for="bottomSheet5"> Open hideable modal bottom sheet </m3e-bottom-sheet-trigger>
+          </m3e-button>
+          <m3e-bottom-sheet id="bottomSheet5" modal handle hideable>
+            <m3e-action-list>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Keep</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Add to a note</span>
+              </m3e-list-action>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Docs</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Embed in a document</span>
+              </m3e-list-action>
+            </m3e-action-list>
+          </m3e-bottom-sheet>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-bottom-sheet id=&quot;bottomSheet&quot; modal handle hideable&gt;
+    &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-bottom-sheet&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-bottom-sheet-trigger for="bottomSheet6">
+              Open hideable modal bottom sheet with detents
+            </m3e-bottom-sheet-trigger>
+          </m3e-button>
+          <m3e-bottom-sheet id="bottomSheet6" modal handle hideable detents="fit half full">
+            <m3e-action-list>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Keep</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Add to a note</span>
+              </m3e-list-action>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Docs</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Embed in a document</span>
+              </m3e-list-action>
+            </m3e-action-list>
+          </m3e-bottom-sheet>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-bottom-sheet id=&quot;bottomSheet&quot; modal handle hideable detents=&quot;fit half full&quot;&gt;
+    &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-bottom-sheet&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Headers</m3e-heading>
+      <p>
+        The <code>m3e-bottom-sheet</code> provides a <code>header</code> named slot for supplying custom content within
+        the sheet's draggable header region. When a header is provided, it appears directly below the optional drag
+        handle. The handle, if enabled, is never replaced by custom header content.
+      </p>
+      <p>
+        If the handle is not enabled, the entire header region—including any slotted header content—remains draggable.
+        This ensures the sheet always preserves a reliable drag surface regardless of whether a handle is present. If
+        dragging is undesired, place header content in the default slot and omit the <code>handle</code> attribute.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-button>
+            <m3e-bottom-sheet-trigger for="bottomSheet10">
+              Open hideable modal bottom sheet with detents and header
+            </m3e-bottom-sheet-trigger>
+          </m3e-button>
+          <m3e-bottom-sheet
+            id="bottomSheet10"
+            modal
+            handle
+            hideable
+            detents="collapsed fit half full"
+            aria-labelledby="sheetTitle"
+          >
+            <m3e-heading id="sheetTitle" slot="header" variant="title" size="large">Choose a destination</m3e-heading>
+            <m3e-action-list>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Keep</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Add to a note</span>
+              </m3e-list-action>
+              <m3e-list-action>
+                <m3e-bottom-sheet-action>Google Docs</m3e-bottom-sheet-action>
+                <span slot="supporting-text">Embed in a document</span>
+              </m3e-list-action>
+            </m3e-action-list>
+          </m3e-bottom-sheet>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-bottom-sheet id=&quot;bottomSheet&quot; modal handle hideable detents=&quot;collapsed fit half full&quot;&gt;
+  &lt;m3e-heading id=&quot;sheetTitle&quot; slot=&quot;header&quot; variant=&quot;title&quot; size=&quot;large&quot;&gt;
+    Choose a destination
+  &lt;/m3e-heading&gt;
+    &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-bottom-sheet&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Standard bottom sheets use <code>role="region"</code>, which identifies the sheet as a labeled section of the
+        page. Because they are not modal, they do not trap focus, support autofocus, or block interaction with the rest
+        of the document.
+      </p>
+      <p>
+        Bottom sheets are typically opened by a trigger element. The primary trigger exposes the correct ARIA
+        relationships so assistive technologies understand that activating it will reveal the sheet. The trigger
+        automatically receives <code>aria-controls</code> referencing the sheet's <code>id</code>, and its
+        <code>aria-expanded</code> attribute is updated as the sheet opens and closes. Standard sheets are also labelled
+        by their primary trigger when that trigger provides an <code>id</code>. Secondary triggers do not participate in
+        ARIA ownership and receive no accessibility attributes; they simply open the sheet. Triggers are considered
+        primary by default; use the <code>secondary</code> attribute on <code>m3e-bottom-sheet-trigger</code> to opt out
+        of ARIA ownership when multiple triggers open the same sheet.
+      </p>
+      <p>
+        Modal bottom sheets use <code>role="dialog"</code> and <code>aria-modal="true"</code>, which identify the sheet
+        as a blocking interaction surface. Unlike standard sheets, modal sheets trap focus, prevent interaction with the
+        rest of the page, and require an explicit action to dismiss. The sheet must have an accessible name, provided by
+        either <code>aria-labelledby</code> or <code>aria-label</code>, so assistive technologies can announce its
+        purpose when it opens.
+      </p>
+      <p>
+        Modal sheets are also opened by a trigger element. The trigger communicates that activating it will open a modal
+        dialog by receiving <code>aria-haspopup="dialog"</code>.
+      </p>
+      <p>
+        Modal sheets trap focus and keyboard navigation is contained within the sheet while it is open. Tabbing cycles
+        through the sheet's focusable elements, wrapping from the last element back to the first. The rest of the page
+        is made inert, preventing background content from receiving focus or pointer interaction. When the sheet is
+        dismissed, focus returns to the trigger that opened it, preserving user context and aligning with established
+        dialog accessibility patterns.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        This package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/bottom-sheet/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include additional dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
+      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production, use index.min.js and a11y.min.js for faster load times.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
+        documents the properties, attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer
+        only="m3e-bottom-sheet"
+        src="https://cdn.jsdelivr.net/npm/@m3e/bottom-sheet@1.3.0/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-bottom-sheet-trigger"
+        src="https://cdn.jsdelivr.net/npm/@m3e/bottom-sheet@1.3.0/dist/custom-elements.json"
+      >
+      </api-viewer>
+      <api-viewer
+        only="m3e-bottom-sheet-action"
+        src="https://cdn.jsdelivr.net/npm/@m3e/bottom-sheet@1.3.0/dist/custom-elements.json"
+      >
+      </api-viewer>
+    </m3e-theme>
+  </body>
+</html>

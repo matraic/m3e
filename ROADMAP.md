@@ -4,7 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 1.2.0 Release
+- 1.3.0 Release
 
 ## 🔮 Future
 
@@ -40,6 +40,7 @@ Planned components which have not yet entered development:
 
 ## 🏛️ Past Milestones
 
+- 1.3.0 - Bug fixes, added @m3e/bottom-sheet
 - 1.2.1 - 1.2.2 - Bug fixes
 - 1.2.0 - Bug fixes, @m3e/menu enhancements (expressive updates), @m3e/tooltip rich tooltip
 - 1.1.8 - 1.1.11: Bug fixes
