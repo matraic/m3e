@@ -128,31 +128,40 @@ This section details the attributes, slots, events, and CSS custom properties av
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                          | Description                                     |
-| ------------------------------------------------- | ----------------------------------------------- |
-| `--m3e-bottom-sheet-width`                        | The width of the sheet.                         |
-| `--m3e-bottom-sheet-max-width`                    | The maximum width of the sheet.                 |
-| `--m3e-bottom-sheet-container-color`              | The background color of the sheet container.    |
-| `--m3e-bottom-sheet-elevation`                    | The elevation level when not modal.             |
-| `--m3e-bottom-sheet-modal-elevation`              | The elevation level when modal.                 |
-| `--m3e-bottom-sheet-full-elevation`               | The elevation level when full height.           |
-| `--m3e-bottom-sheet-z-index`                      | The z-index of the non-modal sheet.             |
-| `--m3e-bottom-sheet-minimized-container-shape`    | The border radius when minimized.               |
-| `--m3e-bottom-sheet-container-shape`              | The border radius of the sheet container.       |
-| `--m3e-bottom-sheet-full-container-shape`         | The border radius when full height.             |
-| `--m3e-bottom-sheet-scrim-color`                  | The color of the scrim overlay.                 |
-| `--m3e-bottom-sheet-scrim-opacity`                | The opacity of the scrim overlay.               |
-| `--m3e-bottom-sheet-peek-height`                  | The visible height when minimized.              |
-| `--m3e-bottom-sheet-compact-top-space`            | The top space in compact mode.                  |
-| `--m3e-bottom-sheet-top-space`                    | The top space in standard mode.                 |
-| `--m3e-bottom-sheet-padding-block`                | The vertical padding.                           |
-| `--m3e-bottom-sheet-padding-inline`               | The horizontal padding.                         |
-| `--m3e-bottom-sheet-drag-handle-container-height` | The height of the drag handle container.        |
-| `--m3e-bottom-sheet-handle-width`                 | The width of the drag handle.                   |
-| `--m3e-bottom-sheet-handle-height`                | The height of the drag handle.                  |
-| `--m3e-bottom-sheet-handle-shape`                 | The border radius of the handle.                |
-| `--m3e-bottom-sheet-handle-color`                 | The color of the drag handle.                   |
-| `--m3e-bottom-sheet-handle-focus-ring-offset`     | The offset of the focus ring around the handle. |
+| Property                                          | Description                                        |
+| ------------------------------------------------- | -------------------------------------------------- |
+| `--m3e-bottom-sheet-width`                        | The width of the sheet.                            |
+| `--m3e-bottom-sheet-max-width`                    | The maximum width of the sheet.                    |
+| `--m3e-bottom-sheet-container-color`              | The background color of the sheet container.       |
+| `--m3e-bottom-sheet-elevation`                    | The elevation level when not modal.                |
+| `--m3e-bottom-sheet-modal-elevation`              | The elevation level when modal.                    |
+| `--m3e-bottom-sheet-full-elevation`               | The elevation level when full height.              |
+| `--m3e-bottom-sheet-z-index`                      | The z-index of the non-modal sheet.                |
+| `--m3e-bottom-sheet-minimized-container-shape`    | The border radius when minimized.                  |
+| `--m3e-bottom-sheet-container-shape`              | The border radius of the sheet container.          |
+| `--m3e-bottom-sheet-full-container-shape`         | The border radius when full height.                |
+| `--m3e-bottom-sheet-scrim-color`                  | The color of the scrim overlay.                    |
+| `--m3e-bottom-sheet-scrim-opacity`                | The opacity of the scrim overlay.                  |
+| `--m3e-bottom-sheet-peek-height`                  | The visible height when minimized.                 |
+| `--m3e-bottom-sheet-compact-top-space`            | The top space in compact mode.                     |
+| `--m3e-bottom-sheet-top-space`                    | The top space in standard mode.                    |
+| `--m3e-bottom-sheet-padding-block`                | The vertical padding.                              |
+| `--m3e-bottom-sheet-padding-inline`               | The horizontal padding.                            |
+| `--m3e-bottom-sheet-drag-handle-container-height` | The height of the drag handle container.           |
+| `--m3e-bottom-sheet-handle-width`                 | The width of the drag handle.                      |
+| `--m3e-bottom-sheet-handle-height`                | The height of the drag handle.                     |
+| `--m3e-bottom-sheet-handle-shape`                 | The border radius of the handle.                   |
+| `--m3e-bottom-sheet-handle-color`                 | The color of the drag handle.                      |
+| `--m3e-bottom-sheet-handle-focus-ring-offset`     | The offset of the focus ring around the handle.    |
+| `--m3e-bottom-sheet-color`                        | The foreground (text) color used inside the sheet. |
+| `--m3e-bottom-sheet-content-font-size`            | Font size for sheet content.                       |
+| `--m3e-bottom-sheet-content-font-weight`          | Font weight for sheet content.                     |
+| `--m3e-bottom-sheet-content-line-height`          | Line height for sheet content.                     |
+| `--m3e-bottom-sheet-content-tracking`             | Letter spacing (tracking) for sheet content.       |
+| `--m3e-bottom-sheet-header-font-size`             | Font size for the sheet header.                    |
+| `--m3e-bottom-sheet-header-font-weight`           | Font weight for the sheet header.                  |
+| `--m3e-bottom-sheet-header-line-height`           | Line height for the sheet header.                  |
+| `--m3e-bottom-sheet-header-tracking`              | Letter spacing (tracking) for the sheet header.    |
 
 ### 🗂️ `m3e-bottom-sheet-trigger`
 

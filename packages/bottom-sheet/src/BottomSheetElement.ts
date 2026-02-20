@@ -105,6 +105,15 @@ import "@m3e/core/a11y";
  * @cssprop --m3e-bottom-sheet-handle-shape - The border radius of the handle.
  * @cssprop --m3e-bottom-sheet-handle-color - The color of the drag handle.
  * @cssprop --m3e-bottom-sheet-handle-focus-ring-offset - The offset of the focus ring around the handle.
+ * @cssprop --m3e-bottom-sheet-color - The foreground (text) color of the sheet.
+ * @cssprop --m3e-bottom-sheet-content-font-size - Font size for the sheet content.
+ * @cssprop --m3e-bottom-sheet-content-font-weight - Font weight for the sheet content.
+ * @cssprop --m3e-bottom-sheet-content-line-height - Line height for the sheet content.
+ * @cssprop --m3e-bottom-sheet-content-tracking - Letter spacing (tracking) for the sheet content.
+ * @cssprop --m3e-bottom-sheet-header-font-size - Font size for the sheet header.
+ * @cssprop --m3e-bottom-sheet-header-font-weight - Font weight for the sheet header.
+ * @cssprop --m3e-bottom-sheet-header-line-height - Line height for the sheet header.
+ * @cssprop --m3e-bottom-sheet-header-tracking - Letter spacing (tracking) for the sheet header.
  */
 @customElement("m3e-bottom-sheet")
 export class M3eBottomSheetElement extends EventAttribute(
@@ -151,6 +160,7 @@ export class M3eBottomSheetElement extends EventAttribute(
       width: var(--m3e-bottom-sheet-width, 100%);
       max-width: var(--m3e-bottom-sheet-max-width, 40rem);
       height: var(--_bottom-sheet-height);
+      color: var(--m3e-bottom-sheet-color, ${DesignToken.color.onSurface});
       background-color: var(--m3e-bottom-sheet-container-color, ${DesignToken.color.surfaceContainerLow});
       transition: ${unsafeCSS(
         `transform ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standardDecelerate},
@@ -234,6 +244,16 @@ export class M3eBottomSheetElement extends EventAttribute(
       scrollbar-color: ${DesignToken.scrollbar.color};
       padding-block-end: var(--m3e-bottom-sheet-padding-block, 0.5rem);
       padding-inline: var(--m3e-bottom-sheet-padding-inline, 1rem);
+      font-size: var(--m3e-bottom-sheet-content-font-size, ${DesignToken.typescale.standard.body.medium.fontSize});
+      font-weight: var(
+        --m3e-bottom-sheet-content-font-weight,
+        ${DesignToken.typescale.standard.body.medium.fontWeight}
+      );
+      line-height: var(
+        --m3e-bottom-sheet-content-line-height,
+        ${DesignToken.typescale.standard.body.medium.lineHeight}
+      );
+      letter-spacing: var(--m3e-bottom-sheet-content-tracking, ${DesignToken.typescale.standard.body.medium.tracking});
     }
     .content {
       height: fit-content;
@@ -246,6 +266,10 @@ export class M3eBottomSheetElement extends EventAttribute(
       border-top-left-radius: inherit;
       border-top-right-radius: inherit;
       padding-block-start: var(--m3e-bottom-sheet-padding-block, 0.5rem);
+      font-size: var(--m3e-bottom-sheet-header-font-size, ${DesignToken.typescale.standard.title.large.fontSize});
+      font-weight: var(--m3e-bottom-sheet-header-font-weight, ${DesignToken.typescale.standard.title.large.fontWeight});
+      line-height: var(--m3e-bottom-sheet-header-line-height, ${DesignToken.typescale.standard.title.large.lineHeight});
+      letter-spacing: var(--m3e-bottom-sheet-header-tracking, ${DesignToken.typescale.standard.title.large.tracking});
     }
     .header {
       cursor: grab;
