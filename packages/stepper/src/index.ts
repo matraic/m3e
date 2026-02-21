@@ -5,5 +5,6 @@ export * from "./StepPanelElement";
 export * from "./StepperButtonElementBase";
 export * from "./StepperElement";
 export * from "./StepperNextElement";
+export * from "./StepperOrientation";
 export * from "./StepperPreviousElement";
 export * from "./StepperResetElement";
