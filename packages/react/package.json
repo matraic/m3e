@@ -1,0 +1,212 @@
+{
+  "name": "@m3e/react",
+  "version": "1.3.1",
+  "description": "React Wrappers for M3E",
+  "author": "matraic <matraic@yahoo.com>",
+  "license": "MIT",
+  "homepage": "https://matraic.github.io/m3e/#/frameworks/react.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matraic/m3e.git"
+  },
+  "keywords": [
+    "material design",
+    "web components",
+    "react"
+  ],
+  "type": "module",
+  "exports": {
+    "./app-bar": {
+      "types": "./dist/src/app-bar/index.d.ts",
+      "default": "./dist/app-bar.js"
+    },
+    "./autocomplete": {
+      "types": "./dist/src/autocomplete/index.d.ts",
+      "default": "./dist/autocomplete.js"
+    },
+    "./avatar": {
+      "types": "./dist/src/avatar/index.d.ts",
+      "default": "./dist/avatar.js"
+    },
+    "./badge": {
+      "types": "./dist/src/badge/index.d.ts",
+      "default": "./dist/badge.js"
+    },
+    "./bottom-sheet": {
+      "types": "./dist/src/bottom-sheet/index.d.ts",
+      "default": "./dist/bottom-sheet.js"
+    },
+    "./button": {
+      "types": "./dist/src/button/index.d.ts",
+      "default": "./dist/button.js"
+    },
+    "./button-group": {
+      "types": "./dist/src/button-group/index.d.ts",
+      "default": "./dist/button-group.js"
+    },
+    "./card": {
+      "types": "./dist/src/card/index.d.ts",
+      "default": "./dist/card.js"
+    },
+    "./checkbox": {
+      "types": "./dist/src/checkbox/index.d.ts",
+      "default": "./dist/checkbox.js"
+    },
+    "./chips": {
+      "types": "./dist/src/chips/index.d.ts",
+      "default": "./dist/chips.js"
+    },
+    "./dialog": {
+      "types": "./dist/src/dialog/index.d.ts",
+      "default": "./dist/dialog.js"
+    },
+    "./divider": {
+      "types": "./dist/src/divider/index.d.ts",
+      "default": "./dist/divider.js"
+    },
+    "./drawer-container": {
+      "types": "./dist/src/drawer-container/index.d.ts",
+      "default": "./dist/drawer-container.js"
+    },
+    "./expansion-panel": {
+      "types": "./dist/src/expansion-panel/index.d.ts",
+      "default": "./dist/expansion-panel.js"
+    },
+    "./fab": {
+      "types": "./dist/src/fab/index.d.ts",
+      "default": "./dist/fab.js"
+    },
+    "./fab-menu": {
+      "types": "./dist/src/fab-menu/index.d.ts",
+      "default": "./dist/fab-menu.js"
+    },
+    "./form-field": {
+      "types": "./dist/src/form-field/index.d.ts",
+      "default": "./dist/form-field.js"
+    },
+    "./heading": {
+      "types": "./dist/src/heading/index.d.ts",
+      "default": "./dist/heading.js"
+    },
+    "./icon": {
+      "types": "./dist/src/icon/index.d.ts",
+      "default": "./dist/icon.js"
+    },
+    "./icon-button": {
+      "types": "./dist/src/icon-button/index.d.ts",
+      "default": "./dist/icon-button.js"
+    },
+    "./list": {
+      "types": "./dist/src/list/index.d.ts",
+      "default": "./dist/list.js"
+    },
+    "./loading-indicator": {
+      "types": "./dist/src/loading-indicator/index.d.ts",
+      "default": "./dist/loading-indicator.js"
+    },
+    "./menu": {
+      "types": "./dist/src/menu/index.d.ts",
+      "default": "./dist/menu.js"
+    },
+    "./nav-bar": {
+      "types": "./dist/src/nav-bar/index.d.ts",
+      "default": "./dist/nav-bar.js"
+    },
+    "./nav-menu": {
+      "types": "./dist/src/nav-menu/index.d.ts",
+      "default": "./dist/nav-menu.js"
+    },
+    "./nav-rail": {
+      "types": "./dist/src/nav-rail/index.d.ts",
+      "default": "./dist/nav-rail.js"
+    },
+    "./option": {
+      "types": "./dist/src/option/index.d.ts",
+      "default": "./dist/option.js"
+    },
+    "./paginator": {
+      "types": "./dist/src/paginator/index.d.ts",
+      "default": "./dist/paginator.js"
+    },
+    "./progress-indicator": {
+      "types": "./dist/src/progress-indicator/index.d.ts",
+      "default": "./dist/progress-indicator.js"
+    },
+    "./radio-group": {
+      "types": "./dist/src/radio-group/index.d.ts",
+      "default": "./dist/radio-group.js"
+    },
+    "./segmented-button": {
+      "types": "./dist/src/segmented-button/index.d.ts",
+      "default": "./dist/segmented-button.js"
+    },
+    "./select": {
+      "types": "./dist/src/select/index.d.ts",
+      "default": "./dist/select.js"
+    },
+    "./shape": {
+      "types": "./dist/src/shape/index.d.ts",
+      "default": "./dist/shape.js"
+    },
+    "./slide-group": {
+      "types": "./dist/src/slide-group/index.d.ts",
+      "default": "./dist/slide-group.js"
+    },
+    "./slider": {
+      "types": "./dist/src/slider/index.d.ts",
+      "default": "./dist/slider.js"
+    },
+    "./snackbar": {
+      "types": "./dist/src/snackbar/index.d.ts",
+      "default": "./dist/snackbar.js"
+    },
+    "./split-button": {
+      "types": "./dist/src/split-button/index.d.ts",
+      "default": "./dist/split-button.js"
+    },
+    "./stepper": {
+      "types": "./dist/src/stepper/index.d.ts",
+      "default": "./dist/stepper.js"
+    },
+    "./switch": {
+      "types": "./dist/src/switch/index.d.ts",
+      "default": "./dist/switch.js"
+    },
+    "./tabs": {
+      "types": "./dist/src/tabs/index.d.ts",
+      "default": "./dist/tabs.js"
+    },
+    "./textarea-autosize": {
+      "types": "./dist/src/textarea-autosize/index.d.ts",
+      "default": "./dist/textarea-autosize.js"
+    },
+    "./theme": {
+      "types": "./dist/src/theme/index.d.ts",
+      "default": "./dist/theme.js"
+    },
+    "./toc": {
+      "types": "./dist/src/toc/index.d.ts",
+      "default": "./dist/toc.js"
+    },
+    "./toolbar": {
+      "types": "./dist/src/toolbar/index.d.ts",
+      "default": "./dist/toolbar.js"
+    },
+    "./tooltip": {
+      "types": "./dist/src/tooltip/index.d.ts",
+      "default": "./dist/tooltip.js"
+    }
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "cem": "echo \"@m3e/react: skipping cem\"",
+    "lint": "npx eslint ./src",
+    "clean": "rimraf dist"
+  },
+  "peerDependencies": {
+    "@lit/react": "^1.0.8",
+    "@m3e/all": "^1.3.0",
+    "lit": "^3.3.0",
+    "react": ">=18"
+  }
+}
