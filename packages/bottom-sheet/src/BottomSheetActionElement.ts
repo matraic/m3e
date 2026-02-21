@@ -9,7 +9,7 @@ import { ActionElementBase } from "@m3e/core";
  * @slot - Renders the content of the action.
  */
 @customElement("m3e-bottom-sheet-action")
-export class M3eDialogActionElement extends ActionElementBase {
+export class M3eBottomSheetActionElement extends ActionElementBase {
   /** @inheritdoc */
   protected override _onClick(): void {
     this.closest("m3e-bottom-sheet")?.hide();
@@ -18,6 +18,6 @@ export class M3eDialogActionElement extends ActionElementBase {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "m3e-bottom-sheet-action": M3eDialogActionElement;
+    "m3e-bottom-sheet-action": M3eBottomSheetActionElement;
   }
 }
