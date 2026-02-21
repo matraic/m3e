@@ -45,6 +45,8 @@ import type { M3eOptionElement, M3eOptionPanelElement } from "@m3e/option";
  * @attr required - Whether the user is required to make a selection when interacting with the autocomplete.
  *
  * @slot - Renders the options of the autocomplete.
+ *
+ * @fires toggle - Emitted when the options menu opens or closes.
  */
 @customElement("m3e-autocomplete")
 export class M3eAutocompleteElement extends HtmlFor(LitElement) {

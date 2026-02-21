@@ -107,6 +107,12 @@ This section details the attributes and slots available for the `m3e-autocomplet
 | ----------- | ------------------------------ |
 | _(default)_ | Renders the options available. |
 
+### 🔥 Events
+
+| Event    | Description                                    |
+| -------- | ---------------------------------------------- |
+| `toggle` | Emitted when the options menu opens or closes. |
+
 ## 🤝 Contributing
 
 See the root monorepo `CONTRIBUTING.md` for guidelines on contributing to this package.
