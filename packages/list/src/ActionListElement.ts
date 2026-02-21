@@ -4,7 +4,7 @@ import { RovingTabIndexManager, selectionManager } from "@m3e/core/a11y";
 
 import { M3eListElement } from "./ListElement";
 import { M3eListActionElement } from "./ListActionElement";
-import { M3eExpandableListItem } from "./ExpandableListItemElement";
+import { M3eExpandableListItemElement } from "./ExpandableListItemElement";
 import { M3eListItemButtonElement } from "./ListItemButtonElement";
 import { M3eListItemElement } from "./ListItemElement";
 
@@ -54,10 +54,10 @@ export class M3eActionListElement extends M3eListElement {
             return true;
           }
 
-          const ancestor = expandable.closest<M3eExpandableListItem | M3eActionListElement>(
+          const ancestor = expandable.closest<M3eExpandableListItemElement | M3eActionListElement>(
             "m3e-expandable-list-item,m3e-action-list",
           );
-          if (ancestor instanceof M3eExpandableListItem) {
+          if (ancestor instanceof M3eExpandableListItemElement) {
             expandable = ancestor;
           }
           break;
@@ -81,7 +81,7 @@ export class M3eActionListElement extends M3eListElement {
   /** @inheritdoc */
   override async notifyItemsChange(): Promise<void> {
     const items = [
-      ...this.querySelectorAll<M3eListActionElement | M3eExpandableListItem>(
+      ...this.querySelectorAll<M3eListActionElement | M3eExpandableListItemElement>(
         "m3e-list-action,m3e-expandable-list-item",
       ),
     ];
@@ -97,7 +97,7 @@ export class M3eActionListElement extends M3eListElement {
     }
 
     const { added } = this[selectionManager].setItems(
-      items.map((x) => (x instanceof M3eExpandableListItem ? x.button : x.button)),
+      items.map((x) => (x instanceof M3eExpandableListItemElement ? x.button : x.button)),
     );
 
     if (!this[selectionManager].activeItem) {

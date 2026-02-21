@@ -122,7 +122,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-disabled-media-opacity - Opacity for media when disabled.
  */
 @customElement("m3e-expandable-list-item")
-export class M3eExpandableListItem extends M3eListItemElement {
+export class M3eExpandableListItemElement extends M3eListItemElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -224,7 +224,7 @@ export class M3eExpandableListItem extends M3eListItemElement {
   `;
 
   /** @private */ private static __nextId = 0;
-  /** @private */ #id = M3eExpandableListItem.__nextId++;
+  /** @private */ #id = M3eExpandableListItemElement.__nextId++;
   /** @private */ #contentId = `m3e-expandable-list-item-${this.#id}-content`;
   /** @private */ #headerId = `m3e-expandable-list-item-${this.#id}-header`;
   /** @private */ #items = new Array<M3eListItemElement>();
@@ -366,6 +366,6 @@ export class M3eExpandableListItem extends M3eListItemElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "m3e-expandable-list-item": M3eExpandableListItem;
+    "m3e-expandable-list-item": M3eExpandableListItemElement;
   }
 }
