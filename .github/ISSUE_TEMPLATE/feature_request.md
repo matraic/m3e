@@ -1,6 +1,6 @@
 ---
 name: Feature Request
-about: Suggest a new feature or enhancement for the web component library
+about: Suggest a new feature or enhancement for the Web Component library
 labels: enhancement
 assignees: ""
 ---

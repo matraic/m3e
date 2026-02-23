@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eRichTooltipActionElement } from "@m3e/tooltip";
-export type { M3eRichTooltipActionElement } from "@m3e/tooltip";
+import { M3eRichTooltipActionElement } from "@m3e/web/tooltip";
+export type { M3eRichTooltipActionElement } from "@m3e/web/tooltip";
 
 /**
- * React wrapper for the `m3e-rich-tooltip-action` web component from `@m3e/tooltip`.
+ * React binding for the `m3e-rich-tooltip-action` Web Component from `@m3e/tooltip`.
  *
  * This component renders the underlying `<m3e-rich-tooltip-action>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

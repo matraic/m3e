@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent, EventName } from "@lit/react";
 
-import { M3ePaginatorElement, PageEventDetail } from "@m3e/paginator";
-export type { M3ePaginatorElement, PageEventDetail } from "@m3e/paginator";
+import { M3ePaginatorElement, PageEventDetail } from "@m3e/web/paginator";
+export type { M3ePaginatorElement, PageEventDetail } from "@m3e/web/paginator";
 
 /**
- * React wrapper for the `m3e-paginator` web component from `@m3e/paginator`.
+ * React binding for the `m3e-paginator` Web Component from `@m3e/paginator`.
  *
  * This component renders the underlying `<m3e-paginator>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

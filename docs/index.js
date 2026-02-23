@@ -1,4 +1,4 @@
-import { M3eDirectionality } from "@m3e/core/bidi";
+import { M3eDirectionality } from "@m3e/web/core/bidi";
 
 window.addEventListener("DOMContentLoaded", () => {
   M3eDirectionality.observe(() => {

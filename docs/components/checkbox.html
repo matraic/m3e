@@ -23,18 +23,18 @@
       {
         "imports": {
           "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
-          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.3.1/dist/index.min.js",
-          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.3.1/dist/a11y.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/core-a11y.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.3.1/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.3.1/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/button@1.3.1/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/toc@1.3.1/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.3.1/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/checkbox@1.3.1/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/button.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/checkbox.min.js"></script>
     <script src="checkbox.js"></script>
     <script src="../main.js"></script>
   </head>
@@ -47,8 +47,7 @@
 
       <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Checkbox</m3e-heading>
       <p>The <code>m3e-checkbox</code> component enables users to select one or more options from a set.</p>
-      <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
-      <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/checkbox</pre></m3e-card>
+      <m3e-card variant="filled" class="install"><pre slot="content">import "@m3e/web/checkbox";</pre></m3e-card>
 
       <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
       <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
@@ -176,7 +175,7 @@
 
       <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
       <p>
-        This package uses
+        The <code>@m3e/web</code> package uses
         <a
           href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
           target="_blank"
@@ -186,7 +185,7 @@
 
       <m3e-card variant="filled" class="example">
         <pre slot="content">
-&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/checkbox/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/checkbox.js&quot;&gt;&lt;/script&gt;</pre
         >
       </m3e-card>
       <p>
@@ -204,21 +203,23 @@
   {
     &quot;imports&quot;: {
       &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
-      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;
+      &quot;@m3e/web/core&quot;: &quot;/node_modules/@m3e/web/dist/core.js&quot;
     }
   }
 &lt;/script&gt;</pre
         >
       </m3e-card>
-      <p>For production, use index.min.js for faster load times.</p>
+      <p>For production builds, use the minified files to ensure optimal load performance.</p>
 
       <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
       <p>
-        This package includes a <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which
-        documents the properties, attributes, slots, events and CSS custom properties of each component.
+        The <code>@m3e/web</code> package includes a
+        <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which documents the properties,
+        attributes, slots, events and CSS custom properties of each component.
       </p>
       <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
-      <api-viewer src="https://cdn.jsdelivr.net/npm/@m3e/checkbox@1.3.1/dist/custom-elements.json"> </api-viewer>
+      <api-viewer only="m3e-checkbox" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/custom-elements.json">
+      </api-viewer>
     </m3e-theme>
   </body>
 </html>

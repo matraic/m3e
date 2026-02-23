@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eDialogElement } from "@m3e/dialog";
-export type { M3eDialogElement } from "@m3e/dialog";
+import { M3eDialogElement } from "@m3e/web/dialog";
+export type { M3eDialogElement } from "@m3e/web/dialog";
 
 /**
- * React wrapper for the `m3e-dialog` web component from `@m3e/dialog`.
+ * React binding for the `m3e-dialog` Web Component from `@m3e/dialog`.
  *
  * This component renders the underlying `<m3e-dialog>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

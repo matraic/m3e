@@ -21,33 +21,36 @@
       {
         "imports": {
           "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
-          "@m3e/core": "https://cdn.jsdelivr.net/npm/@m3e/core@1.3.1/dist/index.min.js",
-          "@m3e/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/core@1.3.1/dist/a11y.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/core-a11y.min.js"
         }
       }
     </script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/card@1.3.1/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/heading@1.3.1/dist/index.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/theme@1.3.1/dist/index.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/theme.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body id="body">
     <m3e-theme strong-focus>
       <m3e-heading variant="display" size="large" level="1">Installation</m3e-heading>
       <p>
-        The M3E web component library is distributed as a set of modular packages under the scoped namespace
-        <strong>@m3e</strong>. Each component is published independently and can be installed as needed.
+        The M3E Web Component library is distributed as a single package under the <strong>@m3e/web</strong> namespace.
       </p>
+      <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/web</pre></m3e-card>
+      <p>After installing the package, each component can be imported individually through its own module.</p>
       <p>For example:</p>
-      <m3e-card variant="filled" class="install"><pre slot="content">npm i @m3e/button</pre></m3e-card>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">import "@m3e/web/button";</pre>
+      </m3e-card>
 
       <p>
-        <strong>Alternatively, install the meta-package that aggregates all components into a single install.</strong>
-        Use this option for convenience or when you want full access to the M3E ecosystem without managing individual
-        dependencies.
+        <strong>Alternatively, import the <code>@m3e/web/all</code> module to load every component at once.</strong>
+        This option is convenient when you want full access to the M3E ecosystem without managing individual modules.
       </p>
+
       <m3e-card variant="filled" class="install">
-        <pre slot="content">npm i @m3e/all</pre>
+        <pre slot="content">import "@m3e/web/all";</pre>
       </m3e-card>
 
       <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
@@ -58,13 +61,13 @@
           target="_blank"
           >JavaScript Modules</a
         >
-        and documents their native module support. To use a package directly in a browser without a bundler, use a
-        module script similar to the following.
+        and documents their native module support. To use a module directly in a browser without a bundler, use a module
+        script similar to the following.
       </p>
 
       <m3e-card variant="filled" class="example">
         <pre slot="content">
-&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/button/dist/index.js&quot;&gt;&lt;/script&gt;</pre
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/button.js&quot;&gt;&lt;/script&gt;</pre
         >
       </m3e-card>
       <p>
@@ -75,7 +78,7 @@
           >import map</a
         >
         to include dependencies. The following is an example import map that imports all entry points for
-        <code>@m3e/core</code>.
+        <code>@m3e/web/core</code>.
       </p>
       <m3e-card variant="filled" class="example">
         <pre slot="content">
@@ -83,29 +86,29 @@
   {
     &quot;imports&quot;: {
       &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
-      &quot;@m3e/core&quot;: &quot;/node_modules/@m3e/core/dist/index.js&quot;,
-      &quot;@m3e/core/a11y&quot;: &quot;/node_modules/@m3e/core/dist/a11y.js&quot;,
-      &quot;@m3e/core/anchoring&quot;: &quot;/node_modules/@m3e/core/dist/anchoring.js&quot;,
-      &quot;@m3e/core/bidi&quot;: &quot;/node_modules/@m3e/core/dist/bidi.js&quot;,
-      &quot;@m3e/core/layout&quot;: &quot;/node_modules/@m3e/core/dist/layout.js&quot;,
-      &quot;@m3e/core/platform&quot;: &quot;/node_modules/@m3e/core/dist/platform.js&quot;
+      &quot;@m3e/web/core&quot;: &quot;/node_modules/@m3e/web/dist/core.js&quot;,
+      &quot;@m3e/web/core/a11y&quot;: &quot;/node_modules/@m3e/web/dist/core-a11y.js&quot;,
+      &quot;@m3e/web/core/anchoring&quot;: &quot;/node_modules/@m3e/web/dist/core-anchoring.js&quot;,
+      &quot;@m3e/web/core/bidi&quot;: &quot;/node_modules/@m3e/web/dist/core-bidi.js&quot;,
+      &quot;@m3e/web/core/layout&quot;: &quot;/node_modules/@m3e/web/dist/core-layout.js&quot;,
+      &quot;@m3e/web/core/platform&quot;: &quot;/node_modules/@m3e/web/dist/core-platform.js&quot;
     }
   }
 &lt;/script&gt;</pre
         >
       </m3e-card>
-      <p>For production, use minified versions (e.g. index.min.js) for faster load times.</p>
+      <p>For production builds, use the minified files to ensure optimal load performance.</p>
 
       <m3e-heading variant="headline" size="medium" level="2">Editor integration</m3e-heading>
       <p>
-        Each package includes a
+        The <code>@m3e/web</code> package includes a
         <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank">Custom Elements Manifest</a>
         to support enhanced editor tooling and developer experience.
       </p>
 
       <m3e-heading variant="headline" size="small" level="3">Visual Studio Code</m3e-heading>
       <p>
-        To enable autocomplete and hover documentation for a package, install the
+        To enable autocomplete and hover documentation, install the
         <a href="https://marketplace.visualstudio.com/items?itemName=pwrs.cem-language-server-vscode" target="_blank"
           >Custom Elements Manifest Language Server</a
         >
@@ -114,14 +117,13 @@
       </p>
       <p>
         Alternately, you can explicitly reference the <code>html-custom-data.json</code> and
-        <code>css-custom-data.json</code> in your workspace settings. The following is an example for
-        <code>@m3e/button</code>.
+        <code>css-custom-data.json</code> in your workspace settings.
       </p>
       <m3e-card variant="filled" class="example">
         <pre slot="content">
 &#123;
-&nbsp;&nbsp;&quot;html.customData&quot;: [&quot;./node_modules/@m3e/button/dist/html-custom-data.json&quot;],
-&nbsp;&nbsp;&quot;css.customData&quot;: [&quot;./node_modules/@m3e/button/dist/css-custom-data.json&quot;]
+&nbsp;&nbsp;&quot;html.customData&quot;: [&quot;./node_modules/@m3e/web/dist/html-custom-data.json&quot;],
+&nbsp;&nbsp;&quot;css.customData&quot;: [&quot;./node_modules/@m3e/web/dist/css-custom-data.json&quot;]
 &#125;</pre
         >
       </m3e-card>

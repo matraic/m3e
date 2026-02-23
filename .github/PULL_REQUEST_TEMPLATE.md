@@ -1,6 +1,6 @@
 ---
 name: Pull Request
-about: Submit a pull request to propose changes to the web component library
+about: Submit a pull request to propose changes to the Web Component library
 ---
 
 ## Description

@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eAppBarElement } from "@m3e/app-bar";
-export type { AppBarSize, M3eAppBarElement } from "@m3e/app-bar";
+import { M3eAppBarElement } from "@m3e/web/app-bar";
+export type { AppBarSize, M3eAppBarElement } from "@m3e/web/app-bar";
 
 /**
- * React wrapper for the `m3e-app-bar` web component from `@m3e/app-bar`.
+ * React binding for the `m3e-app-bar` Web Component from `@m3e/app-bar`.
  *
  * This component renders the underlying `<m3e-app-bar>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

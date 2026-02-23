@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eSliderThumbElement } from "@m3e/slider";
-export type { M3eSliderThumbElement } from "@m3e/slider";
+import { M3eSliderThumbElement } from "@m3e/web/slider";
+export type { M3eSliderThumbElement } from "@m3e/web/slider";
 
 /**
- * React wrapper for the `m3e-slider-thumb` web component from `@m3e/slider`.
+ * React binding for the `m3e-slider-thumb` Web Component from `@m3e/slider`.
  *
  * This component renders the underlying `<m3e-slider-thumb>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

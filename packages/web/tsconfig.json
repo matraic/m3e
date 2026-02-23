@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist/src",
+    "paths": {
+      "@m3e/web": ["src"],
+      "@m3e/web/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "**/*.mjs", "**/*.js"],
+  "exclude": []
+}

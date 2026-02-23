@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eTocElement } from "@m3e/toc";
-export type { M3eTocElement } from "@m3e/toc";
+import { M3eTocElement } from "@m3e/web/toc";
+export type { M3eTocElement } from "@m3e/web/toc";
 
 /**
- * React wrapper for the `m3e-toc` web component from `@m3e/toc`.
+ * React binding for the `m3e-toc` Web Component from `@m3e/toc`.
  *
  * This component renders the underlying `<m3e-toc>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

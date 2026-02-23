@@ -7,7 +7,7 @@ assignees: ""
 ---
 
 **Describe the bug**
-A clear and concise description of the issue with the web component.
+A clear and concise description of the issue with the Web Component.
 
 **To Reproduce**
 Steps to reproduce the behavior:

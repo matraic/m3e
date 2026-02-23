@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eListElement } from "@m3e/list";
-export type { ListVariant, M3eListElement } from "@m3e/list";
+import { M3eListElement } from "@m3e/web/list";
+export type { ListVariant, M3eListElement } from "@m3e/web/list";
 
 /**
- * React wrapper for the `m3e-list` web component from `@m3e/list`.
+ * React binding for the `m3e-list` Web Component from `@m3e/list`.
  *
  * This component renders the underlying `<m3e-list>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

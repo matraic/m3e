@@ -1,11 +1,15 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eExpansionPanelElement } from "@m3e/expansion-panel";
-export type { ExpansionToggleDirection, ExpansionTogglePosition, M3eExpansionPanelElement } from "@m3e/expansion-panel";
+import { M3eExpansionPanelElement } from "@m3e/web/expansion-panel";
+export type {
+  ExpansionToggleDirection,
+  ExpansionTogglePosition,
+  M3eExpansionPanelElement,
+} from "@m3e/web/expansion-panel";
 
 /**
- * React wrapper for the `m3e-expansion-panel` web component from `@m3e/expansion-panel`.
+ * React binding for the `m3e-expansion-panel` Web Component from `@m3e/expansion-panel`.
  *
  * This component renders the underlying `<m3e-expansion-panel>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

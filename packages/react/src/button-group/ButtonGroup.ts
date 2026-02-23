@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eButtonGroupElement } from "@m3e/button-group";
-export type { ButtonGroupSize, ButtonGroupVariant, M3eButtonGroupElement } from "@m3e/button-group";
+import { M3eButtonGroupElement } from "@m3e/web/button-group";
+export type { ButtonGroupSize, ButtonGroupVariant, M3eButtonGroupElement } from "@m3e/web/button-group";
 
 /**
- * React wrapper for the `m3e-button-group` web component from `@m3e/button-group`.
+ * React binding for the `m3e-button-group` Web Component from `@m3e/button-group`.
  *
  * This component renders the underlying `<m3e-button-group>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

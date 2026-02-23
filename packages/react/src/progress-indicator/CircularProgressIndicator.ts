@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eCircularProgressIndicatorElement } from "@m3e/progress-indicator";
-export type { M3eCircularProgressIndicatorElement } from "@m3e/progress-indicator";
+import { M3eCircularProgressIndicatorElement } from "@m3e/web/progress-indicator";
+export type { M3eCircularProgressIndicatorElement } from "@m3e/web/progress-indicator";
 
 /**
- * React wrapper for the `m3e-circular-progress-indicator` web component from `@m3e/progress-indicator`.
+ * React binding for the `m3e-circular-progress-indicator` Web Component from `@m3e/progress-indicator`.
  *
  * This component renders the underlying `<m3e-circular-progress-indicator>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

@@ -1,6 +1,6 @@
-# Contributing to Material 3 Expressive
+# Contributing
 
-Thank you for your interest in contributing to the M3E monorepo! We welcome contributions that help improve, extend, and refine our suite of Material 3 web components.
+Thank you for your interest in contributing to the M3E monorepo! We welcome contributions that help improve, extend, and refine our suite of Material 3 Web Components.
 
 ## How to Contribute
 
@@ -51,4 +51,4 @@ If you find a bug or have a feature request, please open an issue with detailed 
 
 For questions or support, open an issue or contact the maintainers directly.
 
-Thank you for helping us build expressive, accessible, and beautiful web components with Material 3!
+Thank you for helping us build expressive, accessible, and beautiful Web Components with Material 3!

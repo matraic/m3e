@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eOptionElement } from "@m3e/option";
-export type { M3eOptionElement } from "@m3e/option";
+import { M3eOptionElement } from "@m3e/web/option";
+export type { M3eOptionElement } from "@m3e/web/option";
 
 /**
- * React wrapper for the `m3e-option` web component from `@m3e/option`.
+ * React binding for the `m3e-option` Web Component from `@m3e/option`.
  *
  * This component renders the underlying `<m3e-option>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

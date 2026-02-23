@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eDividerElement } from "@m3e/divider";
-export type { M3eDividerElement } from "@m3e/divider";
+import { M3eDividerElement } from "@m3e/web/divider";
+export type { M3eDividerElement } from "@m3e/web/divider";
 
 /**
- * React wrapper for the `m3e-divider` web component from `@m3e/divider`.
+ * React binding for the `m3e-divider` Web Component from `@m3e/divider`.
  *
  * This component renders the underlying `<m3e-divider>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

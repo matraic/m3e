@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>React for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="React for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/core-a11y.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.0/dist/theme.min.js"></script>
+    <script src="../main.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-heading variant="display" size="large" level="1">React</m3e-heading>
+      <p>
+        The <strong>@m3e/react</strong> package provides idiomatic React bindings for all M3E Web Components. Each
+        component is exposed as its own React module, offering typed props, event mappings, and seamless integration
+        with the React rendering model.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">npm i @m3e/react</pre>
+      </m3e-card>
+
+      <p>
+        After installation, import the React module for any component you want to use. Each module wraps the
+        corresponding <code>@m3e/web</code> module and exposes a familiar React component API.
+      </p>
+
+      <p>For example:</p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">import { M3eButton } from "@m3e/react/button";</pre>
+      </m3e-card>
+
+      <p>
+        React modules automatically register their underlying Web Component, so no additional side-effect imports from
+        <code>@m3e/web</code> are required.
+      </p>
+
+      <p>
+        <strong>
+          Alternatively, import the <code>@m3e/react/all</code> module to load every React binding at once.
+        </strong>
+        This option is convenient when you want full access to the M3E component suite without managing individual
+        modules.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">import "@m3e/react/all";</pre>
+      </m3e-card>
+
+      <p>
+        Each React module mirrors the structure of its Web Component counterpart, ensuring a consistent mental model
+        across both ecosystems. Use individual modules for tree-shaking and minimal bundles, or the aggregated module
+        for rapid prototyping and full-suite development.
+      </p>
+    </m3e-theme>
+  </body>
+</html>

@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eFilterChipSetElement } from "@m3e/chips";
-export type { M3eFilterChipSetElement } from "@m3e/chips";
+import { M3eFilterChipSetElement } from "@m3e/web/chips";
+export type { M3eFilterChipSetElement } from "@m3e/web/chips";
 
 /**
- * React wrapper for the `m3e-filter-chip-set` web component from `@m3e/chips`.
+ * React binding for the `m3e-filter-chip-set` Web Component from `@m3e/chips`.
  *
  * This component renders the underlying `<m3e-filter-chip-set>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

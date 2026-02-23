@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eFormFieldElement } from "@m3e/form-field";
-export type { FloatLabelType, FormFieldVariant, FormFieldControl, M3eFormFieldElement } from "@m3e/form-field";
+import { M3eFormFieldElement } from "@m3e/web/form-field";
+export type { FloatLabelType, FormFieldVariant, FormFieldControl, M3eFormFieldElement } from "@m3e/web/form-field";
 
 /**
- * React wrapper for the `m3e-form-field` web component from `@m3e/form-field`.
+ * React binding for the `m3e-form-field` Web Component from `@m3e/form-field`.
  *
  * This component renders the underlying `<m3e-form-field>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

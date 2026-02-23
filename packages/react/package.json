@@ -1,7 +1,7 @@
 {
   "name": "@m3e/react",
-  "version": "1.3.1",
-  "description": "React Wrappers for M3E",
+  "version": "2.0.0",
+  "description": "React bindings for M3E Web Components",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
   "homepage": "https://matraic.github.io/m3e/#/frameworks/react.html",
@@ -11,7 +11,6 @@
   },
   "keywords": [
     "material design",
-    "web components",
     "react"
   ],
   "type": "module",
@@ -195,6 +194,10 @@
     "./tooltip": {
       "types": "./dist/src/tooltip/index.d.ts",
       "default": "./dist/tooltip.js"
+    },
+    "./all": {
+      "types": "./dist/src/all.d.ts",
+      "default": "./dist/all.js"
     }
   },
   "scripts": {
@@ -205,7 +208,7 @@
   },
   "peerDependencies": {
     "@lit/react": "^1.0.8",
-    "@m3e/all": "^1.3.0",
+    "@m3e/web": "^2.0.0",
     "lit": "^3.3.0",
     "react": ">=18"
   }

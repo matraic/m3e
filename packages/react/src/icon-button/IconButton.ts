@@ -1,17 +1,17 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eIconButtonElement } from "@m3e/icon-button";
+import { M3eIconButtonElement } from "@m3e/web/icon-button";
 export type {
   IconButtonShape,
   IconButtonSize,
   IconButtonVariant,
   IconButtonWidth,
   M3eIconButtonElement,
-} from "@m3e/icon-button";
+} from "@m3e/web/icon-button";
 
 /**
- * React wrapper for the `m3e-icon-button` web component from `@m3e/icon-button`.
+ * React binding for the `m3e-icon-button` Web Component from `@m3e/icon-button`.
  *
  * This component renders the underlying `<m3e-icon-button>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.
