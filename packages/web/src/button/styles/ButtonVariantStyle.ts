@@ -163,7 +163,7 @@ export const ButtonVariantStyle: CSSResultGroup = [
   buttonVariantStyle("filled"),
   buttonVariantStyle("tonal"),
   css`
-    :host([variant="outlined"]) .base {
+    :host([variant="outlined"]:not([toggle][selected]):not(:disabled):not([disabled-interactive])) .base {
       outline-style: solid;
     }
   `,
