@@ -6,7 +6,7 @@ import { MonitorControllerBase, MonitorControllerOptions } from "./MonitorContro
 export type PressedControllerCallback = (
   pressed: boolean,
   point: { x: number; y: number },
-  target: HTMLElement
+  target: HTMLElement,
 ) => void;
 
 /** Encapsulates options used to configure a `PressedController`. */
@@ -68,8 +68,8 @@ export class PressedController extends MonitorControllerBase {
   /** @inheritdoc */
   override hostDisconnected(): void {
     document.removeEventListener("pointerup", this.#pointerUpHandler, { capture: this.#capture });
-    document.addEventListener("touchend", this.#touchEndHandler, { capture: this.#capture });
-    document.addEventListener("touchcancel", this.#touchEndHandler, { capture: this.#capture });
+    document.removeEventListener("touchend", this.#touchEndHandler, { capture: this.#capture });
+    document.removeEventListener("touchcancel", this.#touchEndHandler, { capture: this.#capture });
 
     super.hostDisconnected();
     this.#pressedTargets.clear();
@@ -123,35 +123,39 @@ export class PressedController extends MonitorControllerBase {
     const x = e.x;
     const y = e.y;
 
-    for (const target of this.#pressedTargets.keys()) {
-      const remainingTime = this.#minPressedDuration - (performance.now() - this.#pressedTargets.get(target)!);
-      if (remainingTime > 0) {
-        setTimeout(() => {
+    for (const target of e.composedPath()) {
+      if (target instanceof HTMLElement && this.#pressedTargets.has(target)) {
+        const remainingTime = this.#minPressedDuration - (performance.now() - this.#pressedTargets.get(target)!);
+        if (remainingTime > 0) {
+          setTimeout(() => {
+            this.#pressedTargets.delete(target);
+            this.#callback(false, { x, y }, target);
+          }, remainingTime);
+        } else {
           this.#pressedTargets.delete(target);
           this.#callback(false, { x, y }, target);
-        }, remainingTime);
-      } else {
-        this.#pressedTargets.delete(target);
-        this.#callback(false, { x, y }, target);
+        }
       }
     }
   }
 
   /** @private */
   #handleTouchEnd(e: TouchEvent): void {
-    const x = e.touches[0]?.clientX ?? 0;
-    const y = e.touches[0]?.clientY ?? 0;
+    const x = e.changedTouches[0]?.clientX ?? 0;
+    const y = e.changedTouches[0]?.clientY ?? 0;
 
-    for (const target of this.#pressedTargets.keys()) {
-      const remainingTime = this.#minPressedDuration - (performance.now() - this.#pressedTargets.get(target)!);
-      if (remainingTime > 0) {
-        setTimeout(() => {
+    for (const target of e.composedPath()) {
+      if (target instanceof HTMLElement && this.#pressedTargets.has(target)) {
+        const remainingTime = this.#minPressedDuration - (performance.now() - this.#pressedTargets.get(target)!);
+        if (remainingTime > 0) {
+          setTimeout(() => {
+            this.#pressedTargets.delete(target);
+            this.#callback(false, { x, y }, target);
+          }, remainingTime);
+        } else {
           this.#pressedTargets.delete(target);
           this.#callback(false, { x, y }, target);
-        }, remainingTime);
-      } else {
-        this.#pressedTargets.delete(target);
-        this.#callback(false, { x, y }, target);
+        }
       }
     }
   }
