@@ -2,12 +2,6 @@
 
 The `@m3e/react` package provides idiomatic, typed React bindings for M3E Web Components, exposing their properties, attributes, and native DOM events through a familiar React interface with full ref forwarding and client‑only compatibility.
 
-## 📦 Installation
-
-```bash
-npm install @m3e/react
-```
-
 ## 🧪 Example
 
 The following example demonstrates how to use the `M3eButton` React binding from `@m3e/react/button`.
