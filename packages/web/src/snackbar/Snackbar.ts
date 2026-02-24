@@ -127,9 +127,12 @@ export class M3eSnackbar {
   }
 }
 
+// This is the class type, as opposed to an instance of the class.
+type M3eSnackbarClass = typeof M3eSnackbar;
+
 declare global {
   /** Presents short updates about application processes at the bottom of the screen from anywhere in an application. */
-  var M3eSnackbar: M3eSnackbar;
+  var M3eSnackbar: M3eSnackbarClass;
 }
 
 globalThis.M3eSnackbar = M3eSnackbar;
