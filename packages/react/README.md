@@ -15,7 +15,7 @@ The following example demonstrates how to use the `M3eButton` React binding from
 ```tsx
 "use client";
 
-import { M3eButton } from "@m3e/web/react/button";
+import { M3eButton } from "@m3e/react/button";
 
 export default function ClickExample() {
   return <M3eButton onClick={() => console.log("Button clicked!")}>Click me</M3eButton>;
