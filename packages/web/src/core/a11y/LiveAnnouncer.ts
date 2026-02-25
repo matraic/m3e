@@ -136,9 +136,12 @@ export class M3eLiveAnnouncer {
   }
 }
 
+// This is the class type, as opposed to an instance of the class.
+type M3eLiveAnnouncerClass = typeof M3eLiveAnnouncer;
+
 declare global {
   /** Utility for announcing messages to screen readers. */
-  var M3eLiveAnnouncer: M3eLiveAnnouncer;
+  var M3eLiveAnnouncer: M3eLiveAnnouncerClass;
 }
 
 globalThis.M3eLiveAnnouncer = M3eLiveAnnouncer;

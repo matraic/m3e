@@ -59,9 +59,12 @@ export class M3ePlatform {
   static readonly Safari = M3ePlatform.isBrowser && /safari/i.test(navigator.userAgent) && M3ePlatform.WebKit;
 }
 
+// This is the class type, as opposed to an instance of the class.
+type M3ePlatformClass = typeof M3ePlatform;
+
 declare global {
   /** Utility used to detect the current platform. */
-  var M3ePlatform: M3ePlatform;
+  var M3ePlatform: M3ePlatformClass;
 }
 
 globalThis.M3ePlatform = M3ePlatform;

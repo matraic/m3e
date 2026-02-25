@@ -122,9 +122,12 @@ export class M3eAriaDescriber {
   }
 }
 
+// This is the class type, as opposed to an instance of the class.
+type M3eAriaDescriberClass = typeof M3eAriaDescriber;
+
 declare global {
   /** Utility for generating visually hidden elements that convey descriptive messages using `aria-describedby`. */
-  var M3eAriaDescriber: M3eAriaDescriber;
+  var M3eAriaDescriber: M3eAriaDescriberClass;
 }
 
 globalThis.M3eAriaDescriber = M3eAriaDescriber;

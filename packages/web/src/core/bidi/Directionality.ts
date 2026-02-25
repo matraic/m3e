@@ -66,8 +66,8 @@ export class M3eDirectionality {
           ? "rtl"
           : "ltr"
         : _dir === "rtl"
-        ? "rtl"
-        : "ltr";
+          ? "rtl"
+          : "ltr";
   }
 
   /** @private */
@@ -77,9 +77,12 @@ export class M3eDirectionality {
   }
 }
 
+// This is the class type, as opposed to an instance of the class.
+type M3eDirectionalityClass = typeof M3eDirectionality;
+
 declare global {
   /** Utility used to determine the directionality of the current document. */
-  var M3eDirectionality: M3eDirectionality;
+  var M3eDirectionality: M3eDirectionalityClass;
 }
 
 globalThis.M3eDirectionality = M3eDirectionality;

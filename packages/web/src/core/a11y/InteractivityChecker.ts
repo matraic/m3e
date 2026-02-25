@@ -9,7 +9,7 @@ export class M3eInteractivityChecker {
   static isFocusable(element: Element, parents?: readonly Element[]): boolean {
     if (
       element.matches(
-        ":is(button,input,select,textarea,object,:is(a,area)[href],[tabindex],[contenteditable=true]):not(:disabled,[disabled])"
+        ":is(button,input,select,textarea,object,:is(a,area)[href],[tabindex],[contenteditable=true]):not(:disabled,[disabled])",
       )
     ) {
       return !this.#cannotFocusParent(parents);
@@ -54,9 +54,12 @@ export class M3eInteractivityChecker {
   }
 }
 
+// This is the class type, as opposed to an instance of the class.
+type M3eInteractivityCheckerClass = typeof M3eInteractivityChecker;
+
 declare global {
   /** Utility for checking the interactivity of an element, such as whether it is focusable. */
-  var M3eInteractivityChecker: M3eInteractivityChecker;
+  var M3eInteractivityChecker: M3eInteractivityCheckerClass;
 }
 
 globalThis.M3eInteractivityChecker = M3eInteractivityChecker;

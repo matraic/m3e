@@ -36,9 +36,12 @@ export class M3eBreakpointObserver {
   }
 }
 
+// This is the class type, as opposed to an instance of the class.
+type M3eBreakpointObserverClass = typeof M3eBreakpointObserver;
+
 declare global {
   /** Utility used to detect changes to viewport sizes. */
-  var M3eBreakpointObserver: M3eBreakpointObserver;
+  var M3eBreakpointObserver: M3eBreakpointObserverClass;
 }
 
 globalThis.M3eBreakpointObserver = M3eBreakpointObserver;
