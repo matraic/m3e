@@ -114,6 +114,18 @@ export class M3eNavRailElement extends M3eNavBarElement {
     :host(.-compact) ::slotted(m3e-icon-button) {
       align-self: center;
     }
+    ::slotted(m3e-fab) {
+      --m3e-fab-container-elevation: ${DesignToken.elevation.level0};
+      --m3e-fab-disabled-container-elevation: ${DesignToken.elevation.level0};
+      --m3e-fab-focus-container-elevation: ${DesignToken.elevation.level0};
+      --m3e-fab-pressed-container-elevation: ${DesignToken.elevation.level0};
+      --m3e-fab-hover-container-elevation: ${DesignToken.elevation.level1};
+      --m3e-fab-lowered-container-elevation: ${DesignToken.elevation.level0};
+      --m3e-fab-lowered-disabled-container-elevation: ${DesignToken.elevation.level0};
+      --m3e-fab-lowered-focus-container-elevation: ${DesignToken.elevation.level0};
+      --m3e-fab-lowered-pressed-container-elevation: ${DesignToken.elevation.level0};
+      --m3e-fab-lowered-hover-container-elevation: ${DesignToken.elevation.level1};
+    }
   `;
 
   /** @private */ #focusKeyManager = new RovingTabIndexManager().withHomeAndEnd().withWrap();
