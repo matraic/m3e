@@ -27,76 +27,100 @@ type _FabSizeToken = {
 export const FabSizeToken: Record<FabSize, _FabSizeToken> = {
   /** Design tokens that control the `small` `size` variant. */
   small: {
-    containerHeight: unsafeCSS(`calc(var(--m3e-fab-small-container-height, 3.5rem) + ${DesignToken.density.calc(-3)})`),
+    containerHeight: unsafeCSS(
+      `calc(var(--m3e-fab-small-container-height, var(--m3e-fab-container-height, 3.5rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
     labelTextFontSize: unsafeCSS(
-      `var(--m3e-fab-small-label-text-font-size, ${DesignToken.typescale.standard.title.medium.fontSize})`,
+      `var(--m3e-fab-small-label-text-font-size, var(--m3e-fab-label-text-font-size, ${DesignToken.typescale.standard.title.medium.fontSize}))`,
     ),
     labelTextFontWeight: unsafeCSS(
-      `var(--m3e-fab-small-label-text-font-weight, ${DesignToken.typescale.standard.title.medium.fontWeight})`,
+      `var(--m3e-fab-small-label-text-font-weight, var(--m3e-fab-label-text-font-weight, ${DesignToken.typescale.standard.title.medium.fontWeight}))`,
     ),
     labelTextLineHeight: unsafeCSS(
-      `var(--m3e-fab-small-label-text-line-height, ${DesignToken.typescale.standard.title.medium.lineHeight})`,
+      `var(--m3e-fab-small-label-text-line-height, var(--m3e-fab-label-text-line-height, ${DesignToken.typescale.standard.title.medium.lineHeight}))`,
     ),
     labelTextTracking: unsafeCSS(
-      `var(--m3e-fab-small-label-text-tracking, ${DesignToken.typescale.standard.title.medium.tracking})`,
+      `var(--m3e-fab-small-label-text-tracking, var(--m3e-fab-label-text-tracking, ${DesignToken.typescale.standard.title.medium.tracking}))`,
     ),
-    iconSize: unsafeCSS(`calc(var(--m3e-fab-small-icon-size, 1.5rem) + ${DesignToken.density.calc(-3)})`),
-    extendedIconSize: unsafeCSS("var(--m3e-fab-small-icon-size, 1.5rem)"),
-    shape: unsafeCSS(`var(--m3e-fab-small-shape, ${DesignToken.shape.corner.large})`),
-    leadingSpace: unsafeCSS(`calc(var(--m3e-fab-small-leading-space, 1rem) + ${DesignToken.density.calc(-3)})`),
-    trailingSpace: unsafeCSS(`calc(var(--m3e-fab-small-trailing-space, 1rem) + ${DesignToken.density.calc(-3)})`),
-    iconLabelSpace: unsafeCSS("var(--m3e-fab-small-icon-label-space, 0.5rem)"),
-    extendedLeadingSpace: unsafeCSS("var(--m3e-fab-small-leading-space, 1rem)"),
-    extendedTrailingSpace: unsafeCSS("var(--m3e-fab-small-trailing-space, 1rem)"),
+    iconSize: unsafeCSS(
+      `calc(var(--m3e-fab-small-icon-size, var(--m3e-fab-icon-size, 1.5rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
+    extendedIconSize: unsafeCSS("var(--m3e-fab-small-icon-size, var(--m3e-fab-icon-size, 1.5rem))"),
+    shape: unsafeCSS(`var(--m3e-fab-small-shape, var(--m3e-fab-shape, ${DesignToken.shape.corner.large}))`),
+    leadingSpace: unsafeCSS(
+      `calc(var(--m3e-fab-small-leading-space, var(--m3e-fab-leading-space, 1rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
+    trailingSpace: unsafeCSS(
+      `calc(var(--m3e-fab-small-trailing-space, var(--m3e-fab-trailing-space, 1rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
+    iconLabelSpace: unsafeCSS("var(--m3e-fab-small-icon-label-space, var(--m3e-fab-icon-label-space, 0.5rem))"),
+    extendedLeadingSpace: unsafeCSS("var(--m3e-fab-small-leading-space, var(--m3e-fab-leading-space, 1rem))"),
+    extendedTrailingSpace: unsafeCSS("var(--m3e-fab-small-trailing-space, var(--m3e-fab-trailing-space, 1rem))"),
   },
 
   /** Design tokens that control the `medium` `size` variant. */
   medium: {
-    containerHeight: unsafeCSS(`calc(var(--m3e-fab-medium-container-height, 5rem) + ${DesignToken.density.calc(-3)})`),
+    containerHeight: unsafeCSS(
+      `calc(var(--m3e-fab-medium-container-height, var(--m3e-fab-container-height, 5rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
     labelTextFontSize: unsafeCSS(
-      `var(--m3e-fab-medium-label-text-font-size, ${DesignToken.typescale.standard.title.large.fontSize})`,
+      `var(--m3e-fab-medium-label-text-font-size, var(--m3e-fab-label-text-font-size, ${DesignToken.typescale.standard.title.large.fontSize}))`,
     ),
     labelTextFontWeight: unsafeCSS(
-      `var(--m3e-fab-medium-label-text-font-weight, ${DesignToken.typescale.standard.title.large.fontWeight})`,
+      `var(--m3e-fab-medium-label-text-font-weight, var(--m3e-fab-label-text-font-weight, ${DesignToken.typescale.standard.title.large.fontWeight}))`,
     ),
     labelTextLineHeight: unsafeCSS(
-      `var(--m3e-fab-medium-label-text-line-height, ${DesignToken.typescale.standard.title.large.lineHeight})`,
+      `var(--m3e-fab-medium-label-text-line-height, var(--m3e-fab-label-text-line-height, ${DesignToken.typescale.standard.title.large.lineHeight}))`,
     ),
     labelTextTracking: unsafeCSS(
-      `var(--m3e-fab-medium-label-text-tracking, ${DesignToken.typescale.standard.title.large.tracking})`,
+      `var(--m3e-fab-medium-label-text-tracking, var(--m3e-fab-label-text-tracking, ${DesignToken.typescale.standard.title.large.tracking}))`,
     ),
-    iconSize: unsafeCSS(`calc(var(--m3e-fab-medium-icon-size, 1.75rem) + ${DesignToken.density.calc(-3)})`),
-    extendedIconSize: unsafeCSS("var(--m3e-fab-medium-icon-size, 1.75rem)"),
-    shape: unsafeCSS(`var(--m3e-fab-medium-shape, ${DesignToken.shape.corner.largeIncreased})`),
-    leadingSpace: unsafeCSS(`calc(var(--m3e-fab-medium-leading-space, 1.625rem) + ${DesignToken.density.calc(-3)})`),
-    trailingSpace: unsafeCSS(`calc(var(--m3e-fab-medium-trailing-space, 1.625rem) + ${DesignToken.density.calc(-3)})`),
-    iconLabelSpace: unsafeCSS("var(--m3e-fab-medium-icon-label-space, 0.75rem)"),
-    extendedLeadingSpace: unsafeCSS("var(--m3e-fab-medium-leading-space, 1.625rem)"),
-    extendedTrailingSpace: unsafeCSS("var(--m3e-fab-medium-trailing-space, 1.625rem)"),
+    iconSize: unsafeCSS(
+      `calc(var(--m3e-fab-medium-icon-size, var(--m3e-fab-icon-size, 1.75rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
+    extendedIconSize: unsafeCSS("var(--m3e-fab-medium-icon-size, var(--m3e-fab-icon-size, 1.75rem))"),
+    shape: unsafeCSS(`var(--m3e-fab-medium-shape, var(--m3e-fab-shape, ${DesignToken.shape.corner.largeIncreased}))`),
+    leadingSpace: unsafeCSS(
+      `calc(var(--m3e-fab-medium-leading-space, var(--m3e-fab-leading-space, 1.625rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
+    trailingSpace: unsafeCSS(
+      `calc(var(--m3e-fab-medium-trailing-space, var(--m3e-fab-trailing-space, 1.625rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
+    iconLabelSpace: unsafeCSS("var(--m3e-fab-medium-icon-label-space, var(--m3e-fab-icon-label-space, 0.75rem))"),
+    extendedLeadingSpace: unsafeCSS("var(--m3e-fab-medium-leading-space, var(--m3e-fab-leading-space, 1.625rem))"),
+    extendedTrailingSpace: unsafeCSS("var(--m3e-fab-medium-trailing-space, var(--m3e-fab-trailing-space, 1.625rem))"),
   },
 
   /** Design tokens that control the `large` `size` variant. */
   large: {
-    containerHeight: unsafeCSS(`calc(var(--m3e-fab-large-container-height, 6rem) + ${DesignToken.density.calc(-3)})`),
+    containerHeight: unsafeCSS(
+      `calc(var(--m3e-fab-large-container-height, var(--m3e-fab-container-height, 6rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
     labelTextFontSize: unsafeCSS(
-      `var(--m3e-fab-large-label-text-font-size, ${DesignToken.typescale.standard.headline.small.fontSize})`,
+      `var(--m3e-fab-large-label-text-font-size, var(--m3e-fab-label-text-font-size, ${DesignToken.typescale.standard.headline.small.fontSize}))`,
     ),
     labelTextFontWeight: unsafeCSS(
-      `var(--m3e-fab-large-label-text-font-weight, ${DesignToken.typescale.standard.headline.small.fontWeight})`,
+      `var(--m3e-fab-large-label-text-font-weight, var(--m3e-fab-label-text-font-weight, ${DesignToken.typescale.standard.headline.small.fontWeight}))`,
     ),
     labelTextLineHeight: unsafeCSS(
-      `var(--m3e-fab-large-label-text-line-height, ${DesignToken.typescale.standard.headline.small.lineHeight})`,
+      `var(--m3e-fab-large-label-text-line-height, var(--m3e-fab-label-text-line-height, ${DesignToken.typescale.standard.headline.small.lineHeight}))`,
     ),
     labelTextTracking: unsafeCSS(
-      `var(--m3e-fab-large-label-text-tracking, ${DesignToken.typescale.standard.headline.small.tracking})`,
+      `var(--m3e-fab-large-label-text-tracking, var(--m3e-fab-label-text-tracking, ${DesignToken.typescale.standard.headline.small.tracking}))`,
     ),
-    iconSize: unsafeCSS(`calc(var(--m3e-fab-large-icon-size, 2.25rem) + ${DesignToken.density.calc(-3)})`),
-    extendedIconSize: unsafeCSS("var(--m3e-fab-large-icon-size, 2.25rem)"),
-    shape: unsafeCSS(`var(--m3e-fab-large-shape, ${DesignToken.shape.corner.extraLarge})`),
-    leadingSpace: unsafeCSS(`calc(var(--m3e-fab-large-leading-space, 1.75rem) + ${DesignToken.density.calc(-3)})`),
-    trailingSpace: unsafeCSS(`calc(var(--m3e-fab-large-trailing-space, 1.75rem) + ${DesignToken.density.calc(-3)})`),
-    iconLabelSpace: unsafeCSS("var(--m3e-fab-large-icon-label-space, 1rem)"),
-    extendedLeadingSpace: unsafeCSS("var(--m3e-fab-large-leading-space, 1.75rem)"),
-    extendedTrailingSpace: unsafeCSS("var(--m3e-fab-large-trailing-space, 1.75rem)"),
+    iconSize: unsafeCSS(
+      `calc(var(--m3e-fab-large-icon-size, var(--m3e-fab-icon-size, 2.25rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
+    extendedIconSize: unsafeCSS("var(--m3e-fab-large-icon-size, var(--m3e-fab-icon-size, 2.25rem))"),
+    shape: unsafeCSS(`var(--m3e-fab-large-shape, var(--m3e-fab-shape, ${DesignToken.shape.corner.extraLarge}))`),
+    leadingSpace: unsafeCSS(
+      `calc(var(--m3e-fab-large-leading-space, var(--m3e-fab-leading-space, 1.75rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
+    trailingSpace: unsafeCSS(
+      `calc(var(--m3e-fab-large-trailing-space, var(--m3e-fab-trailing-space, 1.75rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
+    iconLabelSpace: unsafeCSS("var(--m3e-fab-large-icon-label-space, var(--m3e-fab-icon-label-space, 1rem))"),
+    extendedLeadingSpace: unsafeCSS("var(--m3e-fab-large-leading-space, var(--m3e-fab-leading-space, 1.75rem))"),
+    extendedTrailingSpace: unsafeCSS("var(--m3e-fab-large-trailing-space, var(--m3e-fab-trailing-space, 1.75rem))"),
   },
 } as const;

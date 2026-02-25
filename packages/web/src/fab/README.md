@@ -67,7 +67,7 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🧱 Size Properties
 
-All size variants (`small`, `medium`, `large`) support:
+All size variants (`small`, `medium`, `large`) support the following tokens. Omitting the `[size]-` prefix overrides the value for all sizes.
 
 | Property                                  | Description                  |
 | ----------------------------------------- | ---------------------------- |
@@ -84,7 +84,7 @@ All size variants (`small`, `medium`, `large`) support:
 
 #### 🎨 Appearance Variant Properties
 
-All appearance variants (`primary`, `primary-container`, `secondary`, `secondary-container`, `tertiary`, `tertiary-container`, `surface`) support:
+All appearance variants (`primary`, `primary-container`, `secondary`, `secondary-container`, `tertiary`, `tertiary-container`, `surface`) support the following tokens. Omitting the `[variant]-` prefix overrides the value for all variants.
 
 | Property                                          | Description                |
 | ------------------------------------------------- | -------------------------- |
@@ -96,7 +96,7 @@ All appearance variants (`primary`, `primary-container`, `secondary`, `secondary
 
 #### 🟫 State Properties
 
-Each variant supports state properties for disabled, hover, focus, and pressed. For each variant, the following properties are available (replace `[variant]` with the variant name):
+Each variant supports state properties for disabled, hover, focus, and pressed. For each variant, the following properties are available (replace `[variant]` with the variant name). Omitting the `[variant]-` prefix overrides the value for all variants.
 
 | Property                                                   | Description                     |
 | ---------------------------------------------------------- | ------------------------------- |

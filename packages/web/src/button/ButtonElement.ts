@@ -80,6 +80,21 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * @fires change - Dispatched when a toggle button's selected state changes.
  * @fires click - Emitted when the element is clicked.
  *
+ * @cssprop --m3e-button-container-height - Height of the button container, for all size variants.
+ * @cssprop --m3e-button-outline-thickness - Thickness of the button outline, for all size variants.
+ * @cssprop --m3e-button-label-text-font-size - Font size for the label text, for all size variants.
+ * @cssprop --m3e-button-label-text-font-weight - Font weight for the label text, for all size variants.
+ * @cssprop --m3e-button-label-text-line-height - Line height for the label text, for all size variants.
+ * @cssprop --m3e-button-label-text-tracking - Letter tracking for the label text, for all size variants.
+ * @cssprop --m3e-button-icon-size - Size of the icon, for all size variants.
+ * @cssprop --m3e-button-shape-round - Corner radius for round shape, for all size variants.
+ * @cssprop --m3e-button-shape-square - Corner radius for square shape, for all size variants.
+ * @cssprop --m3e-button-selected-shape-round - Corner radius when selected (round), for all size variants.
+ * @cssprop --m3e-button-selected-shape-square - Corner radius when selected (square), for all size variants.
+ * @cssprop --m3e-button-shape-pressed-morph - Corner radius when pressed, for all size variants.
+ * @cssprop --m3e-button-leading-space - Space before icon or label, for all size variants.
+ * @cssprop --m3e-button-trailing-space - Space after icon or label, for all size variants.
+ * @cssprop --m3e-button-icon-label-space - Space between icon and label, for all size variants.
  * @cssprop --m3e-button-extra-small-container-height - Height of the button container, for the extra-small size variant.
  * @cssprop --m3e-button-extra-small-outline-thickness - Thickness of the button outline, for the extra-small size variant.
  * @cssprop --m3e-button-extra-small-label-text-font-size - Font size for the label text, for the extra-small size variant.
@@ -155,6 +170,61 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * @cssprop --m3e-button-extra-large-leading-space - Space before icon or label, for the extra-large size variant.
  * @cssprop --m3e-button-extra-large-trailing-space - Space after icon or label, for the extra-large size variant.
  * @cssprop --m3e-button-extra-large-icon-label-space - Space between icon and label, for the extra-large size variant.
+ * @cssprop --m3e-button-outline-color - Outline color, for all variants.
+ * @cssprop --m3e-button-disabled-outline-color - Disabled outline color, for all variants.
+ * @cssprop --m3e-button-hover-outline-color - Hover outline color, for all variants.
+ * @cssprop --m3e-button-focus-outline-color - Focus outline color, for all variants.
+ * @cssprop --m3e-button-pressed-outline-color - Pressed outline color, for all variants.
+ * @cssprop --m3e-button-container-color - Container background color, for all variants.
+ * @cssprop --m3e-button-container-elevation - Elevation, for all variants.
+ * @cssprop --m3e-button-unselected-container-color - Unselected container color, for all variants.
+ * @cssprop --m3e-button-selected-container-color - Selected container color, for all variants.
+ * @cssprop --m3e-button-disabled-container-elevation - Disabled elevation, for all variants.
+ * @cssprop --m3e-button-hover-container-elevation - Hover elevation, for all variants.
+ * @cssprop --m3e-button-focus-container-elevation - Focus elevation, for all variants.
+ * @cssprop --m3e-button-pressed-container-elevation - Pressed elevation, for all variants.
+ * @cssprop --m3e-button-label-text-color - Label color, for all variants.
+ * @cssprop --m3e-button-icon-color - Icon color, for all variants.
+ * @cssprop --m3e-button-unselected-label-text-color - Unselected label color, for all variants.
+ * @cssprop --m3e-button-unselected-icon-color - Unselected icon color, for all variants.
+ * @cssprop --m3e-button-selected-label-text-color - Selected label color, for all variants.
+ * @cssprop --m3e-button-selected-icon-color - Selected icon color, for all variants.
+ * @cssprop --m3e-button-disabled-container-color - Disabled container color, for all variants.
+ * @cssprop --m3e-button-disabled-container-opacity - Disabled container opacity, for all variants.
+ * @cssprop --m3e-button-disabled-icon-color - Disabled icon color, for all variants.
+ * @cssprop --m3e-button-disabled-icon-opacity - Disabled icon opacity, for all variants.
+ * @cssprop --m3e-button-disabled-label-text-color - Disabled label color, for all variants.
+ * @cssprop --m3e-button-disabled-label-text-opacity - Disabled label opacity, for all variants.
+ * @cssprop --m3e-button-hover-icon-color - Hover icon color, for all variants.
+ * @cssprop --m3e-button-hover-label-text-color - Hover label color, for all variants.
+ * @cssprop --m3e-button-hover-state-layer-color - Hover state layer color, for all variants.
+ * @cssprop --m3e-button-hover-state-layer-opacity - Hover state layer opacity, for all variants.
+ * @cssprop --m3e-button-hover-unselected-icon-color - Hover unselected icon color, for all variants.
+ * @cssprop --m3e-button-hover-unselected-label-text-color - Hover unselected label color, for all variants.
+ * @cssprop --m3e-button-hover-unselected-state-layer-color - Hover unselected state layer color, for all variants.
+ * @cssprop --m3e-button-hover-selected-icon-color - Hover selected icon color, for all variants.
+ * @cssprop --m3e-button-hover-selected-label-text-color - Hover selected label color, for all variants.
+ * @cssprop --m3e-button-hover-selected-state-layer-color - Hover selected state layer color, for all variants.
+ * @cssprop --m3e-button-focus-icon-color - Focus icon color, for all variants.
+ * @cssprop --m3e-button-focus-label-text-color - Focus label color, for all variants.
+ * @cssprop --m3e-button-focus-state-layer-color - Focus state layer color, for all variants.
+ * @cssprop --m3e-button-focus-state-layer-opacity - Focus state layer opacity, for all variants.
+ * @cssprop --m3e-button-focus-unselected-icon-color - Focus unselected icon color, for all variants.
+ * @cssprop --m3e-button-focus-unselected-label-text-color - Focus unselected label color, for all variants.
+ * @cssprop --m3e-button-focus-unselected-state-layer-color - Focus unselected state layer color, for all variants.
+ * @cssprop --m3e-button-focus-selected-icon-color - Focus selected icon color, for all variants.
+ * @cssprop --m3e-button-focus-selected-label-text-color - Focus selected label color, for all variants.
+ * @cssprop --m3e-button-focus-selected-state-layer-color - Focus selected state layer color, for all variants.
+ * @cssprop --m3e-button-pressed-icon-color - Pressed icon color, for all variants.
+ * @cssprop --m3e-button-pressed-label-text-color - Pressed label color, for all variants.
+ * @cssprop --m3e-button-pressed-state-layer-color - Pressed state layer color, for all variants.
+ * @cssprop --m3e-button-pressed-state-layer-opacity - Pressed state layer opacity, for all variants.
+ * @cssprop --m3e-button-pressed-unselected-icon-color - Pressed unselected icon color, for all variants.
+ * @cssprop --m3e-button-pressed-unselected-label-text-color - Pressed unselected label color, for all variants.
+ * @cssprop --m3e-button-pressed-unselected-state-layer-color - Pressed unselected state layer color, for all variants.
+ * @cssprop --m3e-button-pressed-selected-icon-color - Pressed selected icon color, for all variants.
+ * @cssprop --m3e-button-pressed-selected-label-text-color - Pressed selected label color, for all variants.
+ * @cssprop --m3e-button-pressed-selected-state-layer-color - Pressed selected state layer color, for all variants.
  * @cssprop --m3e-elevated-button-label-text-color - Label color, for the elevated variant.
  * @cssprop --m3e-elevated-button-icon-color - Icon color, for the elevated variant.
  * @cssprop --m3e-elevated-button-container-color - Container background color, for the elevated variant.

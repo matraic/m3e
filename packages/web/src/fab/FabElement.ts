@@ -80,6 +80,16 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  *
  * @fires click - Emitted when the element is clicked.
  *
+ * @cssprop --m3e-fab-container-height - Height of the FAB container for all size variants.
+ * @cssprop --m3e-fab-label-text-font-size - Font size for the FAB label text for all size variants.
+ * @cssprop --m3e-fab-label-text-font-weight - Font weight for the FAB label text for all size variants.
+ * @cssprop --m3e-fab-label-text-line-height - Line height for the FAB label text for all size variants.
+ * @cssprop --m3e-fab-label-text-tracking - Letter spacing (tracking) for the FAB label text for all size variants.
+ * @cssprop --m3e-fab-icon-size - Icon size for the FAB for all size variants.
+ * @cssprop --m3e-fab-shape - Border radius for the FAB for all size variants.
+ * @cssprop --m3e-fab-leading-space - Leading space for the FAB for all size variants.
+ * @cssprop --m3e-fab-trailing-space - Trailing space for the FAB for all size variants.
+ * @cssprop --m3e-fab-icon-label-space - Space between icon and label for the FAB for all size variants.
  * @cssprop --m3e-fab-small-container-height - Height of the small FAB container.
  * @cssprop --m3e-fab-small-label-text-font-size - Font size for the small FAB label text.
  * @cssprop --m3e-fab-small-label-text-font-weight - Font weight for the small FAB label text.
@@ -110,6 +120,37 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * @cssprop --m3e-fab-large-leading-space - Leading space for the large FAB.
  * @cssprop --m3e-fab-large-trailing-space - Trailing space for the large FAB.
  * @cssprop --m3e-fab-large-icon-label-space - Space between icon and label for the large FAB.
+ * @cssprop --m3e-fab-label-text-color - Default label text color for FAB (all variants).
+ * @cssprop --m3e-fab-icon-color - Default icon color for FAB (all variants).
+ * @cssprop --m3e-fab-container-color - Default container background color for FAB (all variants).
+ * @cssprop --m3e-fab-container-elevation - Resting elevation for FAB (all variants).
+ * @cssprop --m3e-fab-lowered-container-elevation - Lowered resting elevation for FAB (all variants).
+ * @cssprop --m3e-fab-disabled-container-color - Container background color when disabled (all variants).
+ * @cssprop --m3e-fab-disabled-container-opacity - Opacity of container when disabled (all variants).
+ * @cssprop --m3e-fab-disabled-icon-color - Icon color when disabled (all variants).
+ * @cssprop --m3e-fab-disabled-icon-opacity - Icon opacity when disabled (all variants).
+ * @cssprop --m3e-fab-disabled-label-text-color - Label text color when disabled (all variants).
+ * @cssprop --m3e-fab-disabled-label-text-opacity - Label text opacity when disabled (all variants).
+ * @cssprop --m3e-fab-disabled-container-elevation - Elevation when disabled (all variants).
+ * @cssprop --m3e-fab-lowered-disabled-container-elevation - Lowered elevation when disabled (all variants).
+ * @cssprop --m3e-fab-hover-icon-color - Icon color on hover (all variants).
+ * @cssprop --m3e-fab-hover-label-text-color - Label text color on hover (all variants).
+ * @cssprop --m3e-fab-hover-state-layer-color - State layer color on hover (all variants).
+ * @cssprop --m3e-fab-hover-state-layer-opacity - State layer opacity on hover (all variants).
+ * @cssprop --m3e-fab-hover-container-elevation - Elevation on hover (all variants).
+ * @cssprop --m3e-fab-lowered-hover-container-elevation - Lowered elevation on hover (all variants).
+ * @cssprop --m3e-fab-focus-icon-color - Icon color on focus (all variants).
+ * @cssprop --m3e-fab-focus-label-text-color - Label text color on focus (all variants).
+ * @cssprop --m3e-fab-focus-state-layer-color - State layer color on focus (all variants).
+ * @cssprop --m3e-fab-focus-state-layer-opacity - State layer opacity on focus (all variants).
+ * @cssprop --m3e-fab-focus-container-elevation - Elevation on focus (all variants).
+ * @cssprop --m3e-fab-lowered-focus-container-elevation - Lowered elevation on focus (all variants).
+ * @cssprop --m3e-fab-pressed-icon-color - Icon color on pressed (all variants).
+ * @cssprop --m3e-fab-pressed-label-text-color - Label text color on pressed (all variants).
+ * @cssprop --m3e-fab-pressed-state-layer-color - State layer color on pressed (all variants).
+ * @cssprop --m3e-fab-pressed-state-layer-opacity - State layer opacity on pressed (all variants).
+ * @cssprop --m3e-fab-pressed-container-elevation - Elevation on pressed (all variants).
+ * @cssprop --m3e-fab-lowered-pressed-container-elevation - Lowered elevation on pressed (all variants).
  * @cssprop --m3e-primary-fab-label-text-color - Default label text color for primary FAB.
  * @cssprop --m3e-primary-fab-icon-color - Default icon color for primary FAB.
  * @cssprop --m3e-primary-fab-container-color - Default container background color for primary FAB.

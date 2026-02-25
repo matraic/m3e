@@ -59,7 +59,7 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🧱 Size Properties
 
-All size variants (`extra-small`, `small`, `medium`, `large`, `extra-large`) support:
+All size variants (`extra-small`, `small`, `medium`, `large`, `extra-large`) support the following tokens. Omitting the `[size]-` prefix overrides the value for all sizes.
 
 | Property                                     | Description                          |
 | -------------------------------------------- | ------------------------------------ |
@@ -81,7 +81,7 @@ All size variants (`extra-small`, `small`, `medium`, `large`, `extra-large`) sup
 
 #### 🎨 Appearance Variant Properties
 
-All appearance variants (`filled`, `tonal`, `elevated`, `outlined`, `text`) support the following properties (replace `[variant]` with the variant name):
+All appearance variants (`filled`, `tonal`, `elevated`, `outlined`, `text`) support the following properties (replace `[variant]` with the variant name). Omitting the `[variant]-` prefix overrides the value for all variants.
 
 | Property                                     | Description                       |
 | -------------------------------------------- | --------------------------------- |
@@ -94,7 +94,7 @@ All appearance variants (`filled`, `tonal`, `elevated`, `outlined`, `text`) supp
 
 #### 🟫 State Properties
 
-Each variant supports state properties for disabled, hover, focus, pressed, selected, and unselected. For each variant, the following properties are available (replace `[variant]` with the variant name):
+Each variant supports state properties for disabled, hover, focus, pressed, selected, and unselected. For each variant, the following properties are available (replace `[variant]` with the variant name). Omitting the `[variant]-` prefix overrides the value for all variants.
 
 | Property                                              | Description                            |
 | ----------------------------------------------------- | -------------------------------------- |
@@ -126,7 +126,7 @@ Each variant supports state properties for disabled, hover, focus, pressed, sele
 
 #### 🟦 Selected/Unselected State Properties
 
-For toggle buttons, each variant supports selected/unselected state properties:
+For toggle buttons, each variant supports selected/unselected state properties. Omitting the `[variant]-` prefix overrides the value for all variants.
 
 | Property                                              | Description                       |
 | ----------------------------------------------------- | --------------------------------- |

@@ -83,6 +83,20 @@ import { IconButtonWidth } from "./IconButtonWidth";
  * @fires change - Dispatched when a toggle button's selected state changes.
  * @fires click - Emitted when the element is clicked.
  *
+ * @cssprop --m3e-icon-button-container-height - Height of the container for all size variants.
+ * @cssprop --m3e-icon-button-outline-thickness - Outline thickness for all size variants.
+ * @cssprop --m3e-icon-button-icon-size - Icon size for all size variants.
+ * @cssprop --m3e-icon-button-shape-round - Corner radius for all round size variants.
+ * @cssprop --m3e-icon-button-shape-square - Corner radius for all square size variants.
+ * @cssprop --m3e-icon-button-selected-shape-round - Corner radius for all selected round size variants.
+ * @cssprop --m3e-icon-button-selected-shape-square - Corner radius for all selected square size variants.
+ * @cssprop --m3e-icon-button-shape-pressed-morph - Corner radius for all pressed size variants.
+ * @cssprop --m3e-icon-button-narrow-leading-space - Leading space for all size variants (narrow).
+ * @cssprop --m3e-icon-button-narrow-trailing-space - Trailing space for all size variants (narrow).
+ * @cssprop --m3e-icon-button-default-leading-space - Leading space for all size variants (default).
+ * @cssprop --m3e-icon-button-default-trailing-space - Trailing space for all size variants (default).
+ * @cssprop --m3e-icon-button-wide-leading-space - Leading space for all size variants (wide).
+ * @cssprop --m3e-icon-button-wide-trailing-space - Trailing space for all size variants (wide).
  * @cssprop --m3e-icon-button-extra-small-container-height - Height of the extra-small container.
  * @cssprop --m3e-icon-button-extra-small-outline-thickness - Outline thickness for extra-small.
  * @cssprop --m3e-icon-button-extra-small-icon-size - Icon size for extra-small.
@@ -153,6 +167,48 @@ import { IconButtonWidth } from "./IconButtonWidth";
  * @cssprop --m3e-icon-button-extra-large-default-trailing-space - Trailing space for extra-large (default).
  * @cssprop --m3e-icon-button-extra-large-wide-leading-space - Leading space for extra-large (wide).
  * @cssprop --m3e-icon-button-extra-large-wide-trailing-space - Trailing space for extra-large (wide).
+ * @cssprop --m3e-icon-button-outline-color - Default outline color for all variants.
+ * @cssprop --m3e-icon-button-disabled-outline-color - Outline color when disabled (all variants).
+ * @cssprop --m3e-icon-button-hover-outline-color - Outline color on hover (all variants).
+ * @cssprop --m3e-icon-button-focus-outline-color - Outline color on focus (all variants).
+ * @cssprop --m3e-icon-button-pressed-outline-color - Outline color on pressed (all variants).
+ * @cssprop --m3e-icon-button-container-color - Default container background color for all variants.
+ * @cssprop --m3e-icon-button-unselected-container-color - Unselected container background color for all variants.
+ * @cssprop --m3e-icon-button-selected-container-color - Selected container background color for all variants.
+ * @cssprop --m3e-icon-button-icon-color - Default icon color for tonal variant.
+ * @cssprop --m3e-icon-button-container-color - Default container background color for tonal variant.
+ * @cssprop --m3e-icon-button-unselected-icon-color - Unselected icon color for tonal variant.
+ * @cssprop --m3e-icon-button-unselected-container-color - Unselected container background color for tonal variant.
+ * @cssprop --m3e-icon-button-selected-icon-color - Selected icon color for tonal variant.
+ * @cssprop --m3e-icon-button-selected-container-color - Selected container background color for tonal variant.
+ * @cssprop --m3e-icon-button-icon-color - Default icon color for all variants.
+ * @cssprop --m3e-icon-button-unselected-icon-color - Unselected icon color for all variants.
+ * @cssprop --m3e-icon-button-selected-icon-color - Selected icon color for all variants.
+ * @cssprop --m3e-icon-button-disabled-container-color - Container background color when disabled (all variants).
+ * @cssprop --m3e-icon-button-disabled-container-opacity - Opacity of container when disabled (all variants).
+ * @cssprop --m3e-icon-button-disabled-icon-color - Icon color when disabled (all variants).
+ * @cssprop --m3e-icon-button-disabled-icon-opacity - Icon opacity when disabled (all variants).
+ * @cssprop --m3e-icon-button-hover-icon-color - Icon color on hover (all variants).
+ * @cssprop --m3e-icon-button-hover-state-layer-color - State layer color on hover (all variants).
+ * @cssprop --m3e-icon-button-hover-state-layer-opacity - State layer opacity on hover (all variants).
+ * @cssprop --m3e-icon-button-hover-unselected-icon-color - Unselected icon color on hover (all variants).
+ * @cssprop --m3e-icon-button-hover-unselected-state-layer-color - Unselected state layer color on hover (all variants).
+ * @cssprop --m3e-icon-button-hover-selected-icon-color - Selected icon color on hover (all variants).
+ * @cssprop --m3e-icon-button-hover-selected-state-layer-color - Selected state layer color on hover (all variants).
+ * @cssprop --m3e-icon-button-focus-icon-color - Icon color on focus (all variants).
+ * @cssprop --m3e-icon-button-focus-state-layer-color - State layer color on focus (all variants).
+ * @cssprop --m3e-icon-button-focus-state-layer-opacity - State layer opacity on focus (all variants).
+ * @cssprop --m3e-icon-button-focus-unselected-icon-color - Unselected icon color on focus (all variants).
+ * @cssprop --m3e-icon-button-focus-unselected-state-layer-color - Unselected state layer color on focus (all variants).
+ * @cssprop --m3e-icon-button-focus-selected-icon-color - Selected icon color on focus (all variants).
+ * @cssprop --m3e-icon-button-focus-selected-state-layer-color - Selected state layer color on focus (all variants).
+ * @cssprop --m3e-icon-button-pressed-icon-color - Icon color on pressed (all variants).
+ * @cssprop --m3e-icon-button-pressed-state-layer-color - State layer color on pressed (all variants).
+ * @cssprop --m3e-icon-button-pressed-state-layer-opacity - State layer opacity on pressed (all variants).
+ * @cssprop --m3e-icon-button-pressed-unselected-icon-color - Unselected icon color on pressed (all variants).
+ * @cssprop --m3e-icon-button-pressed-unselected-state-layer-color - Unselected state layer color on pressed (all variants).
+ * @cssprop --m3e-icon-button-pressed-selected-icon-color - Selected icon color on pressed (all variants).
+ * @cssprop --m3e-icon-button-pressed-selected-state-layer-color - Selected state layer color on pressed (all variants).
  * @cssprop --m3e-outlined-icon-button-icon-color - Default icon color for outlined variant.
  * @cssprop --m3e-outlined-icon-button-outline-color - Default outline color for outlined variant.
  * @cssprop --m3e-outlined-icon-button-unselected-icon-color - Unselected icon color for outlined variant.
