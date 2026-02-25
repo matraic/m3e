@@ -5,7 +5,7 @@ import { M3eNavItemElement } from "@m3e/web/nav-bar";
 export type { M3eNavItemElement } from "@m3e/web/nav-bar";
 
 /**
- * React binding for the `m3e-nav-item` Web Component from `@m3e/nav-bar`.
+ * React binding for the `m3e-nav-item` Web Component from `@m3e/web/nav-bar`.
  *
  * This component renders the underlying `<m3e-nav-item>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

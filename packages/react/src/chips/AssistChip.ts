@@ -5,7 +5,7 @@ import { M3eAssistChipElement } from "@m3e/web/chips";
 export type { M3eAssistChipElement } from "@m3e/web/chips";
 
 /**
- * React binding for the `m3e-assist-chip` Web Component from `@m3e/chips`.
+ * React binding for the `m3e-assist-chip` Web Component from `@m3e/web/chips`.
  *
  * This component renders the underlying `<m3e-assist-chip>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

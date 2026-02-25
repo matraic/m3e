@@ -9,7 +9,7 @@ export type {
 } from "@m3e/web/progress-indicator";
 
 /**
- * React binding for the `m3e-linear-progress-indicator` Web Component from `@m3e/progress-indicator`.
+ * React binding for the `m3e-linear-progress-indicator` Web Component from `@m3e/web/progress-indicator`.
  *
  * This component renders the underlying `<m3e-linear-progress-indicator>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

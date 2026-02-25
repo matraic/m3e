@@ -5,7 +5,7 @@ import { M3eButtonSegmentElement } from "@m3e/web/segmented-button";
 export type { M3eButtonSegmentElement } from "@m3e/web/segmented-button";
 
 /**
- * React binding for the `m3e-button-segment` Web Component from `@m3e/segmented-button`.
+ * React binding for the `m3e-button-segment` Web Component from `@m3e/web/segmented-button`.
  *
  * This component renders the underlying `<m3e-button-segment>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

@@ -5,7 +5,7 @@ import { M3eElevationElement } from "@m3e/web/core";
 export type { M3eElevationElement, ElevationLevel } from "@m3e/web/core";
 
 /**
- * React binding for the `m3e-elevation` Web Component from `@m3e/web/core`.
+ * React binding for the `m3e-elevation` Web Component from `@m3e/web/web/core`.
  *
  * This component renders the underlying `<m3e-elevation>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

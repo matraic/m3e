@@ -5,7 +5,7 @@ import { M3eMenuItemGroupElement } from "@m3e/web/menu";
 export type { M3eMenuItemGroupElement } from "@m3e/web/menu";
 
 /**
- * React binding for the `m3e-menu-item-group` Web Component from `@m3e/menu`.
+ * React binding for the `m3e-menu-item-group` Web Component from `@m3e/web/menu`.
  *
  * This component renders the underlying `<m3e-menu-item-group>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

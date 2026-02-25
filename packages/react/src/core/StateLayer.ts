@@ -5,7 +5,7 @@ import { M3eStateLayerElement } from "@m3e/web/core";
 export type { M3eStateLayerElement } from "@m3e/web/core";
 
 /**
- * React binding for the `m3e-state-layer` Web Component from `@m3e/web/core`.
+ * React binding for the `m3e-state-layer` Web Component from `@m3e/web/web/core`.
  *
  * This component renders the underlying `<m3e-state-layer>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

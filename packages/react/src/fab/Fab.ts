@@ -5,7 +5,7 @@ import { M3eFabElement } from "@m3e/web/fab";
 export type { FabSize, FabVariant, M3eFabElement } from "@m3e/web/fab";
 
 /**
- * React binding for the `m3e-fab` Web Component from `@m3e/fab`.
+ * React binding for the `m3e-fab` Web Component from `@m3e/web/fab`.
  *
  * This component renders the underlying `<m3e-fab>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

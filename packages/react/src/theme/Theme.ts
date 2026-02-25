@@ -5,7 +5,7 @@ import { M3eThemeElement } from "@m3e/web/theme";
 export type { ColorScheme, ContrastLevel, MotionScheme, M3eThemeElement } from "@m3e/web/theme";
 
 /**
- * React binding for the `m3e-theme` Web Component from `@m3e/theme`.
+ * React binding for the `m3e-theme` Web Component from `@m3e/web/theme`.
  *
  * This component renders the underlying `<m3e-theme>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

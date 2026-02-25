@@ -5,7 +5,7 @@ import { M3eScrollContainerElement } from "@m3e/web/core";
 export type { M3eScrollContainerElement, ScrollDividers } from "@m3e/web/core";
 
 /**
- * React binding for the `m3e-scroll-container` Web Component from `@m3e/web/core`.
+ * React binding for the `m3e-scroll-container` Web Component from `@m3e/web/web/core`.
  *
  * This component renders the underlying `<m3e-scroll-container>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

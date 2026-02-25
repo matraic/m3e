@@ -5,7 +5,7 @@ import { M3eSlideGroupElement } from "@m3e/web/slide-group";
 export type { M3eSlideGroupElement } from "@m3e/web/slide-group";
 
 /**
- * React binding for the `m3e-slide-group` Web Component from `@m3e/slide-group`.
+ * React binding for the `m3e-slide-group` Web Component from `@m3e/web/slide-group`.
  *
  * This component renders the underlying `<m3e-slide-group>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

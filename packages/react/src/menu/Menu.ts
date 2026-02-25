@@ -5,7 +5,7 @@ import { M3eMenuElement } from "@m3e/web/menu";
 export type { MenuPositionX, MenuPositionY, MenuVariant, M3eMenuElement } from "@m3e/web/menu";
 
 /**
- * React binding for the `m3e-menu` Web Component from `@m3e/menu`.
+ * React binding for the `m3e-menu` Web Component from `@m3e/web/menu`.
  *
  * This component renders the underlying `<m3e-menu>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

@@ -5,7 +5,7 @@ import { M3eRadioElement } from "@m3e/web/radio-group";
 export type { M3eRadioElement } from "@m3e/web/radio-group";
 
 /**
- * React binding for the `m3e-radio` Web Component from `@m3e/radio-group`.
+ * React binding for the `m3e-radio` Web Component from `@m3e/web/radio-group`.
  *
  * This component renders the underlying `<m3e-radio>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

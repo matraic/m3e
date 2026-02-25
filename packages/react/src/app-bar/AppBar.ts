@@ -5,7 +5,7 @@ import { M3eAppBarElement } from "@m3e/web/app-bar";
 export type { AppBarSize, M3eAppBarElement } from "@m3e/web/app-bar";
 
 /**
- * React binding for the `m3e-app-bar` Web Component from `@m3e/app-bar`.
+ * React binding for the `m3e-app-bar` Web Component from `@m3e/web/app-bar`.
  *
  * This component renders the underlying `<m3e-app-bar>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

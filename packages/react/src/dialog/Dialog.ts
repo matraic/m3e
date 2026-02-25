@@ -5,7 +5,7 @@ import { M3eDialogElement } from "@m3e/web/dialog";
 export type { M3eDialogElement } from "@m3e/web/dialog";
 
 /**
- * React binding for the `m3e-dialog` Web Component from `@m3e/dialog`.
+ * React binding for the `m3e-dialog` Web Component from `@m3e/web/dialog`.
  *
  * This component renders the underlying `<m3e-dialog>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

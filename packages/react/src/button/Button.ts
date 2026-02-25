@@ -5,7 +5,7 @@ import { M3eButtonElement } from "@m3e/web/button";
 export type { ButtonShape, ButtonSize, ButtonVariant, M3eButtonElement } from "@m3e/web/button";
 
 /**
- * React binding for the `m3e-button` Web Component from `@m3e/button`.
+ * React binding for the `m3e-button` Web Component from `@m3e/web/button`.
  *
  * This component renders the underlying `<m3e-button>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

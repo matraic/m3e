@@ -5,7 +5,7 @@ import { M3eAccordionElement } from "@m3e/web/expansion-panel";
 export type { M3eAccordionElement } from "@m3e/web/expansion-panel";
 
 /**
- * React binding for the `m3e-accordion` Web Component from `@m3e/expansion-panel`.
+ * React binding for the `m3e-accordion` Web Component from `@m3e/web/expansion-panel`.
  *
  * This component renders the underlying `<m3e-accordion>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

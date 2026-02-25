@@ -5,7 +5,7 @@ import { M3ePseudoRadioElement } from "@m3e/web/core";
 export type { M3ePseudoRadioElement } from "@m3e/web/core";
 
 /**
- * React binding for the `m3e-pseudo-radio` Web Component from `@m3e/web/core`.
+ * React binding for the `m3e-pseudo-radio` Web Component from `@m3e/web/web/core`.
  *
  * This component renders the underlying `<m3e-pseudo-radio>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

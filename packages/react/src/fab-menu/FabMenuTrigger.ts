@@ -5,7 +5,7 @@ import { M3eFabMenuTriggerElement } from "@m3e/web/fab-menu";
 export type { M3eFabMenuTriggerElement } from "@m3e/web/fab-menu";
 
 /**
- * React binding for the `m3e-fab-menu-trigger` Web Component from `@m3e/fab-menu`.
+ * React binding for the `m3e-fab-menu-trigger` Web Component from `@m3e/web/fab-menu`.
  *
  * This component renders the underlying `<m3e-fab-menu-trigger>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

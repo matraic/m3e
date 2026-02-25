@@ -11,7 +11,7 @@ export type {
 } from "@m3e/web/icon-button";
 
 /**
- * React binding for the `m3e-icon-button` Web Component from `@m3e/icon-button`.
+ * React binding for the `m3e-icon-button` Web Component from `@m3e/web/icon-button`.
  *
  * This component renders the underlying `<m3e-icon-button>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

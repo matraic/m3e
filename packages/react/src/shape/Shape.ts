@@ -5,7 +5,7 @@ import { M3eShapeElement } from "@m3e/web/shape";
 export type { M3eShapeElement, ShapeName } from "@m3e/web/shape";
 
 /**
- * React binding for the `m3e-shape` Web Component from `@m3e/shape`.
+ * React binding for the `m3e-shape` Web Component from `@m3e/web/shape`.
  *
  * This component renders the underlying `<m3e-shape>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

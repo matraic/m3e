@@ -5,7 +5,7 @@ import { M3eTocElement } from "@m3e/web/toc";
 export type { M3eTocElement } from "@m3e/web/toc";
 
 /**
- * React binding for the `m3e-toc` Web Component from `@m3e/toc`.
+ * React binding for the `m3e-toc` Web Component from `@m3e/web/toc`.
  *
  * This component renders the underlying `<m3e-toc>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

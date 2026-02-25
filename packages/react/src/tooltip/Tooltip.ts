@@ -5,7 +5,7 @@ import { M3eTooltipElement } from "@m3e/web/tooltip";
 export type { M3eTooltipElement, TooltipPosition, TooltipTouchGestures } from "@m3e/web/tooltip";
 
 /**
- * React binding for the `m3e-tooltip` Web Component from `@m3e/tooltip`.
+ * React binding for the `m3e-tooltip` Web Component from `@m3e/web/tooltip`.
  *
  * This component renders the underlying `<m3e-tooltip>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

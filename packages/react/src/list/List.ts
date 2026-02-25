@@ -5,7 +5,7 @@ import { M3eListElement } from "@m3e/web/list";
 export type { ListVariant, M3eListElement } from "@m3e/web/list";
 
 /**
- * React binding for the `m3e-list` Web Component from `@m3e/list`.
+ * React binding for the `m3e-list` Web Component from `@m3e/web/list`.
  *
  * This component renders the underlying `<m3e-list>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

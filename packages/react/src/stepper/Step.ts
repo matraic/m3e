@@ -5,7 +5,7 @@ import { M3eStepElement } from "@m3e/web/stepper";
 export type { M3eStepElement } from "@m3e/web/stepper";
 
 /**
- * React binding for the `m3e-step` Web Component from `@m3e/stepper`.
+ * React binding for the `m3e-step` Web Component from `@m3e/web/stepper`.
  *
  * This component renders the underlying `<m3e-step>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

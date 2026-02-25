@@ -5,7 +5,7 @@ import { M3eNavMenuItemGroupElement } from "@m3e/web/nav-menu";
 export type { M3eNavMenuItemGroupElement } from "@m3e/web/nav-menu";
 
 /**
- * React binding for the `m3e-nav-menu-item-group` Web Component from `@m3e/nav-menu`.
+ * React binding for the `m3e-nav-menu-item-group` Web Component from `@m3e/web/nav-menu`.
  *
  * This component renders the underlying `<m3e-nav-menu-item-group>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

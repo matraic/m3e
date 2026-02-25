@@ -5,7 +5,7 @@ import { M3eCheckboxElement } from "@m3e/web/checkbox";
 export type { M3eCheckboxElement } from "@m3e/web/checkbox";
 
 /**
- * React binding for the `m3e-checkbox` Web Component from `@m3e/checkbox`.
+ * React binding for the `m3e-checkbox` Web Component from `@m3e/web/checkbox`.
  *
  * This component renders the underlying `<m3e-checkbox>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

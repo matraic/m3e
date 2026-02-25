@@ -5,7 +5,7 @@ import { M3eAutocompleteElement } from "@m3e/web/autocomplete";
 export type { M3eAutocompleteElement } from "@m3e/web/autocomplete";
 
 /**
- * React binding for the `m3e-autocomplete` Web Component from `@m3e/autocomplete`.
+ * React binding for the `m3e-autocomplete` Web Component from `@m3e/web/autocomplete`.
  *
  * This component renders the underlying `<m3e-autocomplete>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

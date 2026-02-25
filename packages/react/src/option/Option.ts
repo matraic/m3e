@@ -5,7 +5,7 @@ import { M3eOptionElement } from "@m3e/web/option";
 export type { M3eOptionElement } from "@m3e/web/option";
 
 /**
- * React binding for the `m3e-option` Web Component from `@m3e/option`.
+ * React binding for the `m3e-option` Web Component from `@m3e/web/option`.
  *
  * This component renders the underlying `<m3e-option>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

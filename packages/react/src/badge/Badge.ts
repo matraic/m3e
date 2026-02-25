@@ -5,7 +5,7 @@ import { M3eBadgeElement } from "@m3e/web/badge";
 export type { BadgeSize, BadgePosition, M3eBadgeElement } from "@m3e/web/badge";
 
 /**
- * React binding for the `m3e-badge` Web Component from `@m3e/badge`.
+ * React binding for the `m3e-badge` Web Component from `@m3e/web/badge`.
  *
  * This component renders the underlying `<m3e-badge>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

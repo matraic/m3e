@@ -5,7 +5,7 @@ import { M3eTabsElement } from "@m3e/web/tabs";
 export type { M3eTabsElement, TabVariant, TabHeaderPosition } from "@m3e/web/tabs";
 
 /**
- * React binding for the `m3e-tabs` Web Component from `@m3e/tabs`.
+ * React binding for the `m3e-tabs` Web Component from `@m3e/web/tabs`.
  *
  * This component renders the underlying `<m3e-tabs>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

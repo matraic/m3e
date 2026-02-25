@@ -5,7 +5,7 @@ import { M3eMenuItemRadioElement } from "@m3e/web/menu";
 export type { M3eMenuItemRadioElement } from "@m3e/web/menu";
 
 /**
- * React binding for the `m3e-menu-item-radio` Web Component from `@m3e/menu`.
+ * React binding for the `m3e-menu-item-radio` Web Component from `@m3e/web/menu`.
  *
  * This component renders the underlying `<m3e-menu-item-radio>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

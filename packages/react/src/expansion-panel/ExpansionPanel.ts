@@ -9,7 +9,7 @@ export type {
 } from "@m3e/web/expansion-panel";
 
 /**
- * React binding for the `m3e-expansion-panel` Web Component from `@m3e/expansion-panel`.
+ * React binding for the `m3e-expansion-panel` Web Component from `@m3e/web/expansion-panel`.
  *
  * This component renders the underlying `<m3e-expansion-panel>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

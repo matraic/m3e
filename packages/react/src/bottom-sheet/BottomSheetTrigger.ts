@@ -5,7 +5,7 @@ import { M3eBottomSheetTriggerElement } from "@m3e/web/bottom-sheet";
 export type { M3eBottomSheetTriggerElement } from "@m3e/web/bottom-sheet";
 
 /**
- * React binding for the `m3e-bottom-sheet-trigger` Web Component from `@m3e/bottom-sheet`.
+ * React binding for the `m3e-bottom-sheet-trigger` Web Component from `@m3e/web/bottom-sheet`.
  *
  * This component renders the underlying `<m3e-bottom-sheet-trigger>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

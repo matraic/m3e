@@ -5,7 +5,7 @@ import { M3eTextareaAutosizeElement } from "@m3e/web/textarea-autosize";
 export type { M3eTextareaAutosizeElement } from "@m3e/web/textarea-autosize";
 
 /**
- * React binding for the `m3e-textarea-autosize` Web Component from `@m3e/textarea-autosize`.
+ * React binding for the `m3e-textarea-autosize` Web Component from `@m3e/web/textarea-autosize`.
  *
  * This component renders the underlying `<m3e-textarea-autosize>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.
