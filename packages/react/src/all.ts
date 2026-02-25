@@ -8,6 +8,7 @@ export * from "./button-group";
 export * from "./card";
 export * from "./checkbox";
 export * from "./chips";
+export * from "./core";
 export * from "./dialog";
 export * from "./divider";
 export * from "./drawer-container";

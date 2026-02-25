@@ -84,6 +84,7 @@ const entryPoints = createDefaultEntryPoint();
   "card",
   "checkbox",
   "chips",
+  "core",
   "dialog",
   "divider",
   "drawer-container",

@@ -55,6 +55,10 @@
       "types": "./dist/src/chips/index.d.ts",
       "default": "./dist/chips.js"
     },
+    "./core": {
+      "types": "./dist/src/core/index.d.ts",
+      "default": "./dist/core.js"
+    },
     "./dialog": {
       "types": "./dist/src/dialog/index.d.ts",
       "default": "./dist/dialog.js"
