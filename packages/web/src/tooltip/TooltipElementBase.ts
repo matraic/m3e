@@ -127,7 +127,7 @@ export abstract class TooltipElementBase extends HtmlFor(LitElement) {
   override detach(): void {
     if (this.control) {
       this.#hoverController.unobserve(this.control);
-      this.#longPressController.observe(this.control);
+      this.#longPressController.unobserve(this.control);
       this.control.removeEventListener("click", this.#controlClickHandler);
       this.hide();
     }
