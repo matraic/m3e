@@ -151,7 +151,7 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
     :host(.-three-line) .base {
       align-items: flex-start;
     }
-    :host(:not(:disabled):not([selected]:not(:hover)):focus-visible) .base {
+    :host(:not(:disabled):not([selected]:not(:hover))) .base.focus-visible {
       border-top-left-radius: var(
         --_list-item-top-container-shape,
         var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})

@@ -13,6 +13,7 @@ import {
   M3eStateLayerElement,
   DesignToken,
   getTextContent,
+  FocusController,
 } from "@m3e/web/core";
 
 import { selectionManager } from "@m3e/web/core/a11y";
@@ -230,6 +231,14 @@ export class M3eListOptionElement extends KeyboardClick(
   /** @private */ @query(".ripple") private readonly _ripple?: M3eRippleElement;
 
   /** @private */ readonly #clickHandler = (e: Event) => this.#handleClick(e);
+
+  constructor() {
+    super();
+    new FocusController(this, {
+      callback: (_, focusVisible) =>
+        this.shadowRoot?.querySelector(".base")?.classList.toggle("focus-visible", focusVisible),
+    });
+  }
 
   /** A string representing the value of the option. */
   @property() get value() {

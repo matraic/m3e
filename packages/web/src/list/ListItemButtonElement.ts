@@ -5,6 +5,7 @@ import {
   AttachInternals,
   Disabled,
   Focusable,
+  FocusController,
   KeyboardClick,
   LinkButton,
   M3eFocusRingElement,
@@ -58,6 +59,14 @@ export class M3eListItemButtonElement extends KeyboardClick(
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;
   /** @private */ @query(".state-layer") private readonly _stateLayer?: M3eStateLayerElement;
   /** @private */ @query(".ripple") private readonly _ripple?: M3eRippleElement;
+
+  constructor() {
+    super();
+    new FocusController(this, {
+      callback: (_, focusVisible) =>
+        this.shadowRoot?.querySelector(".base")?.classList.toggle("focus-visible", focusVisible),
+    });
+  }
 
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
