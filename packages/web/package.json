@@ -59,7 +59,6 @@
     "tooltip"
   ],
   "type": "module",
-  "sideEffects": true,
   "exports": {
     "./core": {
       "types": "./dist/src/core/index.d.ts",
