@@ -279,6 +279,11 @@ export class M3eRadioElement extends Labelled(
     } else {
       this.checked = false;
     }
+
+    // Prevent default avoids double-click in FireFox.
+    if (this.closest("label")) {
+      e.preventDefault();
+    }
   }
 
   /** @private */

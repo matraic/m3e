@@ -356,6 +356,11 @@ export class M3eCheckboxElement extends Labelled(
     } else {
       this.checked = !this.checked;
     }
+
+    // Prevent default avoids double-click in FireFox.
+    if (this.closest("label")) {
+      e.preventDefault();
+    }
   }
 }
 
