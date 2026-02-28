@@ -596,6 +596,12 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     callback: () => this.#handleErrorChange(),
   });
 
+  /** @private */
+  readonly #pressedController = new PressedController(this, {
+    target: null,
+    callback: (pressed) => this.classList.toggle("-pressed", pressed && !(this.#control?.disabled ?? true)),
+  });
+
   /** @private */ #focused = false;
   /** @private */ @state() private _pseudoLabel = "";
   /** @private */ @state() private _required = false;
@@ -608,9 +614,6 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     super();
 
     new HoverController(this, { callback: () => this.classList.toggle("-no-animate", false) });
-    new PressedController(this, {
-      callback: (pressed) => this.classList.toggle("-pressed", pressed && !(this.#control?.disabled ?? true)),
-    });
   }
 
   /** @private */
@@ -697,6 +700,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     super.firstUpdated(_changedProperties);
 
     this.#focusController.observe(this._base);
+    this.#pressedController.observe(this._base);
 
     this.#hintMutationController.observe(this._hint);
     this.#handleHintChange();
