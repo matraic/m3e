@@ -330,13 +330,16 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     }
     :host([variant="outlined"]) .pseudo-label {
       visibility: hidden;
-      margin-inline-end: 0.25rem;
+      margin-inline-end: 0.5rem;
       font-size: var(--_form-field-label-font-size);
       line-height: var(--_form-field-label-line-height);
       letter-spacing: var(--_form-field-label-tracking);
       max-width: 100%;
       transition-property: max-width, margin-inline-end;
       transition-duration: 1ms;
+    }
+    :host([variant="outlined"].-required:not([hide-required-marker])) .pseudo-label {
+      margin-inline-end: 0.25rem;
     }
     :host([variant="outlined"][float-label="auto"]:not(.-float-label):not(.-pressed)) .pseudo-label {
       max-width: 0;
