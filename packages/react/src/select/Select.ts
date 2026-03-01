@@ -17,7 +17,12 @@ export type { M3eSelectElement } from "@m3e/web/select";
  * See the `m3e-select` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eSelect = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eSelect = isBrowser ? createComponent({
   tagName: "m3e-select",
   elementClass: M3eSelectElement,
   react: React,

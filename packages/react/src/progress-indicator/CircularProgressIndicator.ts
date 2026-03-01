@@ -17,8 +17,13 @@ export type { M3eCircularProgressIndicatorElement } from "@m3e/web/progress-indi
  * See the `m3e-circular-progress-indicator` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eCircularProgressIndicator = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eCircularProgressIndicator = isBrowser ? createComponent({
   tagName: "m3e-circular-progress-indicator",
   elementClass: M3eCircularProgressIndicatorElement,
   react: React,
-});
+}) : null;

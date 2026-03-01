@@ -17,8 +17,14 @@ export type { M3eDialogTriggerElement } from "@m3e/web/dialog";
  * See the `m3e-dialog-trigger` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eDialogTrigger = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+
+export const M3eDialogTrigger = isBrowser ? createComponent({
   tagName: "m3e-dialog-trigger",
   elementClass: M3eDialogTriggerElement,
   react: React,
-});
+}) : null;

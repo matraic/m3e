@@ -17,11 +17,17 @@ export type { M3eAutocompleteElement } from "@m3e/web/autocomplete";
  * See the `m3e-autocomplete` documentation in `@m3e/autocomplete` for full details on behavior,
  * styling, accessibility, and supported events.
  */
-export const M3eAutocomplete = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+
+export const M3eAutocomplete = isBrowser ? createComponent({
   tagName: "m3e-autocomplete",
   elementClass: M3eAutocompleteElement,
   react: React,
   events: {
     onToggle: "toggle",
   },
-});
+}) : null;

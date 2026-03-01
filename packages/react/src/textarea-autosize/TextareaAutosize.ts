@@ -17,8 +17,13 @@ export type { M3eTextareaAutosizeElement } from "@m3e/web/textarea-autosize";
  * See the `m3e-textarea-autosize` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eTextareaAutosize = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eTextareaAutosize = isBrowser ? createComponent({
   tagName: "m3e-textarea-autosize",
   elementClass: M3eTextareaAutosizeElement,
   react: React,
-});
+}) : null;

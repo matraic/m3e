@@ -17,8 +17,13 @@ export type { M3eFabMenuTriggerElement } from "@m3e/web/fab-menu";
  * See the `m3e-fab-menu-trigger` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eFabMenuTrigger = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eFabMenuTrigger = isBrowser ? createComponent({
   tagName: "m3e-fab-menu-trigger",
   elementClass: M3eFabMenuTriggerElement,
   react: React,
-});
+}) : null;

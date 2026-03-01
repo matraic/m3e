@@ -17,11 +17,16 @@ export type { M3eListActionElement } from "@m3e/web/list";
  * See the `m3e-list-action` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eListAction = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eListAction = isBrowser ? createComponent({
   tagName: "m3e-list-action",
   elementClass: M3eListActionElement,
   react: React,
   events: {
     onClick: "click",
   },
-});
+}) : null;

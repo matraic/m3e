@@ -17,11 +17,16 @@ export type { M3eMenuItemCheckboxElement } from "@m3e/web/menu";
  * See the `m3e-menu-item-checkbox` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eMenuItemCheckbox = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eMenuItemCheckbox = isBrowser ? createComponent({
   tagName: "m3e-menu-item-checkbox",
   elementClass: M3eMenuItemCheckboxElement,
   react: React,
   events: {
     onClick: "click",
   },
-});
+}) : null;

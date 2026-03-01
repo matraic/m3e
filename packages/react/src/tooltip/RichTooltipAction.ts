@@ -17,8 +17,13 @@ export type { M3eRichTooltipActionElement } from "@m3e/web/tooltip";
  * See the `m3e-rich-tooltip-action` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eRichTooltipAction = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eRichTooltipAction = isBrowser ? createComponent({
   tagName: "m3e-rich-tooltip-action",
   elementClass: M3eRichTooltipActionElement,
   react: React,
-});
+}) : null;

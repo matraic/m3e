@@ -17,7 +17,12 @@ export type { M3eSelectionListElement } from "@m3e/web/list";
  * See the `m3e-selection-list` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eSelectionList = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eSelectionList = isBrowser ? createComponent({
   tagName: "m3e-selection-list",
   elementClass: M3eSelectionListElement,
   react: React,
@@ -25,4 +30,4 @@ export const M3eSelectionList = createComponent({
     onInput: "input",
     onChange: "change",
   },
-});
+}) : null;

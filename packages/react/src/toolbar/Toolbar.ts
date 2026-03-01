@@ -17,8 +17,12 @@ export type { M3eToolbarElement, ToolbarVariant, ToolbarShape } from "@m3e/web/t
  * See the `m3e-toolbar` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eToolbar = createComponent({
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eToolbar = isBrowser ? createComponent({
   tagName: "m3e-toolbar",
   elementClass: M3eToolbarElement,
   react: React,
-});
+}) : null;

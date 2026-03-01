@@ -17,7 +17,12 @@ export type { M3eExpandableListItemElement } from "@m3e/web/list";
  * See the `m3e-expandable-list-item` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eExpandableListItem = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eExpandableListItem = isBrowser ? createComponent({
   tagName: "m3e-expandable-list-item",
   elementClass: M3eExpandableListItemElement,
   react: React,
@@ -27,4 +32,4 @@ export const M3eExpandableListItem = createComponent({
     onClosing: "closing",
     onClosed: "closed",
   },
-});
+}) : null;
