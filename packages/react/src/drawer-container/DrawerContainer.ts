@@ -17,11 +17,17 @@ export type { DrawerMode, DrawerPosition, M3eDrawerContainerElement } from "@m3e
  * See the `m3e-drawer-container` documentation in `@m3e/drawer-container` for full details on behavior,
  * styling, accessibility, and supported events.
  */
-export const M3eDrawerContainer = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+
+export const M3eDrawerContainer = isBrowser ? createComponent({
   tagName: "m3e-drawer-container",
   elementClass: M3eDrawerContainerElement,
   react: React,
   events: {
     onChange: "change",
   },
-});
+}) : null;

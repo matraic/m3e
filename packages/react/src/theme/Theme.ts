@@ -17,7 +17,12 @@ export type { ColorScheme, ContrastLevel, MotionScheme, M3eThemeElement } from "
  * See the `m3e-theme` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eTheme = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eTheme = isBrowser ? createComponent({
   tagName: "m3e-theme",
   elementClass: M3eThemeElement,
   react: React,

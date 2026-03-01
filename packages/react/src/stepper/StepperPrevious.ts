@@ -17,8 +17,13 @@ export type { M3eStepperPreviousElement } from "@m3e/web/stepper";
  * See the `m3e-stepper-previous` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eStepperPrevious = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eStepperPrevious = isBrowser ? createComponent({
   tagName: "m3e-stepper-previous",
   elementClass: M3eStepperPreviousElement,
   react: React,
-});
+}) : null;

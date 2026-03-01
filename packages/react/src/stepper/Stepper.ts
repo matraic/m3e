@@ -17,11 +17,16 @@ export type { M3eStepperElement, StepperOrientation, StepLabelPosition, StepHead
  * See the `m3e-stepper` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eStepper = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eStepper = isBrowser ? createComponent({
   tagName: "m3e-stepper",
   elementClass: M3eStepperElement,
   react: React,
   events: {
     onChange: "change",
   },
-});
+}) : null;

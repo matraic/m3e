@@ -17,11 +17,16 @@ export type { M3eMenuItemRadioElement } from "@m3e/web/menu";
  * See the `m3e-menu-item-radio` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eMenuItemRadio = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eMenuItemRadio = isBrowser ? createComponent({
   tagName: "m3e-menu-item-radio",
   elementClass: M3eMenuItemRadioElement,
   react: React,
   events: {
     onClick: "click",
   },
-});
+}) : null;

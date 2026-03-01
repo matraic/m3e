@@ -17,8 +17,14 @@ export type { M3eRippleElement } from "@m3e/web/core";
  * See the `m3e-ripple` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eRipple = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+
+export const M3eRipple = isBrowser ? createComponent({
   tagName: "m3e-ripple",
   elementClass: M3eRippleElement,
   react: React,
-});
+}) : null;

@@ -17,8 +17,13 @@ export type { M3eSlideGroupElement } from "@m3e/web/slide-group";
  * See the `m3e-slide-group` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eSlideGroup = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eSlideGroup = isBrowser ? createComponent({
   tagName: "m3e-slide-group",
   elementClass: M3eSlideGroupElement,
   react: React,
-});
+}) : null;

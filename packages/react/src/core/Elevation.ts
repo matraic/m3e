@@ -17,8 +17,14 @@ export type { M3eElevationElement, ElevationLevel } from "@m3e/web/core";
  * See the `m3e-elevation` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eElevation = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+
+export const M3eElevation = isBrowser ? createComponent({
   tagName: "m3e-elevation",
   elementClass: M3eElevationElement,
   react: React,
-});
+}) : null;
