@@ -152,6 +152,10 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
     :host([variant="secondary"]) .tablist {
       --_tabs-active-indicator-thickness: var(--m3e-tabs-secondary-active-indicator-thickness, 2px);
       --_tab-height: 3rem;
+      --_tab-selected-color: ${DesignToken.color.onSurface};
+      --_tab-selected-container-hover-color: ${DesignToken.color.onSurface};
+      --_tab-selected-container-focus-color: ${DesignToken.color.onSurface};
+      --_tab-selected-ripple-color: ${DesignToken.color.onSurface};
     }
     :host([stretch]) .header {
       width: 100%;
