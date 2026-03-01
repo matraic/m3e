@@ -39,6 +39,9 @@ Planned components which have not yet entered development:
 
 ## 🏛️ Past Milestones
 
+- **2.0.1 — Patch release**  
+  Bug fixes, SSR support for React.
+
 - **2.0.0 — Major release**  
   Unified architecture under `@m3e/web`, introduced `@m3e/react` (React bindings), consolidated components, and deprecated legacy per‑component packages.
 
