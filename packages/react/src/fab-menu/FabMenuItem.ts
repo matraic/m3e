@@ -17,16 +17,11 @@ export type { M3eFabMenuItemElement } from "@m3e/web/fab-menu";
  * See the `m3e-fab-menu-item` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eFabMenuItem = isBrowser ? createComponent({
+export const M3eFabMenuItem = createComponent({
   tagName: "m3e-fab-menu-item",
   elementClass: M3eFabMenuItemElement,
   react: React,
   events: {
     onClick: "click",
   },
-}) : null;
+});

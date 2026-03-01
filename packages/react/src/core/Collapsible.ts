@@ -17,13 +17,7 @@ export type { M3eCollapsibleElement } from "@m3e/web/core";
  * See the `m3e-collapsible` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eCollapsible = isBrowser ? createComponent({
+export const M3eCollapsible = createComponent({
   tagName: "m3e-collapsible",
   elementClass: M3eCollapsibleElement,
   react: React,
@@ -33,4 +27,4 @@ export const M3eCollapsible = isBrowser ? createComponent({
     onClosing: "closing",
     onClosed: "closed",
   },
-}) : null;
+});

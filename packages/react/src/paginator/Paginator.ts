@@ -17,16 +17,11 @@ export type { M3ePaginatorElement, PageEventDetail } from "@m3e/web/paginator";
  * See the `m3e-paginator` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3ePaginator = isBrowser ? createComponent({
+export const M3ePaginator = createComponent({
   tagName: "m3e-paginator",
   elementClass: M3ePaginatorElement,
   react: React,
   events: {
     onPage: "page" as EventName<CustomEvent<PageEventDetail>>,
   },
-}) : null;
+});

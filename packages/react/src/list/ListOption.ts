@@ -17,12 +17,7 @@ export type { M3eListOptionElement } from "@m3e/web/list";
  * See the `m3e-list-option` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eListOption = isBrowser ? createComponent({
+export const M3eListOption = createComponent({
   tagName: "m3e-list-option",
   elementClass: M3eListOptionElement,
   react: React,
@@ -31,4 +26,4 @@ export const M3eListOption = isBrowser ? createComponent({
     onChange: "change",
     onClick: "click",
   },
-}) : null;
+});

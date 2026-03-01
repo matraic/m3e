@@ -17,12 +17,7 @@ export type { M3eTocElement } from "@m3e/web/toc";
  * See the `m3e-toc` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eToc = isBrowser ? createComponent({
+export const M3eToc = createComponent({
   tagName: "m3e-toc",
   elementClass: M3eTocElement,
   react: React,

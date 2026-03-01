@@ -17,14 +17,8 @@ export type { M3eTextHighlightElement } from "@m3e/web/core";
  * See the `m3e-text-highlight` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eTextHighlight = isBrowser ? createComponent({
+export const M3eTextHighlight = createComponent({
   tagName: "m3e-text-highlight",
   elementClass: M3eTextHighlightElement,
   react: React,
-}) : null;
+});

@@ -17,13 +17,8 @@ export type { HeadingLevel, HeadingSize, HeadingVariant, M3eHeadingElement } fro
  * See the `m3e-heading` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eHeading = isBrowser ? createComponent({
+export const M3eHeading = createComponent({
   tagName: "m3e-heading",
   elementClass: M3eHeadingElement,
   react: React,
-}) : null;
+});

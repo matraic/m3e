@@ -17,12 +17,7 @@ export type { M3eNavItemElement } from "@m3e/web/nav-bar";
  * See the `m3e-nav-item` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eNavItem = isBrowser ? createComponent({
+export const M3eNavItem = createComponent({
   tagName: "m3e-nav-item",
   elementClass: M3eNavItemElement,
   react: React,
@@ -31,4 +26,4 @@ export const M3eNavItem = isBrowser ? createComponent({
     onChange: "change",
     onClick: "click",
   },
-}) : null;
+});

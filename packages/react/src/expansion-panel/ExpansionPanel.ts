@@ -21,13 +21,7 @@ export type {
  * See the `m3e-expansion-panel` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eExpansionPanel = isBrowser ? createComponent({
+export const M3eExpansionPanel = createComponent({
   tagName: "m3e-expansion-panel",
   elementClass: M3eExpansionPanelElement,
   react: React,
@@ -37,4 +31,4 @@ export const M3eExpansionPanel = isBrowser ? createComponent({
     onClosing: "closing",
     onClosed: "closed",
   },
-}) : null;
+});

@@ -16,14 +16,8 @@ export type { M3eAvatarElement } from "@m3e/web/avatar";
  * See the `m3e-avatar` documentation in `@m3e/avatar` for full details on behavior,
  * styling, accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eAvatar = isBrowser ? createComponent({
+export const M3eAvatar = createComponent({
   tagName: "m3e-avatar",
   elementClass: M3eAvatarElement,
   react: React,
-}) : null;
+});

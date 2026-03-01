@@ -17,14 +17,8 @@ export type { M3eChipSetElement } from "@m3e/web/chips";
  * See the `m3e-chip-set` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eChipSet = isBrowser ? createComponent({
+export const M3eChipSet = createComponent({
   tagName: "m3e-chip-set",
   elementClass: M3eChipSetElement,
   react: React,
-}) : null;
+});

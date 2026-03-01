@@ -17,13 +17,7 @@ export type { ButtonShape, ButtonSize, ButtonVariant, M3eButtonElement } from "@
  * See the `m3e-button` documentation in `@m3e/button` for full details on behavior,
  * styling, accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eButton = isBrowser ? createComponent({
+export const M3eButton = createComponent({
   tagName: "m3e-button",
   elementClass: M3eButtonElement,
   react: React,

@@ -17,16 +17,11 @@ export type { M3eTabsElement, TabVariant, TabHeaderPosition } from "@m3e/web/tab
  * See the `m3e-tabs` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eTabs = isBrowser ? createComponent({
+export const M3eTabs = createComponent({
   tagName: "m3e-tabs",
   elementClass: M3eTabsElement,
   react: React,
   events: {
     onChange: "change",
   },
-}) : null;
+});

@@ -17,14 +17,8 @@ export type { ButtonGroupSize, ButtonGroupVariant, M3eButtonGroupElement } from 
  * See the `m3e-button-group` documentation in `@m3e/button-group` for full details on behavior,
  * styling, accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eButtonGroup = isBrowser ? createComponent({
+export const M3eButtonGroup = createComponent({
   tagName: "m3e-button-group",
   elementClass: M3eButtonGroupElement,
   react: React,
-}) : null;
+});

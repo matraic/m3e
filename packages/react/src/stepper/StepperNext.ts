@@ -17,13 +17,8 @@ export type { M3eStepperNextElement } from "@m3e/web/stepper";
  * See the `m3e-stepper-next` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eStepperNext = isBrowser ? createComponent({
+export const M3eStepperNext = createComponent({
   tagName: "m3e-stepper-next",
   elementClass: M3eStepperNextElement,
   react: React,
-}) : null;
+});

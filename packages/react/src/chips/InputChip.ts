@@ -17,13 +17,7 @@ export type { M3eInputChipElement } from "@m3e/web/chips";
  * See the `m3e-input-chip` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eInputChip = isBrowser ? createComponent({
+export const M3eInputChip = createComponent({
   tagName: "m3e-input-chip",
   elementClass: M3eInputChipElement,
   react: React,
@@ -31,4 +25,4 @@ export const M3eInputChip = isBrowser ? createComponent({
     onClick: "click",
     onRemove: "remove",
   },
-}) : null;
+});

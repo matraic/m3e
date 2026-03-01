@@ -17,14 +17,8 @@ export type { M3eStateLayerElement } from "@m3e/web/core";
  * See the `m3e-state-layer` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eStateLayer = isBrowser ? createComponent({
+export const M3eStateLayer = createComponent({
   tagName: "m3e-state-layer",
   elementClass: M3eStateLayerElement,
   react: React,
-}) : null;
+});

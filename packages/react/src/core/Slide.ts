@@ -17,14 +17,8 @@ export type { M3eSlideElement } from "@m3e/web/core";
  * See the `m3e-slide` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eSlide = isBrowser ? createComponent({
+export const M3eSlide = createComponent({
   tagName: "m3e-slide",
   elementClass: M3eSlideElement,
   react: React,
-}) : null;
+});

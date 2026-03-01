@@ -17,16 +17,11 @@ export type { M3eRadioGroupElement } from "@m3e/web/radio-group";
  * See the `m3e-radio-group` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eRadioGroup = isBrowser ? createComponent({
+export const M3eRadioGroup = createComponent({
   tagName: "m3e-radio-group",
   elementClass: M3eRadioGroupElement,
   react: React,
   events: {
     onChange: "change",
   },
-}) : null;
+});

@@ -17,12 +17,7 @@ export type { M3eSegmentedButtonElement } from "@m3e/web/segmented-button";
  * See the `m3e-segmented-button` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eSegmentedButton = isBrowser ? createComponent({
+export const M3eSegmentedButton = createComponent({
   tagName: "m3e-segmented-button",
   elementClass: M3eSegmentedButtonElement,
   react: React,
@@ -30,4 +25,4 @@ export const M3eSegmentedButton = isBrowser ? createComponent({
     onInput: "input",
     onChange: "change",
   },
-}) : null;
+});

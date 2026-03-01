@@ -17,14 +17,8 @@ export type { M3eScrollContainerElement, ScrollDividers } from "@m3e/web/core";
  * See the `m3e-scroll-container` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eScrollContainer = isBrowser ? createComponent({
+export const M3eScrollContainer = createComponent({
   tagName: "m3e-scroll-container",
   elementClass: M3eScrollContainerElement,
   react: React,
-}) : null;
+});

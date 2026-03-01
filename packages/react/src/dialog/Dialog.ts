@@ -17,13 +17,7 @@ export type { M3eDialogElement } from "@m3e/web/dialog";
  * See the `m3e-dialog` documentation in `@m3e/dialog` for full details on behavior,
  * styling, accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eDialog = isBrowser ? createComponent({
+export const M3eDialog = createComponent({
   tagName: "m3e-dialog",
   elementClass: M3eDialogElement,
   react: React,
@@ -34,4 +28,4 @@ export const M3eDialog = isBrowser ? createComponent({
     onClosed: "closed",
     onCancel: "cancel",
   },
-}) : null;
+});

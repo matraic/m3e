@@ -17,13 +17,8 @@ export type { FloatLabelType, FormFieldVariant, FormFieldControl, M3eFormFieldEl
  * See the `m3e-form-field` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eFormField = isBrowser ? createComponent({
+export const M3eFormField = createComponent({
   tagName: "m3e-form-field",
   elementClass: M3eFormFieldElement,
   react: React,
-}) : null;
+});

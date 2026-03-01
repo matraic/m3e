@@ -17,13 +17,8 @@ export type { LoadingIndicatorVariant, M3eLoadingIndicatorElement } from "@m3e/w
  * See the `m3e-loading-indicator` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eLoadingIndicator = isBrowser ? createComponent({
+export const M3eLoadingIndicator = createComponent({
   tagName: "m3e-loading-indicator",
   elementClass: M3eLoadingIndicatorElement,
   react: React,
-}) : null;
+});

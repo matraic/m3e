@@ -17,13 +17,8 @@ export type { M3eDrawerToggleElement } from "@m3e/web/drawer-container";
  * See the `m3e-drawer-toggle` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eDrawerToggle = isBrowser ? createComponent({
+export const M3eDrawerToggle = createComponent({
   tagName: "m3e-drawer-toggle",
   elementClass: M3eDrawerToggleElement,
   react: React,
-}) : null;
+});

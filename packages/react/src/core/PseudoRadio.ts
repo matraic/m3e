@@ -17,14 +17,8 @@ export type { M3ePseudoRadioElement } from "@m3e/web/core";
  * See the `m3e-pseudo-radio` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3ePseudoRadio = isBrowser ? createComponent({
+export const M3ePseudoRadio = createComponent({
   tagName: "m3e-pseudo-radio",
   elementClass: M3ePseudoRadioElement,
   react: React,
-}) : null;
+});

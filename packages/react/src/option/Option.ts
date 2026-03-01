@@ -17,13 +17,8 @@ export type { M3eOptionElement } from "@m3e/web/option";
  * See the `m3e-option` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eOption = isBrowser ? createComponent({
+export const M3eOption = createComponent({
   tagName: "m3e-option",
   elementClass: M3eOptionElement,
   react: React,
-}) : null;
+});

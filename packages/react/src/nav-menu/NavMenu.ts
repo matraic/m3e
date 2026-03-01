@@ -17,13 +17,8 @@ export type { M3eNavMenuElement } from "@m3e/web/nav-menu";
  * See the `m3e-nav-menu` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eNavMenu = isBrowser ? createComponent({
+export const M3eNavMenu = createComponent({
   tagName: "m3e-nav-menu",
   elementClass: M3eNavMenuElement,
   react: React,
-}) : null;
+});

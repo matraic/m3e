@@ -17,14 +17,8 @@ export type { M3eAccordionElement } from "@m3e/web/expansion-panel";
  * See the `m3e-accordion` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eAccordion = isBrowser ? createComponent({
+export const M3eAccordion = createComponent({
   tagName: "m3e-accordion",
   elementClass: M3eAccordionElement,
   react: React,
-}) : null;
+});

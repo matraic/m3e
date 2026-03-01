@@ -17,12 +17,7 @@ export type { M3eRichTooltipElement, RichTooltipPosition } from "@m3e/web/toolti
  * See the `m3e-rich-tooltip` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eRichTooltip = isBrowser ? createComponent({
+export const M3eRichTooltip = createComponent({
   tagName: "m3e-rich-tooltip",
   elementClass: M3eRichTooltipElement,
   react: React,
@@ -30,4 +25,4 @@ export const M3eRichTooltip = isBrowser ? createComponent({
     onBeforeToggle: "beforetoggle",
     onToggle: "toggle",
   },
-}) : null;
+});

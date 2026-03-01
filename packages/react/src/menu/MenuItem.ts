@@ -17,16 +17,11 @@ export type { M3eMenuItemElement } from "@m3e/web/menu";
  * See the `m3e-menu-item` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eMenuItem = isBrowser ? createComponent({
+export const M3eMenuItem = createComponent({
   tagName: "m3e-menu-item",
   elementClass: M3eMenuItemElement,
   react: React,
   events: {
     onClick: "click",
   },
-}) : null;
+});

@@ -23,12 +23,7 @@ export type {
  * See the `m3e-icon-button` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eIconButton = isBrowser ? createComponent({
+export const M3eIconButton = createComponent({
   tagName: "m3e-icon-button",
   elementClass: M3eIconButtonElement,
   react: React,
@@ -37,4 +32,4 @@ export const M3eIconButton = isBrowser ? createComponent({
     onChange: "change",
     onClick: "click",
   },
-}) : null;
+});

@@ -17,14 +17,8 @@ export type { M3eBottomSheetTriggerElement } from "@m3e/web/bottom-sheet";
  * See the `m3e-bottom-sheet-trigger` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eBottomSheetTrigger = isBrowser ? createComponent({
+export const M3eBottomSheetTrigger = createComponent({
   tagName: "m3e-bottom-sheet-trigger",
   elementClass: M3eBottomSheetTriggerElement,
   react: React,
-}) : null;
+});

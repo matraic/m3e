@@ -17,12 +17,7 @@ export type { FabMenuVariant, M3eFabMenuElement } from "@m3e/web/fab-menu";
  * See the `m3e-fab-menu` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-export const M3eFabMenu = isBrowser ? createComponent({
+export const M3eFabMenu = createComponent({
   tagName: "m3e-fab-menu",
   elementClass: M3eFabMenuElement,
   react: React,
@@ -30,4 +25,4 @@ export const M3eFabMenu = isBrowser ? createComponent({
     onBeforeToggle: "beforetoggle",
     onToggle: "toggle",
   },
-}) : null;
+});

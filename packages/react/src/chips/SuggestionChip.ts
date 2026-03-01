@@ -17,17 +17,11 @@ export type { M3eSuggestionChipElement } from "@m3e/web/chips";
  * See the `m3e-suggestion-chip` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-
-// Checking if the code is running in the browser
-const isBrowser = typeof window !== "undefined";
-
-// Defining element
-
-export const M3eSuggestionChip = isBrowser ? createComponent({
+export const M3eSuggestionChip = createComponent({
   tagName: "m3e-suggestion-chip",
   elementClass: M3eSuggestionChipElement,
   react: React,
   events: {
     onClick: "click",
   },
-}) : null;
+});

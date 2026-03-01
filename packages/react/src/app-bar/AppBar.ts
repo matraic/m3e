@@ -17,11 +17,8 @@ export type { AppBarSize, M3eAppBarElement } from "@m3e/web/app-bar";
  * See the `m3e-app-bar` documentation in `@m3e/app-bar` for full details on behavior,
  * styling, accessibility, and supported events.
  */
-
-const isBrowser = typeof window !== "undefined";
-
-export const M3eAppBar = isBrowser ? createComponent({
+export const M3eAppBar = createComponent({
   tagName: "m3e-app-bar",
   elementClass: M3eAppBarElement,
   react: React,
-}) : null;
+});
