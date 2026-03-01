@@ -252,7 +252,7 @@ export class M3eNavItemElement extends LinkButton(
       );
     }
     :host([orientation="vertical"]) .focus-ring {
-      border-radius: var(--m3e-nav-item-focus-ring-shape, ${DesignToken.shape.corner.extraSmall});
+      border-radius: var(--m3e-nav-item-focus-ring-shape, ${DesignToken.shape.corner.medium});
     }
     :host([orientation="horizontal"]) .icon-wrapper {
       width: var(--m3e-nav-item-icon-size, 1.5rem);
