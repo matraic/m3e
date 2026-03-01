@@ -337,11 +337,15 @@
         Linear steppers require use of a <code>form</code> per step whose validity status determines whether a user can
         move to the next step.
       </p>
+      <p>
+        A step is considered complete once the user transitions forward. Navigation back to an earlier step is allowed
+        only when that step is explicitly designated as editable via the <code>editable</code> attribute.
+      </p>
       <m3e-card variant="outlined">
         <div slot="content">
           <m3e-stepper linear>
-            <m3e-step for="step13">Fill out your name</m3e-step>
-            <m3e-step for="step14">Fill out your address</m3e-step>
+            <m3e-step for="step13" editable>Fill out your name</m3e-step>
+            <m3e-step for="step14" editable>Fill out your address</m3e-step>
             <m3e-step for="step15">Done</m3e-step>
             <m3e-step-panel id="step13">
               <form>
@@ -379,6 +383,9 @@
       <m3e-card variant="filled" class="example">
         <pre slot="content">
 &lt;m3e-stepper linear&gt;
+  &lt;m3e-step for=&quot;step1&quot; editable&gt;Fill out your name&lt;/m3e-step&gt;
+  &lt;m3e-step for=&quot;step2&quot; editable&gt;Fill out your address&lt;/m3e-step&gt;
+  &lt;m3e-step for=&quot;step3&quot;&gt;Done&lt;/m3e-step&gt;
   &lt;!-- Content omitted for brevity --&gt;
 &lt;/m3e-stepper&gt;</pre
         >
