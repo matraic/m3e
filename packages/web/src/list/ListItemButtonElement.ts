@@ -11,6 +11,7 @@ import {
   M3eFocusRingElement,
   M3eRippleElement,
   M3eStateLayerElement,
+  PressedController,
   renderPseudoLink,
   Role,
 } from "@m3e/web/core";
@@ -65,6 +66,9 @@ export class M3eListItemButtonElement extends KeyboardClick(
     new FocusController(this, {
       callback: (_, focusVisible) =>
         this.shadowRoot?.querySelector(".base")?.classList.toggle("focus-visible", focusVisible),
+    });
+    new PressedController(this, {
+      callback: (pressed) => this.shadowRoot?.querySelector(".base")?.classList.toggle("pressed", pressed),
     });
   }
 
