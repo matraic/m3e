@@ -120,13 +120,22 @@ export class M3eTabElement extends Selected(
       bottom: var(--_tab-focus-ring-bottom-offset, 0);
     }
     :host([selected]:not(:disabled)) .base {
-      color: var(--m3e-tab-selected-color, ${DesignToken.color.primary});
-      --m3e-state-layer-hover-color: var(--m3e-tab-selected-container-hover-color, ${DesignToken.color.primary});
-      --m3e-state-layer-focus-color: var(--m3e-tab-selected-container-focus-color, ${DesignToken.color.primary});
-      --m3e-ripple-color: var(--m3e-tab-selected-ripple-color, ${DesignToken.color.primary});
+      color: var(--m3e-tab-selected-color, var(--_tab-selected-color, ${DesignToken.color.primary}));
+      --m3e-state-layer-hover-color: var(
+        --m3e-tab-selected-container-hover-color,
+        var(--_tab-selected-container-hover-color, ${DesignToken.color.primary})
+      );
+      --m3e-state-layer-focus-color: var(
+        --_tab-selected-container-focus-color,
+        var(--m3e-tab-selected-container-focus-color, ${DesignToken.color.primary})
+      );
+      --m3e-ripple-color: var(
+        --_tab-selected-ripple-color,
+        var(--m3e-tab-selected-ripple-color, ${DesignToken.color.primary})
+      );
     }
     :host(:not([selected]):not(:disabled)) .base {
-      color: var(--m3e-tab-unselected-color, ${DesignToken.color.onSurface});
+      color: var(--m3e-tab-unselected-color, ${DesignToken.color.onSurfaceVariant});
       --m3e-state-layer-hover-color: var(--m3e-tab-unselected-container-hover-color, ${DesignToken.color.onSurface});
       --m3e-state-layer-focus-color: var(--m3e-tab-unselected-container-focus-color, ${DesignToken.color.onSurface});
       --m3e-ripple-color: var(--m3e-tab-unselected-ripple-color, ${DesignToken.color.onSurface});
