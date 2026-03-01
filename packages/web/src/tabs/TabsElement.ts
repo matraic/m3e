@@ -134,7 +134,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
     }
     :host([variant="primary"]) .tablist {
       --_tabs-activate-indicator-inset: var(--m3e-tabs-primary-active-indicator-inset, 0.125rem);
-      --_tabs-active-indicator-thickness: var(--m3e-tabs-primary-active-indicator-thickness, 0.1875rem);
+      --_tabs-active-indicator-thickness: var(--m3e-tabs-primary-active-indicator-thickness, 3px);
       --_tab-height: 4rem;
     }
     :host([header-position="before"]) .tablist {
@@ -150,7 +150,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       --_tab-direction: column-reverse;
     }
     :host([variant="secondary"]) .tablist {
-      --_tabs-active-indicator-thickness: var(--m3e-tabs-secondary-active-indicator-thickness, 0.125rem);
+      --_tabs-active-indicator-thickness: var(--m3e-tabs-secondary-active-indicator-thickness, 2px);
       --_tab-height: 3rem;
     }
     :host([stretch]) .header {
