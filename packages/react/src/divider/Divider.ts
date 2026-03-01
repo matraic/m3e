@@ -17,8 +17,14 @@ export type { M3eDividerElement } from "@m3e/web/divider";
  * See the `m3e-divider` documentation in `@m3e/divider` for full details on behavior,
  * styling, accessibility, and supported events.
  */
-export const M3eDivider = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+
+export const M3eDivider = isBrowser ? createComponent({
   tagName: "m3e-divider",
   elementClass: M3eDividerElement,
   react: React,
-});
+}) : null;

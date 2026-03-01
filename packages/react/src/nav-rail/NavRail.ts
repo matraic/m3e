@@ -17,11 +17,16 @@ export type { M3eNavRailElement } from "@m3e/web/nav-rail";
  * See the `m3e-nav-rail` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eNavRail = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eNavRail = isBrowser ? createComponent({
   tagName: "m3e-nav-rail",
   elementClass: M3eNavRailElement,
   react: React,
   events: {
     onChange: "change",
   },
-});
+}) : null;

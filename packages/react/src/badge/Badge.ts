@@ -17,8 +17,14 @@ export type { BadgeSize, BadgePosition, M3eBadgeElement } from "@m3e/web/badge";
  * See the `m3e-badge` documentation in `@m3e/badge` for full details on behavior,
  * styling, accessibility, and supported events.
  */
-export const M3eBadge = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+
+export const M3eBadge = isBrowser ? createComponent({
   tagName: "m3e-badge",
   elementClass: M3eBadgeElement,
   react: React,
-});
+}) : null;

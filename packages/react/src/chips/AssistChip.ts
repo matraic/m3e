@@ -17,11 +17,17 @@ export type { M3eAssistChipElement } from "@m3e/web/chips";
  * See the `m3e-assist-chip` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eAssistChip = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+
+export const M3eAssistChip = isBrowser ? createComponent({
   tagName: "m3e-assist-chip",
   elementClass: M3eAssistChipElement,
   react: React,
   events: {
     onClick: "click",
   },
-});
+}) : null;

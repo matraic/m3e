@@ -17,8 +17,14 @@ export type { M3eTextOverflowElement } from "@m3e/web/core";
  * See the `m3e-text-overflow` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eTextOverflow = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+
+export const M3eTextOverflow = isBrowser ? createComponent({
   tagName: "m3e-text-overflow",
   elementClass: M3eTextOverflowElement,
   react: React,
-});
+}) : null;

@@ -17,8 +17,14 @@ export type { M3eDialogActionElement } from "@m3e/web/dialog";
  * See the `m3e-dialog-action` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eDialogAction = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+
+export const M3eDialogAction = isBrowser ? createComponent({
   tagName: "m3e-dialog-action",
   elementClass: M3eDialogActionElement,
   react: React,
-});
+}) : null;

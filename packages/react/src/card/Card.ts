@@ -17,11 +17,17 @@ export type { CardOrientation, CardVariant, M3eCardElement } from "@m3e/web/card
  * See the `m3e-card` documentation in `@m3e/card` for full details on behavior,
  * styling, accessibility, and supported events.
  */
-export const M3eCard = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+
+export const M3eCard = isBrowser ? createComponent({
   tagName: "m3e-card",
   elementClass: M3eCardElement,
   react: React,
   events: {
     onClick: "click",
   },
-});
+}) : null;

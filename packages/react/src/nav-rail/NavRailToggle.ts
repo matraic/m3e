@@ -17,8 +17,13 @@ export type { M3eNavRailToggleElement } from "@m3e/web/nav-rail";
  * See the `m3e-nav-rail-toggle` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eNavRailToggle = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eNavRailToggle = isBrowser ? createComponent({
   tagName: "m3e-nav-rail-toggle",
   elementClass: M3eNavRailToggleElement,
   react: React,
-});
+}) : null;

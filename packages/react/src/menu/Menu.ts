@@ -17,7 +17,12 @@ export type { MenuPositionX, MenuPositionY, MenuVariant, M3eMenuElement } from "
  * See the `m3e-menu` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eMenu = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eMenu = isBrowser ? createComponent({
   tagName: "m3e-menu",
   elementClass: M3eMenuElement,
   react: React,
@@ -25,4 +30,4 @@ export const M3eMenu = createComponent({
     onBeforeToggle: "beforetoggle",
     onToggle: "toggle",
   },
-});
+}) : null;

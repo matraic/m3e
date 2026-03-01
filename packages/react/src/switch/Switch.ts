@@ -17,7 +17,12 @@ export type { M3eSwitchElement, SwitchIcons } from "@m3e/web/switch";
  * See the `m3e-switch` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eSwitch = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eSwitch = isBrowser ? createComponent({
   tagName: "m3e-switch",
   elementClass: M3eSwitchElement,
   react: React,
@@ -26,4 +31,4 @@ export const M3eSwitch = createComponent({
     onChange: "change",
     onClick: "click",
   },
-});
+}) : null;

@@ -17,8 +17,13 @@ export type { M3eOptGroupElement } from "@m3e/web/option";
  * See the `m3e-optgroup` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eOptGroup = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eOptGroup = isBrowser ? createComponent({
   tagName: "m3e-optgroup",
   elementClass: M3eOptGroupElement,
   react: React,
-});
+}) : null;

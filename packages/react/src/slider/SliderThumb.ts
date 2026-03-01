@@ -17,7 +17,12 @@ export type { M3eSliderThumbElement } from "@m3e/web/slider";
  * See the `m3e-slider-thumb` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eSliderThumb = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eSliderThumb = isBrowser ? createComponent({
   tagName: "m3e-slider-thumb",
   elementClass: M3eSliderThumbElement,
   react: React,
@@ -26,4 +31,4 @@ export const M3eSliderThumb = createComponent({
     onChange: "change",
     onClick: "click",
   },
-});
+}) : null;

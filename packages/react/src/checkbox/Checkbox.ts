@@ -17,7 +17,13 @@ export type { M3eCheckboxElement } from "@m3e/web/checkbox";
  * See the `m3e-checkbox` documentation in `@m3e/checkbox` for full details on behavior,
  * styling, accessibility, and supported events.
  */
-export const M3eCheckbox = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+
+export const M3eCheckbox = isBrowser ? createComponent({
   tagName: "m3e-checkbox",
   elementClass: M3eCheckboxElement,
   react: React,
@@ -27,4 +33,4 @@ export const M3eCheckbox = createComponent({
     onChange: "change",
     onClick: "click",
   },
-});
+}) : null;

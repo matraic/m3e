@@ -17,11 +17,16 @@ export type { NavBarMode, NavItemOrientation, M3eNavBarElement } from "@m3e/web/
  * See the `m3e-nav-bar` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eNavBar = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eNavBar = isBrowser ? createComponent({
   tagName: "m3e-nav-bar",
   elementClass: M3eNavBarElement,
   react: React,
   events: {
     onChange: "change",
   },
-});
+}) : null;

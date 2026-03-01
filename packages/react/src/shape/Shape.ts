@@ -17,7 +17,12 @@ export type { M3eShapeElement, ShapeName } from "@m3e/web/shape";
  * See the `m3e-shape` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eShape = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eShape = isBrowser ? createComponent({
   tagName: "m3e-shape",
   elementClass: M3eShapeElement,
   react: React,

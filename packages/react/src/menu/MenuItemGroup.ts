@@ -17,8 +17,13 @@ export type { M3eMenuItemGroupElement } from "@m3e/web/menu";
  * See the `m3e-menu-item-group` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eMenuItemGroup = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eMenuItemGroup = isBrowser ? createComponent({
   tagName: "m3e-menu-item-group",
   elementClass: M3eMenuItemGroupElement,
   react: React,
-});
+}) : null;

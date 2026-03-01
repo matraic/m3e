@@ -17,8 +17,13 @@ export type { M3eStepPanelElement } from "@m3e/web/stepper";
  * See the `m3e-step-panel` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eStepPanel = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eStepPanel = isBrowser ? createComponent({
   tagName: "m3e-step-panel",
   elementClass: M3eStepPanelElement,
   react: React,
-});
+}) : null;

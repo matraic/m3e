@@ -17,8 +17,13 @@ export type { M3eSplitButtonElement, SplitButtonVariant } from "@m3e/web/split-b
  * See the `m3e-split-button` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eSplitButton = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eSplitButton = isBrowser ? createComponent({
   tagName: "m3e-split-button",
   elementClass: M3eSplitButtonElement,
   react: React,
-});
+}) : null;

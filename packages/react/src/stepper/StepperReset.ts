@@ -17,8 +17,13 @@ export type { M3eStepperResetElement } from "@m3e/web/stepper";
  * See the `m3e-stepper-reset` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eStepperReset = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eStepperReset = isBrowser ? createComponent({
   tagName: "m3e-stepper-reset",
   elementClass: M3eStepperResetElement,
   react: React,
-});
+}) : null;

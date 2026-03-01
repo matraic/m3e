@@ -17,7 +17,12 @@ export type { M3eRadioElement } from "@m3e/web/radio-group";
  * See the `m3e-radio` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eRadio = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eRadio = isBrowser ? createComponent({
   tagName: "m3e-radio",
   elementClass: M3eRadioElement,
   react: React,
@@ -26,4 +31,4 @@ export const M3eRadio = createComponent({
     onChange: "change",
     onClick: "click",
   },
-});
+}) : null;

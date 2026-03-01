@@ -17,8 +17,14 @@ export type { ChipVariant, M3eChipElement } from "@m3e/web/chips";
  * See the `m3e-chip` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eChip = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+
+export const M3eChip = isBrowser ? createComponent({
   tagName: "m3e-chip",
   elementClass: M3eChipElement,
   react: React,
-});
+}) : null;

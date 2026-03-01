@@ -17,8 +17,13 @@ export type { M3eListItemElement } from "@m3e/web/list";
  * See the `m3e-list-item` documentation for full details on behavior, styling,
  * accessibility, and supported events.
  */
-export const M3eListItem = createComponent({
+
+// Checking if the code is running in the browser
+const isBrowser = typeof window !== "undefined";
+
+// Defining element
+export const M3eListItem = isBrowser ? createComponent({
   tagName: "m3e-list-item",
   elementClass: M3eListItemElement,
   react: React,
-});
+}) : null;
