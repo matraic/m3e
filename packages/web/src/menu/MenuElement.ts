@@ -141,6 +141,10 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
     :host(:not(.-active)) {
       border-radius: var(--m3e-menu-container-shape, ${DesignToken.shape.corner.small});
     }
+    :host(:not(.-active)) .base {
+      --m3e-menu-item-first-child-shape: var(--m3e-menu-container-shape, ${DesignToken.shape.corner.small});
+      --m3e-menu-item-last-child-shape: var(--m3e-menu-container-shape, ${DesignToken.shape.corner.small});
+    }
     :host(.-active) {
       border-radius: var(--m3e-menu-active-container-shape, ${DesignToken.shape.corner.large});
     }
