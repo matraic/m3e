@@ -14,7 +14,7 @@ export type { CardOrientation, CardVariant, M3eCardElement } from "@m3e/web/card
  * native DOM events dispatched by the component. Refs are forwarded to the
  * underlying `<m3e-card>` instance for imperative access.
  *
- * See the `m3e-card` documentation in `@m3e/card` for full details on behavior,
+ * See the `m3e-card` documentation for full details on behavior,
  * styling, accessibility, and supported events.
  */
 export const M3eCard = createComponent({

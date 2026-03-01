@@ -14,7 +14,7 @@ export type { ButtonShape, ButtonSize, ButtonVariant, M3eButtonElement } from "@
  * native DOM events dispatched by the component. Refs are forwarded to the
  * underlying `<m3e-button>` instance for imperative access.
  *
- * See the `m3e-button` documentation in `@m3e/button` for full details on behavior,
+ * See the `m3e-button` documentation for full details on behavior,
  * styling, accessibility, and supported events.
  */
 export const M3eButton = createComponent({

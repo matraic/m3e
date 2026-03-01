@@ -14,7 +14,7 @@ export type { M3eDividerElement } from "@m3e/web/divider";
  * native DOM events dispatched by the component. Refs are forwarded to the
  * underlying `<m3e-divider>` instance for imperative access.
  *
- * See the `m3e-divider` documentation in `@m3e/divider` for full details on behavior,
+ * See the `m3e-divider` documentation for full details on behavior,
  * styling, accessibility, and supported events.
  */
 export const M3eDivider = createComponent({

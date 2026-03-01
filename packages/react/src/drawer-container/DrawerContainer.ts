@@ -14,7 +14,7 @@ export type { DrawerMode, DrawerPosition, M3eDrawerContainerElement } from "@m3e
  * native DOM events dispatched by the component. Refs are forwarded to the
  * underlying `<m3e-drawer-container>` instance for imperative access.
  *
- * See the `m3e-drawer-container` documentation in `@m3e/drawer-container` for full details on behavior,
+ * See the `m3e-drawer-container` documentation for full details on behavior,
  * styling, accessibility, and supported events.
  */
 export const M3eDrawerContainer = createComponent({

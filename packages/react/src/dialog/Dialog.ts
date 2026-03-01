@@ -14,7 +14,7 @@ export type { M3eDialogElement } from "@m3e/web/dialog";
  * native DOM events dispatched by the component. Refs are forwarded to the
  * underlying `<m3e-dialog>` instance for imperative access.
  *
- * See the `m3e-dialog` documentation in `@m3e/dialog` for full details on behavior,
+ * See the `m3e-dialog` documentation for full details on behavior,
  * styling, accessibility, and supported events.
  */
 export const M3eDialog = createComponent({

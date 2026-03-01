@@ -14,7 +14,7 @@ export type { M3eAutocompleteElement } from "@m3e/web/autocomplete";
  * native DOM events dispatched by the component. Refs are forwarded to the
  * underlying `<m3e-autocomplete>` instance for imperative access.
  *
- * See the `m3e-autocomplete` documentation in `@m3e/autocomplete` for full details on behavior,
+ * See the `m3e-autocomplete` documentation for full details on behavior,
  * styling, accessibility, and supported events.
  */
 export const M3eAutocomplete = createComponent({

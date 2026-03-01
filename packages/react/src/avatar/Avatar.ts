@@ -13,7 +13,7 @@ export type { M3eAvatarElement } from "@m3e/web/avatar";
  * native DOM events dispatched by the component. Refs are forwarded to the
  * underlying `<m3e-avatar>` instance for imperative access.
  *
- * See the `m3e-avatar` documentation in `@m3e/avatar` for full details on behavior,
+ * See the `m3e-avatar` documentation for full details on behavior,
  * styling, accessibility, and supported events.
  */
 export const M3eAvatar = createComponent({

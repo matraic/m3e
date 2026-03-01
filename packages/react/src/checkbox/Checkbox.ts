@@ -14,7 +14,7 @@ export type { M3eCheckboxElement } from "@m3e/web/checkbox";
  * native DOM events dispatched by the component. Refs are forwarded to the
  * underlying `<m3e-checkbox>` instance for imperative access.
  *
- * See the `m3e-checkbox` documentation in `@m3e/checkbox` for full details on behavior,
+ * See the `m3e-checkbox` documentation for full details on behavior,
  * styling, accessibility, and supported events.
  */
 export const M3eCheckbox = createComponent({

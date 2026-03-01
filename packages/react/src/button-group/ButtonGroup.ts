@@ -14,7 +14,7 @@ export type { ButtonGroupSize, ButtonGroupVariant, M3eButtonGroupElement } from 
  * native DOM events dispatched by the component. Refs are forwarded to the
  * underlying `<m3e-button-group>` instance for imperative access.
  *
- * See the `m3e-button-group` documentation in `@m3e/button-group` for full details on behavior,
+ * See the `m3e-button-group` documentation for full details on behavior,
  * styling, accessibility, and supported events.
  */
 export const M3eButtonGroup = createComponent({

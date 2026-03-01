@@ -14,7 +14,7 @@ export type { BadgeSize, BadgePosition, M3eBadgeElement } from "@m3e/web/badge";
  * native DOM events dispatched by the component. Refs are forwarded to the
  * underlying `<m3e-badge>` instance for imperative access.
  *
- * See the `m3e-badge` documentation in `@m3e/badge` for full details on behavior,
+ * See the `m3e-badge` documentation for full details on behavior,
  * styling, accessibility, and supported events.
  */
 export const M3eBadge = createComponent({
