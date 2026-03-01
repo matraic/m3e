@@ -162,6 +162,8 @@ export class M3eBottomSheetElement extends EventAttribute(
       height: var(--_bottom-sheet-height);
       color: var(--m3e-bottom-sheet-color, ${DesignToken.color.onSurface});
       background-color: var(--m3e-bottom-sheet-container-color, ${DesignToken.color.surfaceContainerLow});
+    }
+    :host(:not(.-no-animate)) {
       transition: ${unsafeCSS(
         `transform ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standardDecelerate},
         border-radius ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standard}`,
@@ -196,7 +198,7 @@ export class M3eBottomSheetElement extends EventAttribute(
     :host([modal]:popover-open) {
       transform: translateX(-50%) translateY(0);
     }
-    :host([modal])::backdrop {
+    :host([modal]:not(.-no-animate))::backdrop {
       transition: ${unsafeCSS(
         `background-color ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
         overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete,
@@ -209,6 +211,8 @@ export class M3eBottomSheetElement extends EventAttribute(
         var(--m3e-bottom-sheet-scrim-color, ${DesignToken.color.scrim}) var(--m3e-bottom-sheet-scrim-opacity, 32%),
         transparent
       );
+    }
+    :host([modal]:popover-open:not(.-no-animate))::backdrop {
       transition: ${unsafeCSS(
         `background-color ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard}, 
         overlay ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard} allow-discrete,
@@ -290,13 +294,15 @@ export class M3eBottomSheetElement extends EventAttribute(
       justify-content: center;
       opacity: 1;
       visibility: visible;
+      height: var(--m3e-bottom-sheet-handle-container-height, 1.5rem);
+    }
+    :host(:not(.-no-animate)) .handle-row {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard},
         padding ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard},
         height ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard},
         visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
-      height: var(--m3e-bottom-sheet-handle-container-height, 1.5rem);
     }
     .handle {
       position: relative;
@@ -320,16 +326,16 @@ export class M3eBottomSheetElement extends EventAttribute(
       );
     }
     @media (prefers-reduced-motion) {
-      :host,
-      :host([modal])::backdrop,
-      :host([modal]:popover-open)::backdrop,
-      .handle {
+      :host(:not(.-no-animate)),
+      :host([modal]:not(.-no-animate))::backdrop,
+      :host([modal]:popover-open:not(.-no-animate))::backdrop,
+      :host(:not(.-no-animate)) .handle-row {
         transition: none;
       }
     }
     @media (forced-colors: active) {
-      :host([modal])::backdrop,
-      :host([modal]:popover-open)::backdrop {
+      :host([modal]:not(.-no-animate))::backdrop,
+      :host([modal]:popover-open:not(.-no-animate))::backdrop {
         transition: none;
       }
       .base {
@@ -464,6 +470,12 @@ export class M3eBottomSheetElement extends EventAttribute(
   }
 
   /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.classList.add("-no-animate");
+  }
+
+  /** @inheritdoc */
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
 
@@ -489,6 +501,8 @@ export class M3eBottomSheetElement extends EventAttribute(
       this.#cachedHeaderHeight = header.clientHeight;
       this.#resizeController.observe(header);
     }
+
+    this.classList.remove("-no-animate");
   }
 
   /** @inheritdoc */
