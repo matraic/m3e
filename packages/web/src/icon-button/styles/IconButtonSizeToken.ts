@@ -171,7 +171,7 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
       `calc(var(--m3e-icon-button-large-container-height, var(--m3e-icon-button-container-height, 6rem)) + ${DesignToken.density.calc(-3)})`,
     ),
     outlineThickness: unsafeCSS(
-      "var(--m3e-icon-button-large-outline-thickness, var(--m3e-icon-button-outline-thickness, 0.125rem))",
+      "var(--m3e-icon-button-large-outline-thickness, var(--m3e-icon-button-outline-thickness, 2px))",
     ),
     iconSize: unsafeCSS(
       `calc(var(--m3e-icon-button-large-icon-size, var(--m3e-icon-button-icon-size, 2rem)) + ${DesignToken.density.calc(-3)})`,
@@ -217,7 +217,7 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
       `calc(var(--m3e-icon-button-extra-large-container-height, var(--m3e-icon-button-container-height, 8.5rem)) + ${DesignToken.density.calc(-3)})`,
     ),
     outlineThickness: unsafeCSS(
-      "var(--m3e-icon-button-extra-large-outline-thickness, var(--m3e-icon-button-outline-thickness, 0.1875rem))",
+      "var(--m3e-icon-button-extra-large-outline-thickness, var(--m3e-icon-button-outline-thickness, 3px))",
     ),
     iconSize: unsafeCSS(
       `calc(var(--m3e-icon-button-extra-large-icon-size, var(--m3e-icon-button-icon-size, 2.5rem)) + ${DesignToken.density.calc(-3)})`,

@@ -64,7 +64,7 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
       scroll-padding-block: calc(
-        var(--m3e-focus-ring-thickness, 0.1875rem) + var(--m3e-option-panel-container-padding-block, 0.25rem)
+        var(--m3e-focus-ring-thickness, 3px) + var(--m3e-option-panel-container-padding-block, 0.25rem)
       );
       border-radius: var(--m3e-option-panel-container-shape, ${DesignToken.shape.corner.large});
       min-width: var(--m3e-option-panel-container-min-width, 7rem);
@@ -91,6 +91,8 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
         --m3e-option-panel-text-highlight-color,
         ${DesignToken.color.onTertiaryContainer}
       );
+      --m3e-focus-ring-outward-offset: 0px;
+      --m3e-focus-ring-growth-factor: 1.5;
     }
     :host(:not(.-no-animate)) {
       transition: ${unsafeCSS(

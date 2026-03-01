@@ -301,15 +301,9 @@ export class M3eBottomSheetElement extends EventAttribute(
     .handle {
       position: relative;
       width: var(--m3e-bottom-sheet-handle-width, 2rem);
-      height: var(--m3e-bottom-sheet-handle-height, 0.25rem);
+      height: var(--m3e-bottom-sheet-handle-height, 4px);
       border-radius: var(--m3e-bottom-sheet-handle-shape, ${DesignToken.shape.corner.full});
       background-color: var(--m3e-bottom-sheet-handle-color, ${DesignToken.color.onSurfaceVariant});
-    }
-    .focus-ring {
-      top: calc(0px - var(--m3e-bottom-sheet-handle-focus-ring-offset, 0.125rem));
-      left: calc(0px - var(--m3e-bottom-sheet-handle-focus-ring-offset, 0.125rem));
-      right: calc(0px - var(--m3e-bottom-sheet-handle-focus-ring-offset, 0.125rem));
-      bottom: calc(0px - var(--m3e-bottom-sheet-handle-focus-ring-offset, 0.125rem));
     }
     .handle-touch {
       position: absolute;
@@ -320,7 +314,7 @@ export class M3eBottomSheetElement extends EventAttribute(
       top: calc(
         0px - calc(
             calc(3rem - var(--m3e-bottom-sheet-handle-container-height, 1.5rem)) - calc(
-                var(--m3e-bottom-sheet-handle-height, 0.25rem) / 2
+                var(--m3e-bottom-sheet-handle-height, 4px) / 2
               )
           )
       );

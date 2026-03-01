@@ -40,6 +40,8 @@ import { FocusRingToken } from "./FocusRingToken";
  * @cssprop --m3e-focus-ring-growth-factor - The factor by which the focus ring grows.
  * @cssprop --m3e-focus-ring-thickness - The thickness of the focus ring.
  * @cssprop --m3e-focus-ring-visibility - The visibility of the focus ring.
+ * @cssprop --m3e-focus-ring-outward-offset - Offset of an outward focus ring.
+ * @cssprop --m3e-focus-ring-inward-offset - Offset of an inward focus ring.
  */
 @customElement("m3e-focus-ring")
 export class M3eFocusRingElement extends HtmlFor(Role(LitElement, "none")) {
@@ -73,10 +75,10 @@ export class M3eFocusRingElement extends HtmlFor(Role(LitElement, "none")) {
       outline-style: solid;
     }
     :host(:not([inward])) .outline {
-      outline-offset: calc(${FocusRingToken.thickness} / ${FocusRingToken.growthFactor});
+      outline-offset: ${FocusRingToken.outwardOffset};
     }
     :host([inward]) .outline {
-      outline-offset: calc(0px - ${FocusRingToken.thickness});
+      outline-offset: calc(${FocusRingToken.inwardOffset} - ${FocusRingToken.thickness});
     }
     :host(:not([inward])) .outline.visible {
       animation: grow-shrink ${FocusRingToken.duration};
@@ -91,7 +93,9 @@ export class M3eFocusRingElement extends HtmlFor(Role(LitElement, "none")) {
     }
     @keyframes shrink-grow {
       50% {
-        outline-offset: calc(0px - calc(${FocusRingToken.thickness} * ${FocusRingToken.growthFactor}));
+        outline-offset: calc(
+          ${FocusRingToken.inwardOffset} - calc(${FocusRingToken.thickness} * ${FocusRingToken.growthFactor})
+        );
         outline-width: calc(${FocusRingToken.thickness} * ${FocusRingToken.growthFactor});
       }
     }

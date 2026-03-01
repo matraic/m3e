@@ -146,7 +146,7 @@ export class M3eCheckboxElement extends Labelled(
       border-radius: var(--m3e-checkbox-container-shape, 0.125rem);
     }
     :host(:not([checked]):not([indeterminate])) .wrapper {
-      border-width: var(--m3e-checkbox-unselected-outline-thickness, 0.125rem);
+      border-width: var(--m3e-checkbox-unselected-outline-thickness, 2px);
       border-style: solid;
     }
     :host(:not(.-touched.-invalid):not([indeterminate]):not([checked])) .base {

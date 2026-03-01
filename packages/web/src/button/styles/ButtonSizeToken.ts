@@ -147,9 +147,7 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
     containerHeight: unsafeCSS(
       `calc(var(--m3e-button-large-container-height, var(--m3e-button-container-height, 6rem)) + ${DesignToken.density.calc(-3)})`,
     ),
-    outlineThickness: unsafeCSS(
-      "var(--m3e-button-large-outline-thickness, var(--m3e-button-outline-thickness, 0.125rem))",
-    ),
+    outlineThickness: unsafeCSS("var(--m3e-button-large-outline-thickness, var(--m3e-button-outline-thickness, 2px))"),
     labelTextFontSize: unsafeCSS(
       `var(--m3e-button-large-label-text-font-size, var(--m3e-button-label-text-font-size, ${DesignToken.typescale.standard.headline.small.fontSize}))`,
     ),
@@ -187,7 +185,7 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
       `calc(var(--m3e-button-extra-large-container-height, var(--m3e-button-container-height, 8.5rem)) + ${DesignToken.density.calc(-3)})`,
     ),
     outlineThickness: unsafeCSS(
-      "var(--m3e-button-extra-large-outline-thickness, var(--m3e-button-outline-thickness, 0.1875rem))",
+      "var(--m3e-button-extra-large-outline-thickness, var(--m3e-button-outline-thickness, 3px))",
     ),
     labelTextFontSize: unsafeCSS(
       `var(--m3e-button-extra-large-label-text-font-size, var(--m3e-button-label-text-font-size, ${DesignToken.typescale.standard.headline.large.fontSize}))`,

@@ -118,7 +118,7 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
       scroll-padding-block: calc(
-        var(--m3e-focus-ring-thickness, 0.1875rem) + var(--m3e-menu-container-padding-block, 0.25rem)
+        var(--m3e-focus-ring-thickness, 3px) + var(--m3e-menu-container-padding-block, 0.25rem)
       );
       min-width: var(--m3e-menu-container-min-width, 7rem);
       max-width: var(--m3e-menu-container-max-width, 17.5rem);
@@ -135,6 +135,8 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       max-width: inherit;
       padding-block: var(--m3e-menu-container-padding-block, 0.25rem);
       padding-inline: var(--m3e-menu-container-padding-inline, 0.25rem);
+      --m3e-focus-ring-outward-offset: 0px;
+      --m3e-focus-ring-growth-factor: 1.5;
     }
     :host(:not(.-active)) {
       border-radius: var(--m3e-menu-container-shape, ${DesignToken.shape.corner.small});

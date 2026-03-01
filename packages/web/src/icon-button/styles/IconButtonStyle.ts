@@ -165,12 +165,12 @@ export const IconButtonStyle: CSSResultGroup = css`
       outline-width: var(--m3e-icon-button-medium-outline-thickness, 1px);
     }
     :host([size="large"]) .base {
-      outline-offset: calc(0px - var(--m3e-icon-button-large-outline-thickness, 0.125rem));
-      outline-width: var(--m3e-icon-button-large-outline-thickness, 0.125rem);
+      outline-offset: calc(0px - var(--m3e-icon-button-large-outline-thickness, 2px));
+      outline-width: var(--m3e-icon-button-large-outline-thickness, 2px);
     }
     :host([size="extra-large"]) .base {
-      outline-offset: calc(0px - var(--m3e-icon-button-extra-large-outline-thickness, 0.1875rem));
-      outline-width: var(--m3e-icon-button-extra-large-outline-thickness, 0.1875rem);
+      outline-offset: calc(0px - var(--m3e-icon-button-extra-large-outline-thickness, 3px));
+      outline-width: var(--m3e-icon-button-extra-large-outline-thickness, 3px);
     }
   }
   @media (prefers-reduced-motion) {

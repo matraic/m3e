@@ -140,8 +140,8 @@ export const FabStyle: CSSResultGroup = css`
       outline-width: var(--m3e-button-medium-outline-thickness, 1px);
     }
     :host([size="large"]) .base {
-      outline-offset: calc(0px - var(--m3e-button-large-outline-thickness, 0.125rem));
-      outline-width: var(--m3e-button-large-outline-thickness, 0.125rem);
+      outline-offset: calc(0px - var(--m3e-button-large-outline-thickness, 2px));
+      outline-width: var(--m3e-button-large-outline-thickness, 2px);
     }
   }
   @media (prefers-reduced-motion) {

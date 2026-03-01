@@ -16,7 +16,7 @@ export const SwitchToken = {
   trackHeight: unsafeCSS("var(--m3e-switch-track-height, 2rem)"),
   trackWidth: unsafeCSS("var(--m3e-switch-track-width, 3.25rem)"),
   trackOutlineColor: unsafeCSS(`var(--m3e-switch-track-outline-color, ${DesignToken.color.outline})`),
-  trackOutlineWidth: unsafeCSS("var(--m3e-switch-track-outline-width, 0.125rem)"),
+  trackOutlineWidth: unsafeCSS("var(--m3e-switch-track-outline-width, 2px)"),
   trackShape: unsafeCSS(`var(--m3e-switch-track-shape, ${DesignToken.shape.corner.full})`),
   selectedTrackColor: unsafeCSS(`var(--m3e-switch-selected-track-color, ${DesignToken.color.primary})`),
   unselectedTrackColor: unsafeCSS(

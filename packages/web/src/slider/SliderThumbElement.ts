@@ -106,11 +106,10 @@ export class M3eSliderThumbElement extends Dirty(
       width: calc(var(--m3e-slider-thumb-width, 0.25rem) + calc(var(--m3e-slider-thumb-padding, 0.375em) * 2));
     }
     .focus-ring {
-      --m3e-focus-ring-growth-factor: 1.5;
-      top: calc(0px - var(--m3e-focus-ring-thickness, 0.1875rem));
-      bottom: calc(0px - var(--m3e-focus-ring-thickness, 0.1875rem));
-      left: var(--m3e-focus-ring-thickness, 0.1875rem);
-      right: var(--m3e-focus-ring-thickness, 0.1875rem);
+      top: calc(0px - var(--m3e-focus-ring-thickness, 3px));
+      bottom: calc(0px - var(--m3e-focus-ring-thickness, 3px));
+      left: var(--m3e-focus-ring-thickness, 3px);
+      right: var(--m3e-focus-ring-thickness, 3px);
     }
     .label {
       user-select: none;
@@ -151,7 +150,7 @@ export class M3eSliderThumbElement extends Dirty(
       transition: ${unsafeCSS(`width ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
     }
     :host(:active:not([aria-disabled="true"])) .handle {
-      width: var(--m3e-slider-thumb-pressed-width, 0.125rem);
+      width: var(--m3e-slider-thumb-pressed-width, 2px);
     }
     :host(:not([aria-disabled="true"])) .handle {
       background-color: var(--m3e-slider-thumb-color, ${DesignToken.color.primary});

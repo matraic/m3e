@@ -5,6 +5,7 @@ import { debounce } from "../decorators";
 import { DesignToken } from "../tokens";
 
 import { ScrollDividers } from "./ScrollDividers";
+import { FocusRingToken } from "./FocusRingToken";
 
 /**
  * A vertically oriented content container which presents dividers above and below content when scrolled.
@@ -48,9 +49,9 @@ export class M3eScrollContainerElement extends LitElement {
       scrollbar-color: ${DesignToken.scrollbar.color};
       border-top: var(--m3e-divider-thickness, 1px) solid transparent;
       border-bottom: var(--m3e-divider-thickness, 1px) solid transparent;
-      outline: var(--m3e-focus-ring-color, ${DesignToken.color.secondary});
-      outline-width: var(--m3e-focus-ring-thickness, 0.25rem);
-      outline-offset: calc(var(--m3e-focus-ring-thickness, 0.25rem) / 2);
+      outline-color: ${FocusRingToken.color};
+      outline-width: ${FocusRingToken.thickness};
+      outline-offset: ${FocusRingToken.outwardOffset};
     }
     :host([thin]) {
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
@@ -66,11 +67,11 @@ export class M3eScrollContainerElement extends LitElement {
     }
     :host(:focus-visible) {
       outline-style: solid;
-      animation: grow-shrink var(--m3e-focus-ring-duration, ${DesignToken.motion.duration.long2});
+      animation: grow-shrink ${FocusRingToken.duration};
     }
     @keyframes grow-shrink {
       50% {
-        outline-width: calc(var(--m3e-focus-ring-thickness, 0.25rem) * var(--m3e-focus-ring-factor, 2));
+        outline-width: calc(${FocusRingToken.thickness} * ${FocusRingToken.growthFactor});
       }
     }
     @media (forced-colors: active) {

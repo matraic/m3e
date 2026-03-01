@@ -45,12 +45,12 @@ export class M3ePseudoCheckboxElement extends CheckedIndeterminate(Disabled(Role
       vertical-align: middle;
       width: var(--m3e-checkbox-icon-size, 1.125rem);
       height: var(--m3e-checkbox-icon-size, 1.125rem);
-      border-radius: var(--m3e-checkbox-container-shape, 0.125rem);
+      border-radius: var(--m3e-checkbox-container-shape, 2px);
       box-sizing: border-box;
       flex: none;
     }
     :host(:not([checked]):not([indeterminate])) {
-      border-width: var(--m3e-checkbox-unselected-outline-thickness, 0.125rem);
+      border-width: var(--m3e-checkbox-unselected-outline-thickness, 2px);
       border-style: solid;
     }
     :host(:not([disabled])[checked]),

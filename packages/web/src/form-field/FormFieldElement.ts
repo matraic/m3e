@@ -347,7 +347,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     :host([variant="outlined"]) .outline-notch,
     :host([variant="outlined"]) .outline-end {
       box-sizing: border-box;
-      border-width: var(--_form-field-outline-size, 0.0625rem);
+      border-width: var(--_form-field-outline-size, 1px);
       border-color: var(--_form-field-outline-color);
       transition: border-color ${DesignToken.motion.duration.short4};
     }
@@ -380,7 +380,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     :host([variant="outlined"]:not(.-disabled)) .base:hover .outline,
     :host([variant="outlined"]:not(.-disabled):focus-within) .outline,
     :host([variant="outlined"]:not(.-disabled).-pressed) .outline {
-      --_form-field-outline-size: 0.125rem;
+      --_form-field-outline-size: 2px;
     }
     :host([variant="outlined"]) .subscript {
       margin-inline: 1rem;
@@ -416,7 +416,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       right: 0;
       bottom: 0;
       border-bottom-style: solid;
-      border-width: 0.0625rem;
+      border-width: 1px;
       border-radius: var(--m3e-form-field-container-shape, ${DesignToken.shape.corner.extraSmallTop});
       border-color: var(--_form-field-outline-color);
       background-color: var(--_form-field-container-color);
@@ -424,7 +424,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     :host([variant="filled"]:not(.-disabled)) .base:hover::before,
     :host([variant="filled"]:not(.-disabled):focus-within) .base::before,
     :host([variant="filled"]:not(.-disabled).-pressed) .base::before {
-      border-width: 0.1875rem;
+      border-width: 3px;
     }
     :host([variant="filled"]) .base::after {
       content: "";
