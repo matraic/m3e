@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eButtonElement } from "@m3e/web/button";
 export type { ButtonShape, ButtonSize, ButtonVariant, M3eButtonElement } from "@m3e/web/button";

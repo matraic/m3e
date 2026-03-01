@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eSplitButtonElement } from "@m3e/web/split-button";
 export type { M3eSplitButtonElement, SplitButtonVariant } from "@m3e/web/split-button";

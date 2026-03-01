@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eBottomSheetActionElement } from "@m3e/web/bottom-sheet";
 export type { M3eBottomSheetActionElement } from "@m3e/web/bottom-sheet";

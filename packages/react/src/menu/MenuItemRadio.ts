@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eMenuItemRadioElement } from "@m3e/web/menu";
 export type { M3eMenuItemRadioElement } from "@m3e/web/menu";

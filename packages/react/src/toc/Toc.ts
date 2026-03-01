@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eTocElement } from "@m3e/web/toc";
 export type { M3eTocElement } from "@m3e/web/toc";

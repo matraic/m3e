@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eDrawerToggleElement } from "@m3e/web/drawer-container";
 export type { M3eDrawerToggleElement } from "@m3e/web/drawer-container";

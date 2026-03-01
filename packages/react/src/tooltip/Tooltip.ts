@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eTooltipElement } from "@m3e/web/tooltip";
 export type { M3eTooltipElement, TooltipPosition, TooltipTouchGestures } from "@m3e/web/tooltip";

@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eLinearProgressIndicatorElement } from "@m3e/web/progress-indicator";
 export type {

@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eCircularProgressIndicatorElement } from "@m3e/web/progress-indicator";
 export type { M3eCircularProgressIndicatorElement } from "@m3e/web/progress-indicator";

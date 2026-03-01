@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eSwitchElement } from "@m3e/web/switch";
 export type { M3eSwitchElement, SwitchIcons } from "@m3e/web/switch";

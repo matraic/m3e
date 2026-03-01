@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eSliderThumbElement } from "@m3e/web/slider";
 export type { M3eSliderThumbElement } from "@m3e/web/slider";

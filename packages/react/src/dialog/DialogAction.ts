@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eDialogActionElement } from "@m3e/web/dialog";
 export type { M3eDialogActionElement } from "@m3e/web/dialog";

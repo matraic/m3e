@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eFormFieldElement } from "@m3e/web/form-field";
 export type { FloatLabelType, FormFieldVariant, FormFieldControl, M3eFormFieldElement } from "@m3e/web/form-field";

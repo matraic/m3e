@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eCollapsibleElement } from "@m3e/web/core";
 export type { M3eCollapsibleElement } from "@m3e/web/core";

@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eButtonGroupElement } from "@m3e/web/button-group";
 export type { ButtonGroupSize, ButtonGroupVariant, M3eButtonGroupElement } from "@m3e/web/button-group";

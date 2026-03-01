@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eFabElement } from "@m3e/web/fab";
 export type { FabSize, FabVariant, M3eFabElement } from "@m3e/web/fab";

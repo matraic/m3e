@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eLoadingIndicatorElement } from "@m3e/web/loading-indicator";
 export type { LoadingIndicatorVariant, M3eLoadingIndicatorElement } from "@m3e/web/loading-indicator";

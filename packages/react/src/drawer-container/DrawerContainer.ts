@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eDrawerContainerElement } from "@m3e/web/drawer-container";
 export type { DrawerMode, DrawerPosition, M3eDrawerContainerElement } from "@m3e/web/drawer-container";

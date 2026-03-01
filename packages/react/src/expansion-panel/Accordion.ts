@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eAccordionElement } from "@m3e/web/expansion-panel";
 export type { M3eAccordionElement } from "@m3e/web/expansion-panel";

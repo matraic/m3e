@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eSlideGroupElement } from "@m3e/web/slide-group";
 export type { M3eSlideGroupElement } from "@m3e/web/slide-group";

@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eNavRailToggleElement } from "@m3e/web/nav-rail";
 export type { M3eNavRailToggleElement } from "@m3e/web/nav-rail";

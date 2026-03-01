@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eButtonSegmentElement } from "@m3e/web/segmented-button";
 export type { M3eButtonSegmentElement } from "@m3e/web/segmented-button";

@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eNavBarElement } from "@m3e/web/nav-bar";
 export type { NavBarMode, NavItemOrientation, M3eNavBarElement } from "@m3e/web/nav-bar";

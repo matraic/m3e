@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eToolbarElement } from "@m3e/web/toolbar";
 export type { M3eToolbarElement, ToolbarVariant, ToolbarShape } from "@m3e/web/toolbar";

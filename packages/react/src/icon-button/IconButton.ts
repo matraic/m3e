@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eIconButtonElement } from "@m3e/web/icon-button";
 export type {

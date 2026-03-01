@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eScrollContainerElement } from "@m3e/web/core";
 export type { M3eScrollContainerElement, ScrollDividers } from "@m3e/web/core";

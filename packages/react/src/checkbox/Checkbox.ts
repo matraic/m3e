@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent } from "../utils";
 
 import { M3eCheckboxElement } from "@m3e/web/checkbox";
 export type { M3eCheckboxElement } from "@m3e/web/checkbox";
