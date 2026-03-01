@@ -393,7 +393,7 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
     if (parent) {
       this.variant = parent.variant;
     } else {
-      this.#activate();
+      this._activate();
     }
 
     this.showPopover();
@@ -529,7 +529,7 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
 
   /** @private */
   #handleMouseEnter(): void {
-    this.#activate();
+    this._activate();
   }
 
   /** @private */
@@ -556,8 +556,8 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
     return { x, y };
   }
 
-  /** @private */
-  #activate(): void {
+  /** @internal */
+  _activate(): void {
     if (this !== M3eMenuElement.__activeMenu) {
       M3eMenuElement.__activeMenu?.classList.remove("-active");
       M3eMenuElement.__activeMenu = this;

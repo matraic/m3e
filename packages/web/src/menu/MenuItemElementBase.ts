@@ -6,6 +6,7 @@ import {
   DesignToken,
   Disabled,
   Focusable,
+  FocusController,
   isLinkButtonMixin,
   KeyboardClick,
   M3eFocusRingElement,
@@ -163,6 +164,18 @@ export abstract class MenuItemElementBase extends KeyboardClick(
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;
   /** @private */ @query(".state-layer") private readonly _stateLayer?: M3eStateLayerElement;
   /** @private */ @query(".ripple") private readonly _ripple?: M3eRippleElement;
+
+  constructor() {
+    super();
+
+    new FocusController(this, {
+      callback: (focused) => {
+        if (focused) {
+          this.menu?._activate();
+        }
+      },
+    });
+  }
 
   /** The menu to which this item belongs. */
   get menu(): M3eMenuElement | null {
