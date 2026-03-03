@@ -58,6 +58,46 @@ For a detailed view of current development, planned components, and past milesto
 
 Contributions from the community are welcome! Please review the [Contributing Guidelines](CONTRIBUTING.md) and help us advance the future of expressive web design.
 
+### Preview builds for pull requests and pushes
+
+Every pull request **and every push** publishes a preview build of the M3E packages using **pkg.pr.new**. This makes it easy to test changes locally without cloning the repo or linking workspaces.
+
+Preview builds include the compiled output for both `@m3e/web` and `@m3e/react`, matching the structure of a standard npm release.
+
+#### Pull request builds
+
+To install a preview build for any PR:
+
+```sh
+npm install pkg.pr.new/matraic/m3e/pull/<PR_NUMBER>
+```
+
+#### Commit builds
+
+To install a preview build for a specific commit:
+
+```sh
+npm install pkg.pr.new/matraic/m3e/commit/<COMMIT_SHA>
+```
+
+#### Native modules
+
+Preview builds are supported by **jsDelivr**, allowing you to load them directly in the browser:
+
+```html
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/pkg-pr.new/matraic/m3e/pull/<PR_NUMBER>/@m3e/web/dist/button.min.js"
+></script>
+```
+
+```html
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/pkg-pr.new/matraic/m3e/commit/<COMMIT_SHA>/@m3e/web/dist/button.min.js"
+></script>
+```
+
 ## 📄 License
 
 This project is licensed under the MIT License.
