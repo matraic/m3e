@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eAutocompleteElement } from "@m3e/web/autocomplete";
 export type { M3eAutocompleteElement } from "@m3e/web/autocomplete";

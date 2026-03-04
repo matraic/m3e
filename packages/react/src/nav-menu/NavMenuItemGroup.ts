@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eNavMenuItemGroupElement } from "@m3e/web/nav-menu";
 export type { M3eNavMenuItemGroupElement } from "@m3e/web/nav-menu";

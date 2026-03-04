@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eTextareaAutosizeElement } from "@m3e/web/textarea-autosize";
 export type { M3eTextareaAutosizeElement } from "@m3e/web/textarea-autosize";

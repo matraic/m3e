@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eCardElement } from "@m3e/web/card";
 export type { CardOrientation, CardVariant, M3eCardElement } from "@m3e/web/card";

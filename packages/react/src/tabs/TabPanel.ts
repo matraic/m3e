@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eTabPanelElement } from "@m3e/web/tabs";
 export type { M3eTabPanelElement } from "@m3e/web/tabs";

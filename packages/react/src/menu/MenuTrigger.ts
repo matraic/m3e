@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eMenuTriggerElement } from "@m3e/web/menu";
 export type { M3eMenuTriggerElement } from "@m3e/web/menu";

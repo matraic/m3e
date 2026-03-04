@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eIconElement } from "@m3e/web/icon";
 export type { IconGrade, IconVariant, M3eIconElement } from "@m3e/web/icon";

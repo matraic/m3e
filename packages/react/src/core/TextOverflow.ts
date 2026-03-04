@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eTextOverflowElement } from "@m3e/web/core";
 export type { M3eTextOverflowElement } from "@m3e/web/core";

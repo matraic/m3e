@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eShapeElement } from "@m3e/web/shape";
 export type { M3eShapeElement, ShapeName } from "@m3e/web/shape";

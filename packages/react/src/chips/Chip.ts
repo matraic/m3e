@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eChipElement } from "@m3e/web/chips";
 export type { ChipVariant, M3eChipElement } from "@m3e/web/chips";

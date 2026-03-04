@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eListActionElement } from "@m3e/web/list";
 export type { M3eListActionElement } from "@m3e/web/list";

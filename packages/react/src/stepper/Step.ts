@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eStepElement } from "@m3e/web/stepper";
 export type { M3eStepElement } from "@m3e/web/stepper";

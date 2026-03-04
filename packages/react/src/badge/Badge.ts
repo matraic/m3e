@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eBadgeElement } from "@m3e/web/badge";
 export type { BadgeSize, BadgePosition, M3eBadgeElement } from "@m3e/web/badge";

@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eDividerElement } from "@m3e/web/divider";
 export type { M3eDividerElement } from "@m3e/web/divider";

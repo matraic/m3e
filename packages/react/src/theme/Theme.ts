@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eThemeElement } from "@m3e/web/theme";
 export type { ColorScheme, ContrastLevel, MotionScheme, M3eThemeElement } from "@m3e/web/theme";

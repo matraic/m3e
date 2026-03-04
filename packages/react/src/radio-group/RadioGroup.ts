@@ -1,5 +1,5 @@
 import React from "react";
-import { createComponent } from "../utils";
+import { createComponent } from "@lit/react";
 
 import { M3eRadioGroupElement } from "@m3e/web/radio-group";
 export type { M3eRadioGroupElement } from "@m3e/web/radio-group";
