@@ -119,45 +119,12 @@ export class PressedController extends MonitorControllerBase {
   /** @private */
   #handlePointerUp(e: PointerEvent): void {
     if (e.pointerType === "mouse" && e.button > 1) return;
-
-    const x = e.x;
-    const y = e.y;
-
-    for (const target of e.composedPath()) {
-      if (target instanceof HTMLElement && this.#pressedTargets.has(target)) {
-        const remainingTime = this.#minPressedDuration - (performance.now() - this.#pressedTargets.get(target)!);
-        if (remainingTime > 0) {
-          setTimeout(() => {
-            this.#pressedTargets.delete(target);
-            this.#callback(false, { x, y }, target);
-          }, remainingTime);
-        } else {
-          this.#pressedTargets.delete(target);
-          this.#callback(false, { x, y }, target);
-        }
-      }
-    }
+    this.#clearPressedTargets(e.x, e.y);
   }
 
   /** @private */
   #handleTouchEnd(e: TouchEvent): void {
-    const x = e.changedTouches[0]?.clientX ?? 0;
-    const y = e.changedTouches[0]?.clientY ?? 0;
-
-    for (const target of e.composedPath()) {
-      if (target instanceof HTMLElement && this.#pressedTargets.has(target)) {
-        const remainingTime = this.#minPressedDuration - (performance.now() - this.#pressedTargets.get(target)!);
-        if (remainingTime > 0) {
-          setTimeout(() => {
-            this.#pressedTargets.delete(target);
-            this.#callback(false, { x, y }, target);
-          }, remainingTime);
-        } else {
-          this.#pressedTargets.delete(target);
-          this.#callback(false, { x, y }, target);
-        }
-      }
-    }
+    this.#clearPressedTargets(e.changedTouches[0]?.clientX ?? 0, e.changedTouches[0]?.clientY ?? 0);
   }
 
   /** @private */
@@ -193,6 +160,22 @@ export class PressedController extends MonitorControllerBase {
       } else {
         this.#pressedTargets.delete(target);
         this.#callback(false, { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 }, target);
+      }
+    }
+  }
+
+  /** @private */
+  #clearPressedTargets(x: number, y: number): void {
+    for (const target of this.#pressedTargets) {
+      const remainingTime = this.#minPressedDuration - (performance.now() - target[1]);
+      if (remainingTime > 0) {
+        setTimeout(() => {
+          this.#pressedTargets.delete(target[0]);
+          this.#callback(false, { x, y }, target[0]);
+        }, remainingTime);
+      } else {
+        this.#pressedTargets.delete(target[0]);
+        this.#callback(false, { x, y }, target[0]);
       }
     }
   }
