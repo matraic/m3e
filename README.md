@@ -80,24 +80,6 @@ To install a preview build for a specific commit:
 npm install pkg.pr.new/matraic/m3e/commit/<COMMIT_SHA>
 ```
 
-#### Native modules
-
-Preview builds are supported by **jsDelivr**, allowing you to load them directly in the browser:
-
-```html
-<script
-  type="module"
-  src="https://cdn.jsdelivr.net/npm/pkg-pr.new/matraic/m3e/pull/<PR_NUMBER>/@m3e/web/dist/button.min.js"
-></script>
-```
-
-```html
-<script
-  type="module"
-  src="https://cdn.jsdelivr.net/npm/pkg-pr.new/matraic/m3e/commit/<COMMIT_SHA>/@m3e/web/dist/button.min.js"
-></script>
-```
-
 ## 📄 License
 
 This project is licensed under the MIT License.
