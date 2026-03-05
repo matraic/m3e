@@ -217,17 +217,17 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
 
   /** @private */
   #handleTitleSlotChange(e: Event): void {
-    this._base?.classList.toggle("-with-title", hasAssignedNodes(<HTMLSlotElement>e.target));
+    this._base?.classList.toggle("with-title", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
   #handleSubtitleSlotChange(e: Event): void {
-    this._base?.classList.toggle("-with-subtitle", hasAssignedNodes(<HTMLSlotElement>e.target));
+    this._base?.classList.toggle("with-subtitle", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
   #handleLeadingIconSlotChange(e: Event): void {
-    this._base?.classList.toggle("-with-leading-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    this._base?.classList.toggle("with-leading-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
     if (this.centered && this.size === "small") {
       setTimeout(() => this.#computeCentered(), 40);
     }
@@ -235,7 +235,7 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
 
   /** @private */
   #handleTrailingIconsSlotChange(e: Event): void {
-    this._base?.classList.toggle("-with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    this._base?.classList.toggle("with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
     if (this.centered && this.size === "small") {
       setTimeout(() => this.#computeCentered(), 40);
     }
@@ -272,14 +272,14 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
       scrollTop = e.target.scrollTop;
     }
 
-    this._base?.classList.toggle("-on-scroll", scrollTop > 0);
+    this._base?.classList.toggle("on-scroll", scrollTop > 0);
   }
 
   /** @private */
   #handleFrameLoad(): void {
     if (this.control instanceof HTMLIFrameElement) {
       this.control.contentDocument?.addEventListener("scroll", this.#scrollHandler, { passive: true });
-      this._base?.classList.toggle("-on-scroll", this.#getFrameScrollTop(this.control) > 0);
+      this._base?.classList.toggle("on-scroll", this.#getFrameScrollTop(this.control) > 0);
     }
   }
 

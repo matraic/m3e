@@ -6,10 +6,10 @@ import { AppBarSizeToken } from "./AppBarSizeToken";
 /** @private */
 function appBarStyle(size: AppBarSize): CSSResult {
   return css`
-    :host([size="${unsafeCSS(size)}"]) .base:not(.-with-subtitle) {
+    :host([size="${unsafeCSS(size)}"]) .base:not(.with-subtitle) {
       min-height: ${AppBarSizeToken[size].containerHeight};
     }
-    :host([size="${unsafeCSS(size)}"]) .base.-with-subtitle {
+    :host([size="${unsafeCSS(size)}"]) .base.with-subtitle {
       min-height: ${AppBarSizeToken[size].containerHeightWithSubtitle ?? AppBarSizeToken[size].containerHeight};
     }
     :host([size="${unsafeCSS(size)}"]) .title {

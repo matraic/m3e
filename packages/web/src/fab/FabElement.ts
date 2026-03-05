@@ -481,7 +481,7 @@ export class M3eFabElement extends KeyboardClick(
 
   /** @private */
   #handleSlotChange(): void {
-    this._base?.classList.toggle("-with-menu", this.querySelector("m3e-fab-menu-trigger") !== null);
+    this._base?.classList.toggle("with-menu", this.querySelector("m3e-fab-menu-trigger") !== null);
   }
 }
 

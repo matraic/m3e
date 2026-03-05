@@ -26,11 +26,11 @@ export const AppBarStyle: CSSResult = css`
       box-shadow ${DesignToken.motion.duration.medium1} ${DesignToken.motion.easing.standard}`,
     )};
   }
-  .base:not(.-on-scroll) {
+  .base:not(.on-scroll) {
     background-color: ${AppBarToken.containerColor};
     box-shadow: ${AppBarToken.containerElevation};
   }
-  .base.-on-scroll {
+  .base.on-scroll {
     background-color: ${AppBarToken.containerColorOnScroll};
     box-shadow: ${AppBarToken.containerElevationOnScroll};
   }
@@ -67,10 +67,10 @@ export const AppBarStyle: CSSResult = css`
   .subtitle {
     color: ${AppBarToken.subtitleTextColor};
   }
-  .base:not(.-with-title) .title,
-  .base:not(.-with-subtitle) .subtitle,
-  .base:not(.-with-title):not(.-with-subtitle) .label,
-  .base:not(.-with-trailing-icon) .trailing-icon {
+  .base:not(.with-title) .title,
+  .base:not(.with-subtitle) .subtitle,
+  .base:not(.with-title):not(.with-subtitle) .label,
+  .base:not(.with-trailing-icon) .trailing-icon {
     display: none;
   }
   :host([size="small"]) .base {
@@ -106,8 +106,8 @@ export const AppBarStyle: CSSResult = css`
     .base {
       transition: none;
     }
-    .base:not(.-on-scroll),
-    .base.-on-scroll {
+    .base:not(.on-scroll),
+    .base.on-scroll {
       background-color: Canvas;
       box-shadow: unset;
     }
