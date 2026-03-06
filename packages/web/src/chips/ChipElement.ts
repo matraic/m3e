@@ -273,6 +273,19 @@ export class M3eChipElement extends LitElement {
       this.removeAttribute("tabindex");
     }
 
+    this.#attach();
+  }
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    
+    if (this.hasUpdated) {
+      this.#attach();
+    }
+  }
+
+  /** @private */ #attach(): void {
     [this._elevation, this._focusRing, this._stateLayer, this._ripple].forEach((x) => {
       if (!x?.htmlFor) {
         x?.attach(this);
