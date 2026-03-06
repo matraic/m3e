@@ -29,7 +29,7 @@ export const DrawerContainerStyle: CSSResultGroup = css`
     background-color: ${DrawerContainerToken.containerColor};
     box-shadow: ${DrawerContainerToken.containerElevation};
     transition: ${unsafeCSS(
-      `margin-inline ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard},
+      `margin ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard},
       visibility ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard} allow-discrete,
       background-color ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard},
       box-shadow ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard}`,
@@ -43,17 +43,33 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   }
   :host(:not([start])) .start {
     visibility: hidden;
-    margin-inline-start: calc(0px - var(--_start-drawer-size, ${DrawerContainerToken.containerWidth}));
   }
-  :host([start]) .start {
-    margin-inline-start: 0;
+  :host(:not([start]):not(:dir(rtl))) .start {
+    margin-left: calc(0px - var(--_start-drawer-size, ${DrawerContainerToken.containerWidth}));
+  }
+  :host(:not([start]):dir(rtl)) .start {
+    margin-right: calc(0px - var(--_start-drawer-size, ${DrawerContainerToken.containerWidth}));
+  }
+  :host([start]:not(:dir(rtl))) .start {
+    margin-left: 0;
+  }
+  :host([start]:dir(rtl)) .start {
+    margin-right: 0;
   }
   :host(:not([end])) .end {
     visibility: hidden;
-    margin-inline-end: calc(0px - var(--_end-drawer-size, ${DrawerContainerToken.containerWidth}));
   }
-  :host([end]) .end {
-    margin-inline-end: 0;
+  :host(:not([end]):not(:dir(rtl))) .end {
+    margin-right: calc(0px - var(--_end-drawer-size, ${DrawerContainerToken.containerWidth}));
+  }
+  :host(:not([end]):dir(rtl)) .end {
+    margin-left: calc(0px - var(--_end-drawer-size, ${DrawerContainerToken.containerWidth}));
+  }
+  :host([end]:not(:dir(rtl))) .end {
+    margin-right: 0;
+  }
+  :host([end]:dir(rtl)) .end {
+    margin-left: 0;
   }
   ::slotted([slot="start"]),
   ::slotted([slot="end"]) {
@@ -65,19 +81,25 @@ export const DrawerContainerStyle: CSSResultGroup = css`
     position: relative;
     height: 100%;
     overflow: auto;
-    margin-inline-start: 0;
-    margin-inline-end: 0;
-    transition: ${unsafeCSS(
-      `margin-inline ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard}`,
-    )};
+    margin-left: 0;
+    margin-right: 0;
+    transition: ${unsafeCSS(`margin ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard}`)};
   }
-  :host(.-start-push[start]) .content,
-  :host(.-start-side[start]) .content {
-    margin-inline-start: var(--_start-drawer-size, ${DrawerContainerToken.containerWidth});
+  :host(.-start-push[start]:not(:dir(rtl))) .content,
+  :host(.-start-side[start]:not(:dir(rtl))) .content {
+    margin-left: var(--_start-drawer-size, ${DrawerContainerToken.containerWidth});
   }
-  :host(.-end-push[end]) .content,
-  :host(.-end-side[end]) .content {
-    margin-inline-end: var(--_end-drawer-size, ${DrawerContainerToken.containerWidth});
+  :host(.-start-push[start]:dir(rtl)) .content,
+  :host(.-start-side[start]:dir(rtl)) .content {
+    margin-right: var(--_start-drawer-size, ${DrawerContainerToken.containerWidth});
+  }
+  :host(.-end-push[end]:not(:dir(rtl))) .content,
+  :host(.-end-side[end]:not(:dir(rtl))) .content {
+    margin-right: var(--_end-drawer-size, ${DrawerContainerToken.containerWidth});
+  }
+  :host(.-end-push[end]:dir(rtl)) .content,
+  :host(.-end-side[end]:dir(rtl)) .content {
+    margin-left: var(--_end-drawer-size, ${DrawerContainerToken.containerWidth});
   }
   .scrim {
     display: block;
