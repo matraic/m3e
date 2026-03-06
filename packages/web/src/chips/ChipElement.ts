@@ -281,7 +281,7 @@ export class M3eChipElement extends LitElement {
     super.connectedCallback();
     
     if (this.hasUpdated) {
-      this.#attach();
+      this.updateComplete.then(() => this.#attach());
     }
   }
 
