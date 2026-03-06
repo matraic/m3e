@@ -2,7 +2,16 @@ import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { DesignToken, prefersReducedMotion, ResizeController, safeStyleMap } from "@m3e/web/core";
+import {
+  addCustomState,
+  AttachInternals,
+  deleteCustomState,
+  DesignToken,
+  hasCustomState,
+  prefersReducedMotion,
+  ResizeController,
+  safeStyleMap,
+} from "@m3e/web/core";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
 import { M3eSliderThumbElement } from "./SliderThumbElement";
@@ -79,7 +88,7 @@ import { SliderSize } from "./SliderSize";
  * @cssprop --m3e-slider-disabled-tick-inactive-color - Color of inactive ticks when disabled.
  */
 @customElement("m3e-slider")
-export class M3eSliderElement extends LitElement {
+export class M3eSliderElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -219,9 +228,9 @@ export class M3eSliderElement extends LitElement {
     :host([size="extra-large"]) .track {
       height: var(--m3e-slider-extra-large-track-height, 6rem);
     }
-    :host(.-animating) .track-active,
-    :host(.-animating) .track-inactive.start,
-    :host(.-animating) .track-inactive.end {
+    :host(:state(-animating)) .track-active,
+    :host(:state(-animating)) .track-inactive.start,
+    :host(:state(-animating)) .track-inactive.end {
       transition: ${unsafeCSS(`margin-inline-start ${DesignToken.motion.spring.fastEffects},
         width ${DesignToken.motion.spring.fastEffects}`)};
     }
@@ -683,8 +692,8 @@ export class M3eSliderElement extends LitElement {
       max = Math.min(max, this.upperThumb.value ?? this.max);
     }
 
-    if (this.classList.contains("-animating")) {
-      this.classList.toggle("-animating", false);
+    if (hasCustomState(this, "-animating")) {
+      deleteCustomState(this, "-animating");
       this.#activeThumb.style.transition = "";
     }
 
@@ -799,12 +808,12 @@ export class M3eSliderElement extends LitElement {
     if (thumb.value === value) return;
     const prev = thumb.value;
     if (animate && !prefersReducedMotion()) {
-      this.classList.toggle("-animating", true);
+      addCustomState(this, "-animating");
       thumb.addEventListener(
         "transitionend",
         () => {
           thumb.style.transition = "";
-          this.classList.toggle("-animating", false);
+          deleteCustomState(this, "-animating");
         },
         { once: true },
       );
