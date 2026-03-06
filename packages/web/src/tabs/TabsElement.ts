@@ -2,7 +2,14 @@ import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeC
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { AttachInternals, DesignToken, ResizeController } from "@m3e/web/core";
+import {
+  addCustomState,
+  AttachInternals,
+  deleteCustomState,
+  DesignToken,
+  hasCustomState,
+  ResizeController,
+} from "@m3e/web/core";
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
@@ -161,7 +168,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       width: 100%;
       --_tab-grow: 1;
     }
-    :host(.-no-animate) .active-indicator {
+    :host(:state(-no-animate)) .active-indicator {
       transition: none;
     }
     @media (prefers-reduced-motion) {
@@ -193,7 +200,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
     new ResizeController(this, {
       skipInitial: true,
       callback: () => {
-        this.classList.toggle("-no-animate", true);
+        addCustomState(this, "-no-animate");
         this.#updateInkBar();
       },
     });
@@ -264,7 +271,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this.classList.toggle("-no-animate", true);
+    addCustomState(this, "-no-animate");
     this.#directionalitySubscription = M3eDirectionality.observe(() => {
       this.requestUpdate();
       this[selectionManager].directionality = M3eDirectionality.current;
@@ -399,8 +406,8 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
     this._tablist.style.setProperty("--_tabs-active-tab-position", `${left}px`);
     this._tablist.style.setProperty("--_tabs-active-tab-size", `${width}px`);
 
-    if (width > 0 && this.classList.contains("-no-animate")) {
-      setTimeout(() => this.classList.toggle("-no-animate", false));
+    if (width > 0 && hasCustomState(this, "-no-animate")) {
+      setTimeout(() => deleteCustomState(this, "-no-animate"));
     }
   }
 }
