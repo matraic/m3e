@@ -1,6 +1,6 @@
 import { LitElement, PropertyDeclaration, PropertyValues, isServer } from "lit";
 
-import { internals } from "./AttachInternals";
+import { internals, setCustomState } from "./AttachInternals";
 import { Constructor } from "./Constructor";
 import { FormAssociatedMixin, isFormAssociatedMixin } from "./FormAssociated";
 import { hasKeys } from "./hasKeys";
@@ -60,7 +60,7 @@ export function isConstraintValidationMixin(value: unknown): value is Constraint
       "validationMessage",
       "reportValidity",
       "checkValidity",
-      "setCustomValidity"
+      "setCustomValidity",
     ) && isFormAssociatedMixin(value)
   );
 }
@@ -75,7 +75,7 @@ const _validityMessage = Symbol("_validityMessage");
  * @returns {Constructor<ConstraintValidationMixin> & T} A constructor that implements `ConstraintValidationMixin`.
  */
 export function ConstraintValidation<T extends Constructor<LitElement & FormAssociatedMixin>>(
-  base: T
+  base: T,
 ): Constructor<ConstraintValidationMixin> & T {
   abstract class _ConstraintValidation extends base implements ConstraintValidationMixin {
     private [_validityMessage]?: string;
@@ -164,7 +164,7 @@ export function ConstraintValidation<T extends Constructor<LitElement & FormAsso
 
       this[internals].setValidity(validity, validityMessage);
       this.ariaInvalid = invalid ? "true" : null;
-      this.classList.toggle("-invalid", invalid === true);
+      setCustomState(this, "-invalid", invalid === true);
 
       if (isLabelledMixin(this)) {
         this[updateLabels]?.();

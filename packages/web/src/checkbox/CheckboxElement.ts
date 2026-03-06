@@ -149,27 +149,32 @@ export class M3eCheckboxElement extends Labelled(
       border-width: var(--m3e-checkbox-unselected-outline-thickness, 2px);
       border-style: solid;
     }
-    :host(:not(.-touched.-invalid):not([indeterminate]):not([checked])) .base {
+    :host(:not(:state(-touched):state(-invalid)):not([indeterminate]):not([checked])) .base {
       --m3e-state-layer-hover-color: var(--m3e-checkbox-unselected-hover-color, ${DesignToken.color.onSurface});
       --m3e-state-layer-focus-color: var(--m3e-checkbox-unselected-focus-color, ${DesignToken.color.onSurface});
       --m3e-ripple-color: var(--m3e-checkbox-unselected-ripple-color, ${DesignToken.color.onSurface});
     }
-    :host(:not(.-touched.-invalid)[checked]) .base,
-    :host(:not(.-touched.-invalid)[indeterminate]) .base {
+    :host(:not(:state(-touched):state(-invalid))[checked]) .base,
+    :host(:not(:state(-touched):state(-invalid))[indeterminate]) .base {
       --m3e-state-layer-hover-color: var(--m3e-checkbox-selected-hover-color, ${DesignToken.color.primary});
       --m3e-state-layer-focus-color: var(--m3e-checkbox-selected-focus-color, ${DesignToken.color.primary});
       --m3e-ripple-color: var(--m3e-checkbox-selected-ripple-color, ${DesignToken.color.primary});
     }
-    :host(:not([aria-disabled="true"]):not(.-touched.-invalid)[checked]) .wrapper,
-    :host(:not([aria-disabled="true"]):not(.-touched.-invalid)[indeterminate]) .wrapper {
+    :host(:not([aria-disabled="true"]):not(:state(-touched):state(-invalid))[checked]) .wrapper,
+    :host(:not([aria-disabled="true"]):not(:state(-touched):state(-invalid))[indeterminate]) .wrapper {
       background-color: var(--m3e-checkbox-selected-container-color, ${DesignToken.color.primary});
       color: var(--m3e-checkbox-selected-icon-color, ${DesignToken.color.onPrimary});
     }
-    :host(:not([aria-disabled="true"]):not(.-touched.-invalid):not([checked]):not([indeterminate]):not(:hover))
+    :host(
+        :not([aria-disabled="true"]):not(:state(-touched):state(-invalid)):not([checked]):not([indeterminate]):not(
+            :hover
+          )
+      )
       .wrapper {
       border-color: var(--m3e-checkbox-unselected-outline-color, ${DesignToken.color.onSurfaceVariant});
     }
-    :host(:not([aria-disabled="true"]):not(.-touched.-invalid):not([checked]):not([indeterminate]):hover) .wrapper {
+    :host(:not([aria-disabled="true"]):not(:state(-touched):state(-invalid)):not([checked]):not([indeterminate]):hover)
+      .wrapper {
       border-color: var(--m3e-checkbox-unselected-hover-outline-color, ${DesignToken.color.onSurface});
     }
     :host([aria-disabled="true"]:not([checked]):not([indeterminate])) .wrapper {
@@ -195,35 +200,42 @@ export class M3eCheckboxElement extends Labelled(
         transparent
       );
     }
-    :host(:not([aria-disabled="true"]).-touched.-invalid:not([checked]):not([indeterminate])) .base {
+    :host(:not([aria-disabled="true"]):state(-touched):state(-invalid):not([checked]):not([indeterminate])) .base {
       --m3e-state-layer-hover-color: var(--m3e-checkbox-unselected-error-hover-color, ${DesignToken.color.error});
       --m3e-state-layer-focus-color: var(--m3e-checkbox-unselected-error-focus-color, ${DesignToken.color.error});
       --m3e-ripple-color: var(--m3e-checkbox-unselected-error-ripple-color, ${DesignToken.color.error});
     }
-    :host(:not([aria-disabled="true"]).-touched.-invalid[checked]) .base,
-    :host(:not([aria-disabled="true"]).-touched.-invalid[indeterminate]) .base {
+    :host(:not([aria-disabled="true"]):state(-touched):state(-invalid)[checked]) .base,
+    :host(:not([aria-disabled="true"]):state(-touched):state(-invalid)[indeterminate]) .base {
       --m3e-state-layer-hover-color: var(--m3e-checkbox-selected-error-hover-color, ${DesignToken.color.onError});
       --m3e-state-layer-focus-color: var(--m3e-checkbox-selected-error-focus-color, ${DesignToken.color.onError});
       --m3e-ripple-color: var(--m3e-checkbox-selected-error-ripple-color, ${DesignToken.color.onError});
     }
-    :host(:not([aria-disabled="true"]).-touched.-invalid:not([checked]):not([indeterminate])) .wrapper {
+    :host(:not([aria-disabled="true"]):state(-touched):state(-invalid):not([checked]):not([indeterminate])) .wrapper {
       border-color: var(--m3e-checkbox-unselected-error-outline-color, ${DesignToken.color.error});
     }
     @media (forced-colors: active) {
-      :host(:not(.-touched.-invalid):not([indeterminate]):not([checked])) .base,
-      :host(:not(.-touched.-invalid)[checked]) .base,
-      :host(:not(.-touched.-invalid)[indeterminate]) .base {
+      :host(:not(:state(-touched):state(-invalid)):not([indeterminate]):not([checked])) .base,
+      :host(:not(:state(-touched):state(-invalid))[checked]) .base,
+      :host(:not(:state(-touched):state(-invalid))[indeterminate]) .base {
         --m3e-state-layer-hover-color: CanvasText;
         --m3e-state-layer-focus-color: CanvasText;
         --m3e-ripple-color: CanvasText;
       }
-      :host(:not([aria-disabled="true"]):not(.-touched.-invalid):not([checked]):not([indeterminate]):not(:hover))
+      :host(
+          :not([aria-disabled="true"]):not(:state(-touched):state(-invalid)):not([checked]):not([indeterminate]):not(
+              :hover
+            )
+        )
         .wrapper,
-      :host(:not([aria-disabled="true"]):not(.-touched.-invalid):not([checked]):not([indeterminate]):hover) .wrapper {
+      :host(
+          :not([aria-disabled="true"]):not(:state(-touched):state(-invalid)):not([checked]):not([indeterminate]):hover
+        )
+        .wrapper {
         border-color: CanvasText;
       }
-      :host(:not([aria-disabled="true"]):not(.-touched.-invalid)[checked]) .wrapper,
-      :host(:not([aria-disabled="true"]):not(.-touched.-invalid)[indeterminate]) .wrapper {
+      :host(:not([aria-disabled="true"]):not(:state(-touched):state(-invalid))[checked]) .wrapper,
+      :host(:not([aria-disabled="true"]):not(:state(-touched):state(-invalid))[indeterminate]) .wrapper {
         background-color: CanvasText;
         color: Canvas;
       }
@@ -235,12 +247,12 @@ export class M3eCheckboxElement extends Labelled(
         background-color: GrayText;
         color: Canvas;
       }
-      :host(:not([aria-disabled="true"]).-touched.-invalid:not([checked]):not([indeterminate])) .wrapper {
+      :host(:not([aria-disabled="true"]):state(-touched):state(-invalid):not([checked]):not([indeterminate])) .wrapper {
         border-color: Highlight;
       }
-      :host(:not([aria-disabled="true"]).-touched.-invalid:not([checked]):not([indeterminate])) .base,
-      :host(:not([aria-disabled="true"]).-touched.-invalid[checked]) .base,
-      :host(:not([aria-disabled="true"]).-touched.-invalid[indeterminate]) .base {
+      :host(:not([aria-disabled="true"]):state(-touched):state(-invalid):not([checked]):not([indeterminate])) .base,
+      :host(:not([aria-disabled="true"]):state(-touched):state(-invalid)[checked]) .base,
+      :host(:not([aria-disabled="true"]):state(-touched):state(-invalid)[indeterminate]) .base {
         --m3e-state-layer-hover-color: Highlight;
         --m3e-state-layer-focus-color: Highlight;
         --m3e-ripple-color: Highlight;

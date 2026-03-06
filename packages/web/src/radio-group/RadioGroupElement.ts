@@ -13,6 +13,7 @@ import {
   FormAssociated,
   RequiredConstraintValidation,
   updateLabels,
+  setCustomState,
 } from "@m3e/web/core";
 
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
@@ -136,7 +137,7 @@ export class M3eRadioGroupElement extends Labelled(
 
       case "aria-invalid":
         this.radios.forEach((x) => {
-          x.classList.toggle("-invalid", newValue === "true");
+          setCustomState(x, "-invalid", newValue === "true");
           x[updateLabels]?.();
         });
         break;

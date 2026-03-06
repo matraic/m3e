@@ -2,6 +2,7 @@ import { LitElement } from "lit";
 
 import { Constructor } from "./Constructor";
 import { hasKeys } from "./hasKeys";
+import { addCustomState, AttachInternalsMixin, deleteCustomState, hasCustomState } from "./AttachInternals";
 
 /** Defines functionality for an element that can be marked as touched. */
 export interface TouchedMixin {
@@ -35,14 +36,16 @@ const _eventHandler = Symbol("_eventHandler");
  * @param {T} base The base class.
  * @returns {Constructor<TouchedMixin> & T} A constructor that implements `TouchedMixin`.
  */
-export function Touched<T extends Constructor<LitElement>>(base: T): Constructor<TouchedMixin> & T {
+export function Touched<T extends Constructor<LitElement & AttachInternalsMixin>>(
+  base: T,
+): Constructor<TouchedMixin> & T {
   abstract class _Touched extends base implements TouchedMixin {
     /** @private */
     private [_eventHandler] = () => this.markAsTouched();
 
     /** Whether the user has interacted when the element. */
     get touched(): boolean {
-      return this.classList.contains("-touched");
+      return hasCustomState(this, "-touched");
     }
 
     /** Whether the user has not interacted when the element. */
@@ -65,12 +68,12 @@ export function Touched<T extends Constructor<LitElement>>(base: T): Constructor
 
     /** Marks the element as touched. */
     markAsTouched(): void {
-      this.classList.toggle("-touched", true);
+      addCustomState(this, "-touched");
     }
 
     /** Marks the element as untouched. */
     markAsUntouched(): void {
-      this.classList.toggle("-touched", false);
+      deleteCustomState(this, "-touched");
     }
   }
 

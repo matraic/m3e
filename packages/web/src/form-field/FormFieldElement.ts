@@ -22,6 +22,7 @@ import {
   MutationController,
   PressedController,
   ResizeController,
+  setCustomState,
 } from "@m3e/web/core";
 
 import { M3eAriaDescriber } from "@m3e/web/core/a11y";
@@ -240,7 +241,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     :host([hide-subscript="always"]) .subscript {
       display: none;
     }
-    :host([hide-subscript="auto"]:not(.-invalid)) .subscript {
+    :host([hide-subscript="auto"]:not(:state(-invalid))) .subscript {
       opacity: 0;
       margin-top: 0px;
       margin-bottom: 0.25rem;
@@ -250,16 +251,16 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
         margin-bottom ${DesignToken.motion.duration.short4}`,
       )};
     }
-    :host([hide-subscript="auto"]:not(.-invalid):focus-within) .subscript,
-    :host([hide-subscript="auto"]:not(.-invalid).-pressed) .subscript {
+    :host([hide-subscript="auto"]:not(:state(-invalid)):focus-within) .subscript,
+    :host([hide-subscript="auto"]:not(:state(-invalid)).-pressed) .subscript {
       opacity: 1;
       margin-top: 0.25rem;
       margin-bottom: 0;
     }
-    :host(.-invalid) .hint {
+    :host(:state(-invalid)) .hint {
       display: none;
     }
-    :host(:not(.-invalid)) .error {
+    :host(:not(:state(-invalid))) .error {
       display: none;
     }
     ::slotted(input),
@@ -468,19 +469,19 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
         transparent
       );
     }
-    :host(:not(.-disabled):not(.-invalid)) {
+    :host(:not(.-disabled):not(:state(-invalid))) {
       color: var(--m3e-form-field-color, ${DesignToken.color.onSurface});
     }
-    :host([variant="outlined"]:not(.-disabled):not(.-invalid)) .base {
+    :host([variant="outlined"]:not(.-disabled):not(:state(-invalid))) .base {
       --_form-field-outline-color: var(--m3e-form-field-outline-color, ${DesignToken.color.outline});
     }
-    :host([variant="filled"]:not(.-disabled):not(.-invalid)) .base {
+    :host([variant="filled"]:not(.-disabled):not(:state(-invalid))) .base {
       --_form-field-outline-color: var(--m3e-form-field-outline-color, ${DesignToken.color.onSurfaceVariant});
     }
-    :host([variant="outlined"]:not(.-disabled):not(.-invalid):focus-within) .base,
-    :host([variant="outlined"]:not(.-disabled):not(.-invalid).-pressed) .base,
-    :host([variant="filled"]:not(.-disabled):not(.-invalid):focus-within) .base,
-    :host([variant="filled"]:not(.-disabled):not(.-invalid).-pressed) .base {
+    :host([variant="outlined"]:not(.-disabled):not(:state(-invalid)):focus-within) .base,
+    :host([variant="outlined"]:not(.-disabled):not(:state(-invalid)).-pressed) .base,
+    :host([variant="filled"]:not(.-disabled):not(:state(-invalid)):focus-within) .base,
+    :host([variant="filled"]:not(.-disabled):not(:state(-invalid)).-pressed) .base {
       --_form-field-outline-color: var(--m3e-form-field-focused-outline-color, ${DesignToken.color.primary});
       --_form-field-label-color: var(--m3e-form-field-focused-color, ${DesignToken.color.primary});
     }
@@ -490,11 +491,11 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
         ${DesignToken.color.surfaceContainerHighest}
       );
     }
-    :host(:not(.-disabled).-invalid) .base {
+    :host(:not(.-disabled):state(-invalid)) .base {
       --_form-field-label-color: var(--m3e-form-field-invalid-color, ${DesignToken.color.error});
       --_form-field-outline-color: var(--m3e-form-field-invalid-color, ${DesignToken.color.error});
     }
-    :host(:not(.-disabled).-invalid) .subscript {
+    :host(:not(.-disabled):state(-invalid)) .subscript {
       color: var(--m3e-form-field-invalid-color, ${DesignToken.color.error});
     }
     :host(.-disabled) {
@@ -677,7 +678,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       this._invalid = !(this.#control?.checkValidity?.() ?? true);
     }
 
-    this.classList.toggle("-invalid", this._invalid);
+    setCustomState(this, "-invalid", this._invalid);
 
     this._validationMessage = this.#control?.validationMessage ?? "";
     if (!this.isUpdatePending) {

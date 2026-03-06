@@ -2,7 +2,7 @@ import { LitElement, PropertyValues } from "lit";
 
 import { DesignToken } from "../tokens";
 
-import { AttachInternalsMixin, internals, isAttachInternalsMixin } from "./AttachInternals";
+import { AttachInternalsMixin, hasCustomState, internals, isAttachInternalsMixin } from "./AttachInternals";
 import { Constructor } from "./Constructor";
 import { isDisabledMixin } from "./Disabled";
 import { isDisabledInteractiveMixin } from "./DisabledInteractive";
@@ -39,7 +39,7 @@ const _eventHandler = Symbol("_eventHandler");
  * @returns {Constructor<FormAssociatedMixin> & T} A constructor that implements `FormAssociatedMixin`.
  */
 export function Labelled<T extends Constructor<LitElement & AttachInternalsMixin>>(
-  base: T
+  base: T,
 ): Constructor<LabelledMixin> & T {
   abstract class _Labelled extends base implements LabelledMixin {
     /** Indicates that this custom element participates in form submission, validation, and form state restoration. */
@@ -82,7 +82,7 @@ export function Labelled<T extends Constructor<LitElement & AttachInternalsMixin
       const focusable = this.hasAttribute("tabindex");
       const disabled =
         (isDisabledMixin(this) && this.disabled) || (isDisabledInteractiveMixin(this) && this.disabledInteractive);
-      const invalid = isTouchedMixin(this) && this.touched && (this.ariaInvalid || this.classList.contains("-invalid"));
+      const invalid = isTouchedMixin(this) && this.touched && (this.ariaInvalid || hasCustomState(this, "-invalid"));
 
       for (const label of this.labels ?? []) {
         label.style.userSelect = focusable ? "none" : "";

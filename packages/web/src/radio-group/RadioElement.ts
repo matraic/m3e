@@ -142,7 +142,7 @@ export class M3eRadioElement extends Labelled(
     :host([aria-disabled="true"]) .base {
       color: color-mix(in srgb, var(--m3e-radio-disabled-icon-color, ${DesignToken.color.onSurface}) 38%, transparent);
     }
-    :host(.-touched.-invalid) .base {
+    :host(:state(-touched):state(-invalid)) .base {
       --m3e-state-layer-hover-color: var(--m3e-radio-error-hover-color, ${DesignToken.color.error});
       --m3e-state-layer-focus-color: var(--m3e-radio-error-focus-color, ${DesignToken.color.error});
       --m3e-ripple-color: var(--m3e-radio-error-ripple-color, ${DesignToken.color.error});
@@ -159,7 +159,7 @@ export class M3eRadioElement extends Labelled(
       :host([aria-disabled="true"]) .base {
         color: GrayText;
       }
-      :host(.-touched.-invalid) .base {
+      :host(:state(-touched):state(-invalid)) .base {
         --_radio-forced-color: Highlight;
         color: Highlight;
       }
