@@ -2,7 +2,6 @@ import { nothing } from "lit";
 import { customElement } from "lit/decorators.js";
 
 import {
-  AttachInternals,
   Disabled,
   DisabledInteractive,
   Focusable,
@@ -86,11 +85,11 @@ import { M3eChipElement } from "./ChipElement";
  */
 @customElement("m3e-assist-chip")
 export class M3eAssistChipElement extends FormSubmitter(
-  AttachInternals(
-    LinkButton(KeyboardClick(Focusable(DisabledInteractive(Disabled(Role(M3eChipElement, "button")))))),
-    true,
-  ),
+  LinkButton(KeyboardClick(Focusable(DisabledInteractive(Disabled(Role(M3eChipElement, "button")))))),
 ) {
+  /** Indicates that this custom element participates in form submission, validation, and form state restoration. */
+  static readonly formAssociated = true;
+
   /** @internal @inheritdoc */
   protected override _renderTrailingIcon(): unknown {
     return nothing;

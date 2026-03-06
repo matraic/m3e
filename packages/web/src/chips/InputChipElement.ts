@@ -8,11 +8,10 @@ import {
   Disabled,
   EventAttribute,
   Role,
-  AttachInternals,
   DesignToken,
   hasAssignedNodes,
+  setCustomState,
 } from "@m3e/web/core";
-
 import { M3eIconButtonElement } from "@m3e/web/icon-button";
 
 import { M3eChipElement } from "./ChipElement";
@@ -89,9 +88,12 @@ import { M3eChipElement } from "./ChipElement";
  */
 @customElement("m3e-input-chip")
 export class M3eInputChipElement extends EventAttribute(
-  DisabledInteractive(Disabled(AttachInternals(Role(M3eChipElement, "row"), true))),
+  DisabledInteractive(Disabled(Role(M3eChipElement, "row"))),
   "remove",
 ) {
+  /** Indicates that this custom element participates in form submission, validation, and form state restoration. */
+  static readonly formAssociated = true;
+
   /** The styles of the element. */
   static override styles: CSSResultGroup = [
     M3eChipElement.styles,
@@ -132,10 +134,10 @@ export class M3eInputChipElement extends EventAttribute(
         opacity: var(--m3e-chip-disabled-avatar-opacity, 38%);
         color: var(--m3e-chip-disabled-icon-color, ${DesignToken.color.onSurface});
       }
-      :host(.-with-avatar) ::slotted([slot="icon"]) {
+      :host(:state(-with-avatar)) ::slotted([slot="icon"]) {
         display: none;
       }
-      :host(.-with-avatar) .wrapper {
+      :host(:state(-with-avatar)) .wrapper {
         padding-inline-start: var(--m3e-chip-with-avatar-padding-start, 0.25rem);
       }
       @media (forced-colors: active) {
@@ -177,7 +179,7 @@ export class M3eInputChipElement extends EventAttribute(
     this.removeAttribute("tabindex");
 
     if (changedProperties.has("removable")) {
-      this.classList.toggle("-with-trailing-icon", this.removable);
+      setCustomState(this, "-with-trailing-icon", this.removable);
     }
   }
 
@@ -241,7 +243,7 @@ export class M3eInputChipElement extends EventAttribute(
 
   /** @private */
   #handleAvatarSlotChange(e: Event): void {
-    this.classList.toggle("-with-avatar", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "-with-avatar", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */

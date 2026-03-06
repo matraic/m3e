@@ -2,6 +2,7 @@ import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeC
 import { customElement, property, query } from "lit/decorators.js";
 
 import {
+  AttachInternals,
   DesignToken,
   getTextContent,
   hasAssignedNodes,
@@ -13,6 +14,7 @@ import {
   M3eRippleElement,
   M3eStateLayerElement,
   renderPseudoLink,
+  setCustomState,
 } from "@m3e/web/core";
 
 import { ChipVariant } from "./ChipVariant";
@@ -66,7 +68,7 @@ import { ChipVariant } from "./ChipVariant";
  * @cssprop --m3e-outlined-chip-outline-color - Outline color for outlined variant.
  */
 @customElement("m3e-chip")
-export class M3eChipElement extends LitElement {
+export class M3eChipElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -157,16 +159,16 @@ export class M3eChipElement extends LitElement {
         transparent
       );
     }
-    :host(.-with-icon) .wrapper {
+    :host(:state(-with-icon)) .wrapper {
       padding-inline-start: var(--m3e-chip-with-icon-padding-start, 0.5rem);
     }
-    :host(:not(.-with-icon)) .wrapper {
+    :host(:not(:state(-with-icon))) .wrapper {
       padding-inline-start: var(--m3e-chip-padding-start, 1rem);
     }
-    :host(.-with-trailing-icon) .wrapper {
+    :host(:state(-with-trailing-icon)) .wrapper {
       padding-inline-end: var(--m3e-chip-with-icon-padding-end, 0.5rem);
     }
-    :host(:not(.-with-trailing-icon)) .wrapper {
+    :host(:not(:state(-with-trailing-icon))) .wrapper {
       padding-inline-end: var(--m3e-chip-padding-end, 1rem);
     }
     ::slotted([slot="icon"]),
@@ -324,12 +326,12 @@ export class M3eChipElement extends LitElement {
 
   /** @private */
   #handleIconSlotChange(e: Event): void {
-    this.classList.toggle("-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
   #handleTrailingIconSlotChange(e: Event): void {
-    this.classList.toggle("-with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "-with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */

@@ -1,17 +1,7 @@
 import { css, CSSResultGroup, html, PropertyValues } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import {
-  AttachInternals,
-  DesignToken,
-  Disabled,
-  DisabledInteractive,
-  Focusable,
-  KeyboardClick,
-  Role,
-  Selected,
-} from "@m3e/web/core";
-
+import { DesignToken, Disabled, DisabledInteractive, Focusable, KeyboardClick, Role, Selected } from "@m3e/web/core";
 import { selectionManager } from "@m3e/web/core/a11y";
 
 import { M3eChipElement } from "./ChipElement";
@@ -100,13 +90,16 @@ import { M3eChipElement } from "./ChipElement";
  */
 @customElement("m3e-filter-chip")
 export class M3eFilterChipElement extends Selected(
-  KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(M3eChipElement, "radio"), true))))),
+  KeyboardClick(Focusable(DisabledInteractive(Disabled(Role(M3eChipElement, "radio"))))),
 ) {
+  /** Indicates that this custom element participates in form submission, validation, and form state restoration. */
+  static readonly formAssociated = true;
+
   /** The styles of the element. */
   static override styles: CSSResultGroup = [
     M3eChipElement.styles,
     css`
-      :host([selected]:not(.-hide-selection)) .wrapper {
+      :host([selected]:not(:state(-hide-selection))) .wrapper {
         padding-inline-start: var(--m3e-chip-with-icon-padding-start, 0.5rem);
       }
       .icon {
@@ -122,18 +115,18 @@ export class M3eFilterChipElement extends Selected(
         color: var(--m3e-chip-selected-leading-icon-color, ${DesignToken.color.onSecondaryContainer});
       }
       :host(:not([selected])) .check,
-      :host(.-hide-selection) .check,
-      :host(.-hide-selection:not(.-with-icon)) .icon {
+      :host(:state(-hide-selection)) .check,
+      :host(:state(-hide-selection):not(:state(-with-icon))) .icon {
         display: none;
       }
-      :host(:not(.-with-icon)) .icon {
+      :host(:not(:state(-with-icon))) .icon {
         margin-inline-start: calc(0px - var(--m3e-chip-with-icon-padding-start, 0.5rem));
         transition: margin-inline-start ${DesignToken.motion.spring.fastEffects};
       }
       :host([selected]) .icon {
         margin-inline-start: 0;
       }
-      :host([selected]:not(.-hide-selection)) ::slotted([slot="icon"]) {
+      :host([selected]:not(:state(-hide-selection))) ::slotted([slot="icon"]) {
         display: none !important;
       }
       :host(:not(:disabled):not([disabled-interactive]):not([selected])) .base {
@@ -186,7 +179,7 @@ export class M3eFilterChipElement extends Selected(
       }
       @media (prefers-reduced-motion) {
         .base,
-        :host(:not(.-with-icon)) .icon {
+        :host(:not(:state(-with-icon))) .icon {
           transition: none;
         }
       }
