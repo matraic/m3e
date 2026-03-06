@@ -271,7 +271,7 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
       box-shadow: none;
       font-family: inherit;
       font-size: inherit;
-      line-height: initial;
+      line-height: inherit;
       letter-spacing: inherit;
       color: var(--_form-field-input-color, inherit);
       flex: 1 1 auto;
