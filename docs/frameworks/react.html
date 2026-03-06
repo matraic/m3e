@@ -44,7 +44,8 @@
       <p>
         The <strong>@m3e/react</strong> package provides idiomatic React bindings for all M3E Web Components. Each
         component is exposed as its own React module, offering typed props, event mappings, and seamless integration
-        with the React rendering model.
+        with the React rendering model. However, the React bindings are <strong>client-only</strong>. In Next.js, you
+        <strong>must</strong> use them inside a <code>"use client"</code> boundary.
       </p>
 
       <m3e-card variant="filled" class="install">
@@ -83,30 +84,6 @@
         across both ecosystems. Use individual modules for tree-shaking and minimal bundles, or the aggregated module
         for rapid prototyping and full-suite development.
       </p>
-      <p>
-        The React bindings in <code>@m3e/react</code> are client-only and must be used inside a
-        <code>"use client"</code> boundary in your application.
-      </p>
-      <p>
-        To support Next.js and SSR, <code>@m3e/web</code> works with Lit's server-ready modules, and consumers only need
-        to wrap their next.config.js with <code>withLitSSR</code> from <code>@lit-labs/nextjs</code>. This lets Next.js
-        load the correct server build instead of evaluating browser code during rendering, so all
-        <code>@m3e/web</code> elements render on the server and hydrate on the client without any extra setup.
-      </p>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
-const withLitSSR = require(&#39;@lit-labs/nextjs&#39;)({
-  addDeclarativeShadowDomPolyfill: true,
-});
-
-/** @type {import(&#39;next&#39;).NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-};
-
-module.exports = withLitSSR(nextConfig);</pre
-        >
-      </m3e-card>
     </m3e-theme>
   </body>
 </html>
