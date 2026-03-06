@@ -1,4 +1,4 @@
-import { LitElement } from "lit";
+import { isServer, LitElement } from "lit";
 
 import { Constructor } from "./Constructor";
 import { hasKeys } from "./hasKeys";
@@ -32,7 +32,7 @@ const _internals = Symbol("_internals");
  */
 export function AttachInternals<T extends Constructor<LitElement>>(
   base: T,
-  formAssociated?: boolean
+  formAssociated?: boolean,
 ): Constructor<AttachInternalsMixin> & T {
   abstract class _AttachInternals extends base implements AttachInternalsMixin {
     /** Indicates that this custom element participates in form submission, validation, and form state restoration. */
@@ -48,4 +48,49 @@ export function AttachInternals<T extends Constructor<LitElement>>(
   }
 
   return _AttachInternals;
+}
+
+/**
+ * Convenience function used to test whether an element has a given custom state.
+ * @param {AttachInternalsMixin} element The element to test.
+ * @param {string} state The custom state to test.
+ * @returns {boolean} Whether `element` has `state`.
+ */
+export function hasCustomState(element: AttachInternalsMixin, state: string): boolean {
+  return isServer ? false : element[internals].states.has(state);
+}
+
+/**
+ * Convenience function used to add custom state to an element.
+ * @param {AttachInternalsMixin} element The element to which to add custom state.
+ * @param {string} state The custom state to add.
+ */
+export function addCustomState(element: AttachInternalsMixin, state: string): void {
+  if (!isServer) {
+    element[internals].states.add(state);
+  }
+}
+
+/**
+ * Convenience function used to delete custom state from an element.
+ * @param {AttachInternalsMixin} element The element from which to delete custom state.
+ * @param {string} state The custom state to delete.
+ * @returns {boolean} Whether `state` was removed from `element`.
+ */
+export function deleteCustomState(element: AttachInternalsMixin, state: string): boolean {
+  return !isServer && element[internals].states.delete(state);
+}
+
+/**
+ * Convenience function used to add or delete custom state for an element.
+ * @param {AttachInternalsMixin} element The element for which to add or delete custom state.
+ * @param {string} state The custom state to add or delete.
+ * @param {boolean} value Whether to add or delete `state` from `element`.
+ */
+export function setCustomState(element: AttachInternalsMixin, state: string, value: boolean): void {
+  if (value) {
+    addCustomState(element, state);
+  } else {
+    deleteCustomState(element, state);
+  }
 }
