@@ -2,6 +2,7 @@ import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from
 import { customElement, property } from "lit/decorators.js";
 
 import { DesignToken } from "../tokens";
+import { addCustomState, AttachInternals, deleteCustomState, hasCustomState } from "../mixins";
 
 /**
  * A carousel-like container used to horizontally cycle through slotted items.
@@ -26,7 +27,7 @@ import { DesignToken } from "../tokens";
  * @cssprop --m3e-slide-animation-duration - The duration of transitions between slotted items.
  */
 @customElement("m3e-slide")
-export class M3eSlideElement extends LitElement {
+export class M3eSlideElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -39,7 +40,7 @@ export class M3eSlideElement extends LitElement {
       top: 0;
       transition: ${unsafeCSS(
         `inset-inline-start var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard},
-        visibility var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard} allow-discrete`
+        visibility var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
     ::slotted(.-before),
@@ -57,7 +58,7 @@ export class M3eSlideElement extends LitElement {
       position: relative;
       inset-inline-start: 0;
     }
-    :host(.-no-animate) ::slotted(*) {
+    :host(:state(-no-animate)) ::slotted(*) {
       transition: none;
     }
     @media (prefers-reduced-motion) {
@@ -78,7 +79,7 @@ export class M3eSlideElement extends LitElement {
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-    this.classList.toggle("-no-animate", true);
+    addCustomState(this, "-no-animate");
   }
 
   /** @inheritdoc */
@@ -87,15 +88,15 @@ export class M3eSlideElement extends LitElement {
 
     if (changedProperties.has("selectedIndex")) {
       if (this.selectedIndex === null) {
-        this.classList.toggle("-no-animate", true);
+        addCustomState(this, "-no-animate");
       }
 
       this.#updateItems();
 
-      if (this.selectedIndex !== null && this.classList.contains("-no-animate")) {
+      if (this.selectedIndex !== null && hasCustomState(this, "-no-animate")) {
         requestAnimationFrame(() => {
           if (this.selectedIndex !== null) {
-            this.classList.toggle("-no-animate", false);
+            deleteCustomState(this, "-no-animate");
           }
         });
       }

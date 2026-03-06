@@ -6,6 +6,7 @@ import { DesignToken } from "../tokens";
 
 import { ScrollDividers } from "./ScrollDividers";
 import { FocusRingToken } from "./FocusRingToken";
+import { AttachInternals, setCustomState } from "../mixins";
 
 /**
  * A vertically oriented content container which presents dividers above and below content when scrolled.
@@ -38,7 +39,7 @@ import { FocusRingToken } from "./FocusRingToken";
  * @cssprop --m3e-focus-ring-duration - Duration of the focus ring animation.
  */
 @customElement("m3e-scroll-container")
-export class M3eScrollContainerElement extends LitElement {
+export class M3eScrollContainerElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -59,10 +60,10 @@ export class M3eScrollContainerElement extends LitElement {
     :host(:not([thin])) {
       scrollbar-width: ${DesignToken.scrollbar.width};
     }
-    :host(:not(:focus-visible).-above) {
+    :host(:not(:focus-visible):state(-above)) {
       border-top-color: var(--m3e-divider-color, ${DesignToken.color.outlineVariant});
     }
-    :host(:not(:focus-visible).-below) {
+    :host(:not(:focus-visible):state(-below)) {
       border-bottom-color: var(--m3e-divider-color, ${DesignToken.color.outlineVariant});
     }
     :host(:focus-visible) {
@@ -79,10 +80,10 @@ export class M3eScrollContainerElement extends LitElement {
         border-top: var(--m3e-divider-thickness, 1px) solid Canvas;
         border-bottom: var(--m3e-divider-thickness, 1px) solid Canvas;
       }
-      :host(:not(:focus-visible).-above) {
+      :host(:not(:focus-visible):state(-above)) {
         border-top-color: GrayText;
       }
-      :host(:not(:focus-visible).-below) {
+      :host(:not(:focus-visible):state(-below)) {
         border-bottom-color: GrayText;
       }
     }
@@ -138,8 +139,8 @@ export class M3eScrollContainerElement extends LitElement {
       (this.dividers === "below" || this.dividers === "above-below") &&
       this.scrollHeight - this.scrollTop - this.clientHeight > 1;
 
-    this.classList.toggle("-above", before);
-    this.classList.toggle("-below", after);
+    setCustomState(this, "-above", before);
+    setCustomState(this, "-below", after);
   }
 }
 
