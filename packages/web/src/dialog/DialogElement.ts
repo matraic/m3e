@@ -3,7 +3,15 @@ import { css, CSSResultGroup, html, LitElement, nothing, unsafeCSS } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { DesignToken, EventAttribute, focusWhenReady, ScrollLockController } from "@m3e/web/core";
+import {
+  AttachInternals,
+  DesignToken,
+  EventAttribute,
+  focusWhenReady,
+  ScrollLockController,
+  setCustomState,
+} from "@m3e/web/core";
+
 import "@m3e/web/core/a11y";
 
 /**
@@ -68,7 +76,14 @@ import "@m3e/web/core/a11y";
  * @cssprop --m3e-dialog-content-tracking - Letter spacing for the dialog content.
  */
 @customElement("m3e-dialog")
-export class M3eDialogElement extends EventAttribute(LitElement, "opening", "opened", "cancel", "closing", "closed") {
+export class M3eDialogElement extends EventAttribute(
+  AttachInternals(LitElement),
+  "opening",
+  "opened",
+  "cancel",
+  "closing",
+  "closed",
+) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -184,10 +199,10 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
     ::slotted([slot="actions"][end]) {
       justify-content: flex-end;
     }
-    :host(:not(.-has-actions)) .content {
+    :host(:not(:state(-with-actions))) .content {
       margin-bottom: 1.5rem;
     }
-    :host(:not(.-has-actions)) .actions {
+    :host(:not(:state(-with-actions))) .actions {
       display: none;
     }
     .close {
@@ -224,7 +239,7 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
 
   /** @private */ #open = false;
   /** @private */ #escapePressedWithoutCancel = false;
-  /** @private */ @state() private _hasActions = false;
+  /** @private */ @state() private _withActions = false;
   /** @private */ @query(".base") private readonly _base!: HTMLDialogElement;
   /** @private */ @query(".content") private readonly _content!: HTMLDialogElement;
 
@@ -362,7 +377,7 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
           <slot name="header" id="m3e-dialog-${this.#id}-header"></slot>
           ${this.#renderCloseButton()}
         </div>
-        <m3e-scroll-container class="content" dividers="${this._hasActions ? "above-below" : "above"}">
+        <m3e-scroll-container class="content" dividers="${this._withActions ? "above-below" : "above"}">
           <slot></slot>
         </m3e-scroll-container>
         <div class="actions">
@@ -425,8 +440,8 @@ export class M3eDialogElement extends EventAttribute(LitElement, "opening", "ope
 
   /** @private */
   #handleActionsSlotChange(e: Event): void {
-    this._hasActions = (<HTMLSlotElement>e.target).assignedNodes({ flatten: true }).length > 0;
-    this.classList.toggle("-has-actions", this._hasActions);
+    this._withActions = (<HTMLSlotElement>e.target).assignedNodes({ flatten: true }).length > 0;
+    setCustomState(this, "-with-actions", this._withActions);
   }
 }
 
