@@ -55,7 +55,7 @@ export const ExpansionPanelStyle = css`
   .content {
     padding: ${ExpansionPanelToken.contentPadding};
   }
-  :host(:not(.-has-actions)) .actions {
+  :host(:not(:state(-with-actions))) .actions {
     display: none;
   }
   .actions {

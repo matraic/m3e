@@ -3,7 +3,7 @@
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 
-import { AttachInternals, Disabled, EventAttribute, hasAssignedNodes } from "@m3e/web/core";
+import { AttachInternals, Disabled, EventAttribute, hasAssignedNodes, setCustomState } from "@m3e/web/core";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
 import { ExpansionTogglePosition } from "./ExpansionTogglePosition";
@@ -265,7 +265,7 @@ export class M3eExpansionPanelElement extends EventAttribute(
 
   /** @private */
   #handleActionsSlotChange(e: Event): void {
-    this.classList.toggle("-has-actions", hasAssignedNodes(e.target as HTMLSlotElement));
+    setCustomState(this, "-with-actions", hasAssignedNodes(e.target as HTMLSlotElement));
   }
 
   /** @private */
