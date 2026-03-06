@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { DesignToken, getTextContent } from "@m3e/web/core";
+import { DesignToken, getTextContent, setCustomState } from "@m3e/web/core";
 import { M3eAriaDescriber } from "@m3e/web/core/a11y";
 import { AnchorPosition } from "@m3e/web/core/anchoring";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
@@ -98,7 +98,7 @@ export class M3eTooltipElement extends TooltipElementBase {
         display ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
-    :host(.-multiline) .base {
+    :host(:state(-multiline)) .base {
       text-align: start;
     }
     .base::backdrop {
@@ -217,7 +217,7 @@ export class M3eTooltipElement extends TooltipElementBase {
   #handleToggle(e: ToggleEvent): void {
     if (e.newState === "open") {
       const multiline = this._base.getBoundingClientRect().height > parseFloat(getComputedStyle(this._base).minHeight);
-      this.classList.toggle("-multiline", multiline);
+      setCustomState(this, "-multiline", multiline);
     }
   }
 }

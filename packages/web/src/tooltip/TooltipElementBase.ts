@@ -1,7 +1,7 @@
 import { LitElement, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { HoverController, HtmlFor, isDisabledMixin, LongPressController } from "@m3e/web/core";
+import { AttachInternals, HoverController, HtmlFor, isDisabledMixin, LongPressController } from "@m3e/web/core";
 import { M3ePlatform } from "@m3e/web/core/platform";
 import { AnchorPosition, positionAnchor } from "@m3e/web/core/anchoring";
 
@@ -14,7 +14,7 @@ const TOOLTIP_OFFSET = 4;
 const TOOLTIP_HIDE_DELAY = 200;
 
 /** Provides a base implementation for a tooltip. This class must be inherited. */
-export abstract class TooltipElementBase extends HtmlFor(LitElement) {
+export abstract class TooltipElementBase extends HtmlFor(AttachInternals(LitElement)) {
   /** @private */ private static __openTooltips = new Array<TooltipElementBase>();
 
   /** @internal */ @query(".base") protected readonly _base!: HTMLElement;
