@@ -57,6 +57,7 @@ export class HoverController extends MonitorControllerBase {
   protected override _observe(target: HTMLElement): void {
     target.addEventListener("pointerenter", this.#pointerInHandler);
     target.addEventListener("pointerleave", this.#pointerLeaveHandler);
+    target.addEventListener("touchend", this.#pointerLeaveHandler);
   }
 
   /**
@@ -66,6 +67,7 @@ export class HoverController extends MonitorControllerBase {
   protected override _unobserve(target: HTMLElement): void {
     target.removeEventListener("pointerenter", this.#pointerInHandler);
     target.removeEventListener("pointerleave", this.#pointerLeaveHandler);
+    target.removeEventListener("touchend", this.#pointerLeaveHandler);
   }
 
   /** @private */
@@ -107,7 +109,7 @@ export class HoverController extends MonitorControllerBase {
         setTimeout(() => {
           this.#startDelays.delete(target);
           this.#callback(true, target);
-        }, this.startDelay)
+        }, this.startDelay),
       );
     } else {
       // Otherwise, report the start.
@@ -130,7 +132,7 @@ export class HoverController extends MonitorControllerBase {
         setTimeout(() => {
           this.#endDelays.delete(target);
           this.#callback(false, target);
-        }, this.endDelay)
+        }, this.endDelay),
       );
     } else {
       // Otherwise, report the end.
