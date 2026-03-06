@@ -43,7 +43,7 @@ const _firstUpdated = Symbol("_firstUpdated");
  */
 export function HtmlFor<T extends Constructor<LitElement>>(base: T): Constructor<HtmlForMixin> & T {
   abstract class _HtmlForMixin extends base implements HtmlForMixin {
-    /** @private */ private [_control]: HTMLElement | null = null;
+    /** @private */ private [_control]?: WeakRef<HTMLElement>;
     /** @private */ private [_firstUpdated] = false;
 
     /** The identifier of the interactive control to which this element is attached. */
@@ -51,7 +51,28 @@ export function HtmlFor<T extends Constructor<LitElement>>(base: T): Constructor
 
     /** The interactive element to which this element is attached. */
     get control() {
-      return this[_control];
+      return this[_control]?.deref() ?? null;
+    }
+
+    /** @inheritdoc */
+    override connectedCallback(): void {
+      super.connectedCallback();
+
+      const control = this[_control]?.deref();
+      if (control) {
+        this.attach(control);
+      }
+    }
+
+    /** @inheritdoc */
+    override disconnectedCallback(): void {
+      super.disconnectedCallback();
+
+      const control = this[_control];
+      if (control) {
+        this.detach();
+        this[_control] = control;
+      }
     }
 
     /** @inheritdoc */
@@ -90,12 +111,12 @@ export function HtmlFor<T extends Constructor<LitElement>>(base: T): Constructor
      * @param {HTMLElement} control The element that controls the attachable element.
      */
     attach(control: HTMLElement): void {
-      this[_control] = control;
+      this[_control] = new WeakRef(control);
     }
 
     /** Detaches the element from its current interactive control. */
     detach(): void {
-      this[_control] = null;
+      this[_control] = undefined;
     }
   }
 
