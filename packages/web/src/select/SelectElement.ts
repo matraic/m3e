@@ -22,6 +22,8 @@ import {
   Focusable,
   prefersReducedMotion,
   forcedColorsActive,
+  deleteCustomState,
+  addCustomState,
 } from "@m3e/web/core";
 
 import { ListKeyManager } from "@m3e/web/core/a11y";
@@ -142,7 +144,7 @@ export class M3eSelectElement
       height: 1em;
       font-size: var(--m3e-select-icon-size, 1.5rem);
     }
-    :host(.-open) .focus-ring {
+    :host(:state(-open)) .focus-ring {
       display: none;
     }
   `;
@@ -509,7 +511,7 @@ export class M3eSelectElement
     this.removeAttribute("aria-owns");
     this.requestUpdate();
 
-    this.classList.toggle("-open", false);
+    deleteCustomState(this, "-open");
     this.#formField?.notifyControlStateChange();
 
     this.dispatchEvent(
@@ -558,7 +560,7 @@ export class M3eSelectElement
 
     setTimeout(() => {
       this.#menu?.show(this, this.#formField?.menuAnchor);
-      this.classList.toggle("-open", true);
+      addCustomState(this, "-open");
     });
   }
 
@@ -568,7 +570,7 @@ export class M3eSelectElement
 
     this.#menu.hide();
     this.removeAttribute("aria-activedescendant");
-    this.classList.toggle("-open", false);
+    deleteCustomState(this, "-open");
   }
 
   /** @private */
