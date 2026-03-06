@@ -21,6 +21,10 @@ import {
   debounce,
   ResizeController,
   prefersReducedMotion,
+  hasCustomState,
+  deleteCustomState,
+  setCustomState,
+  AttachInternalsMixin,
 } from "@m3e/web/core";
 
 import { IconButtonSize } from "./IconButtonSize";
@@ -428,7 +432,7 @@ export class M3eIconButtonElement extends KeyboardClick(
 
   /** Whether the button is contained by a button group. */
   get grouped() {
-    return this.classList.contains("-grouped");
+    return hasCustomState(this, "-grouped");
   }
 
   /** @inheritdoc */
@@ -465,11 +469,11 @@ export class M3eIconButtonElement extends KeyboardClick(
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    ["-pressed", "-resting", "-grouped", "-connected"].forEach((x) => this.classList.remove(x));
+    ["-pressed", "-resting", "-grouped", "-connected"].forEach((x) => deleteCustomState(this, x));
     this._base?.style.removeProperty("--_button-shape");
     this.style.removeProperty("--_button-width");
     this.style.removeProperty("--_adjacent-button-width");
-    this.classList.remove("-adjacent-pressed");
+    deleteCustomState(this, "-adjacent-pressed");
 
     this.removeEventListener("click", this.#clickHandler);
   }
@@ -488,8 +492,8 @@ export class M3eIconButtonElement extends KeyboardClick(
       (_changedProperties.has("disabled") && this.disabled) ||
       (_changedProperties.has("disabledInteractive") && this.disabledInteractive)
     ) {
-      this.classList.toggle("-pressed", false);
-      this.classList.toggle("-resting", false);
+      deleteCustomState(this, "-pressed");
+      deleteCustomState(this, "-resting");
     }
 
     if (_changedProperties.has("toggle") || _changedProperties.has("selected")) {
@@ -505,7 +509,7 @@ export class M3eIconButtonElement extends KeyboardClick(
   /** @private */
   @debounce(40)
   private _handleResize(): void {
-    if (this.grouped && !this.classList.contains("-pressed")) {
+    if (this.grouped && !hasCustomState(this, "-pressed")) {
       this.style.setProperty("--_button-width", `${this.clientWidth}px`);
       this.#updateButtonShape(true);
     }
@@ -525,26 +529,26 @@ export class M3eIconButtonElement extends KeyboardClick(
 
   /** @private */
   #handlePressedChange(pressed: boolean): void {
-    this.classList.toggle("-pressed", pressed);
-    this.classList.toggle("-resting", !pressed);
+    setCustomState(this, "-pressed", pressed);
+    setCustomState(this, "-resting", !pressed);
 
     const group = this.closest("m3e-button-group");
     if (group) {
       const clientWidth = this.getBoundingClientRect().width;
-      const buttons = [...group.querySelectorAll<HTMLElement>("m3e-button,m3e-icon-button")];
+      const buttons = [...group.querySelectorAll<HTMLElement & AttachInternalsMixin>("m3e-button,m3e-icon-button")];
       const index = buttons.indexOf(this);
 
       for (let i = 0; i < buttons.length; i++) {
         const button = buttons[i];
         if (i === index - 1) {
           button.style.setProperty("--_adjacent-button-width", `${clientWidth}px`);
-          button.classList.toggle("-adjacent-pressed", pressed);
+          setCustomState(button, "-adjacent-pressed", pressed);
         } else if (i === index + 1) {
           button.style.setProperty("--_adjacent-button-width", `${clientWidth}px`);
-          button.classList.toggle("-adjacent-pressed", pressed);
+          setCustomState(button, "-adjacent-pressed", pressed);
         } else {
           button.style.removeProperty("--_adjacent-button-width");
-          button.classList.remove("-adjacent-pressed");
+          deleteCustomState(button, "-adjacent-pressed");
         }
       }
     }

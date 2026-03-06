@@ -31,8 +31,8 @@ export const ButtonStyle: CSSResultGroup = css`
     left: 0;
     right: 0;
   }
-  :host(.-pressed) .base,
-  :host(.-resting) .base {
+  :host(:state(-pressed)) .base,
+  :host(:state(-resting)) .base {
     transition: ${unsafeCSS(`background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard},
           border-radius ${DesignToken.motion.spring.fastEffects}`)};
   }
@@ -86,24 +86,24 @@ export const ButtonStyle: CSSResultGroup = css`
     bottom: 0px;
     z-index: 1;
   }
-  :host(.-grouped.-connected) {
+  :host(:state(-grouped):state(-connected)) {
     flex: 1 1 auto;
   }
-  :host(.-grouped:not(.-connected)) {
+  :host(:state(-grouped):not(:state(-connected))) {
     transition: ${unsafeCSS(`padding-inline ${DesignToken.motion.spring.fastEffects}`)};
   }
-  :host(.-grouped:not(.-connected):not(.-adjacent-pressed):not(.-pressed)) {
+  :host(:state(-grouped):not(:state(-connected)):not(:state(-adjacent-pressed)):not(:state(-pressed))) {
     flex-shrink: 0;
     flex-grow: 0;
   }
-  :host(.-grouped:not(.-connected).-adjacent-pressed:not(.-pressed)) {
+  :host(:state(-grouped):not(:state(-connected)):state(-adjacent-pressed):not(:state(-pressed))) {
     flex-shrink: 1;
     min-width: 0;
   }
-  :host(.-grouped:not(.-connected).-adjacent-pressed:not(.-pressed)) .label {
+  :host(:state(-grouped):not(:state(-connected)):state(-adjacent-pressed):not(:state(-pressed))) .label {
     text-overflow: clip;
   }
-  :host(.-grouped:not(.-connected).-pressed:not([disabled-interactive]):not(:disabled)) {
+  :host(:state(-grouped):not(:state(-connected)):state(-pressed):not([disabled-interactive]):not(:disabled)) {
     flex-shrink: 0;
     flex-basis: calc(
       var(--_button-width) + calc(var(--_button-width) * var(--m3e-standard-button-group-width-multiplier, 0.15))
@@ -115,8 +115,8 @@ export const ButtonStyle: CSSResultGroup = css`
     .icon {
       transition: none;
     }
-    :host(.-pressed) .base,
-    :host(.-resting) .base {
+    :host(:state(-pressed)) .base,
+    :host(:state(-resting)) .base {
       transition: ${unsafeCSS(`border-radius ${DesignToken.motion.spring.fastEffects}`)};
     }
     :host([variant]:not(:disabled):not([disabled-interactive]):not([toggle])) .base {
@@ -181,8 +181,8 @@ export const ButtonStyle: CSSResultGroup = css`
     }
   }
   @media (prefers-reduced-motion) {
-    :host(.-pressed) .base,
-    :host(.-resting) .base,
+    :host(:state(-pressed)) .base,
+    :host(:state(-resting)) .base,
     .base,
     .label,
     .icon {
