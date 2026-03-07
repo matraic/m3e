@@ -14,6 +14,7 @@ import {
   M3eStateLayerElement,
   Role,
   Selected,
+  setCustomState,
 } from "@m3e/web/core";
 
 import { selectionManager } from "@m3e/web/core/a11y";
@@ -220,7 +221,7 @@ export class M3eNavMenuItemElement extends Selected(
       transition: ${unsafeCSS(`transform var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
         ${DesignToken.motion.easing.standard}`)};
     }
-    :host(:not(.-with-icon)) .icon {
+    :host(:not(:state(-with-icon))) .icon {
       display: none;
     }
     .icon {
@@ -235,8 +236,8 @@ export class M3eNavMenuItemElement extends Selected(
     :host([open]) .toggle {
       transform: rotate(180deg);
     }
-    :host(:not(.-has-items)) .toggle,
-    :host(:not(.-has-items)) .group {
+    :host(:not(:state(-with-items))) .toggle,
+    :host(:not(:state(-with-items))) .group {
       display: none;
     }
     ::slotted([slot="selected-icon"]),
@@ -262,7 +263,7 @@ export class M3eNavMenuItemElement extends Selected(
         transparent
       );
     }
-    :host([selected]:not(.-has-items):not(:disabled)) .base {
+    :host([selected]:not(:state(-with-items)):not(:disabled)) .base {
       color: var(--m3e-nav-menu-item-selected-label-color, ${DesignToken.color.onSecondaryContainer});
       background-color: var(--m3e-nav-menu-item-selected-container-color, ${DesignToken.color.secondaryContainer});
       --m3e-state-layer-focus-color: var(
@@ -275,7 +276,7 @@ export class M3eNavMenuItemElement extends Selected(
       );
       --m3e-ripple-color: var(--m3e-nav-menu-item-selected-ripple-color, ${DesignToken.color.onSecondaryContainer});
     }
-    :host(:not([selected]):not(.-has-items):not(:disabled)) .base {
+    :host(:not([selected]):not(:state(-with-items)):not(:disabled)) .base {
       --m3e-state-layer-focus-color: var(
         --m3e-nav-menu-item-unselected-container-focus-color,
         ${DesignToken.color.onSurface}
@@ -289,7 +290,7 @@ export class M3eNavMenuItemElement extends Selected(
     .state-layer {
       margin-inline: auto;
     }
-    :host([selected].-has-items:not(:disabled)) .base {
+    :host([selected]:state(-with-items):not(:disabled)) .base {
       background-color: var(--m3e-nav-menu-item-open-container-color, ${DesignToken.color.surfaceContainerHighest});
       --m3e-state-layer-focus-color: var(
         --m3e-nav-menu-item-open-container-focus-color,
@@ -323,12 +324,12 @@ export class M3eNavMenuItemElement extends Selected(
       :host(:not([selected]):not(:disabled)) .base {
         color: ButtonText;
       }
-      :host([selected]:not(.-has-items):not(:disabled)) .base {
+      :host([selected]:not(:state(-with-items)):not(:disabled)) .base {
         forced-color-adjust: none;
         color: ButtonFace;
         background-color: ButtonText;
       }
-      :host([selected].-has-items:not(:disabled)) .base {
+      :host([selected]:state(-with-items):not(:disabled)) .base {
         background-color: unset;
         color: ButtonText;
       }
@@ -530,7 +531,7 @@ export class M3eNavMenuItemElement extends Selected(
 
   /** @private */
   #handleIconSlotChange(e: Event) {
-    this.classList.toggle("-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
@@ -550,7 +551,7 @@ export class M3eNavMenuItemElement extends Selected(
 
     const hadChildItems = this._hasChildItems;
     this._hasChildItems = this.#items.length > 0;
-    this.classList.toggle("-has-items", this._hasChildItems);
+    setCustomState(this, "-with-items", this._hasChildItems);
 
     if (hadChildItems || this._hasChildItems) {
       this.selected = this.#items.some((x) => x.selected);

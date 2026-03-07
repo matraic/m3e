@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { Role } from "@m3e/web/core";
+import { AttachInternals, deleteCustomState, Role, setCustomState } from "@m3e/web/core";
 
 /**
  * A top-level semantic grouping of items in a navigation menu.
@@ -46,13 +46,13 @@ import { Role } from "@m3e/web/core";
  * @cssprop --m3e-nav-menu-item-group-label-space - Vertical spacing around the group's label.
  */
 @customElement("m3e-nav-menu-item-group")
-export class M3eNavMenuItemGroupElement extends Role(LitElement, "group") {
+export class M3eNavMenuItemGroupElement extends AttachInternals(Role(LitElement, "group")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
       display: contents;
     }
-    :host(:not(.-has-label)) .label {
+    :host(:not(:state(-with-label))) .label {
       display: none;
     }
     .label {
@@ -60,12 +60,12 @@ export class M3eNavMenuItemGroupElement extends Role(LitElement, "group") {
       margin-block-end: var(--m3e-nav-menu-item-group-label-space, 1rem);
       flex: none;
     }
-    :host(.-divided) .label {
+    :host(:state(-divided)) .label {
       margin-block-start: calc(
         var(--m3e-nav-menu-item-group-label-space, 1rem) - var(--m3e-nav-menu-divider-margin, 0.25rem)
       );
     }
-    :host(:not(.-divided)) .label {
+    :host(:not(:state(-divided))) .label {
       margin-block-start: var(--m3e-nav-menu-item-group-label-space, 1rem);
     }
   `;
@@ -77,13 +77,13 @@ export class M3eNavMenuItemGroupElement extends Role(LitElement, "group") {
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-    this.classList.toggle("-divided", this.previousElementSibling?.tagName === "M3E-DIVIDER");
+    setCustomState(this, "-divided", this.previousElementSibling?.tagName === "M3E-DIVIDER");
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.classList.remove("-divided");
+    deleteCustomState(this, "-divided");
   }
 
   /** @inheritdoc */
@@ -114,7 +114,7 @@ export class M3eNavMenuItemGroupElement extends Role(LitElement, "group") {
         this.removeAttribute("aria-labelledby");
       }
     }
-    this.classList.toggle("-has-label", this.#label !== undefined);
+    setCustomState(this, "-with-label", this.#label !== undefined);
   }
 }
 
