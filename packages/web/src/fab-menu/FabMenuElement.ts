@@ -2,7 +2,16 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { DesignToken, DisabledMixin, Role, ScrollController } from "@m3e/web/core";
+import {
+  addCustomState,
+  AttachInternals,
+  deleteCustomState,
+  DesignToken,
+  DisabledMixin,
+  Role,
+  ScrollController,
+  setCustomState,
+} from "@m3e/web/core";
 import { RovingTabIndexManager } from "@m3e/web/core/a11y";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 import { positionAnchor } from "@m3e/web/core/anchoring";
@@ -66,7 +75,7 @@ import { M3eFabMenuItemElement } from "./FabMenuItemElement";
  * @cssprop --m3e-tertiary-fab-ripple-color - Ripple color for tertiary variant items.
  */
 @customElement("m3e-fab-menu")
-export class M3eFabMenuElement extends Role(LitElement, "menu") {
+export class M3eFabMenuElement extends AttachInternals(Role(LitElement, "menu")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -82,7 +91,7 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
       background-color: transparent;
       display: none;
     }
-    :host(:not(.-no-animate)) {
+    :host(:not(:state(-no-animate))) {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.spring.fastEffects}, 
         transform ${DesignToken.motion.spring.fastSpatial},
@@ -126,11 +135,11 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
     :host {
       transform: scaleX(0.8);
     }
-    :host(.-left) {
+    :host(:state(-left)) {
       align-items: flex-start;
       transform-origin: left;
     }
-    :host(.-right) {
+    :host(:state(-right)) {
       align-items: flex-end;
       transform-origin: right;
     }
@@ -151,7 +160,7 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
       }
     }
     @media (prefers-reduced-motion) {
-      :host(:not(.-no-animate)) {
+      :host(:not(:state(-no-animate))) {
         transition: none;
       }
     }
@@ -225,8 +234,8 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
         offset: 8,
       },
       (x, y, position) => {
-        this.classList.toggle("-right", position.includes("end"));
-        this.classList.toggle("-left", position.includes("start"));
+        setCustomState(this, "-right", position.includes("end"));
+        setCustomState(this, "-left", position.includes("start"));
         if (M3eDirectionality.current === "rtl") {
           this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
           this.style.left = "";
@@ -288,7 +297,7 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
 
     this.tabIndex = -1;
     this.setAttribute("popover", "manual");
-    this.classList.add("-no-animate");
+    addCustomState(this, "-no-animate");
 
     this.addEventListener("keydown", this.#keyDownHandler);
     this.addEventListener("toggle", this.#toggleHandler);
@@ -307,7 +316,7 @@ export class M3eFabMenuElement extends Role(LitElement, "menu") {
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
-    requestAnimationFrame(() => this.classList.remove("-no-animate"));
+    requestAnimationFrame(() => deleteCustomState(this, "-no-animate"));
   }
 
   /** @inheritdoc */
