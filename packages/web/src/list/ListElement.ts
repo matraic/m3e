@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { DesignToken, Role } from "@m3e/web/core";
+import { AttachInternals, DesignToken, Role, setCustomState } from "@m3e/web/core";
 
 import { ListVariant } from "./ListVariant";
 import { M3eListItemElement } from "./ListItemElement";
@@ -52,7 +52,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * @cssprop --m3e-segmented-list-item-selected-container-shape - Border radius of items in segmented variant when selected.
  */
 @customElement("m3e-list")
-export class M3eListElement extends Role(LitElement, "list") {
+export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -104,34 +104,34 @@ export class M3eListElement extends Role(LitElement, "list") {
         ${DesignToken.shape.corner.large}
       );
     }
-    :host([variant="segmented"]) ::slotted(.-first),
-    :host([variant="segmented"]) ::slotted(.-has-previous-open:not([open])) {
+    :host([variant="segmented"]) ::slotted(:state(-first)),
+    :host([variant="segmented"]) ::slotted(:state(-has-previous-open):not([open])) {
       --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
     }
-    :host([variant="segmented"]) ::slotted(.-has-next-open:not([open])),
-    :host([variant="segmented"]) ::slotted(.-last) {
+    :host([variant="segmented"]) ::slotted(:state(-has-next-open):not([open])),
+    :host([variant="segmented"]) ::slotted(:state(-last)) {
       --_list-item-bottom-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
     }
     :host([variant="segmented"]) ::slotted(m3e-divider) {
       display: none;
     }
-    :host(.-has-leading-video) {
+    :host(:state(-has-leading-video)) {
       --_list-item-leading-reserved-display: block;
       --_list-item-leading-reserved-space: var(--m3e-list-item-video-width, 6.25rem);
     }
-    :host([variant="standard"].-has-leading-video) {
+    :host([variant="standard"]:state(-has-leading-video)) {
       --_list-item-leading-reserved-outset: var(--m3e-list-item-leading-space, 1rem);
       --_list-item-trailing-reserved-outset: var(--m3e-list-item-trailing-space, 1rem);
     }
-    :host(.-has-leading-image) {
+    :host(:state(-has-leading-image)) {
       --_list-item-leading-reserved-display: block;
       --_list-item-leading-reserved-space: var(--m3e-list-item-image-width, 3.5rem);
     }
-    :host(.-has-leading-avatar) {
+    :host(:state(-has-leading-avatar)) {
       --_list-item-leading-reserved-display: block;
       --_list-item-leading-reserved-space: var(--m3e-avatar-size, 2.5rem);
     }
-    :host(.-has-leading-icon) {
+    :host(:state(-has-leading-icon)) {
       --_list-item-leading-reserved-display: block;
       --_list-item-leading-reserved-space: var(--m3e-list-item-icon-size, 1.5rem);
     }
@@ -194,8 +194,8 @@ export class M3eListElement extends Role(LitElement, "list") {
       .filter((x) => x instanceof M3eListItemElement);
 
     this.#items.forEach((x, i) => {
-      x.classList.toggle("-first", i === 0);
-      x.classList.toggle("-last", i === this.#items.length - 1);
+      setCustomState(x, "-first", i === 0);
+      setCustomState(x, "-last", i === this.#items.length - 1);
     });
 
     this.notifyItemsChange();
@@ -220,7 +220,7 @@ export class M3eListElement extends Role(LitElement, "list") {
     }
 
     ["video", "image", "avatar", "icon"].forEach((x) => {
-      this.classList.toggle(`-has-leading-${x}`, this.leadingContentType === x);
+      setCustomState(this, `-has-leading-${x}`, this.leadingContentType === x);
     });
   }
 
@@ -237,7 +237,7 @@ export class M3eListElement extends Role(LitElement, "list") {
     }
 
     ["video", "image", "avatar", "icon"].forEach((x) => {
-      this.classList.toggle(`-has-trailing-${x}`, this.trailingContentType === x);
+      setCustomState(this, `-has-trailing-${x}`, this.trailingContentType === x);
     });
   }
 }

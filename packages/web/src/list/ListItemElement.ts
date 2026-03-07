@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { computeLineCount, DesignToken, ResizeController, Role } from "@m3e/web/core";
+import { AttachInternals, computeLineCount, DesignToken, ResizeController, Role, setCustomState } from "@m3e/web/core";
 
 import type { M3eListElement } from "./ListElement";
 import { ListItemContentType } from "./ListItemContentType";
@@ -90,7 +90,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * @cssprop --m3e-list-item-three-line-height - Minimum height of a three line list item.
  */
 @customElement("m3e-list-item")
-export class M3eListItemElement extends Role(LitElement, "listitem") {
+export class M3eListItemElement extends AttachInternals(Role(LitElement, "listitem")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -124,31 +124,31 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
         `border-radius ${DesignToken.motion.spring.fastEffects}, background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
       )};
     }
-    :host(.-one-line) {
+    :host(:state(-one-line)) {
       min-height: calc(var(--m3e-list-item-one-line-height, 3.5rem) + ${DesignToken.density.calc(-3)});
     }
-    :host(.-one-line) .base {
+    :host(:state(-one-line)) .base {
       padding-block-start: var(--m3e-list-item-one-line-top-space, 0.5rem);
       padding-block-end: var(--m3e-list-item-one-line-bottom-space, 0.5rem);
     }
-    :host(.-two-line) {
+    :host(:state(-two-line)) {
       min-height: calc(var(--m3e-list-item-two-line-height, 4.5rem) + ${DesignToken.density.calc(-3)});
     }
-    :host(.-two-line) .base {
+    :host(:state(-two-line)) .base {
       padding-block-start: var(--m3e-list-item-two-line-top-space, 0.5rem);
       padding-block-end: var(--m3e-list-item-two-line-bottom-space, 0.5rem);
     }
-    :host(.-three-line) {
+    :host(:state(-three-line)) {
       min-height: calc(var(--m3e-list-item-three-line-height, 5.5rem) + ${DesignToken.density.calc(-3)});
     }
-    :host(.-three-line) .base {
+    :host(:state(-three-line)) .base {
       padding-block-start: var(--m3e-list-item-three-line-top-space, 0.75rem);
       padding-block-end: var(--m3e-list-item-three-line-bottom-space, 0.75rem);
     }
-    :host(:not(.-three-line)) .base {
+    :host(:not(:state(-three-line))) .base {
       align-items: center;
     }
-    :host(.-three-line) .base {
+    :host(:state(-three-line)) .base {
       align-items: flex-start;
     }
     :host(:not(:disabled):not([selected]:not(:hover))) .base.focus-visible:not(.pressed) {
@@ -222,15 +222,15 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
       line-height: var(--m3e-list-item-line-height, ${DesignToken.typescale.standard.body.large.lineHeight});
       letter-spacing: var(--m3e-list-item-tracking, ${DesignToken.typescale.standard.body.large.tracking});
     }
-    :host(.-has-leading) slot[name="leading"],
-    :host(.-has-trailing) slot[name="trailing"] {
+    :host(:state(-has-leading)) slot[name="leading"],
+    :host(:state(-has-trailing)) slot[name="trailing"] {
       display: flex;
       justify-content: center;
     }
-    :host(:not(.-has-leading)) slot[name="leading"] {
+    :host(:not(:state(-has-leading))) slot[name="leading"] {
       display: var(--_list-item-leading-reserved-display, contents);
     }
-    :host(:not(.-has-trailing)) slot[name="trailing"] {
+    :host(:not(:state(-has-trailing))) slot[name="trailing"] {
       display: var(--_list-item-trailing-reserved-display, contents);
     }
     slot[name="leading"] {
@@ -459,16 +459,16 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
   #updateMultiline(): void {
     const content = this.shadowRoot?.querySelector<HTMLElement>(".content") ?? null;
     const lines = content === null ? 0 : computeLineCount(content);
-    this.classList.toggle("-one-line", lines <= 1);
-    this.classList.toggle("-two-line", lines == 2);
-    this.classList.toggle("-three-line", lines > 2);
+    setCustomState(this, "-one-line", lines <= 1);
+    setCustomState(this, "-two-line", lines == 2);
+    setCustomState(this, "-three-line", lines > 2);
   }
 
   /** @internal */
   protected _handleLeadingSlotChange(e: Event): void {
     const contentType = this.#leadingContentType;
     this.#leadingContentType = this.#getSlotContentType(e.target as HTMLSlotElement);
-    this.classList.toggle("-has-leading", this.#leadingContentType !== undefined);
+    setCustomState(this, "-has-leading", this.#leadingContentType !== undefined);
     if (contentType !== this.#leadingContentType) {
       this.closest<M3eListElement>("m3e-list,m3e-action-list,m3e-selection-list")?.notifyLeadingContentTypeChange(
         contentType,
@@ -481,7 +481,7 @@ export class M3eListItemElement extends Role(LitElement, "listitem") {
   protected _handleTrailingSlotChange(e: Event): void {
     const contentType = this.#trailingContentType;
     this.#trailingContentType = this.#getSlotContentType(e.target as HTMLSlotElement);
-    this.classList.toggle("-has-trailing", this.#trailingContentType !== undefined);
+    setCustomState(this, "-has-trailing", this.#trailingContentType !== undefined);
     if (contentType !== this.#trailingContentType) {
       this.closest<M3eListElement>("m3e-list,m3e-action-list,m3e-selection-list")?.notifyTrailingContentTypeChange(
         contentType,

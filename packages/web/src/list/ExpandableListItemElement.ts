@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, PropertyValues, unsafeCSS } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 
-import { DesignToken } from "@m3e/web/core";
+import { DesignToken, setCustomState } from "@m3e/web/core";
 import { selectionManager } from "@m3e/web/core/a11y";
 
 import type { M3eListElement } from "./ListElement";
@@ -271,13 +271,13 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
     if (_changedProperties.has("open")) {
       for (let sibling = this.previousElementSibling; sibling; sibling = sibling.previousElementSibling) {
         if (sibling instanceof M3eListItemElement) {
-          sibling.classList.toggle("-has-next-open", this.open);
+          setCustomState(sibling, "-has-next-open", this.open);
           break;
         }
       }
       for (let sibling = this.nextElementSibling; sibling; sibling = sibling.nextElementSibling) {
         if (sibling instanceof M3eListItemElement) {
-          sibling.classList.toggle("-has-previous-open", this.open);
+          setCustomState(sibling, "-has-previous-open", this.open);
           break;
         }
       }
