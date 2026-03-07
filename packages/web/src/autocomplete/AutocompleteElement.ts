@@ -7,6 +7,7 @@ import {
   prefersReducedMotion,
   scrollIntoViewIfNeeded,
   forcedColorsActive,
+  setCustomState,
 } from "@m3e/web/core";
 
 import { ListKeyManager } from "@m3e/web/core/a11y";
@@ -208,7 +209,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     const { added } = this._listKeyManager.setItems([...this.querySelectorAll("m3e-option")]);
     added.forEach((x) => {
       x.id = x.id || `${this.#id}-option-${this._listKeyManager.items.indexOf(x)}`;
-      x.classList.toggle("-hide-selection-indicator", this.hideSelectionIndicator);
+      setCustomState(x, "-hide-selection-indicator", this.hideSelectionIndicator);
     });
   }
 

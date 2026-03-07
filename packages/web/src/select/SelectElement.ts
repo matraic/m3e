@@ -24,6 +24,7 @@ import {
   forcedColorsActive,
   deleteCustomState,
   addCustomState,
+  setCustomState,
 } from "@m3e/web/core";
 
 import { ListKeyManager } from "@m3e/web/core/a11y";
@@ -310,7 +311,7 @@ export class M3eSelectElement
     super.update(changedProperties);
 
     if (changedProperties.has("hideSelectionIndicator")) {
-      this.options.forEach((x) => x.classList.toggle("-hide-selection-indicator", this.hideSelectionIndicator));
+      this.options.forEach((x) => setCustomState(x, "-hide-selection-indicator", this.hideSelectionIndicator));
     }
   }
 
@@ -355,7 +356,7 @@ export class M3eSelectElement
     const { added } = this._listKeyManager.setItems([...this.querySelectorAll("m3e-option")]);
     added.forEach((x) => {
       x.id = x.id || `${this.#id}-option-${this._listKeyManager.items.indexOf(x)}`;
-      x.classList.toggle("-hide-selection-indicator", this.hideSelectionIndicator);
+      setCustomState(x, "-hide-selection-indicator", this.hideSelectionIndicator);
     });
     this.#formField?.notifyControlStateChange();
   }

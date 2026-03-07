@@ -2,7 +2,16 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { DesignToken, ScrollController, Role } from "@m3e/web/core";
+import {
+  DesignToken,
+  ScrollController,
+  Role,
+  AttachInternals,
+  addCustomState,
+  setCustomState,
+  deleteCustomState,
+} from "@m3e/web/core";
+
 import { positionAnchor } from "@m3e/web/core/anchoring";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
@@ -36,7 +45,7 @@ import { M3eDirectionality } from "@m3e/web/core/bidi";
 
  */
 @customElement("m3e-option-panel")
-export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
+export class M3eOptionPanelElement extends AttachInternals(Role(LitElement, "listbox")) {
   static {
     if (document) {
       const lightDomStyle = new CSSStyleSheet();
@@ -94,7 +103,7 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
       --m3e-focus-ring-outward-offset: 0px;
       --m3e-focus-ring-growth-factor: 1.5;
     }
-    :host(:not(.-no-animate)) {
+    :host(:not(:state(-no-animate))) {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}, 
         transform ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard},
@@ -113,10 +122,10 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
     :host::backdrop {
       background-color: transparent;
     }
-    :host(.-bottom) {
+    :host(:state(-bottom)) {
       transform-origin: top;
     }
-    :host(.-top) {
+    :host(:state(-top)) {
       transform-origin: bottom;
     }
     @starting-style {
@@ -125,7 +134,7 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
       }
     }
     @media (prefers-reduced-motion) {
-      :host(:not(.-no-animate)) {
+      :host(:not(:state(-no-animate))) {
         transition: none;
       }
     }
@@ -164,7 +173,7 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this.classList.add("-no-animate");
+    addCustomState(this, "-no-animate");
     this.setAttribute("popover", "manual");
     this.addEventListener("toggle", this.#toggleHandler);
     document.addEventListener("click", this.#documentClickHandler);
@@ -198,8 +207,8 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
         flip: true,
       },
       (x, y, position) => {
-        this.classList.toggle("-top", position.includes("top"));
-        this.classList.toggle("-bottom", position.includes("bottom"));
+        setCustomState(this, "-top", position.includes("top"));
+        setCustomState(this, "-bottom", position.includes("bottom"));
 
         if (M3eDirectionality.current === "rtl") {
           this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
@@ -255,7 +264,7 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
-    requestAnimationFrame(() => this.classList.remove("-no-animate"));
+    requestAnimationFrame(() => deleteCustomState(this, "-no-animate"));
   }
 
   /** @inheritdoc */
@@ -267,8 +276,8 @@ export class M3eOptionPanelElement extends Role(LitElement, "listbox") {
   #handleSlotChange(): void {
     const options = [...this.querySelectorAll("m3e-option")];
     options.forEach((x, i) => {
-      x.classList.toggle("-first", i === 0);
-      x.classList.toggle("-last", i === options.length - 1);
+      setCustomState(x, "-first", i === 0);
+      setCustomState(x, "-last", i === options.length - 1);
     });
   }
 

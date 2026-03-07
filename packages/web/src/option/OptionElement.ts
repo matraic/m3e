@@ -2,6 +2,7 @@ import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from
 import { customElement, property, query } from "lit/decorators.js";
 
 import {
+  AttachInternals,
   DesignToken,
   Disabled,
   getTextContent,
@@ -10,6 +11,7 @@ import {
   M3eStateLayerElement,
   Role,
   Selected,
+  setCustomState,
 } from "@m3e/web/core";
 
 import { typeaheadLabel } from "@m3e/web/core/a11y";
@@ -60,7 +62,7 @@ import { typeaheadLabel } from "@m3e/web/core/a11y";
 
  */
 @customElement("m3e-option")
-export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option"))) {
+export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(LitElement, "option")))) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -77,7 +79,7 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
       --m3e-state-layer-focus-color: var(--m3e-option-container-focus-color, ${DesignToken.color.onSurface});
       --m3e-ripple-color: var(--m3e-option-ripple-color, ${DesignToken.color.onSurface});
     }
-    :host(:not([aria-disabled="true"]):not(.-empty)[selected]) .base {
+    :host(:not([aria-disabled="true"]):not(:state(-empty))[selected]) .base {
       color: var(--m3e-option-selected-color, ${DesignToken.color.onTertiaryContainer});
       background-color: var(--m3e-option-selected-container-color, ${DesignToken.color.tertiaryContainer});
       --m3e-state-layer-hover-color: var(
@@ -111,19 +113,19 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
       border-radius: var(--m3e-option-shape, ${DesignToken.shape.corner.extraSmall});
       transition: ${unsafeCSS(`border-radius ${DesignToken.motion.spring.fastEffects}`)};
     }
-    :host([selected]:not(.-first)) .base {
+    :host([selected]:not(:state(-first))) .base {
       border-top-left-radius: var(--m3e-option-selected-shape, ${DesignToken.shape.corner.medium});
       border-top-right-radius: var(--m3e-option-selected-shape, ${DesignToken.shape.corner.medium});
     }
-    :host([selected]:not(.-last)) .base {
+    :host([selected]:not(:state(-last))) .base {
       border-bottom-left-radius: var(--m3e-option-selected-shape, ${DesignToken.shape.corner.medium});
       border-bottom-right-radius: var(--m3e-option-selected-shape, ${DesignToken.shape.corner.medium});
     }
-    :host(.-first) .base {
+    :host(:state(-first)) .base {
       border-top-left-radius: var(--m3e-option-first-child-shape, ${DesignToken.shape.corner.medium});
       border-top-right-radius: var(--m3e-option-first-child-shape, ${DesignToken.shape.corner.medium});
     }
-    :host(.-last) .base {
+    :host(:state(-last)) .base {
       border-bottom-left-radius: var(--m3e-option-last-child-shape, ${DesignToken.shape.corner.medium});
       border-bottom-right-radius: var(--m3e-option-last-child-shape, ${DesignToken.shape.corner.medium});
     }
@@ -165,8 +167,8 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
       width: 0px;
       font-size: var(--m3e-option-icon-size, 1.25rem);
     }
-    :host(.-empty) .icon,
-    :host(.-hide-selection-indicator) .icon,
+    :host(:state(-empty)) .icon,
+    :host(:state(-hide-selection-indicator)) .icon,
     :host(:not([selected])) .check {
       display: none;
     }
@@ -261,7 +263,7 @@ export class M3eOptionElement extends Selected(Disabled(Role(LitElement, "option
   /** @private */
   #handleSlotChange(e: Event): void {
     this.#textContent = getTextContent(<HTMLSlotElement>e.target);
-    this.classList.toggle("-empty", this.isEmpty);
+    setCustomState(this, "-empty", this.isEmpty);
   }
 }
 
