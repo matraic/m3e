@@ -282,6 +282,8 @@ export class M3eBottomSheetElement extends EventAttribute(
     }
     .header {
       cursor: grab;
+      touch-action: none;
+      outline: none;
       user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       box-sizing: border-box;
@@ -639,8 +641,6 @@ export class M3eBottomSheetElement extends EventAttribute(
 
   /** @private */
   #handleHeaderPointerDown(e: PointerEvent): void {
-    if (e.button === 2) return;
-
     if (e.target instanceof HTMLElement && M3eInteractivityChecker.isFocusable(e.target)) {
       return;
     }
