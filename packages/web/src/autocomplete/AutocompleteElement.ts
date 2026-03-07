@@ -8,6 +8,8 @@ import {
   scrollIntoViewIfNeeded,
   forcedColorsActive,
   setCustomState,
+  deleteCustomState,
+  addCustomState,
 } from "@m3e/web/core";
 
 import { ListKeyManager } from "@m3e/web/core/a11y";
@@ -496,16 +498,18 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
       if (hidden) {
         this.#deactivateOption(option);
-        option.classList.remove("-first");
-        option.classList.remove("-last");
+        deleteCustomState(option, "-first");
+        deleteCustomState(option, "-last");
       } else if (!first) {
-        option.classList.add("-first");
+        addCustomState(option, "-first");
         first = true;
-        option.classList.add("-last");
+        addCustomState(option, "-last");
         last = option;
       } else {
-        last?.classList.remove("-last");
-        option.classList.add("-last");
+        if (last) {
+          deleteCustomState(last, "-last");
+        }
+        addCustomState(option, "-last");
         last = option;
       }
 
