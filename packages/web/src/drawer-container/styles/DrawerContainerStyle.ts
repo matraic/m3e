@@ -85,20 +85,20 @@ export const DrawerContainerStyle: CSSResultGroup = css`
     margin-right: 0;
     transition: ${unsafeCSS(`margin ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard}`)};
   }
-  :host(.-start-push[start]:not(:dir(rtl))) .content,
-  :host(.-start-side[start]:not(:dir(rtl))) .content {
+  :host(:state(-start-push)[start]:not(:dir(rtl))) .content,
+  :host(:state(-start-side)[start]:not(:dir(rtl))) .content {
     margin-left: var(--_start-drawer-size, ${DrawerContainerToken.containerWidth});
   }
-  :host(.-start-push[start]:dir(rtl)) .content,
-  :host(.-start-side[start]:dir(rtl)) .content {
+  :host(:state(-start-push)[start]:dir(rtl)) .content,
+  :host(:state(-start-side)[start]:dir(rtl)) .content {
     margin-right: var(--_start-drawer-size, ${DrawerContainerToken.containerWidth});
   }
-  :host(.-end-push[end]:not(:dir(rtl))) .content,
-  :host(.-end-side[end]:not(:dir(rtl))) .content {
+  :host(:state(-end-push)[end]:not(:dir(rtl))) .content,
+  :host(:state(-end-side)[end]:not(:dir(rtl))) .content {
     margin-right: var(--_end-drawer-size, ${DrawerContainerToken.containerWidth});
   }
-  :host(.-end-push[end]:dir(rtl)) .content,
-  :host(.-end-side[end]:dir(rtl)) .content {
+  :host(:state(-end-push)[end]:dir(rtl)) .content,
+  :host(:state(-end-side)[end]:dir(rtl)) .content {
     margin-left: var(--_end-drawer-size, ${DrawerContainerToken.containerWidth});
   }
   .scrim {
@@ -122,27 +122,27 @@ export const DrawerContainerStyle: CSSResultGroup = css`
       opacity: 0;
     }
   }
-  :host(.-start-push[start]) .scrim,
-  :host(.-end-push[end]) .scrim,
-  :host(.-start-over[start]) .scrim,
-  :host(.-end-over[end]) .scrim {
+  :host(:state(-start-push)[start]) .scrim,
+  :host(:state(-end-push)[end]) .scrim,
+  :host(:state(-start-over)[start]) .scrim,
+  :host(:state(-end-over)[end]) .scrim {
     visibility: visible;
     opacity: ${DrawerContainerToken.scrimOpacity};
   }
-  :host(.-start-push) .start,
-  :host(.-start-over) .start {
+  :host(:state(-start-push)) .start,
+  :host(:state(-start-over)) .start {
     border-start-end-radius: ${DrawerContainerToken.cornerShape};
     border-end-end-radius: ${DrawerContainerToken.cornerShape};
   }
-  :host(.-end-push) .end,
-  :host(.-end-over) .end {
+  :host(:state(-end-push)) .end,
+  :host(:state(-end-over)) .end {
     border-start-start-radius: ${DrawerContainerToken.cornerShape};
     border-end-start-radius: ${DrawerContainerToken.cornerShape};
   }
-  :host(.-start-push) .start,
-  :host(.-end-push) .end,
-  :host(.-start-over) .start,
-  :host(.-end-over) .end {
+  :host(:state(-start-push)) .start,
+  :host(:state(-end-push)) .end,
+  :host(:state(-start-over)) .start,
+  :host(:state(-end-over)) .end {
     background-color: ${DrawerContainerToken.modalContainerColor};
     box-shadow: ${DrawerContainerToken.modalContainerElevation};
   }
@@ -152,7 +152,7 @@ export const DrawerContainerStyle: CSSResultGroup = css`
     border-inline-end-style: solid;
     box-sizing: border-box;
   }
-  :host([start-divider].-start-side[start]:not(.-end-push[end]):not(.-end-over[end])) .start {
+  :host([start-divider]:state(-start-side)[start]:not(:state(-end-push)[end]):not(:state(-end-over)[end])) .start {
     border-inline-end-color: ${DrawerContainerToken.dividerColor};
   }
   :host([end-divider]) .end {
@@ -161,12 +161,12 @@ export const DrawerContainerStyle: CSSResultGroup = css`
     border-inline-start-style: solid;
     box-sizing: border-box;
   }
-  :host([end-divider].-end-side[end]:not(.-start-push[start]):not(.-start-over[start])) .end {
+  :host([end-divider]:state(-end-side)[end]:not(:state(-start-push)[start]):not(:state(-start-over)[start])) .end {
     border-inline-start-color: ${DrawerContainerToken.dividerColor};
   }
-  :host(.-no-animate) .start,
-  :host(.-no-animate) .end,
-  :host(.-no-animate) .content {
+  :host(:state(-no-animate)) .start,
+  :host(:state(-no-animate)) .end,
+  :host(:state(-no-animate)) .content {
     transition: none;
   }
   @media (forced-colors: active) {
@@ -179,10 +179,10 @@ export const DrawerContainerStyle: CSSResultGroup = css`
       visibility ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
-    :host(.-start-push) .start,
-    :host(.-end-push) .end,
-    :host(.-start-over) .start,
-    :host(.-end-over) .end {
+    :host(:state(-start-push)) .start,
+    :host(:state(-end-push)) .end,
+    :host(:state(-start-over)) .start,
+    :host(:state(-end-over)) .end {
       background-color: Canvas;
       box-shadow: unset;
       border-color: CanvasText;
@@ -199,10 +199,10 @@ export const DrawerContainerStyle: CSSResultGroup = css`
     .end {
       border-inline-end-style: none;
     }
-    :host([start-divider].-start-side[start]:not(.-end-push[end]):not(.-end-over[end])) .start {
+    :host([start-divider]:state(-start-side)[start]:not(:state(-end-push)[end]):not(:state(-end-over)[end])) .start {
       border-inline-end-color: GrayText;
     }
-    :host([end-divider].-end-side[end]:not(.-start-push[start]):not(.-start-over[start])) .end {
+    :host([end-divider]:state(-end-side)[end]:not(:state(-start-push)[start]):not(:state(-start-over)[start])) .end {
       border-inline-start-color: GrayText;
     }
   }

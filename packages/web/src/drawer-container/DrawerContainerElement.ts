@@ -1,7 +1,14 @@
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 
-import { hasAssignedNodes, ResizeController } from "@m3e/web/core";
+import {
+  addCustomState,
+  AttachInternals,
+  deleteCustomState,
+  hasAssignedNodes,
+  hasCustomState,
+  ResizeController,
+} from "@m3e/web/core";
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
 import "@m3e/web/core/a11y";
 
@@ -61,7 +68,7 @@ import { DrawerContainerStyle } from "./styles";
  * @cssprop --m3e-drawer-divider-thickness - The thickness of the divider line.
  */
 @customElement("m3e-drawer-container")
-export class M3eDrawerContainerElement extends LitElement {
+export class M3eDrawerContainerElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = DrawerContainerStyle;
 
@@ -117,7 +124,7 @@ export class M3eDrawerContainerElement extends LitElement {
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-    this.classList.add("-no-animate");
+    addCustomState(this, "-no-animate");
   }
 
   /** @inheritdoc */
@@ -223,21 +230,21 @@ export class M3eDrawerContainerElement extends LitElement {
       }
     }
 
-    if (this.classList.contains("-no-animate")) {
+    if (hasCustomState(this, "-no-animate")) {
       // Force synchronous layout flush
       void this.offsetTop;
-      this.classList.remove("-no-animate");
+      deleteCustomState(this, "-no-animate");
     }
   }
 
   /** @inheritdoc */
   #clearMode(): void {
-    this.classList.remove("-start-over");
-    this.classList.remove("-start-push");
-    this.classList.remove("-start-side");
-    this.classList.remove("-end-over");
-    this.classList.remove("-end-push");
-    this.classList.remove("-end-side");
+    deleteCustomState(this, "-start-over");
+    deleteCustomState(this, "-start-push");
+    deleteCustomState(this, "-start-side");
+    deleteCustomState(this, "-end-over");
+    deleteCustomState(this, "-end-push");
+    deleteCustomState(this, "-end-side");
   }
 
   /** @inheritdoc */
@@ -278,8 +285,8 @@ export class M3eDrawerContainerElement extends LitElement {
 
     this.#clearMode();
 
-    this.classList.add(`-start-${this._startMode}`);
-    this.classList.add(`-end-${this._endMode}`);
+    addCustomState(this, `-start-${this._startMode}`);
+    addCustomState(this, `-end-${this._endMode}`);
 
     if (autoClose && (autoCloseStart || autoCloseEnd)) {
       if (autoCloseStart) {

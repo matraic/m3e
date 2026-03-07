@@ -9,6 +9,7 @@ import {
   Disabled,
   EventAttribute,
   hasAssignedNodes,
+  hasCustomState,
   M3eFocusRingElement,
   M3eRippleElement,
   M3eStateLayerElement,
@@ -573,8 +574,8 @@ export class M3eNavMenuItemElement extends Selected(
         const drawer = this.closest("[slot='start']") ?? this.closest("[slot='end')");
         if (
           drawer &&
-          (drawerContainer.classList.contains(`-${drawer.slot}-push`) ||
-            drawerContainer.classList.contains(`-${drawer.slot}-over`))
+          (hasCustomState(drawerContainer, `-${drawer.slot}-push`) ||
+            hasCustomState(drawerContainer, `-${drawer.slot}-over`))
         ) {
           setTimeout(() => {
             drawerContainer.removeAttribute(drawer.slot);
