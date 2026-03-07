@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { Checked, DesignToken, hasAssignedNodes, prefersReducedMotion, Role } from "@m3e/web/core";
+import { Checked, DesignToken, hasAssignedNodes, prefersReducedMotion, Role, setCustomState } from "@m3e/web/core";
 
 import { M3eMenuItemElement } from "./MenuItemElement";
 import { MenuItemElementBase } from "./MenuItemElementBase";
@@ -91,7 +91,7 @@ export class M3eMenuItemCheckboxElement extends Checked(Role(MenuItemElementBase
         justify-content: center;
         transition: margin-inline-start ${DesignToken.motion.spring.fastEffects};
       }
-      :host(:not(.-with-icon)) .icon {
+      :host(:not(:state(-with-icon))) .icon {
         margin-inline-start: calc(0px - var(--m3e-menu-item-icon-label-space, 0.75rem));
       }
       .check {
@@ -155,12 +155,12 @@ export class M3eMenuItemCheckboxElement extends Checked(Role(MenuItemElementBase
 
   /** @internal */
   #handleIconSlotChange(e: Event): void {
-    this.classList.toggle("-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @internal */
   #handleTrailingIconSlotChange(e: Event): void {
-    this.classList.toggle("-with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "-with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @internal */

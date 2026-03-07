@@ -1,7 +1,7 @@
 import { CSSResultGroup, html, PropertyValues } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import { Checked, hasAssignedNodes, prefersReducedMotion, Role } from "@m3e/web/core";
+import { Checked, hasAssignedNodes, prefersReducedMotion, Role, setCustomState } from "@m3e/web/core";
 
 import { M3eMenuItemCheckboxElement } from "./MenuItemCheckboxElement";
 import { M3eMenuItemElement } from "./MenuItemElement";
@@ -140,12 +140,12 @@ export class M3eMenuItemRadioElement extends Checked(Role(MenuItemElementBase, "
 
   /** @private */
   #handleIconSlotChange(e: Event): void {
-    this.classList.toggle("-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
   #handleTrailingIconSlotChange(e: Event): void {
-    this.classList.toggle("-with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "-with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */

@@ -1,7 +1,7 @@
 import { html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 
-import { hasAssignedNodes, HoverController, LinkButton, Role } from "@m3e/web/core";
+import { hasAssignedNodes, HoverController, LinkButton, Role, setCustomState } from "@m3e/web/core";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
 import type { M3eMenuElement } from "./MenuElement";
@@ -187,12 +187,12 @@ export class M3eMenuItemElement extends LinkButton(Role(MenuItemElementBase, "me
 
   /** @private */
   #iconSlotChangeHandler(e: Event): void {
-    this.classList.toggle("-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
   #trailingIconSlotChangeHandler(e: Event): void {
-    this.classList.toggle("-with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "-with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */

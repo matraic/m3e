@@ -2,7 +2,16 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { DesignToken, ScrollController, Role } from "@m3e/web/core";
+import {
+  DesignToken,
+  ScrollController,
+  Role,
+  AttachInternals,
+  addCustomState,
+  setCustomState,
+  deleteCustomState,
+} from "@m3e/web/core";
+
 import { RovingTabIndexManager } from "@m3e/web/core/a11y";
 import { positionAnchor } from "@m3e/web/core/anchoring";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
@@ -90,7 +99,7 @@ import { MenuVariant } from "./MenuVariant";
  * @cssprop --m3e-menu-gap - Gap between content in the menu.
  */
 @customElement("m3e-menu")
-export class M3eMenuElement extends Role(LitElement, "menu") {
+export class M3eMenuElement extends AttachInternals(Role(LitElement, "menu")) {
   static {
     if (document) {
       const lightDomStyle = new CSSStyleSheet();
@@ -138,17 +147,17 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       --m3e-focus-ring-outward-offset: 0px;
       --m3e-focus-ring-growth-factor: 1.5;
     }
-    :host(:not(.-active)) {
+    :host(:not(:state(-active))) {
       border-radius: var(--m3e-menu-container-shape, ${DesignToken.shape.corner.small});
     }
-    :host(:not(.-active)) .base {
+    :host(:not(:state(-active))) .base {
       --m3e-menu-item-first-child-shape: ${DesignToken.shape.corner.extraSmall};
       --m3e-menu-item-last-child-shape: ${DesignToken.shape.corner.extraSmall};
     }
-    :host(.-active) {
+    :host(:state(-active)) {
       border-radius: var(--m3e-menu-active-container-shape, ${DesignToken.shape.corner.large});
     }
-    :host(:not(.-no-animate)) {
+    :host(:not(:state(-no-animate))) {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}, 
         transform ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard},
@@ -170,16 +179,16 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       display: block;
       opacity: 1;
     }
-    :host(.-bottom) {
+    :host(:state(-bottom)) {
       transform-origin: top;
     }
-    :host(.-top) {
+    :host(:state(-top)) {
       transform-origin: bottom;
     }
-    :host(.-shift-down) {
+    :host(:state(-shift-down)) {
       margin-top: calc(0px - var(--m3e-menu-container-padding-block, 0.25rem));
     }
-    :host(.-shift-up) {
+    :host(:state(-shift-up)) {
       margin-top: var(--m3e-menu-container-padding-block, 0.25rem);
     }
     :host([variant="vibrant"]) {
@@ -233,7 +242,7 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       }
     }
     @media (prefers-reduced-motion) {
-      :host(:not(.-no-animate)) {
+      :host(:not(:state(-no-animate))) {
         transition: none;
       }
     }
@@ -314,7 +323,7 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
     super.connectedCallback();
 
     this.tabIndex = -1;
-    this.classList.add("-no-animate");
+    addCustomState(this, "-no-animate");
     this.setAttribute("popover", "manual");
     this.addEventListener("keydown", this.#keyDownHandler);
     this.addEventListener("mouseenter", this.#mouseEnterHandler);
@@ -371,13 +380,13 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
       },
       (x, y, position) => {
         if (!this.submenu) {
-          this.classList.toggle("-top", position.includes("top"));
-          this.classList.toggle("-bottom", position.includes("bottom"));
+          setCustomState(this, "-top", position.includes("top"));
+          setCustomState(this, "-bottom", position.includes("bottom"));
         } else if (this.#trigger) {
           const top = this.#getAbsolutePosition(this.#trigger).y;
-          this.classList.toggle("-shift-down", false);
-          this.classList.toggle("-shift-up", false);
-          this.classList.toggle(Math.round(y) === Math.round(top) ? "-shift-down" : "-shift-up", true);
+          setCustomState(this, "-shift-down", false);
+          setCustomState(this, "-shift-up", false);
+          setCustomState(this, Math.round(y) === Math.round(top) ? "-shift-down" : "-shift-up", true);
         }
 
         if (M3eDirectionality.current === "rtl") {
@@ -466,7 +475,7 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
-    requestAnimationFrame(() => this.classList.remove("-no-animate"));
+    requestAnimationFrame(() => deleteCustomState(this, "-no-animate"));
   }
 
   /** @private */
@@ -482,8 +491,8 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
     }
 
     this.#listManager.items.forEach((x, i) => {
-      x.classList.toggle("-first", i === 0);
-      x.classList.toggle("-last", i === this.#listManager.items.length - 1);
+      setCustomState(x, "-first", i === 0);
+      setCustomState(x, "-last", i === this.#listManager.items.length - 1);
     });
   }
 
@@ -559,16 +568,18 @@ export class M3eMenuElement extends Role(LitElement, "menu") {
   /** @internal */
   _activate(): void {
     if (this !== M3eMenuElement.__activeMenu) {
-      M3eMenuElement.__activeMenu?.classList.remove("-active");
+      if (M3eMenuElement.__activeMenu) {
+        deleteCustomState(M3eMenuElement.__activeMenu, "-active");
+      }
       M3eMenuElement.__activeMenu = this;
-      M3eMenuElement.__activeMenu?.classList.add("-active");
+      addCustomState(M3eMenuElement.__activeMenu, "-active");
     }
   }
 
   /** @private */
   #deactivate(): void {
     if (this === M3eMenuElement.__activeMenu) {
-      M3eMenuElement.__activeMenu.classList.remove("-active");
+      deleteCustomState(M3eMenuElement.__activeMenu, "-active");
       M3eMenuElement.__activeMenu = undefined;
     }
   }
