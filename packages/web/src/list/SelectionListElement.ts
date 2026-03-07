@@ -1,7 +1,18 @@
 import { PropertyValues } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
-import { AttachInternals, Dirty, Disabled, FormAssociated, formValue, Labelled, Role, Touched } from "@m3e/web/core";
+import {
+  AttachInternals,
+  Dirty,
+  Disabled,
+  FormAssociated,
+  formValue,
+  Labelled,
+  Role,
+  setCustomState,
+  Touched,
+} from "@m3e/web/core";
+
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
 
 import { M3eListElement } from "./ListElement";
@@ -138,14 +149,14 @@ export class M3eSelectionListElement extends Labelled(
     }
 
     if (changedProperties.has("hideSelectionIndicator")) {
-      this[selectionManager].items.forEach((x) => x.classList.toggle("-hide-selection", this.hideSelectionIndicator));
+      this[selectionManager].items.forEach((x) => setCustomState(x, "-hide-selection", this.hideSelectionIndicator));
     }
   }
 
   /** @inheritdoc */
   override notifyItemsChange(): void {
     const { added } = this[selectionManager].setItems(this.items.filter((x) => x instanceof M3eListOptionElement));
-    added.forEach((x) => x.classList.toggle("-hide-selection", this.hideSelectionIndicator));
+    added.forEach((x) => setCustomState(x, "-hide-selection", this.hideSelectionIndicator));
 
     if (!this[selectionManager].activeItem) {
       this[selectionManager].updateActiveItem(added.find((x) => !x.disabled));
