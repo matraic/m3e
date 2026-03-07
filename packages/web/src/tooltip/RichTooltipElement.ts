@@ -98,11 +98,11 @@ export class M3eRichTooltipElement extends TooltipElementBase {
       opacity: 0;
       transform: scale(0.8);
       transition: ${unsafeCSS(
-    `opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
+        `opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
             transform ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard},
             overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete,
             display ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
-  )};
+      )};
     }
     .base:not(.has-actions) {
       padding-block-end: var(--m3e-rich-tooltip-padding-bottom, 0.75rem);
