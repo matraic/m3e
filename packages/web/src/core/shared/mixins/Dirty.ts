@@ -1,5 +1,6 @@
 import { LitElement } from "lit";
 
+import { addCustomState, AttachInternalsMixin, deleteCustomState, hasCustomState } from "./AttachInternals";
 import { Constructor } from "./Constructor";
 import { hasKeys } from "./hasKeys";
 
@@ -35,14 +36,14 @@ const _eventHandler = Symbol("_eventHandler");
  * @param {T} base The base class.
  * @returns {Constructor<DirtyMixin> & T} A constructor that implements `DirtyMixin`.
  */
-export function Dirty<T extends Constructor<LitElement>>(base: T): Constructor<DirtyMixin> & T {
+export function Dirty<T extends Constructor<LitElement & AttachInternalsMixin>>(base: T): Constructor<DirtyMixin> & T {
   abstract class _Dirty extends base implements DirtyMixin {
     /** @private */
     private [_eventHandler] = () => this.markAsDirty();
 
     /** Whether the user has modified the value of the element. */
     get dirty(): boolean {
-      return this.classList.contains("-dirty");
+      return hasCustomState(this, "-dirty");
     }
 
     /** Whether the user has not modified the value of the element. */
@@ -65,12 +66,12 @@ export function Dirty<T extends Constructor<LitElement>>(base: T): Constructor<D
 
     /** Marks the element as pristine. */
     markAsPristine(): void {
-      this.classList.toggle("-dirty", false);
+      deleteCustomState(this, "-dirty");
     }
 
     /** Marks the element as dirty. */
     markAsDirty(): void {
-      this.classList.toggle("-dirty", true);
+      addCustomState(this, "-dirty");
     }
   }
 
