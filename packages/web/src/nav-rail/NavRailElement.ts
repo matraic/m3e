@@ -63,7 +63,7 @@ export class M3eNavRailElement extends M3eNavBarElement {
           m3e-nav-rail > m3e-fab {
             margin-block-end: var(--m3e-nav-rail-button-item-space, 1rem);
           }
-          m3e-nav-rail:not(.-compact) > m3e-icon-button {
+          m3e-nav-rail:not(:state(-compact)) > m3e-icon-button {
             margin-inline-start: var(--m3e-nav-rail-expanded-icon-button-inset, 0.5rem);
           }
         `.toString(),
@@ -91,17 +91,17 @@ export class M3eNavRailElement extends M3eNavBarElement {
       padding-block-start: var(--m3e-nav-rail-top-space, 2.75rem);
       padding-block-end: var(--m3e-nav-rail-bottom-space, 0.5rem);
     }
-    :host(.-compact) {
+    :host(:state(-compact)) {
       width: var(--m3e-nav-rail-compact-width, 6rem);
     }
-    :host(.-compact) ::slotted(m3e-fab) {
+    :host(:state(-compact)) ::slotted(m3e-fab) {
       align-self: center;
     }
-    :host(:not(.-compact)) {
+    :host(:not(:state(-compact))) {
       min-width: var(--m3e-nav-rail-expanded-min-width, 13.75rem);
       max-width: var(--m3e-nav-rail-expanded-max-width, 22.5rem);
     }
-    :host(:not(.-compact)) .base {
+    :host(:not(:state(-compact))) .base {
       padding-inline: var(--m3e-nav-rail-expanded-inline-padding, 1.25rem);
       align-items: flex-start;
       --m3e-horizontal-nav-item-active-indicator-height: var(--m3e-nav-rail-expanded-item-height, 3.5rem);
@@ -111,7 +111,7 @@ export class M3eNavRailElement extends M3eNavBarElement {
     ::slotted(*) {
       flex: none;
     }
-    :host(.-compact) ::slotted(m3e-icon-button) {
+    :host(:state(-compact)) ::slotted(m3e-icon-button) {
       align-self: center;
     }
     ::slotted(m3e-fab) {
