@@ -278,9 +278,11 @@ export class M3eRichTooltipElement extends TooltipElementBase {
       document.removeEventListener("click", this.#documentClickHandler);
     }
 
+    const wasOpen = this.isOpen;
+
     super.hide();
 
-    if (restoreFocus && this.isConnected && this._interactive && this.control && M3eInteractivityChecker.isFocusable(this.control)) {
+    if (restoreFocus && wasOpen && this._interactive && this.control && M3eInteractivityChecker.isFocusable(this.control)) {
       this.control.focus();
     }
   }
