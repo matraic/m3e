@@ -15,6 +15,7 @@ import {
   getTextContent,
   FocusController,
   PressedController,
+  HoverController,
 } from "@m3e/web/core";
 
 import { selectionManager } from "@m3e/web/core/a11y";
@@ -241,6 +242,9 @@ export class M3eListOptionElement extends KeyboardClick(
     });
     new PressedController(this, {
       callback: (pressed) => this.shadowRoot?.querySelector(".base")?.classList.toggle("pressed", pressed),
+    });
+    new HoverController(this, {
+      callback: (hovering) => this.shadowRoot?.querySelector(".base")?.classList.toggle("hover", hovering),
     });
   }
 

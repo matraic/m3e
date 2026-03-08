@@ -151,7 +151,7 @@ export class M3eListItemElement extends AttachInternals(Role(LitElement, "listit
     :host(:state(-three-line)) .base {
       align-items: flex-start;
     }
-    :host(:not(:disabled):not([selected]:not(:hover))) .base.focus-visible:not(.pressed) {
+    :host(:not(:disabled):not([selected])) .base:not(.hover).focus-visible:not(.pressed) {
       border-top-left-radius: var(
         --_list-item-top-container-shape,
         var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
@@ -169,7 +169,7 @@ export class M3eListItemElement extends AttachInternals(Role(LitElement, "listit
         var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
       );
     }
-    :host(:not(:disabled):not([selected]):hover) .base,
+    :host(:not(:disabled):not([selected])) .base.hover,
     :host(:not(:disabled):not([selected])) .base.pressed {
       border-top-left-radius: var(
         --_list-item-top-container-shape,

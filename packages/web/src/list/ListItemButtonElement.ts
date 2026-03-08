@@ -6,6 +6,7 @@ import {
   Disabled,
   Focusable,
   FocusController,
+  HoverController,
   KeyboardClick,
   LinkButton,
   M3eFocusRingElement,
@@ -69,6 +70,9 @@ export class M3eListItemButtonElement extends KeyboardClick(
     });
     new PressedController(this, {
       callback: (pressed) => this.shadowRoot?.querySelector(".base")?.classList.toggle("pressed", pressed),
+    });
+    new HoverController(this, {
+      callback: (hovering) => this.shadowRoot?.querySelector(".base")?.classList.toggle("hover", hovering),
     });
   }
 
