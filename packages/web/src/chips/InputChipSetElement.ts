@@ -340,30 +340,29 @@ export class M3eInputChipSetElement
   }
 
   /** @private */
-  #handleInputChange(): void {
+  async #handleInputChange(): Promise<void> {
     const value = this.#input?.value;
     if (!value) return;
 
-    setTimeout(() => {
-      const value = this.#input?.value;
-      if (!value) return;
+    const chip = document.createElement("m3e-input-chip");
+    chip.removable = true;
+    chip.appendChild(document.createTextNode(value));
+    this.appendChild(chip);
 
-      const chip = document.createElement("m3e-input-chip");
-      chip.removable = true;
-      chip.appendChild(document.createTextNode(value));
-      this.appendChild(chip);
+    if (chip.isUpdatePending) {
+      await chip.updateComplete;
+    }
 
-      if (this.#input) {
-        try {
-          this.#ignoreInputChange = true;
-          this.#input.value = "";
-        } finally {
-          this.#ignoreInputChange = false;
-        }
+    if (this.#input) {
+      try {
+        this.#ignoreInputChange = true;
+        this.#input.value = "";
+      } finally {
+        this.#ignoreInputChange = false;
       }
+    }
 
-      this.dispatchEvent(new Event("change", { bubbles: true }));
-    });
+    this.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
   /** @private */
