@@ -242,39 +242,44 @@ This section details the attributes, events, slots, and CSS custom properties av
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                         | Description                                                 |
-| ------------------------------------------------ | ----------------------------------------------------------- |
-| `--m3e-chip-container-shape`                     | Border radius of the chip container                         |
-| `--m3e-chip-container-height`                    | Base height of the chip container before density adjustment |
-| `--m3e-chip-label-text-font-size`                | Font size of the chip label text                            |
-| `--m3e-chip-label-text-font-weight`              | Font weight of the chip label text                          |
-| `--m3e-chip-label-text-line-height`              | Line height of the chip label text                          |
-| `--m3e-chip-label-text-tracking`                 | Letter spacing of the chip label text                       |
-| `--m3e-chip-label-text-color`                    | Label text color in default state                           |
-| `--m3e-chip-icon-color`                          | Icon color in default state                                 |
-| `--m3e-chip-icon-size`                           | Font size of leading/trailing icons                         |
-| `--m3e-chip-spacing`                             | Horizontal gap between chip content elements                |
-| `--m3e-chip-padding-start`                       | Default start padding when no icon is present               |
-| `--m3e-chip-padding-end`                         | Default end padding when no trailing icon is present        |
-| `--m3e-chip-with-icon-padding-start`             | Start padding when leading icon is present                  |
-| `--m3e-chip-with-icon-padding-end`               | End padding when trailing icon is present                   |
-| `--m3e-chip-disabled-label-text-color`           | Base color for disabled label text                          |
-| `--m3e-chip-disabled-label-text-opacity`         | Opacity applied to disabled label text                      |
-| `--m3e-chip-disabled-icon-color`                 | Base color for disabled icons                               |
-| `--m3e-chip-disabled-icon-opacity`               | Opacity applied to disabled icons                           |
-| `--m3e-elevated-chip-container-color`            | Background color for elevated variant                       |
-| `--m3e-elevated-chip-elevation`                  | Elevation level for elevated variant                        |
-| `--m3e-elevated-chip-hover-elevation`            | Elevation level on hover                                    |
-| `--m3e-elevated-chip-disabled-container-color`   | Background color for disabled elevated variant              |
-| `--m3e-elevated-chip-disabled-container-opacity` | Opacity applied to disabled elevated background             |
-| `--m3e-elevated-chip-disabled-elevation`         | Elevation level for disabled elevated variant               |
-| `--m3e-outlined-chip-outline-thickness`          | Outline thickness for outlined variant                      |
-| `--m3e-outlined-chip-outline-color`              | Outline color for outlined variant                          |
-| `--m3e-outlined-chip-disabled-outline-color`     | Outline color for disabled outlined variant                 |
-| `--m3e-outlined-chip-disabled-outline-opacity`   | Opacity applied to disabled outline                         |
-| `--m3e-chip-avatar-size`                         | Font size of the avatar slot content                        |
-| `--m3e-chip-disabled-avatar-opacity`             | Opacity applied to the avatar when disabled                 |
-| `--m3e-chip-with-avatar-padding-start`           | Start padding when an avatar is present                     |
+| Property                                         | Description                                                        |
+| ------------------------------------------------ | ------------------------------------------------------------------ |
+| `--m3e-chip-container-shape`                     | Border radius of the chip container                                |
+| `--m3e-chip-container-height`                    | Base height of the chip container before density adjustment        |
+| `--m3e-chip-label-text-font-size`                | Font size of the chip label text                                   |
+| `--m3e-chip-label-text-font-weight`              | Font weight of the chip label text                                 |
+| `--m3e-chip-label-text-line-height`              | Line height of the chip label text                                 |
+| `--m3e-chip-label-text-tracking`                 | Letter spacing of the chip label text                              |
+| `--m3e-chip-label-text-color`                    | Label text color in default state                                  |
+| `--m3e-chip-icon-color`                          | Icon color in default state                                        |
+| `--m3e-chip-icon-size`                           | Font size of leading/trailing icons                                |
+| `--m3e-chip-spacing`                             | Horizontal gap between chip content elements                       |
+| `--m3e-chip-padding-start`                       | Default start padding when no icon is present                      |
+| `--m3e-chip-padding-end`                         | Default end padding when no trailing icon is present               |
+| `--m3e-chip-with-icon-padding-start`             | Start padding when leading icon is present                         |
+| `--m3e-chip-with-icon-padding-end`               | End padding when trailing icon is present                          |
+| `--m3e-chip-disabled-label-text-color`           | Base color for disabled label text                                 |
+| `--m3e-chip-disabled-label-text-opacity`         | Opacity applied to disabled label text                             |
+| `--m3e-chip-disabled-icon-color`                 | Base color for disabled icons                                      |
+| `--m3e-chip-disabled-icon-opacity`               | Opacity applied to disabled icons                                  |
+| `--m3e-elevated-chip-container-color`            | Background color for elevated variant                              |
+| `--m3e-elevated-chip-elevation`                  | Elevation level for elevated variant                               |
+| `--m3e-elevated-chip-hover-elevation`            | Elevation level on hover                                           |
+| `--m3e-elevated-chip-disabled-container-color`   | Background color for disabled elevated variant                     |
+| `--m3e-elevated-chip-disabled-container-opacity` | Opacity applied to disabled elevated background                    |
+| `--m3e-elevated-chip-disabled-elevation`         | Elevation level for disabled elevated variant                      |
+| `--m3e-outlined-chip-outline-thickness`          | Outline thickness for outlined variant                             |
+| `--m3e-outlined-chip-outline-color`              | Outline color for outlined variant                                 |
+| `--m3e-outlined-chip-disabled-outline-color`     | Outline color for disabled outlined variant                        |
+| `--m3e-outlined-chip-disabled-outline-opacity`   | Opacity applied to disabled outline                                |
+| `--m3e-chip-avatar-size`                         | Font size of the avatar slot content                               |
+| `--m3e-chip-avatar-icon-size`                    | Size of the icon displayed inside the avatar when used in a chip   |
+| `--m3e-chip-avatar-font-size`                    | Font size of text initials inside the avatar when used in a chip   |
+| `--m3e-chip-avatar-font-weight`                  | Font weight of text initials inside the avatar when used in a chip |
+| `--m3e-chip-avatar-line-height`                  | Line height of text initials inside the avatar when used in a chip |
+| `--m3e-chip-avatar-tracking`                     | Letter spacing (tracking) of text initials inside the avatar       |
+| `--m3e-chip-disabled-avatar-opacity`             | Opacity applied to the avatar when disabled                        |
+| `--m3e-chip-with-avatar-padding-start`           | Start padding when an avatar is present                            |
 
 ### 🗂️ Input Chip Set
 

@@ -83,6 +83,11 @@ import { M3eChipElement } from "./ChipElement";
  * @cssprop --m3e-outlined-chip-disabled-outline-color - Outline color for disabled outlined variant.
  * @cssprop --m3e-outlined-chip-disabled-outline-opacity - Opacity applied to disabled outline.
  * @cssprop --m3e-chip-avatar-size - Font size of the avatar slot content.
+ * @cssprop --m3e-chip-avatar-icon-size - Size of the icon displayed inside the avatar when used in a chip.
+ * @cssprop --m3e-chip-avatar-font-size - Font size of text initials inside the avatar when used in a chip.
+ * @cssprop --m3e-chip-avatar-font-weight - Font weight of text initials inside the avatar when used in a chip.
+ * @cssprop --m3e-chip-avatar-line-height - Line height of text initials inside the avatar when used in a chip.
+ * @cssprop --m3e-chip-avatar-tracking - Letter spacing (tracking) of text initials inside the avatar when used in a chip.
  * @cssprop --m3e-chip-disabled-avatar-opacity - Opacity applied to the avatar when disabled.
  * @cssprop --m3e-chip-with-avatar-padding-start - Start padding when an avatar is present.
  */
@@ -128,6 +133,23 @@ export class M3eInputChipElement extends EventAttribute(
       ::slotted([slot="avatar"]) {
         flex: none;
         font-size: var(--m3e-chip-avatar-size, 1.5rem);
+      }
+      ::slotted(m3e-avatar[slot="avatar"]) {
+        --m3e-icon-size: var(--m3e-chip-avatar-icon-size, 1.125rem);
+        --m3e-avatar-size: var(--m3e-chip-avatar-size, 1.5rem);
+        --m3e-avatar-font-size: var(
+          --m3e-chip-avatar-font-size,
+          ${DesignToken.typescale.standard.title.small.fontSize}
+        );
+        --m3e-avatar-font-weight: var(
+          --m3e-chip-avatar-font-height,
+          ${DesignToken.typescale.standard.title.small.fontWeight}
+        );
+        --m3e-avatar-line-height: var(
+          --m3e-chip-avatar-line-height,
+          ${DesignToken.typescale.standard.title.small.lineHeight}
+        );
+        --m3e-avatar-tracking: var(--m3e-chip-avatar-tracking, ${DesignToken.typescale.standard.title.small.tracking});
       }
       :host(:disabled) ::slotted([slot="avatar"]),
       :host([disabled-interactive]) ::slotted([slot="avatar"]) {
