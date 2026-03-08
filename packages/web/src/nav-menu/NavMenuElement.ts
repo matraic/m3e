@@ -267,7 +267,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
         }
 
         if (item.hasChildItems) {
-          item.toggle();
+          requestAnimationFrame(() => item.toggle());
         } else if (!item.selected) {
           this[selectionManager].select(item);
           item.link?.click();
@@ -284,12 +284,14 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
         e.preventDefault();
         if (M3eDirectionality.current === "ltr") {
           if (item.hasChildItems && item.open) {
-            item.collapse();
+            requestAnimationFrame(() => item.collapse());
           } else {
             const parent = item.parentItem;
             if (parent) {
-              parent.collapse();
-              this[selectionManager].setActiveItem(parent);
+              requestAnimationFrame(() => {
+                parent.collapse();
+                this[selectionManager].setActiveItem(parent);
+              });
             }
           }
         } else if (item.hasChildItems && !item.open) {
@@ -303,12 +305,14 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
         e.preventDefault();
         if (M3eDirectionality.current === "rtl") {
           if (item.hasChildItems && item.open) {
-            item.collapse();
+            requestAnimationFrame(() => item.collapse());
           } else {
             const parent = item.parentItem;
             if (parent) {
-              parent.collapse();
-              this[selectionManager].setActiveItem(parent);
+              requestAnimationFrame(() => {
+                parent.collapse();
+                this[selectionManager].setActiveItem(parent);
+              });
             }
           }
         } else if (item.hasChildItems && !item.open) {
