@@ -491,7 +491,7 @@ export class M3eMenuElement extends AttachInternals(Role(LitElement, "menu")) {
     }
 
     this.#listManager.items.forEach((x, i) => {
-      setCustomState(x, "-first", i === 0);
+      setCustomState(x, "-first", i === 0 && !x.previousElementSibling);
       setCustomState(x, "-last", i === this.#listManager.items.length - 1);
     });
   }
