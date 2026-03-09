@@ -284,7 +284,11 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
         if (this.#menu && this._listKeyManager.activeItem) {
           e.preventDefault();
           this.#selectOption(this._listKeyManager.activeItem);
-          this.#hideMenu();
+          if (!prefersReducedMotion()) {
+            setTimeout(() => this.#hideMenu(), 150);
+          } else {
+            this.#hideMenu();
+          }
         } else if (this.#menu) {
           setTimeout(() => {
             if (this.#input && !this.#input.value) {
@@ -337,7 +341,11 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     if (option && !option.disabled) {
       this._listKeyManager.setActiveItem(option);
       this.#selectOption(option);
-      this.#hideMenu();
+      if (!prefersReducedMotion()) {
+        setTimeout(() => this.#hideMenu(), 150);
+      } else {
+        this.#hideMenu();
+      }
     }
   }
 
