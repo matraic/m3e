@@ -571,7 +571,7 @@ export class M3eNavMenuItemElement extends Selected(
 
       const drawerContainer = this.closest("m3e-drawer-container");
       if (drawerContainer) {
-        const drawer = this.closest("[slot='start']") ?? this.closest("[slot='end')");
+        const drawer = this.closest("[slot='start']") ?? this.closest("[slot='end']");
         if (
           drawer &&
           (hasCustomState(drawerContainer, `-${drawer.slot}-push`) ||
