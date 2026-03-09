@@ -15,6 +15,8 @@ import {
 import { positionAnchor } from "@m3e/web/core/anchoring";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
+import { M3eOptGroupElement } from "./OptGroupElement";
+
 /**
  * Presents a list of options on a temporary surface.
  *
@@ -276,7 +278,7 @@ export class M3eOptionPanelElement extends AttachInternals(Role(LitElement, "lis
   #handleSlotChange(): void {
     const options = [...this.querySelectorAll("m3e-option")];
     options.forEach((x, i) => {
-      setCustomState(x, "-first", i === 0);
+      setCustomState(x, "-first", i === 0 && !(x.parentElement instanceof M3eOptGroupElement));
       setCustomState(x, "-last", i === options.length - 1);
     });
   }
