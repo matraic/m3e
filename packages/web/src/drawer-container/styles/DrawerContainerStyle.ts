@@ -10,6 +10,7 @@ import { DrawerContainerToken } from "./DrawerContainerToken";
  */
 export const DrawerContainerStyle: CSSResultGroup = css`
   :host {
+    display: block;
     position: relative;
     overflow: hidden;
     flex: 1 1 auto;
