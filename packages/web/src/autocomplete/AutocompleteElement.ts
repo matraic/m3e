@@ -384,9 +384,11 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     this.#menu = undefined;
     this.#textHighlight = undefined;
 
-    this.ariaExpanded = "false";
-    this.removeAttribute("aria-controls");
-    this.removeAttribute("aria-owns");
+    if (this.#input) {
+      this.#input.ariaExpanded = "false";
+      this.#input.removeAttribute("aria-controls");
+      this.#input.removeAttribute("aria-owns");
+    }
     this.requestUpdate();
 
     this.#formField?.notifyControlStateChange();
@@ -422,9 +424,8 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
     (this.#formField ?? this.#input).insertAdjacentElement("afterend", this.#menu);
 
-    this.ariaExpanded = "true";
-    this.setAttribute("aria-controls", this.#menuId);
-    this.setAttribute("aria-owns", this.#menuId);
+    this.#input.setAttribute("aria-controls", this.#menuId);
+    this.#input.setAttribute("aria-owns", this.#menuId);
 
     this.#formField?.notifyControlStateChange();
 
@@ -432,7 +433,8 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
       this.#activateOption(this._listKeyManager.activeItem, true);
     }
 
-    setTimeout(() => this.#menu?.show(this, this.#formField?.menuAnchor));
+    const input = this.#input;
+    setTimeout(() => this.#menu?.show(input, this.#formField?.menuAnchor));
   }
 
   /** @private */
