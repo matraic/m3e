@@ -506,6 +506,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
         addCustomState(option, "-last");
         last = option;
       } else {
+        deleteCustomState(option, "-first");
         if (last) {
           deleteCustomState(last, "-last");
         }
