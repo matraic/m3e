@@ -166,7 +166,7 @@ export class M3eOptionPanelElement extends AttachInternals(Role(LitElement, "lis
     }
   };
 
-  /** Whether the menu is open. */
+  /** Whether the panel is open. */
   get isOpen() {
     return this.#trigger !== undefined;
   }
@@ -190,10 +190,10 @@ export class M3eOptionPanelElement extends AttachInternals(Role(LitElement, "lis
   }
 
   /**
-   * Opens the menu.
-   * @param {HTMLElement} trigger The element that triggered the menu.
-   * @param {HTMLElement | undefined} anchor The element used to position the menu.
-   * @returns {Promise<void>} A `Promise` that resolves when the menu is opened.
+   * Opens the panel.
+   * @param {HTMLElement} trigger The element that triggered the panel.
+   * @param {HTMLElement | undefined} anchor The element used to position the panel.
+   * @returns {Promise<void>} A `Promise` that resolves when the panel is opened.
    */
   async show(trigger: HTMLElement, anchor?: HTMLElement): Promise<void> {
     if (this.#trigger && this.#trigger !== trigger) {
@@ -233,8 +233,8 @@ export class M3eOptionPanelElement extends AttachInternals(Role(LitElement, "lis
   }
 
   /**
-   * Hides the menu.
-   * @param {boolean} [restoreFocus=false] Whether to restore focus to the menu's trigger.
+   * Hides the panel.
+   * @param {boolean} [restoreFocus=false] Whether to restore focus to the panel's trigger.
    */
   hide(restoreFocus: boolean = false): void {
     this.hidePopover();
@@ -250,10 +250,10 @@ export class M3eOptionPanelElement extends AttachInternals(Role(LitElement, "lis
   }
 
   /**
-   * Toggles the menu.
-   * @param {HTMLElement} trigger The element that triggered the menu.
-   * @param {HTMLElement | undefined} anchor The element used to position the menu.
-   * @returns {Promise<void>} A `Promise` that resolves when the menu is opened or closed.
+   * Toggles the panel.
+   * @param {HTMLElement} trigger The element that triggered the panel.
+   * @param {HTMLElement | undefined} anchor The element used to position the panel.
+   * @returns {Promise<void>} A `Promise` that resolves when the panel is opened or closed.
    */
   async toggle(trigger: HTMLElement, anchor?: HTMLElement): Promise<void> {
     if (this.#trigger) {
