@@ -74,7 +74,15 @@ const createEntryPoint = (path) => [
         plugins: [terser({ mangle: true })],
       },
     ],
-    external: [/^@m3e\//, /^lit$/, /^lit\//, /^@lit\/reactive-element$/, /^@lit\/reactive-element\//],
+    external: [
+      /^@m3e\//,
+      /^lit$/,
+      /^lit\//,
+      /^@lit\/reactive-element$/,
+      /^@lit\/reactive-element\//,
+      /^lit-html$/,
+      /^lit-html\//,
+    ],
     plugins: [
       resolve(),
       typescript(),
