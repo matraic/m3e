@@ -667,9 +667,17 @@ export class M3eBottomSheetElement extends EventAttribute(
     }
 
     const minDragThreshold = 8;
-    if (Math.abs(e.clientY - this.#dragState.startY) <= minDragThreshold) {
-      // Ignore movement under threshold
-      return;
+    if (!this.#dragged) {
+      const delta = e.clientY - this.#dragState.startY;
+
+      if (Math.abs(delta) <= minDragThreshold) {
+        // Ignore movement under threshold
+        return;
+      }
+
+      this.#dragState.startY = e.clientY;
+      this.#dragState.startHeight = this.clientHeight;
+      this.#dragged = true;
     }
 
     (e.getCoalescedEvents?.() ?? [e]).forEach((x) => this.#velocityTracker.add(x.clientY, e.timeStamp));
@@ -681,7 +689,6 @@ export class M3eBottomSheetElement extends EventAttribute(
     }
 
     this.#updateHeight(Math.min(this.#dragState.maxHeight, newHeight));
-    this.#dragged = true;
   }
 
   /** @private */
