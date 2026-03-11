@@ -23,7 +23,6 @@ export interface IntersectionControllerOptions extends MonitorControllerOptions 
 
 /** A `ReactiveController` used to monitor changes in the intersection of a target element with an ancestor element. */
 export class IntersectionController extends MonitorControllerBase {
-  /** @private */ #host: ReactiveControllerHost;
   /** @private */ #callback: IntersectionControllerCallback;
   /** @private */ #skipInitial = false;
   /** @private */ #observer?: IntersectionObserver;
@@ -37,7 +36,6 @@ export class IntersectionController extends MonitorControllerBase {
   constructor(host: ReactiveControllerHost & HTMLElement, options: IntersectionControllerOptions) {
     super(host, options);
 
-    this.#host = host;
     this.#callback = options.callback;
     this.#skipInitial = options.skipInitial ?? false;
 
@@ -49,7 +47,6 @@ export class IntersectionController extends MonitorControllerBase {
 
     this.#observer = new IntersectionObserver((entries, observer) => {
       this.#callback(entries, observer);
-      this.#host.requestUpdate();
     }, options.init);
   }
 
@@ -68,7 +65,6 @@ export class IntersectionController extends MonitorControllerBase {
   protected override _observe(target: HTMLElement): void {
     this.#observer?.observe(target);
     this.#unobservedUpdate = true;
-    this.#host.requestUpdate();
   }
 
   /**
