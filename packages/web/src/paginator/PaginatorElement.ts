@@ -15,6 +15,12 @@ import { customElement, DesignToken, EventAttribute, Role } from "@m3e/web/core"
 import type { M3eSelectElement } from "@m3e/web/select";
 import type { FormFieldVariant } from "@m3e/web/form-field";
 
+import "@m3e/web/form-field";
+import "@m3e/web/select";
+import "@m3e/web/option";
+import "@m3e/web/icon-button";
+import "@m3e/web/tooltip";
+
 import { PageEventDetail } from "./PageEventDetail";
 
 /**

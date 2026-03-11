@@ -15,6 +15,8 @@ import {
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
+import "@m3e/web/slide-group";
+
 import { TabVariant } from "./TabVariant";
 import { M3eTabElement } from "./TabElement";
 import { TabHeaderPosition } from "./TabHeaderPosition";

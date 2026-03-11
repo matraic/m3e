@@ -5,6 +5,8 @@ import { customElement, DesignToken, HoverController, PressedController, Role } 
 import { M3eButtonElement, ButtonSize } from "@m3e/web/button";
 import { M3eIconButtonElement } from "@m3e/web/icon-button";
 
+import "@m3e/web/button-group";
+
 import { SplitButtonVariant } from "./SplitButtonVariant";
 
 /**

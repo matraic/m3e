@@ -5,6 +5,9 @@ import { property } from "lit/decorators.js";
 
 import { customElement, DesignToken, Role } from "@m3e/web/core";
 
+import "@m3e/web/button";
+import "@m3e/web/icon-button";
+
 /**
  * Presents short updates about application processes at the bottom of the screen.
  * @tag m3e-snackbar

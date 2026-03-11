@@ -4,6 +4,8 @@ import { property, query, state } from "lit/decorators.js";
 import { customElement, debounce, ResizeController } from "@m3e/web/core";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
+import "@m3e/web/icon-button";
+
 /**
  * Presents pagination controls used to scroll overflowing content.
  *

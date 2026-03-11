@@ -14,6 +14,7 @@ import {
 } from "@m3e/web/core";
 
 import "@m3e/web/core/a11y";
+import "@m3e/web/icon-button";
 
 /**
  * A dialog that provides important prompts in a user flow.
