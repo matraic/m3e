@@ -1,6 +1,6 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 
-import { element, DesignToken, Role } from "@m3e/web/core";
+import { customElement, DesignToken, Role } from "@m3e/web/core";
 
 /**
  * A panel presented for a tab.
@@ -30,7 +30,7 @@ import { element, DesignToken, Role } from "@m3e/web/core";
  *
  * @slot - Renders the content of the panel.
  */
-@element("m3e-tab-panel")
+@customElement("m3e-tab-panel")
 export class M3eTabPanelElement extends Role(LitElement, "tabpanel") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

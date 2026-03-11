@@ -1,6 +1,13 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 
-import { element, DesignToken, FocusController, PressedController, Role, scrollIntoViewIfNeeded } from "@m3e/web/core";
+import {
+  customElement,
+  DesignToken,
+  FocusController,
+  PressedController,
+  Role,
+  scrollIntoViewIfNeeded,
+} from "@m3e/web/core";
 
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
@@ -80,7 +87,7 @@ import { M3eNavMenuItemElement } from "./NavMenuItemElement";
  * @cssprop --m3e-nav-menu-scrollbar-width - Width of the menu scrollbar.
  * @cssprop --m3e-nav-menu-scrollbar-color - Color of the menu scrollbar.
  */
-@element("m3e-nav-menu")
+@customElement("m3e-nav-menu")
 export class M3eNavMenuElement extends Role(LitElement, "tree") {
   static {
     if (typeof window !== "undefined") {

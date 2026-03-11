@@ -4,7 +4,7 @@ import { property } from "lit/decorators.js";
 import { PressedController } from "../controllers";
 import { HtmlFor, Role } from "../mixins";
 import { DesignToken } from "../tokens";
-import { element } from "../decorators";
+import { customElement } from "../decorators";
 
 import { RippleToken } from "./RippleToken";
 
@@ -48,7 +48,7 @@ import { RippleToken } from "./RippleToken";
  * @cssprop --m3e-ripple-scale-factor - The factor by which to scale the ripple.
  * @cssprop --m3e-ripple-shape - The shape of the ripple.
  */
-@element("m3e-ripple")
+@customElement("m3e-ripple")
 export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

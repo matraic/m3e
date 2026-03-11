@@ -4,7 +4,7 @@ import { property, query } from "lit/decorators.js";
 import { FocusController, HoverController, PressedController } from "../controllers";
 import { HtmlFor, Role } from "../mixins";
 import { DesignToken } from "../tokens";
-import { element } from "../decorators";
+import { customElement } from "../decorators";
 
 import { ElevationLevel } from "./ElevationLevel";
 import { ElevationToken } from "./ElevationToken";
@@ -58,7 +58,7 @@ import { ElevationToken } from "./ElevationToken";
  * @cssprop --m3e-elevation-focus-level - Elevation on focus (box-shadow).
  * @cssprop --m3e-elevation-pressed-level - Elevation on pressed (box-shadow).
  */
-@element("m3e-elevation")
+@customElement("m3e-elevation")
 export class M3eElevationElement extends HtmlFor(Role(LitElement, "none")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

@@ -1,6 +1,6 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 
-import { element, DesignToken, Role } from "@m3e/web/core";
+import { customElement, DesignToken, Role } from "@m3e/web/core";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y";
 
 /**
@@ -28,7 +28,7 @@ import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y"
  * @cssprop --m3e-option-padding-start - The left padding of the label.
  * @cssprop --m3e-option-color - The text color of the group label.
  */
-@element("m3e-optgroup")
+@customElement("m3e-optgroup")
 export class M3eOptGroupElement extends Role(LitElement, "group") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

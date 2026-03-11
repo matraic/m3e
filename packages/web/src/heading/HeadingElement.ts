@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { element, DesignToken } from "@m3e/web/core";
+import { customElement, DesignToken } from "@m3e/web/core";
 
 import { HeadingLevel } from "./HeadingLevel";
 import { HeadingSize } from "./HeadingSize";
@@ -145,7 +145,7 @@ import { HeadingVariant } from "./HeadingVariant";
  * @cssprop --md-sys-typescale-emphasized-label-small-tracking - Letter spacing for emphasized Label Small text
  * @cssprop --md-sys-typescale-emphasized-label-small-line-height - Line height for emphasized Label Small text
  */
-@element("m3e-heading")
+@customElement("m3e-heading")
 export class M3eHeadingElement extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

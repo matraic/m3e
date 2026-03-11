@@ -18,7 +18,7 @@ import {
   KeyboardClick,
   PressedController,
   HoverController,
-  element,
+  customElement,
 } from "@m3e/web/core";
 
 import { SwitchHandleStyle, SwitchIconStyle, SwitchStateLayerStyle, SwitchStyle, SwitchTrackStyle } from "./styles";
@@ -132,7 +132,7 @@ import { SwitchIcons } from "./SwitchIcons";
  * @cssprop --m3e-switch-selected-pressed-handle-color - Handle color when selected and pressed.
  * @cssprop --m3e-switch-unselected-pressed-handle-color - Handle color when unselected and pressed.
  */
-@element("m3e-switch")
+@customElement("m3e-switch")
 export class M3eSwitchElement extends Labelled(
   Dirty(
     Touched(

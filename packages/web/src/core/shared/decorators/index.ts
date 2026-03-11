@@ -1,2 +1,2 @@
-export * from "./element";
+export * from "./customElement";
 export * from "./debounce";

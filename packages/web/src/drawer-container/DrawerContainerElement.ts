@@ -4,7 +4,7 @@ import { property, state } from "lit/decorators.js";
 import {
   addCustomState,
   AttachInternals,
-  element,
+  customElement,
   deleteCustomState,
   hasAssignedNodes,
   hasCustomState,
@@ -69,7 +69,7 @@ import { DrawerContainerStyle } from "./styles";
  * @cssprop --m3e-drawer-divider-color - The color of the divider between drawer sections.
  * @cssprop --m3e-drawer-divider-thickness - The thickness of the divider line.
  */
-@element("m3e-drawer-container")
+@customElement("m3e-drawer-container")
 export class M3eDrawerContainerElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = DrawerContainerStyle;

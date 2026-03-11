@@ -1,4 +1,4 @@
-import { element } from "@m3e/web/core";
+import { customElement } from "@m3e/web/core";
 
 import { StepperButtonElementBase } from "./StepperButtonElementBase";
 
@@ -8,7 +8,7 @@ import { StepperButtonElementBase } from "./StepperButtonElementBase";
  *
  * @slot - Renders the content of the action.
  */
-@element("m3e-stepper-next")
+@customElement("m3e-stepper-next")
 export class M3eStepperNextElement extends StepperButtonElementBase {
   constructor() {
     super("next");

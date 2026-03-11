@@ -1,4 +1,4 @@
-import { ActionElementBase, element, HtmlFor } from "@m3e/web/core";
+import { ActionElementBase, customElement, HtmlFor } from "@m3e/web/core";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y";
 
 import { M3eFabMenuElement } from "./FabMenuElement";
@@ -26,7 +26,7 @@ import { M3eFabMenuElement } from "./FabMenuElement";
  *
  * @tag m3e-fab-menu-trigger
  */
-@element("m3e-fab-menu-trigger")
+@customElement("m3e-fab-menu-trigger")
 export class M3eFabMenuTriggerElement extends HtmlFor(ActionElementBase) {
   /** The menu triggered by the element. */
   get menu(): M3eFabMenuElement | null {

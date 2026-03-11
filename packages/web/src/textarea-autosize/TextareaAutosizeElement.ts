@@ -10,7 +10,7 @@
 import { css, CSSResultGroup, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { element, debounce, HtmlFor, Role } from "@m3e/web/core";
+import { customElement, debounce, HtmlFor, Role } from "@m3e/web/core";
 
 /**
  * A non-visual element used to automatically resize a `textarea` to fit its content.
@@ -39,7 +39,7 @@ import { element, debounce, HtmlFor, Role } from "@m3e/web/core";
  * @attr max-rows - The maximum amount of rows in the `textarea`.
  * @attr min-rows - The minimum amount of rows in the `textarea`.
  */
-@element("m3e-textarea-autosize")
+@customElement("m3e-textarea-autosize")
 export class M3eTextareaAutosizeElement extends HtmlFor(Role(LitElement, "none")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

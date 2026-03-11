@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 import { addCustomState, AttachInternals, deleteCustomState, EventAttribute, setCustomState } from "../mixins";
 import { DesignToken } from "../tokens";
 import { prefersReducedMotion } from "../utils";
-import { element } from "../decorators";
+import { customElement } from "../decorators";
 
 /**
  * A container used to expand and collapse content.
@@ -31,7 +31,7 @@ import { element } from "../decorators";
  *
  * @cssprop --m3e-collapsible-animation-duration - The duration of the expand / collapse animation.
  */
-@element("m3e-collapsible")
+@customElement("m3e-collapsible")
 export class M3eCollapsibleElement extends EventAttribute(
   AttachInternals(LitElement),
   "opening",

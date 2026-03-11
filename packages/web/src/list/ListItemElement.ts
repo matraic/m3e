@@ -2,7 +2,7 @@ import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from
 
 import {
   AttachInternals,
-  element,
+  customElement,
   computeLineCount,
   DesignToken,
   ResizeController,
@@ -96,7 +96,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * @cssprop --m3e-list-item-two-line-height - Minimum height of a two line list item.
  * @cssprop --m3e-list-item-three-line-height - Minimum height of a three line list item.
  */
-@element("m3e-list-item")
+@customElement("m3e-list-item")
 export class M3eListItemElement extends AttachInternals(Role(LitElement, "listitem")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

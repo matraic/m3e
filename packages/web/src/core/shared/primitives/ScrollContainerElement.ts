@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { element, debounce } from "../decorators";
+import { customElement, debounce } from "../decorators";
 import { DesignToken } from "../tokens";
 import { AttachInternals, setCustomState } from "../mixins";
 
@@ -38,7 +38,7 @@ import { FocusRingToken } from "./FocusRingToken";
  * @cssprop --m3e-focus-ring-factor - Animation factor for focus ring thickness.
  * @cssprop --m3e-focus-ring-duration - Duration of the focus ring animation.
  */
-@element("m3e-scroll-container")
+@customElement("m3e-scroll-container")
 export class M3eScrollContainerElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

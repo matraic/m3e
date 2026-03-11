@@ -8,7 +8,7 @@ import {
   DesignToken,
   setCustomState,
   addCustomState,
-  element,
+  customElement,
 } from "@m3e/web/core";
 
 import { M3eButtonElement } from "@m3e/web/button";
@@ -71,7 +71,7 @@ import { ButtonGroupSize } from "./ButtonGroupSize";
  * @cssprop --m3e-connected-button-group-extra-large-inner-shape - Corner shape for connected variant, extra-large size.
  * @cssprop --m3e-connected-button-group-extra-large-inner-pressed-shape - Pressed corner shape for connected variant, extra-large size.
  */
-@element("m3e-button-group")
+@customElement("m3e-button-group")
 export class M3eButtonGroupElement extends Role(LitElement, "group") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

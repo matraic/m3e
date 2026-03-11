@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 
-import { element, DesignToken } from "@m3e/web/core";
+import { customElement, DesignToken } from "@m3e/web/core";
 
 import { M3eExpansionPanelElement } from "./ExpansionPanelElement";
 
@@ -36,7 +36,7 @@ import { M3eExpansionPanelElement } from "./ExpansionPanelElement";
  *
  * @attr multi - Whether multiple expansion panels can be open at the same time.
  */
-@element("m3e-accordion")
+@customElement("m3e-accordion")
 export class M3eAccordionElement extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

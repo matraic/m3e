@@ -3,7 +3,7 @@ import { property } from "lit/decorators.js";
 
 import { DesignToken } from "../tokens";
 import { addCustomState, AttachInternals, deleteCustomState, hasCustomState } from "../mixins";
-import { element } from "../decorators";
+import { customElement } from "../decorators";
 
 /**
  * A carousel-like container used to horizontally cycle through slotted items.
@@ -27,7 +27,7 @@ import { element } from "../decorators";
  *
  * @cssprop --m3e-slide-animation-duration - The duration of transitions between slotted items.
  */
-@element("m3e-slide")
+@customElement("m3e-slide")
 export class M3eSlideElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

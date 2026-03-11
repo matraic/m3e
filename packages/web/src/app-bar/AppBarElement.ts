@@ -1,7 +1,7 @@
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { element, debounce, hasAssignedNodes, HtmlFor, Role } from "@m3e/web/core";
+import { customElement, debounce, hasAssignedNodes, HtmlFor, Role } from "@m3e/web/core";
 
 import { AppBarSize } from "./AppBarSize";
 
@@ -108,7 +108,7 @@ import { AppBarSizeStyle, AppBarStyle } from "./styles";
  * @cssprop --m3e-app-bar-large-title-max-lines - Maximum number of lines for the large app bar title.
  * @cssprop --m3e-app-bar-large-subtitle-max-lines - Maximum number of lines for the large app bar subtitle.
  */
-@element("m3e-app-bar")
+@customElement("m3e-app-bar")
 export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = [AppBarStyle, AppBarSizeStyle];

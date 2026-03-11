@@ -4,7 +4,7 @@ import { property, query } from "lit/decorators.js";
 import {
   AttachInternals,
   Checked,
-  element,
+  customElement,
   DesignToken,
   Dirty,
   Disabled,
@@ -92,7 +92,7 @@ import { selectionManager } from "@m3e/web/core/a11y";
  * @cssprop --m3e-segmented-button-disabled-icon-color - Base color for disabled icons.
  * @cssprop --m3e-segmented-button-disabled-icon-opacity - Opacity applied to disabled icons.
  */
-@element("m3e-button-segment")
+@customElement("m3e-button-segment")
 export class M3eButtonSegmentElement extends Dirty(
   Touched(Checked(Disabled(AttachInternals(Role(LitElement, "radio"), true)))),
 ) {

@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { element, DesignToken, HoverController, PressedController, Role } from "@m3e/web/core";
+import { customElement, DesignToken, HoverController, PressedController, Role } from "@m3e/web/core";
 import { M3eButtonElement, ButtonSize } from "@m3e/web/button";
 import { M3eIconButtonElement } from "@m3e/web/icon-button";
 
@@ -82,7 +82,7 @@ import { SplitButtonVariant } from "./SplitButtonVariant";
  * @cssprop --m3e-split-button-large-between-spacing - Spacing between leading and trailing buttons (large).
  * @cssprop --m3e-split-button-extra-large-between-spacing - Spacing between leading and trailing buttons (extra-large).
  */
-@element("m3e-split-button")
+@customElement("m3e-split-button")
 export class M3eSplitButtonElement extends Role(LitElement, "group") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { element, Role } from "@m3e/web/core";
+import { customElement, Role } from "@m3e/web/core";
 
 import { IconVariant } from "./IconVariant";
 import { IconGrade } from "./IconGrade";
@@ -40,7 +40,7 @@ import { IconGrade } from "./IconGrade";
  * @attr variant - The appearance variant of the icon.
  * @attr weight - A value from 100 to 700 indicating the weight of the icon.
  */
-@element("m3e-icon")
+@customElement("m3e-icon")
 export class M3eIconElement extends Role(LitElement, "img") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

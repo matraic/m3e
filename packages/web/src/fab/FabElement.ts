@@ -16,7 +16,7 @@ import {
   PressedController,
   Role,
   KeyboardClick,
-  element,
+  customElement,
 } from "@m3e/web/core";
 
 import { FabSize } from "./FabSize";
@@ -371,7 +371,7 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * @cssprop --m3e-surface-fab-pressed-container-elevation - Elevation on pressed (surface).
  * @cssprop --m3e-surface-fab-lowered-pressed-container-elevation - Lowered elevation on pressed (surface).
  */
-@element("m3e-fab")
+@customElement("m3e-fab")
 export class M3eFabElement extends KeyboardClick(
   LinkButton(
     FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))),

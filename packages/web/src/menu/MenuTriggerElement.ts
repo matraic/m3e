@@ -1,4 +1,4 @@
-import { ActionElementBase, element, HtmlFor } from "@m3e/web/core";
+import { ActionElementBase, customElement, HtmlFor } from "@m3e/web/core";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y";
 
 import type { M3eMenuElement } from "./MenuElement";
@@ -61,7 +61,7 @@ import type { M3eMenuElement } from "./MenuElement";
  *
  * @slot - Renders the contents of the trigger.
  */
-@element("m3e-menu-trigger")
+@customElement("m3e-menu-trigger")
 export class M3eMenuTriggerElement extends HtmlFor(ActionElementBase) {
   /** The menu triggered by the element. */
   get menu(): M3eMenuElement | null {

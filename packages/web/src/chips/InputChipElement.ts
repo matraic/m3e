@@ -11,7 +11,7 @@ import {
   DesignToken,
   hasAssignedNodes,
   setCustomState,
-  element,
+  customElement,
 } from "@m3e/web/core";
 
 import { M3eIconButtonElement } from "@m3e/web/icon-button";
@@ -93,7 +93,7 @@ import { M3eChipElement } from "./ChipElement";
  * @cssprop --m3e-chip-disabled-avatar-opacity - Opacity applied to the avatar when disabled.
  * @cssprop --m3e-chip-with-avatar-padding-start - Start padding when an avatar is present.
  */
-@element("m3e-input-chip")
+@customElement("m3e-input-chip")
 export class M3eInputChipElement extends EventAttribute(
   DisabledInteractive(Disabled(Role(M3eChipElement, "row"))),
   "remove",

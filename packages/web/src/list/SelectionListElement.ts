@@ -3,7 +3,7 @@ import { property } from "lit/decorators.js";
 
 import {
   AttachInternals,
-  element,
+  customElement,
   Dirty,
   Disabled,
   FormAssociated,
@@ -52,7 +52,7 @@ import { M3eListOptionElement } from "./ListOptionElement";
  * @cssprop --m3e-segmented-list-item-focus-container-shape - Border radius of items in segmented variant on focus.
  * @cssprop --m3e-segmented-list-item-selected-container-shape - Border radius of items in segmented variant when selected.
  */
-@element("m3e-selection-list")
+@customElement("m3e-selection-list")
 export class M3eSelectionListElement extends Labelled(
   Dirty(Touched(FormAssociated(Disabled(AttachInternals(Role(M3eListElement, "listbox")))))),
 ) {

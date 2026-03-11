@@ -1,7 +1,7 @@
 import { LitElement, html, css, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { element, DesignToken, Role } from "@m3e/web/core";
+import { customElement, DesignToken, Role } from "@m3e/web/core";
 
 import { LoadingIndicatorVariant } from "./LoadingIndicatorVariant";
 import { LoadingIndicatorToken } from "./LoadingIndicatorToken";
@@ -34,7 +34,7 @@ import { ShapePolygon } from "./ShapePolygon";
  * @cssprop --m3e-loading-indicator-container-shape - Container shape.
  * @cssprop --m3e-loading-indicator-container-size - Container size.
  */
-@element("m3e-loading-indicator")
+@customElement("m3e-loading-indicator")
 export class M3eLoadingIndicatorElement extends Role(LitElement, "progressbar") {
   /** The styles of the element. */
   static override styles = css`

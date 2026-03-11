@@ -1,4 +1,4 @@
-import { element } from "@m3e/web/core";
+import { customElement } from "@m3e/web/core";
 import { RovingTabIndexManager, selectionManager } from "@m3e/web/core/a11y";
 
 import { M3eListElement } from "./ListElement";
@@ -33,7 +33,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-segmented-list-item-focus-container-shape - Border radius of items in segmented variant on focus.
  * @cssprop --m3e-segmented-list-item-selected-container-shape - Border radius of items in segmented variant when selected.
  */
-@element("m3e-action-list")
+@customElement("m3e-action-list")
 export class M3eActionListElement extends M3eListElement {
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this[selectionManager].onKeyDown(e);
 

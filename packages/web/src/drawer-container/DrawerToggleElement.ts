@@ -1,6 +1,6 @@
 import { LitElement } from "lit";
 
-import { ActionElementBase, element, HtmlFor } from "@m3e/web/core";
+import { ActionElementBase, customElement, HtmlFor } from "@m3e/web/core";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y";
 
 import { M3eDrawerContainerElement } from "./DrawerContainerElement";
@@ -29,7 +29,7 @@ import { M3eDrawerContainerElement } from "./DrawerContainerElement";
  *
  * @tag m3e-drawer-toggle
  */
-@element("m3e-drawer-toggle")
+@customElement("m3e-drawer-toggle")
 export class M3eDrawerToggleElement extends HtmlFor(ActionElementBase) {
   /** @private */ readonly #drawerContainerChangeHandler = () => this.#handleDrawerContainerChange();
   /** @private */ #togglingDrawer = false;

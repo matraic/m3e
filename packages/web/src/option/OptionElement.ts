@@ -3,7 +3,7 @@ import { property, query } from "lit/decorators.js";
 
 import {
   AttachInternals,
-  element,
+  customElement,
   DesignToken,
   Disabled,
   getTextContent,
@@ -61,7 +61,7 @@ import { typeaheadLabel } from "@m3e/web/core/a11y";
  * @cssprop --m3e-option-first-child-shape - Shape for the first option in a list.
  * @cssprop --m3e-option-last-child-shape - Shape for the last option in a list.
  */
-@element("m3e-option")
+@customElement("m3e-option")
 export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(LitElement, "option")))) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

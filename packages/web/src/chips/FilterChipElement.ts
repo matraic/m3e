@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, PropertyValues } from "lit";
 
 import {
-  element,
+  customElement,
   DesignToken,
   Disabled,
   DisabledInteractive,
@@ -97,7 +97,7 @@ import { M3eChipElement } from "./ChipElement";
  * @cssprop --m3e-chip-unselected-leading-icon-color - Leading icon color in unselected state.
  * @cssprop --m3e-chip-unselected-trailing-icon-color - Trailing icon color in unselected state.
  */
-@element("m3e-filter-chip")
+@customElement("m3e-filter-chip")
 export class M3eFilterChipElement extends Selected(
   KeyboardClick(Focusable(DisabledInteractive(Disabled(Role(M3eChipElement, "radio"))))),
 ) {

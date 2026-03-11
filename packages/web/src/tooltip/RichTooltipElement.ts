@@ -3,7 +3,7 @@ import { css, CSSResultGroup, html, PropertyValues, unsafeCSS } from "lit";
 import { property, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { element, DesignToken, getTextContent, hasAssignedNodes } from "@m3e/web/core";
+import { customElement, DesignToken, getTextContent, hasAssignedNodes } from "@m3e/web/core";
 import { M3eAriaDescriber, M3eInteractivityChecker } from "@m3e/web/core/a11y";
 import { AnchorPosition } from "@m3e/web/core/anchoring";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
@@ -74,7 +74,7 @@ import { TooltipElementBase } from "./TooltipElementBase";
  * @cssprop --m3e-rich-tooltip-actions-top-space - Space above the actions slot.
  * @cssprop --m3e-rich-tooltip-actions-bottom-space - Space below the actions slot.
  */
-@element("m3e-rich-tooltip")
+@customElement("m3e-rich-tooltip")
 export class M3eRichTooltipElement extends TooltipElementBase {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

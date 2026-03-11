@@ -5,7 +5,7 @@ import { property } from "lit/decorators.js";
 import {
   addCustomState,
   AttachInternals,
-  element,
+  customElement,
   computeCssSize,
   deleteCustomState,
   DesignToken,
@@ -121,7 +121,7 @@ import "@m3e/web/core/a11y";
  * @cssprop --m3e-bottom-sheet-header-line-height - Line height for the sheet header.
  * @cssprop --m3e-bottom-sheet-header-tracking - Letter spacing (tracking) for the sheet header.
  */
-@element("m3e-bottom-sheet")
+@customElement("m3e-bottom-sheet")
 export class M3eBottomSheetElement extends EventAttribute(
   AttachInternals(LitElement),
   "opening",

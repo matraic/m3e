@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 
-import { element, DesignToken, Role } from "@m3e/web/core";
+import { customElement, DesignToken, Role } from "@m3e/web/core";
 
 /**
  * A thin line that separates content in lists or other containers.
@@ -31,7 +31,7 @@ import { element, DesignToken, Role } from "@m3e/web/core";
  * @cssprop --m3e-divider-inset-start-size - When inset, leading inset size.
  * @cssprop --m3e-divider-inset-end-size - When inset, trailing inset size.
  */
-@element("m3e-divider")
+@customElement("m3e-divider")
 export class M3eDividerElement extends Role(LitElement, "separator") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

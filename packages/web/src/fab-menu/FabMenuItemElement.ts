@@ -3,7 +3,7 @@ import { query } from "lit/decorators.js";
 
 import {
   AttachInternals,
-  element,
+  customElement,
   DesignToken,
   Disabled,
   KeyboardClick,
@@ -63,7 +63,7 @@ import type { M3eFabMenuElement } from "./FabMenuElement";
  * @cssprop --m3e-fab-menu-item-spacing - Gap between icon and label.
  * @cssprop --m3e-fab-menu-item-icon-size - Size of the icon in the menu item.
  */
-@element("m3e-fab-menu-item")
+@customElement("m3e-fab-menu-item")
 export class M3eFabMenuItemElement extends KeyboardClick(
   LinkButton(Disabled(AttachInternals(Role(LitElement, "menuitem"), true))),
 ) {

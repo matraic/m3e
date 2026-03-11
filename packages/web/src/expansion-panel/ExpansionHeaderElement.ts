@@ -3,7 +3,7 @@ import { property, query } from "lit/decorators.js";
 
 import {
   AttachInternals,
-  element,
+  customElement,
   Disabled,
   Focusable,
   KeyboardClick,
@@ -42,7 +42,7 @@ import { ExpansionHeaderStyle } from "./styles";
  * @cssprop --m3e-expansion-header-line-height - The line height of the header text.
  * @cssprop --m3e-expansion-header-tracking - Letter spacing (tracking) of the header text.
  */
-@element("m3e-expansion-header")
+@customElement("m3e-expansion-header")
 export class M3eExpansionHeaderElement extends KeyboardClick(
   Focusable(Disabled(AttachInternals(Role(LitElement, "button"), true))),
 ) {

@@ -1,6 +1,6 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 
-import { element, DesignToken } from "@m3e/web/core";
+import { customElement, DesignToken } from "@m3e/web/core";
 
 /**
  * An image, icon or textual initials representing a user or other identity.
@@ -48,7 +48,7 @@ import { element, DesignToken } from "@m3e/web/core";
  * @cssprop --m3e-avatar-color - Background color of the avatar.
  * @cssprop --m3e-avatar-label-color - Text color of the avatar.
  */
-@element("m3e-avatar")
+@customElement("m3e-avatar")
 export class M3eAvatarElement extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

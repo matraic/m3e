@@ -1,4 +1,4 @@
-import { ActionElementBase, element } from "@m3e/web/core";
+import { ActionElementBase, customElement } from "@m3e/web/core";
 
 /**
  * An element, nested within a clickable element, used to close a parenting bottom sheet.
@@ -6,7 +6,7 @@ import { ActionElementBase, element } from "@m3e/web/core";
  *
  * @slot - Renders the content of the action.
  */
-@element("m3e-bottom-sheet-action")
+@customElement("m3e-bottom-sheet-action")
 export class M3eBottomSheetActionElement extends ActionElementBase {
   /** @inheritdoc */
   protected override _onClick(): void {

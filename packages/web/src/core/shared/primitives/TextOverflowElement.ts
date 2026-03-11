@@ -1,6 +1,6 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 
-import { element } from "../decorators";
+import { customElement } from "../decorators";
 
 /**
  * An inline container which presents an ellipsis when content overflows.
@@ -27,7 +27,7 @@ import { element } from "../decorators";
  *
  * @slot - Renders the content to truncate with an ellipsis.
  */
-@element("m3e-text-overflow")
+@customElement("m3e-text-overflow")
 export class M3eTextOverflowElement extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

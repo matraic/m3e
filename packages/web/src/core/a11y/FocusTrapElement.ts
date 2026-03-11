@@ -2,7 +2,7 @@ import { css, CSSResultGroup, html, LitElement } from "lit";
 import { query } from "lit/decorators.js";
 
 import { Disabled } from "../shared/mixins/Disabled";
-import { element } from "../shared/decorators/element";
+import { customElement } from "../shared/decorators/customElement";
 import { M3eInteractivityChecker } from "./InteractivityChecker";
 
 /**
@@ -13,7 +13,7 @@ import { M3eInteractivityChecker } from "./InteractivityChecker";
  *
  * @attr disabled - Disables the focus trap.
  */
-@element("m3e-focus-trap")
+@customElement("m3e-focus-trap")
 export class M3eFocusTrapElement extends Disabled(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

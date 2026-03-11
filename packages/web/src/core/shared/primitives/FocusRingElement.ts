@@ -3,7 +3,7 @@ import { property, query } from "lit/decorators.js";
 
 import { FocusController } from "../controllers";
 import { HtmlFor, Role } from "../mixins";
-import { element } from "../decorators";
+import { customElement } from "../decorators";
 
 import { FocusRingToken } from "./FocusRingToken";
 
@@ -44,7 +44,7 @@ import { FocusRingToken } from "./FocusRingToken";
  * @cssprop --m3e-focus-ring-outward-offset - Offset of an outward focus ring.
  * @cssprop --m3e-focus-ring-inward-offset - Offset of an inward focus ring.
  */
-@element("m3e-focus-ring")
+@customElement("m3e-focus-ring")
 export class M3eFocusRingElement extends HtmlFor(Role(LitElement, "none")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

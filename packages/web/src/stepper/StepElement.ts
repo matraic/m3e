@@ -3,7 +3,7 @@ import { property, query, state } from "lit/decorators.js";
 
 import {
   AttachInternals,
-  element,
+  customElement,
   DesignToken,
   Disabled,
   Focusable,
@@ -120,7 +120,7 @@ import { M3eStepPanelElement } from "./StepPanelElement";
  * @cssprop --m3e-step-hint-color - Text color of hint messages in valid state.
  * @cssprop --m3e-step-disabled-hint-color - Base color used to mix the disabled hint foreground.
  */
-@element("m3e-step")
+@customElement("m3e-step")
 export class M3eStepElement extends Selected(
   KeyboardClick(Focusable(HtmlFor(Disabled(AttachInternals(Role(LitElement, "tab")))))),
 ) {

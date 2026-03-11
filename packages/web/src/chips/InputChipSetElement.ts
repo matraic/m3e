@@ -2,7 +2,7 @@ import { css, CSSResultGroup, html, PropertyValues } from "lit";
 
 import {
   AttachInternals,
-  element,
+  customElement,
   ConstraintValidation,
   DesignToken,
   Dirty,
@@ -58,7 +58,7 @@ import { M3eInputChipElement } from "./InputChipElement";
  *
  * @cssprop --m3e-chip-set-spacing - The spacing (gap) between chips in the set.
  */
-@element("m3e-input-chip-set")
+@customElement("m3e-input-chip-set")
 export class M3eInputChipSetElement
   extends RequiredConstraintValidation(
     Required(

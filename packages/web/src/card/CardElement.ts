@@ -16,7 +16,7 @@ import {
   PressedController,
   KeyboardClick,
   hasAssignedNodes,
-  element,
+  customElement,
 } from "@m3e/web/core";
 
 import { CardVariant } from "./CardVariant";
@@ -143,7 +143,7 @@ import { CardOrientation } from "./CardOrientation";
  * @cssprop --m3e-outlined-card-pressed-container-elevation - Elevation level on press.
  * @cssprop --m3e-outlined-card-pressed-outline-color - Border color on press.
  */
-@element("m3e-card")
+@customElement("m3e-card")
 export class M3eCardElement extends KeyboardClick(
   LinkButton(FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(LitElement), true))))),
 ) {

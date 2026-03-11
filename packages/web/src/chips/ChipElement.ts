@@ -3,7 +3,7 @@ import { property, query } from "lit/decorators.js";
 
 import {
   AttachInternals,
-  element,
+  customElement,
   DesignToken,
   getTextContent,
   hasAssignedNodes,
@@ -68,7 +68,7 @@ import { ChipVariant } from "./ChipVariant";
  * @cssprop --m3e-outlined-chip-outline-thickness - Outline thickness for outlined variant.
  * @cssprop --m3e-outlined-chip-outline-color - Outline color for outlined variant.
  */
-@element("m3e-chip")
+@customElement("m3e-chip")
 export class M3eChipElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

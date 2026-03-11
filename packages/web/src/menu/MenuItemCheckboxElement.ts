@@ -2,7 +2,7 @@ import { css, CSSResultGroup, html } from "lit";
 
 import {
   Checked,
-  element,
+  customElement,
   DesignToken,
   hasAssignedNodes,
   prefersReducedMotion,
@@ -86,7 +86,7 @@ import { MenuItemElementBase } from "./MenuItemElementBase";
  * @cssprop --m3e-menu-item-first-child-shape - Shape for the first menu item in a menu.
  * @cssprop --m3e-menu-item-last-child-shape - Shape for the last menu item in a menu.
  */
-@element("m3e-menu-item-checkbox")
+@customElement("m3e-menu-item-checkbox")
 export class M3eMenuItemCheckboxElement extends Checked(Role(MenuItemElementBase, "menuitemcheckbox")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = [

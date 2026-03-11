@@ -10,7 +10,7 @@ import {
   addCustomState,
   setCustomState,
   deleteCustomState,
-  element,
+  customElement,
 } from "@m3e/web/core";
 
 import { RovingTabIndexManager } from "@m3e/web/core/a11y";
@@ -99,7 +99,7 @@ import { MenuVariant } from "./MenuVariant";
  * @cssprop --m3e-menu-divider-spacing - Vertical spacing around slotted `m3e-divider` elements.
  * @cssprop --m3e-menu-gap - Gap between content in the menu.
  */
-@element("m3e-menu")
+@customElement("m3e-menu")
 export class M3eMenuElement extends AttachInternals(Role(LitElement, "menu")) {
   static {
     if (typeof window !== "undefined") {

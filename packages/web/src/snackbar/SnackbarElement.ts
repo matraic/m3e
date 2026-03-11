@@ -3,7 +3,7 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
-import { element, DesignToken, Role } from "@m3e/web/core";
+import { customElement, DesignToken, Role } from "@m3e/web/core";
 
 /**
  * Presents short updates about application processes at the bottom of the screen.
@@ -27,7 +27,7 @@ import { element, DesignToken, Role } from "@m3e/web/core";
  * @cssprop --m3e-snackbar-min-width - Minimum width of the snackbar.
  * @cssprop --m3e-snackbar-max-width - Maximum width of the snackbar.
  */
-@element("m3e-snackbar")
+@customElement("m3e-snackbar")
 export class M3eSnackbarElement extends Role(LitElement, "status") {
   static {
     if (typeof window !== "undefined") {

@@ -13,7 +13,7 @@ import {
   RequiredConstraintValidation,
   updateLabels,
   setCustomState,
-  element,
+  customElement,
 } from "@m3e/web/core";
 
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
@@ -54,7 +54,7 @@ import { M3eRadioElement } from "./RadioElement";
  *
  * @fires change - Emitted when the checked state of a radio button changes.
  */
-@element("m3e-radio-group")
+@customElement("m3e-radio-group")
 export class M3eRadioGroupElement extends Labelled(
   RequiredConstraintValidation(
     Dirty(

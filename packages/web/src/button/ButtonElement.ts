@@ -25,7 +25,7 @@ import {
   deleteCustomState,
   setCustomState,
   AttachInternalsMixin,
-  element,
+  customElement,
 } from "@m3e/web/core";
 
 import { ButtonShape } from "./ButtonShape";
@@ -471,7 +471,7 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * @cssprop --m3e-text-button-pressed-selected-label-text-color - Pressed selected label color, for the text variant.
  * @cssprop --m3e-text-button-pressed-selected-state-layer-color - Pressed selected state layer color, for the text variant.
  */
-@element("m3e-button")
+@customElement("m3e-button")
 export class M3eButtonElement extends KeyboardClick(
   LinkButton(
     FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))),

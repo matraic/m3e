@@ -25,7 +25,7 @@ import {
   deleteCustomState,
   setCustomState,
   AttachInternalsMixin,
-  element,
+  customElement,
 } from "@m3e/web/core";
 
 import { IconButtonSize } from "./IconButtonSize";
@@ -339,7 +339,7 @@ import { IconButtonWidth } from "./IconButtonWidth";
  * @cssprop --m3e-standard-icon-button-pressed-selected-icon-color - Selected icon color on pressed (standard).
  * @cssprop --m3e-standard-icon-button-pressed-selected-state-layer-color - Selected state layer color on pressed (standard).
  */
-@element("m3e-icon-button")
+@customElement("m3e-icon-button")
 export class M3eIconButtonElement extends KeyboardClick(
   LinkButton(
     FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))),

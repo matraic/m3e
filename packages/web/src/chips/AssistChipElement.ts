@@ -1,7 +1,7 @@
 import { nothing } from "lit";
 
 import {
-  element,
+  customElement,
   Disabled,
   DisabledInteractive,
   Focusable,
@@ -83,7 +83,7 @@ import { M3eChipElement } from "./ChipElement";
  * @cssprop --m3e-outlined-chip-disabled-outline-color - Outline color for disabled outlined variant.
  * @cssprop --m3e-outlined-chip-disabled-outline-opacity - Opacity applied to disabled outline.
  */
-@element("m3e-assist-chip")
+@customElement("m3e-assist-chip")
 export class M3eAssistChipElement extends FormSubmitter(
   LinkButton(KeyboardClick(Focusable(DisabledInteractive(Disabled(Role(M3eChipElement, "button")))))),
 ) {

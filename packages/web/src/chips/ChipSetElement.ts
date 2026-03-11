@@ -1,6 +1,6 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 
-import { element, Vertical } from "@m3e/web/core";
+import { customElement, Vertical } from "@m3e/web/core";
 
 /**
  * A container used to organize chips into a cohesive unit.
@@ -29,7 +29,7 @@ import { element, Vertical } from "@m3e/web/core";
  *
  * @cssprop --m3e-chip-set-spacing - The spacing (gap) between chips in the set.
  */
-@element("m3e-chip-set")
+@customElement("m3e-chip-set")
 export class M3eChipSetElement extends Vertical(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

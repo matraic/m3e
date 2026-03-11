@@ -1,6 +1,6 @@
 import { LitElement } from "lit";
 
-import { ActionElementBase, element, HtmlFor, MutationController } from "@m3e/web/core";
+import { ActionElementBase, customElement, HtmlFor, MutationController } from "@m3e/web/core";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y";
 
 import { M3eNavRailElement } from "./NavRailElement";
@@ -33,7 +33,7 @@ import { M3eNavRailElement } from "./NavRailElement";
  *
  * @tag m3e-nav-rail-toggle
  */
-@element("m3e-nav-rail-toggle")
+@customElement("m3e-nav-rail-toggle")
 export class M3eNavRailToggleElement extends HtmlFor(ActionElementBase) {
   /** @private */ readonly #mutationController = new MutationController(this, {
     target: null,

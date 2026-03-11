@@ -6,7 +6,7 @@ export type Constructor<T> = { new (...args: unknown[]): T };
  * Class decorator factory that defines the decorated class as a custom element.
  *
  * ```js
- * @element('my-element')
+ * @customElement('my-element')
  * class MyElement extends LitElement {
  *   render() {
  *     return html``;
@@ -15,7 +15,7 @@ export type Constructor<T> = { new (...args: unknown[]): T };
  * ```
  * @param {string} tagName The tag name of the custom element to define.
  */
-export const element =
+export const customElement =
   (tagName: string): CustomElementDecorator =>
   (
     classOrTarget: Omit<typeof HTMLElement, "new"> | Constructor<HTMLElement>,

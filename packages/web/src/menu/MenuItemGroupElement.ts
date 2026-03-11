@@ -1,6 +1,6 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 
-import { element, Role } from "@m3e/web/core";
+import { customElement, Role } from "@m3e/web/core";
 
 /**
  * Groups related items (such a radios) in a menu.
@@ -14,7 +14,7 @@ import { element, Role } from "@m3e/web/core";
  *
  * @slot - Renders the contents of the group.
  */
-@element("m3e-menu-item-group")
+@customElement("m3e-menu-item-group")
 export class M3eMenuItemGroupElement extends Role(LitElement, "group") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

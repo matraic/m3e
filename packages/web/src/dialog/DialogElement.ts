@@ -5,7 +5,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
 
 import {
   AttachInternals,
-  element,
+  customElement,
   DesignToken,
   EventAttribute,
   focusWhenReady,
@@ -76,7 +76,7 @@ import "@m3e/web/core/a11y";
  * @cssprop --m3e-dialog-content-line-height - Line height for the dialog content.
  * @cssprop --m3e-dialog-content-tracking - Letter spacing for the dialog content.
  */
-@element("m3e-dialog")
+@customElement("m3e-dialog")
 export class M3eDialogElement extends EventAttribute(
   AttachInternals(LitElement),
   "opening",

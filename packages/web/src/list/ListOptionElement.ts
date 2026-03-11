@@ -16,7 +16,7 @@ import {
   FocusController,
   PressedController,
   HoverController,
-  element,
+  customElement,
 } from "@m3e/web/core";
 
 import { selectionManager } from "@m3e/web/core/a11y";
@@ -119,7 +119,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-three-line-top-offset - Top offset for media in three line items.
  * @cssprop --m3e-list-item-disabled-media-opacity - Opacity for media when disabled.
  */
-@element("m3e-list-option")
+@customElement("m3e-list-option")
 export class M3eListOptionElement extends KeyboardClick(
   Focusable(Selected(Disabled(AttachInternals(Role(M3eListItemElement, "option"), true)))),
 ) {

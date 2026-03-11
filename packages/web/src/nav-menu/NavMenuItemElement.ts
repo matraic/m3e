@@ -5,7 +5,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
 
 import {
   AttachInternals,
-  element,
+  customElement,
   DesignToken,
   Disabled,
   EventAttribute,
@@ -137,7 +137,7 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  * @cssprop --m3e-nav-menu-divider-margin - Margin for divider elements.
  * @cssprop --m3e-nav-menu-item-vertical-inset - Vertical margin for first/last child items.
  */
-@element("m3e-nav-menu-item")
+@customElement("m3e-nav-menu-item")
 export class M3eNavMenuItemElement extends Selected(
   Disabled(
     EventAttribute(AttachInternals(Role(LitElement, "treeitem"), true), "opening", "opened", "closing", "closed"),

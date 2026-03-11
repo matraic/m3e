@@ -5,7 +5,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import {
   addCustomState,
   AttachInternals,
-  element,
+  customElement,
   deleteCustomState,
   DesignToken,
   hasCustomState,
@@ -85,7 +85,7 @@ import { StepperOrientation } from "./StepperOrientation";
  * @cssprop --m3e-step-divider-color - Color of the divider line between steps.
  * @cssprop --m3e-step-divider-inset - Inset offset for divider alignment within step layout.
  */
-@element("m3e-stepper")
+@customElement("m3e-stepper")
 export class M3eStepperElement extends AttachInternals(LitElement) {
   static {
     if (typeof window !== "undefined") {

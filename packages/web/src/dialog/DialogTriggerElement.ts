@@ -1,4 +1,4 @@
-import { ActionElementBase, element, HtmlFor } from "@m3e/web/core";
+import { ActionElementBase, customElement, HtmlFor } from "@m3e/web/core";
 
 import { M3eDialogElement } from "./DialogElement";
 
@@ -6,7 +6,7 @@ import { M3eDialogElement } from "./DialogElement";
  * An element, nested within a clickable element, used to open a dialog.
  * @tag m3e-dialog-trigger
  */
-@element("m3e-dialog-trigger")
+@customElement("m3e-dialog-trigger")
 export class M3eDialogTriggerElement extends HtmlFor(ActionElementBase) {
   /** @inheritdoc */
   override connectedCallback(): void {

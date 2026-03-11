@@ -9,7 +9,7 @@ import {
   addCustomState,
   setCustomState,
   deleteCustomState,
-  element,
+  customElement,
 } from "@m3e/web/core";
 
 import { positionAnchor } from "@m3e/web/core/anchoring";
@@ -45,7 +45,7 @@ import { M3eOptGroupElement } from "./OptGroupElement";
  * @cssprop --m3e-option-panel-text-highlight-container-color - Background color used for text highlight matches.
  * @cssprop --m3e-option-panel-text-highlight-color - Text color used for text highlight matches.
  */
-@element("m3e-option-panel")
+@customElement("m3e-option-panel")
 export class M3eOptionPanelElement extends AttachInternals(Role(LitElement, "listbox")) {
   static {
     if (typeof window !== "undefined") {

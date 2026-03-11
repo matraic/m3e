@@ -5,7 +5,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import {
   addCustomState,
   AttachInternals,
-  element,
+  customElement,
   deleteCustomState,
   DesignToken,
   hasCustomState,
@@ -71,7 +71,7 @@ const MIN_PRIMARY_TAB_WIDTH = 24;
  * @cssprop --m3e-tabs-primary-active-indicator-thickness - Thickness for primary variant's active indicator.
  * @cssprop --m3e-tabs-secondary-active-indicator-thickness - Thickness for secondary variant's active indicator.
  */
-@element("m3e-tabs")
+@customElement("m3e-tabs")
 export class M3eTabsElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

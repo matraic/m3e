@@ -3,7 +3,7 @@ import { css, CSSResultGroup, html, isServer, LitElement, PropertyValues, unsafe
 import { property } from "lit/decorators.js";
 
 import { DesignToken } from "../tokens";
-import { element } from "../decorators";
+import { customElement } from "../decorators";
 
 /**
  * Highlights text which matches a given search term.
@@ -37,7 +37,7 @@ import { element } from "../decorators";
  * @cssprop --m3e-text-highlight-decoration - Optional text decoration (e.g., underline, line-through) for highlighted text.
  * @cssprop --m3e-text-highlight-shadow - Optional text shadow for emphasis or contrast.
  */
-@element("m3e-text-highlight")
+@customElement("m3e-text-highlight")
 export class M3eTextHighlightElement extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

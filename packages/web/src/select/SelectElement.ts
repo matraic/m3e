@@ -25,7 +25,7 @@ import {
   deleteCustomState,
   addCustomState,
   setCustomState,
-  element,
+  customElement,
 } from "@m3e/web/core";
 
 import { ListKeyManager } from "@m3e/web/core/a11y";
@@ -85,7 +85,7 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * @cssprop --m3e-select-disabled-color-opacity - The opacity level applied to the disabled text color.
  * @cssprop --m3e-select-icon-size - The size of the dropdown arrow icon.
  */
-@element("m3e-select")
+@customElement("m3e-select")
 export class M3eSelectElement
   extends Focusable(
     Labelled(

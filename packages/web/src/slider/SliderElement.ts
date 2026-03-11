@@ -5,7 +5,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import {
   addCustomState,
   AttachInternals,
-  element,
+  customElement,
   deleteCustomState,
   DesignToken,
   hasCustomState,
@@ -89,7 +89,7 @@ import { SliderSize } from "./SliderSize";
  * @cssprop --m3e-slider-tick-inactive-color - Color of inactive ticks when enabled.
  * @cssprop --m3e-slider-disabled-tick-inactive-color - Color of inactive ticks when disabled.
  */
-@element("m3e-slider")
+@customElement("m3e-slider")
 export class M3eSliderElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

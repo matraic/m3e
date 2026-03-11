@@ -22,7 +22,7 @@ import {
   Focusable,
   HoverController,
   PressedController,
-  element,
+  customElement,
 } from "@m3e/web/core";
 
 /**
@@ -92,7 +92,7 @@ import {
  * @cssprop --m3e-checkbox-selected-error-focus-color - Ripple focus color for invalid selected state.
  * @cssprop --m3e-checkbox-selected-error-ripple-color - Ripple base color for invalid selected state.
  */
-@element("m3e-checkbox")
+@customElement("m3e-checkbox")
 export class M3eCheckboxElement extends Labelled(
   RequiredConstraintValidation(
     Dirty(

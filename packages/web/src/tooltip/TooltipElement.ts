@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
-import { element, DesignToken, getTextContent, setCustomState } from "@m3e/web/core";
+import { customElement, DesignToken, getTextContent, setCustomState } from "@m3e/web/core";
 import { M3eAriaDescriber } from "@m3e/web/core/a11y";
 import { AnchorPosition } from "@m3e/web/core/anchoring";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
@@ -50,7 +50,7 @@ import { TooltipElementBase } from "./TooltipElementBase";
  * @cssprop --m3e-tooltip-supporting-text-line-height - Line height of supporting text.
  * @cssprop --m3e-tooltip-supporting-text-tracking - Letter spacing of supporting text.
  */
-@element("m3e-tooltip")
+@customElement("m3e-tooltip")
 export class M3eTooltipElement extends TooltipElementBase {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

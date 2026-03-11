@@ -11,7 +11,7 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { element, DesignToken, EventAttribute, Role } from "@m3e/web/core";
+import { customElement, DesignToken, EventAttribute, Role } from "@m3e/web/core";
 import type { M3eSelectElement } from "@m3e/web/select";
 import type { FormFieldVariant } from "@m3e/web/form-field";
 
@@ -61,7 +61,7 @@ import { PageEventDetail } from "./PageEventDetail";
  * @cssprop --m3e-paginator-line-height - The line height used for paginator text.
  * @cssprop --m3e-paginator-tracking - The letter-spacing used for paginator text.
  */
-@element("m3e-paginator")
+@customElement("m3e-paginator")
 export class M3ePaginatorElement extends EventAttribute(Role(LitElement, "group"), "page") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
