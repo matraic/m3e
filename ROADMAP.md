@@ -39,7 +39,7 @@ Planned components which have not yet entered development:
 
 ## 🏛️ Past Milestones
 
-- **2.0.1 – 2.0.3 — Patch releases**  
+- **2.0.1 – 2.0.4 — Patch releases**  
   Bug fixes, SSR support for React.
 
 - **2.0.0 — Major release**  
