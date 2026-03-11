@@ -1,14 +1,16 @@
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { property, state } from "lit/decorators.js";
 
 import {
   addCustomState,
   AttachInternals,
+  element,
   deleteCustomState,
   hasAssignedNodes,
   hasCustomState,
   ResizeController,
 } from "@m3e/web/core";
+
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
 import "@m3e/web/core/a11y";
 
@@ -67,7 +69,7 @@ import { DrawerContainerStyle } from "./styles";
  * @cssprop --m3e-drawer-divider-color - The color of the divider between drawer sections.
  * @cssprop --m3e-drawer-divider-thickness - The thickness of the divider line.
  */
-@customElement("m3e-drawer-container")
+@element("m3e-drawer-container")
 export class M3eDrawerContainerElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = DrawerContainerStyle;

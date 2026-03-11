@@ -1,7 +1,14 @@
 import { css, CSSResultGroup, html } from "lit";
-import { customElement } from "lit/decorators.js";
 
-import { Checked, DesignToken, hasAssignedNodes, prefersReducedMotion, Role, setCustomState } from "@m3e/web/core";
+import {
+  Checked,
+  element,
+  DesignToken,
+  hasAssignedNodes,
+  prefersReducedMotion,
+  Role,
+  setCustomState,
+} from "@m3e/web/core";
 
 import { M3eMenuItemElement } from "./MenuItemElement";
 import { MenuItemElementBase } from "./MenuItemElementBase";
@@ -79,7 +86,7 @@ import { MenuItemElementBase } from "./MenuItemElementBase";
  * @cssprop --m3e-menu-item-first-child-shape - Shape for the first menu item in a menu.
  * @cssprop --m3e-menu-item-last-child-shape - Shape for the last menu item in a menu.
  */
-@customElement("m3e-menu-item-checkbox")
+@element("m3e-menu-item-checkbox")
 export class M3eMenuItemCheckboxElement extends Checked(Role(MenuItemElementBase, "menuitemcheckbox")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = [

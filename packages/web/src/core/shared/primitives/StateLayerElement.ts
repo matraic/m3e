@@ -1,8 +1,9 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 
 import { FocusController, HoverController } from "../controllers";
 import { HtmlFor, Role } from "../mixins";
+import { element } from "../decorators";
 
 import { StateLayerToken } from "./StateLayerToken";
 
@@ -40,7 +41,7 @@ import { StateLayerToken } from "./StateLayerToken";
  * @cssprop --m3e-state-layer-hover-color - Color on hover.
  * @cssprop --m3e-state-layer-hover-opacity - Opacity on hover.
  */
-@customElement("m3e-state-layer")
+@element("m3e-state-layer")
 export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

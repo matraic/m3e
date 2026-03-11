@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 
 import {
@@ -25,6 +25,7 @@ import {
   deleteCustomState,
   addCustomState,
   setCustomState,
+  element,
 } from "@m3e/web/core";
 
 import { ListKeyManager } from "@m3e/web/core/a11y";
@@ -84,7 +85,7 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * @cssprop --m3e-select-disabled-color-opacity - The opacity level applied to the disabled text color.
  * @cssprop --m3e-select-icon-size - The size of the dropdown arrow icon.
  */
-@customElement("m3e-select")
+@element("m3e-select")
 export class M3eSelectElement
   extends Focusable(
     Labelled(

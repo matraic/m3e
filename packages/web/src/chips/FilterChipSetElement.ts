@@ -1,5 +1,5 @@
 import { html, PropertyValues } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
 import {
   AttachInternals,
@@ -11,6 +11,7 @@ import {
   Touched,
   Role,
   setCustomState,
+  element,
 } from "@m3e/web/core";
 
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
@@ -56,7 +57,7 @@ import { M3eFilterChipElement } from "./FilterChipElement";
  *
  * @cssprop --m3e-chip-set-spacing - The spacing (gap) between chips in the set.
  */
-@customElement("m3e-filter-chip-set")
+@element("m3e-filter-chip-set")
 export class M3eFilterChipSetElement extends Labelled(
   Dirty(Touched(FormAssociated(Disabled(AttachInternals(Role(M3eChipSetElement, "radiogroup")))))),
 ) {

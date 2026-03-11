@@ -1,4 +1,4 @@
-import { customElement } from "lit/decorators.js";
+import { element } from "@m3e/web/core";
 
 import { StepperButtonElementBase } from "./StepperButtonElementBase";
 
@@ -8,7 +8,7 @@ import { StepperButtonElementBase } from "./StepperButtonElementBase";
  *
  * @slot - Renders the content of the action.
  */
-@customElement("m3e-stepper-reset")
+@element("m3e-stepper-reset")
 export class M3eStepperResetElement extends StepperButtonElementBase {
   constructor() {
     super("reset");

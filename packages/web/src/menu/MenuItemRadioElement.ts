@@ -1,7 +1,6 @@
 import { CSSResultGroup, html, PropertyValues } from "lit";
-import { customElement } from "lit/decorators.js";
 
-import { Checked, hasAssignedNodes, prefersReducedMotion, Role, setCustomState } from "@m3e/web/core";
+import { Checked, element, hasAssignedNodes, prefersReducedMotion, Role, setCustomState } from "@m3e/web/core";
 
 import { M3eMenuItemCheckboxElement } from "./MenuItemCheckboxElement";
 import { M3eMenuItemElement } from "./MenuItemElement";
@@ -79,7 +78,7 @@ import { MenuItemElementBase } from "./MenuItemElementBase";
  * @cssprop --m3e-menu-item-first-child-shape - Shape for the first menu item in a menu.
  * @cssprop --m3e-menu-item-last-child-shape - Shape for the last menu item in a menu.
  */
-@customElement("m3e-menu-item-radio")
+@element("m3e-menu-item-radio")
 export class M3eMenuItemRadioElement extends Checked(Role(MenuItemElementBase, "menuitemradio")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = M3eMenuItemCheckboxElement.styles;

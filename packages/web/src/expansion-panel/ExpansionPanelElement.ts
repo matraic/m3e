@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 
-import { AttachInternals, Disabled, EventAttribute, hasAssignedNodes, setCustomState } from "@m3e/web/core";
+import { AttachInternals, element, Disabled, EventAttribute, hasAssignedNodes, setCustomState } from "@m3e/web/core";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
 import { ExpansionTogglePosition } from "./ExpansionTogglePosition";
@@ -80,7 +80,7 @@ import { M3eExpansionHeaderElement } from "./ExpansionHeaderElement";
  * @cssprop --m3e-expansion-panel-actions-divider-thickness - Thickness of the divider above actions.
  * @cssprop --m3e-expansion-panel-actions-divider-color - Color of the divider above actions.
  */
-@customElement("m3e-expansion-panel")
+@element("m3e-expansion-panel")
 export class M3eExpansionPanelElement extends EventAttribute(
   Disabled(AttachInternals(LitElement, true)),
   "opening",

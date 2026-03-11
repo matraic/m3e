@@ -1,8 +1,8 @@
 import { css, CSSResultGroup, html, PropertyValues } from "lit";
-import { customElement } from "lit/decorators.js";
 
 import {
   AttachInternals,
+  element,
   ConstraintValidation,
   DesignToken,
   Dirty,
@@ -58,7 +58,7 @@ import { M3eInputChipElement } from "./InputChipElement";
  *
  * @cssprop --m3e-chip-set-spacing - The spacing (gap) between chips in the set.
  */
-@customElement("m3e-input-chip-set")
+@element("m3e-input-chip-set")
 export class M3eInputChipSetElement
   extends RequiredConstraintValidation(
     Required(
@@ -68,7 +68,7 @@ export class M3eInputChipSetElement
   implements FormFieldControl
 {
   static {
-    if (document) {
+    if (typeof window !== "undefined") {
       const lightDomStyle = new CSSStyleSheet();
       lightDomStyle.replaceSync(
         css`

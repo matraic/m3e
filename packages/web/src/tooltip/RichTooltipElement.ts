@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { property, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { DesignToken, getTextContent, hasAssignedNodes } from "@m3e/web/core";
+import { element, DesignToken, getTextContent, hasAssignedNodes } from "@m3e/web/core";
 import { M3eAriaDescriber, M3eInteractivityChecker } from "@m3e/web/core/a11y";
 import { AnchorPosition } from "@m3e/web/core/anchoring";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
@@ -74,7 +74,7 @@ import { TooltipElementBase } from "./TooltipElementBase";
  * @cssprop --m3e-rich-tooltip-actions-top-space - Space above the actions slot.
  * @cssprop --m3e-rich-tooltip-actions-bottom-space - Space below the actions slot.
  */
-@customElement("m3e-rich-tooltip")
+@element("m3e-rich-tooltip")
 export class M3eRichTooltipElement extends TooltipElementBase {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

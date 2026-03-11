@@ -1,8 +1,8 @@
 import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
-import { customElement } from "lit/decorators.js";
 
 import { CheckedIndeterminate, Disabled, Role } from "../mixins";
 import { DesignToken } from "../tokens";
+import { element } from "../decorators";
 
 /**
  * An element which looks like a checkbox.
@@ -36,7 +36,7 @@ import { DesignToken } from "../tokens";
  * @cssprop --m3e-checkbox-selected-disabled-icon-color - Icon color for selected disabled state.
  * @cssprop --m3e-checkbox-selected-disabled-icon-opacity - Icon opacity for selected disabled state.
  */
-@customElement("m3e-pseudo-checkbox")
+@element("m3e-pseudo-checkbox")
 export class M3ePseudoCheckboxElement extends CheckedIndeterminate(Disabled(Role(LitElement, "none"))) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

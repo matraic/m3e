@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, isServer, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
 import { DesignToken } from "../tokens";
+import { element } from "../decorators";
 
 /**
  * Highlights text which matches a given search term.
@@ -36,7 +37,7 @@ import { DesignToken } from "../tokens";
  * @cssprop --m3e-text-highlight-decoration - Optional text decoration (e.g., underline, line-through) for highlighted text.
  * @cssprop --m3e-text-highlight-shadow - Optional text shadow for emphasis or contrast.
  */
-@customElement("m3e-text-highlight")
+@element("m3e-text-highlight")
 export class M3eTextHighlightElement extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -64,7 +65,7 @@ export class M3eTextHighlightElement extends LitElement {
             text-decoration: var(--m3e-text-highlight-decoration);
             text-shadow: var(--m3e-text-highlight-shadow);
           }
-        `.toString()
+        `.toString(),
       );
     }
   }
@@ -175,7 +176,7 @@ export class M3eTextHighlightElement extends LitElement {
           detail: [...this.#ranges],
           bubbles: false,
           composed: false,
-        })
+        }),
       );
       return;
     }
@@ -218,7 +219,7 @@ export class M3eTextHighlightElement extends LitElement {
         detail: [...this.#ranges],
         bubbles: false,
         composed: false,
-      })
+      }),
     );
   }
 }
@@ -231,25 +232,25 @@ export interface M3eTextHighlightElement {
   addEventListener<K extends keyof M3eTextHighlightElementEventMap>(
     type: K,
     listener: (this: M3eTextHighlightElement, ev: M3eTextHighlightElementEventMap[K]) => void,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   addEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | AddEventListenerOptions
+    options?: boolean | AddEventListenerOptions,
   ): void;
 
   removeEventListener<K extends keyof M3eTextHighlightElementEventMap>(
     type: K,
     listener: (this: M3eTextHighlightElement, ev: M3eTextHighlightElementEventMap[K]) => void,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 
   removeEventListener(
     type: string,
     listener: EventListenerOrEventListenerObject,
-    options?: boolean | EventListenerOptions
+    options?: boolean | EventListenerOptions,
   ): void;
 }
 

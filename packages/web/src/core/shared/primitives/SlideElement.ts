@@ -1,8 +1,9 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
 import { DesignToken } from "../tokens";
 import { addCustomState, AttachInternals, deleteCustomState, hasCustomState } from "../mixins";
+import { element } from "../decorators";
 
 /**
  * A carousel-like container used to horizontally cycle through slotted items.
@@ -26,7 +27,7 @@ import { addCustomState, AttachInternals, deleteCustomState, hasCustomState } fr
  *
  * @cssprop --m3e-slide-animation-duration - The duration of transitions between slotted items.
  */
-@customElement("m3e-slide")
+@element("m3e-slide")
 export class M3eSlideElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

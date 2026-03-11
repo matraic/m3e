@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, nothing, PropertyValues } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 import {
@@ -11,7 +11,9 @@ import {
   DesignToken,
   hasAssignedNodes,
   setCustomState,
+  element,
 } from "@m3e/web/core";
+
 import { M3eIconButtonElement } from "@m3e/web/icon-button";
 
 import { M3eChipElement } from "./ChipElement";
@@ -91,7 +93,7 @@ import { M3eChipElement } from "./ChipElement";
  * @cssprop --m3e-chip-disabled-avatar-opacity - Opacity applied to the avatar when disabled.
  * @cssprop --m3e-chip-with-avatar-padding-start - Start padding when an avatar is present.
  */
-@customElement("m3e-input-chip")
+@element("m3e-input-chip")
 export class M3eInputChipElement extends EventAttribute(
   DisabledInteractive(Disabled(Role(M3eChipElement, "row"))),
   "remove",

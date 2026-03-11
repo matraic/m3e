@@ -67,7 +67,7 @@ export function hasCustomState(element: AttachInternalsMixin, state: string): bo
  */
 export function addCustomState(element: AttachInternalsMixin, state: string): void {
   if (!isServer) {
-    element[internals].states.add(state);
+    element[internals]?.states.add(state);
   }
 }
 
@@ -78,7 +78,7 @@ export function addCustomState(element: AttachInternalsMixin, state: string): vo
  * @returns {boolean} Whether `state` was removed from `element`.
  */
 export function deleteCustomState(element: AttachInternalsMixin, state: string): boolean {
-  return !isServer && element[internals].states.delete(state);
+  return !isServer && element[internals]?.states.delete(state);
 }
 
 /**

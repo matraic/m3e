@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
-import { AttachInternals, DesignToken, Role, setCustomState } from "@m3e/web/core";
+import { AttachInternals, element, DesignToken, Role, setCustomState } from "@m3e/web/core";
 
 import { ListVariant } from "./ListVariant";
 import { M3eListItemElement } from "./ListItemElement";
@@ -51,7 +51,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * @cssprop --m3e-segmented-list-item-focus-container-shape - Border radius of items in segmented variant on focus.
  * @cssprop --m3e-segmented-list-item-selected-container-shape - Border radius of items in segmented variant when selected.
  */
-@customElement("m3e-list")
+@element("m3e-list")
 export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

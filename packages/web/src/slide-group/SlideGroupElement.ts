@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js";
+import { property, query, state } from "lit/decorators.js";
 
-import { debounce, ResizeController } from "@m3e/web/core";
+import { element, debounce, ResizeController } from "@m3e/web/core";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
 /**
@@ -43,7 +43,7 @@ import { M3eDirectionality } from "@m3e/web/core/bidi";
  * @cssprop --m3e-slide-group-divider-top - Adds top border to content container for visual separation.
  * @cssprop --m3e-slide-group-divider-bottom - Adds bottom border to content container for visual separation.
  */
-@customElement("m3e-slide-group")
+@element("m3e-slide-group")
 export class M3eSlideGroupElement extends LitElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

@@ -1,5 +1,5 @@
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 
 import {
   Labelled,
@@ -18,6 +18,7 @@ import {
   KeyboardClick,
   PressedController,
   HoverController,
+  element,
 } from "@m3e/web/core";
 
 import { SwitchHandleStyle, SwitchIconStyle, SwitchStateLayerStyle, SwitchStyle, SwitchTrackStyle } from "./styles";
@@ -131,7 +132,7 @@ import { SwitchIcons } from "./SwitchIcons";
  * @cssprop --m3e-switch-selected-pressed-handle-color - Handle color when selected and pressed.
  * @cssprop --m3e-switch-unselected-pressed-handle-color - Handle color when unselected and pressed.
  */
-@customElement("m3e-switch")
+@element("m3e-switch")
 export class M3eSwitchElement extends Labelled(
   Dirty(
     Touched(

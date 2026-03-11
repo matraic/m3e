@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 
-import { DesignToken, setCustomState } from "@m3e/web/core";
+import { element, DesignToken, setCustomState } from "@m3e/web/core";
 import { selectionManager } from "@m3e/web/core/a11y";
 
 import type { M3eListElement } from "./ListElement";
@@ -121,7 +121,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-three-line-top-offset - Top offset for media in three line items.
  * @cssprop --m3e-list-item-disabled-media-opacity - Opacity for media when disabled.
  */
-@customElement("m3e-expandable-list-item")
+@element("m3e-expandable-list-item")
 export class M3eExpandableListItemElement extends M3eListItemElement {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

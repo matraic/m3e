@@ -1,10 +1,9 @@
 import { LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
 
-import { ActionElementBase, HtmlFor, MutationController } from "@m3e/web/core";
+import { ActionElementBase, element, HtmlFor, MutationController } from "@m3e/web/core";
+import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y";
 
 import { M3eNavRailElement } from "./NavRailElement";
-import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y";
 
 /**
  * An element, nested within a clickable element, used to toggle the expanded state of a navigation rail.
@@ -34,7 +33,7 @@ import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y"
  *
  * @tag m3e-nav-rail-toggle
  */
-@customElement("m3e-nav-rail-toggle")
+@element("m3e-nav-rail-toggle")
 export class M3eNavRailToggleElement extends HtmlFor(ActionElementBase) {
   /** @private */ readonly #mutationController = new MutationController(this, {
     target: null,

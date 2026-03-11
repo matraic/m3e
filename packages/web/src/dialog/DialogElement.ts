@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, LitElement, nothing, unsafeCSS } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js";
+import { property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 import {
   AttachInternals,
+  element,
   DesignToken,
   EventAttribute,
   focusWhenReady,
@@ -75,7 +76,7 @@ import "@m3e/web/core/a11y";
  * @cssprop --m3e-dialog-content-line-height - Line height for the dialog content.
  * @cssprop --m3e-dialog-content-tracking - Letter spacing for the dialog content.
  */
-@customElement("m3e-dialog")
+@element("m3e-dialog")
 export class M3eDialogElement extends EventAttribute(
   AttachInternals(LitElement),
   "opening",

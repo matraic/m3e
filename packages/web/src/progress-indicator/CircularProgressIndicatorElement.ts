@@ -1,9 +1,9 @@
 import { css, CSSResultGroup, html, nothing, PropertyValues, svg } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { AnimationLoopController, DesignToken, ResizeController, resolveFragmentUrl } from "@m3e/web/core";
+import { AnimationLoopController, element, DesignToken, ResizeController, resolveFragmentUrl } from "@m3e/web/core";
 
 import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
 
@@ -47,7 +47,7 @@ const WAVY_INDETERMINATE_DURATION = 1.575;
  * @cssprop --m3e-progress-indicator-track-color - Track color of the progress indicator (background).
  * @cssprop --m3e-progress-indicator-color - Color of the progress indicator (foreground).
  */
-@customElement("m3e-circular-progress-indicator")
+@element("m3e-circular-progress-indicator")
 export class M3eCircularProgressIndicatorElement extends ProgressElementIndicatorBase {
   /** The styles of the element. */
   static override styles: CSSResultGroup = [

@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, query, state } from "lit/decorators.js";
+import { query, state } from "lit/decorators.js";
 
-import { AttachInternals, DesignToken, Disabled, M3eStateLayerElement, Role, Selected } from "@m3e/web/core";
+import { AttachInternals, element, DesignToken, Disabled, M3eStateLayerElement, Role, Selected } from "@m3e/web/core";
 
 import { TocNode } from "./TocGenerator";
 
@@ -31,7 +31,7 @@ import { TocNode } from "./TocGenerator";
  * @cssprop --m3e-toc-item-selected-tracking - Letter spacing for selected items.
  * @cssprop --m3e-toc-item-selected-color - Text color for selected items.
  */
-@customElement("m3e-toc-item")
+@element("m3e-toc-item")
 export class M3eTocItemElement extends Selected(Disabled(AttachInternals(Role(LitElement, "link")))) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

@@ -1,7 +1,6 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
 
-import { AttachInternals, deleteCustomState, Role, setCustomState } from "@m3e/web/core";
+import { AttachInternals, element, deleteCustomState, Role, setCustomState } from "@m3e/web/core";
 
 /**
  * A top-level semantic grouping of items in a navigation menu.
@@ -45,7 +44,7 @@ import { AttachInternals, deleteCustomState, Role, setCustomState } from "@m3e/w
  * @cssprop --m3e-nav-menu-item-group-label-inset - Insets the label from the start edge of the group.
  * @cssprop --m3e-nav-menu-item-group-label-space - Vertical spacing around the group's label.
  */
-@customElement("m3e-nav-menu-item-group")
+@element("m3e-nav-menu-item-group")
 export class M3eNavMenuItemGroupElement extends AttachInternals(Role(LitElement, "group")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

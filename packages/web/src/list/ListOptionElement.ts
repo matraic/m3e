@@ -1,5 +1,5 @@
 import { CSSResultGroup, css, PropertyValues, html } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 
 import {
   KeyboardClick,
@@ -16,6 +16,7 @@ import {
   FocusController,
   PressedController,
   HoverController,
+  element,
 } from "@m3e/web/core";
 
 import { selectionManager } from "@m3e/web/core/a11y";
@@ -118,7 +119,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-three-line-top-offset - Top offset for media in three line items.
  * @cssprop --m3e-list-item-disabled-media-opacity - Opacity for media when disabled.
  */
-@customElement("m3e-list-option")
+@element("m3e-list-option")
 export class M3eListOptionElement extends KeyboardClick(
   Focusable(Selected(Disabled(AttachInternals(Role(M3eListItemElement, "option"), true)))),
 ) {

@@ -1,5 +1,5 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 
 import {
   Labelled,
@@ -22,6 +22,7 @@ import {
   Focusable,
   HoverController,
   PressedController,
+  element,
 } from "@m3e/web/core";
 
 /**
@@ -91,7 +92,7 @@ import {
  * @cssprop --m3e-checkbox-selected-error-focus-color - Ripple focus color for invalid selected state.
  * @cssprop --m3e-checkbox-selected-error-ripple-color - Ripple base color for invalid selected state.
  */
-@customElement("m3e-checkbox")
+@element("m3e-checkbox")
 export class M3eCheckboxElement extends Labelled(
   RequiredConstraintValidation(
     Dirty(

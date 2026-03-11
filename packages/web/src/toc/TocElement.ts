@@ -1,8 +1,9 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js";
+import { property, query, state } from "lit/decorators.js";
 
 import {
   AttachInternals,
+  element,
   debounce,
   DesignToken,
   hasAssignedNodes,
@@ -74,7 +75,7 @@ import { TocGenerator, TocNode } from "./TocGenerator";
  * @cssprop --m3e-toc-title-tracking - Letter spacing for the title slot.
  * @cssprop --m3e-toc-title-color - Text color for the title slot.
  */
-@customElement("m3e-toc")
+@element("m3e-toc")
 export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "navigation"))) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

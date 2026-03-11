@@ -1,5 +1,5 @@
 import { CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 
 import {
   renderPseudoLink,
@@ -25,6 +25,7 @@ import {
   deleteCustomState,
   setCustomState,
   AttachInternalsMixin,
+  element,
 } from "@m3e/web/core";
 
 import { IconButtonSize } from "./IconButtonSize";
@@ -338,7 +339,7 @@ import { IconButtonWidth } from "./IconButtonWidth";
  * @cssprop --m3e-standard-icon-button-pressed-selected-icon-color - Selected icon color on pressed (standard).
  * @cssprop --m3e-standard-icon-button-pressed-selected-state-layer-color - Selected state layer color on pressed (standard).
  */
-@customElement("m3e-icon-button")
+@element("m3e-icon-button")
 export class M3eIconButtonElement extends KeyboardClick(
   LinkButton(
     FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))),

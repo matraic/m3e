@@ -1,8 +1,9 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, query } from "lit/decorators.js";
+import { query } from "lit/decorators.js";
 
 import {
   AttachInternals,
+  element,
   DesignToken,
   Disabled,
   Focusable,
@@ -73,7 +74,7 @@ import { addAriaReferencedId, removeAriaReferencedId, selectionManager } from "@
  * @cssprop --m3e-tab-spacing - Column gap between icon and label.
  * @cssprop --m3e-tab-icon-size - Font size for slotted icon.
  */
-@customElement("m3e-tab")
+@element("m3e-tab")
 export class M3eTabElement extends Selected(
   HtmlFor(KeyboardClick(Focusable(Disabled(AttachInternals(Role(LitElement, "tab"), true))))),
 ) {

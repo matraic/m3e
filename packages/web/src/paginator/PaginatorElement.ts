@@ -9,9 +9,9 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
-import { DesignToken, EventAttribute, Role } from "@m3e/web/core";
+import { element, DesignToken, EventAttribute, Role } from "@m3e/web/core";
 import type { M3eSelectElement } from "@m3e/web/select";
 import type { FormFieldVariant } from "@m3e/web/form-field";
 
@@ -60,9 +60,8 @@ import { PageEventDetail } from "./PageEventDetail";
  * @cssprop --m3e-paginator-font-weight - The font weight used for paginator text.
  * @cssprop --m3e-paginator-line-height - The line height used for paginator text.
  * @cssprop --m3e-paginator-tracking - The letter-spacing used for paginator text.
- *
  */
-@customElement("m3e-paginator")
+@element("m3e-paginator")
 export class M3ePaginatorElement extends EventAttribute(Role(LitElement, "group"), "page") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

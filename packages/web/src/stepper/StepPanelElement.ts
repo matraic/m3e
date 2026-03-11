@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { state } from "lit/decorators.js";
 
-import { Role } from "@m3e/web/core";
+import { element, Role } from "@m3e/web/core";
 
 /**
  * A panel presented for a step in a wizard-like workflow.
@@ -60,7 +60,7 @@ import { Role } from "@m3e/web/core";
  * @cssprop --m3e-step-panel-spacing - Vertical gap between stacked elements within the step panel.
  * @cssprop --m3e-step-panel-actions-height - Minimum height of the slotted actions container.
  */
-@customElement("m3e-step-panel")
+@element("m3e-step-panel")
 export class M3eStepPanelElement extends Role(LitElement, "tabpanel") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

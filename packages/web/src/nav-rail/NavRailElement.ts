@@ -1,7 +1,6 @@
 import { css, CSSResultGroup } from "lit";
-import { customElement } from "lit/decorators.js";
 
-import { DesignToken } from "@m3e/web/core";
+import { element, DesignToken } from "@m3e/web/core";
 import { M3eInteractivityChecker, RovingTabIndexManager, selectionManager } from "@m3e/web/core/a11y";
 import { M3eNavBarElement, NavItemOrientation } from "@m3e/web/nav-bar";
 
@@ -52,10 +51,10 @@ import { M3eNavBarElement, NavItemOrientation } from "@m3e/web/nav-bar";
  * @cssprop --m3e-nav-rail-button-item-space - Space below icon buttons and FABs.
  * @cssprop --m3e-nav-rail-expanded-icon-button-inset - Inset for icon buttons in expanded mode.
  */
-@customElement("m3e-nav-rail")
+@element("m3e-nav-rail")
 export class M3eNavRailElement extends M3eNavBarElement {
   static {
-    if (document) {
+    if (typeof window !== "undefined") {
       const lightDomStyle = new CSSStyleSheet();
       lightDomStyle.replaceSync(
         css`

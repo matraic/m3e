@@ -1,5 +1,4 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement } from "lit/decorators.js";
 
 import {
   AttachInternals,
@@ -14,6 +13,7 @@ import {
   RequiredConstraintValidation,
   updateLabels,
   setCustomState,
+  element,
 } from "@m3e/web/core";
 
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
@@ -54,7 +54,7 @@ import { M3eRadioElement } from "./RadioElement";
  *
  * @fires change - Emitted when the checked state of a radio button changes.
  */
-@customElement("m3e-radio-group")
+@element("m3e-radio-group")
 export class M3eRadioGroupElement extends Labelled(
   RequiredConstraintValidation(
     Dirty(

@@ -1,6 +1,4 @@
-import { customElement } from "lit/decorators.js";
-
-import { ActionElementBase, HtmlFor } from "@m3e/web/core";
+import { ActionElementBase, element, HtmlFor } from "@m3e/web/core";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y";
 
 import type { M3eMenuElement } from "./MenuElement";
@@ -63,7 +61,7 @@ import type { M3eMenuElement } from "./MenuElement";
  *
  * @slot - Renders the contents of the trigger.
  */
-@customElement("m3e-menu-trigger")
+@element("m3e-menu-trigger")
 export class M3eMenuTriggerElement extends HtmlFor(ActionElementBase) {
   /** The menu triggered by the element. */
   get menu(): M3eMenuElement | null {

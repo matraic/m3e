@@ -1,6 +1,6 @@
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
-import { ActionElementBase, HtmlFor } from "@m3e/web/core";
+import { ActionElementBase, element, HtmlFor } from "@m3e/web/core";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y";
 
 import { M3eBottomSheetElement } from "./BottomSheetElement";
@@ -14,7 +14,7 @@ import { M3eBottomSheetElement } from "./BottomSheetElement";
  * @attr detent - The zero‑based index of the detent the sheet should open to.
  * @attr secondary - Marks this trigger as a secondary trigger for accessibility. Secondary triggers do not receive ARIA ownership.
  */
-@customElement("m3e-bottom-sheet-trigger")
+@element("m3e-bottom-sheet-trigger")
 export class M3eBottomSheetTriggerElement extends HtmlFor(ActionElementBase) {
   /**
    * The zero‑based index of the detent the sheet should open to.

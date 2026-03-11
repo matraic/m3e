@@ -1,6 +1,6 @@
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
-import { ActionElementBase } from "@m3e/web/core";
+import { ActionElementBase, element } from "@m3e/web/core";
 
 /**
  * An element, nested within a clickable element, used to dismiss a parenting rich tooltip.
@@ -10,7 +10,7 @@ import { ActionElementBase } from "@m3e/web/core";
  *
  * @attr disable-restore-focus - Whether to focus should not be restored to the trigger when activated.
  */
-@customElement("m3e-rich-tooltip-action")
+@element("m3e-rich-tooltip-action")
 export class M3eRichTooltipActionElement extends ActionElementBase {
   /** Whether to focus should not be restored to the trigger when activated. */
   @property({ attribute: "disable-restore-focus", type: Boolean }) disableRestoreFocus = false;

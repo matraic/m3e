@@ -1,12 +1,13 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 
 import { FocusController, HoverController, PressedController } from "../controllers";
 import { HtmlFor, Role } from "../mixins";
+import { DesignToken } from "../tokens";
+import { element } from "../decorators";
 
 import { ElevationLevel } from "./ElevationLevel";
 import { ElevationToken } from "./ElevationToken";
-import { DesignToken } from "../tokens";
 
 /**
  * Visually depicts elevation using a shadow.
@@ -57,7 +58,7 @@ import { DesignToken } from "../tokens";
  * @cssprop --m3e-elevation-focus-level - Elevation on focus (box-shadow).
  * @cssprop --m3e-elevation-pressed-level - Elevation on pressed (box-shadow).
  */
-@customElement("m3e-elevation")
+@element("m3e-elevation")
 export class M3eElevationElement extends HtmlFor(Role(LitElement, "none")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

@@ -1,8 +1,9 @@
 import { css, CSSResultGroup, html, PropertyValues } from "lit";
-import { customElement, query } from "lit/decorators.js";
+import { query } from "lit/decorators.js";
 
 import {
   AttachInternals,
+  element,
   Disabled,
   Focusable,
   FocusController,
@@ -23,7 +24,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * @internal
  * An internal interactive element used to present the content of a list item.
  */
-@customElement("m3e-list-item-button")
+@element("m3e-list-item-button")
 export class M3eListItemButtonElement extends KeyboardClick(
   LinkButton(Focusable(Disabled(AttachInternals(Role(M3eListItemElement, "button"), true)))),
 ) {

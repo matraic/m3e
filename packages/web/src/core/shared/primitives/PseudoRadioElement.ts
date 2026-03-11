@@ -1,8 +1,8 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
-import { customElement } from "lit/decorators.js";
 
 import { Checked, Disabled, Role } from "../mixins";
 import { DesignToken } from "../tokens";
+import { element } from "../decorators";
 
 /**
  * An element which looks like a radio button.
@@ -27,7 +27,7 @@ import { DesignToken } from "../tokens";
  * @cssprop --m3e-radio-selected-icon-color - Color of the selected radio icon.
  * @cssprop --m3e-radio-disabled-icon-color - Color of the disabled radio icon.
  */
-@customElement("m3e-pseudo-radio")
+@element("m3e-pseudo-radio")
 export class M3ePseudoRadioElement extends Checked(Disabled(Role(LitElement, "none"))) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

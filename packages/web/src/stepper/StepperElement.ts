@@ -1,10 +1,11 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { property, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 import {
   addCustomState,
   AttachInternals,
+  element,
   deleteCustomState,
   DesignToken,
   hasCustomState,
@@ -84,10 +85,10 @@ import { StepperOrientation } from "./StepperOrientation";
  * @cssprop --m3e-step-divider-color - Color of the divider line between steps.
  * @cssprop --m3e-step-divider-inset - Inset offset for divider alignment within step layout.
  */
-@customElement("m3e-stepper")
+@element("m3e-stepper")
 export class M3eStepperElement extends AttachInternals(LitElement) {
   static {
-    if (document) {
+    if (typeof window !== "undefined") {
       const lightDomStyle = new CSSStyleSheet();
       lightDomStyle.replaceSync(
         css`

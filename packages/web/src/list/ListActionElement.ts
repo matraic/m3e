@@ -1,8 +1,8 @@
 import { css, CSSResultGroup, html } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { LinkButton } from "@m3e/web/core";
+import { element, LinkButton } from "@m3e/web/core";
 import { selectionManager } from "@m3e/web/core/a11y";
 
 import { M3eListItemElement } from "./ListItemElement";
@@ -88,7 +88,7 @@ import { M3eListItemButtonElement } from "./ListItemButtonElement";
  * @cssprop --m3e-list-item-three-line-top-offset - Top offset for media in three line items.
  * @cssprop --m3e-list-item-disabled-media-opacity - Opacity for media when disabled.
  */
-@customElement("m3e-list-action")
+@element("m3e-list-action")
 export class M3eListActionElement extends LinkButton(M3eListItemElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

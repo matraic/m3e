@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
-import { DesignToken, Role, Vertical } from "@m3e/web/core";
+import { element, DesignToken, Role, Vertical } from "@m3e/web/core";
 import { RovingTabIndexManager, M3eInteractivityChecker } from "@m3e/web/core/a11y";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
@@ -58,7 +58,7 @@ import { ToolbarShape } from "./ToolbarShape";
  * @cssprop --m3e-toolbar-vibrant-container-color - Container color for the vibrant variant.
  * @cssprop --m3e-toolbar-vibrant-color - Foreground color for the vibrant variant.
  */
-@customElement("m3e-toolbar")
+@element("m3e-toolbar")
 export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

@@ -1,8 +1,9 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 
 import {
   AttachInternals,
+  element,
   DesignToken,
   Disabled,
   DisabledInteractive,
@@ -89,7 +90,7 @@ import { NavItemOrientation } from "./NavItemOrientation";
  * @cssprop --m3e-vertical-nav-item-active-indicator-height - Height of the active indicator in vertical orientation.
  * @cssprop --m3e-vertical-nav-item-active-indicator-margin - Margin for the active indicator in vertical orientation.
  */
-@customElement("m3e-nav-item")
+@element("m3e-nav-item")
 export class M3eNavItemElement extends LinkButton(
   Selected(KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true)))))),
 ) {

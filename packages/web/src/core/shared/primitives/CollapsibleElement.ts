@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
 import { addCustomState, AttachInternals, deleteCustomState, EventAttribute, setCustomState } from "../mixins";
 import { DesignToken } from "../tokens";
 import { prefersReducedMotion } from "../utils";
+import { element } from "../decorators";
 
 /**
  * A container used to expand and collapse content.
@@ -30,7 +31,7 @@ import { prefersReducedMotion } from "../utils";
  *
  * @cssprop --m3e-collapsible-animation-duration - The duration of the expand / collapse animation.
  */
-@customElement("m3e-collapsible")
+@element("m3e-collapsible")
 export class M3eCollapsibleElement extends EventAttribute(
   AttachInternals(LitElement),
   "opening",

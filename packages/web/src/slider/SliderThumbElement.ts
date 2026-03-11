@@ -1,8 +1,9 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 
 import {
   AttachInternals,
+  element,
   DesignToken,
   Dirty,
   Disabled,
@@ -63,7 +64,7 @@ import {
  * @cssprop --m3e-slider-label-line-height - Line height of the label text.
  * @cssprop --m3e-slider-label-tracking - Letter spacing of the label text.
  */
-@customElement("m3e-slider-thumb")
+@element("m3e-slider-thumb")
 export class M3eSliderThumbElement extends Dirty(
   Touched(FormAssociated(Focusable(Disabled(AttachInternals(Role(LitElement, "slider")))))),
 ) {

@@ -1,7 +1,16 @@
 import { css, CSSResultGroup, html, PropertyValues } from "lit";
-import { customElement } from "lit/decorators.js";
 
-import { DesignToken, Disabled, DisabledInteractive, Focusable, KeyboardClick, Role, Selected } from "@m3e/web/core";
+import {
+  element,
+  DesignToken,
+  Disabled,
+  DisabledInteractive,
+  Focusable,
+  KeyboardClick,
+  Role,
+  Selected,
+} from "@m3e/web/core";
+
 import { selectionManager } from "@m3e/web/core/a11y";
 
 import { M3eChipElement } from "./ChipElement";
@@ -88,7 +97,7 @@ import { M3eChipElement } from "./ChipElement";
  * @cssprop --m3e-chip-unselected-leading-icon-color - Leading icon color in unselected state.
  * @cssprop --m3e-chip-unselected-trailing-icon-color - Trailing icon color in unselected state.
  */
-@customElement("m3e-filter-chip")
+@element("m3e-filter-chip")
 export class M3eFilterChipElement extends Selected(
   KeyboardClick(Focusable(DisabledInteractive(Disabled(Role(M3eChipElement, "radio"))))),
 ) {

@@ -1,10 +1,11 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js";
+import { property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 import {
   addCustomState,
   AttachInternals,
+  element,
   deleteCustomState,
   DesignToken,
   hasCustomState,
@@ -12,6 +13,7 @@ import {
   ResizeController,
   safeStyleMap,
 } from "@m3e/web/core";
+
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
 import { M3eSliderThumbElement } from "./SliderThumbElement";
@@ -87,7 +89,7 @@ import { SliderSize } from "./SliderSize";
  * @cssprop --m3e-slider-tick-inactive-color - Color of inactive ticks when enabled.
  * @cssprop --m3e-slider-disabled-tick-inactive-color - Color of inactive ticks when disabled.
  */
-@customElement("m3e-slider")
+@element("m3e-slider")
 export class M3eSliderElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

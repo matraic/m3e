@@ -8,10 +8,11 @@
  */
 
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js";
+import { property, query, state } from "lit/decorators.js";
 
 import {
   AttachInternals,
+  element,
   DesignToken,
   FocusController,
   getTextContent,
@@ -104,10 +105,10 @@ import { FloatLabelType } from "./FloatLabelType";
  * @cssprop --m3e-form-field-disabled-opacity - Opacity for disabled text.
  * @cssprop --m3e-form-field-disabled-container-opacity - Opacity for disabled container background.
  */
-@customElement("m3e-form-field")
+@element("m3e-form-field")
 export class M3eFormFieldElement extends AttachInternals(LitElement) {
   static {
-    if (document) {
+    if (typeof window !== "undefined") {
       const lightDomStyle = new CSSStyleSheet();
       lightDomStyle.replaceSync(
         css`

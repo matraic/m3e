@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js";
+import { property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 import {
   AttachInternals,
+  element,
   DesignToken,
   Disabled,
   EventAttribute,
@@ -136,14 +137,14 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  * @cssprop --m3e-nav-menu-divider-margin - Margin for divider elements.
  * @cssprop --m3e-nav-menu-item-vertical-inset - Vertical margin for first/last child items.
  */
-@customElement("m3e-nav-menu-item")
+@element("m3e-nav-menu-item")
 export class M3eNavMenuItemElement extends Selected(
   Disabled(
     EventAttribute(AttachInternals(Role(LitElement, "treeitem"), true), "opening", "opened", "closing", "closed"),
   ),
 ) {
   static {
-    if (document) {
+    if (typeof window !== "undefined") {
       const lightDomStyle = new CSSStyleSheet();
       lightDomStyle.replaceSync(
         css`

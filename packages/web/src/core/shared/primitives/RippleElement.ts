@@ -1,11 +1,12 @@
 import { css, CSSResultGroup, LitElement, PropertyValues } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
 import { PressedController } from "../controllers";
 import { HtmlFor, Role } from "../mixins";
+import { DesignToken } from "../tokens";
+import { element } from "../decorators";
 
 import { RippleToken } from "./RippleToken";
-import { DesignToken } from "../tokens";
 
 /**
  * Connects user input to screen reactions using ripples.
@@ -47,7 +48,7 @@ import { DesignToken } from "../tokens";
  * @cssprop --m3e-ripple-scale-factor - The factor by which to scale the ripple.
  * @cssprop --m3e-ripple-shape - The shape of the ripple.
  */
-@customElement("m3e-ripple")
+@element("m3e-ripple")
 export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

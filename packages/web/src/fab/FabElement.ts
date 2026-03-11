@@ -1,5 +1,5 @@
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 
 import {
   renderPseudoLink,
@@ -16,6 +16,7 @@ import {
   PressedController,
   Role,
   KeyboardClick,
+  element,
 } from "@m3e/web/core";
 
 import { FabSize } from "./FabSize";
@@ -370,7 +371,7 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * @cssprop --m3e-surface-fab-pressed-container-elevation - Elevation on pressed (surface).
  * @cssprop --m3e-surface-fab-lowered-pressed-container-elevation - Lowered elevation on pressed (surface).
  */
-@customElement("m3e-fab")
+@element("m3e-fab")
 export class M3eFabElement extends KeyboardClick(
   LinkButton(
     FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))),

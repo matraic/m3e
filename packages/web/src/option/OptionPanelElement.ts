@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement } from "lit/decorators.js";
 
 import {
   DesignToken,
@@ -10,6 +9,7 @@ import {
   addCustomState,
   setCustomState,
   deleteCustomState,
+  element,
 } from "@m3e/web/core";
 
 import { positionAnchor } from "@m3e/web/core/anchoring";
@@ -44,12 +44,11 @@ import { M3eOptGroupElement } from "./OptGroupElement";
  * @cssprop --m3e-option-panel-divider-spacing - Vertical spacing around slotted `m3e-divider` elements.
  * @cssprop --m3e-option-panel-text-highlight-container-color - Background color used for text highlight matches.
  * @cssprop --m3e-option-panel-text-highlight-color - Text color used for text highlight matches.
-
  */
-@customElement("m3e-option-panel")
+@element("m3e-option-panel")
 export class M3eOptionPanelElement extends AttachInternals(Role(LitElement, "listbox")) {
   static {
-    if (document) {
+    if (typeof window !== "undefined") {
       const lightDomStyle = new CSSStyleSheet();
       lightDomStyle.replaceSync(
         css`

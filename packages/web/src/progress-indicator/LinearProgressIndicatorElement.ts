@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, nothing, PropertyValues, svg } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
-import { DesignToken, ResizeController, resolveFragmentUrl, safeStyleMap } from "@m3e/web/core";
+import { element, DesignToken, ResizeController, resolveFragmentUrl, safeStyleMap } from "@m3e/web/core";
 
 import { LinearProgressMode } from "./LinearProgressMode";
 import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
@@ -43,7 +43,7 @@ import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
  * @cssprop --m3e-linear-wavy-progress-indicator-wavelength - Wavelength of the `wavy` variant.
  * @cssprop --m3e-linear-wavy-indeterminate-progress-indicator-wavelength - Wavelength of the indeterminate/query `wavy` variant.
  */
-@customElement("m3e-linear-progress-indicator")
+@element("m3e-linear-progress-indicator")
 export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorBase {
   /** The styles of the element. */
   static override styles: CSSResultGroup = [

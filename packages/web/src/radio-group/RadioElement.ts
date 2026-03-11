@@ -1,9 +1,10 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 
 import {
   AttachInternals,
   Checked,
+  element,
   DesignToken,
   Dirty,
   Disabled,
@@ -76,7 +77,7 @@ import { selectionManager } from "@m3e/web/core/a11y";
  * @cssprop --m3e-radio-error-ripple-color - Fallback ripple color used when the radio is invalid and touched.
  * @cssprop --m3e-radio-error-icon-color - Fallback icon color used when the radio is invalid and touched.
  */
-@customElement("m3e-radio")
+@element("m3e-radio")
 export class M3eRadioElement extends Labelled(
   Dirty(
     Touched(

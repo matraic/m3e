@@ -7,8 +7,6 @@
  * See LICENSE file in the project root for full license text.
  */
 
-import { isServer } from "lit";
-
 /** Taken from `goog.i18n.bidi.isRtlLanguage`. */
 const RTL_LOCALES =
   /^(ar|ckb|dv|he|iw|fa|nqo|ps|sd|ug|ur|yi|.*[-_](Adlm|Arab|Hebr|Nkoo|Rohg|Thaa))(?!.*[-_](Latn|Cyrl)($|-|_))($|-|_)/i;
@@ -22,7 +20,7 @@ export class M3eDirectionality {
   /** @private */ static readonly #observers = Array<() => void>();
 
   static {
-    if (!isServer) {
+    if (typeof window !== "undefined") {
       this.#updateDirection();
 
       if (MutationObserver) {
@@ -59,9 +57,9 @@ export class M3eDirectionality {
 
   /** @private */
   static #updateDirection() {
-    const _dir = (document?.body?.dir || document?.documentElement?.dir)?.toLowerCase() || "auto";
+    const _dir = (document.body?.dir || document.documentElement?.dir)?.toLowerCase() || "auto";
     this.#current =
-      _dir === "auto" && !isServer && navigator?.language
+      _dir === "auto" && navigator?.language
         ? RTL_LOCALES.test(navigator.language)
           ? "rtl"
           : "ltr"

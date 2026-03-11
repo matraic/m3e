@@ -1,8 +1,9 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
 import {
   AttachInternals,
+  element,
   DesignToken,
   Dirty,
   Disabled,
@@ -64,7 +65,7 @@ import { M3eButtonSegmentElement } from "./ButtonSegmentElement";
  * @cssprop --m3e-segmented-button-start-shape - Border radius for the first segment in a segmented button.
  * @cssprop --m3e-segmented-button-end-shape - Border radius for the last segment in a segmented button.
  */
-@customElement("m3e-segmented-button")
+@element("m3e-segmented-button")
 export class M3eSegmentedButtonElement extends Labelled(
   Dirty(Touched(FormAssociated(Disabled(AttachInternals(Role(LitElement, "radiogroup")))))),
 ) {

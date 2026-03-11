@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
 import {
   DesignToken,
@@ -10,6 +10,7 @@ import {
   addCustomState,
   setCustomState,
   deleteCustomState,
+  element,
 } from "@m3e/web/core";
 
 import { RovingTabIndexManager } from "@m3e/web/core/a11y";
@@ -98,10 +99,10 @@ import { MenuVariant } from "./MenuVariant";
  * @cssprop --m3e-menu-divider-spacing - Vertical spacing around slotted `m3e-divider` elements.
  * @cssprop --m3e-menu-gap - Gap between content in the menu.
  */
-@customElement("m3e-menu")
+@element("m3e-menu")
 export class M3eMenuElement extends AttachInternals(Role(LitElement, "menu")) {
   static {
-    if (document) {
+    if (typeof window !== "undefined") {
       const lightDomStyle = new CSSStyleSheet();
       lightDomStyle.replaceSync(
         css`

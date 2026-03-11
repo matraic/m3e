@@ -1,5 +1,5 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
 import {
   M3eTextHighlightElement,
@@ -10,6 +10,7 @@ import {
   setCustomState,
   deleteCustomState,
   addCustomState,
+  element,
 } from "@m3e/web/core";
 
 import { ListKeyManager } from "@m3e/web/core/a11y";
@@ -51,7 +52,7 @@ import type { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  *
  * @fires toggle - Emitted when the options menu opens or closes.
  */
-@customElement("m3e-autocomplete")
+@element("m3e-autocomplete")
 export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

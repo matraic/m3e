@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { property, state } from "lit/decorators.js";
 
-import { AttachInternals, DesignToken, Role, setCustomState } from "@m3e/web/core";
+import { AttachInternals, element, DesignToken, Role, setCustomState } from "@m3e/web/core";
 
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
@@ -41,7 +41,7 @@ import { NavBarMode } from "./NavBarMode";
  * @cssprop --m3e-nav-bar-container-color - Background color of the navigation bar container.
  * @cssprop --m3e-nav-bar-vertical-item-width - Minimum width of vertical nav items.
  */
-@customElement("m3e-nav-bar")
+@element("m3e-nav-bar")
 export class M3eNavBarElement extends AttachInternals(Role(LitElement, "navigation")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

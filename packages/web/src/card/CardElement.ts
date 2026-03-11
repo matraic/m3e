@@ -1,5 +1,5 @@
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 
 import {
   renderPseudoLink,
@@ -16,6 +16,7 @@ import {
   PressedController,
   KeyboardClick,
   hasAssignedNodes,
+  element,
 } from "@m3e/web/core";
 
 import { CardVariant } from "./CardVariant";
@@ -142,7 +143,7 @@ import { CardOrientation } from "./CardOrientation";
  * @cssprop --m3e-outlined-card-pressed-container-elevation - Elevation level on press.
  * @cssprop --m3e-outlined-card-pressed-outline-color - Border color on press.
  */
-@customElement("m3e-card")
+@element("m3e-card")
 export class M3eCardElement extends KeyboardClick(
   LinkButton(FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(LitElement), true))))),
 ) {

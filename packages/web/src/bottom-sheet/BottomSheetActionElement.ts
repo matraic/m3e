@@ -1,6 +1,4 @@
-import { customElement } from "lit/decorators.js";
-
-import { ActionElementBase } from "@m3e/web/core";
+import { ActionElementBase, element } from "@m3e/web/core";
 
 /**
  * An element, nested within a clickable element, used to close a parenting bottom sheet.
@@ -8,7 +6,7 @@ import { ActionElementBase } from "@m3e/web/core";
  *
  * @slot - Renders the content of the action.
  */
-@customElement("m3e-bottom-sheet-action")
+@element("m3e-bottom-sheet-action")
 export class M3eBottomSheetActionElement extends ActionElementBase {
   /** @inheritdoc */
   protected override _onClick(): void {

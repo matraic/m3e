@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
 import {
   addCustomState,
   AttachInternals,
+  element,
   deleteCustomState,
   DesignToken,
   DisabledMixin,
@@ -75,7 +76,7 @@ import { M3eFabMenuItemElement } from "./FabMenuItemElement";
  * @cssprop --m3e-tertiary-fab-focus-color - Focus background color for tertiary variant items.
  * @cssprop --m3e-tertiary-fab-ripple-color - Ripple color for tertiary variant items.
  */
-@customElement("m3e-fab-menu")
+@element("m3e-fab-menu")
 export class M3eFabMenuElement extends AttachInternals(Role(LitElement, "menu")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

@@ -1,6 +1,6 @@
-import { customElement, property } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 
-import { ActionElementBase } from "@m3e/web/core";
+import { ActionElementBase, element } from "@m3e/web/core";
 
 /**
  * An element, nested within a clickable element, used to close a parenting dialog.
@@ -10,7 +10,7 @@ import { ActionElementBase } from "@m3e/web/core";
  *
  * @attr return-value - The value to return from the dialog.
  */
-@customElement("m3e-dialog-action")
+@element("m3e-dialog-action")
 export class M3eDialogActionElement extends ActionElementBase {
   /**
    * The value to return from the dialog.

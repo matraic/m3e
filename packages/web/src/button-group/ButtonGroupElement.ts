@@ -1,7 +1,16 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, property, query, queryAssignedElements } from "lit/decorators.js";
+import { property, query, queryAssignedElements } from "lit/decorators.js";
 
-import { PressedController, Role, isSelectedMixin, DesignToken, setCustomState, addCustomState } from "@m3e/web/core";
+import {
+  PressedController,
+  Role,
+  isSelectedMixin,
+  DesignToken,
+  setCustomState,
+  addCustomState,
+  element,
+} from "@m3e/web/core";
+
 import { M3eButtonElement } from "@m3e/web/button";
 import { M3eIconButtonElement } from "@m3e/web/icon-button";
 
@@ -62,7 +71,7 @@ import { ButtonGroupSize } from "./ButtonGroupSize";
  * @cssprop --m3e-connected-button-group-extra-large-inner-shape - Corner shape for connected variant, extra-large size.
  * @cssprop --m3e-connected-button-group-extra-large-inner-pressed-shape - Pressed corner shape for connected variant, extra-large size.
  */
-@customElement("m3e-button-group")
+@element("m3e-button-group")
 export class M3eButtonGroupElement extends Role(LitElement, "group") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

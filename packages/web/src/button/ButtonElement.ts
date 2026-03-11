@@ -1,5 +1,5 @@
 import { CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 
 import {
   renderPseudoLink,
@@ -25,6 +25,7 @@ import {
   deleteCustomState,
   setCustomState,
   AttachInternalsMixin,
+  element,
 } from "@m3e/web/core";
 
 import { ButtonShape } from "./ButtonShape";
@@ -470,7 +471,7 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * @cssprop --m3e-text-button-pressed-selected-label-text-color - Pressed selected label color, for the text variant.
  * @cssprop --m3e-text-button-pressed-selected-state-layer-color - Pressed selected state layer color, for the text variant.
  */
-@customElement("m3e-button")
+@element("m3e-button")
 export class M3eButtonElement extends KeyboardClick(
   LinkButton(
     FormSubmitter(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))),

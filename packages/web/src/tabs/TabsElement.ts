@@ -1,15 +1,17 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
-import { customElement, property, query, state } from "lit/decorators.js";
+import { property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 import {
   addCustomState,
   AttachInternals,
+  element,
   deleteCustomState,
   DesignToken,
   hasCustomState,
   ResizeController,
 } from "@m3e/web/core";
+
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
@@ -69,7 +71,7 @@ const MIN_PRIMARY_TAB_WIDTH = 24;
  * @cssprop --m3e-tabs-primary-active-indicator-thickness - Thickness for primary variant's active indicator.
  * @cssprop --m3e-tabs-secondary-active-indicator-thickness - Thickness for secondary variant's active indicator.
  */
-@customElement("m3e-tabs")
+@element("m3e-tabs")
 export class M3eTabsElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`

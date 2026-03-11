@@ -1,7 +1,7 @@
 import { html } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { state } from "lit/decorators.js";
 
-import { hasAssignedNodes, HoverController, LinkButton, Role, setCustomState } from "@m3e/web/core";
+import { element, hasAssignedNodes, HoverController, LinkButton, Role, setCustomState } from "@m3e/web/core";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
 import type { M3eMenuElement } from "./MenuElement";
@@ -115,7 +115,7 @@ import { M3eMenuTriggerElement } from "./MenuTriggerElement";
  * @cssprop --m3e-menu-item-first-child-shape - Shape for the first menu item in a menu.
  * @cssprop --m3e-menu-item-last-child-shape - Shape for the last menu item in a menu.
  */
-@customElement("m3e-menu-item")
+@element("m3e-menu-item")
 export class M3eMenuItemElement extends LinkButton(Role(MenuItemElementBase, "menuitem")) {
   /** @private */ readonly #clickHandler = (e: Event) => this.#handleClick(e);
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);
