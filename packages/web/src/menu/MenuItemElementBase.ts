@@ -31,7 +31,7 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       height: var(--m3e-menu-item-container-height, 2.75rem);
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
-    :host(:not(:disabled):not([aria-expanded="true"])) .base {
+    :host(:not(:disabled)) .base {
       color: var(--m3e-menu-item-color, ${DesignToken.color.onSurface});
     }
     :host(:not([aria-expanded="true"])) .base {
@@ -39,7 +39,6 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       --m3e-state-layer-focus-color: var(--m3e-menu-item-container-focus-color, ${DesignToken.color.onSurface});
       --m3e-ripple-color: var(--m3e-menu-item-ripple-color, ${DesignToken.color.onSurface});
     }
-
     :host(:not(:disabled)[aria-expanded="true"]) .base {
       background-color: color-mix(
         in srgb,
