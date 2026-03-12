@@ -1,4 +1,4 @@
-import { isServer, LitElement } from "lit";
+import { LitElement } from "lit";
 
 import { Constructor } from "./Constructor";
 import { hasKeys } from "./hasKeys";
@@ -57,7 +57,7 @@ export function AttachInternals<T extends Constructor<LitElement>>(
  * @returns {boolean} Whether `element` has `state`.
  */
 export function hasCustomState(element: AttachInternalsMixin, state: string): boolean {
-  return isServer ? false : element[internals].states.has(state);
+  return element[internals].states.has(state);
 }
 
 /**
@@ -66,9 +66,8 @@ export function hasCustomState(element: AttachInternalsMixin, state: string): bo
  * @param {string} state The custom state to add.
  */
 export function addCustomState(element: AttachInternalsMixin, state: string): void {
-  if (!isServer) {
-    element[internals]?.states.add(state);
-  }
+  element[internals]?.states.add(state);
+  element[internals]?.states.has(state); // flush
 }
 
 /**
@@ -78,7 +77,11 @@ export function addCustomState(element: AttachInternalsMixin, state: string): vo
  * @returns {boolean} Whether `state` was removed from `element`.
  */
 export function deleteCustomState(element: AttachInternalsMixin, state: string): boolean {
-  return !isServer && element[internals]?.states.delete(state);
+  if (element[internals]?.states.delete(state)) {
+    element[internals]?.states.has(state); // flush
+    return true;
+  }
+  return false;
 }
 
 /**
