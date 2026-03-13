@@ -1,7 +1,6 @@
 import { LitElement } from "lit";
 
-import { CheckedOrSelectedMixin, checkOrSelect, isCheckedOrSelected } from "../../shared/mixins/CheckedOrSelected";
-import { DisabledMixin } from "../../shared/mixins/Disabled";
+import { CheckedOrSelectedMixin, DisabledMixin, checkOrSelect, isCheckedOrSelected } from "@m3e/web/core";
 
 import { RadioKeyManager } from "./RadioKeyManager";
 
@@ -13,7 +12,7 @@ export const selectionManager = Symbol("selectionManager");
  * @template T The type of managed item.
  */
 export class SelectionManager<
-  T extends LitElement & DisabledMixin & CheckedOrSelectedMixin
+  T extends LitElement & DisabledMixin & CheckedOrSelectedMixin,
 > extends RadioKeyManager<T> {
   /** @private */ #onSelectedItemsChangeCallback?: () => void;
   /** @private */ #selectedItems = new Array<T>();

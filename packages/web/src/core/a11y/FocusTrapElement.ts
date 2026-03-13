@@ -1,8 +1,8 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { query } from "lit/decorators.js";
 
-import { Disabled } from "../shared/mixins/Disabled";
-import { customElement } from "../shared/decorators/customElement";
+import { customElement, Disabled } from "@m3e/web/core";
+
 import { M3eInteractivityChecker } from "./InteractivityChecker";
 
 /**

@@ -1,7 +1,6 @@
 import { LitElement } from "lit";
 
-import { CheckedOrSelectedMixin, isCheckedOrSelected } from "../../shared/mixins/CheckedOrSelected";
-import { DisabledMixin } from "../../shared/mixins/Disabled";
+import { CheckedOrSelectedMixin, DisabledMixin, isCheckedOrSelected } from "@m3e/web/core";
 
 import { RovingTabIndexManager } from "./RovingTabIndexManager";
 
@@ -10,7 +9,7 @@ import { RovingTabIndexManager } from "./RovingTabIndexManager";
  * @template T The type of managed item.
  */
 export class RadioKeyManager<
-  T extends LitElement & DisabledMixin & CheckedOrSelectedMixin
+  T extends LitElement & DisabledMixin & CheckedOrSelectedMixin,
 > extends RovingTabIndexManager<T> {
   /** @private */ #disabled = false;
 

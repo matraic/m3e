@@ -7,8 +7,9 @@
  * See LICENSE file in the project root for full license text.
  */
 
+import { hasKeys } from "@m3e/web/core";
+
 import { getKeyCode, KeyCode } from "../keycodes";
-import { hasKeys } from "../../shared/mixins/hasKeys";
 
 /** A symbol through which to access an element's textual content used for typeahead search. */
 export const typeaheadLabel = Symbol("typeaheadLabel");

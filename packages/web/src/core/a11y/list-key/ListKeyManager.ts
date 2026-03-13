@@ -7,8 +7,9 @@
  * See LICENSE file in the project root for full license text.
  */
 
+import { isDisabledMixin } from "@m3e/web/core";
+
 import { hasModifierKey, isModifierAllowed, ModifierKey } from "../keycodes";
-import { isDisabledMixin } from "../../shared/mixins/Disabled";
 
 import { ListManager } from "./ListManager";
 import { Typeahead, TypeaheadItem } from "./Typeahead";
@@ -254,7 +255,7 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
         if (modifierAllowed && this.pageUpAndDown) {
           e.preventDefault();
           const prev = (this.directionality === "ltr" ? this.#findPreviousByIndex : this.#findNextByIndex)(
-            this.activeItem ? Math.max(0, this.items.indexOf(this.activeItem) - this.pageDelta) : 0
+            this.activeItem ? Math.max(0, this.items.indexOf(this.activeItem) - this.pageDelta) : 0,
           );
           if (prev) {
             this.setActiveItem(prev);
@@ -269,7 +270,7 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
           const next = (this.directionality === "ltr" ? this.#findNextByIndex : this.#findPreviousByIndex)(
             this.activeItem
               ? Math.min(this.items.length - 1, this.items.indexOf(this.activeItem) + this.pageDelta)
-              : this.items.length - 1
+              : this.items.length - 1,
           );
           if (next) {
             this.setActiveItem(next);
