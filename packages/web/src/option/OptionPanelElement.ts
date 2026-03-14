@@ -89,8 +89,6 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
     `,
   ];
 
-  /** @private */ #mutating = false;
-
   /** @private */
   readonly #scrollController = new ScrollController(this, {
     target: null,
@@ -125,18 +123,12 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
 
   /** @private */
   #handleMutation(): void {
-    if (this.#mutating) return;
-    this.#mutating = true;
-
-    queueMicrotask(() => {
-      const options = this.querySelectorAll("m3e-option");
-      for (let i = 0; i < options.length; i++) {
-        const option = options[i];
-        setCustomState(option, "-first", i === 0 && !(option.parentElement instanceof M3eOptGroupElement));
-        setCustomState(option, "-last", i === options.length - 1);
-      }
-      this.#mutating = false;
-    });
+    const options = this.querySelectorAll("m3e-option");
+    for (let i = 0; i < options.length; i++) {
+      const option = options[i];
+      setCustomState(option, "-first", i === 0 && !(option.parentElement instanceof M3eOptGroupElement));
+      setCustomState(option, "-last", i === options.length - 1);
+    }
   }
 }
 
