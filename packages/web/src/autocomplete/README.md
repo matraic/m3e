@@ -48,6 +48,12 @@ This section details the attributes and slots available for the `m3e-autocomplet
 | `hide-selection-indicator` | `boolean` | `false` | Whether to hide the selection indicator for options.                                     |
 | `required`                 | `boolean` | `false` | Whether the user is required to make a selection when interacting with the autocomplete. |
 
+### 🔧 Properties
+
+| Property | Type                                                                  | Default     | Description                                                                                                        |
+| -------- | --------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------ |
+| `filter` | `((option: M3eOptionElement, term: string) => boolean) \| undefined)` | `undefined` | Optional custom filter function used to determine whether an option should be visible for the current input value. |
+
 ### 🧩 Slots
 
 | Slot        | Description                    |

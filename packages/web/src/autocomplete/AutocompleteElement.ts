@@ -128,6 +128,12 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
    */
   @property({ attribute: "auto-activate", type: Boolean }) autoActivate = false;
 
+  /**
+   * Optional custom filter function used to determine whether an option should
+   * be visible for the current input value.
+   */
+  @property() filter: ((option: M3eOptionElement, term: string) => boolean) | undefined;
+
   /** The options that can be selected. */
   get options(): readonly M3eOptionElement[] {
     return this._options ?? [];
@@ -281,7 +287,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   #handleInput(e: Event): void {
     if (!this.#input || e.defaultPrevented) return;
 
-    if (this.#textHighlight) {
+    if (this.#textHighlight && this.filter === undefined) {
       this.#textHighlight.term = this.#input.value;
     }
 
@@ -464,6 +470,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
     this.#textHighlight = document.createElement("m3e-text-highlight");
     this.#textHighlight.term = this.#input.value;
+    this.#textHighlight.disabled = this.filter !== undefined;
     if (this.#clone) {
       this.#textHighlight.replaceChildren(...this.#clone.childNodes);
     }
@@ -554,37 +561,40 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   #filterOptions(): void {
     if (!this.#input) return;
 
-    const term = this.#input.value.toLocaleLowerCase();
+    const exactTerm = this.#input.value;
+    const term = exactTerm.toLocaleLowerCase();
 
     let first = false;
     let last: M3eOptionElement | undefined;
 
     for (let i = 0; i < this.#options.length; i++) {
-      const option = this.#options[i];
-      const value = this.options[i].value.toLocaleLowerCase();
-      option.hidden = !value.includes(term);
+      const clone = this.#options[i];
+      const option = this._options[i];
+      clone.hidden = this.filter
+        ? this.filter(option, exactTerm) !== true
+        : !option.value.toLocaleLowerCase().includes(term);
 
-      if (option.hidden) {
-        this.#deactivateOption(option);
-        deleteCustomState(option, "-first");
-        deleteCustomState(option, "-last");
-      } else if (!first && !(option.parentElement instanceof M3eOptGroupElement)) {
-        addCustomState(option, "-first");
+      if (clone.hidden) {
+        this.#deactivateOption(clone);
+        deleteCustomState(clone, "-first");
+        deleteCustomState(clone, "-last");
+      } else if (!first && !(clone.parentElement instanceof M3eOptGroupElement)) {
+        addCustomState(clone, "-first");
         first = true;
-        addCustomState(option, "-last");
-        last = option;
+        addCustomState(clone, "-last");
+        last = clone;
       } else {
-        deleteCustomState(option, "-first");
+        deleteCustomState(clone, "-first");
         if (last) {
           deleteCustomState(last, "-last");
         }
-        addCustomState(option, "-last");
-        last = option;
+        addCustomState(clone, "-last");
+        last = clone;
       }
 
-      if (option.selected && value !== term) {
-        option.selected = false;
-        this.#updateSelectionState(option);
+      if (clone.selected && clone.hidden) {
+        clone.selected = false;
+        this.#updateSelectionState(clone);
       }
     }
 
