@@ -260,7 +260,7 @@ export class M3eSelectElement
 
   /** @inheritdoc */
   get shouldLabelFloat(): boolean {
-    return this.#selected.filter((x) => !x.isEmpty).length > 0;
+    return this.selected.filter((x) => !x.isEmpty).length > 0;
   }
 
   /** @private */
@@ -386,9 +386,6 @@ export class M3eSelectElement
     });
 
     this._options = [...this.querySelectorAll("m3e-option")];
-    for (let i = 0; i < this._listKeyManager.items.length; i++) {
-      this._listKeyManager.items[i].value = this._options[i].value;
-    }
 
     this.#formField?.notifyControlStateChange();
     if (this.#menu) {

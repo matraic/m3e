@@ -242,9 +242,6 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     });
 
     this._options = [...this.querySelectorAll("m3e-option")];
-    for (let i = 0; i < this._listKeyManager.items.length; i++) {
-      this._listKeyManager.items[i].value = this._options[i].value;
-    }
 
     if (this.#menu) {
       this.#filterOptions();
@@ -562,8 +559,9 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     let first = false;
     let last: M3eOptionElement | undefined;
 
-    for (const option of this.#options) {
-      const value = option.value.toLocaleLowerCase();
+    for (let i = 0; i < this.#options.length; i++) {
+      const option = this.#options[i];
+      const value = this.options[i].value.toLocaleLowerCase();
       option.hidden = !value.includes(term);
 
       if (option.hidden) {
