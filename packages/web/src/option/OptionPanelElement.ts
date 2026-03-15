@@ -43,6 +43,10 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
           m3e-option-panel > m3e-divider {
             margin-block: var(--m3e-option-panel-divider-spacing, 0.5rem);
           }
+          m3e-option-panel m3e-option[hidden],
+          m3e-option-panel m3e-optgroup[hidden] {
+            display: none;
+          }
         `.toString(),
       );
 
@@ -119,6 +123,12 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
       this.#scrollController.unobserve(this.trigger);
     }
     super.hide(restoreFocus);
+  }
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#handleMutation();
   }
 
   /** @private */

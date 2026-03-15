@@ -231,7 +231,7 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
     super.update(changedProperties);
 
     if (changedProperties.has("selected") && this.selected) {
-      const panel = this.closest("[role='listbox']") ?? this.closest("m3e-select");
+      const panel = this.closest("[role='listbox']") ?? this.closest("m3e-autocomplete") ?? this.closest("m3e-select");
       if (panel && panel.ariaMultiSelectable !== "true" && !panel.hasAttribute("multi")) {
         panel.querySelectorAll("m3e-option").forEach((x) => {
           if (x !== this && x.selected) {
