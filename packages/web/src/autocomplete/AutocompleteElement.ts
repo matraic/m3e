@@ -288,12 +288,13 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
       this.#textHighlight.term = this.#input.value;
     }
 
-    this.#filterOptions();
-
     if (!this.#menu) {
       this.#showMenu();
-    } else if (!this.#hasVisibleOptions) {
-      this.#hideMenu();
+    } else {
+      this.#filterOptions();
+      if (!this.#hasVisibleOptions) {
+        this.#hideMenu();
+      }
     }
 
     this.#formField?.notifyControlStateChange(true);
