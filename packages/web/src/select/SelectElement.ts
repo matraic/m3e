@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 
 import {
   AttachInternals,
@@ -26,9 +25,10 @@ import {
   addCustomState,
   setCustomState,
   customElement,
+  MutationController,
 } from "@m3e/web/core";
 
-import { ListKeyManager } from "@m3e/web/core/a11y";
+import { ListKeyManager, typeaheadLabel } from "@m3e/web/core/a11y";
 
 import type { M3eFormFieldElement, FormFieldControl } from "@m3e/web/form-field";
 import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
@@ -153,6 +153,9 @@ export class M3eSelectElement
 
   /** @private */ static __nextId = 0;
 
+  /** @private */ private _options = new Array<M3eOptionElement>();
+  /** @private */ #clone?: HTMLElement;
+
   /** @private */ #menu?: M3eOptionPanelElement;
   /** @private */ #ignoreKeyUp = false;
   /** @private */ #ignoreFocusVisible = false;
@@ -189,6 +192,14 @@ export class M3eSelectElement
         }
       },
     });
+
+    new MutationController(this, {
+      config: {
+        childList: true,
+        subtree: true,
+      },
+      callback: () => this.#handleMutation(),
+    });
   }
 
   /**
@@ -203,14 +214,22 @@ export class M3eSelectElement
    */
   @property({ type: Boolean }) multi = false;
 
-  /** The selected option(s). */
-  get selected(): readonly M3eOptionElement[] {
-    return this.options.filter((x) => x.selected);
+  get #options(): readonly M3eOptionElement[] {
+    return this._listKeyManager?.items ?? [];
+  }
+
+  get #selected(): readonly M3eOptionElement[] {
+    return this.#options.filter((x) => x.selected);
   }
 
   /** The options that can be selected. */
   get options(): readonly M3eOptionElement[] {
-    return this._listKeyManager?.items ?? [];
+    return this._options ?? [];
+  }
+
+  /** The selected option(s). */
+  get selected(): readonly M3eOptionElement[] {
+    return this.options.filter((x) => x.selected);
   }
 
   /** The selected (enabled) value(s). */
@@ -241,7 +260,7 @@ export class M3eSelectElement
 
   /** @inheritdoc */
   get shouldLabelFloat(): boolean {
-    return this.selected.filter((x) => !x.isEmpty).length > 0;
+    return this.#selected.filter((x) => !x.isEmpty).length > 0;
   }
 
   /** @private */
@@ -267,11 +286,14 @@ export class M3eSelectElement
    * @param [restoreFocus=false] Whether to restore input focus.
    */
   clear(restoreFocus = false): void {
-    const selected = this.selected;
+    const selected = this.#selected;
     const willChange = selected.length > 0;
 
     if (willChange) {
-      selected.forEach((x) => (x.selected = false));
+      selected.forEach((x) => {
+        x.selected = false;
+        this.#updateSelectionState(x);
+      });
       this.requestUpdate();
     }
 
@@ -296,6 +318,8 @@ export class M3eSelectElement
     this.addEventListener("click", this.#clickHandler);
     this.addEventListener("keydown", this.#keyDownHandler);
     this.addEventListener("keyup", this.#keyUpHandler);
+
+    this.#handleMutation();
   }
 
   /** @inheritdoc */
@@ -312,7 +336,7 @@ export class M3eSelectElement
     super.update(changedProperties);
 
     if (changedProperties.has("hideSelectionIndicator")) {
-      this.options.forEach((x) => setCustomState(x, "-hide-selection-indicator", this.hideSelectionIndicator));
+      this.#options.forEach((x) => setCustomState(x, "-hide-selection-indicator", this.hideSelectionIndicator));
     }
   }
 
@@ -335,7 +359,7 @@ export class M3eSelectElement
           <slot name="value">
             ${this.selected
               .filter((x) => !x.isEmpty)
-              .map((x, i) => (i > 0 ? html`<span>, </span>${unsafeHTML(x.innerHTML)}` : unsafeHTML(x.innerHTML)))}
+              .map((x, i) => (i > 0 ? html`<span>, </span>${x[typeaheadLabel]()}` : x[typeaheadLabel]()))}
           </slot>
         </m3e-text-overflow>
         <div class="arrow-wrapper" aria-hidden="true">
@@ -346,20 +370,33 @@ export class M3eSelectElement
           </slot>
         </div>
       </div>
-      <div class="options" role="listbox" aria-multiselectable="${this.multi}">
-        <slot @slotchange="${this.#handleSlotChange}"></slot>
+      <div class="options" aria-hidden="true">
+        <slot></slot>
       </div>`;
   }
 
   /** @private */
-  #handleSlotChange(): void {
-    if (this.#menu) return;
-    const { added } = this._listKeyManager.setItems([...this.querySelectorAll("m3e-option")]);
+  #handleMutation(): void {
+    this.#clone = <HTMLElement>this.cloneNode(true);
+
+    const { added } = this._listKeyManager.setItems([...this.#clone.querySelectorAll("m3e-option")]);
     added.forEach((x) => {
       x.id = x.id || `${this.#id}-option-${this._listKeyManager.items.indexOf(x)}`;
       setCustomState(x, "-hide-selection-indicator", this.hideSelectionIndicator);
     });
+
+    this._options = [...this.querySelectorAll("m3e-option")];
+    for (let i = 0; i < this._listKeyManager.items.length; i++) {
+      this._listKeyManager.items[i].value = this._options[i].value;
+    }
+
     this.#formField?.notifyControlStateChange();
+    if (this.#menu) {
+      this.#menu.replaceChildren(...this.#clone.childNodes);
+      if (this._options.length == 0) {
+        this.#hideMenu();
+      }
+    }
   }
 
   /** @private */
@@ -475,7 +512,7 @@ export class M3eSelectElement
     if (!this.#menu) return;
 
     if (e.newState !== "closed") {
-      const option = this.selected.find((x) => !x.disabled) ?? this._listKeyManager.items.find((x) => !x.disabled);
+      const option = this.#selected.find((x) => !x.disabled) ?? this._listKeyManager.items.find((x) => !x.disabled);
       this._listKeyManager.setActiveItem(option);
       if (option) {
         scrollIntoViewIfNeeded(option, this.#menu, { block: "nearest", behavior: "instant" });
@@ -501,8 +538,7 @@ export class M3eSelectElement
   #destroyMenu(e: ToggleEvent): void {
     if (!this.#menu) return;
 
-    [...this.#menu.childNodes].forEach((x) => this.append(x));
-
+    this.#clone?.replaceChildren(...this.#menu.childNodes);
     this.#menu.remove();
     this.#menu.removeEventListener("toggle", this.#menuToggleHandler);
     this.#menu.removeEventListener("pointerdown", this.#menuPointerDownHandler);
@@ -536,7 +572,7 @@ export class M3eSelectElement
 
   /** @private */
   #showMenu(): void {
-    if (this.#menu) return;
+    if (this.#menu || this._options.length == 0) return;
 
     this.#menu = document.createElement("m3e-option-panel");
     if (this.multi) {
@@ -549,8 +585,8 @@ export class M3eSelectElement
     this.#menu.addEventListener("toggle", this.#menuToggleHandler);
     this.#menu.addEventListener("pointerdown", this.#menuPointerDownHandler);
 
-    for (const node of [...this.childNodes]) {
-      this.#menu.append(node);
+    if (this.#clone) {
+      this.#menu.replaceChildren(...this.#clone.childNodes);
     }
 
     (this.#formField ?? this).insertAdjacentElement("afterend", this.#menu);
@@ -583,7 +619,7 @@ export class M3eSelectElement
 
       const focusVisible = !this.#ignoreFocusVisible && (this.matches(":focus-visible") || forcedColorsActive());
 
-      this.options.forEach((x) => {
+      this.#options.forEach((x) => {
         const active = x === option && focusVisible;
         if (active) {
           x.focusRing?.show();
@@ -597,15 +633,29 @@ export class M3eSelectElement
   }
 
   /** @private */
+  #updateSelectionState(clone: M3eOptionElement): void {
+    const option = this._options[this._listKeyManager.items.indexOf(clone)];
+    if (option) {
+      option.selected = clone.selected;
+    }
+  }
+
+  /** @private */
   #selectOption(option: M3eOptionElement): void {
     const selected = this.multi ? !option.selected : true;
     if (option.selected === selected) return;
 
     option.selected = selected;
+    this.#updateSelectionState(option);
 
     if (this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
       if (!this.multi) {
-        this.selected.filter((x) => x !== option).forEach((x) => (x.selected = false));
+        this.#selected
+          .filter((x) => x !== option)
+          .forEach((x) => {
+            x.selected = false;
+            this.#updateSelectionState(x);
+          });
       }
 
       this.requestUpdate();
@@ -613,6 +663,7 @@ export class M3eSelectElement
       this.dispatchEvent(new Event("change", { bubbles: true }));
     } else {
       option.selected = !selected;
+      this.#updateSelectionState(option);
     }
   }
 }
