@@ -2,7 +2,6 @@ import { css, CSSResultGroup, html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 
 import {
-  M3eTextHighlightElement,
   HtmlFor,
   prefersReducedMotion,
   scrollIntoViewIfNeeded,
@@ -18,6 +17,7 @@ import { ListKeyManager } from "@m3e/web/core/a11y";
 
 import type { M3eFormFieldElement } from "@m3e/web/form-field";
 import { M3eOptGroupElement, M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
+import { AutocompleteFilterMode } from "./AutocompleteFilterMode";
 
 /**
  * Enhances a text input with suggested options.
@@ -46,6 +46,8 @@ import { M3eOptGroupElement, M3eOptionElement, M3eOptionPanelElement } from "@m3
  * @tag m3e-autocomplete
  *
  * @attr auto-activate - Whether the first option should be automatically activated.
+ * @attr case-sensitive - Whether filtering is case sensitive.
+ * @attr filter - Mode in which to filter options.
  * @attr hide-selection-indicator - Whether to hide the selection indicator.
  * @attr required - Whether the user is required to make a selection when interacting with the autocomplete.
  *
@@ -73,7 +75,6 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   /** @private */ #clone?: HTMLElement;
   /** @private */ #ignoreFocusVisible = false;
   /** @private */ #menu?: M3eOptionPanelElement;
-  /** @private */ #textHighlight?: M3eTextHighlightElement;
   /** @private */ #ignoreHideMenuOnBlur = false;
 
   /** @private */ readonly #clickHandler = () => this.#handleClick();
@@ -129,10 +130,33 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   @property({ attribute: "auto-activate", type: Boolean }) autoActivate = false;
 
   /**
-   * Optional custom filter function used to determine whether an option should
-   * be visible for the current input value.
+   * Whether filtering is case sensitive.
+   * @default false
    */
-  @property() filter: ((option: M3eOptionElement, term: string) => boolean) | undefined;
+  @property({ attribute: "case-sensitive", type: Boolean }) caseSensitive = false;
+
+  /**
+   * Mode in which to filter options.
+   * @default "contains"
+   */
+  @property({
+    converter: {
+      fromAttribute(value: string | null): AutocompleteFilterMode {
+        if (value === null) return "contains";
+        if (value === "starts-with" || value === "ends-with" || value === "contains") {
+          return value;
+        }
+        return "contains";
+      },
+
+      toAttribute(
+        value: AutocompleteFilterMode | ((option: M3eOptionElement, term: string) => boolean),
+      ): string | null {
+        return typeof value === "string" ? value : null;
+      },
+    },
+  })
+  filter: AutocompleteFilterMode | ((option: M3eOptionElement, term: string) => boolean) = "contains";
 
   /** The options that can be selected. */
   get options(): readonly M3eOptionElement[] {
@@ -211,10 +235,6 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     if (!this.#input) return;
 
     this.#input.value = "";
-    if (this.#textHighlight) {
-      this.#textHighlight.term = "";
-    }
-
     this.#filterOptions();
 
     if (restoreFocus) {
@@ -251,7 +271,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
     if (this.#menu) {
       this.#filterOptions();
-      this.#textHighlight?.replaceChildren(...this.#clone.childNodes);
+      this.#menu.replaceChildren(...this.#clone.childNodes);
       if (!this.#hasVisibleOptions) {
         this.#hideMenu();
       }
@@ -286,10 +306,6 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   /** @private */
   #handleInput(e: Event): void {
     if (!this.#input || e.defaultPrevented) return;
-
-    if (this.#textHighlight && this.filter === undefined) {
-      this.#textHighlight.term = this.#input.value;
-    }
 
     if (!this.#menu) {
       this.#showMenu();
@@ -425,16 +441,14 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
   /** @private*/
   #destroyMenu(e: ToggleEvent): void {
-    if (!this.#menu || !this.#textHighlight) return;
+    if (!this.#menu) return;
 
-    this.#clone?.replaceChildren(...this.#textHighlight.childNodes);
-    this.#textHighlight.remove();
+    this.#clone?.replaceChildren(...this.#menu.childNodes);
 
     this.#menu.remove();
     this.#menu.removeEventListener("toggle", this.#menuToggleHandler);
     this.#menu.removeEventListener("pointerdown", this.#menuPointerDownHandler);
     this.#menu = undefined;
-    this.#textHighlight = undefined;
 
     if (this.#input) {
       this.#input.ariaExpanded = "false";
@@ -467,15 +481,9 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     this.#menu.style.minWidth = this.#minMenuWidth;
     this.#menu.addEventListener("toggle", this.#menuToggleHandler);
     this.#menu.addEventListener("pointerdown", this.#menuPointerDownHandler);
-
-    this.#textHighlight = document.createElement("m3e-text-highlight");
-    this.#textHighlight.term = this.#input.value;
-    this.#textHighlight.disabled = this.filter !== undefined;
     if (this.#clone) {
-      this.#textHighlight.replaceChildren(...this.#clone.childNodes);
+      this.#menu.replaceChildren(...this.#clone.childNodes);
     }
-
-    this.#menu.appendChild(this.#textHighlight);
 
     (this.#formField ?? this.#input).insertAdjacentElement("afterend", this.#menu);
 
@@ -558,11 +566,33 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   }
 
   /** @private */
+  #filterOption(clone: M3eOptionElement, option: M3eOptionElement, term: string, exactTerm: string): boolean {
+    const value = this.caseSensitive ? option.value : option.value.toLowerCase();
+    switch (this.filter) {
+      case "starts-with":
+        clone.term = exactTerm;
+        clone.highlightMode = this.filter;
+        return value.startsWith(term);
+      case "ends-with":
+        clone.term = exactTerm;
+        clone.highlightMode = this.filter;
+        return value.endsWith(term);
+      case "contains":
+        clone.term = exactTerm;
+        clone.highlightMode = this.filter;
+        return value.includes(term);
+      default:
+        clone.disableHighlight = true;
+        return this.filter(option, exactTerm);
+    }
+  }
+
+  /** @private */
   #filterOptions(): void {
     if (!this.#input) return;
 
     const exactTerm = this.#input.value;
-    const term = exactTerm.toLocaleLowerCase();
+    const term = this.caseSensitive ? exactTerm : exactTerm.toLocaleLowerCase();
 
     let first = false;
     let last: M3eOptionElement | undefined;
@@ -570,9 +600,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     for (let i = 0; i < this.#options.length; i++) {
       const clone = this.#options[i];
       const option = this._options[i];
-      clone.hidden = this.filter
-        ? this.filter(option, exactTerm) !== true
-        : !option.value.toLocaleLowerCase().includes(term);
+      clone.hidden = !this.#filterOption(clone, option, term, exactTerm);
 
       if (clone.hidden) {
         this.#deactivateOption(clone);
@@ -592,7 +620,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
         last = clone;
       }
 
-      if (clone.selected && clone.hidden) {
+      if (clone.selected && option.value !== exactTerm) {
         clone.selected = false;
         this.#updateSelectionState(clone);
       }

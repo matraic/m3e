@@ -10,5 +10,6 @@ export * from "./ScrollContainerElement";
 export * from "./ScrollDividers";
 export * from "./SlideElement";
 export * from "./StateLayerElement";
-export * from "./TextOverflowElement";
 export * from "./TextHighlightElement";
+export * from "./TextHighlightMode";
+export * from "./TextOverflowElement";

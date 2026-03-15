@@ -2,7 +2,7 @@ import React from "react";
 import { createComponent } from "@lit/react";
 
 import { M3eTextHighlightElement } from "@m3e/web/core";
-export type { M3eTextHighlightElement } from "@m3e/web/core";
+export type { M3eTextHighlightElement, TextHighlightMode } from "@m3e/web/core";
 
 /**
  * React binding for the `m3e-text-highlight` Web Component from `@m3e/web/web/core`.

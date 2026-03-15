@@ -4,6 +4,7 @@ import { property } from "lit/decorators.js";
 
 import { DesignToken } from "../tokens";
 import { customElement } from "../decorators";
+import { TextHighlightMode } from "./TextHighlightMode";
 
 /**
  * Highlights text which matches a given search term.
@@ -26,8 +27,9 @@ import { customElement } from "../decorators";
  *
  * @slot - Renders the content to highlight.
  *
- * @attr case-sensitive - A value indicating whether matching is case sensitive.
+ * @attr case-sensitive - Whether matching is case sensitive.
  * @attr disabled - A value indicating whether text highlighting is disabled.
+ * @attr mode - The mode in which to highlight text.
  * @attr term - The term to highlight.
  *
  * @fires highlight - Emitted when content is highlighted.
@@ -83,10 +85,16 @@ export class M3eTextHighlightElement extends LitElement {
   @property() term = "";
 
   /**
-   * A value indicating whether matching is case sensitive.
+   * Whether matching is case sensitive.
    * @default false
    */
   @property({ attribute: "case-sensitive", type: Boolean }) caseSensitive = false;
+
+  /**
+   * The mode in which to highlight text.
+   * @default "contains"
+   */
+  @property() mode: TextHighlightMode = "contains";
 
   /** A value indicating whether text highlighting is supported by the browser. */
   get isSupported(): boolean {
@@ -128,13 +136,13 @@ export class M3eTextHighlightElement extends LitElement {
   /** @private */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   #isTextNode(node: any): boolean {
-    return /^(\\s|\\n)+$/gi.test(node.data) ? false : true;
+    return !/^\s*$/.test(node.data);
   }
 
   /** @private */
   #findTextNodes(parent: Node, nodes: Node[]): void {
     if (parent instanceof HTMLSlotElement) {
-      parent.assignedElements({ flatten: true }).forEach((x) => {
+      parent.assignedNodes({ flatten: true }).forEach((x) => {
         switch (x.nodeType) {
           case Node.TEXT_NODE:
             if (this.#isTextNode(x)) {
@@ -184,34 +192,69 @@ export class M3eTextHighlightElement extends LitElement {
     const texts = new Array<Node>();
     this.#findTextNodes(this, texts);
 
-    const term = !this.caseSensitive ? this.term.toLowerCase() : this.term;
-    this.#ranges = texts
-      .map((x) => {
-        return {
-          el: x,
-          text: (!this.caseSensitive ? x.textContent?.toLowerCase() : x.textContent) ?? "",
-        };
-      })
-      .map(({ el, text }) => {
-        const indices = new Array<number>();
-        let startPos = 0;
-        while (startPos < text.length) {
-          const index = text.indexOf(term, startPos);
-          if (index === -1) break;
-          indices.push(index);
-          startPos = index + term.length;
-        }
-        return indices.map((index) => {
-          const range = new Range();
-          range.setStart(el, index);
-          range.setEnd(el, index + term.length);
-          return range;
-        });
-      })
-      .flat();
+    if (texts.length > 0) {
+      const term = !this.caseSensitive ? this.term.toLowerCase() : this.term;
 
-    if (this.#ranges.length > 0) {
-      CSS.highlights.set(this.#id, new Highlight(...this.#ranges));
+      switch (this.mode) {
+        case "starts-with":
+          {
+            const first = texts[0];
+            const text = (this.caseSensitive ? first.textContent : first.textContent?.toLowerCase()) ?? "";
+
+            if (text.startsWith(term)) {
+              const range = new Range();
+              range.setStart(first, 0);
+              range.setEnd(first, term.length);
+              this.#ranges.push(range);
+            }
+          }
+          break;
+        case "ends-with":
+          {
+            const last = texts[texts.length - 1];
+            const text = (this.caseSensitive ? last.textContent : last.textContent?.toLowerCase()) ?? "";
+
+            if (text.endsWith(term)) {
+              const start = text.length - term.length;
+              const end = start + term.length;
+              const range = new Range();
+              range.setStart(last, start);
+              range.setEnd(last, end);
+              this.#ranges.push(range);
+            }
+          }
+          break;
+        case "contains":
+          this.#ranges = texts
+            .map((x) => {
+              return {
+                el: x,
+                text: (!this.caseSensitive ? x.textContent?.toLowerCase() : x.textContent) ?? "",
+              };
+            })
+            .map(({ el, text }) => {
+              const indices = new Array<number>();
+              let startPos = 0;
+              while (startPos < text.length) {
+                const index = text.indexOf(term, startPos);
+                if (index === -1) break;
+                indices.push(index);
+                startPos = index + term.length;
+              }
+              return indices.map((index) => {
+                const range = new Range();
+                range.setStart(el, index);
+                range.setEnd(el, index + term.length);
+                return range;
+              });
+            })
+            .flat();
+          break;
+      }
+
+      if (this.#ranges.length > 0) {
+        CSS.highlights.set(this.#id, new Highlight(...this.#ranges));
+      }
     }
 
     this.dispatchEvent(

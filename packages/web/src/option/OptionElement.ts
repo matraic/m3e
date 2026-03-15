@@ -13,6 +13,7 @@ import {
   Role,
   Selected,
   setCustomState,
+  TextHighlightMode,
 } from "@m3e/web/core";
 
 import { typeaheadLabel } from "@m3e/web/core/a11y";
@@ -32,7 +33,10 @@ import { typeaheadLabel } from "@m3e/web/core/a11y";
  * @slot - Renders the label of the option.
  *
  * @attr disabled - Whether the element is disabled.
+ * @attr disable-highlight - Whether text highlighting is disabled.
+ * @attr highlight-mode - The mode in which to highlight a term.
  * @attr selected - Whether the element is selected.
+ * @attr term - The search term to highlight.
  * @attr value - A string representing the value of the option.
  *
  * @cssprop --m3e-option-container-height - The height of the option container.
@@ -204,6 +208,24 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
     this.#value = value;
   }
 
+  /**
+   * The search term to highlight.
+   * @default ""
+   */
+  @property() term = "";
+
+  /**
+   * The mode in which to highlight a term.
+   * @default "contains"
+   */
+  @property({ attribute: "highlight-mode" }) highlightMode: TextHighlightMode = "contains";
+
+  /**
+   * Whether text highlighting is disabled.
+   * @default false
+   */
+  @property({ attribute: "disable-highlight", type: Boolean }) disableHighlight = false;
+
   /** @internal */
   [typeaheadLabel](): string {
     return this.#textContent;
@@ -255,7 +277,11 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
             <path fill="currentColor" d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
           </svg>
         </div>
-        <m3e-text-overflow class="label"><slot @slotchange="${this.#handleSlotChange}"></slot></m3e-text-overflow>
+        <m3e-text-overflow class="label">
+          <m3e-text-highlight term="${this.term}" mode="${this.highlightMode}" ?disabled="${this.disableHighlight}">
+            <slot @slotchange="${this.#handleSlotChange}"></slot>
+          </m3e-text-highlight>
+        </m3e-text-overflow>
       </div>
     </div>`;
   }

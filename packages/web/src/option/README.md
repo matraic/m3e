@@ -34,11 +34,14 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### ⚙️ Attributes
 
-| Attribute  | Type      | Default | Description                                    |
-| ---------- | --------- | ------- | ---------------------------------------------- |
-| `disabled` | `boolean` | `false` | Whether the element is disabled.               |
-| `selected` | `boolean` | `false` | Whether the element is selected.               |
-| `value`    | `string`  |         | A string representing the value of the option. |
+| Attribute           | Type                                         | Default      | Description                                    |
+| ------------------- | -------------------------------------------- | ------------ | ---------------------------------------------- |
+| `disabled`          | `boolean`                                    | `false`      | Whether the element is disabled.               |
+| `disable-highlight` | `boolean`                                    | `false`      | Whether text highlighting is disabled.         |
+| `highlight-mode`    | `"contains" \| "starts-with" \| "ends-with"` | `"contains"` | The mode in which to highlight a term.         |
+| `selected`          | `boolean`                                    | `false`      | Whether the element is selected.               |
+| `term`              | `string`                                     |              | The search term to highlight.                  |
+| `value`             | `string`                                     |              | A string representing the value of the option. |
 
 #### 🧩 Slots
 
