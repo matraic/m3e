@@ -1,9 +1,19 @@
 import { css, CSSResultGroup } from "lit";
 
-import { DesignToken, Role, setCustomState, customElement, ScrollController, MutationController } from "@m3e/web/core";
+import {
+  DesignToken,
+  Role,
+  customElement,
+  ScrollController,
+  MutationController,
+  deleteCustomState,
+  addCustomState,
+} from "@m3e/web/core";
+
 import { M3eFloatingPanelElement } from "@m3e/web/core/anchoring";
 
 import { M3eOptGroupElement } from "./OptGroupElement";
+import { M3eOptionElement } from "./OptionElement";
 
 /**
  * Presents a list of options on a temporary surface.
@@ -134,10 +144,27 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
   /** @private */
   #handleMutation(): void {
     const options = this.querySelectorAll("m3e-option");
+    let first = false;
+    let last: M3eOptionElement | undefined;
+
     for (let i = 0; i < options.length; i++) {
       const option = options[i];
-      setCustomState(option, "-first", i === 0 && !(option.parentElement instanceof M3eOptGroupElement));
-      setCustomState(option, "-last", i === options.length - 1);
+      if (option.hidden) {
+        deleteCustomState(option, "-first");
+        deleteCustomState(option, "-last");
+      } else if (!first && !(option.parentElement instanceof M3eOptGroupElement)) {
+        addCustomState(option, "-first");
+        first = true;
+        addCustomState(option, "-last");
+        last = option;
+      } else {
+        deleteCustomState(option, "-first");
+        if (last) {
+          deleteCustomState(last, "-last");
+        }
+        addCustomState(option, "-last");
+        last = option;
+      }
     }
   }
 }
