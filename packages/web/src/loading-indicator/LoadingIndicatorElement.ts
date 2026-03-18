@@ -150,6 +150,7 @@ export class M3eLoadingIndicatorElement extends Role(LitElement, "progressbar") 
 
     this.ariaValueMin = this.ariaValueMin || "0";
     this.ariaValueMax = this.ariaValueMax || "100";
+    this._activeIndicator?.classList.toggle("animate", true);
   }
 
   /** @inheritdoc */
