@@ -23,7 +23,6 @@ export interface ResizeControllerOptions extends MonitorControllerOptions {
 
 /** A `ReactiveController` used to monitor when an element is resized. */
 export class ResizeController extends MonitorControllerBase {
-  /** @private */ readonly #host: ReactiveControllerHost;
   /** @private */ readonly #callback: ResizeControllerCallback;
   /** @private */ readonly #skipInitial: boolean;
   /** @private */ readonly #config?: ResizeObserverOptions;
@@ -38,7 +37,6 @@ export class ResizeController extends MonitorControllerBase {
   constructor(host: ReactiveControllerHost & HTMLElement, options: ResizeControllerOptions) {
     super(host, options);
 
-    this.#host = host;
     this.#callback = options.callback;
     this.#skipInitial = options.skipInitial ?? false;
     this.#config = options.config;
@@ -49,10 +47,7 @@ export class ResizeController extends MonitorControllerBase {
       return;
     }
 
-    this.#observer = new ResizeObserver((entries, observer) => {
-      this.#callback(entries, observer);
-      this.#host.requestUpdate();
-    });
+    this.#observer = new ResizeObserver((entries, observer) => this.#callback(entries, observer));
   }
 
   /** @inheritdoc */
@@ -70,7 +65,6 @@ export class ResizeController extends MonitorControllerBase {
   protected override _observe(target: HTMLElement): void {
     this.#observer?.observe(target, this.#config);
     this.#unobservedUpdate = true;
-    this.#host.requestUpdate();
   }
 
   /**

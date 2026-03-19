@@ -267,6 +267,7 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
     callback: () => {
       this.#updateDiameterAndStroke();
       this.#updateAmplitudeAndWavelength();
+      queueMicrotask(() => this.requestUpdate());
     },
   });
 

@@ -347,6 +347,7 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
     callback: () => {
       this.#updateStroke();
       this.#updateAmplitudeAndWavelength();
+      queueMicrotask(() => this.requestUpdate());
     },
   });
 
