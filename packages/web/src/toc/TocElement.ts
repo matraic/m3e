@@ -357,7 +357,6 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   /** @private */
   #generateToc(): void {
     this._toc = this.control ? TocGenerator.generate(this.control, Math.max(1, Math.min(this.maxDepth, 6))) : [];
-    this.requestUpdate();
   }
 
   /** @private */

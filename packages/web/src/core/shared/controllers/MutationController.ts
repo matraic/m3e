@@ -23,7 +23,6 @@ export interface MutationControllerOptions extends MonitorControllerOptions {
  * to detect arbitrary changes to DOM, including nodes being added or removed and attributes changing.
  */
 export class MutationController extends MonitorControllerBase {
-  /** @private */ #host: ReactiveControllerHost;
   /** @private */ #callback: MutationCallback;
   /** @private */ #skipInitial = false;
   /** @private */ #config?: MutationObserverInit;
@@ -38,7 +37,6 @@ export class MutationController extends MonitorControllerBase {
   constructor(host: ReactiveControllerHost & HTMLElement, options: MutationControllerOptions) {
     super(host, options);
 
-    this.#host = host;
     this.#callback = options.callback;
     this.#skipInitial = options.skipInitial ?? false;
     this.#config = options.config;
@@ -49,10 +47,7 @@ export class MutationController extends MonitorControllerBase {
       return;
     }
 
-    this.#observer = new MutationObserver((records, observer) => {
-      this.#callback(records, observer);
-      this.#host.requestUpdate();
-    });
+    this.#observer = new MutationObserver((records, observer) => this.#callback(records, observer));
   }
 
   /** @inheritdoc */
@@ -76,7 +71,6 @@ export class MutationController extends MonitorControllerBase {
   protected override _observe(target: HTMLElement): void {
     this.#observer?.observe(target, this.#config);
     this.#unobservedUpdate = true;
-    this.#host.requestUpdate();
   }
 
   /** @inheritdoc */
