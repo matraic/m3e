@@ -1,78 +1,10 @@
 import resolve from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
+import babel from "@rollup/plugin-babel";
+import createConfig from "../../rollup.config.js";
 
-const banner = `/**
- * @license MIT
- * Copyright (c) 2025 matraic
- * See LICENSE file in the project root for full license text.
- */
-`;
-
-const createDefaultEntryPoint = () => [
-  {
-    input: "src/index.ts",
-    output: [
-      {
-        file: "dist/index.js",
-        format: "esm",
-        sourcemap: true,
-        banner: banner,
-      },
-    ],
-    plugins: [resolve(), typescript()],
-  },
-];
-
-const createAllEntryPoint = [
-  {
-    input: "src/all.ts",
-    output: [
-      {
-        file: "dist/all.js",
-        format: "esm",
-        sourcemap: true,
-        banner: banner,
-      },
-      {
-        file: "dist/all.min.js",
-        format: "esm",
-        sourcemap: true,
-        banner: banner,
-        plugins: [terser({ mangle: true, compress: { directives: false } })],
-      },
-    ],
-    external: [/^@m3e\//, "lit", "@lit/react", "react"],
-    plugins: [resolve(), typescript()],
-  },
-];
-
-const createEntryPoint = (path) => [
-  {
-    input: `src/${path}/index.ts`,
-    output: [
-      {
-        file: `dist/${path}.js`,
-        format: "esm",
-        sourcemap: true,
-        banner: banner,
-      },
-      {
-        file: `dist/${path}.min.js`,
-        format: "esm",
-        sourcemap: true,
-        banner: banner,
-        plugins: [terser({ mangle: true, compress: { directives: false } })],
-      },
-    ],
-    external: [/^@m3e\//, "lit", "@lit/react", "react"],
-    plugins: [resolve(), typescript()],
-  },
-];
-
-const entryPoints = createDefaultEntryPoint();
-
-[
+const inputs = [
   "app-bar",
   "autocomplete",
   "avatar",
@@ -119,10 +51,15 @@ const entryPoints = createDefaultEntryPoint();
   "toc",
   "toolbar",
   "tooltip",
-].forEach((x) => {
-  entryPoints.push(...createEntryPoint(x));
+];
+
+export default createConfig({ 
+  inputs: inputs, 
+  externals: [/^@m3e\//, "lit", "@lit/react", "react"],
+  config: {
+    terserConfig: {
+      compress: { directives: false }
+    }
+  }
 });
 
-entryPoints.push(...createAllEntryPoint);
-
-export default entryPoints;
