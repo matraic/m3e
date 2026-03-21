@@ -23,6 +23,10 @@ export function isAttachInternalsMixin(value: unknown): value is AttachInternals
 
 const _internals = Symbol("_internals");
 
+// Since flushing custom state doesn't flush in Safari (affecting all iOS browsers),
+// a copy of custom state is retained locally so components can correctly read after write.
+const _customState = Symbol("_customState");
+
 /**
  * Mixin to augment an element with behavior that attaches to `ElementInternals`.
  * @template T The type of the base class.
@@ -41,6 +45,12 @@ export function AttachInternals<T extends Constructor<LitElement>>(
     /** @private */
     private [_internals]?: ElementInternals;
 
+    // Since flushing custom state doesn't flush in Safari (affecting all iOS browsers),
+    // a copy of custom state is retained locally so components can correctly read after write.
+
+    /** @private */
+    [_customState] = new Set<string>();
+
     /** @internal */
     get [internals](): ElementInternals {
       return this[_internals] ?? (this[_internals] = this.attachInternals());
@@ -57,6 +67,14 @@ export function AttachInternals<T extends Constructor<LitElement>>(
  * @returns {boolean} Whether `element` has `state`.
  */
 export function hasCustomState(element: AttachInternalsMixin, state: string): boolean {
+  // Since flushing custom state doesn't flush in Safari (affecting all iOS browsers),
+  // a copy of custom state is retained locally so components can correctly read after write.
+  if (_customState in element) {
+    return (<{ [_customState]: Set<string> }>(<unknown>element))[_customState].has(state);
+  }
+
+  // This should never get called due to needing a local copy of custom state
+  // since reading after write to flush doesn't work in Safari (affecting all iOS browsers).
   return element[internals].states.has(state);
 }
 
@@ -66,8 +84,14 @@ export function hasCustomState(element: AttachInternalsMixin, state: string): bo
  * @param {string} state The custom state to add.
  */
 export function addCustomState(element: AttachInternalsMixin, state: string): void {
+  // Since flushing custom state doesn't flush in Safari (affecting all iOS browsers),
+  // a copy of custom state is retained locally so components can correctly read after write.
+  if (_customState in element) {
+    (<{ [_customState]: Set<string> }>(<unknown>element))[_customState].add(state);
+  }
+
   element[internals]?.states.add(state);
-  element[internals]?.states.has(state); // flush
+  element[internals]?.states.has(state); // flush (even though this doesn't work in Safari)
 }
 
 /**
@@ -77,8 +101,13 @@ export function addCustomState(element: AttachInternalsMixin, state: string): vo
  * @returns {boolean} Whether `state` was removed from `element`.
  */
 export function deleteCustomState(element: AttachInternalsMixin, state: string): boolean {
+  // Since flushing custom state doesn't flush in Safari (affecting all iOS browsers),
+  // a copy of custom state is retained locally so components can correctly read after write.
+  if (_customState in element) {
+    (<{ [_customState]: Set<string> }>(<unknown>element))[_customState].delete(state);
+  }
   if (element[internals]?.states.delete(state)) {
-    element[internals]?.states.has(state); // flush
+    element[internals]?.states.has(state); // flush (even though this doesn't work in Safari)
     return true;
   }
   return false;
