@@ -40,7 +40,7 @@ Planned components which have not yet entered development:
 
 ## 🏛️ Past Milestones
 
-- **2.1.0 — Feature release**  
+- **2.1.0 – 2.1.1 — Feature + patch releases**
   Enhancements to `m3e-autocomplete` and `m3e-input-chip-set`, bug fixes.
 
 - **2.0.1 – 2.0.5 — Patch releases**  
