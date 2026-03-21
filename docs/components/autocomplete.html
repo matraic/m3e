@@ -29,26 +29,32 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.5/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.5/dist/core-a11y.min.js",
-          "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.5/dist/core-anchoring.min.js",
-          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.0.5/dist/core-bidi.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/core-a11y.min.js",
+          "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/core-anchoring.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/core-bidi.min.js",
+          "@m3e/web/option": "https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/option.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.5/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.5/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.5/dist/toc.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.5/dist/form-field.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.5/dist/option.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.5/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.5/dist/autocomplete.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/form-field.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/option.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/autocomplete.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/chips.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/icon-button.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/loading-indicator.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/progress-indicator.min.js"></script>
+    <script src="autocomplete.js"></script>
     <script src="../main.js"></script>
   </head>
   <body id="body">
     <m3e-theme strong-focus>
-      <m3e-toc class="toc" for="body">
+      <m3e-toc class="toc" for="body" max-depth="4">
         <span slot="overline">On this page</span>
         <span slot="title">Autocomplete</span>
       </m3e-toc>
@@ -104,6 +110,281 @@
   &lt;m3e-option&gt;Bananas&lt;/m3e-option&gt;
   &lt;m3e-option&gt;Grapes&lt;/m3e-option&gt;
 &lt;/m3e-autocomplete&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Filter modes</m3e-heading>
+      <p>
+        By default, <code>m3e-autocomplete</code> will filter options using a case insensitive substring match. You can
+        use the <code>filter</code> attribute to control this behavior. Supported values include:
+        <code>contains</code> (default), <code>starts-with</code>, <code>ends-with</code> and <code>none</code>. In
+        addition, use the <code>case-sensitive</code> attribute to control whether matching is case-sensitive.
+      </p>
+      <p>The following example illustrates a case-sensitive prefix match.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field>
+            <label slot="label" for="fruit5">Choose your favorite fruit</label>
+            <input id="fruit5" />
+          </m3e-form-field>
+          <m3e-autocomplete for="fruit5" filter="starts-with" case-sensitive>
+            <m3e-option>Apples</m3e-option>
+            <m3e-option>Oranges</m3e-option>
+            <m3e-option>Bananas</m3e-option>
+            <m3e-option>Grapes</m3e-option>
+          </m3e-autocomplete>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;fruit&quot;&gt;Choose your favorite fruit&lt;/label&gt;
+  &lt;input id=&quot;fruit&quot; value=&quot;Apple&quot; /&gt;
+&lt;/m3e-form-field&gt;
+&lt;m3e-autocomplete for=&quot;fruit&quot; filter=&quot;starts-with&quot; case-sensitive&gt;
+  &lt;!-- Options omitted for brevity --&gt;
+&lt;/m3e-autocomplete&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Custom filtering</m3e-heading>
+      <p>
+        Alternately, you can provide a callback function using the <code>filter</code> property to control this
+        behavior. Custom filters do not support automatic text highlighting, because the component cannot determine
+        which parts of the text matched.
+      </p>
+      <p>
+        The following example shows how to set <code>filter</code> with logic for a custom case-insensitive prefix
+        match.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field>
+            <label slot="label" for="fruit4">Choose your favorite fruit</label>
+            <input id="fruit4" />
+          </m3e-form-field>
+          <m3e-autocomplete class="custom-filter" for="fruit4">
+            <m3e-option>Apples</m3e-option>
+            <m3e-option>Oranges</m3e-option>
+            <m3e-option>Bananas</m3e-option>
+            <m3e-option>Grapes</m3e-option>
+          </m3e-autocomplete>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;fruit&quot;&gt;Choose your favorite fruit&lt;/label&gt;
+  &lt;input id=&quot;fruit&quot; value=&quot;Apple&quot; /&gt;
+&lt;/m3e-form-field&gt;
+&lt;m3e-autocomplete class=&quot;custom-filter&quot; for=&quot;fruit&quot;&gt;
+  &lt;!-- Options omitted for brevity --&gt;
+&lt;/m3e-autocomplete&gt;</pre
+        >
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+window.addEventListener(&quot;DOMContentLoaded&quot;, () =&gt; {
+  for (const autocomplete of document.querySelectorAll(&quot;m3e-autocomplete.custom-filter&quot;)) {
+    autocomplete.filter = (option, term) =&gt;
+      option.value.toLocaleLowerCase().startsWith(term.toLocaleLowerCase());
+  }
+});</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">No data</m3e-heading>
+      <p>
+        Use the <code>no-data-label</code> attribute to control the text announced and displayed when no options match.
+        The <code>no-data</code> slot can be used to provide custom visual content for the empty state. Alternatively,
+        use the <code>hide-no-data</code> attribute to suppress the empty-state UI entirely.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field>
+            <label slot="label" for="fruit6">Choose your favorite fruit</label>
+            <input id="fruit6" value="Pear" />
+          </m3e-form-field>
+          <m3e-autocomplete for="fruit6" no-data-label="No data">
+            <m3e-option>Apples</m3e-option>
+            <m3e-option>Oranges</m3e-option>
+            <m3e-option>Bananas</m3e-option>
+            <m3e-option>Grapes</m3e-option>
+          </m3e-autocomplete>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;fruit&quot;&gt;Choose your favorite fruit&lt;/label&gt;
+  &lt;input id=&quot;fruit&quot; value=&quot;Pear&quot; /&gt;
+&lt;/m3e-form-field&gt;
+&lt;m3e-autocomplete for=&quot;fruit&quot; no-data-label=&quot;No data&quot;&gt;
+  &lt;!-- Options omitted for brevity --&gt;
+&lt;/m3e-autocomplete&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Lazy loading</m3e-heading>
+      <p>
+        The <code>m3e-autocomplete</code> emits a <code>query</code> event that can be used to lazy-load options. The
+        event fires only when the control is enabled and not read-only, under the following conditions:
+      </p>
+      <ul>
+        <li>
+          The <code>input</code> receives focus while no options are available. This can be used to load initial
+          options.
+        </li>
+        <li>
+          The <code>input</code> value changes. This can be used to fetch options that match the current term using the
+          event's <code>detail.term</code> property.
+        </li>
+      </ul>
+
+      <p>
+        Use the <code>loading</code> attribute to control whether the <code>m3e-autocomplete</code> presents a loading
+        UI. The <code>loading-label</code> attribute controls the text announced and displayed when enabled and the
+        <code>loading</code> slot can be used to provide custom visual content for the loading state. Use the
+        <code>hide-loading</code> attribute to suppress the loading-state UI entirely. <code>loading-label</code> will
+        still be announced when hidden.
+      </p>
+      <m3e-heading variant="title" size="medium" level="4">Initial load</m3e-heading>
+      <p>
+        The following example illustrates lazy loading initial data when the <code>input</code> is focused. In addition,
+        a <code>m3e-loading-indicator</code> is presented in the <code>loading</code> slot. See
+        <a href="../components/loading-indicator.html">Loading Indicator</a> for more information.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field>
+            <label slot="label" for="state">State</label>
+            <input id="state" />
+          </m3e-form-field>
+          <m3e-autocomplete class="lazy" for="state">
+            <m3e-loading-indicator slot="loading"></m3e-loading-indicator>
+          </m3e-autocomplete>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;state&quot;&gt;State&lt;/label&gt;
+  &lt;input id=&quot;state&quot; /&gt;
+&lt;/m3e-form-field&gt;
+&lt;m3e-autocomplete for=&quot;state&quot; class=&quot;lazy&quot;&gt;
+&lt;/m3e-autocomplete&gt;</pre
+        >
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+const lazy = document.querySelector(&quot;m3e-autocomplete.lazy&quot;);
+lazy.addEventListener(&quot;query&quot;, () =&gt; {
+  if (!lazy.querySelector(&quot;m3e-option&quot;)) {
+    lazy.loading = true;
+    setTimeout(() =&gt; {
+      usStates.forEach((state) =&gt; {
+        const option = document.createElement(&quot;m3e-option&quot;);
+        option.innerText = state;
+        lazy.appendChild(option);
+      });
+      lazy.loading = false;
+    }, 2000);
+  }
+});</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Search as you type</m3e-heading>
+      <p>
+        The next example performs a search only after the user pauses typing. The loading indicator is not shown while
+        the user is typing and appears only when an actual search request is made. If the user begins typing while a
+        search is in progress, the loading indicator remains visible, the in-flight request is canceled, and a new
+        search is started after debouncing. This example sets <code>filter="none"</code> to disable built-in filtering.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field>
+            <label slot="label" for="state2">State</label>
+            <input id="state2" />
+          </m3e-form-field>
+          <m3e-autocomplete class="search" for="state2" filter="none">
+            <m3e-loading-indicator slot="loading"></m3e-loading-indicator>
+          </m3e-autocomplete>
+        </div>
+      </m3e-card>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;state&quot;&gt;State&lt;/label&gt;
+  &lt;input id=&quot;state&quot; /&gt;
+&lt;/m3e-form-field&gt;
+&lt;m3e-autocomplete for=&quot;state&quot; filter=&quot;none&quot; class=&quot;search&quot;&gt;
+&lt;/m3e-autocomplete&gt;</pre
+        >
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+const search = document.querySelector(&quot;m3e-autocomplete.search&quot;);
+
+let debounceTimer = -1;
+let activeRequest = null;
+
+search.addEventListener(&quot;query&quot;, (e) =&gt; {
+  const term = e.detail.term?.trim().toLowerCase();
+
+  // User is typing → reset debounce, but do NOT show loading yet
+  clearTimeout(debounceTimer);
+
+  // If user cleared the field
+  if (!term) {
+    // Cancel any in‑flight request
+    if (activeRequest) activeRequest.abort();
+
+    // Reset UI
+    search.querySelectorAll(&quot;m3e-option&quot;).forEach((x) =&gt; x.remove());
+    search.hideNoData = true;
+    search.loading = false;
+    return;
+  }
+
+  // Now a real search is happening → show loading
+  search.loading = true;
+  search.hideNoData = false;
+
+  // If a request is already loading, keep showing loading
+  // but cancel the old request
+  if (activeRequest) activeRequest.abort();
+
+  // Start debounce
+  debounceTimer = setTimeout(() =&gt; {
+    // Clear old results (so we don't show stale data)
+    search.querySelectorAll(&quot;m3e-option&quot;).forEach((x) =&gt; x.remove());
+
+    // Create a cancellable &quot;request&quot;
+    const controller = new AbortController();
+    activeRequest = controller;
+
+    // Simulate async search
+    setTimeout(() =&gt; {
+      // If canceled, do nothing
+      if (controller.signal.aborted) return;
+
+      // Populate results
+      usStates
+        .filter((x) =&gt; x.toLowerCase().includes(term))
+        .forEach((state) =&gt; {
+          const option = document.createElement(&quot;m3e-option&quot;);
+          option.innerText = state;
+          search.appendChild(option);
+        });
+
+      search.loading = false;
+
+      activeRequest = null;
+    }, 2000);
+  }, 300); // debounce delay
+});</pre
         >
       </m3e-card>
 
@@ -180,6 +461,41 @@
         >
       </m3e-card>
 
+      <m3e-heading variant="headline" size="small" level="3">Chips</m3e-heading>
+      <p>
+        The <code>m3e-autocomplete</code> pairs with <code>m3e-input-chip-set</code> to surface suggestions that users
+        can select and convert into chips. See <a href="../components/chips.html">Chips</a> for more information.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field>
+            <label slot="label" for="fruit7">Choose your favorite fruits</label>
+            <m3e-input-chip-set aria-label="Enter favorite fruits">
+              <input id="fruit7" slot="input" placeholder="Add fruit..." />
+            </m3e-input-chip-set>
+          </m3e-form-field>
+          <m3e-autocomplete for="fruit7">
+            <m3e-option>Apples</m3e-option>
+            <m3e-option>Oranges</m3e-option>
+            <m3e-option>Bananas</m3e-option>
+            <m3e-option>Grapes</m3e-option>
+          </m3e-autocomplete>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;fruit&quot;&gt;Choose your favorite fruits&lt;/label&gt;
+  &lt;m3e-input-chip-set aria-label=&quot;Enter favorite fruits&quot;&gt;
+    &lt;input id=&quot;fruit&quot; slot=&quot;input&quot; placeholder=&quot;Add fruit...&quot; /&gt;
+  &lt;/m3e-input-chip-set&gt;
+&lt;/m3e-form-field&gt;
+&lt;m3e-autocomplete for=&quot;fruit&quot;&gt;
+  &lt;!-- Options omitted for brevity --&gt;
+&lt;/m3e-autocomplete&gt;</pre
+        >
+      </m3e-card>
+
       <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
       <p>
         The <code>m3e-autocomplete</code> component follows the ARIA <code>combobox</code> interaction pattern. The
@@ -227,6 +543,27 @@
         controls within options disrupts expected navigation and interferes with screen reader behavior.
       </p>
 
+      <p>
+        The component provides built-in ARIA-friendly announcements for loading, no-data, and results updates. These
+        announcements are exposed through a polite <code>aria-live</code> region so assistive technologies receive
+        timely, non-interruptive updates as the user types.
+      </p>
+      <ul>
+        <li>
+          A loading announcement is issued whenever the <code>loading</code> attribute becomes <code>true</code>, using
+          the value of <code>loading-label</code>.
+        </li>
+        <li>
+          A no-data announcement is issued when no options match the current term and announces the value of
+          <code>no-data-label</code>.
+        </li>
+        <li>
+          A results announcement is issued when one or more options become available and announces the value of
+          <code>results-label</code>. If <code>results-label</code> is a function, it receives the number of matching
+          options and must return a string; if it is a plain string, it is announced as-is.
+        </li>
+      </ul>
+
       <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
       <p>
         The <code>@m3e/web</code> package uses
@@ -273,8 +610,8 @@
       &quot;@m3e/web/core&quot;: &quot;/node_modules/@m3e/web/dist/core.js&quot;,
       &quot;@m3e/web/core/a11y&quot;: &quot;/node_modules/@m3e/web/dist/core-a11y.js&quot;,
       &quot;@m3e/web/core/anchoring&quot;: &quot;/node_modules/@m3e/web/dist/core-anchoring.js&quot;,
-      &quot;@m3e/web/core/bidi&quot;: &quot;/node_modules/@m3e/web/dist/core-bidi.js&quot;
-
+      &quot;@m3e/web/core/bidi&quot;: &quot;/node_modules/@m3e/web/dist/core-bidi.js&quot;,
+      &quot;@m3e/web/option&quot;: &quot;/node_modules/@m3e/web/dist/option.js&quot;
     }
   }
 &lt;/script&gt;</pre
@@ -289,11 +626,11 @@
         attributes, slots, events and CSS custom properties of each component.
       </p>
       <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
-      <api-viewer only="m3e-autocomplete" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.5/dist/custom-elements.json">
+      <api-viewer only="m3e-autocomplete" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/custom-elements.json">
       </api-viewer>
-      <api-viewer only="m3e-option" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.5/dist/custom-elements.json">
+      <api-viewer only="m3e-option" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/custom-elements.json">
       </api-viewer>
-      <api-viewer only="m3e-optgroup" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.0.5/dist/custom-elements.json">
+      <api-viewer only="m3e-optgroup" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.0/dist/custom-elements.json">
       </api-viewer>
     </m3e-theme>
   </body>

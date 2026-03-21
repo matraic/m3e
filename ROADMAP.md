@@ -4,7 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 2.0.0 Release
+- 2.1.0 Release
 
 ## 🔮 Future
 
@@ -39,6 +39,9 @@ Planned components which have not yet entered development:
 - MCP Server enabling IDEs and AI tools to query local knowledge about components and documentation
 
 ## 🏛️ Past Milestones
+
+- **2.1.0 — Feature release**  
+  Enhancements to `m3e-autocomplete` and `m3e-input-chip-set`, bug fixes.
 
 - **2.0.1 – 2.0.5 — Patch releases**  
   Bug fixes, SSR support for React.
