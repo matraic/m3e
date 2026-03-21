@@ -42,26 +42,26 @@ This section details the attributes and slots available for the `m3e-autocomplet
 
 ### ⚙️ Attributes
 
-| Attribute                  | Type                                         | Default      | Description                                                                    |
-| -------------------------- | -------------------------------------------- | ------------ | ------------------------------------------------------------------------------ |
-| `auto-activate`            | `boolean`                                    | `false`      | Whether the first option should be automatically activated.                    |
-| `case-sensitive`           | `boolean`                                    | `false`      | Whether filtering is case sensitive.                                           |
-| `filter`                   | `"contains" \| "starts-with" \| "ends-with"` | `"contains"` | Mode in which to filter options.                                               |
-| `hide-selection-indicator` | `boolean`                                    | `false`      | Whether to hide the selection indicator for options.                           |
-| `hide-loading`             | `boolean`                                    | `false`      | Whether to hide the menu while options are loading.                            |
-| `hide-no-data`             | `boolean`                                    | `false`      | Whether to hide the menu when there are no options to display.                 |
-| `loading`                  | `boolean`                                    | `false`      | Whether options are currently being loaded.                                    |
-| `loading-label`            | `string`                                     | `Loading...` | The text announced and displayed while loading options.                        |
-| `no-data-label`            | `string`                                     | `No options` | The text announced and displayed when no options match the current term.       |
-| `required`                 | `boolean`                                    | `false`      | Whether the user must make a selection when interacting with the autocomplete. |
-| `results-label`            | `string`                                     |              | The text announced when the available options change for the current term.     |
+| Attribute                  | Type                                                   | Default      | Description                                                                    |
+| -------------------------- | ------------------------------------------------------ | ------------ | ------------------------------------------------------------------------------ |
+| `auto-activate`            | `boolean`                                              | `false`      | Whether the first option should be automatically activated.                    |
+| `case-sensitive`           | `boolean`                                              | `false`      | Whether filtering is case sensitive.                                           |
+| `filter`                   | `"contains" \| "starts-with" \| "ends-with" \| "none"` | `"contains"` | Mode in which to filter options.                                               |
+| `hide-selection-indicator` | `boolean`                                              | `false`      | Whether to hide the selection indicator for options.                           |
+| `hide-loading`             | `boolean`                                              | `false`      | Whether to hide the menu while options are loading.                            |
+| `hide-no-data`             | `boolean`                                              | `false`      | Whether to hide the menu when there are no options to display.                 |
+| `loading`                  | `boolean`                                              | `false`      | Whether options are currently being loaded.                                    |
+| `loading-label`            | `string`                                               | `Loading...` | The text announced and displayed while loading options.                        |
+| `no-data-label`            | `string`                                               | `No options` | The text announced and displayed when no options match the current term.       |
+| `required`                 | `boolean`                                              | `false`      | Whether the user must make a selection when interacting with the autocomplete. |
+| `results-label`            | `string`                                               |              | The text announced when the available options change for the current term.     |
 
 ### 🔧 Properties
 
-| Property       | Type                                                                                                  | Default                          | Description                                                                |
-| -------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------- | -------------------------------------------------------------------------- |
-| `filter`       | `"contains" \| "starts-with" \| "ends-with" \| ((option: M3eOptionElement, term: string) => boolean)` | `"contains"`                     | Mode in which to filter options.                                           |
-| `resultsLabel` | `Function`                                                                                            | ``(count) => `${count} options`` | The text announced when the available options change for the current term. |
+| Property       | Type                                                                                                            | Default                          | Description                                                                |
+| -------------- | --------------------------------------------------------------------------------------------------------------- | -------------------------------- | -------------------------------------------------------------------------- |
+| `filter`       | `"contains" \| "starts-with" \| "ends-with" \| "none" \| ((option: M3eOptionElement, term: string) => boolean)` | `"contains"`                     | Mode in which to filter options.                                           |
+| `resultsLabel` | `Function`                                                                                                      | ``(count) => `${count} options`` | The text announced when the available options change for the current term. |
 
 ### 🧩 Slots
 

@@ -157,7 +157,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     converter: {
       fromAttribute(value: string | null): AutocompleteFilterMode {
         if (value === null) return "contains";
-        if (value === "starts-with" || value === "ends-with" || value === "contains") {
+        if (value === "starts-with" || value === "ends-with" || value === "contains" || value === "none") {
           return value;
         }
         return "contains";
@@ -740,6 +740,9 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
         clone.term = exactTerm;
         clone.highlightMode = this.filter;
         return value.includes(term);
+      case "none":
+        clone.disableHighlight = true;
+        return true;
       default:
         clone.disableHighlight = true;
         return this.filter(option, exactTerm);
