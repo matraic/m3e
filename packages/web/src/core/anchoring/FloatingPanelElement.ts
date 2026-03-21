@@ -59,10 +59,9 @@ export class M3eFloatingPanelElement extends AttachInternals(LitElement) {
       display: none;
     }
     .base {
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      min-width: inherit;
-      max-width: inherit;
       padding-block: var(--m3e-floating-panel-container-padding-block, 0.25rem);
       padding-inline: var(--m3e-floating-panel-container-padding-inline, 0.25rem);
     }
