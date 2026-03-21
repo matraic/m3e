@@ -1,8 +1,8 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent, EventName } from "@lit/react";
 
-import { M3eAutocompleteElement } from "@m3e/web/autocomplete";
-export type { M3eAutocompleteElement, AutocompleteFilterMode } from "@m3e/web/autocomplete";
+import { M3eAutocompleteElement, QueryEventDetail } from "@m3e/web/autocomplete";
+export type { M3eAutocompleteElement, AutocompleteFilterMode, QueryEventDetail } from "@m3e/web/autocomplete";
 
 /**
  * React binding for the `m3e-autocomplete` Web Component from `@m3e/web/autocomplete`.
@@ -23,5 +23,6 @@ export const M3eAutocomplete = createComponent({
   react: React,
   events: {
     onToggle: "toggle",
+    onQuery: "query" as EventName<CustomEvent<QueryEventDetail>>,
   },
 });

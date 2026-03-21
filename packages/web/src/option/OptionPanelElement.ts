@@ -1,4 +1,4 @@
-import { css, CSSResultGroup } from "lit";
+import { css, CSSResultGroup, html } from "lit";
 
 import {
   DesignToken,
@@ -8,12 +8,16 @@ import {
   MutationController,
   deleteCustomState,
   addCustomState,
+  setCustomState,
+  hasAssignedNodes,
 } from "@m3e/web/core";
 
 import { M3eFloatingPanelElement } from "@m3e/web/core/anchoring";
 
 import { M3eOptGroupElement } from "./OptGroupElement";
 import { M3eOptionElement } from "./OptionElement";
+import { property } from "lit/decorators.js";
+import { OptionPanelState } from "./OptionPanelState";
 
 /**
  * Presents a list of options on a temporary surface.
@@ -100,6 +104,65 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
         --m3e-focus-ring-outward-offset: 0px;
         --m3e-focus-ring-growth-factor: 1.5;
       }
+      .no-data {
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        min-height: var(--m3e-option-panel-no-data-container-height, 2.75rem);
+        padding: var(--m3e-option-panel-no-data-container-padding, 0.75rem);
+        color: var(--m3e-option-panel-no-data-color, ${DesignToken.color.onSurfaceVariant});
+        font-size: var(--m3e-option-panel-no-data-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
+        font-weight: var(
+          --m3e-option-panel-no-data-font-weight,
+          ${DesignToken.typescale.standard.label.large.fontWeight}
+        );
+        line-height: var(
+          --m3e-option-panel-no-data-line-height,
+          ${DesignToken.typescale.standard.label.large.lineHeight}
+        );
+        letter-spacing: var(
+          --m3e-option-panel-no-data-tracking,
+          ${DesignToken.typescale.standard.label.large.tracking}
+        );
+      }
+      .loading {
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        min-height: var(--m3e-option-panel-loading-container-height, 2.75rem);
+        padding: var(--m3e-option-panel-loading-container-padding, 0.75rem);
+        color: var(--m3e-option-panel-loading-color, ${DesignToken.color.onSurfaceVariant});
+        font-size: var(--m3e-option-panel-loading-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
+        font-weight: var(
+          --m3e-option-panel-loading-font-weight,
+          ${DesignToken.typescale.standard.label.large.fontWeight}
+        );
+        line-height: var(
+          --m3e-option-panel-loading-line-height,
+          ${DesignToken.typescale.standard.label.large.lineHeight}
+        );
+        letter-spacing: var(
+          --m3e-option-panel-loading-tracking,
+          ${DesignToken.typescale.standard.label.large.tracking}
+        );
+      }
+      :host(:state(-no-data)) slot:not([name]),
+      :host(:state(-loading)) slot:not([name]),
+      :host(:state(-loading)) .no-data,
+      :host(:not(:state(-no-data))) .no-data,
+      :host(:not(:state(-with-no-data))) .no-data,
+      :host(:not(:state(-loading))) .loading,
+      :host(:not(:state(-with-loading))) .loading {
+        display: none;
+      }
+      :host(:state(-no-data)) .base,
+      :host(:state(-loading)) .base {
+        overflow-y: hidden;
+      }
+      :host(:state(-with-loading-indicator)) .loading {
+        padding: 0;
+        justify-content: center;
+      }
     `,
   ];
 
@@ -121,6 +184,12 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
     });
   }
 
+  /**
+   * The state for which to present content.
+   * @default "content"
+   */
+  @property({ reflect: true }) state: OptionPanelState = "content";
+
   /** @inheritdoc */
   override async show(trigger: HTMLElement, anchor?: HTMLElement): Promise<void> {
     await super.show(trigger, anchor);
@@ -139,6 +208,35 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
   override connectedCallback(): void {
     super.connectedCallback();
     this.#handleMutation();
+  }
+
+  /** @inheritdoc */
+  protected override render(): unknown {
+    return html`<div class="base">
+      <slot></slot>
+      <div class="no-data" aria-hidden="true">
+        <slot name="no-data" @slotchange="${this.#handleNoDataSlotChange}"></slot>
+      </div>
+      <div class="loading" aria-hidden="true">
+        <slot name="loading" @slotchange="${this.#handleLoadingSlotChange}"> </slot>
+      </div>
+    </div>`;
+  }
+
+  /** @private */
+  #handleNoDataSlotChange(e: Event): void {
+    setCustomState(this, "-with-no-data", hasAssignedNodes(<HTMLSlotElement>e.target));
+  }
+
+  /** @private */
+  #handleLoadingSlotChange(e: Event): void {
+    setCustomState(this, "-with-loading", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(
+      this,
+      "-with-loading-indicator",
+      this.querySelector("m3e-loading-indicator[slot='loading'], m3e-circular-progress-indicator[slot='loading']") !==
+        null,
+    );
   }
 
   /** @private */

@@ -1,4 +1,5 @@
-import { css, CSSResultGroup, html, LitElement } from "lit";
+/* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
+import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
 import {
@@ -13,11 +14,12 @@ import {
   MutationController,
 } from "@m3e/web/core";
 
-import { ListKeyManager } from "@m3e/web/core/a11y";
-
-import type { M3eFormFieldElement } from "@m3e/web/form-field";
+import { ListKeyManager, M3eLiveAnnouncer } from "@m3e/web/core/a11y";
 import { M3eOptGroupElement, M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
+import type { M3eFormFieldElement } from "@m3e/web/form-field";
+
 import { AutocompleteFilterMode } from "./AutocompleteFilterMode";
+import { QueryEventDetail } from "./QueryEventDetail";
 
 /**
  * Enhances a text input with suggested options.
@@ -49,11 +51,20 @@ import { AutocompleteFilterMode } from "./AutocompleteFilterMode";
  * @attr case-sensitive - Whether filtering is case sensitive.
  * @attr filter - Mode in which to filter options.
  * @attr hide-selection-indicator - Whether to hide the selection indicator.
+ * @attr hide-loading - Whether to hide the menu when loading options.
+ * @attr hide-no-data - Whether to hide the menu when there are no options to show.
+ * @attr loading - Whether options are being loaded.
+ * @attr loading-label - The text announced and presented when loading options.
+ * @attr no-data-label - The text announced and presented when no options are available for the current term.
  * @attr required - Whether the user is required to make a selection when interacting with the autocomplete.
+ * @attr results-label - The text announced when available options change for the current term.
  *
  * @slot - Renders the options of the autocomplete.
+ * @slot loading - Renders content when loading options.
+ * @slot no-data - Renders content when there are no options to show.
  *
  * @fires toggle - Emitted when the options menu opens or closes.
+ * @fires query - Emitted when the input is focused or when the user modifies its value.
  */
 @customElement("m3e-autocomplete")
 export class M3eAutocompleteElement extends HtmlFor(LitElement) {
@@ -76,6 +87,9 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   /** @private */ #ignoreFocusVisible = false;
   /** @private */ #menu?: M3eOptionPanelElement;
   /** @private */ #ignoreHideMenuOnBlur = false;
+  /** @private */ #inputChanged = false;
+  /** @private */ #hasFocus = false;
+  /** @private */ #mutationAbortController?: AbortController;
 
   /** @private */ readonly #clickHandler = () => this.#handleClick();
   /** @private */ readonly #formFieldPointerDownHandler = () => this.#handleFormFieldPointerDown();
@@ -148,21 +162,53 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
         }
         return "contains";
       },
-
-      toAttribute(
-        value: AutocompleteFilterMode | ((option: M3eOptionElement, term: string) => boolean),
-      ): string | null {
-        return typeof value === "string" ? value : null;
-      },
     },
   })
   filter: AutocompleteFilterMode | ((option: M3eOptionElement, term: string) => boolean) = "contains";
+
+  /**
+   * Whether options are being loaded.
+   * @default false
+   */
+  @property({ type: Boolean }) loading = false;
+
+  /**
+   * Whether to hide the menu when there are no options to show.
+   * @default false
+   */
+  @property({ attribute: "hide-no-data", type: Boolean }) hideNoData = false;
+
+  /**
+   * Whether to hide the menu when loading options.
+   * @default false
+   */
+  @property({ attribute: "hide-loading", type: Boolean }) hideLoading = false;
+
+  /**
+   * The text announced and presented when loading options.
+   * @default "Loading..."
+   */
+  @property({ attribute: "loading-label" }) loadingLabel = "Loading...";
+
+  /**
+   * The text announced and presented when no options are available for the current term.
+   * @default "No options"
+   */
+  @property({ attribute: "no-data-label" }) noDataLabel = "No options";
+
+  /**
+   * The text announced when available options change for the current term.
+   * @default (count) => `${count} options`
+   */
+  @property({ attribute: "results-label" }) resultsLabel: string | ((count: number) => string) = (count) =>
+    `${count} options`;
 
   /** The options that can be selected. */
   get options(): readonly M3eOptionElement[] {
     return this._options ?? [];
   }
 
+  /** @private */
   get #options(): readonly M3eOptionElement[] {
     return this._listKeyManager?.items ?? [];
   }
@@ -172,8 +218,23 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     return this.control ? <HTMLInputElement>this.control : null;
   }
 
-  get #hasVisibleOptions(): boolean {
-    return this.#options.some((x) => !x.hidden);
+  /** @private */
+  get #hasNoDataSlot(): boolean {
+    return (this.#clone?.querySelector("[slot='no-data']") ?? null) !== null;
+  }
+
+  /** @private */
+  get #hasLoadingSlot(): boolean {
+    return (this.#clone?.querySelector("[slot='loading']") ?? null) !== null;
+  }
+
+  /** @private */
+  get #shouldShowMenu(): boolean {
+    return (
+      this.#options.some((x) => !x.hidden) ||
+      (this.loading && !this.hideLoading && this.loadingLabel.length > 0) ||
+      (!this.loading && !this.hideNoData && this.noDataLabel.length > 0)
+    );
   }
 
   /** @private */
@@ -251,6 +312,34 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   }
 
   /** @inheritdoc */
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+
+    if (changedProperties.has("hideNoData") && this.hideNoData && this.#menu) {
+      setCustomState(this.#menu, "-no-data", false);
+    }
+
+    if (changedProperties.has("loading")) {
+      if (this.loading) {
+        if (this.#hasFocus) {
+          if (this.loadingLabel) {
+            M3eLiveAnnouncer.announce(this.loadingLabel, "polite");
+          }
+          if (!this.#menu && this.#shouldShowMenu) {
+            this.#showMenu();
+          }
+        }
+      } else if (this.#menu && !this.#shouldShowMenu) {
+        this.#hideMenu();
+      } else if (this.#menu) {
+        deleteCustomState(this.#menu, "-loading");
+      } else if (this.#hasFocus) {
+        this.#showMenu();
+      }
+    }
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="options" aria-hidden="true">
       <slot></slot>
@@ -258,7 +347,30 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   }
 
   /** @private */
-  #handleMutation(): void {
+  async #handleMutation(): Promise<void> {
+    if (this.#mutationAbortController) {
+      this.#mutationAbortController.abort();
+    }
+    const mutationAbortController = new AbortController();
+    this.#mutationAbortController = mutationAbortController;
+
+    const options = [...this.querySelectorAll("m3e-option")];
+
+    for (const option of options) {
+      if (mutationAbortController.signal.aborted) {
+        break;
+      }
+      if (option.isUpdatePending) {
+        await option.updateComplete;
+      }
+    }
+
+    if (mutationAbortController.signal.aborted) {
+      return;
+    }
+
+    this._options = options;
+
     this.#clone = <HTMLElement>this.cloneNode(true);
 
     const { added } = this._listKeyManager.setItems([...this.#clone.querySelectorAll("m3e-option")]);
@@ -267,13 +379,13 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
       setCustomState(x, "-hide-selection-indicator", this.hideSelectionIndicator);
     });
 
-    this._options = [...this.querySelectorAll("m3e-option")];
-
     if (this.#menu) {
-      this.#filterOptions();
+      const count = this.#filterOptions();
       this.#menu.replaceChildren(...this.#clone.childNodes);
-      if (!this.#hasVisibleOptions) {
+      if (!this.#shouldShowMenu) {
         this.#hideMenu();
+      } else {
+        this.#updateMenuState(this.#menu, count);
       }
     }
   }
@@ -291,12 +403,25 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
   /** @private */
   #handleFocus(): void {
+    this.#hasFocus = true;
     this.#ignoreFocusVisible = true;
+
+    if (this.options.length == 0 && !(<HTMLInputElement>this.control).readOnly) {
+      this.dispatchEvent(
+        new CustomEvent<QueryEventDetail>("query", {
+          detail: { term: this.#input?.value ?? "" },
+          bubbles: true,
+          composed: true,
+        }),
+      );
+    }
+
     this.#showMenu();
   }
 
   /** @private */
   #handleBlur(): void {
+    this.#hasFocus = false;
     if (!this.#ignoreHideMenuOnBlur) {
       this.#hideMenu();
     }
@@ -307,16 +432,28 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   #handleInput(e: Event): void {
     if (!this.#input || e.defaultPrevented) return;
 
-    if (!this.#menu) {
-      this.#showMenu();
-    } else {
-      this.#filterOptions();
-      if (!this.#hasVisibleOptions) {
-        this.#hideMenu();
-      }
-    }
+    this.dispatchEvent(
+      new CustomEvent<QueryEventDetail>("query", {
+        detail: { term: this.#input.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
 
-    this.#formField?.notifyControlStateChange(true);
+    this.#inputChanged = true;
+    try {
+      if (!this.#menu) {
+        this.#showMenu();
+      } else {
+        this.#filterOptions();
+        if (!this.#shouldShowMenu) {
+          this.#hideMenu();
+        }
+      }
+    } finally {
+      this.#inputChanged = false;
+      this.#formField?.notifyControlStateChange(true);
+    }
   }
 
   /** @private */
@@ -471,9 +608,9 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   #showMenu(): void {
     if (this.#menu || !this.#input || this.#input.readOnly || this.#input.disabled) return;
 
-    this.#filterOptions();
+    const count = this.#filterOptions();
 
-    if (!this.#hasVisibleOptions) return;
+    if (!this.#shouldShowMenu) return;
 
     this.#menu = document.createElement("m3e-option-panel");
     this.#menu.id = this.#menuId;
@@ -481,9 +618,25 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     this.#menu.style.minWidth = this.#minMenuWidth;
     this.#menu.addEventListener("toggle", this.#menuToggleHandler);
     this.#menu.addEventListener("pointerdown", this.#menuPointerDownHandler);
+
     if (this.#clone) {
-      this.#menu.replaceChildren(...this.#clone.childNodes);
+      const children = [...this.#clone.childNodes];
+      if (!this.#hasNoDataSlot && this.noDataLabel) {
+        const noDataSpan = document.createElement("span");
+        noDataSpan.slot = "no-data";
+        noDataSpan.textContent = this.noDataLabel;
+        children.push(noDataSpan);
+      }
+      if (!this.#hasLoadingSlot && this.loadingLabel) {
+        const loadingSpan = document.createElement("span");
+        loadingSpan.slot = "loading";
+        loadingSpan.textContent = this.loadingLabel;
+        children.push(loadingSpan);
+      }
+      this.#menu.replaceChildren(...children);
     }
+
+    this.#updateMenuState(this.#menu, count);
 
     (this.#formField ?? this.#input).insertAdjacentElement("afterend", this.#menu);
 
@@ -498,6 +651,12 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
     const input = this.#input;
     setTimeout(() => this.#menu?.show(input, this.#formField?.menuAnchor));
+  }
+
+  /** @private */
+  #updateMenuState(menu: M3eOptionPanelElement, count: number): void {
+    setCustomState(menu, "-loading", this.loading);
+    setCustomState(menu, "-no-data", count == 0);
   }
 
   /** @private */
@@ -588,12 +747,17 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   }
 
   /** @private */
-  #filterOptions(): void {
-    if (!this.#input) return;
+  #filterOptions(): number {
+    if (!this.#input) return 0;
+
+    const oldCount = this.#options.filter((x) => !x.hidden).length;
+    const shouldAnnounce = !this.loading && this.#inputChanged;
+    this.#inputChanged = false;
 
     const exactTerm = this.#input.value;
     const term = this.caseSensitive ? exactTerm : exactTerm.toLocaleLowerCase();
 
+    let newCount = 0;
     let first = false;
     let last: M3eOptionElement | undefined;
 
@@ -606,18 +770,21 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
         this.#deactivateOption(clone);
         deleteCustomState(clone, "-first");
         deleteCustomState(clone, "-last");
-      } else if (!first && !(clone.parentElement instanceof M3eOptGroupElement)) {
-        addCustomState(clone, "-first");
-        first = true;
-        addCustomState(clone, "-last");
-        last = clone;
       } else {
-        deleteCustomState(clone, "-first");
-        if (last) {
-          deleteCustomState(last, "-last");
+        newCount++;
+        if (!first && !(clone.parentElement instanceof M3eOptGroupElement)) {
+          addCustomState(clone, "-first");
+          first = true;
+          addCustomState(clone, "-last");
+          last = clone;
+        } else {
+          deleteCustomState(clone, "-first");
+          if (last) {
+            deleteCustomState(last, "-last");
+          }
+          addCustomState(clone, "-last");
+          last = clone;
         }
-        addCustomState(clone, "-last");
-        last = clone;
       }
 
       if (clone.selected && option.value !== exactTerm) {
@@ -626,12 +793,36 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
       }
     }
 
+    if (this.#menu) {
+      this.#updateMenuState(this.#menu, newCount);
+    }
+
     const groups = this.#menu?.querySelectorAll("m3e-optgroup") ?? this.#clone?.querySelectorAll("m3e-optgroup") ?? [];
     for (const group of groups) {
       group.hidden = [...group.querySelectorAll("m3e-option")].every((x) => x.hidden);
     }
 
+    if (shouldAnnounce) {
+      this.#announceResults(oldCount, newCount);
+    }
+
     this.#autoActivate();
+    return newCount;
+  }
+
+  /** @private */
+  #announceResults(oldCount: number, newCount: number): void {
+    if (!this.#hasFocus) return;
+    if (newCount == 0) {
+      if (oldCount > 0 && this.noDataLabel) {
+        M3eLiveAnnouncer.announce(this.noDataLabel, "polite");
+      }
+    } else if (oldCount != newCount) {
+      const message = this.resultsLabel instanceof Function ? this.resultsLabel(newCount) : this.resultsLabel;
+      if (message) {
+        M3eLiveAnnouncer.announce(message, "polite");
+      }
+    }
   }
 
   /** @private */
@@ -656,6 +847,37 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
       this.#input?.removeAttribute("aria-activedescendant");
     }
   }
+}
+
+interface M3eAutocompleteElementEventMap extends HTMLElementEventMap {
+  toggle: ToggleEvent;
+  query: CustomEvent<QueryEventDetail>;
+}
+
+export interface M3eAutocompleteElement {
+  addEventListener<K extends keyof M3eAutocompleteElementEventMap>(
+    type: K,
+    listener: (this: M3eAutocompleteElement, ev: M3eAutocompleteElementEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ): void;
+
+  addEventListener(
+    type: string,
+    listener: EventListenerOrEventListenerObject,
+    options?: boolean | AddEventListenerOptions,
+  ): void;
+
+  removeEventListener<K extends keyof M3eAutocompleteElementEventMap>(
+    type: K,
+    listener: (this: M3eAutocompleteElement, ev: M3eAutocompleteElementEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ): void;
+
+  removeEventListener(
+    type: string,
+    listener: EventListenerOrEventListenerObject,
+    options?: boolean | EventListenerOptions,
+  ): void;
 }
 
 declare global {
