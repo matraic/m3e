@@ -1,8 +1,8 @@
 import React from "react";
-import { createComponent } from "@lit/react";
+import { createComponent, EventName } from "@lit/react";
 
-import { M3eInputChipSetElement } from "@m3e/web/chips";
-export type { M3eInputChipSetElement } from "@m3e/web/chips";
+import { M3eInputChipSetElement, InputChipSetChangeEventDetail } from "@m3e/web/chips";
+export type { M3eInputChipSetElement, InputChipSetChangeEventDetail, InputChipSetChangeType } from "@m3e/web/chips";
 
 /**
  * React binding for the `m3e-input-chip-set` Web Component from `@m3e/web/chips`.
@@ -22,6 +22,6 @@ export const M3eInputChipSet = createComponent({
   elementClass: M3eInputChipSetElement,
   react: React,
   events: {
-    onChange: "change",
+    onChange: "change" as EventName<CustomEvent<InputChipSetChangeEventDetail>>,
   },
 });

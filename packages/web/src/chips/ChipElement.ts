@@ -268,6 +268,11 @@ export class M3eChipElement extends AttachInternals(LitElement) {
     this.#value = value;
   }
 
+  /** The textual label of the chip. */
+  get label() {
+    return this.#textContent;
+  }
+
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);

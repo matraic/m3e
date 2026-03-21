@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, PropertyValues } from "lit";
 
 import {
@@ -21,6 +22,7 @@ import { FormFieldControl } from "@m3e/web/form-field";
 
 import { M3eChipSetElement } from "./ChipSetElement";
 import { M3eInputChipElement } from "./InputChipElement";
+import { InputChipSetChangeEventDetail } from "./InputChipSetChangeEventDetail";
 
 /**
  * A container that transforms user input into a cohesive set of interactive chips, supporting entry, editing, and removal of discrete values.
@@ -331,7 +333,12 @@ export class M3eInputChipSetElement
       this.#input?.focus();
     }
 
-    this.dispatchEvent(new Event("change", { bubbles: true }));
+    this.dispatchEvent(
+      new CustomEvent<InputChipSetChangeEventDetail>("change", {
+        bubbles: true,
+        detail: { type: "remove", value: chip.value, chip: chip },
+      }),
+    );
   }
 
   /** @private */
@@ -362,7 +369,12 @@ export class M3eInputChipSetElement
       }
     }
 
-    this.dispatchEvent(new Event("change", { bubbles: true }));
+    this.dispatchEvent(
+      new CustomEvent<InputChipSetChangeEventDetail>("change", {
+        bubbles: true,
+        detail: { type: "add", value: value, chip: chip },
+      }),
+    );
   }
 
   /** @private */
@@ -376,6 +388,36 @@ export class M3eInputChipSetElement
       }
     }
   }
+}
+
+interface M3eInputChipSetElementEventMap extends HTMLElementEventMap {
+  change: CustomEvent<InputChipSetChangeEventDetail>;
+}
+
+export interface M3eInputChipSetElement {
+  addEventListener<K extends keyof M3eInputChipSetElementEventMap>(
+    type: K,
+    listener: (this: M3eInputChipSetElement, ev: M3eInputChipSetElementEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions,
+  ): void;
+
+  addEventListener(
+    type: string,
+    listener: EventListenerOrEventListenerObject,
+    options?: boolean | AddEventListenerOptions,
+  ): void;
+
+  removeEventListener<K extends keyof M3eInputChipSetElementEventMap>(
+    type: K,
+    listener: (this: M3eInputChipSetElement, ev: M3eInputChipSetElementEventMap[K]) => void,
+    options?: boolean | EventListenerOptions,
+  ): void;
+
+  removeEventListener(
+    type: string,
+    listener: EventListenerOrEventListenerObject,
+    options?: boolean | EventListenerOptions,
+  ): void;
 }
 
 declare global {

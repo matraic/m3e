@@ -5,5 +5,6 @@ export * from "./ChipVariant";
 export * from "./FilterChipElement";
 export * from "./FilterChipSetElement";
 export * from "./InputChipElement";
+export * from "./InputChipSetChangeEventDetail";
 export * from "./InputChipSetElement";
 export * from "./SuggestionChipElement";
