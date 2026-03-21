@@ -226,9 +226,14 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
    */
   @property({ attribute: "disable-highlight", type: Boolean }) disableHighlight = false;
 
+  /** The textual label of the option. */
+  get label() {
+    return this.#textContent;
+  }
+
   /** @internal */
   [typeaheadLabel](): string {
-    return this.#textContent;
+    return this.label;
   }
 
   /** Whether the option represents an empty option. */
