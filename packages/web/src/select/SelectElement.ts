@@ -71,6 +71,7 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * @attr hide-selection-indicator - Whether to hide the selection indicator for single select options.
  * @attr multi - Whether multiple options can be selected.
  * @attr name - The name that identifies the element when submitting the associated form.
+ * @attr panel-class - Class or list of classes to be applied to the select's overlay panel.
  * @attr required - Whether the element is required.
  *
  * @fires input - Emitted when the selected state changes.
@@ -213,6 +214,12 @@ export class M3eSelectElement
    * @default false
    */
   @property({ type: Boolean }) multi = false;
+
+  /**
+   * Class or list of classes to be applied to the select's overlay panel.
+   * @default ""
+   */
+  @property({ attribute: "panel-class" }) panelClass = "";
 
   get #options(): readonly M3eOptionElement[] {
     return this._listKeyManager?.items ?? [];
@@ -577,6 +584,16 @@ export class M3eSelectElement
     }
 
     this.#menu.id = this.#listId;
+
+    if (this.panelClass) {
+      for (const klass of this.panelClass
+        .split(/\s+/)
+        .map((d) => d.trim())
+        .filter(Boolean)) {
+        this.#menu.classList.add(klass);
+      }
+    }
+
     this.#menu.style.overflowX = "hidden";
     this.#menu.style.minWidth = this.#minMenuWidth;
     this.#menu.addEventListener("toggle", this.#menuToggleHandler);

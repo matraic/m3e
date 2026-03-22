@@ -56,6 +56,7 @@ import { QueryEventDetail } from "./QueryEventDetail";
  * @attr loading - Whether options are being loaded.
  * @attr loading-label - The text announced and presented when loading options.
  * @attr no-data-label - The text announced and presented when no options are available for the current term.
+ * @attr panel-class - Class or list of classes to be applied to the autocomplete's overlay panel.
  * @attr required - Whether the user is required to make a selection when interacting with the autocomplete.
  * @attr results-label - The text announced when available options change for the current term.
  *
@@ -202,6 +203,12 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
    */
   @property({ attribute: "results-label" }) resultsLabel: string | ((count: number) => string) = (count) =>
     `${count} options`;
+
+  /**
+   * Class or list of classes to be applied to the autocomplete's overlay panel.
+   * @default ""
+   */
+  @property({ attribute: "panel-class" }) panelClass = "";
 
   /** The options that can be selected. */
   get options(): readonly M3eOptionElement[] {
@@ -614,6 +621,16 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
     this.#menu = document.createElement("m3e-option-panel");
     this.#menu.id = this.#menuId;
+
+    if (this.panelClass) {
+      for (const klass of this.panelClass
+        .split(/\s+/)
+        .map((d) => d.trim())
+        .filter(Boolean)) {
+        this.#menu.classList.add(klass);
+      }
+    }
+
     this.#menu.scrollStrategy = "reposition";
     this.#menu.style.overflowX = "hidden";
     this.#menu.style.minWidth = this.#minMenuWidth;

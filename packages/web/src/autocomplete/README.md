@@ -53,6 +53,7 @@ This section details the attributes and slots available for the `m3e-autocomplet
 | `loading`                  | `boolean`                                              | `false`      | Whether options are currently being loaded.                                    |
 | `loading-label`            | `string`                                               | `Loading...` | The text announced and displayed while loading options.                        |
 | `no-data-label`            | `string`                                               | `No options` | The text announced and displayed when no options match the current term.       |
+| `panel-class`              | `string`                                               |              | Class or list of classes to be applied to the autocomplete's overlay panel.    |
 | `required`                 | `boolean`                                              | `false`      | Whether the user must make a selection when interacting with the autocomplete. |
 | `results-label`            | `string`                                               |              | The text announced when the available options change for the current term.     |
 

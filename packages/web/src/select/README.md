@@ -50,6 +50,7 @@ This section details the attributes, slots, events and CSS custom properties ava
 | `hide-selection-indicator` | `boolean` | `false` | Whether to hide the selection indicator for single select options.        |
 | `multi`                    | `boolean` | `false` | Whether multiple options can be selected.                                 |
 | `name`                     | `string`  |         | The name that identifies the element when submitting the associated form. |
+| `panel-class`              | `string`  |         | Class or list of classes to be applied to the select's overlay panel.     |
 | `required`                 | `boolean` | `false` | Whether the element is required.                                          |
 
 #### 🔔 Events
