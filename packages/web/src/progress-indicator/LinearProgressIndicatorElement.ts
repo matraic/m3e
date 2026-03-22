@@ -364,9 +364,19 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
   @property({ attribute: "buffer-value", type: Number, reflect: true }) bufferValue = 0;
 
   /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.#initialize();
+  }
+
+  /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
+    this.#initialize();
+  }
 
+  /** @private */
+  #initialize(): void {
     this.#updateStroke();
     this.#updateAmplitudeAndWavelength();
 

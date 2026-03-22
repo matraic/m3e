@@ -16,6 +16,7 @@ export * from "./KeyboardClick";
 export * from "./Labelled";
 export * from "./LinkButton";
 export * from "./ReadOnly";
+export * from "./ReconnectedCallback";
 export * from "./Required";
 export * from "./RequiredConstraintValidation";
 export * from "./Role";

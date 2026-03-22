@@ -8,6 +8,7 @@ import {
   deleteCustomState,
   hasAssignedNodes,
   hasCustomState,
+  ReconnectedCallback,
   ResizeController,
 } from "@m3e/web/core";
 
@@ -70,7 +71,7 @@ import { DrawerContainerStyle } from "./styles";
  * @cssprop --m3e-drawer-divider-thickness - The thickness of the divider line.
  */
 @customElement("m3e-drawer-container")
-export class M3eDrawerContainerElement extends AttachInternals(LitElement) {
+export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInternals(LitElement)) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = DrawerContainerStyle;
 
@@ -167,13 +168,15 @@ export class M3eDrawerContainerElement extends AttachInternals(LitElement) {
   }
 
   /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.#initialize();
+  }
+
+  /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
-
-    let drawer = this.shadowRoot?.querySelector<HTMLElement>(".start");
-    if (drawer) this.#resizeController.observe(drawer);
-    drawer = this.shadowRoot?.querySelector(".end");
-    if (drawer) this.#resizeController.observe(drawer);
+    this.#initialize();
   }
 
   /** @inheritdoc */
@@ -195,6 +198,14 @@ export class M3eDrawerContainerElement extends AttachInternals(LitElement) {
           <slot name="end" @slotchange="${this.#handleEndSlotChange}"></slot>
         </m3e-focus-trap>
       </div>`;
+  }
+
+  /** @private */
+  #initialize(): void {
+    let drawer = this.shadowRoot?.querySelector<HTMLElement>(".start");
+    if (drawer) this.#resizeController.observe(drawer);
+    drawer = this.shadowRoot?.querySelector(".end");
+    if (drawer) this.#resizeController.observe(drawer);
   }
 
   /** @private */

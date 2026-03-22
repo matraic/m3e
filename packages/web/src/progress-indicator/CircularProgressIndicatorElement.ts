@@ -291,9 +291,19 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
   }
 
   /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.#initialize();
+  }
+
+  /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
+    this.#initialize();
+  }
 
+  /** @private */
+  #initialize(): void {
     const diameterAndStroke = this.shadowRoot?.querySelector<HTMLElement>(".diameter-and-stroke");
     if (diameterAndStroke) {
       this.#updateDiameterAndStroke();

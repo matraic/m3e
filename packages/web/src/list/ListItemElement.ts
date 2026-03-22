@@ -8,6 +8,7 @@ import {
   ResizeController,
   Role,
   setCustomState,
+  ReconnectedCallback,
 } from "@m3e/web/core";
 
 import type { M3eListElement } from "./ListElement";
@@ -97,7 +98,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * @cssprop --m3e-list-item-three-line-height - Minimum height of a three line list item.
  */
 @customElement("m3e-list-item")
-export class M3eListItemElement extends AttachInternals(Role(LitElement, "listitem")) {
+export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role(LitElement, "listitem"))) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -432,9 +433,19 @@ export class M3eListItemElement extends AttachInternals(Role(LitElement, "listit
   }
 
   /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.#initialize();
+  }
+
+  /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
+    this.#initialize();
+  }
 
+  /** @private */
+  #initialize(): void {
     const content = this.shadowRoot?.querySelector<HTMLElement>(".content");
     if (content) {
       this.#resizeController.observe(content);

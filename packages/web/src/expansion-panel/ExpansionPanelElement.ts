@@ -9,8 +9,10 @@ import {
   Disabled,
   EventAttribute,
   hasAssignedNodes,
+  ReconnectedCallback,
   setCustomState,
 } from "@m3e/web/core";
+
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
 import { ExpansionTogglePosition } from "./ExpansionTogglePosition";
@@ -89,7 +91,7 @@ import { M3eExpansionHeaderElement } from "./ExpansionHeaderElement";
  */
 @customElement("m3e-expansion-panel")
 export class M3eExpansionPanelElement extends EventAttribute(
-  Disabled(AttachInternals(LitElement, true)),
+  Disabled(ReconnectedCallback(AttachInternals(LitElement, true))),
   "opening",
   "opened",
   "closing",
@@ -158,6 +160,12 @@ export class M3eExpansionPanelElement extends EventAttribute(
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.#directionalitySubscription?.();
+  }
+
+  /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.#updateHeaderToggleRotation();
   }
 
   /** @inheritdoc */

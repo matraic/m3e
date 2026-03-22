@@ -1,12 +1,14 @@
 import { css, CSSResultGroup, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { AttachInternals, Role } from "@m3e/web/core";
+import { AttachInternals, ReconnectedCallback, Role } from "@m3e/web/core";
 
 import { ProgressIndicatorVariant } from "./ProgressIndicatorVariant";
 
 /** A base implementation for an element used to convey progress. This class must be inherited. */
-export abstract class ProgressElementIndicatorBase extends AttachInternals(Role(LitElement, "progressbar"), true) {
+export abstract class ProgressElementIndicatorBase extends ReconnectedCallback(
+  AttachInternals(Role(LitElement, "progressbar"), true),
+) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     @media (forced-colors: active) {

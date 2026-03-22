@@ -23,6 +23,7 @@ import {
   isReadOnlyMixin,
   MutationController,
   PressedController,
+  ReconnectedCallback,
   ResizeController,
   setCustomState,
 } from "@m3e/web/core";
@@ -106,7 +107,7 @@ import { FloatLabelType } from "./FloatLabelType";
  * @cssprop --m3e-form-field-disabled-container-opacity - Opacity for disabled container background.
  */
 @customElement("m3e-form-field")
-export class M3eFormFieldElement extends AttachInternals(LitElement) {
+export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(LitElement)) {
   static {
     if (typeof window !== "undefined") {
       const lightDomStyle = new CSSStyleSheet();
@@ -701,18 +702,16 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
     this.#changeControl(null);
   }
 
-  /** @private */
+  /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.#initialize();
+  }
+
+  /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
-
-    this.#focusController.observe(this._base);
-    this.#pressedController.observe(this._base);
-
-    this.#hintMutationController.observe(this._hint);
-    this.#handleHintChange();
-
-    this.#errorMutationController.observe(this._error);
-    this.#handleErrorChange();
+    this.#initialize();
   }
 
   /** @inheritdoc */
@@ -778,6 +777,18 @@ export class M3eFormFieldElement extends AttachInternals(LitElement) {
         <span class="error"><slot name="error">${this._validationMessage}</slot></span>
         <span class="hint"><slot name="hint"></slot></span>
       </span>`;
+  }
+
+  /** @private */
+  #initialize(): void {
+    this.#focusController.observe(this._base);
+    this.#pressedController.observe(this._base);
+
+    this.#hintMutationController.observe(this._hint);
+    this.#handleHintChange();
+
+    this.#errorMutationController.observe(this._error);
+    this.#handleErrorChange();
   }
 
   /** @private */

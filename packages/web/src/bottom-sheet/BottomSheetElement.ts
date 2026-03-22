@@ -18,6 +18,7 @@ import {
   spaceSeparatedStringConverter,
   VelocityTracker,
   SuppressInitialAnimation,
+  ReconnectedCallback,
 } from "@m3e/web/core";
 
 import { isModifierAllowed, M3eInteractivityChecker } from "@m3e/web/core/a11y";
@@ -122,7 +123,7 @@ import "@m3e/web/core/a11y";
  */
 @customElement("m3e-bottom-sheet")
 export class M3eBottomSheetElement extends EventAttribute(
-  SuppressInitialAnimation(AttachInternals(LitElement)),
+  ReconnectedCallback(SuppressInitialAnimation(AttachInternals(LitElement))),
   "opening",
   "opened",
   "cancel",
@@ -488,20 +489,15 @@ export class M3eBottomSheetElement extends EventAttribute(
   }
 
   /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.#initialize();
+  }
+
+  /** @inheritdoc */
   override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
-
-    const content = this.shadowRoot?.querySelector<HTMLElement>(".content");
-    if (content) {
-      this.#cachedContentHeight = content.clientHeight;
-      this.#resizeController.observe(content);
-    }
-
-    const header = this.shadowRoot?.querySelector<HTMLElement>(".header");
-    if (header) {
-      this.#cachedHeaderHeight = header.clientHeight;
-      this.#resizeController.observe(header);
-    }
+    this.#initialize();
   }
 
   /** @inheritdoc */
@@ -624,6 +620,21 @@ export class M3eBottomSheetElement extends EventAttribute(
         </div>
       </div>
     </m3e-focus-trap>`;
+  }
+
+  /** @private */
+  #initialize(): void {
+    const content = this.shadowRoot?.querySelector<HTMLElement>(".content");
+    if (content) {
+      this.#cachedContentHeight = content.clientHeight;
+      this.#resizeController.observe(content);
+    }
+
+    const header = this.shadowRoot?.querySelector<HTMLElement>(".header");
+    if (header) {
+      this.#cachedHeaderHeight = header.clientHeight;
+      this.#resizeController.observe(header);
+    }
   }
 
   /** @private */

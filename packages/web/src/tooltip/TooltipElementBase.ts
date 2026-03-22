@@ -1,7 +1,15 @@
 import { LitElement, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { AttachInternals, HoverController, HtmlFor, isDisabledMixin, LongPressController } from "@m3e/web/core";
+import {
+  AttachInternals,
+  HoverController,
+  HtmlFor,
+  isDisabledMixin,
+  LongPressController,
+  ReconnectedCallback,
+} from "@m3e/web/core";
+
 import { M3ePlatform } from "@m3e/web/core/platform";
 import { AnchorPosition, positionAnchor } from "@m3e/web/core/anchoring";
 
@@ -14,7 +22,7 @@ const TOOLTIP_OFFSET = 4;
 const TOOLTIP_HIDE_DELAY = 200;
 
 /** Provides a base implementation for a tooltip. This class must be inherited. */
-export abstract class TooltipElementBase extends HtmlFor(AttachInternals(LitElement)) {
+export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(AttachInternals(LitElement))) {
   /** @private */ private static __openTooltips = new Array<TooltipElementBase>();
 
   /** @internal */ @query(".base") protected readonly _base!: HTMLElement;
@@ -144,9 +152,19 @@ export abstract class TooltipElementBase extends HtmlFor(AttachInternals(LitElem
   }
 
   /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.#initialize();
+  }
+
+  /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
     super.firstUpdated(_changedProperties);
+    this.#initialize();
+  }
 
+  /** @private */
+  #initialize(): void {
     if (this._base) {
       this.#hoverController.observe(this._base);
     }

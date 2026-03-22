@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
 import { property, query, state } from "lit/decorators.js";
 
-import { customElement, debounce, ResizeController } from "@m3e/web/core";
+import { customElement, debounce, ReconnectedCallback, ResizeController } from "@m3e/web/core";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
 import "@m3e/web/icon-button";
@@ -46,7 +46,7 @@ import "@m3e/web/icon-button";
  * @cssprop --m3e-slide-group-divider-bottom - Adds bottom border to content container for visual separation.
  */
 @customElement("m3e-slide-group")
-export class M3eSlideGroupElement extends LitElement {
+export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -152,6 +152,12 @@ export class M3eSlideGroupElement extends LitElement {
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.#directionalitySubscription?.();
+  }
+
+  /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.#resizeController.observe(this.scrollContainer);
   }
 
   /** @inheritdoc */
