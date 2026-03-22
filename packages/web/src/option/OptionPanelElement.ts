@@ -4,7 +4,6 @@ import {
   DesignToken,
   Role,
   customElement,
-  ScrollController,
   MutationController,
   deleteCustomState,
   addCustomState,
@@ -166,12 +165,6 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
     `,
   ];
 
-  /** @private */
-  readonly #scrollController = new ScrollController(this, {
-    target: null,
-    callback: () => this.hide(false),
-  });
-
   constructor() {
     super();
 
@@ -189,20 +182,6 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
    * @default "content"
    */
   @property({ reflect: true }) state: OptionPanelState = "content";
-
-  /** @inheritdoc */
-  override async show(trigger: HTMLElement, anchor?: HTMLElement): Promise<void> {
-    await super.show(trigger, anchor);
-    this.#scrollController.observe(trigger);
-  }
-
-  /** @inheritdoc */
-  override hide(restoreFocus?: boolean): void {
-    if (this.trigger) {
-      this.#scrollController.unobserve(this.trigger);
-    }
-    super.hide(restoreFocus);
-  }
 
   /** @inheritdoc */
   override connectedCallback(): void {

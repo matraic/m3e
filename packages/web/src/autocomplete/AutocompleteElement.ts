@@ -614,6 +614,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
     this.#menu = document.createElement("m3e-option-panel");
     this.#menu.id = this.#menuId;
+    this.#menu.scrollStrategy = "reposition";
     this.#menu.style.overflowX = "hidden";
     this.#menu.style.minWidth = this.#minMenuWidth;
     this.#menu.addEventListener("toggle", this.#menuToggleHandler);

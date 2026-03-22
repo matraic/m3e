@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
+import { property } from "lit/decorators.js";
 
 import {
   addCustomState,
@@ -8,16 +9,20 @@ import {
   setCustomState,
   customElement,
   DesignToken,
+  ScrollController,
 } from "@m3e/web/core";
 
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
 import { positionAnchor } from "./positionAnchor";
+import { FloatingPanelScrollStrategy } from "./FloatingPanelScrollStrategy";
 
 /**
  * A lightweight, generic floating surface used to present content above the page.
  *
  * @tag m3e-floating-panel
+ *
+ * @attr scroll-strategy - The strategy that controls how the panel behaves when any scrollable ancestor scrolls.
  *
  * @slot - Renders the contents of the panel.
  *
@@ -119,9 +124,17 @@ export class M3eFloatingPanelElement extends AttachInternals(LitElement) {
     if (e.newState === "closed") {
       this.#anchorCleanup?.();
       this.#anchorCleanup = undefined;
-      this.#anchor = undefined;
     }
   };
+
+  /** @private */
+  readonly #scrollController = new ScrollController(this, {
+    target: null,
+    callback: () => this.hide(false),
+  });
+
+  /** The strategy that controls how the panel behaves when any scrollable ancestor scrolls. */
+  @property({ attribute: "scroll-strategy" }) scrollStrategy: FloatingPanelScrollStrategy = "hide";
 
   /** Whether the panel is open. */
   get isOpen() {
@@ -191,6 +204,10 @@ export class M3eFloatingPanelElement extends AttachInternals(LitElement) {
     this.#trigger = trigger;
     this.#trigger.ariaExpanded = "true";
     this.#anchor = anchor;
+
+    if (this.scrollStrategy === "hide") {
+      this.#scrollController.observe(this.#anchor ?? this.#trigger);
+    }
   }
 
   /**
@@ -205,7 +222,11 @@ export class M3eFloatingPanelElement extends AttachInternals(LitElement) {
       if (restoreFocus) {
         this.#trigger.focus();
       }
+
+      this.#scrollController.unobserve(this.#anchor ?? this.#trigger);
+
       this.#trigger = undefined;
+      this.#anchor = undefined;
     }
   }
 
