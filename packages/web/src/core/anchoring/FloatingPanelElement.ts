@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, LitElement, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
 import {
-  addCustomState,
   AttachInternals,
-  deleteCustomState,
   setCustomState,
   customElement,
   DesignToken,
   ScrollController,
+  SuppressInitialAnimation,
 } from "@m3e/web/core";
 
 import { M3eDirectionality } from "@m3e/web/core/bidi";
@@ -39,7 +38,7 @@ import { FloatingPanelScrollStrategy } from "./FloatingPanelScrollStrategy";
  * @cssprop --m3e-floating-panel-container-elevation - Box shadow elevation of the panel container.
  */
 @customElement("m3e-floating-panel")
-export class M3eFloatingPanelElement extends AttachInternals(LitElement) {
+export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInternals(LitElement)) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -150,7 +149,6 @@ export class M3eFloatingPanelElement extends AttachInternals(LitElement) {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    addCustomState(this, "-no-animate");
     this.setAttribute("popover", "manual");
     this.addEventListener("toggle", this.#toggleHandler);
     document.addEventListener("click", this.#documentClickHandler);
@@ -242,12 +240,6 @@ export class M3eFloatingPanelElement extends AttachInternals(LitElement) {
     } else {
       await this.show(trigger, anchor);
     }
-  }
-
-  /** @inheritdoc */
-  protected override firstUpdated(_changedProperties: PropertyValues): void {
-    super.firstUpdated(_changedProperties);
-    requestAnimationFrame(() => deleteCustomState(this, "-no-animate"));
   }
 
   /** @inheritdoc */

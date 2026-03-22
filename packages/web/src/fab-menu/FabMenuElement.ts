@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, LitElement, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
 import {
-  addCustomState,
   AttachInternals,
   customElement,
-  deleteCustomState,
   DesignToken,
   DisabledMixin,
   Role,
   ScrollController,
   setCustomState,
+  SuppressInitialAnimation,
 } from "@m3e/web/core";
 
 import { RovingTabIndexManager } from "@m3e/web/core/a11y";
@@ -77,7 +76,7 @@ import { M3eFabMenuItemElement } from "./FabMenuItemElement";
  * @cssprop --m3e-tertiary-fab-ripple-color - Ripple color for tertiary variant items.
  */
 @customElement("m3e-fab-menu")
-export class M3eFabMenuElement extends AttachInternals(Role(LitElement, "menu")) {
+export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(Role(LitElement, "menu"))) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -299,8 +298,6 @@ export class M3eFabMenuElement extends AttachInternals(Role(LitElement, "menu"))
 
     this.tabIndex = -1;
     this.setAttribute("popover", "manual");
-    addCustomState(this, "-no-animate");
-
     this.addEventListener("keydown", this.#keyDownHandler);
     this.addEventListener("toggle", this.#toggleHandler);
     document.addEventListener("click", this.#documentClickHandler);
@@ -313,12 +310,6 @@ export class M3eFabMenuElement extends AttachInternals(Role(LitElement, "menu"))
     this.removeEventListener("keydown", this.#keyDownHandler);
     this.removeEventListener("toggle", this.#toggleHandler);
     document.removeEventListener("click", this.#documentClickHandler);
-  }
-
-  /** @inheritdoc */
-  protected override firstUpdated(_changedProperties: PropertyValues): void {
-    super.firstUpdated(_changedProperties);
-    requestAnimationFrame(() => deleteCustomState(this, "-no-animate"));
   }
 
   /** @inheritdoc */

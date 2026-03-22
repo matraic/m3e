@@ -20,5 +20,6 @@ export * from "./Required";
 export * from "./RequiredConstraintValidation";
 export * from "./Role";
 export * from "./Selected";
+export * from "./SuppressInitialAnimation";
 export * from "./Touched";
 export * from "./Vertical";

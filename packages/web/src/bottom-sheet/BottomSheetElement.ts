@@ -3,11 +3,9 @@ import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeC
 import { property } from "lit/decorators.js";
 
 import {
-  addCustomState,
   AttachInternals,
   customElement,
   computeCssSize,
-  deleteCustomState,
   DesignToken,
   EventAttribute,
   focusWhenReady,
@@ -19,6 +17,7 @@ import {
   setCustomState,
   spaceSeparatedStringConverter,
   VelocityTracker,
+  SuppressInitialAnimation,
 } from "@m3e/web/core";
 
 import { isModifierAllowed, M3eInteractivityChecker } from "@m3e/web/core/a11y";
@@ -123,7 +122,7 @@ import "@m3e/web/core/a11y";
  */
 @customElement("m3e-bottom-sheet")
 export class M3eBottomSheetElement extends EventAttribute(
-  AttachInternals(LitElement),
+  SuppressInitialAnimation(AttachInternals(LitElement)),
   "opening",
   "opened",
   "cancel",
@@ -478,12 +477,6 @@ export class M3eBottomSheetElement extends EventAttribute(
   }
 
   /** @inheritdoc */
-  override connectedCallback(): void {
-    super.connectedCallback();
-    addCustomState(this, "-no-animate");
-  }
-
-  /** @inheritdoc */
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
 
@@ -509,8 +502,6 @@ export class M3eBottomSheetElement extends EventAttribute(
       this.#cachedHeaderHeight = header.clientHeight;
       this.#resizeController.observe(header);
     }
-
-    deleteCustomState(this, "-no-animate");
   }
 
   /** @inheritdoc */

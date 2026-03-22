@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, LitElement, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
 import {
@@ -11,6 +11,7 @@ import {
   setCustomState,
   deleteCustomState,
   customElement,
+  SuppressInitialAnimation,
 } from "@m3e/web/core";
 
 import { RovingTabIndexManager } from "@m3e/web/core/a11y";
@@ -100,7 +101,7 @@ import { MenuVariant } from "./MenuVariant";
  * @cssprop --m3e-menu-gap - Gap between content in the menu.
  */
 @customElement("m3e-menu")
-export class M3eMenuElement extends AttachInternals(Role(LitElement, "menu")) {
+export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Role(LitElement, "menu"))) {
   static {
     if (typeof window !== "undefined") {
       const lightDomStyle = new CSSStyleSheet();
@@ -324,7 +325,6 @@ export class M3eMenuElement extends AttachInternals(Role(LitElement, "menu")) {
     super.connectedCallback();
 
     this.tabIndex = -1;
-    addCustomState(this, "-no-animate");
     this.setAttribute("popover", "manual");
     this.addEventListener("keydown", this.#keyDownHandler);
     this.addEventListener("mouseenter", this.#mouseEnterHandler);
@@ -471,12 +471,6 @@ export class M3eMenuElement extends AttachInternals(Role(LitElement, "menu")) {
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base"><slot @slotchange="${this.#handleSlotChange}"></slot></div>`;
-  }
-
-  /** @inheritdoc */
-  protected override firstUpdated(_changedProperties: PropertyValues): void {
-    super.firstUpdated(_changedProperties);
-    requestAnimationFrame(() => deleteCustomState(this, "-no-animate"));
   }
 
   /** @private */
