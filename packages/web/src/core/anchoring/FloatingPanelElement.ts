@@ -22,7 +22,7 @@ import { FloatingPanelScrollStrategy } from "./FloatingPanelScrollStrategy";
  *
  * @tag m3e-floating-panel
  *
- * @attr scroll-strategy - The strategy that controls how the panel behaves when any scrollable ancestor scrolls.
+ * @attr scroll-strategy - The strategy that controls how the panel behaves when its trigger scrolls.
  *
  * @slot - Renders the contents of the panel.
  *
@@ -133,7 +133,7 @@ export class M3eFloatingPanelElement extends AttachInternals(LitElement) {
     callback: () => this.hide(false),
   });
 
-  /** The strategy that controls how the panel behaves when any scrollable ancestor scrolls. */
+  /** The strategy that controls how the panel behaves when its trigger scrolls. */
   @property({ attribute: "scroll-strategy" }) scrollStrategy: FloatingPanelScrollStrategy = "hide";
 
   /** Whether the panel is open. */
