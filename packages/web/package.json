@@ -281,7 +281,8 @@
     "composed-offset-position": "^0.0.6"
   },
   "peerDependencies": {
-    "lit": "^3.3.0"
+    "lit": "^3.3.0",
+    "tslib": "^2.8.1"
   },
   "customElements": "dist/custom-elements.json"
 }

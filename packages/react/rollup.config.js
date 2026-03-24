@@ -1,7 +1,3 @@
-import resolve from "@rollup/plugin-node-resolve";
-import terser from "@rollup/plugin-terser";
-import typescript from "@rollup/plugin-typescript";
-import babel from "@rollup/plugin-babel";
 import createConfig from "../../rollup.config.js";
 
 const inputs = [
@@ -53,13 +49,12 @@ const inputs = [
   "tooltip",
 ];
 
-export default createConfig({ 
-  inputs: inputs, 
+export default createConfig({
+  inputs: inputs,
   externals: [/^@m3e\//, "lit", "@lit/react", "react"],
   config: {
     terserConfig: {
-      compress: { directives: false }
-    }
-  }
+      compress: { directives: false },
+    },
+  },
 });
-
