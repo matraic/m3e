@@ -11,6 +11,7 @@
     "clean": "npm run clean --workspaces",
     "release": "npm publish --access public --workspaces"
   },
+  "type": "module",
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.4",
     "@eslint/js": "^9.30.1",
