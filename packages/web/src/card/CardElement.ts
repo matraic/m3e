@@ -117,6 +117,7 @@ import { CardOrientation } from "./CardOrientation";
  * @cssprop --m3e-elevated-card-pressed-state-layer-opacity - State layer opacity on press.
  * @cssprop --m3e-elevated-card-pressed-container-elevation - Elevation level on press.
  * @cssprop --m3e-outlined-card-text-color - Foreground color for text content in outlined cards.
+ * @cssprop --m3e-outlined-card-container-color - Background color of the outlined card container.
  * @cssprop --m3e-outlined-card-container-elevation - Elevation level for outlined card container.
  * @cssprop --m3e-outlined-card-outline-color - Border color for outlined cards.
  * @cssprop --m3e-outlined-card-outline-thickness - Border thickness for outlined cards.
