@@ -7,7 +7,7 @@ import { CardVariant } from "../CardVariant";
 /** @private */
 type _CardVariantToken = {
   textColor: CSSResult;
-  containerColor?: CSSResult;
+  containerColor: CSSResult;
   containerElevation: CSSResult;
   outlineColor?: CSSResult;
   outlineThickness?: CSSResult;
@@ -212,6 +212,9 @@ export const CardVariantToken: Record<CardVariant, _CardVariantToken> = {
   outlined: {
     textColor: unsafeCSS(
       `var(--m3e-outlined-card-text-color, var(--m3e-card-text-color, ${DesignToken.color.onSurface}))`,
+    ),
+    containerColor: unsafeCSS(
+      `var(--m3e-outlined-card-container-color, var(--m3e-card-container-color, ${DesignToken.color.surface}))`,
     ),
     containerElevation: unsafeCSS(
       `var(--m3e-outlined-card-container-elevation, var(--m3e-card-container-elevation, ${DesignToken.elevation.level0}))`,
