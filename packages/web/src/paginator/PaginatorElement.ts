@@ -290,8 +290,8 @@ export class M3ePaginatorElement extends EventAttribute(Role(LitElement, "group"
   }
 
   /** @inheritdoc */
-  protected override update(changedProperties: PropertyValues<this>): void {
-    super.update(changedProperties);
+  protected override willUpdate(changedProperties: PropertyValues<this>): void {
+    super.willUpdate(changedProperties);
 
     if (changedProperties.has("pageIndex")) {
       const pageSizes = this.#parsePageSizes();
