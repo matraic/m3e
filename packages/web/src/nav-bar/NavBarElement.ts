@@ -103,8 +103,8 @@ export class M3eNavBarElement extends AttachInternals(Role(LitElement, "navigati
   }
 
   /** @inheritdoc */
-  protected override update(changedProperties: PropertyValues): void {
-    super.update(changedProperties);
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    super.willUpdate(changedProperties);
 
     if (changedProperties.has("mode")) {
       this.#breakpointUnobserve?.();

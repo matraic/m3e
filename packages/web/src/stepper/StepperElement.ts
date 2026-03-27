@@ -389,8 +389,8 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
   }
 
   /** @inheritdoc */
-  protected override update(changedProperties: PropertyValues): void {
-    super.update(changedProperties);
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    super.willUpdate(changedProperties);
 
     if (changedProperties.has("orientation")) {
       this.#breakpointUnobserve?.();

@@ -269,8 +269,8 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   }
 
   /** @inheritdoc */
-  protected override update(changedProperties: PropertyValues<this>): void {
-    super.update(changedProperties);
+  protected override willUpdate(changedProperties: PropertyValues<this>): void {
+    super.willUpdate(changedProperties);
 
     if (changedProperties.has("maxDepth")) {
       this.#generateToc();

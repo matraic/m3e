@@ -139,8 +139,8 @@ export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInterna
   }
 
   /** @inheritdoc */
-  protected override update(changedProperties: PropertyValues<this>): void {
-    super.update(changedProperties);
+  protected override willUpdate(changedProperties: PropertyValues<this>): void {
+    super.willUpdate(changedProperties);
 
     if (changedProperties.has("startMode") || changedProperties.has("endMode")) {
       this.#breakpointUnobserve?.();
