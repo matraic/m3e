@@ -176,13 +176,13 @@ export class M3eCardElement extends KeyboardClick(
    * Whether to present the card inline with surrounding content.
    * @default false
    */
-  @property({ type: Boolean }) inline = false;
+  @property({ type: Boolean, reflect: true }) inline = false;
 
   /**
    * Whether the card is "actionable" and will respond to use interaction.
    * @default false
    */
-  @property({ type: Boolean }) actionable = false;
+  @property({ type: Boolean, reflect: true }) actionable = false;
 
   /**
    * The appearance variant of the card.
