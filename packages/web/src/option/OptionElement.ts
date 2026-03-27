@@ -295,6 +295,10 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
   #handleSlotChange(e: Event): void {
     this.#textContent = getTextContent(<HTMLSlotElement>e.target);
     setCustomState(this, "-empty", this.isEmpty);
+
+    if (this.selected) {
+      this.closest<LitElement>("m3e-select")?.requestUpdate();
+    }
   }
 }
 

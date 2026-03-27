@@ -28,7 +28,7 @@ import {
   MutationController,
 } from "@m3e/web/core";
 
-import { ListKeyManager, typeaheadLabel } from "@m3e/web/core/a11y";
+import { ListKeyManager } from "@m3e/web/core/a11y";
 
 import type { M3eFormFieldElement, FormFieldControl } from "@m3e/web/form-field";
 import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
@@ -366,7 +366,7 @@ export class M3eSelectElement
           <slot name="value">
             ${this.selected
               .filter((x) => !x.isEmpty)
-              .map((x, i) => (i > 0 ? html`<span>, </span>${x[typeaheadLabel]()}` : x[typeaheadLabel]()))}
+              .map((x, i) => (i > 0 ? html`<span>, </span>${x.label}` : x.label))}
           </slot>
         </m3e-text-overflow>
         <div class="arrow-wrapper" aria-hidden="true">
