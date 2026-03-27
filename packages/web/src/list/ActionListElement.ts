@@ -58,6 +58,7 @@ export class M3eActionListElement extends M3eListElement {
           );
           if (ancestor instanceof M3eExpandableListItemElement) {
             expandable = ancestor;
+            continue;
           }
           break;
         }
