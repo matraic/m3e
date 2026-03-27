@@ -165,12 +165,13 @@ The `m3e-card` element supports extensive theming via scoped CSS custom properti
 
 ##### Base
 
-| Property                                  | Description                        |
-| ----------------------------------------- | ---------------------------------- |
-| `--m3e-outlined-card-text-color`          | Foreground color for text content. |
-| `--m3e-outlined-card-container-elevation` | Elevation level of the container.  |
-| `--m3e-outlined-card-outline-color`       | Border color of the card.          |
-| `--m3e-outlined-card-outline-thickness`   | Border thickness of the card.      |
+| Property                                  | Description                                      |
+| ----------------------------------------- | ------------------------------------------------ |
+| `--m3e-outlined-card-text-color`          | Foreground color for text content.               |
+| `--m3e-outlined-card-container-color`     | Background color of the outlined card container. |
+| `--m3e-outlined-card-container-elevation` | Elevation level of the container.                |
+| `--m3e-outlined-card-outline-color`       | Border color of the card.                        |
+| `--m3e-outlined-card-outline-thickness`   | Border thickness of the card.                    |
 
 ##### Disabled
 
