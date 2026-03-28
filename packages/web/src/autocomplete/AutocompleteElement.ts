@@ -388,7 +388,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
     if (this.#menu) {
       const count = this.#filterOptions();
-      this.#menu.replaceChildren(...this.#clone.childNodes);
+      this.#projectClone();
       if (!this.#shouldShowMenu) {
         this.#hideMenu();
       } else {
@@ -637,22 +637,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     this.#menu.addEventListener("toggle", this.#menuToggleHandler);
     this.#menu.addEventListener("pointerdown", this.#menuPointerDownHandler);
 
-    if (this.#clone) {
-      const children = [...this.#clone.childNodes];
-      if (!this.#hasNoDataSlot && this.noDataLabel) {
-        const noDataSpan = document.createElement("span");
-        noDataSpan.slot = "no-data";
-        noDataSpan.textContent = this.noDataLabel;
-        children.push(noDataSpan);
-      }
-      if (!this.#hasLoadingSlot && this.loadingLabel) {
-        const loadingSpan = document.createElement("span");
-        loadingSpan.slot = "loading";
-        loadingSpan.textContent = this.loadingLabel;
-        children.push(loadingSpan);
-      }
-      this.#menu.replaceChildren(...children);
-    }
+    this.#projectClone();
 
     this.#updateMenuState(this.#menu, count);
 
@@ -669,6 +654,25 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
     const input = this.#input;
     setTimeout(() => this.#menu?.show(input, this.#formField?.menuAnchor));
+  }
+
+  /** @private */
+  #projectClone(): void {
+    if (!this.#clone || !this.#menu) return;
+    const children = [...this.#clone.childNodes];
+    if (!this.#hasNoDataSlot && this.noDataLabel) {
+      const noDataSpan = document.createElement("span");
+      noDataSpan.slot = "no-data";
+      noDataSpan.textContent = this.noDataLabel;
+      children.push(noDataSpan);
+    }
+    if (!this.#hasLoadingSlot && this.loadingLabel) {
+      const loadingSpan = document.createElement("span");
+      loadingSpan.slot = "loading";
+      loadingSpan.textContent = this.loadingLabel;
+      children.push(loadingSpan);
+    }
+    this.#menu.replaceChildren(...children);
   }
 
   /** @private */
