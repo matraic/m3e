@@ -11,7 +11,6 @@ import {
   FormAssociated,
   Required,
   RequiredConstraintValidation,
-  ResizeController,
   Touched,
   DesignToken,
   formValue,
@@ -186,13 +185,6 @@ export class M3eSelectElement
 
   constructor() {
     super();
-    new ResizeController(this, {
-      callback: () => {
-        if (this.#menu) {
-          this.#menu.style.minWidth = this.#minMenuWidth;
-        }
-      },
-    });
 
     new MutationController(this, {
       config: {
@@ -268,12 +260,6 @@ export class M3eSelectElement
   /** @inheritdoc */
   get shouldLabelFloat(): boolean {
     return this.selected.filter((x) => !x.isEmpty).length > 0;
-  }
-
-  /** @private */
-  get #minMenuWidth(): string {
-    const formField = this.#formField;
-    return `${formField ? formField.menuAnchor.clientWidth : this.clientWidth}px`;
   }
 
   /** @private */
@@ -595,7 +581,7 @@ export class M3eSelectElement
     }
 
     this.#menu.style.overflowX = "hidden";
-    this.#menu.style.minWidth = this.#minMenuWidth;
+    this.#menu.fitAnchorWidth = true;
     this.#menu.addEventListener("toggle", this.#menuToggleHandler);
     this.#menu.addEventListener("pointerdown", this.#menuPointerDownHandler);
 

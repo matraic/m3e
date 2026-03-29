@@ -9,6 +9,7 @@ import {
   DesignToken,
   ScrollController,
   SuppressInitialAnimation,
+  ResizeController,
 } from "@m3e/web/core";
 
 import { M3eDirectionality } from "@m3e/web/core/bidi";
@@ -22,6 +23,7 @@ import { FloatingPanelScrollStrategy } from "./FloatingPanelScrollStrategy";
  * @tag m3e-floating-panel
  *
  * @attr scroll-strategy - The strategy that controls how the panel behaves when its trigger scrolls.
+ * @attr fit-anchor-width - Whether the panel's width should match its anchor's width.
  *
  * @slot - Renders the contents of the panel.
  *
@@ -132,8 +134,27 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
     callback: () => this.hide(false),
   });
 
-  /** The strategy that controls how the panel behaves when its trigger scrolls. */
+  /** @private */
+  readonly #anchorResizeController = new ResizeController(this, {
+    target: null,
+    callback: () => {
+      if (this.#anchor && this.fitAnchorWidth) {
+        this.style.minWidth = `${this.#anchor.clientWidth}px`;
+      }
+    },
+  });
+
+  /**
+   * The strategy that controls how the panel behaves when its trigger scrolls.
+   * @default "hide"
+   */
   @property({ attribute: "scroll-strategy" }) scrollStrategy: FloatingPanelScrollStrategy = "hide";
+
+  /**
+   * Whether the panel's width should match its anchor's width.
+   * @default false
+   */
+  @property({ attribute: "fit-anchor-width", type: Boolean }) fitAnchorWidth = false;
 
   /** Whether the panel is open. */
   get isOpen() {
@@ -165,17 +186,30 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
   /**
    * Opens the panel.
    * @param {HTMLElement} trigger The element that triggered the panel.
-   * @param {HTMLElement | undefined} anchor The element used to position the panel.
+   * @param {HTMLElement | null | undefined} anchor The element used to position the panel.
    * @returns {Promise<void>} A `Promise` that resolves when the panel is opened.
    */
-  async show(trigger: HTMLElement, anchor?: HTMLElement): Promise<void> {
+  async show(trigger: HTMLElement, anchor?: HTMLElement | null): Promise<void> {
     if (this.#trigger && this.#trigger !== trigger) {
       this.hide();
     }
 
+    this.#trigger = trigger;
+    this.#trigger.ariaExpanded = "true";
+    this.#anchor = anchor ?? trigger;
+
+    if (this.scrollStrategy === "hide") {
+      this.#scrollController.observe(this.#anchor);
+    }
+
+    if (this.fitAnchorWidth) {
+      this.#anchorResizeController.observe(this.#anchor);
+      this.style.minWidth = `${this.#anchor.clientWidth}px`;
+    }
+
     this.#anchorCleanup = await positionAnchor(
       this,
-      anchor ?? trigger,
+      this.#anchor,
       {
         position: "bottom-start",
         inline: true,
@@ -198,14 +232,6 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
     );
 
     this.showPopover();
-
-    this.#trigger = trigger;
-    this.#trigger.ariaExpanded = "true";
-    this.#anchor = anchor;
-
-    if (this.scrollStrategy === "hide") {
-      this.#scrollController.observe(this.#anchor ?? this.#trigger);
-    }
   }
 
   /**
@@ -221,7 +247,13 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
         this.#trigger.focus();
       }
 
-      this.#scrollController.unobserve(this.#anchor ?? this.#trigger);
+      if (this.#anchor) {
+        this.#scrollController.unobserve(this.#anchor);
+
+        if (this.fitAnchorWidth) {
+          this.#anchorResizeController.unobserve(this.#anchor);
+        }
+      }
 
       this.#trigger = undefined;
       this.#anchor = undefined;
@@ -249,7 +281,7 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
 
   /** @private */
   #handleDocumentClick(e: MouseEvent): void {
-    if (this.isOpen && !e.composedPath().some((x) => x === this || x === this.#trigger || x === this.#anchor)) {
+    if (this.isOpen && !e.composedPath().some((x) => x === this || x === this.#anchor)) {
       this.hide();
     }
   }

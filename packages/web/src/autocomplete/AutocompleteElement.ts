@@ -245,12 +245,6 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   }
 
   /** @private */
-  get #minMenuWidth(): string {
-    const formField = this.#formField;
-    return `${formField ? formField.menuAnchor.clientWidth : (this.control?.clientWidth ?? 0)}px`;
-  }
-
-  /** @private */
   get #formField(): M3eFormFieldElement | null {
     return this.control?.closest("m3e-form-field") ?? null;
   }
@@ -631,9 +625,9 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
       }
     }
 
-    this.#menu.scrollStrategy = "reposition";
     this.#menu.style.overflowX = "hidden";
-    this.#menu.style.minWidth = this.#minMenuWidth;
+    this.#menu.scrollStrategy = "reposition";
+    this.#menu.fitAnchorWidth = true;
     this.#menu.addEventListener("toggle", this.#menuToggleHandler);
     this.#menu.addEventListener("pointerdown", this.#menuPointerDownHandler);
 
