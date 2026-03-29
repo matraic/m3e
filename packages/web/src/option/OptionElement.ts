@@ -297,7 +297,7 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
     setCustomState(this, "-empty", this.isEmpty);
 
     if (this.selected) {
-      this.closest<LitElement>("m3e-select")?.requestUpdate();
+      this.closest<LitElement>("m3e-select")?.requestUpdate?.();
     }
   }
 }
