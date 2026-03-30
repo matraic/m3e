@@ -24,6 +24,7 @@ import { FloatingPanelScrollStrategy } from "./FloatingPanelScrollStrategy";
  *
  * @attr scroll-strategy - The strategy that controls how the panel behaves when its trigger scrolls.
  * @attr fit-anchor-width - Whether the panel's width should match its anchor's width.
+ * @attr anchor-offset - The logical margin, in pixels, between the panel and its anchor.
  *
  * @slot - Renders the contents of the panel.
  *
@@ -156,6 +157,12 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
    */
   @property({ attribute: "fit-anchor-width", type: Boolean }) fitAnchorWidth = false;
 
+  /**
+   * The logical margin, in pixels, between the panel and its anchor.
+   * @default 0
+   */
+  @property({ attribute: "anchor-offset", type: Number }) anchorOffset = 0;
+
   /** Whether the panel is open. */
   get isOpen() {
     return this.#trigger !== undefined;
@@ -214,6 +221,7 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
         position: "bottom-start",
         inline: true,
         flip: true,
+        offset: this.anchorOffset > 0 ? this.anchorOffset : undefined,
       },
       (x, y, position) => {
         setCustomState(this, "-top", position.includes("top"));
