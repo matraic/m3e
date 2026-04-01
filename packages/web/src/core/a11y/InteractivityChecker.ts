@@ -9,10 +9,10 @@ export class M3eInteractivityChecker {
   static isFocusable(element: Element, parents?: readonly Element[]): boolean {
     if (
       element.matches(
-        ":is(button,input,select,textarea,object,:is(a,area)[href],[tabindex],[contenteditable=true]):not(:disabled,[disabled])",
+        ":is(button,input,select,textarea,object,:is(a,area)[href],[tabindex]:not([tabindex='-1']),[contenteditable=true]):not(:disabled,[disabled],[hidden])",
       )
     ) {
-      return !this.#cannotFocusParent(parents);
+      return !this.#isVisiblyHidden(element) && !this.#cannotFocusParent(parents);
     }
 
     if (
@@ -24,14 +24,25 @@ export class M3eInteractivityChecker {
     }
 
     if (element.shadowRoot?.delegatesFocus) {
-      return !this.#cannotFocusParent(parents);
+      return !this.#isVisiblyHidden(element) && !this.#cannotFocusParent(parents);
     }
 
     return false;
   }
 
+  /** @private */
   static #cannotFocusParent(parents?: readonly Element[]): boolean {
-    return parents?.some((x) => x.matches(":is([aria-hidden='true'],:disabled,[disabled])")) ?? false;
+    return (
+      parents?.some(
+        (x) => x.matches(":is([aria-hidden='true'],:disabled,[disabled],[inert],[hidden])") || this.#isVisiblyHidden(x),
+      ) ?? false
+    );
+  }
+
+  /** @private */
+  static #isVisiblyHidden(element: Element): boolean {
+    const style = getComputedStyle(element);
+    return style.display === "none" || style.visibility === "hidden";
   }
 
   /**
