@@ -8,6 +8,7 @@ export * from "./guid";
 export * from "./hasAssignedNodes";
 export * from "./interceptProperty";
 export * from "./prefersReducedMotion";
+export * from "./registerStyleSheet";
 export * from "./resolveElementById";
 export * from "./resolveFragmentUrl";
 export * from "./scrollIntoViewIfNeeded";

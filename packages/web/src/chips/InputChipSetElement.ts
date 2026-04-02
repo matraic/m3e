@@ -14,6 +14,7 @@ import {
   RequiredConstraintValidation,
   Role,
   Touched,
+  registerStyleSheet,
 } from "@m3e/web/core";
 
 import { ListKeyManager, ListManager } from "@m3e/web/core/a11y";
@@ -70,32 +71,25 @@ export class M3eInputChipSetElement
   implements FormFieldControl
 {
   static {
-    if (typeof window !== "undefined") {
-      const lightDomStyle = new CSSStyleSheet();
-      lightDomStyle.replaceSync(
-        css`
-          m3e-input-chip-set [slot="input"]::placeholder {
-            user-select: none;
-            color: currentColor;
-            transition: opacity ${DesignToken.motion.duration.extraLong1};
-          }
-          m3e-input-chip-set:not(:focus-within) [slot="input"]::placeholder {
-            opacity: 0;
-            transition: 0s;
-          }
-          m3e-input-chip-set:hover [slot="input"]::placeholder {
-            transition: 0s;
-          }
-          @media (prefers-reduced-motion) {
-            m3e-input-chip-set [slot="input"]::placeholder {
-              transition: none !important;
-            }
-          }
-        `.toString(),
-      );
-
-      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
-    }
+    registerStyleSheet(css`
+      m3e-input-chip-set [slot="input"]::placeholder {
+        user-select: none;
+        color: currentColor;
+        transition: opacity ${DesignToken.motion.duration.extraLong1};
+      }
+      m3e-input-chip-set:not(:focus-within) [slot="input"]::placeholder {
+        opacity: 0;
+        transition: 0s;
+      }
+      m3e-input-chip-set:hover [slot="input"]::placeholder {
+        transition: 0s;
+      }
+      @media (prefers-reduced-motion) {
+        m3e-input-chip-set [slot="input"]::placeholder {
+          transition: none !important;
+        }
+      }
+    `);
   }
 
   /** The styles of the element. */

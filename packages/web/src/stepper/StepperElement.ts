@@ -9,6 +9,7 @@ import {
   deleteCustomState,
   DesignToken,
   hasCustomState,
+  registerStyleSheet,
   setCustomState,
 } from "@m3e/web/core";
 
@@ -88,51 +89,44 @@ import { StepperOrientation } from "./StepperOrientation";
 @customElement("m3e-stepper")
 export class M3eStepperElement extends AttachInternals(LitElement) {
   static {
-    if (typeof window !== "undefined") {
-      const lightDomStyle = new CSSStyleSheet();
-      lightDomStyle.replaceSync(
-        css`
-          m3e-stepper:not(:state(-vertical)) > .-m3e-step-divider::before {
-            border-bottom-width: var(--m3e-step-divider-thickness, 1px);
-            border-bottom-style: solid;
-            border-bottom-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
-          }
-          m3e-stepper:not(:state(-vertical)) > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
-          m3e-stepper:not(:state(-vertical)) > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
-            border-bottom-width: var(--m3e-step-divider-thickness, 1px);
-            border-bottom-style: solid;
-            border-bottom-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
-          }
-          m3e-stepper:not(:state(-vertical))[label-position="end"] > .-m3e-step-divider {
-            margin-block: auto;
-          }
-          m3e-stepper:not(:state(-vertical))[label-position="below"] > .-m3e-step-divider::before,
-          m3e-stepper:not(:state(-vertical))[label-position="below"]
-            > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
-          m3e-stepper:not(:state(-vertical))[label-position="below"]
-            > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
-            margin-block-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
-          }
-          m3e-stepper:state(-vertical) > [slot="panel"] {
-            margin-inline-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
-          }
-          m3e-stepper:state(-vertical) > [slot="panel"]:not(:last-of-type) {
-            border-inline-start-width: var(--m3e-step-divider-thickness, 1px);
-            border-inline-start-style: solid;
-            border-inline-start-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
-          }
-          m3e-stepper:state(-vertical) > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
-          m3e-stepper:state(-vertical) > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
-            margin-inline-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
-            border-inline-start-width: var(--m3e-step-divider-thickness, 1px);
-            border-inline-start-style: solid;
-            border-inline-start-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
-          }
-        `.toString(),
-      );
-
-      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
-    }
+    registerStyleSheet(css`
+      m3e-stepper:not(:state(-vertical)) > .-m3e-step-divider::before {
+        border-bottom-width: var(--m3e-step-divider-thickness, 1px);
+        border-bottom-style: solid;
+        border-bottom-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
+      }
+      m3e-stepper:not(:state(-vertical)) > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
+      m3e-stepper:not(:state(-vertical)) > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
+        border-bottom-width: var(--m3e-step-divider-thickness, 1px);
+        border-bottom-style: solid;
+        border-bottom-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
+      }
+      m3e-stepper:not(:state(-vertical))[label-position="end"] > .-m3e-step-divider {
+        margin-block: auto;
+      }
+      m3e-stepper:not(:state(-vertical))[label-position="below"] > .-m3e-step-divider::before,
+      m3e-stepper:not(:state(-vertical))[label-position="below"]
+        > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
+      m3e-stepper:not(:state(-vertical))[label-position="below"]
+        > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
+        margin-block-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
+      }
+      m3e-stepper:state(-vertical) > [slot="panel"] {
+        margin-inline-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
+      }
+      m3e-stepper:state(-vertical) > [slot="panel"]:not(:last-of-type) {
+        border-inline-start-width: var(--m3e-step-divider-thickness, 1px);
+        border-inline-start-style: solid;
+        border-inline-start-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
+      }
+      m3e-stepper:state(-vertical) > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
+      m3e-stepper:state(-vertical) > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
+        margin-inline-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
+        border-inline-start-width: var(--m3e-step-divider-thickness, 1px);
+        border-inline-start-style: solid;
+        border-inline-start-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
+      }
+    `);
   }
 
   /** The styles of the element. */

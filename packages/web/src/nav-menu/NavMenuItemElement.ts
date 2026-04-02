@@ -14,6 +14,7 @@ import {
   M3eFocusRingElement,
   M3eRippleElement,
   M3eStateLayerElement,
+  registerStyleSheet,
   Role,
   Selected,
   setCustomState,
@@ -144,25 +145,18 @@ export class M3eNavMenuItemElement extends Selected(
   ),
 ) {
   static {
-    if (typeof window !== "undefined") {
-      const lightDomStyle = new CSSStyleSheet();
-      lightDomStyle.replaceSync(
-        css`
-          m3e-nav-menu-item > m3e-divider {
-            margin-block: var(--m3e-nav-menu-divider-margin, 0.25rem);
-            flex: none;
-          }
-          m3e-nav-menu-item > m3e-nav-menu-item:first-of-type {
-            margin-block-start: var(--m3e-nav-menu-item-vertical-inset, 0.25rem);
-          }
-          m3e-nav-menu-item > m3e-nav-menu-item:last-of-type {
-            margin-block-end: var(--m3e-nav-menu-item-vertical-inset, 0.25rem);
-          }
-        `.toString(),
-      );
-
-      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
-    }
+    registerStyleSheet(css`
+      m3e-nav-menu-item > m3e-divider {
+        margin-block: var(--m3e-nav-menu-divider-margin, 0.25rem);
+        flex: none;
+      }
+      m3e-nav-menu-item > m3e-nav-menu-item:first-of-type {
+        margin-block-start: var(--m3e-nav-menu-item-vertical-inset, 0.25rem);
+      }
+      m3e-nav-menu-item > m3e-nav-menu-item:last-of-type {
+        margin-block-end: var(--m3e-nav-menu-item-vertical-inset, 0.25rem);
+      }
+    `);
   }
 
   /** The styles of the element. */

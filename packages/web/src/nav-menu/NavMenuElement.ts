@@ -5,6 +5,7 @@ import {
   DesignToken,
   FocusController,
   PressedController,
+  registerStyleSheet,
   Role,
   scrollIntoViewIfNeeded,
 } from "@m3e/web/core";
@@ -90,19 +91,12 @@ import { M3eNavMenuItemElement } from "./NavMenuItemElement";
 @customElement("m3e-nav-menu")
 export class M3eNavMenuElement extends Role(LitElement, "tree") {
   static {
-    if (typeof window !== "undefined") {
-      const lightDomStyle = new CSSStyleSheet();
-      lightDomStyle.replaceSync(
-        css`
-          m3e-nav-menu > m3e-divider {
-            margin-block: var(--m3e-nav-menu-divider-margin, 0.25rem);
-            flex: none;
-          }
-        `.toString(),
-      );
-
-      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
-    }
+    registerStyleSheet(css`
+      m3e-nav-menu > m3e-divider {
+        margin-block: var(--m3e-nav-menu-divider-margin, 0.25rem);
+        flex: none;
+      }
+    `);
   }
 
   /** The styles of the element. */

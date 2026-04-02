@@ -1,6 +1,6 @@
 import { css, CSSResultGroup } from "lit";
 
-import { customElement, DesignToken } from "@m3e/web/core";
+import { customElement, DesignToken, registerStyleSheet } from "@m3e/web/core";
 import { M3eInteractivityChecker, RovingTabIndexManager, selectionManager } from "@m3e/web/core/a11y";
 import { M3eNavBarElement, NavItemOrientation } from "@m3e/web/nav-bar";
 
@@ -54,22 +54,15 @@ import { M3eNavBarElement, NavItemOrientation } from "@m3e/web/nav-bar";
 @customElement("m3e-nav-rail")
 export class M3eNavRailElement extends M3eNavBarElement {
   static {
-    if (typeof window !== "undefined") {
-      const lightDomStyle = new CSSStyleSheet();
-      lightDomStyle.replaceSync(
-        css`
-          m3e-nav-rail > m3e-icon-button,
-          m3e-nav-rail > m3e-fab {
-            margin-block-end: var(--m3e-nav-rail-button-item-space, 1rem);
-          }
-          m3e-nav-rail:not(:state(-compact)) > m3e-icon-button {
-            margin-inline-start: var(--m3e-nav-rail-expanded-icon-button-inset, 0.5rem);
-          }
-        `.toString(),
-      );
-
-      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
-    }
+    registerStyleSheet(css`
+      m3e-nav-rail > m3e-icon-button,
+      m3e-nav-rail > m3e-fab {
+        margin-block-end: var(--m3e-nav-rail-button-item-space, 1rem);
+      }
+      m3e-nav-rail:not(:state(-compact)) > m3e-icon-button {
+        margin-inline-start: var(--m3e-nav-rail-expanded-icon-button-inset, 0.5rem);
+      }
+    `);
   }
 
   /** The styles of the element. */

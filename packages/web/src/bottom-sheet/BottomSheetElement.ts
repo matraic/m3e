@@ -19,6 +19,7 @@ import {
   VelocityTracker,
   SuppressInitialAnimation,
   ReconnectedCallback,
+  registerStyleSheet,
 } from "@m3e/web/core";
 
 import { isModifierAllowed, M3eInteractivityChecker } from "@m3e/web/core/a11y";
@@ -131,23 +132,17 @@ export class M3eBottomSheetElement extends EventAttribute(
   "closed",
 ) {
   static {
-    if (typeof window !== "undefined") {
-      const lightDomStyle = new CSSStyleSheet();
-      lightDomStyle.replaceSync(
-        css`
-          @property --_bottom-sheet-height {
-            syntax: "<length>";
-            inherits: false;
-            initial-value: 50vh;
-          }
-          m3e-bottom-sheet > [slot="header"] {
-            margin-block-end: var(--m3e-bottom-sheet-padding-block, 0.5rem);
-            margin-inline: var(--m3e-bottom-sheet-padding-inline, 1rem);
-          }
-        `.toString(),
-      );
-      document.adoptedStyleSheets.push(lightDomStyle);
-    }
+    registerStyleSheet(css`
+      @property --_bottom-sheet-height {
+        syntax: "<length>";
+        inherits: false;
+        initial-value: 50vh;
+      }
+      m3e-bottom-sheet > [slot="header"] {
+        margin-block-end: var(--m3e-bottom-sheet-padding-block, 0.5rem);
+        margin-inline: var(--m3e-bottom-sheet-padding-inline, 1rem);
+      }
+    `);
   }
 
   /** The styles of the element. */

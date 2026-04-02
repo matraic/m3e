@@ -12,6 +12,7 @@ import {
   deleteCustomState,
   customElement,
   SuppressInitialAnimation,
+  registerStyleSheet,
 } from "@m3e/web/core";
 
 import { RovingTabIndexManager } from "@m3e/web/core/a11y";
@@ -103,18 +104,11 @@ import { MenuVariant } from "./MenuVariant";
 @customElement("m3e-menu")
 export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Role(LitElement, "menu"))) {
   static {
-    if (typeof window !== "undefined") {
-      const lightDomStyle = new CSSStyleSheet();
-      lightDomStyle.replaceSync(
-        css`
-          m3e-menu > m3e-divider {
-            margin-block: var(--m3e-menu-divider-spacing, 0.5rem);
-          }
-        `.toString(),
-      );
-
-      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
-    }
+    registerStyleSheet(css`
+      m3e-menu > m3e-divider {
+        margin-block: var(--m3e-menu-divider-spacing, 0.5rem);
+      }
+    `);
   }
 
   /** The styles of the element. */

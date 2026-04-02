@@ -9,6 +9,7 @@ import {
   addCustomState,
   setCustomState,
   hasAssignedNodes,
+  registerStyleSheet,
 } from "@m3e/web/core";
 
 import { M3eFloatingPanelElement } from "@m3e/web/core/anchoring";
@@ -49,22 +50,15 @@ import { OptionPanelState } from "./OptionPanelState";
 @customElement("m3e-option-panel")
 export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbox") {
   static {
-    if (typeof window !== "undefined") {
-      const lightDomStyle = new CSSStyleSheet();
-      lightDomStyle.replaceSync(
-        css`
-          m3e-option-panel > m3e-divider {
-            margin-block: var(--m3e-option-panel-divider-spacing, 0.5rem);
-          }
-          m3e-option-panel m3e-option[hidden],
-          m3e-option-panel m3e-optgroup[hidden] {
-            display: none;
-          }
-        `.toString(),
-      );
-
-      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
-    }
+    registerStyleSheet(css`
+      m3e-option-panel > m3e-divider {
+        margin-block: var(--m3e-option-panel-divider-spacing, 0.5rem);
+      }
+      m3e-option-panel m3e-option[hidden],
+      m3e-option-panel m3e-optgroup[hidden] {
+        display: none;
+      }
+    `);
   }
 
   /** The styles of the element. */

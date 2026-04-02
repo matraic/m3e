@@ -3,7 +3,7 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, DesignToken, Role } from "@m3e/web/core";
+import { customElement, DesignToken, registerStyleSheet, Role } from "@m3e/web/core";
 
 import "@m3e/web/button";
 import "@m3e/web/icon-button";
@@ -33,18 +33,11 @@ import "@m3e/web/icon-button";
 @customElement("m3e-snackbar")
 export class M3eSnackbarElement extends Role(LitElement, "status") {
   static {
-    if (typeof window !== "undefined") {
-      const lightDomStyle = new CSSStyleSheet();
-      lightDomStyle.replaceSync(
-        css`
-          m3e-snackbar {
-            margin-inline: auto;
-          }
-        `.toString(),
-      );
-
-      document.adoptedStyleSheets = [...document.adoptedStyleSheets, lightDomStyle];
-    }
+    registerStyleSheet(css`
+      m3e-snackbar {
+        margin-inline: auto;
+      }
+    `);
   }
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
