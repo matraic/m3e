@@ -20,7 +20,7 @@ import { M3eOptGroupElement, M3eOptionElement, M3eOptionPanelElement } from "@m3
 import type { M3eFormFieldElement } from "@m3e/web/form-field";
 
 import { AutocompleteFilterMode } from "./AutocompleteFilterMode";
-import { QueryEventDetail } from "./QueryEventDetail";
+import { AutocompleteQueryEventDetail } from "./AutocompleteQueryEventDetail";
 
 /**
  * Enhances a text input with suggested options.
@@ -410,7 +410,7 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
 
     if (this.options.length == 0 && !(<HTMLInputElement>this.control).readOnly) {
       this.dispatchEvent(
-        new CustomEvent<QueryEventDetail>("query", {
+        new CustomEvent<AutocompleteQueryEventDetail>("query", {
           detail: { term: this.#input?.value ?? "" },
           bubbles: true,
           composed: true,
@@ -435,7 +435,7 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
     if (!this.#input || e.defaultPrevented) return;
 
     this.dispatchEvent(
-      new CustomEvent<QueryEventDetail>("query", {
+      new CustomEvent<AutocompleteQueryEventDetail>("query", {
         detail: { term: this.#input.value },
         bubbles: true,
         composed: true,
@@ -871,7 +871,7 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
 
 interface M3eAutocompleteElementEventMap extends HTMLElementEventMap {
   toggle: ToggleEvent;
-  query: CustomEvent<QueryEventDetail>;
+  query: CustomEvent<AutocompleteQueryEventDetail>;
 }
 
 export interface M3eAutocompleteElement {
