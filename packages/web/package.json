@@ -44,6 +44,7 @@
     "paginator",
     "progress-indicator",
     "radio-group",
+    "search",
     "segmented-button",
     "select",
     "shape",
@@ -213,6 +214,10 @@
     "./radio-group": {
       "types": "./dist/src/radio-group/index.d.ts",
       "default": "./dist/radio-group.js"
+    },
+    "./search": {
+      "types": "./dist/src/search/index.d.ts",
+      "default": "./dist/search.js"
     },
     "./segmented-button": {
       "types": "./dist/src/segmented-button/index.d.ts",

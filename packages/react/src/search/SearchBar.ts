@@ -1,0 +1,27 @@
+import React from "react";
+import { createComponent } from "@lit/react";
+
+import { M3eSearchBarElement } from "@m3e/web/search";
+export type { M3eSearchBarElement } from "@m3e/web/search";
+
+/**
+ * React binding for the `m3e-search-bar` Web Component from `@m3e/web/search`.
+ *
+ * This component renders the underlying `<m3e-search-bar>` element and exposes its
+ * properties, attributes, and events through an idiomatic React interface.
+ *
+ * Props map directly to element properties, and event handlers receive the
+ * native DOM events dispatched by the component. Refs are forwarded to the
+ * underlying `<m3e-search-bar>` instance for imperative access.
+ *
+ * See the `m3e-search-bar` documentation for full details on behavior, styling,
+ * accessibility, and supported events.
+ */
+export const M3eSearchBar = createComponent({
+  tagName: "m3e-search-bar",
+  elementClass: M3eSearchBarElement,
+  react: React,
+  events: {
+    onClear: "clear",
+  },
+});

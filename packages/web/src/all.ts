@@ -31,6 +31,7 @@ export * from "./option";
 export * from "./paginator";
 export * from "./progress-indicator";
 export * from "./radio-group";
+export * from "./search";
 export * from "./segmented-button";
 export * from "./select";
 export * from "./shape";

@@ -34,6 +34,7 @@ const inputs = [
   "paginator",
   "progress-indicator",
   "radio-group",
+  "search",
   "segmented-button",
   "select",
   "shape",
