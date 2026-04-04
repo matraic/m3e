@@ -150,38 +150,38 @@ export class M3eYearViewElement extends CalendarViewElementBase {
 
       case "ArrowLeft":
       case "Left":
-        activeDate = addCalendarMonths(this.activeDate, M3eDirectionality.current === "rtl" ? 1 : -1);
+        activeDate = addCalendarMonths(activeDate, M3eDirectionality.current === "rtl" ? 1 : -1);
         break;
 
       case "ArrowRight":
       case "Right":
-        activeDate = addCalendarMonths(this.activeDate, M3eDirectionality.current === "rtl" ? -1 : 1);
+        activeDate = addCalendarMonths(activeDate, M3eDirectionality.current === "rtl" ? -1 : 1);
         break;
 
       case "ArrowUp":
       case "Up":
-        activeDate = addCalendarMonths(this.activeDate, -4);
+        activeDate = addCalendarMonths(activeDate, -4);
         break;
 
       case "ArrowDown":
       case "Down":
-        activeDate = addCalendarMonths(this.activeDate, 4);
+        activeDate = addCalendarMonths(activeDate, 4);
         break;
 
       case "Home":
-        activeDate = addCalendarMonths(this.activeDate, -this.activeDate.getMonth());
+        activeDate = addCalendarMonths(activeDate, -activeDate.getMonth());
         break;
 
       case "End":
-        activeDate = addCalendarMonths(this.activeDate, 11 - this.activeDate.getMonth());
+        activeDate = addCalendarMonths(activeDate, 11 - activeDate.getMonth());
         break;
 
       case "PageUp":
-        activeDate = addCalendarYears(this.activeDate, e.altKey ? -10 : -1);
+        activeDate = addCalendarYears(activeDate, e.altKey ? -10 : -1);
         break;
 
       case "PageDown":
-        activeDate = addCalendarYears(this.activeDate, e.altKey ? 10 : 1);
+        activeDate = addCalendarYears(activeDate, e.altKey ? 10 : 1);
         break;
 
       default:

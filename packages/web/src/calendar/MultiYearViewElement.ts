@@ -133,41 +133,41 @@ export class M3eMultiYearViewElement extends CalendarViewElementBase {
 
       case "ArrowLeft":
       case "Left":
-        activeDate = addCalendarYears(this.activeDate, M3eDirectionality.current === "rtl" ? 1 : -1);
+        activeDate = addCalendarYears(activeDate, M3eDirectionality.current === "rtl" ? 1 : -1);
         break;
 
       case "ArrowRight":
       case "Right":
-        activeDate = addCalendarYears(this.activeDate, M3eDirectionality.current === "rtl" ? -1 : 1);
+        activeDate = addCalendarYears(activeDate, M3eDirectionality.current === "rtl" ? -1 : 1);
         break;
 
       case "ArrowUp":
       case "Up":
-        activeDate = addCalendarYears(this.activeDate, -YEARS_PER_ROW);
+        activeDate = addCalendarYears(activeDate, -YEARS_PER_ROW);
         break;
 
       case "ArrowDown":
       case "Down":
-        activeDate = addCalendarYears(this.activeDate, YEARS_PER_ROW);
+        activeDate = addCalendarYears(activeDate, YEARS_PER_ROW);
         break;
 
       case "Home":
-        activeDate = addCalendarYears(this.activeDate, -getActiveOffset(this.activeDate, this.minDate, this.maxDate));
+        activeDate = addCalendarYears(activeDate, -getActiveOffset(activeDate, this.minDate, this.maxDate));
         break;
 
       case "End":
         activeDate = addCalendarYears(
-          this.activeDate,
-          YEARS_PER_PAGE - getActiveOffset(this.activeDate, this.minDate, this.maxDate) - 1,
+          activeDate,
+          YEARS_PER_PAGE - getActiveOffset(activeDate, this.minDate, this.maxDate) - 1,
         );
         break;
 
       case "PageUp":
-        activeDate = addCalendarYears(this.activeDate, e.altKey ? -YEARS_PER_PAGE * 10 : -YEARS_PER_PAGE);
+        activeDate = addCalendarYears(activeDate, e.altKey ? -YEARS_PER_PAGE * 10 : -YEARS_PER_PAGE);
         break;
 
       case "PageDown":
-        activeDate = addCalendarYears(this.activeDate, e.altKey ? YEARS_PER_PAGE * 10 : YEARS_PER_PAGE);
+        activeDate = addCalendarYears(activeDate, e.altKey ? YEARS_PER_PAGE * 10 : YEARS_PER_PAGE);
         break;
 
       default:
