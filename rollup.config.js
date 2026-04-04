@@ -9,39 +9,36 @@ const banner = `/**
  * See LICENSE file in the project root for full license text.
  */`;
 
-const defaultDisableMinification = process.env.nominify === 'true';
+const defaultDisableMinification = process.env.nominify === "true";
 
 const defaultBaseOutput = {
-    format: "esm",
-    banner: banner,
-    sourcemap: true,
-    minifyInternalExports: false,
-    hoistTransitiveImports: false,
+  format: "esm",
+  banner: banner,
+  sourcemap: true,
+  minifyInternalExports: false,
+  hoistTransitiveImports: false,
 };
 
 const defaultBabelConfig = {
   babelHelpers: "bundled",
-  extensions: [ ".ts", ".js" ],
+  extensions: [".ts", ".js"],
   exclude: "node_modules/**",
   rootMode: "upward",
-}
+};
 
-const createOutput = ({
-  dist,
-  config = {}
-}) => {
+const createOutput = ({ dist, config = {} }) => {
   const {
     disableMinification = defaultDisableMinification,
-    terserConfig = { },
-    babelConfig = { },
-    baseOutput = { }
+    terserConfig = {},
+    babelConfig = {},
+    baseOutput = {},
   } = config;
 
   const outputs = [
     {
       file: `dist/${dist}.js`,
       ...defaultBaseOutput,
-    }
+    },
   ];
   if (!disableMinification) {
     outputs.push({
@@ -52,18 +49,15 @@ const createOutput = ({
         terser({
           mangle: true,
           ...terserConfig,
-        })],
+        }),
+      ],
     });
   }
   return outputs;
-}
+};
 
-export const createDefaultEntryPoint = ({
-  config = {}
-}) => {
-  const {
-    typescriptConfig = { },
-  } = config;
+export const createDefaultEntryPoint = ({ config = {} }) => {
+  const { typescriptConfig = {} } = config;
 
   return {
     input: "src/index.ts",
@@ -71,44 +65,42 @@ export const createDefaultEntryPoint = ({
     plugins: [
       resolve(),
       typescript({
-        "exclude": [ "./**/*.ts" ],
+        exclude: ["./**/*.ts"],
         ...typescriptConfig,
-      })
+      }),
     ],
   };
 };
 
-export const createInputsEntryPoint = ({
-  inputs = [],
-  externals = [],
-  config = {}
-}) => {
+export const createInputsEntryPoint = ({ inputs = [], externals = [], config = {} }) => {
   const {
     disableMinification = defaultDisableMinification,
-    typescriptConfig = { },
-    terserConfig = { },
-    babelConfig = { },
-    baseOutput = { }
+    typescriptConfig = {},
+    terserConfig = {},
+    babelConfig = {},
+    baseOutput = {},
   } = config;
-  const mappedInputs = { };
+  const mappedInputs = {};
   inputs.forEach((module) => {
     mappedInputs[module.replace(/\//g, "-")] = `src/${module}/index.ts`;
   });
 
-  const outputs = [{
-    dir: `dist`,
-    chunkFileNames: `[name].js`,
-    entryFileNames: `[name].js`,
-    ...defaultBaseOutput,
-    ...baseOutput,
-  }];
+  const outputs = [
+    {
+      dir: `dist`,
+      chunkFileNames: `[name].js`,
+      entryFileNames: `[name].js`,
+      ...defaultBaseOutput,
+      ...baseOutput,
+    },
+  ];
 
   if (!disableMinification) {
     outputs.push({
       dir: `dist`,
       entryFileNames: `[name].min.js`,
       chunkFileNames: `[name].min.js`,
-      plugins: [ terser(terserConfig)],
+      plugins: [terser(terserConfig)],
       ...defaultBaseOutput,
       ...baseOutput,
     });
@@ -121,7 +113,7 @@ export const createInputsEntryPoint = ({
     plugins: [
       resolve(),
       typescript(typescriptConfig),
-      babel({ 
+      babel({
         ...defaultBabelConfig,
         ...babelConfig,
       }),
@@ -129,15 +121,8 @@ export const createInputsEntryPoint = ({
   };
 };
 
-export const createAllEntryPoint = ({
-  externals = [], 
-  config = {}
-}) => {
-  const {
-    typescriptConfig = { },
-    terserConfig = { },
-    babelConfig = { },
-  } = config;
+export const createAllEntryPoint = ({ externals = [], config = {} }) => {
+  const { typescriptConfig = {}, terserConfig = {}, babelConfig = {} } = config;
   return {
     input: "src/all.ts",
     output: createOutput({ dist: "all", config: config }),
@@ -145,34 +130,28 @@ export const createAllEntryPoint = ({
     plugins: [
       resolve(),
       typescript(typescriptConfig),
-      babel({ 
+      babel({
         ...defaultBabelConfig,
         ...babelConfig,
       }),
     ],
   };
-}
+};
 
-const createConfig = ({
-  inputs = [ ],
-  externals = [ ],
-  config = { }
-}) => {
-  const {
-    disableMinification = defaultDisableMinification,
-  } = config;
+const createConfig = ({ inputs = [], externals = [], config = {} }) => {
+  const { disableMinification = defaultDisableMinification } = config;
 
   if (disableMinification) {
-    console.warn('Minification: disabled');
+    console.warn("Minification: disabled");
   } else {
-    console.log('Minification: enabled');
+    console.log("Minification: enabled");
   }
 
   return [
     createDefaultEntryPoint({ config: config }),
     createInputsEntryPoint({ inputs: inputs, externals: externals, config: config }),
-    createAllEntryPoint({ externals: externals, config: config })
+    createAllEntryPoint({ externals: externals, config: config }),
   ];
-}
+};
 
 export default createConfig;
