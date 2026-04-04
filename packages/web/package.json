@@ -19,9 +19,11 @@
     "bottom-sheet",
     "button",
     "button-group",
+    "calendar",
     "card",
     "checkbox",
     "chips",
+    "datepicker",
     "dialog",
     "divider",
     "drawer-container",
@@ -112,6 +114,10 @@
       "types": "./dist/src/button-group/index.d.ts",
       "default": "./dist/button-group.js"
     },
+    "./calendar": {
+      "types": "./dist/src/calendar/index.d.ts",
+      "default": "./dist/calendar.js"
+    },
     "./card": {
       "types": "./dist/src/card/index.d.ts",
       "default": "./dist/card.js"
@@ -123,6 +129,10 @@
     "./chips": {
       "types": "./dist/src/chips/index.d.ts",
       "default": "./dist/chips.js"
+    },
+    "./datepicker": {
+      "types": "./dist/src/datepicker/index.d.ts",
+      "default": "./dist/datepicker.js"
     },
     "./dialog": {
       "types": "./dist/src/dialog/index.d.ts",
