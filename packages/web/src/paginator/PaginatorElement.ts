@@ -21,7 +21,7 @@ import "@m3e/web/option";
 import "@m3e/web/icon-button";
 import "@m3e/web/tooltip";
 
-import { PageEventDetail } from "./PageEventDetail";
+import { PaginatorPageEventDetail } from "./PaginatorPageEventDetail";
 
 /**
  * Provides navigation for paged information, typically used with a table.
@@ -432,7 +432,7 @@ export class M3ePaginatorElement extends EventAttribute(Role(LitElement, "group"
   /** @private */
   #emitPageEvent(previousPageIndex: number): void {
     this.dispatchEvent(
-      new CustomEvent<PageEventDetail>("page", {
+      new CustomEvent<PaginatorPageEventDetail>("page", {
         detail: {
           previousPageIndex: previousPageIndex,
           pageIndex: this.pageIndex,
@@ -445,7 +445,7 @@ export class M3ePaginatorElement extends EventAttribute(Role(LitElement, "group"
 }
 
 interface M3ePaginatorElementEventMap extends HTMLElementEventMap {
-  page: CustomEvent<PageEventDetail>;
+  page: CustomEvent<PaginatorPageEventDetail>;
 }
 
 export interface M3ePaginatorElement {

@@ -1,8 +1,8 @@
 import React from "react";
 import { createComponent, EventName } from "@lit/react";
 
-import { M3ePaginatorElement, PageEventDetail } from "@m3e/web/paginator";
-export type { M3ePaginatorElement, PageEventDetail } from "@m3e/web/paginator";
+import { M3ePaginatorElement, PaginatorPageEventDetail } from "@m3e/web/paginator";
+export type { M3ePaginatorElement, PageEventDetail, PaginatorPageEventDetail } from "@m3e/web/paginator";
 
 /**
  * React binding for the `m3e-paginator` Web Component from `@m3e/web/paginator`.
@@ -22,6 +22,6 @@ export const M3ePaginator = createComponent({
   elementClass: M3ePaginatorElement,
   react: React,
   events: {
-    onPage: "page" as EventName<CustomEvent<PageEventDetail>>,
+    onPage: "page" as EventName<CustomEvent<PaginatorPageEventDetail>>,
   },
 });

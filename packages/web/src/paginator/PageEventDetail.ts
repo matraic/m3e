@@ -1,14 +1,7 @@
-/** Emitted when a user selects a different page size or navigates to another page. */
-export interface PageEventDetail {
-  /** The zero-based index of the current page index. */
-  pageIndex: number;
+import { PaginatorPageEventDetail } from "./PaginatorPageEventDetail";
 
-  /** The zero-based index of the page which was previously selected. */
-  previousPageIndex?: number;
-
-  /** The current page size. */
-  pageSize: number | "all";
-
-  /** The current total number of items being paged. */
-  length: number;
-}
+/**
+ * Emitted when a user selects a different page size or navigates to another page.
+ * @deprecated Use `PaginatorPageEventDetail`.
+ */
+export type PageEventDetail = PaginatorPageEventDetail;
