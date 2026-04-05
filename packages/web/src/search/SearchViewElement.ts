@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { html, LitElement, PropertyValues, svg } from "lit";
 import { property, query, state } from "lit/decorators.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 
 import {
   AttachInternals,
@@ -183,9 +184,16 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
   protected override render(): unknown {
     return html` <div class="base">
       <div class="anchor"></div>
-      <div class="view" tabindex="-1" @keydown="${this.#handleKeyDown}">
+      <div
+        role="${ifDefined(this.open ? "dialog" : undefined)}"
+        aria-modal="${ifDefined(this.open ? "true" : undefined)}"
+        aria-labelledby="${ifDefined(this.open ? "header" : undefined)}"
+        class="view"
+        tabindex="-1"
+        @keydown="${this.#handleKeyDown}"
+      >
         <m3e-focus-trap ?disabled="${!this.open}">
-          <div class="header">
+          <div class="header" id="header">
             <m3e-search-bar class="bar">
               ${this.#renderIconOrBackButton()}
               <slot name="leading" slot="leading"></slot>
@@ -194,7 +202,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
               <slot name="trailing" slot="trailing"></slot>
             </m3e-search-bar>
           </div>
-          <div class="results">
+          <div class="results" aria-live="${ifDefined(this.open ? "polite" : undefined)}">
             <div class="scroll-container">
               <slot></slot>
             </div>
