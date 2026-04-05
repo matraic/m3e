@@ -202,7 +202,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
               <slot name="trailing" slot="trailing"></slot>
             </m3e-search-bar>
           </div>
-          <div class="results" aria-live="${ifDefined(this.open ? "polite" : undefined)}">
+          <div class="results">
             <div class="scroll-container">
               <slot></slot>
             </div>
