@@ -18,6 +18,7 @@ Components in nearing completion include:
 
 - Calendar
 - Datepicker
+- Search
 
 Components in early stages of development include:
 
@@ -31,7 +32,6 @@ Planned components which have not yet entered development:
 
 - Inputs (Numeric, Masked, Date, Datetime)
 - Time Picker
-- Search
 
 ### 📜 Building with AI
 
