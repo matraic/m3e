@@ -17,6 +17,7 @@ import {
 
 import { positionAnchor } from "@m3e/web/core/anchoring";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
 
 import "@m3e/web/core/a11y";
 
@@ -104,8 +105,12 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
 
   /** @private */ readonly #scrollLockController = new ScrollLockController(this);
 
-  /** @private */ @state() _clearable = false;
+  /** @private */ @state() private _clearable = false;
+  /** @private */ @state() private _mode?: Exclude<SearchViewMode, "auto">;
+  /** @private */ #openMode?: Exclude<SearchViewMode, "auto">;
+
   /** @private */ #anchorCleanup?: () => void;
+  /** @private */ #breakpointUnobserve?: () => void;
   /** @private */ @query(".anchor") private readonly _anchor!: HTMLElement;
   /** @private */ @query(".view") private readonly _view!: HTMLElement;
 
@@ -147,6 +152,14 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
    */
   @property({ attribute: "close-label" }) closeLabel = "Close";
 
+  /** The current mode applied to the view. */
+  get currentMode(): Exclude<SearchViewMode, "auto"> {
+    return this._mode ?? (this.mode !== "fullscreen" ? "docked" : "fullscreen");
+  }
+  set currentMode(value: Exclude<SearchViewMode, "auto">) {
+    this._mode = value;
+  }
+
   /** Clears the search term. */
   clear(): void {
     if (!this.#input) return;
@@ -157,25 +170,52 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
   }
 
   /** @inheritdoc */
+  protected override willUpdate(changedProperties: PropertyValues): void {
+    super.willUpdate(changedProperties);
+
+    if (changedProperties.has("mode")) {
+      this.#breakpointUnobserve?.();
+
+      const previousMode = changedProperties.get("mode");
+      if (previousMode && previousMode !== this.mode && this.open) {
+        this.open = false;
+      }
+
+      if (this.mode === "auto") {
+        this.#breakpointUnobserve = M3eBreakpointObserver.observe([Breakpoint.XSmall], (matches) => {
+          const currentMode = this.currentMode;
+          this._mode = matches.get(Breakpoint.XSmall) ? "fullscreen" : "docked";
+          if (currentMode !== this._mode && this.open) {
+            this.open = false;
+          }
+          this.#updateMode();
+        });
+      } else {
+        this._mode = undefined;
+        this.#updateMode();
+      }
+    }
+    if (changedProperties.has("_mode")) {
+      this.#updateMode();
+    }
+  }
+
+  /** @inheritdoc */
   protected override updated(_changedProperties: PropertyValues<this>): void {
     super.updated(_changedProperties);
     if (_changedProperties.has("open")) {
-      switch (this.mode) {
-        case "docked":
-          if (this.open) {
-            this.#openDocked();
-          } else {
-            this.#closeDocked();
-          }
-          break;
-
-        case "fullscreen":
-          if (this.open) {
-            this.#openFullscreen();
-          } else {
-            this.#closeFullscreen();
-          }
-          break;
+      if (!this.open) {
+        if ((this.#openMode ?? this.currentMode) === "fullscreen") {
+          this.#closeFullscreen();
+        } else {
+          this.#closeDocked();
+        }
+      } else {
+        if (this.currentMode === "fullscreen") {
+          this.#openFullscreen();
+        } else {
+          this.#openDocked();
+        }
       }
     }
   }
@@ -238,7 +278,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
     >
       <slot name="close-icon">
         <svg class="close-icon" viewBox="0 -960 960 960" fill="currentColor">
-          ${this.mode === "docked"
+          ${this.currentMode === "docked"
             ? svg`<path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/>`
             : svg`<path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z"/>`}
         </svg>
@@ -308,6 +348,12 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
   }
 
   /** @private */
+  #updateMode(): void {
+    setCustomState(this, "-fullscreen", this.currentMode === "fullscreen");
+    setCustomState(this, "-docked", this.currentMode === "docked");
+  }
+
+  /** @private */
   #updateClearableState(): void {
     this._clearable = (this.#input?.value ?? "").length > 0;
     setCustomState(this, "-clearable", this._clearable);
@@ -372,7 +418,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
   /** @private */
   @debounce(40)
   private _handleFocusChange(focused: boolean) {
-    if (!focused && this.mode === "docked") {
+    if (!focused && this.currentMode === "docked") {
       this.clear();
       this.open = false;
     }
@@ -395,6 +441,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
       return;
     }
 
+    this.#openMode = this.currentMode;
     const view = this._view;
 
     this.#anchorCleanup?.();
@@ -462,6 +509,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
       return;
     }
 
+    this.#openMode = undefined;
     this.#scrollLockController.unlock();
 
     if (prefersReducedMotion()) {
@@ -515,6 +563,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
       return;
     }
 
+    this.#openMode = this.currentMode;
     this.#scrollLockController.lock();
 
     const view = this._view;
@@ -589,8 +638,10 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
       return;
     }
 
-    const anchor = this._anchor;
+    this.#openMode = undefined;
     this.#scrollLockController.unlock();
+
+    const anchor = this._anchor;
 
     if (!prefersReducedMotion()) {
       const start = view.getBoundingClientRect();

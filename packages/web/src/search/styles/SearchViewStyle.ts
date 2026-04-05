@@ -55,15 +55,15 @@ export const SearchViewStyle: CSSResultGroup = css`
   .bar {
     flex: 1 1 auto;
   }
-  :host([mode="fullscreen"]) .bar {
+  :host(:state(-fullscreen)) .bar {
     transition: ${unsafeCSS(`margin ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
   }
-  :host([mode="fullscreen"][contained]:not([open])) .bar {
+  :host(:state(-fullscreen)[contained]:not([open])) .bar {
     margin-inline-start: ${SearchViewToken.containedLeadingMargin};
     margin-inline-end: ${SearchViewToken.containedTrailingMargin};
   }
-  :host([mode="fullscreen"][contained][open]) .bar,
-  :host([mode="fullscreen"][contained][open]) .results {
+  :host(:state(-fullscreen)[contained][open]) .bar,
+  :host(:state(-fullscreen)[contained][open]) .results {
     margin-inline-start: ${SearchViewToken.containedFocusedLeadingMargin};
     margin-inline-end: ${SearchViewToken.containedFocusedTrailingMargin};
   }
@@ -108,33 +108,33 @@ export const SearchViewStyle: CSSResultGroup = css`
   slot[name="clear-icon"] {
     --m3e-icon-size: ${SearchBarToken.iconSize};
   }
-  :host([mode="fullscreen"]) .header {
+  :host(:state(-fullscreen)) .header {
     transition: height 150ms cubic-bezier(0.2, 0, 0, 1);
   }
-  :host([mode="fullscreen"]) .view:popover-open:not(.closing) .header {
+  :host(:state(-fullscreen)) .view:popover-open:not(.closing) .header {
     height: ${SearchViewToken.fullScreenHeaderContainerHeight};
   }
-  :host([mode="fullscreen"]:not([open])) .header,
-  :host([mode="fullscreen"][open]) .view.closing .header {
+  :host(:state(-fullscreen):not([open])) .header,
+  :host(:state(-fullscreen)[open]) .view.closing .header {
     height: ${SearchViewToken.containedFullScreenBarContainerHeight};
   }
-  :host([mode="fullscreen"][open]) .bar {
+  :host(:state(-fullscreen)[open]) .bar {
     --m3e-search-bar-container-height: ${SearchViewToken.containedFullScreenBarContainerHeight};
   }
-  :host([mode="fullscreen"]) .anchor {
+  :host(:state(-fullscreen)) .anchor {
     height: ${SearchViewToken.containedFullScreenBarContainerHeight};
   }
-  :host([mode="fullscreen"]) .view:popover-open {
+  :host(:state(-fullscreen)) .view:popover-open {
     border-radius: ${SearchViewToken.fullScreenContainerShape};
   }
-  :host([mode="fullscreen"][contained]) .view:popover-open {
+  :host(:state(-fullscreen)[contained]) .view:popover-open {
     background-color: ${SearchViewToken.containedContainerColor};
   }
-  :host([mode="fullscreen"]:not([contained])) .view:popover-open {
+  :host(:state(-fullscreen):not([contained])) .view:popover-open {
     background-color: ${SearchViewToken.containerColor};
   }
-  :host([mode="docked"][open]) .header,
-  :host([mode="docked"]) .anchor {
+  :host(:state(-docked)[open]) .header,
+  :host(:state(-docked)) .anchor {
     height: ${SearchViewToken.dockedHeaderContainerHeight};
   }
   :host(:not([contained])[open]) .results {
@@ -142,34 +142,34 @@ export const SearchViewStyle: CSSResultGroup = css`
     border-top-style: solid;
     border-top-color: ${SearchViewToken.dividerColor};
   }
-  :host([mode="docked"][contained]) .results {
+  :host(:state(-docked)[contained]) .results {
     margin-top: ${SearchViewToken.containedDockedBarResultsGap};
   }
-  :host([mode="docked"]:not([contained])[open]) .view {
+  :host(:state(-docked):not([contained])[open]) .view {
     background-color: ${SearchViewToken.containerColor};
     --m3e-search-bar-container-color: ${SearchViewToken.containerColor};
   }
-  :host([mode="docked"][contained]) .results {
+  :host(:state(-docked)[contained]) .results {
     background-color: ${SearchViewToken.containerColor};
   }
-  :host([mode="docked"]:not([contained])[open]) .view,
-  :host([mode="docked"][contained]) .results {
+  :host(:state(-docked):not([contained])[open]) .view,
+  :host(:state(-docked)[contained]) .results {
     border-radius: ${SearchViewToken.dockedContainerShape};
   }
-  :host([mode="docked"]) .results {
+  :host(:state(-docked)) .results {
     min-height: calc(${SearchViewToken.dockedContainerMinHeight} - ${SearchViewToken.dockedHeaderContainerHeight});
     max-height: calc(${SearchViewToken.dockedContainerMaxHeight} - ${SearchViewToken.dockedHeaderContainerHeight});
   }
-  :host([mode="docked"]) .scroll-container {
+  :host(:state(-docked)) .scroll-container {
     scrollbar-width: ${DesignToken.scrollbar.thinWidth};
   }
-  :host([mode="docked"]:not([contained])) .scroll-container {
+  :host(:state(-docked):not([contained])) .scroll-container {
     padding-bottom: ${SearchViewToken.dockedResultsBottomSpace};
   }
-  :host([mode="docked"][contained]) .scroll-container {
+  :host(:state(-docked)[contained]) .scroll-container {
     padding: ${SearchViewToken.containedDockedResultsSpace};
   }
-  :host([mode="docked"]) .results {
+  :host(:state(-docked)) .results {
     transform-origin: top;
     transition: ${unsafeCSS(
       `transform ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard},
@@ -177,38 +177,38 @@ export const SearchViewStyle: CSSResultGroup = css`
       display ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard} allow-discrete`,
     )};
   }
-  :host([mode="docked"]:not([open])) .results {
+  :host(:state(-docked):not([open])) .results {
     transform: scaleY(0.8);
   }
-  :host([mode="docked"][open]) .results {
+  :host(:state(-docked)[open]) .results {
     transform: scaleY(1);
   }
   @starting-style {
-    :host([mode="docked"][open]) .results {
+    :host(:state(-docked)[open]) .results {
       transform: scaleY(0.8);
     }
   }
-  :host([mode="docked"][contained]) .view {
+  :host(:state(-docked)[contained]) .view {
     background-color: transparent;
   }
-  :host([mode="docked"]:not([open])) .view {
+  :host(:state(-docked):not([open])) .view {
     transition: ${unsafeCSS(
       `border-radius ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard},
       background-color ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard}`,
     )};
   }
-  :host([mode="docked"]:not([open])) .view::backdrop {
+  :host(:state(-docked):not([open])) .view::backdrop {
     transition: ${unsafeCSS(
       `background-color ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
         overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete,
         visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
     )};
   }
-  :host([mode="docked"]) .view::backdrop {
+  :host(:state(-docked)) .view::backdrop {
     background-color: color-mix(in srgb, ${SearchViewToken.dockedScrimColor} 0%, transparent);
     margin-inline-end: -20px;
   }
-  :host([mode="docked"][open]) .view::backdrop {
+  :host(:state(-docked)[open]) .view::backdrop {
     background-color: color-mix(
       in srgb,
       ${SearchViewToken.dockedScrimColor} ${SearchViewToken.dockedScrimOpacity},
@@ -221,11 +221,11 @@ export const SearchViewStyle: CSSResultGroup = css`
     )};
   }
   @starting-style {
-    :host([mode="docked"][open]) .view::backdrop {
+    :host(:state(-docked)[open]) .view::backdrop {
       background-color: color-mix(in srgb, ${SearchViewToken.dockedScrimColor} 0%, transparent);
     }
   }
-  :host([mode="fullscreen"]) .view:popover-open {
+  :host(:state(-fullscreen)) .view:popover-open {
     width: 100vw;
     width: 100dvw;
     height: 100vh;
@@ -233,12 +233,12 @@ export const SearchViewStyle: CSSResultGroup = css`
     overflow: hidden;
   }
   @media (prefers-reduced-motion) {
-    :host([mode="fullscreen"]) .bar,
-    :host([mode="fullscreen"]) .header,
-    :host([mode="docked"]) .results,
-    :host([mode="docked"]:not([open])) .view,
-    :host([mode="docked"]:not([open])) .view::backdrop,
-    :host([mode="docked"][open]) .view::backdrop {
+    :host(:state(-fullscreen)) .bar,
+    :host(:state(-fullscreen)) .header,
+    :host(:state(-docked)) .results,
+    :host(:state(-docked):not([open])) .view,
+    :host(:state(-docked):not([open])) .view::backdrop,
+    :host(:state(-docked)[open]) .view::backdrop {
       transition: none;
     }
   }
@@ -246,8 +246,8 @@ export const SearchViewStyle: CSSResultGroup = css`
     :host(:not([contained])[open]) .bar {
       --_search-bar-forced-color-outline-style: none;
     }
-    :host([mode="docked"]:not([contained])[open]) .view,
-    :host([mode="docked"][contained]) .results {
+    :host(:state(-docked):not([contained])[open]) .view,
+    :host(:state(-docked)[contained]) .results {
       border: 1px solid CanvasText;
     }
     :host(:not([contained])[open]) .results {
