@@ -166,6 +166,14 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
     this.#input.value = "";
     this.#updateClearableState();
 
+    this.dispatchEvent(
+      new CustomEvent<SearchViewQueryEventDetail>("query", {
+        detail: { term: "" },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+
     this.dispatchEvent(new Event("clear", { bubbles: true, composed: true }));
   }
 
