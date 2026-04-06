@@ -116,12 +116,14 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🧩 Slots
 
-| Slot        | Description                              |
-| ----------- | ---------------------------------------- |
-| `leading`   | Renders content before the input.        |
-| `input`     | Renders the input element.               |
-| `trailing`  | Renders content after the input.         |
-| _(default)_ | Renders the results content of the view. |
+| Slot              | Description                                         |
+| ----------------- | --------------------------------------------------- |
+| `closed-leading`  | When closed, renders content before the input.      |
+| `closed-trailing` | When closed, renders content after the input.       |
+| `open-leading`    | When open, renders content before the input.        |
+| `open-trailing`   | When open, renders content after the input.         |
+| `input`           | Renders the input element of the view.              |
+| _(default)_       | When open, renders the results content of the view. |
 
 #### 🎛️ CSS Custom Properties
 

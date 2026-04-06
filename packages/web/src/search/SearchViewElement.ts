@@ -60,6 +60,13 @@ import "./SearchBarElement";
  * @attr close-label - The accessible label given to the button used to collapse the view.
  * @attr hide-search-icon - Whether to hide the search icon.
  *
+ * @slot - When open, renders the results content of the view.
+ * @slot input - Renders the input of the view.
+ * @slot open-leading - When open, renders content before the input of the view.
+ * @slot open-trailing - When open, renders content after the input of the view.
+ * @slot closed-leading - When closed, renders content before the input of the view.
+ * @slot closed-trailing - When closed, renders content after the input of the view.
+ *
  * @fires clear - Dispatched when the search term is cleared.
  * @fires query - Dispatched when the view is opened or when the user modifies the search term.
  * @fires beforetoggle - Dispatched before the toggle state changes.
@@ -251,10 +258,14 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
           <div class="header" id="header">
             <m3e-search-bar class="bar">
               ${this.#renderIconOrBackButton()}
-              <slot name="leading" slot="leading"></slot>
+              ${this.open
+                ? html`<slot name="open-leading" slot="leading"></slot>`
+                : html`<slot name="closed-leading" slot="leading"></slot>`}
               <slot name="input" slot="input" @slotchange="${this.#handleInputSlotChange}"></slot>
               ${this.#renderClearButton()}
-              <slot name="trailing" slot="trailing"></slot>
+              ${this.open
+                ? html`<slot name="open-trailing" slot="trailing"></slot>`
+                : html`<slot name="closed-trailing" slot="trailing"></slot>`}
             </m3e-search-bar>
           </div>
           <div class="results">
