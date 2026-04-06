@@ -85,9 +85,10 @@ export abstract class CalendarViewElementBase extends LitElement {
       color: var(--m3e-calendar-item-current-outline-color, ${DesignToken.color.primary});
     }
     td.current:not(.selected):not(.special):not(.range-start):not(.range-end) .state-layer {
-      border-style: solid;
-      border-width: var(--m3e-calendar-item-current-outline-thickness, 0.0625rem);
-      border-color: var(--m3e-calendar-item-current-outline-color, ${DesignToken.color.primary});
+      outline-style: solid;
+      outline-offset: -1px;
+      outline-width: var(--m3e-calendar-item-current-outline-thickness, 1px);
+      outline-color: var(--m3e-calendar-item-current-outline-color, ${DesignToken.color.primary});
     }
     td:has(.item[aria-disabled]) {
       color: color-mix(
