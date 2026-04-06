@@ -20,6 +20,7 @@ import {
   SuppressInitialAnimation,
   ReconnectedCallback,
   registerStyleSheet,
+  InertController,
 } from "@m3e/web/core";
 
 import { isModifierAllowed, M3eInteractivityChecker } from "@m3e/web/core/a11y";
@@ -357,9 +358,9 @@ export class M3eBottomSheetElement extends EventAttribute(
   /** @private */ readonly #documentClickHandler = (e: Event) => this.#handleDocumentClick(e);
   /** @private */ readonly #documentKeyDownHandler = (e: KeyboardEvent) => this.#handleDocumentKeyDown(e);
   /** @private */ readonly #windowResizeHandler = () => this.#handleWindowResize();
-  /** @private */ readonly #inerts = new Array<HTMLElement>();
   /** @private */ readonly #velocityTracker = new VelocityTracker();
   /** @private */ readonly #scrollLockController = new ScrollLockController(this);
+  /** @private */ readonly #inertController = new InertController(this);
 
   /** @private */
   readonly #resizeController = new ResizeController(this, {
@@ -545,7 +546,7 @@ export class M3eBottomSheetElement extends EventAttribute(
       if (this.modal) {
         if (this.open) {
           this.#trigger = document.activeElement;
-          this.#applyInert();
+          this.#inertController.lock();
           this.#scrollLockController.lock();
           this.showPopover();
           requestAnimationFrame(() => {
@@ -562,7 +563,7 @@ export class M3eBottomSheetElement extends EventAttribute(
           }
         } else {
           this.#snapToHeight(0).then(() => {
-            this.#restoreInert();
+            this.#inertController.unlock();
             this.#scrollLockController.unlock();
             document.removeEventListener("click", this.#documentClickHandler);
             document.removeEventListener("keydown", this.#documentKeyDownHandler);
@@ -998,30 +999,6 @@ export class M3eBottomSheetElement extends EventAttribute(
     if (content) {
       content.inert = height <= this.#computePeekHeight();
     }
-  }
-
-  /** @private */
-  #applyInert() {
-    this.#inerts.length = 0;
-
-    for (
-      let current: Node = this as Node;
-      current.parentNode && current.parentNode !== document.documentElement;
-      current = current.parentNode
-    ) {
-      for (const sibling of current.parentNode.children) {
-        if (sibling instanceof HTMLElement && sibling !== current && !sibling.inert) {
-          sibling.inert = true;
-          this.#inerts.push(sibling);
-        }
-      }
-    }
-  }
-
-  /** @private */
-  #restoreInert(): void {
-    this.#inerts.forEach((x) => (x.inert = false));
-    this.#inerts.length = 0;
   }
 }
 
