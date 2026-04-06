@@ -150,7 +150,6 @@ export class M3eCalendarElement extends LitElement {
     }
     .body {
       position: relative;
-      overflow: hidden;
     }
     .view:not(.no-animate) {
       transition: ${unsafeCSS(
@@ -220,6 +219,7 @@ export class M3eCalendarElement extends LitElement {
   /** @private */ @state() private _activeView: CalendarView = "month";
   /** @private */ @state() private _activeDate: Date = new Date();
   /** @private */ @query(".active") private readonly _view?: CalendarViewElementBase;
+  /** @private */ @query(".body") private readonly _body!: HTMLElement;
 
   /**
    * The initial view used to select a date.
@@ -411,10 +411,12 @@ export class M3eCalendarElement extends LitElement {
       );
     });
 
+    this._body.style.overflow = "hidden";
     views[1].classList.add("after");
     views[0].classList.remove("before");
 
     await this.#transitionComplete;
+    this._body.style.overflow = "";
   }
 
   /**
@@ -450,10 +452,12 @@ export class M3eCalendarElement extends LitElement {
       );
     });
 
+    this._body.style.overflow = "hidden";
     views[1].classList.add("before");
     views[2].classList.remove("after");
 
     await this.#transitionComplete;
+    this._body.style.overflow = "";
   }
 
   /**
