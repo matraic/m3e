@@ -114,6 +114,7 @@ export class M3eCalendarElement extends LitElement {
       display: flex;
       flex-direction: column;
       width: fit-content;
+      overflow: hidden;
       padding: var(--m3e-calendar-padding, 0.5rem);
       background-color: var(--m3e-calendar-container-color);
       box-shadow: var(--m3e-calendar-container-elevation);
