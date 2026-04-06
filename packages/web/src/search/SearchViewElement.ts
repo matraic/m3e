@@ -352,6 +352,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
         this.#input.role = this.#input.role || "searchbox";
         this.#input.inputMode = this.#input.inputMode || "search";
         this.#input.type = "text";
+        this.#input.ariaHasPopup = "dialog";
       }
 
       this.#updateClearableState();
