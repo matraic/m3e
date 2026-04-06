@@ -188,7 +188,7 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
         position: this._anchorPosition,
         inline: true,
         flip: true,
-        shift: true,
+        shift: "main",
         offset: TOOLTIP_OFFSET,
       },
       (x, y) => this._updatePosition(this._base, x, y),

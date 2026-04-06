@@ -672,6 +672,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
           position: "bottom-start",
           inline: true,
           flip: true,
+          shift: "both",
         },
         (x, y, position) => {
           setCustomState(this, "-top", position.includes("top"));

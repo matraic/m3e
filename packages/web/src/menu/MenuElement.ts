@@ -370,7 +370,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
               : "bottom-start",
         inline: true,
         flip: true,
-        shift: true,
+        shift: "main",
         offset: !this.submenu ? 4 : undefined,
       },
       (x, y, position) => {

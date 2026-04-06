@@ -9,7 +9,7 @@ export interface AnchorOptions {
   inline?: boolean;
 
   /** Whether the element can be shifted to keep it in view. */
-  shift?: boolean;
+  shift?: "main" | "cross" | "both";
 
   /** Whether the element can flip to keep it in view. */
   flip?: boolean | AnchorPosition[];

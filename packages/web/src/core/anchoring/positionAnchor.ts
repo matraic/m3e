@@ -1,4 +1,15 @@
-import { autoUpdate, computePosition, flip, inline, Middleware, offset, platform, shift } from "@floating-ui/dom";
+import {
+  autoUpdate,
+  computePosition,
+  flip,
+  inline,
+  limitShift,
+  Middleware,
+  offset,
+  platform,
+  shift,
+} from "@floating-ui/dom";
+
 import { offsetParent } from "composed-offset-position";
 
 import { AnchorOptions } from "./AnchorOptions";
@@ -16,7 +27,7 @@ export async function positionAnchor(
   target: HTMLElement,
   anchor: HTMLElement,
   options: AnchorOptions,
-  update: (x: number, y: number, position: AnchorPosition) => void
+  update: (x: number, y: number, position: AnchorPosition) => void,
 ): Promise<() => void> {
   async function computeAnchorPosition() {
     const middleware = new Array<Middleware>();
@@ -28,7 +39,13 @@ export async function positionAnchor(
       middleware.push(options.flip === true ? flip() : flip({ fallbackPlacements: options.flip }));
     }
     if (options.shift) {
-      middleware.push(shift());
+      middleware.push(
+        shift({
+          mainAxis: options.shift === "main" || options.shift === "both",
+          crossAxis: options.shift === "cross" || options.shift === "both",
+          limiter: limitShift(),
+        }),
+      );
     }
     if (options.offset && !isNaN(options.offset)) {
       middleware.push(offset(options.offset));
