@@ -276,6 +276,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
   /** @private */ readonly #scrollLockController = new ScrollLockController(this);
   /** @private */ readonly #inertController = new InertController(this);
   /** @private */ readonly #documentClickHandler = (e: MouseEvent) => this.#handleDocumentClick(e);
+  /** @private */ readonly #documentKeyDownHandler = (e: KeyboardEvent) => this.#handleDocumentKeyDown(e);
 
   /** @private */
   readonly #toggleHandler = (e: ToggleEvent) => {
@@ -429,6 +430,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
     this.setAttribute("popover", "manual");
     this.addEventListener("toggle", this.#toggleHandler);
     document.addEventListener("click", this.#documentClickHandler);
+    document.addEventListener("keydown", this.#documentKeyDownHandler);
   }
 
   /** @inheritdoc */
@@ -443,6 +445,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
 
     this.removeEventListener("toggle", this.#toggleHandler);
     document.removeEventListener("click", this.#documentClickHandler);
+    document.removeEventListener("keydown", this.#documentKeyDownHandler);
   }
 
   /**
@@ -621,6 +624,14 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
     this.rangeEnd = this._rangeEnd ?? this.rangeEnd;
     this.hide(true);
     this.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+
+  /** @private */
+  #handleDocumentKeyDown(e: KeyboardEvent): void {
+    if (this.isOpen && this.currentVariant === "modal" && e.key === "Escape" && !e.shiftKey && !e.ctrlKey) {
+      e.preventDefault();
+      this.hide(true);
+    }
   }
 
   /** @private */
