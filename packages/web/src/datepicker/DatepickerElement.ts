@@ -14,6 +14,7 @@ import {
   ScrollLockController,
   setCustomState,
   SuppressInitialAnimation,
+  InertController,
 } from "@m3e/web/core";
 
 import { positionAnchor } from "@m3e/web/core/anchoring";
@@ -273,6 +274,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
   /** @private */ #anchorCleanup?: () => void;
 
   /** @private */ readonly #scrollLockController = new ScrollLockController(this);
+  /** @private */ readonly #inertController = new InertController(this);
   /** @private */ readonly #documentClickHandler = (e: MouseEvent) => this.#handleDocumentClick(e);
 
   /** @private */
@@ -454,6 +456,11 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
       this.hide();
     }
 
+    if (this.currentVariant === "modal") {
+      this.#scrollLockController.lock();
+      this.#inertController.lock();
+    }
+
     this._calendar.date = this.date;
     this._calendar.rangeStart = this.rangeStart;
     this._calendar.rangeEnd = this.rangeEnd;
@@ -473,6 +480,11 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
    * @param {boolean} [restoreFocus=false] Whether to restore focus to the picker's trigger.
    */
   hide(restoreFocus: boolean = false): void {
+    if (this.currentVariant === "modal") {
+      this.#scrollLockController.unlock();
+      this.#inertController.unlock();
+    }
+
     this.hidePopover();
 
     if (this.#trigger) {
@@ -619,13 +631,18 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
         deleteCustomState(this, "-modal");
         addCustomState(this, "-docked");
         this.#scrollLockController.unlock();
+        this.#inertController.unlock();
         break;
 
       case "modal":
         this.ariaModal = "true";
         deleteCustomState(this, "-docked");
         addCustomState(this, "-modal");
-        this.#scrollLockController.lock();
+        if (this.isOpen) {
+          this.#scrollLockController.lock();
+          this.#inertController.lock();
+        }
+
         break;
     }
 

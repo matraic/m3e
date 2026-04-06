@@ -9,6 +9,7 @@ import {
   debounce,
   EventAttribute,
   FocusController,
+  InertController,
   prefersReducedMotion,
   registerStyleSheet,
   ScrollLockController,
@@ -112,6 +113,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
   /** @private */ readonly #inputPointerHandler = () => this.#handleInputPointerDown();
 
   /** @private */ readonly #scrollLockController = new ScrollLockController(this);
+  /** @private */ readonly #inertController = new InertController(this);
 
   /** @private */ @state() private _clearable = false;
   /** @private */ @state() private _mode?: Exclude<SearchViewMode, "auto">;
@@ -499,6 +501,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
     view.style.position = "absolute";
     view.showPopover();
     this.#scrollLockController.lock();
+    this.#inertController.lock();
 
     this.dispatchEvent(
       new ToggleEvent("toggle", {
@@ -539,6 +542,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
 
     this.#openMode = undefined;
     this.#scrollLockController.unlock();
+    this.#inertController.unlock();
 
     if (prefersReducedMotion()) {
       this.#hideDocked();
@@ -593,6 +597,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
 
     this.#openMode = this.currentMode;
     this.#scrollLockController.lock();
+    this.#inertController.lock();
 
     const view = this._view;
     this.#anchorCleanup?.();
@@ -668,6 +673,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
 
     this.#openMode = undefined;
     this.#scrollLockController.unlock();
+    this.#inertController.unlock();
 
     const anchor = this._anchor;
 

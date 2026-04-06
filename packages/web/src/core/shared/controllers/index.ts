@@ -1,6 +1,7 @@
 export * from "./AnimationLoopController";
 export * from "./FocusController";
 export * from "./HoverController";
+export * from "./InertController";
 export * from "./IntersectionController";
 export * from "./LongPressController";
 export * from "./MutationController";
