@@ -107,6 +107,11 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
       opacity: 0;
       display: none;
     }
+    .calendar {
+      --m3e-calendar-container-color: transparent;
+      --m3e-calendar-container-elevation: ${DesignToken.elevation.level0};
+      --m3e-calendar-container-shape: ${DesignToken.shape.corner.none};
+    }
     .headline {
       font-size: var(
         --m3e-datepicker-modal-headline-font-size,
@@ -500,6 +505,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
     return html`<m3e-focus-trap>
       ${this.#renderHeader()}
       <m3e-calendar
+        class="calendar"
         start-view="${this.startView}"
         start-at="${ifDefined(this.startAt?.toISOString())}"
         min-date="${ifDefined(this.minDate?.toISOString())}"

@@ -65,6 +65,9 @@ import "./YearViewElement";
  *
  * @fires change - Emitted when the selected date changes.
  *
+ * @cssprop --m3e-calendar-container-color - Background color of the container surface.
+ * @cssprop --m3e-calendar-container-elevation - Elevation shadow applied to the container surface.
+ * @cssprop --m3e-calendar-container-shape - Corner radius of the container surface.
  * @cssprop --m3e-calendar-padding - Padding applied to the calendar header and body.
  * @cssprop --m3e-calendar-period-button-text-color - Text color used for the period‑navigation buttons in the header.
  * @cssprop --m3e-calendar-weekday-font-size - Font size of weekday labels in month view.
@@ -112,6 +115,9 @@ export class M3eCalendarElement extends LitElement {
       flex-direction: column;
       width: fit-content;
       padding: var(--m3e-calendar-padding, 0.5rem);
+      background-color: var(--m3e-calendar-container-color);
+      box-shadow: var(--m3e-calendar-container-elevation);
+      border-radius: var(--m3e-calendar-container-shape);
     }
     .header {
       display: flex;

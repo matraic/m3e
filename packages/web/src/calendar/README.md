@@ -58,6 +58,9 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 | Property                                        | Description                                                      |
 | ----------------------------------------------- | ---------------------------------------------------------------- |
+| `--m3e-calendar-container-color`                | Background color of the container surface.                       |
+| `--m3e-calendar-container-elevation`            | Elevation shadow applied to the container surface.               |
+| `--m3e-calendar-container-shape`                | Corner radius of the container surface.                          |
 | `--m3e-calendar-padding`                        | Padding applied to the calendar header and body.                 |
 | `--m3e-calendar-period-button-text-color`       | Text color used for the period-navigation buttons in the header. |
 | `--m3e-calendar-weekday-font-size`              | Font size of weekday labels in month view.                       |
