@@ -22,8 +22,11 @@ import "@m3e/web/tooltip";
 import { CalendarView } from "./CalendarView";
 import { CalendarViewElementBase } from "./CalendarViewElementBase";
 import { M3eMonthViewElement } from "./MonthViewElement";
-
 import { maxYearOfPage, minYearOfPage } from "./utils";
+
+import "./MonthViewElement";
+import "./MultiYearViewElement";
+import "./YearViewElement";
 
 /**
  * A calendar used to select a date.
@@ -101,12 +104,18 @@ export class M3eCalendarElement extends LitElement {
     :host {
       display: inline-block;
       vertical-align: top;
+      width: fit-content;
+      height: fit-content;
+    }
+    .base {
+      display: flex;
+      flex-direction: column;
+      width: fit-content;
+      padding: var(--m3e-calendar-padding, 0.5rem);
     }
     .header {
       display: flex;
       align-items: center;
-      padding-block-start: var(--m3e-calendar-padding, 0.5rem);
-      padding-inline: var(--m3e-calendar-padding, 0.5rem);
       --m3e-text-button-label-text-color: var(
         --m3e-calendar-period-button-text-color,
         ${DesignToken.color.onSurfaceVariant}
@@ -136,8 +145,6 @@ export class M3eCalendarElement extends LitElement {
     .body {
       position: relative;
       overflow: hidden;
-      padding-inline: var(--m3e-calendar-padding, 0.5rem);
-      padding-block-end: var(--m3e-calendar-padding, 0.5rem);
     }
     .view:not(.no-animate) {
       transition: ${unsafeCSS(
@@ -484,7 +491,8 @@ export class M3eCalendarElement extends LitElement {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot name="header">${this.#renderHeader()}</slot>
+    return html`<div class="base">
+      <slot name="header">${this.#renderHeader()}</slot>
       <div class="body ${this._activeView}">
         <div class="row multi-year">
           ${this.#renderView("multi-year", -1)}${this.#renderView("multi-year", 0)}${this.#renderView("multi-year", 1)}
@@ -495,7 +503,8 @@ export class M3eCalendarElement extends LitElement {
         <div class="row month">
           ${this.#renderView("month", -1)}${this.#renderView("month", 0)}${this.#renderView("month", 1)}
         </div>
-      </div>`;
+      </div>
+    </div>`;
   }
 
   /** @private */
