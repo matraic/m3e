@@ -424,8 +424,6 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this.ariaModal = "true";
-
     this.setAttribute("popover", "manual");
     this.addEventListener("toggle", this.#toggleHandler);
     document.addEventListener("click", this.#documentClickHandler);
@@ -617,12 +615,14 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
   #updateVariant(): void {
     switch (this.currentVariant) {
       case "docked":
+        this.ariaModal = null;
         deleteCustomState(this, "-modal");
         addCustomState(this, "-docked");
         this.#scrollLockController.unlock();
         break;
 
       case "modal":
+        this.ariaModal = "true";
         deleteCustomState(this, "-docked");
         addCustomState(this, "-modal");
         this.#scrollLockController.lock();
