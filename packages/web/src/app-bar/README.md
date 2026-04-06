@@ -54,12 +54,14 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### 🧩 Slots
 
-| Slot            | Description              |
-| --------------- | ------------------------ |
-| `leading-icon`  | Renders a leading icon.  |
-| `title`         | Renders the title.       |
-| `subtitle`      | Renders the subtitle.    |
-| `trailing-icon` | Renders a trailing icon. |
+| Slot            | Description                                                       |
+| --------------- | ----------------------------------------------------------------- |
+| `leading`       | Renders content positioned at the start of the bar.               |
+| `subtitle`      | Renders the subtitle of the bar.                                  |
+| `title`         | Renders the title of the bar.                                     |
+| `trailing`      | Renders one or more action buttons aligned to the end of the bar. |
+| `leading-icon`  | **Deprecated:** use the `leading` slot.                           |
+| `trailing-icon` | **Deprecated:** use the `trailing` slot.                          |
 
 ### 🎛️ CSS Custom Properties
 

@@ -47,10 +47,12 @@ import { AppBarSizeStyle, AppBarStyle } from "./styles";
  *
  * @tag m3e-app-bar
  *
- * @slot leading-icon - Renders a leading icon.
- * @slot subtitle - Renders the subtitle.
- * @slot title - Renders the title.
- * @slot trailing-icon - Renders a trailing icon.
+ * @slot leading - Renders content positioned at the start of the bar.
+ * @slot subtitle - Renders the subtitle of the bar.
+ * @slot title - Renders the title of the bar.
+ * @slot trailing - Renders one or more action buttons aligned to the end of the bar.
+ * @slot leading-icon - Deprecated: use the `leading` slot.
+ * @slot trailing-icon - Deprecated: use the `trailing` slot.
  *
  * @attr centered - Whether the title and subtitle are centered.
  * @attr for - The identifier of the interactive control to which this element is attached.
@@ -174,7 +176,9 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
       case "small":
         return html`<div class="base">
           <div class="leading-icon">
-            <slot name="leading-icon" @slotchange="${this.#handleLeadingIconSlotChange}"></slot>
+            <slot name="leading" @slotchange="${this.#handleLeadingIconSlotChange}">
+              <slot name="leading-icon" @slotchange="${this.#handleDeprecatedSlotChange}"></slot>
+            </slot>
           </div>
           <div class="heading">
             <div class="label">
@@ -187,7 +191,9 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
             </div>
           </div>
           <div class="trailing-icon">
-            <slot name="trailing-icon" @slotchange="${this.#handleTrailingIconsSlotChange}"></slot>
+            <slot name="trailing" @slotchange="${this.#handleTrailingIconsSlotChange}">
+              <slot name="trailing-icon" @slotchange="${this.#handleDeprecatedSlotChange}"></slot>
+            </slot>
           </div>
         </div>`;
 
@@ -195,11 +201,15 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
         return html`<div class="base">
           <div class="heading">
             <div class="leading-icon">
-              <slot name="leading-icon" @slotchange="${this.#handleLeadingIconSlotChange}"></slot>
+              <slot name="leading" @slotchange="${this.#handleLeadingIconSlotChange}">
+                <slot name="leading-icon" @slotchange="${this.#handleDeprecatedSlotChange}"></slot>
+              </slot>
             </div>
             <div class="spacer"></div>
             <div class="trailing-icon">
-              <slot name="trailing-icon" @slotchange="${this.#handleTrailingIconsSlotChange}"></slot>
+              <slot name="trailing" @slotchange="${this.#handleTrailingIconsSlotChange}">
+                <slot name="trailing-icon" @slotchange="${this.#handleDeprecatedSlotChange}"></slot>
+              </slot>
             </div>
           </div>
           <div class="spacer"></div>
@@ -239,6 +249,16 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
     if (this.centered && this.size === "small") {
       setTimeout(() => this.#computeCentered(), 40);
     }
+  }
+
+  /** @private */
+  #handleDeprecatedSlotChange(e: Event): void {
+    const deprecatedSlot = (e.target as HTMLSlotElement).name;
+    const useSlot = deprecatedSlot.replace("-icon", "");
+
+    console.warn(
+      `[m3e-app-bar] Slot "${deprecatedSlot}" is deprecated and will be removed in a future release. Use "${useSlot}" instead.`,
+    );
   }
 
   /** @private */
