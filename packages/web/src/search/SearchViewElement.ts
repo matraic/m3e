@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { html, LitElement, PropertyValues, svg } from "lit";
+import { html, LitElement, nothing, PropertyValues, svg } from "lit";
 import { property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
@@ -58,6 +58,7 @@ import "./SearchBarElement";
  * @attr open - Whether the view is expanded to show results.
  * @attr clear-label - The accessible label given to the button used to clear the search term.
  * @attr close-label - The accessible label given to the button used to collapse the view.
+ * @attr hide-search-icon - Whether to hide the search icon.
  *
  * @fires clear - Dispatched when the search term is cleared.
  * @fires query - Dispatched when the view is opened or when the user modifies the search term.
@@ -151,6 +152,12 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
    * @default "Close"
    */
   @property({ attribute: "close-label" }) closeLabel = "Close";
+
+  /**
+   * Whether to hide the search icon.
+   * @default false;
+   */
+  @property({ attribute: "hide-search-icon", type: Boolean }) hideSearchIcon = false;
 
   /** The current mode applied to the view. */
   get currentMode(): Exclude<SearchViewMode, "auto"> {
@@ -262,6 +269,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
 
   /** @private */
   #renderIconOrBackButton(): unknown {
+    if (!this.open && this.hideSearchIcon) return nothing;
     return html`<div class="icon" slot="leading">${this.open ? this.#renderBackButton() : this.#renderIcon()}</div>`;
   }
 
