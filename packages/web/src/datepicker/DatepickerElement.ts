@@ -620,8 +620,8 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
   /** @private */
   #handleConfirmClick(): void {
     this.date = this._date ?? this.date;
-    this.rangeStart = this._rangeStart ?? this.rangeStart;
-    this.rangeEnd = this._rangeEnd ?? this.rangeEnd;
+    this.rangeStart = this._rangeStart === undefined ? this.rangeStart : this._rangeStart;
+    this.rangeEnd = this._rangeEnd === undefined ? this.rangeEnd : this._rangeEnd;
     this.hide(true);
     this.dispatchEvent(new Event("change", { bubbles: true }));
   }
