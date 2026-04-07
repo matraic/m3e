@@ -129,15 +129,23 @@ export class M3eFocusTrapElement extends Disabled(LitElement) {
     parents: readonly Element[],
     callback: (element: Element, parents: readonly Element[]) => void,
   ) {
-    for (const node of slot.assignedElements()) {
-      if (node instanceof HTMLSlotElement) {
-        this.#walkSlot(node, parents, callback);
+    parents = [...parents, slot];
+    let childNodes: Array<Element> | NodeListOf<ChildNode> = slot.assignedElements();
+    if (childNodes.length == 0 && slot.hasChildNodes()) {
+      childNodes = slot.childNodes;
+    }
+    for (const node of childNodes) {
+      if (node.nodeType !== Node.ELEMENT_NODE) continue;
+      const element = <HTMLElement>node;
+
+      if (element instanceof HTMLSlotElement) {
+        this.#walkSlot(element, parents, callback);
         continue;
       }
 
-      callback(node, parents);
-      if (!node.hasChildNodes()) continue;
-      this.#walkTree(node, parents, callback);
+      callback(element, parents);
+      if (!element.hasChildNodes()) continue;
+      this.#walkTree(element, parents, callback);
     }
   }
 }
