@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>Search for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Search for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "tslib": "https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm",
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "lit/": "https://cdn.jsdelivr.net/npm/lit@3.3.0/",
+          "lit-html": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/+esm",
+          "lit-html/directive.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directive.js",
+          "lit-html/directives/if-defined.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/if-defined.js",
+          "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
+          "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
+          "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/core-a11y.min.js",
+          "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/core-anchoring.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/core-bidi.min.js",
+          "@m3e/web/core/layout": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/core-layout.min.js",
+          "@m3e/web/icon-button": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/icon-button.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/icon.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/menu.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/list.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/search.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/icon-button.min.js"></script>
+    <script src="../main.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body" max-depth="4">
+        <span slot="overline">On this page</span>
+        <span slot="title">Search</span>
+      </m3e-toc>
+
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Search</m3e-heading>
+
+      <p>
+        The <code>m3e-search-bar</code> and <code>m3e-search-view</code> components provide a Material 3 expressive
+        search experience. The search bar offers a prominent entry point for text input, while the search view presents
+        suggestions, history, and results in contained, docked, or full screen configurations.
+      </p>
+
+      <m3e-card variant="filled" class="install"><pre slot="content">import "@m3e/web/search";</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Search bar</m3e-heading>
+      <p>
+        Use the <code>m3e-search-bar</code> as the entry point for search. It provides the interactive affordance that
+        activates search, but does not display results. To present suggestions, history, or results, use
+        <code>m3e-search-view</code>, which provides a complete search experience.
+      </p>
+
+      <m3e-heading variant="title" size="medium" level="4">Anatomy</m3e-heading>
+      <p>The <code>m3e-search-bar</code> exposes the following named slots:</p>
+
+      <ul>
+        <li>
+          <code>leading</code> — Content positioned at the start of the bar, such as an icon or navigation affordance.
+        </li>
+        <li><code>input</code> — The <code>input</code> element used to capture search text.</li>
+        <li><code>trailing</code> — Content aligned to the end of the bar, such as an avatar or overflow menu.</li>
+      </ul>
+
+      <m3e-heading variant="title" size="medium" level="4">Clearable</m3e-heading>
+      <p>
+        Use the <code>clearable</code> attribute to control whether the bar displays a clear button. When activated,
+        this button clears the input and emits a <code>clear</code> event.
+      </p>
+
+      <m3e-heading variant="title" size="medium" level="4">Typical usage</m3e-heading>
+      <p>
+        The following example illustrates typical usage of a <code>m3e-search-bar</code> with a leading icon and the
+        ability to clear the current search text.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-search-bar clearable>
+            <m3e-icon name="search" slot="leading"></m3e-icon>
+            <input slot="input" placeholder="Search..." />
+          </m3e-search-bar>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-search-bar clearable&gt;
+  &lt;m3e-icon name=&quot;search&quot; slot=&quot;leading&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;input slot=&quot;input&quot; placeholder=&quot;Search...&quot; /&gt;
+&lt;/m3e-search-bar&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Search view</m3e-heading>
+      <p>
+        Use the <code>m3e-search-view</code> to display search suggestions and results. Unlike
+        <code>m3e-search-bar</code>, which only provides the entry point, the search view presents the results of a
+        search.
+      </p>
+
+      <m3e-heading variant="title" size="medium" level="4">Anatomy</m3e-heading>
+      <p>The <code>m3e-search-view</code> exposes the following named slots:</p>
+      <ul>
+        <li><code>closed-leading</code> — When the view is closed, renders content positioned before the input.</li>
+        <li><code>closed-trailing</code> — When the view is closed, renders content positioned after the input.</li>
+        <li><code>open-leading</code> — When the view is open, renders content positioned before the input.</li>
+        <li><code>open-trailing</code> — When the view is open, renders content after the input.</li>
+        <li><code>input</code> — Renders the <code>input</code> element used to capture search text.</li>
+        <li><em>(default)</em> — When the view is open, renders the results content of the view.</li>
+      </ul>
+
+      <m3e-heading variant="title" size="medium" level="4">Modes</m3e-heading>
+      <p>
+        Use the <code>mode</code> attribute to control how results are presented. Supported values include
+        <code>fullscreen</code>, <code>docked</code> (default), and <code>auto</code>, which selects the appropriate
+        mode based on the current viewport breakpoint.
+      </p>
+
+      <p>
+        The following example illustrates the <code>docked</code> mode. In this mode, the search view appears as a
+        surface anchored to the search bar, allowing users to explore results while maintaining context within the
+        surrounding layout.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-search-view mode="docked">
+            <input slot="input" placeholder="Search..." />
+            <m3e-list>
+              <m3e-list-item>Result One</m3e-list-item>
+              <m3e-list-item>Result Two</m3e-list-item>
+              <m3e-list-item>Result Three</m3e-list-item>
+            </m3e-list>
+          </m3e-search-view>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-search-view mode=&quot;docked&quot;&gt;
+  &lt;input slot=&quot;input&quot; placeholder=&quot;Search...&quot; /&gt;
+  &lt;m3e-list&gt;
+    &lt;m3e-list-item&gt;Result One&lt;/m3e-list-item&gt;
+    &lt;m3e-list-item&gt;Result Two&lt;/m3e-list-item&gt;
+    &lt;m3e-list-item&gt;Result Three&lt;/m3e-list-item&gt;
+  &lt;/m3e-list&gt;
+&lt;/m3e-search-view&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        The next example illustrates the <code>fullscreen</code> mode. In this mode, the search view occupies the entire
+        viewport, creating an immersive, focused search that temporarily replaces the surrounding UI.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-search-view mode="fullscreen">
+            <input slot="input" placeholder="Search..." />
+            <m3e-list>
+              <m3e-list-item>Result One</m3e-list-item>
+              <m3e-list-item>Result Two</m3e-list-item>
+              <m3e-list-item>Result Three</m3e-list-item>
+            </m3e-list>
+          </m3e-search-view>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-search-view mode=&quot;fullscreen&quot;&gt;
+  &lt;input slot=&quot;input&quot; placeholder=&quot;Search...&quot; /&gt;
+  &lt;!-- Results omitted for brevity --&gt;
+&lt;/m3e-search-view&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Appearance variants</m3e-heading>
+
+      <p>Use the <code>contained</code> attribute to a persistent, filled search container when open.</p>
+      <p>The following example illustrates use of <code>contained</code> in the <code>docked</code> mode.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-search-view mode="docked" contained>
+            <input slot="input" placeholder="Search..." />
+            <m3e-list>
+              <m3e-list-item>Result One</m3e-list-item>
+              <m3e-list-item>Result Two</m3e-list-item>
+              <m3e-list-item>Result Three</m3e-list-item>
+            </m3e-list>
+          </m3e-search-view>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-search-view mode=&quot;docked&quot; contained&gt;
+  &lt;input slot=&quot;input&quot; placeholder=&quot;Search...&quot; /&gt;
+  &lt;!-- Results omitted for brevity --&gt;
+&lt;/m3e-search-view&gt;</pre
+        >
+      </m3e-card>
+      <p>The next example illustrates use of <code>contained</code> in the <code>fullscreen</code> mode.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-search-view mode="fullscreen" contained>
+            <input slot="input" placeholder="Search..." />
+            <m3e-list>
+              <m3e-list-item>Result One</m3e-list-item>
+              <m3e-list-item>Result Two</m3e-list-item>
+              <m3e-list-item>Result Three</m3e-list-item>
+            </m3e-list>
+          </m3e-search-view>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-search-view mode=&quot;fullscreen&quot; contained&gt;
+  &lt;input slot=&quot;input&quot; placeholder=&quot;Search...&quot; /&gt;
+  &lt;!-- Results omitted for brevity --&gt;
+&lt;/m3e-search-view&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="title" size="medium" level="4">Loading results</m3e-heading>
+      <p>
+        The <code>m3e-search-view</code> emits a <code>query</code> event that can be used to load results. The event
+        fires under the following conditions:
+      </p>
+      <ul>
+        <li>The <code>input</code> receives focus. This can be used to load initial suggestions.</li>
+        <li>
+          The <code>input</code> value changes. This can be used to fetch results that match the current term using the
+          event's <code>detail.term</code> property.
+        </li>
+      </ul>
+      <p>
+        In addition, a <code>clear</code> event is emitted when the user clicks the clear button. This action also
+        triggers a <code>query</code> event first, followed by <code>clear</code>, reflecting the component's input →
+        query → clear event sequence.
+      </p>
+
+      <m3e-heading variant="title" size="medium" level="4">Hiding the search icon</m3e-heading>
+      <p>
+        While its typical to show a search icon, you can use the <code>hide-search-icon</code> attribute to hide it when
+        a search view is closed.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-search-view mode="docked" hide-search-icon>
+            <input slot="input" placeholder="Search..." />
+            <m3e-list>
+              <m3e-list-item>Result One</m3e-list-item>
+              <m3e-list-item>Result Two</m3e-list-item>
+              <m3e-list-item>Result Three</m3e-list-item>
+            </m3e-list>
+          </m3e-search-view>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-search-view mode=&quot;docked&quot; hide-search-icon&gt;
+  &lt;input slot=&quot;input&quot; placeholder=&quot;Search...&quot; /&gt;
+  &lt;!-- Results omitted for brevity --&gt;
+&lt;/m3e-search-view&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        The search bar automatically normalizes its slotted <code>input</code> to ensure correct search semantics across
+        browsers and assistive technologies. It applies <code>role="searchbox"</code>, <code>inputmode="search"</code>,
+        and <code>type="text"</code> when not already specified. Additionally, <code>aria-haspopup="dialog"</code> is
+        applied to inform assistive technologies that activating the input will open a dialog, allowing screen readers
+        to anticipate the resulting change in context.
+      </p>
+      <p>
+        When open, the overlay region of the search view is given ARIA <code>role="dialog"</code> indicating that it is
+        a dedicated search surface. The dialog is labeled by its header via <code>aria-labelledby</code>, allowing
+        assistive technologies to announce the search context clearly. <code>aria-modal="true"</code> is used to
+        indicate only the content in the dialog can be interacted with.
+      </p>
+      <p>
+        The search view does not automatically announce dynamic updates. Instead, you are responsible for sending short,
+        textual updates to a dedicated<code>aria-live="polite"</code> element when search results change. This ensures
+        assistive technologies receive meaningful feedback without re-announcing the full list of results.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        The <code>@m3e/web</code> package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/search.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;tslib&quot;: &quot;https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm&quot;,
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;lit/&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/&quot;,
+      &quot;lit-html&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/+esm&quot;,
+      &quot;lit-html/directive.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directive.js&quot;,
+      &quot;lit-html/directives/if-defined.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/if-defined.js&quot;,
+      &quot;@lit/reactive-element&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm&quot;,
+      &quot;@lit/reactive-element/&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/&quot;,
+      &quot;@m3e/web/core&quot;: &quot;/node_modules/@m3e/web/dist/core.js&quot;,
+      &quot;@m3e/web/core/a11y&quot;: &quot;/node_modules/@m3e/web/dist/core-a11y.js&quot;,
+      &quot;@m3e/web/core/anchoring&quot;: &quot;/node_modules/@m3e/web/dist/core-anchoring.js&quot;,
+      &quot;@m3e/web/core/bidi&quot;: &quot;/node_modules/@m3e/web/dist/core-bidi.js&quot;
+      &quot;@m3e/web/core/layout&quot;: &quot;/node_modules/@m3e/web/dist/core-layout.js&quot;
+      &quot;@m3e/web/icon-button&quot;: &quot;/node_modules/@m3e/web/dist/icon-button.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production builds, use the minified files to ensure optimal load performance.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        The <code>@m3e/web</code> package includes a
+        <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which documents the properties,
+        attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer only="m3e-search-bar" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/custom-elements.json">
+      </api-viewer>
+      <api-viewer only="m3e-search-view" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/custom-elements.json">
+      </api-viewer>
+    </m3e-theme>
+  </body>
+</html>

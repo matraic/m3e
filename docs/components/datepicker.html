@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Datepicker for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Datepicker for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="./datepicker.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "tslib": "https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm",
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "lit/": "https://cdn.jsdelivr.net/npm/lit@3.3.0/",
+          "lit-html": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/+esm",
+          "lit-html/directive.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directive.js",
+          "lit-html/directives/if-defined.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/if-defined.js",
+          "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
+          "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
+          "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/core-a11y.min.js",
+          "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/core-anchoring.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/core-bidi.min.js",
+          "@m3e/web/core/layout": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/core-layout.min.js",
+          "@m3e/web/core/platform": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/core-platform.min.js",
+          "@m3e/web/calendar": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/calendar.min.js",
+          "@m3e/web/button": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/button.min.js",
+          "@m3e/web/icon-button": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/icon-button.min.js",
+          "@m3e/web/tooltip": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/tooltip.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/icon.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/tooltip.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/icon-button.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/form-field.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/button.min.js"></script>
+    <script type="module" src="../../packages/web//dist/datepicker.min.js"></script>
+    <script src="../main.js"></script>
+    <script src="./datepicker.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Datepicker</span>
+      </m3e-toc>
+
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Datepicker</m3e-heading>
+      <p></p>
+
+      <m3e-card variant="filled" class="install"><pre slot="content">import "@m3e/web/datepicker";</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Date string handling</m3e-heading>
+      <p>
+        Different browsers interpret date strings in inconsistent ways, especially when the string resembles an ISO date
+        but does not include a time or timezone. To ensure predictable behavior across environments,
+        <code>m3e-datepicker</code> uses a consistent, standards-aligned parsing model instead of relying on the
+        browser's built-in <code>Date.parse()</code> rules.
+      </p>
+      <p>
+        When <code>m3e-datepicker</code> receives a date string, it automatically detects whether the value matches one
+        of the ISO-8601 formats that can be parsed safely and unambiguously:
+      </p>
+      <ul>
+        <li><code>yyyy-MM-dd</code> — local date (no time, no timezone)</li>
+        <li><code>yyyy-MM-ddTHH:mm:ss</code> — local date and time</li>
+        <li><code>yyyy-MM-ddTHH:mm:ssZ</code> — UTC date and time</li>
+        <li><code>yyyy-MM-ddTHH:mm:ss±HH:mm</code> — date and time with an explicit timezone offset</li>
+      </ul>
+      <p>
+        Strings in these formats are converted into local <code>Date</code> objects without unexpected timezone shifts.
+        This prevents issues such as date-only values drifting into the previous or next day when interpreted as UTC. If
+        a string does not follow one of these ISO-compatible patterns, parsing may be ambiguous or unsupported. For the
+        most reliable results, use one of the formats above.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+      <p>
+        Use the <code>m3e-datepicker-toggle</code> to open a <code>m3e-datepicker</code>. This component should be
+        nested inside a clickable element and be associated with a picker by setting the for attribute to the id of the
+        picker to open.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field variant="outlined">
+            <label slot="label" for="fld1">Date Field</label>
+            <input autocomplete="off" id="fld1" />
+            <m3e-icon-button slot="suffix">
+              <m3e-icon name="calendar_today"></m3e-icon>
+              <m3e-datepicker-toggle for="datepicker"></m3e-datepicker-toggle>
+            </m3e-icon-button>
+            <span slot="hint">MM/DD/YYYY</span>
+          </m3e-form-field>
+          <m3e-datepicker variant="auto" id="datepicker"></m3e-datepicker>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field&quot;&gt;Date Field&lt;/label&gt;
+  &lt;input autocomplete=&quot;off&quot; id=&quot;field&quot; /&gt;
+  &lt;m3e-icon-button slot=&quot;suffix&quot;&gt;
+    &lt;m3e-icon name=&quot;calendar_today&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;m3e-datepicker-toggle for=&quot;datepicker&quot;&gt;&lt;/m3e-datepicker-toggle&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY&lt;/span&gt;
+&lt;/m3e-form-field&gt;
+&lt;m3e-datepicker id=&quot;datepicker&quot;&gt;&lt;/m3e-datepicker&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+      <p>
+        The <code>m3e-datepicker</code> supports three appearance variants: <code>docked</code> (default),
+        <code>modal</code>, and <code>auto</code>. Use the <code>variant</code> attribute to control how the picker is
+        presented. When set to <code>auto</code>, the picker automatically selects the appropriate appearance based on
+        the current screen size.
+      </p>
+      <p>
+        When using the <code>modal</code> variant, the value of the <code>label</code> attribute is used as the header
+        text for the modal dialog.
+      </p>
+      <p>All examples in this page use <code>variant="auto"</code>.</p>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">&lt;m3e-datepicker variant=&quot;auto&quot;&gt;&lt;/m3e-datepicker&gt;</pre>
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Date selection</m3e-heading>
+      <p>
+        Use the <code>date</code> attribute to set the currently selected date, and listen for the
+        <code>change</code> event to react when the user selects a new one. You can also enable the
+        <code>clearable</code> attribute to display a button that clears the current selection.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field variant="outlined">
+            <label slot="label" for="fld8">Date Field</label>
+            <input autocomplete="off" id="fld8" />
+            <m3e-icon-button slot="suffix">
+              <m3e-icon name="calendar_today"></m3e-icon>
+              <m3e-datepicker-toggle for="picker5"></m3e-datepicker-toggle>
+            </m3e-icon-button>
+            <span slot="hint">MM/DD/YYYY</span>
+          </m3e-form-field>
+          <m3e-datepicker variant="auto" id="picker5" date="2026-01-01" clearable></m3e-datepicker>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;!-- Form field omitted for brevity --&gt;
+&lt;m3e-datepicker id=&quot;datepicker&quot; date=&quot;2026-01-01&quot; clearable&gt;&lt;/m3e-datepicker&gt;</pre
+        >
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+const picker = document.querySelector(&quot;#datepicker&quot;);
+const field = document.querySelector(&quot;#field&quot;);
+field.value = toLocaleDateString(picker.date);
+picker.addEventListener(&quot;change&quot;, () =&gt; {
+  field.value = toLocaleDateString(picker.date);
+});</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Start date</m3e-heading>
+      <p>
+        By default, a datepicker opens to the selected date, or to today if no date is set. You can override this by
+        using the <code>start-at</code> attribute to specify the date that <code>m3e-datepicker</code> should initially
+        display.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field variant="outlined">
+            <label slot="label" for="fld7">Date Field</label>
+            <input autocomplete="off" id="fld7" />
+            <m3e-icon-button slot="suffix">
+              <m3e-icon name="calendar_today"></m3e-icon>
+              <m3e-datepicker-toggle for="picker4"></m3e-datepicker-toggle>
+            </m3e-icon-button>
+            <span slot="hint">MM/DD/YYYY</span>
+          </m3e-form-field>
+          <m3e-datepicker variant="auto" id="picker4" start-at="2026-01-01"></m3e-datepicker>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;!-- Form field omitted for brevity --&gt;
+&lt;m3e-datepicker id=&quot;datepicker&quot; start-at=&quot;2026-01-01&quot;&gt;&lt;/m3e-datepicker&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Start view</m3e-heading>
+      <p>
+        The <code>start-view</code> attribute can be used to set the view that will show up when the calendar first
+        opens. It can be set to <code>month</code>, <code>year</code>, or <code>multi-year</code>; by default it will
+        open to <code>month</code> view.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field variant="outlined">
+            <label slot="label" for="fld6">Date Field</label>
+            <input autocomplete="off" id="fld6" />
+            <m3e-icon-button slot="suffix">
+              <m3e-icon name="calendar_today"></m3e-icon>
+              <m3e-datepicker-toggle for="picker3"></m3e-datepicker-toggle>
+            </m3e-icon-button>
+            <span slot="hint">MM/DD/YYYY</span>
+          </m3e-form-field>
+          <m3e-datepicker variant="auto" id="picker3" start-view="multi-year"></m3e-datepicker>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;!-- Form field omitted for brevity --&gt;
+&lt;m3e-datepicker id=&quot;datepicker&quot; start-view=&quot;multi-year&quot;&gt;&lt;/m3e-datepicker&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Date ranges</m3e-heading>
+      <p>
+        To select a range of dates instead of a single date, use the
+        <code>range-start</code> and <code>range-end</code> attributes. Setting <code>range-start</code> puts the
+        calendar into range-selection mode. When the user selects a date after the current <code>range-start</code>,
+        both <code>date</code> and <code>range-end</code> are updated to that value. If the user selects a date before
+        the current <code>range-start</code>, the range is reset and both <code>date</code> and
+        <code>range-start</code> are set to the newly selected date.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field id="range-field" variant="outlined">
+            <label slot="label" for="fld5">Date Range Field</label>
+            <input autocomplete="off" id="fld5" />
+            <m3e-icon-button slot="suffix">
+              <m3e-icon name="calendar_today"></m3e-icon>
+              <m3e-datepicker-toggle for="date-range"></m3e-datepicker-toggle>
+            </m3e-icon-button>
+            <span slot="hint">MM/DD/YYYY - MM/DD/YYYY</span>
+          </m3e-form-field>
+          <m3e-datepicker
+            id="date-range"
+            range-start="2026-01-01"
+            range-end="2026-01-09"
+            start-at="2026-01-01"
+          ></m3e-datepicker>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field&quot;&gt;Date Range Field&lt;/label&gt;
+  &lt;input autocomplete=&quot;off&quot; id=&quot;field&quot; /&gt;
+  &lt;m3e-icon-button slot=&quot;suffix&quot;&gt;
+    &lt;m3e-icon name=&quot;calendar_today&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;m3e-datepicker-toggle for=&quot;range-picker&quot;&gt;&lt;/m3e-datepicker-toggle&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY - MM/DD/YYYY&lt;/span&gt;
+&lt;/m3e-form-field&gt;
+
+&lt;m3e-datepicker
+  id=&quot;range-picker&quot;
+  range-start=&quot;2026-01-01&quot;
+  range-end=&quot;2026-01-09&quot;
+  start-at=&quot;2026-01-01&quot;
+&gt;&lt;/m3e-datepicker&gt;
+</pre
+        >
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+const picker = document.querySelector(&quot;#range-picker&quot;);
+const field = document.querySelector(&quot;#field&quot;);
+field.value = toLocaleDateString(picker.rangeStart) + &quot; - &quot; + toLocaleDateString(picker.rangeEnd);
+picker.addEventListener(&quot;change&quot;, () =&gt; {
+  field.value = toLocaleDateString(picker.rangeStart) + &quot; - &quot; + toLocaleDateString(picker.rangeEnd);
+});</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Min and max dates</m3e-heading>
+      <p>
+        Use the <code>min-date</code> and <code>max-date</code> to disable all dates on the calendar before or after the
+        respective values and prevent the user from advancing the calendar past the month or year (depending on current
+        view) containing the minimum or maximum date.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field variant="outlined">
+            <label slot="label" for="fld4">Date Field</label>
+            <input autocomplete="off" id="fld4" />
+            <m3e-icon-button slot="suffix">
+              <m3e-icon name="calendar_today"></m3e-icon>
+              <m3e-datepicker-toggle for="picker1"></m3e-datepicker-toggle>
+            </m3e-icon-button>
+            <span slot="hint">MM/DD/YYYY</span>
+          </m3e-form-field>
+          <m3e-datepicker
+            id="picker1"
+            start-at="2026-04-01"
+            min-date="2026-01-01"
+            max-date="2026-04-30"
+          ></m3e-datepicker>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;!-- Form field omitted for brevity --&gt;
+&lt;m3e-datepicker
+  id=&quot;picker1&quot;
+  start-at=&quot;2026-04-01&quot;
+  min-date=&quot;2026-01-01&quot;
+  max-date=&quot;2026-04-30&quot;
+&gt;&lt;/m3e-datepicker&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Blackout dates</m3e-heading>
+      <p>
+        Use the <code>blackoutDates</code> property to specify a function used to determine whether a date is disabled
+        and cannot be selected by the user.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field variant="outlined">
+            <label slot="label" for="fld3">Date Field</label>
+            <input autocomplete="off" id="fld3" />
+            <m3e-icon-button slot="suffix">
+              <m3e-icon name="calendar_today"></m3e-icon>
+              <m3e-datepicker-toggle for="blackout-dates"></m3e-datepicker-toggle>
+            </m3e-icon-button>
+            <span slot="hint">MM/DD/YYYY</span>
+          </m3e-form-field>
+          <m3e-datepicker variant="auto" id="blackout-dates"></m3e-datepicker>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+document.querySelector(&quot;#blackout-dates&quot;).blackoutDates = (date) =&gt; isWeekend(date);</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Special dates</m3e-heading>
+      <p>
+        Use the <code>specialDates</code> property to specify a function used to determine whether a date has a
+        highlighted look and feel. You can use the <code>--m3e-calendar-item-special-container-color</code>,
+        <code>--m3e-calendar-item-special-color</code>, <code>--m3e-calendar-item-special-ripple-color</code>,
+        <code>--m3e-calendar-item-special-hover-color</code>, and
+        <code>--m3e-calendar-item-special-focus-color</code> CSS properties to style special dates.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field variant="outlined">
+            <label slot="label" for="fld2">Date Field</label>
+            <input autocomplete="off" id="fld2" />
+            <m3e-icon-button slot="suffix">
+              <m3e-icon name="calendar_today"></m3e-icon>
+              <m3e-datepicker-toggle for="special-dates"></m3e-datepicker-toggle>
+            </m3e-icon-button>
+            <span slot="hint">MM/DD/YYYY</span>
+          </m3e-form-field>
+          <m3e-datepicker variant="auto" id="special-dates" start-at="2026-04-01"></m3e-datepicker>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+document.querySelector(&quot;#special-dates&quot;).specialDates = (date) =&gt; isHoliday(date);</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Internationalization</m3e-heading>
+      <p>
+        <code>m3e-datepicker</code> uses the Gregorian calendar, and all date formatting is handled by the browser's
+        <code>Intl</code> APIs based on the active locale.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Datepickers are given ARIA <code>role="dialog"</code> to identify the picker surface as a discrete interactive
+        region that opens above the page and requires user attention. When the picker is shown in its modal variant, it
+        also sets <code>aria-modal="true"</code> to indicate that the rest of the page is inert and that focus is
+        trapped within the dialog until it is dismissed. In docked mode, the picker omits
+        <code>aria-modal</code> entirely, since the surrounding page remains interactive and the surface behaves like an
+        anchored popover rather than a blocking dialog.
+      </p>
+      <p>
+        Datepicker toggles add <code>aria-haspopup="dialog"</code> to its parenting element indicating to assistive
+        technologies that activating the control will open a dialog.
+      </p>
+      <p>
+        The calendar is fully accessible and exposes clear semantics for assistive technologies. The header contains
+        navigation controls, each with an accessible label that can be customized through attributes. The calendar grid
+        is implemented using <code>role="grid"</code>, with each date cell using <code>role="gridcell"</code> and
+        containing a focusable element with <code>role="button"</code>. Selected dates and range boundaries are
+        indicated using <code>aria-pressed</code>, while today's date is marked with <code>aria-current="date"</code>.
+        Each cell includes a visually hidden, locale-aware full date string for screen readers, while the visible text
+        shows only the day number. Day-of-week headers use abbreviated labels but include visually hidden full names
+        (such as “Monday”) to ensure clear, unambiguous announcements.
+      </p>
+      <ul>
+        <li>
+          <code>previous-month-label</code> — Accessible label for the button that navigates to the previous month.
+        </li>
+        <li><code>next-month-label</code> — Accessible label for the button that navigates to the next month.</li>
+        <li><code>previous-year-label</code> — Accessible label for the button that navigates to the previous year.</li>
+        <li><code>next-year-label</code> — Accessible label for the button that navigates to the next year.</li>
+        <li>
+          <code>previous-multi-year-label</code> — Accessible label for the button that navigates to the previous
+          24-year range.
+        </li>
+        <li>
+          <code>next-multi-year-label</code> — Accessible label for the button that navigates to the next 24-year range.
+        </li>
+      </ul>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        The <code>@m3e/web</code> package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/datepicker.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;tslib&quot;: &quot;https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm&quot;,
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;lit/&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/&quot;,
+      &quot;lit-html&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/+esm&quot;,
+      &quot;lit-html/directive.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directive.js&quot;,
+      &quot;lit-html/directives/if-defined.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/if-defined.js&quot;,
+      &quot;lit-html/directives/class-map.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js&quot;,
+      &quot;@lit/reactive-element&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm&quot;,
+      &quot;@lit/reactive-element/&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/&quot;,
+      &quot;@m3e/web/core&quot;: &quot;/node_modules/@m3e/web/dist/core.js&quot;,
+      &quot;@m3e/web/core/a11y&quot;: &quot;/node_modules/@m3e/web/dist/core-a11y.js&quot;
+      &quot;@m3e/web/core/anchoring&quot;: &quot;/node_modules/@m3e/web/dist/core-anchoring.js&quot;,
+      &quot;@m3e/web/core/bidi&quot;: &quot;/node_modules/@m3e/web/dist/core-bidi.js&quot;,
+      &quot;@m3e/web/core/platform&quot;: &quot;/node_modules/@m3e/web/dist/core-platform.js&quot;
+      &quot;@m3e/web/calendar&quot;: &quot;/node_modules/@m3e/web/dist/calendar.js&quot;,
+      &quot;@m3e/web/button&quot;: &quot;/node_modules/@m3e/web/dist/button.js&quot;,
+      &quot;@m3e/web/icon-button&quot;: &quot;/node_modules/@m3e/web/dist/icon-button.js&quot;,
+      &quot;@m3e/web/tooltip&quot;: &quot;/node_modules/@m3e/web/dist/tooltip.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production builds, use the minified files to ensure optimal load performance.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        The <code>@m3e/web</code> package includes a
+        <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which documents the properties,
+        attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer only="m3e-datepicker" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/custom-elements.json">
+      </api-viewer>
+      <api-viewer
+        only="m3e-datepicker-toggle"
+        src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/custom-elements.json"
+      >
+      </api-viewer>
+    </m3e-theme>
+  </body>
+</html>

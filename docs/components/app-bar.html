@@ -31,19 +31,19 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.1.3/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.1.3/dist/core-a11y.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/core-a11y.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.3/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.3/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.3/dist/icon.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.3/dist/toc.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.3/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.3/dist/icon-button.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.3/dist/app-bar.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/icon.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/icon-button.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/app-bar.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body id="body">
@@ -70,8 +70,8 @@
       </p>
       <ul>
         <li>
-          <code>leading-icon</code> — typically a navigation affordance such as a back arrow or menu button. Positioned
-          at the start of the bar.
+          <code>leading</code> — typically a navigation affordance such as a back arrow or menu button. Positioned at
+          the start of the bar.
         </li>
         <li>
           <code>title</code> — The primary label for the current view or context. Usually a short, expressive heading.
@@ -81,19 +81,19 @@
           title.
         </li>
         <li>
-          <code>trailing-icon</code> — One or more action buttons aligned to the end of the bar. Common examples include
+          <code>trailing</code> — One or more action buttons aligned to the end of the bar. Common examples include
           search, bookmark, or overflow menus.
         </li>
       </ul>
       <m3e-card variant="outlined">
         <div slot="content">
           <m3e-app-bar>
-            <m3e-icon-button slot="leading-icon" aria-label="Back">
+            <m3e-icon-button slot="leading" aria-label="Back">
               <m3e-icon name="arrow_back"></m3e-icon>
             </m3e-icon-button>
             <span slot="title">Top 10 hiking trails</span>
             <span slot="subtitle">Discover popular trails</span>
-            <m3e-icon-button slot="trailing-icon" aria-label="Bookmark" variant="tonal">
+            <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal">
               <m3e-icon name="bookmark" filled></m3e-icon>
             </m3e-icon-button>
           </m3e-app-bar>
@@ -102,12 +102,12 @@
       <m3e-card variant="filled" class="example">
         <pre slot="content">
 &lt;m3e-app-bar&gt;
-  &lt;m3e-icon-button slot=&quot;leading-icon&quot; aria-label=&quot;Back&quot;&gt;
+  &lt;m3e-icon-button slot=&quot;leading&quot; aria-label=&quot;Back&quot;&gt;
     &lt;m3e-icon name=&quot;arrow_back&quot;&gt;&lt;/m3e-icon&gt;
   &lt;/m3e-icon-button&gt;
   &lt;span slot=&quot;title&quot;&gt;Top 10 hiking trails&lt;/span&gt;
   &lt;span slot=&quot;subtitle&quot;&gt;Discover popular trails&lt;/span&gt;
-  &lt;m3e-icon-button slot=&quot;trailing-icon&quot; aria-label=&quot;Bookmark&quot; variant=&quot;tonal&quot;&gt;
+  &lt;m3e-icon-button slot=&quot;trailing&quot; aria-label=&quot;Bookmark&quot; variant=&quot;tonal&quot;&gt;
     &lt;m3e-icon name=&quot;bookmark&quot; filled&gt;&lt;/m3e-icon&gt;
   &lt;/m3e-icon-button&gt;
 &lt;/m3e-app-bar&gt;</pre
@@ -122,12 +122,12 @@
       <m3e-card variant="outlined">
         <div slot="content">
           <m3e-app-bar size="medium">
-            <m3e-icon-button slot="leading-icon" aria-label="Back">
+            <m3e-icon-button slot="leading" aria-label="Back">
               <m3e-icon name="arrow_back"></m3e-icon>
             </m3e-icon-button>
             <span slot="title">Top 10 hiking trails</span>
             <span slot="subtitle">Discover popular trails</span>
-            <m3e-icon-button slot="trailing-icon" aria-label="Bookmark" variant="tonal">
+            <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal">
               <m3e-icon name="bookmark" filled></m3e-icon>
             </m3e-icon-button>
           </m3e-app-bar>
@@ -136,12 +136,12 @@
       <m3e-card variant="outlined">
         <div slot="content">
           <m3e-app-bar size="large">
-            <m3e-icon-button slot="leading-icon" aria-label="Back">
+            <m3e-icon-button slot="leading" aria-label="Back">
               <m3e-icon name="arrow_back"></m3e-icon>
             </m3e-icon-button>
             <span slot="title">Top 10 hiking trails</span>
             <span slot="subtitle">Discover popular trails</span>
-            <m3e-icon-button slot="trailing-icon" aria-label="Bookmark" variant="tonal">
+            <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal">
               <m3e-icon name="bookmark" filled></m3e-icon>
             </m3e-icon-button>
           </m3e-app-bar>
@@ -162,7 +162,7 @@
       <p>
         A <code>centered</code> app bar ensures that its primary content — the <code>title</code> and optional
         <code>subtitle</code> — remains visually centered within the available horizontal space, regardless of the
-        number or size of elements in the <code>leading-icon</code> or <code>trailing-icon</code> slots.
+        number or size of elements in the <code>leading</code> or <code>trailing</code> slots.
       </p>
       <p>
         This is achieved through layout symmetry, not equal spacing. The title area is anchored to the center of the
@@ -173,15 +173,15 @@
       <m3e-card variant="outlined">
         <div slot="content">
           <m3e-app-bar centered>
-            <m3e-icon-button slot="leading-icon" aria-label="Back">
+            <m3e-icon-button slot="leading" aria-label="Back">
               <m3e-icon name="arrow_back"></m3e-icon>
             </m3e-icon-button>
             <span slot="title">Top 10 hiking trails</span>
             <span slot="subtitle">Discover popular trails</span>
-            <m3e-icon-button slot="trailing-icon" aria-label="Bookmark">
+            <m3e-icon-button slot="trailing" aria-label="Bookmark">
               <m3e-icon name="bookmark"></m3e-icon>
             </m3e-icon-button>
-            <m3e-icon-button slot="trailing-icon" aria-label="help">
+            <m3e-icon-button slot="trailing" aria-label="help">
               <m3e-icon name="help"></m3e-icon>
             </m3e-icon-button>
           </m3e-app-bar>
@@ -219,12 +219,12 @@
         <div slot="content">
           <div id="scrollContainer">
             <m3e-app-bar for="scrollContainer">
-              <m3e-icon-button slot="leading-icon" aria-label="Back">
+              <m3e-icon-button slot="leading" aria-label="Back">
                 <m3e-icon name="arrow_back"></m3e-icon>
               </m3e-icon-button>
               <span slot="title">Top 10 hiking trails</span>
               <span slot="subtitle">Discover popular trails</span>
-              <m3e-icon-button slot="trailing-icon" aria-label="Bookmark" variant="tonal">
+              <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal">
                 <m3e-icon name="bookmark" filled></m3e-icon>
               </m3e-icon-button>
             </m3e-app-bar>
@@ -321,7 +321,7 @@
         attributes, slots, events and CSS custom properties of each component.
       </p>
       <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
-      <api-viewer only="m3e-app-bar" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.1.3/dist/custom-elements.json">
+      <api-viewer only="m3e-app-bar" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.2.0/dist/custom-elements.json">
       </api-viewer>
     </m3e-theme>
   </body>

@@ -4,7 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 2.1.0 Release
+- 2.2.0 Release
 
 ## 🔮 Future
 
@@ -13,12 +13,6 @@ This roadmap presents the ongoing development, future direction, and past accomp
 The following components are planned for future release.
 
 #### 🛠️ In Progress
-
-Components in nearing completion include:
-
-- Calendar
-- Datepicker
-- Search
 
 Components in early stages of development include:
 
@@ -39,6 +33,9 @@ Planned components which have not yet entered development:
 - MCP Server enabling IDEs and AI tools to query local knowledge about components and documentation
 
 ## 🏛️ Past Milestones
+
+- **2.2.0 — Feature release**
+  Added `@m3e/web/calendar`, `@m3e/web/datepicker` and `@m3e/web/search`, bug fixes.
 
 - **2.1.0 – 2.1.3 — Feature + patch releases**
   Enhancements to `m3e-autocomplete` and `m3e-input-chip-set`, bug fixes.
