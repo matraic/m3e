@@ -146,9 +146,7 @@ export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInterna
       this.#breakpointUnobserve?.();
 
       if (this.startMode === "auto" || this.endMode === "auto") {
-        this.#breakpointUnobserve = M3eBreakpointObserver.observe([Breakpoint.XSmall, Breakpoint.Small], (matches) =>
-          this.#updateMode(matches, true),
-        );
+        this.#initBreakpointMonitoring();
       } else {
         this.#updateMode();
       }
@@ -171,6 +169,10 @@ export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInterna
   override reconnectedCallback(): void {
     super.reconnectedCallback();
     this.#initialize();
+
+    if (this.startMode === "auto" || this.endMode === "auto") {
+      this.#initBreakpointMonitoring();
+    }
   }
 
   /** @inheritdoc */
@@ -250,7 +252,14 @@ export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInterna
     }
   }
 
-  /** @inheritdoc */
+  /** @private */
+  #initBreakpointMonitoring(): void {
+    this.#breakpointUnobserve = M3eBreakpointObserver.observe([Breakpoint.XSmall, Breakpoint.Small], (matches) =>
+      this.#updateMode(matches, true),
+    );
+  }
+
+  /** @private */
   #clearMode(): void {
     deleteCustomState(this, "-start-over");
     deleteCustomState(this, "-start-push");
