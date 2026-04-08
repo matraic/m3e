@@ -15,6 +15,7 @@ import {
   setCustomState,
   SuppressInitialAnimation,
   InertController,
+  ReconnectedCallback,
 } from "@m3e/web/core";
 
 import { positionAnchor } from "@m3e/web/core/anchoring";
@@ -94,7 +95,9 @@ import { DatepickerVariant } from "./DatepickerVariant";
  * @cssprop --m3e-dialog-scrim-opacity - Opacity applied to the scrim color in modal mode.
  */
 @customElement("m3e-datepicker")
-export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInternals(Role(LitElement, "dialog"))) {
+export class M3eDatepickerElement extends SuppressInitialAnimation(
+  ReconnectedCallback(AttachInternals(Role(LitElement, "dialog"))),
+) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -440,12 +443,23 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
     this._variant = undefined;
     this.#breakpointUnobserve?.();
 
+    this.#clearAnchoring();
+
     deleteCustomState(this, "-docked");
     deleteCustomState(this, "-modal");
 
     this.removeEventListener("toggle", this.#toggleHandler);
     document.removeEventListener("click", this.#documentClickHandler);
     document.removeEventListener("keydown", this.#documentKeyDownHandler);
+  }
+
+  /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+
+    if (this.variant === "auto") {
+      this.#initBreakpointMonitoring();
+    }
   }
 
   /**
@@ -567,10 +581,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
       this.#breakpointUnobserve?.();
 
       if (this.variant === "auto") {
-        this.#breakpointUnobserve = M3eBreakpointObserver.observe([Breakpoint.XSmall, Breakpoint.Small], (matches) => {
-          this._variant = matches.get(Breakpoint.XSmall) || matches.get(Breakpoint.Small) ? "modal" : "docked";
-          this.#updateVariant();
-        });
+        this.#initBreakpointMonitoring();
       } else {
         this._variant = undefined;
         this.#updateVariant();
@@ -635,6 +646,14 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
   }
 
   /** @private */
+  #initBreakpointMonitoring(): void {
+    this.#breakpointUnobserve = M3eBreakpointObserver.observe([Breakpoint.XSmall, Breakpoint.Small], (matches) => {
+      this._variant = matches.get(Breakpoint.XSmall) || matches.get(Breakpoint.Small) ? "modal" : "docked";
+      this.#updateVariant();
+    });
+  }
+
+  /** @private */
   #updateVariant(): void {
     switch (this.currentVariant) {
       case "docked":
@@ -665,6 +684,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
   /** @private */
   async #updatePosition(): Promise<void> {
     if (this.currentVariant === "docked" && this.#trigger) {
+      this.#anchorCleanup?.();
       this.#anchorCleanup = await positionAnchor(
         this,
         this.#anchor ?? this.#trigger,
@@ -690,12 +710,17 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(AttachInterna
         },
       );
     } else {
-      this.#anchorCleanup?.();
-      this.#anchorCleanup = undefined;
-      this.style.left = "";
-      this.style.right = "";
-      this.style.top = "";
+      this.#clearAnchoring();
     }
+  }
+
+  /** @private */
+  #clearAnchoring(): void {
+    this.#anchorCleanup?.();
+    this.#anchorCleanup = undefined;
+    this.style.left = "";
+    this.style.right = "";
+    this.style.top = "";
   }
 
   /** @private */
