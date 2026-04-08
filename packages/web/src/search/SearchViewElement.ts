@@ -11,6 +11,7 @@ import {
   FocusController,
   InertController,
   prefersReducedMotion,
+  ReconnectedCallback,
   registerStyleSheet,
   ScrollLockController,
   setCustomState,
@@ -97,7 +98,11 @@ import "./SearchBarElement";
  * @cssprop --m3e-search-view-docked-scrim-opacity - Opacity of the scrim behind the docked view.
  */
 @customElement("m3e-search-view")
-export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElement), "clear", "query") {
+export class M3eSearchViewElement extends EventAttribute(
+  ReconnectedCallback(AttachInternals(LitElement)),
+  "clear",
+  "query",
+) {
   static {
     registerStyleSheet(SearchViewLightDomStyle);
   }
@@ -194,6 +199,23 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
   }
 
   /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this._mode = undefined;
+    this.#breakpointUnobserve?.();
+  }
+
+  /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+
+    if (this.mode === "auto") {
+      this.#initBreakpointMonitoring();
+    }
+  }
+
+  /** @inheritdoc */
   protected override willUpdate(changedProperties: PropertyValues): void {
     super.willUpdate(changedProperties);
 
@@ -206,14 +228,7 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
       }
 
       if (this.mode === "auto") {
-        this.#breakpointUnobserve = M3eBreakpointObserver.observe([Breakpoint.XSmall], (matches) => {
-          const currentMode = this.currentMode;
-          this._mode = matches.get(Breakpoint.XSmall) ? "fullscreen" : "docked";
-          if (currentMode !== this._mode && this.open) {
-            this.open = false;
-          }
-          this.#updateMode();
-        });
+        this.#initBreakpointMonitoring();
       } else {
         this._mode = undefined;
         this.#updateMode();
@@ -329,6 +344,18 @@ export class M3eSearchViewElement extends EventAttribute(AttachInternals(LitElem
         </svg>
       </slot>
     </m3e-icon-button>`;
+  }
+
+  /** @private */
+  #initBreakpointMonitoring(): void {
+    this.#breakpointUnobserve = M3eBreakpointObserver.observe([Breakpoint.XSmall], (matches) => {
+      const currentMode = this.currentMode;
+      this._mode = matches.get(Breakpoint.XSmall) ? "fullscreen" : "docked";
+      if (currentMode !== this._mode && this.open) {
+        this.open = false;
+      }
+      this.#updateMode();
+    });
   }
 
   /** @private */
