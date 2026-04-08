@@ -9,6 +9,7 @@ import {
   deleteCustomState,
   DesignToken,
   hasCustomState,
+  ReconnectedCallback,
   registerStyleSheet,
   setCustomState,
 } from "@m3e/web/core";
@@ -87,7 +88,7 @@ import { StepperOrientation } from "./StepperOrientation";
  * @cssprop --m3e-step-divider-inset - Inset offset for divider alignment within step layout.
  */
 @customElement("m3e-stepper")
-export class M3eStepperElement extends AttachInternals(LitElement) {
+export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitElement)) {
   static {
     registerStyleSheet(css`
       m3e-stepper:not(:state(-vertical)) > .-m3e-step-divider::before {
@@ -383,6 +384,15 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
   }
 
   /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+
+    if (this.orientation === "auto") {
+      this.#initBreakpointMonitoring();
+    }
+  }
+
+  /** @inheritdoc */
   protected override willUpdate(changedProperties: PropertyValues): void {
     super.willUpdate(changedProperties);
 
@@ -390,10 +400,7 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
       this.#breakpointUnobserve?.();
 
       if (this.orientation === "auto") {
-        this.#breakpointUnobserve = M3eBreakpointObserver.observe([Breakpoint.XSmall], (matches) => {
-          this._orientation = matches.get(Breakpoint.XSmall) ? "vertical" : "horizontal";
-          this.#updateDisplayOrder();
-        });
+        this.#initBreakpointMonitoring();
       } else {
         this._orientation = undefined;
         this.#updateDisplayOrder();
@@ -508,6 +515,14 @@ export class M3eStepperElement extends AttachInternals(LitElement) {
       this.selectedStep.invalid = !valid;
     }
     return valid;
+  }
+
+  /** @private */
+  #initBreakpointMonitoring(): void {
+    this.#breakpointUnobserve = M3eBreakpointObserver.observe([Breakpoint.XSmall], (matches) => {
+      this._orientation = matches.get(Breakpoint.XSmall) ? "vertical" : "horizontal";
+      this.#updateDisplayOrder();
+    });
   }
 
   /** @private */
