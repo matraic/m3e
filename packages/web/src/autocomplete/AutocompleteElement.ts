@@ -735,7 +735,7 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
     }
 
     if (this.#input) {
-      this.#input.value = option.value;
+      this.#input.value = option.label;
     }
 
     this.#formField?.notifyControlStateChange(true);
