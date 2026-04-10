@@ -220,7 +220,7 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
 
     for (let i = 0; i < options.length; i++) {
       const option = options[i];
-      if (option.hidden) {
+      if (option.hidden === true) {
         deleteCustomState(option, "-first");
         deleteCustomState(option, "-last");
       } else if (!first && !(option.parentElement instanceof M3eOptGroupElement)) {

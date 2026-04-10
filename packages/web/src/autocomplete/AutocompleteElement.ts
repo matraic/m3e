@@ -109,7 +109,7 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
     .withHomeAndEnd()
     .withPageUpAndDown()
     .withVerticalOrientation()
-    .withSkipPredicate((item) => item.disabled || item.hidden)
+    .withSkipPredicate((item) => item.disabled || item.hidden === true)
     .onActiveItemChange(() => {
       if (this._listKeyManager.activeItem) {
         this.#activateOption(this._listKeyManager.activeItem);
@@ -251,7 +251,7 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
   /** @private */
   get #shouldShowMenu(): boolean {
     return (
-      this.#options.some((x) => !x.hidden) ||
+      this.#options.some((x) => x.hidden === false) ||
       (this.loading && !this.hideLoading && this.loadingLabel.length > 0) ||
       (!this.loading && !this.hideNoData && this.noDataLabel.length > 0)
     );
@@ -796,7 +796,7 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
   #filterOptions(): number {
     if (!this.#input) return 0;
 
-    const oldCount = this.#options.filter((x) => !x.hidden).length;
+    const oldCount = this.#options.filter((x) => x.hidden === false).length;
     const shouldAnnounce = !this.loading && this.#inputChanged;
     this.#inputChanged = false;
 
@@ -812,7 +812,7 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
       const option = this._options[i];
       clone.hidden = !this.#filterOption(clone, option, term, exactTerm);
 
-      if (clone.hidden) {
+      if (clone.hidden === true) {
         this.#deactivateOption(clone);
         deleteCustomState(clone, "-first");
         deleteCustomState(clone, "-last");
@@ -840,7 +840,7 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
 
     const groups = this.#menu?.querySelectorAll("m3e-optgroup") ?? this.#clone?.querySelectorAll("m3e-optgroup") ?? [];
     for (const group of groups) {
-      group.hidden = [...group.querySelectorAll("m3e-option")].every((x) => x.hidden);
+      group.hidden = [...group.querySelectorAll("m3e-option")].every((x) => x.hidden === true);
     }
 
     if (shouldAnnounce) {
@@ -882,7 +882,7 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
   /** @private */
   #autoActivate(): void {
     if (this.autoActivate && (!this._listKeyManager.activeItem || !this._listKeyManager.activeItem.selected)) {
-      const option = this.#options.find((x) => !x.disabled && !x.hidden);
+      const option = this.#options.find((x) => !x.disabled && x.hidden === false);
       if (option) {
         this._listKeyManager.setActiveItem(option);
         if (this.#menu) {
