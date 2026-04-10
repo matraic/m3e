@@ -74,7 +74,8 @@ This section details the attributes and slots available for the `m3e-autocomplet
 
 ### 🔥 Events
 
-| Event    | Description                                                            |
-| -------- | ---------------------------------------------------------------------- |
-| `toggle` | Emitted when the options menu opens or closes.                         |
-| `query`  | Emitted when the input is focused or when the user modifies its value. |
+| Event    | Description                                                                                |
+| -------- | ------------------------------------------------------------------------------------------ |
+| `toggle` | Emitted when the options menu opens or closes.                                             |
+| `query`  | Emitted when the input is focused or when the user modifies its value.                     |
+| `change` | Emitted when the committed value changes due to selecting an option or clearing the input. |

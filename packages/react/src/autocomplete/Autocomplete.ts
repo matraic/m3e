@@ -28,6 +28,7 @@ export const M3eAutocomplete = createComponent({
   elementClass: M3eAutocompleteElement,
   react: React,
   events: {
+    onChange: "change",
     onToggle: "toggle",
     onQuery: "query" as EventName<CustomEvent<AutocompleteQueryEventDetail>>,
   },

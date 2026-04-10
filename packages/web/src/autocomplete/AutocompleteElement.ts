@@ -67,6 +67,7 @@ import { AutocompleteQueryEventDetail } from "./AutocompleteQueryEventDetail";
  *
  * @fires toggle - Emitted when the options menu opens or closes.
  * @fires query - Emitted when the input is focused or when the user modifies its value.
+ * @fires change - Emitted when the committed value changes due to selecting an option or clearing the input.
  */
 @customElement("m3e-autocomplete")
 export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), "query") {
@@ -216,6 +217,17 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
     return this._options ?? [];
   }
 
+  /** The selected option. */
+  get selected(): M3eOptionElement | null {
+    return this.options.find((x) => x.selected) ?? null;
+  }
+
+  /** The selected (enabled) value. */
+  get value(): string | null {
+    const selected = this.selected;
+    return selected && !selected.disabled ? selected.value : null;
+  }
+
   /** @private */
   get #options(): readonly M3eOptionElement[] {
     return this._listKeyManager?.items ?? [];
@@ -298,6 +310,9 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
     if (!this.#input) return;
 
     this.#input.value = "";
+    if (this.#clearOptions()) {
+      this.dispatchEvent(new Event("change", { bubbles: true }));
+    }
     this.#filterOptions();
 
     if (restoreFocus) {
@@ -442,6 +457,10 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
       }),
     );
 
+    if (this.#input.value === "" && this.#clearOptions()) {
+      this.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
     this.#inputChanged = true;
     try {
       if (!this.#menu) {
@@ -460,8 +479,13 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
 
   /** @private */
   #handleChange(): void {
-    if (this.#input && this.required && !this.#options.some((x) => x.selected && !x.disabled)) {
-      this.#input.value = "";
+    if (this.#input) {
+      const selected = this.selected;
+      if (this.required) {
+        this.#input.value = selected?.label ?? "";
+      } else if (selected && selected.label !== this.#input.value && this.#clearOptions()) {
+        this.dispatchEvent(new Event("change", { bubbles: true }));
+      }
     }
   }
 
@@ -738,6 +762,8 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
       this.#input.value = option.label;
     }
 
+    this.dispatchEvent(new Event("change", { bubbles: true }));
+
     this.#formField?.notifyControlStateChange(true);
   }
 
@@ -806,11 +832,6 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
           last = clone;
         }
       }
-
-      if (clone.selected && option.value !== exactTerm) {
-        clone.selected = false;
-        this.#updateSelectionState(clone);
-      }
     }
 
     if (this.#menu) {
@@ -828,6 +849,19 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
 
     this.#autoActivate();
     return newCount;
+  }
+
+  /** @private */
+  #clearOptions(): boolean {
+    const selected = this._listKeyManager.items.filter((x) => x.selected);
+    if (selected.length > 0) {
+      selected.forEach((x) => {
+        x.selected = false;
+        this.#updateSelectionState(x);
+      });
+      return true;
+    }
+    return false;
   }
 
   /** @private */
