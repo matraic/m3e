@@ -628,6 +628,10 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
         newState: e.newState,
       }),
     );
+
+    if (this.#input?.slot === "input" && this.#input.parentElement?.tagName === "M3E-INPUT-CHIP-SET") {
+      this.#clearOptions();
+    }
   }
 
   /** @private */
