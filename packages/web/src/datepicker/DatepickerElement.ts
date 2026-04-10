@@ -478,9 +478,17 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
       this.#inertController.lock();
     }
 
-    this._calendar.date = this.date;
-    this._calendar.rangeStart = this.rangeStart;
-    this._calendar.rangeEnd = this.rangeEnd;
+    const calendar = this._calendar;
+
+    calendar.date = this.date;
+    calendar.rangeStart = this.rangeStart;
+    calendar.rangeEnd = this.rangeEnd;
+
+    // Reset the start-view
+    calendar.requestUpdate("startView");
+    if (calendar.isUpdatePending) {
+      await calendar.updateComplete;
+    }
 
     this.#trigger = trigger;
     this.#trigger.ariaExpanded = "true";
