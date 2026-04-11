@@ -537,6 +537,7 @@ export class M3eSelectElement
     this.ariaExpanded = "false";
     this.removeAttribute("aria-controls");
     this.removeAttribute("aria-owns");
+    this.removeAttribute("aria-activedescendant");
     this.requestUpdate();
 
     deleteCustomState(this, "-open");
@@ -607,7 +608,6 @@ export class M3eSelectElement
     if (!this.#menu) return;
 
     this.#menu.hide();
-    this.removeAttribute("aria-activedescendant");
     deleteCustomState(this, "-open");
   }
 

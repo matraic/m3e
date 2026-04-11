@@ -617,6 +617,7 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
       this.#input.ariaExpanded = "false";
       this.#input.removeAttribute("aria-controls");
       this.#input.removeAttribute("aria-owns");
+      this.#input.removeAttribute("aria-activedescendant");
     }
     this.requestUpdate();
 
@@ -707,7 +708,6 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
   /** @private */
   #hideMenu(): void {
     this.#menu?.hide();
-    this.#input?.removeAttribute("aria-activedescendant");
   }
 
   /** @private */
