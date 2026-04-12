@@ -18,7 +18,7 @@ import { SplitButtonVariant } from "./SplitButtonVariant";
  * `filled`, `tonal`, and `outlined` variants, and adapts to all button sizes. The leading button triggers
  * the main action, while the trailing icon button reveals additional options, enabling efficient workflows
  * and clear visual hierarchy. The split button ensures accessible, adaptive, and visually harmonious
- * interactions, reflecting Material 3’s principles of clarity, flexibility, and expressive design.
+ * interactions, reflecting Material 3's principles of clarity, flexibility, and expressive design.
  *
  * @example
  * The following example illustrates use of the `m3e-split-button` to combine the `m3e-button`,

@@ -68,8 +68,8 @@ import { SwitchIcons } from "./SwitchIcons";
  * @cssprop --m3e-switch-unselected-icon-size - Size of the icon in the unselected state.
  * @cssprop --m3e-switch-track-height - Height of the switch track.
  * @cssprop --m3e-switch-track-width - Width of the switch track.
- * @cssprop --m3e-switch-track-outline-color - Color of the track’s outline.
- * @cssprop --m3e-switch-track-outline-width - Thickness of the track’s outline.
+ * @cssprop --m3e-switch-track-outline-color - Color of the track's outline.
+ * @cssprop --m3e-switch-track-outline-width - Thickness of the track's outline.
  * @cssprop --m3e-switch-track-shape - Corner shape of the track.
  * @cssprop --m3e-switch-selected-track-color - Track color when selected.
  * @cssprop --m3e-switch-unselected-track-color - Track color when unselected.

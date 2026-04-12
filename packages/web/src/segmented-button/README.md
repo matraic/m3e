@@ -90,8 +90,8 @@ This section details the attributes, slots, events and CSS custom properties ava
 | Property                                                  | Description                                         |
 | --------------------------------------------------------- | --------------------------------------------------- |
 | `--m3e-segmented-button-height`                           | Total height of the segmented button.               |
-| `--m3e-segmented-button-outline-thickness`                | Thickness of the button’s border.                   |
-| `--m3e-segmented-button-outline-color`                    | Color of the button’s border.                       |
+| `--m3e-segmented-button-outline-thickness`                | Thickness of the button's border.                   |
+| `--m3e-segmented-button-outline-color`                    | Color of the button's border.                       |
 | `--m3e-segmented-button-padding-start`                    | Padding on the leading edge of the button content.  |
 | `--m3e-segmented-button-padding-end`                      | Padding on the trailing edge of the button content. |
 | `--m3e-segmented-button-spacing`                          | Horizontal gap between icon and label.              |

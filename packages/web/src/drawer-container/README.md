@@ -77,8 +77,8 @@ This section details the attributes and CSS custom properties available for the 
 | `--m3e-drawer-container-elevation`     | The elevation level of the drawer container.                  |
 | `--m3e-drawer-container-width`         | The width of the drawer container.                            |
 | `--m3e-drawer-container-scrim-opacity` | The opacity of the scrim behind the drawer.                   |
-| `--m3e-modal-drawer-start-shape`       | The shape of the drawer’s start edge (typically left in LTR). |
-| `--m3e-modal-drawer-end-shape`         | The shape of the drawer’s end edge (typically right in LTR).  |
+| `--m3e-modal-drawer-start-shape`       | The shape of the drawer's start edge (typically left in LTR). |
+| `--m3e-modal-drawer-end-shape`         | The shape of the drawer's end edge (typically right in LTR).  |
 | `--m3e-modal-drawer-container-color`   | The background color of the modal drawer container.           |
 | `--m3e-modal-drawer-elevation`         | The elevation level of the modal drawer container.            |
 | `--m3e-drawer-divider-color`           | The color of the divider between drawer sections.             |

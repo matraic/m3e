@@ -8,10 +8,10 @@ This project is not affiliated with or endorsed by Google. “Material Design”
 
 ## ✨ Features
 
-- **Expressive Components**: Leverage Material 3’s design tokens, dynamic color, shape and motion systems for highly customizable UI elements.
+- **Expressive Components**: Leverage Material 3's design tokens, dynamic color, shape and motion systems for highly customizable UI elements.
 - **Unified Architecture**: Modularized for easy maintenance, scalability, and rapid development.
 - **Accessibility First**: Built-in support for accessibility standards, ensuring inclusive experiences for all users.
-- **Theming & Personalization**: Effortlessly adapt components to your brand or user preferences with Material 3’s advanced theming capabilities.
+- **Theming & Personalization**: Effortlessly adapt components to your brand or user preferences with Material 3's advanced theming capabilities.
 - **Performance Optimized**: Lightweight, fast-loading components designed for modern web platforms.
 - **Security Conscious**: Built with secure-by-default patterns, including XSS-safe templating, Trusted Types compatibility, and support for strong Content Security Policies (CSP) to enforce safe DOM interactions and mitigate injection risks.
 

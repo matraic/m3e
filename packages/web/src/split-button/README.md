@@ -1,6 +1,6 @@
 # @m3e/web/split-button
 
-The `m3e-split-button` component presents a primary action alongside a menu of related actions, uniting two buttons in a single expressive surface. Designed for Material 3, it supports `elevated`, `filled`, `tonal`, and `outlined` variants, and adapts to all button sizes. The leading button triggers the main action, while the trailing icon button reveals additional options, enabling efficient workflows and clear visual hierarchy. The split button ensures accessible, adaptive, and visually harmonious interactions, reflecting Material 3’s principles of clarity, flexibility, and expressive design.
+The `m3e-split-button` component presents a primary action alongside a menu of related actions, uniting two buttons in a single expressive surface. Designed for Material 3, it supports `elevated`, `filled`, `tonal`, and `outlined` variants, and adapts to all button sizes. The leading button triggers the main action, while the trailing icon button reveals additional options, enabling efficient workflows and clear visual hierarchy. The split button ensures accessible, adaptive, and visually harmonious interactions, reflecting Material 3's principles of clarity, flexibility, and expressive design.
 
 ```ts
 import "@m3e/web/split-button";

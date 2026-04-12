@@ -63,8 +63,8 @@ import { selectionManager } from "@m3e/web/core/a11y";
  * @fires click - Emitted when the element is clicked.
  *
  * @cssprop --m3e-segmented-button-height - Total height of the segmented button.
- * @cssprop --m3e-segmented-button-outline-thickness - Thickness of the button’s border.
- * @cssprop --m3e-segmented-button-outline-color - Color of the button’s border.
+ * @cssprop --m3e-segmented-button-outline-thickness - Thickness of the button's border.
+ * @cssprop --m3e-segmented-button-outline-color - Color of the button's border.
  * @cssprop --m3e-segmented-button-padding-start - Padding on the leading edge of the button content.
  * @cssprop --m3e-segmented-button-padding-end - Padding on the trailing edge of the button content.
  * @cssprop --m3e-segmented-button-spacing - Horizontal gap between icon and label.
