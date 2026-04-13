@@ -1,6 +1,6 @@
 {
   "name": "@m3e/react",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "React bindings for M3E Web Components",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
@@ -224,7 +224,7 @@
   },
   "peerDependencies": {
     "@lit/react": "^1.0.8",
-    "@m3e/web": "^2.2.1",
+    "@m3e/web": "^2.2.2",
     "lit": "^3.3.0",
     "react": ">=18"
   }
