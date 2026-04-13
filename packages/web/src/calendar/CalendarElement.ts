@@ -74,6 +74,7 @@ import "./YearViewElement";
  * @cssprop --m3e-calendar-weekday-font-weight - Font weight of weekday labels in month view.
  * @cssprop --m3e-calendar-weekday-line-height - Line height of weekday labels in month view.
  * @cssprop --m3e-calendar-weekday-tracking - Letter spacing of weekday labels in month view.
+ * @cssprop --m3e-calendar-weekday-color - Text color for weekday labels in month view.
  * @cssprop --m3e-calendar-date-font-size - Font size of date cells in month view.
  * @cssprop --m3e-calendar-date-font-weight - Font weight of date cells in month view.
  * @cssprop --m3e-calendar-date-line-height - Line height of date cells in month view.
@@ -82,6 +83,7 @@ import "./YearViewElement";
  * @cssprop --m3e-calendar-item-font-weight - Font weight of items in year and multi‑year views.
  * @cssprop --m3e-calendar-item-line-height - Line height of items in year and multi‑year views.
  * @cssprop --m3e-calendar-item-tracking - Letter spacing of items in year and multi‑year views.
+ * @cssprop --m3e-calendar-item-color - Text color for date items.
  * @cssprop --m3e-calendar-item-selected-color - Text color for selected date items.
  * @cssprop --m3e-calendar-item-selected-container-color - Background color for selected date items.
  * @cssprop --m3e-calendar-item-selected-ripple-color - Ripple color used when interacting with selected date items.

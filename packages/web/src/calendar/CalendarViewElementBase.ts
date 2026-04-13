@@ -47,6 +47,7 @@ export abstract class CalendarViewElementBase extends LitElement {
       height: 3rem;
       padding: 0.25rem;
       position: relative;
+      color: var(--m3e-calendar-item-color, ${DesignToken.color.onSurface});
     }
     .item,
     .item > span {
