@@ -76,10 +76,12 @@ import { DatepickerVariant } from "./DatepickerVariant";
  * @cssprop --m3e-datepicker-container-padding-inline - Inline‑axis padding of the date picker container.
  * @cssprop --m3e-datepicker-container-color - Background color of the standard container surface.
  * @cssprop --m3e-datepicker-container-elevation - Elevation shadow applied to the container surface.
+ * @cssprop --m3e-datepicker-modal-headline-color - Color used for the modal headline text.
  * @cssprop --m3e-datepicker-modal-headline-font-size - Font size used for the modal headline text.
  * @cssprop --m3e-datepicker-modal-headline-font-weight - Font weight used for the modal headline text.
  * @cssprop --m3e-datepicker-modal-headline-line-height - Line height used for the modal headline text.
  * @cssprop --m3e-datepicker-modal-headline-tracking - Letter spacing used for the modal headline text.
+ * @cssprop --m3e-datepicker-modal-supporting-text-color - Color used for supporting text in modal mode.
  * @cssprop --m3e-datepicker-modal-supporting-text-font-size - Font size used for supporting text in modal mode.
  * @cssprop --m3e-datepicker-modal-supporting-text-font-weight - Font weight used for supporting text in modal mode.
  * @cssprop --m3e-datepicker-modal-supporting-text-line-height - Line height used for supporting text in modal mode.
@@ -117,6 +119,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
       --m3e-calendar-container-shape: ${DesignToken.shape.corner.none};
     }
     .headline {
+      color: var(--m3e-datepicker-modal-headline-color, ${DesignToken.color.onSurfaceVariant});
       font-size: var(
         --m3e-datepicker-modal-headline-font-size,
         ${DesignToken.typescale.standard.headline.large.fontSize}
@@ -138,6 +141,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
       margin-inline: 1.5rem;
     }
     .supporting-text {
+      color: var(--m3e-datepicker-modal-supporting-text-color, ${DesignToken.color.onSurfaceVariant});
       font-size: var(
         --m3e-datepicker-modal-supporting-text-font-size,
         ${DesignToken.typescale.standard.label.large.fontSize}

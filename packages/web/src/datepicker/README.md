@@ -55,10 +55,12 @@ This section details the attributes, events, and CSS custom properties available
 | `--m3e-datepicker-container-padding-inline`          | Inline‑axis padding of the date picker container.      |
 | `--m3e-datepicker-container-color`                   | Background color of the standard container surface.    |
 | `--m3e-datepicker-container-elevation`               | Elevation shadow applied to the container surface.     |
+| `--m3e-datepicker-modal-headline-color`              | Color used for the modal headline text.                |
 | `--m3e-datepicker-modal-headline-font-size`          | Font size used for the modal headline text.            |
 | `--m3e-datepicker-modal-headline-font-weight`        | Font weight used for the modal headline text.          |
 | `--m3e-datepicker-modal-headline-line-height`        | Line height used for the modal headline text.          |
 | `--m3e-datepicker-modal-headline-tracking`           | Letter spacing used for the modal headline text.       |
+| `--m3e-datepicker-modal-supporting-text-color`       | Color used for supporting text in modal mode.          |
 | `--m3e-datepicker-modal-supporting-text-font-size`   | Font size used for supporting text in modal mode.      |
 | `--m3e-datepicker-modal-supporting-text-font-weight` | Font weight used for supporting text in modal mode.    |
 | `--m3e-datepicker-modal-supporting-text-line-height` | Line height used for supporting text in modal mode.    |
