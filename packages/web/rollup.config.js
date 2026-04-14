@@ -47,6 +47,7 @@ const inputs = [
   "slider",
   "snackbar",
   "split-button",
+  "split-pane",
   "stepper",
   "switch",
   "tabs",

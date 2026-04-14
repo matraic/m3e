@@ -5,6 +5,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 ## 🟡 Current
 
 - 2.2.0 Release
+- Split Pane
 
 ## 🔮 Future
 
@@ -17,7 +18,6 @@ The following components are planned for future release.
 Components in early stages of development include:
 
 - Skeleton Loader
-- Split Pane
 - Tree
 
 #### 🔮 Not Yet Started

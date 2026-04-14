@@ -179,6 +179,10 @@
       "types": "./dist/src/split-button/index.d.ts",
       "default": "./dist/split-button.js"
     },
+    "./split-pane": {
+      "types": "./dist/src/split-pane/index.d.ts",
+      "default": "./dist/split-pane.js"
+    },
     "./stepper": {
       "types": "./dist/src/stepper/index.d.ts",
       "default": "./dist/stepper.js"
