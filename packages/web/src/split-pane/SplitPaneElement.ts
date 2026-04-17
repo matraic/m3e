@@ -147,6 +147,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       align-items: center;
       justify-content: center;
       outline: none;
+      touch-action: none;
       user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
@@ -176,6 +177,9 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       height: 3rem;
       width: 3rem;
       margin: auto;
+      touch-action: none;
+      user-select: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:not(:state(-pressed))) .handle {
       background-color: var(--m3e-split-pane-drag-handle-color, ${DesignToken.color.outline});
