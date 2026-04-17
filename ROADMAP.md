@@ -4,8 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 2.2.0 Release
-- Split Pane
+- 2.3.0 Release
 
 ## 🔮 Future
 
@@ -17,7 +16,6 @@ The following components are planned for future release.
 
 Components in early stages of development include:
 
-- Skeleton Loader
 - Tree
 
 #### 🔮 Not Yet Started
@@ -33,6 +31,9 @@ Planned components which have not yet entered development:
 - MCP Server enabling IDEs and AI tools to query local knowledge about components and documentation
 
 ## 🏛️ Past Milestones
+
+- **2.3.0 — Feature release**
+  Added `@m3e/web/split-pane` and `@m3e/web/skeleton`
 
 - **2.2.0 — 2.2.2 Feature release + patch releases**
   Added `@m3e/web/calendar`, `@m3e/web/datepicker`, `@m3e/web/search`, and `change` event to `@m3e/web/autocomplete`, bug fixes.

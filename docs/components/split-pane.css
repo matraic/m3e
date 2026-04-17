@@ -1,0 +1,12 @@
+m3e-split-pane:not([orientation="vertical"]) {
+  height: 100px;
+}
+m3e-split-pane[orientation="vertical"],
+m3e-split-pane.complex {
+  height: 200px;
+}
+m3e-split-pane m3e-card {
+  margin: unset;
+  width: 100%;
+  height: 100%;
+}

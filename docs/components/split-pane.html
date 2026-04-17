@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Split Pane for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Split Pane for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="./split-pane.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "tslib": "https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm",
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "lit/": "https://cdn.jsdelivr.net/npm/lit@3.3.0/",
+          "lit-html": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/+esm",
+          "lit-html/directive.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directive.js",
+          "lit-html/directives/if-defined.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/if-defined.js",
+          "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
+          "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
+          "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.3.0/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.3.0/dist/core-a11y.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.3.0/dist/core-bidi.min.js",
+          "@m3e/web/core/layout": "https://cdn.jsdelivr.net/npm/@m3e/web@2.3.0/dist/core-layout.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.0/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.0/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.0/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.0/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.0/dist/split-pane.min.js"></script>
+    <script src="../main.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Split Pane</span>
+      </m3e-toc>
+
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Split Pane</m3e-heading>
+      <p>
+        The <code>m3e-split-pane</code> component delivers a Material 3-inspired split view with a movable drag handle,
+        enabling responsive layout composition and precise pane resizing. It supports keyboard interaction, adaptive
+        orientation, and optional detent snapping for consistent, accessible content distribution.
+      </p>
+      <m3e-card variant="filled" class="install"><pre slot="content">import "@m3e/web/split-pane";</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+      <p>
+        The <code>m3e-split-pane</code> exposes two slots: <code>start</code>, which renders content on the logical
+        start side of the layout, and <code>end</code>, which renders content on the logical end side. The
+        <code>value</code> attribute controls the percentage of the available space occupied by the start pane, with the
+        end pane automatically filling the remainder. By default, <code>value</code> is 50%. When a user interaction
+        causes <code>value</code> to change, a cancellable <code>input</code> event is emitted, followed by a
+        <code>change</code> event. This allows you to react to live resizing as well as commit final adjustments when
+        the user finishes interacting with the drag handle.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-split-pane value="50">
+            <m3e-card slot="start"></m3e-card>
+            <m3e-card slot="end"></m3e-card>
+          </m3e-split-pane>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-split-pane value=&quot;50&quot;&gt;
+  &lt;m3e-card slot=&quot;start&quot;&gt;&lt;/m3e-card&gt;
+  &lt;m3e-card slot=&quot;end&quot;&gt;&lt;/m3e-card&gt;
+&lt;/m3e-split-pane&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Orientation</m3e-heading>
+      <p>
+        The <code>m3e-split-pane</code> supports three orientations: <code>horizontal</code> (default),
+        <code>vertical</code>, and <code>auto</code>. Using <code>auto</code>, the orientation is responsive and
+        determined by viewport size. Use the <code>orientation</code> attribute to change the orientation.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-split-pane value="50" orientation="vertical">
+            <m3e-card slot="start"></m3e-card>
+            <m3e-card slot="end"></m3e-card>
+          </m3e-split-pane>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-split-pane value=&quot;50&quot; orientation=&quot;vertical&quot;&gt;
+  &lt;m3e-card slot=&quot;start&quot;&gt;&lt;/m3e-card&gt;
+  &lt;m3e-card slot=&quot;end&quot;&gt;&lt;/m3e-card&gt;
+&lt;/m3e-split-pane&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Min and max sizes</m3e-heading>
+      <p>
+        Use the <code>min</code> and <code>max</code> attributes to control the minimum and maximum percentage the start
+        pane can occupy.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-split-pane value="50" min="25" max="75">
+            <m3e-card slot="start"></m3e-card>
+            <m3e-card slot="end"></m3e-card>
+          </m3e-split-pane>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-split-pane value=&quot;50&quot; min=&quot;25&quot; max=&quot;75&quot;&gt;
+  &lt;m3e-card slot=&quot;start&quot;&gt;&lt;/m3e-card&gt;
+  &lt;m3e-card slot=&quot;end&quot;&gt;&lt;/m3e-card&gt;
+&lt;/m3e-split-pane&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Step size</m3e-heading>
+      <p>
+        Use the <code>step</code> attribute to control how much the split pane's <code>value</code> changes with each
+        keyboard resize action, such as pressing the arrow keys.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-split-pane value="50" step="10">
+            <m3e-card slot="start"></m3e-card>
+            <m3e-card slot="end"></m3e-card>
+          </m3e-split-pane>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-split-pane value=&quot;50&quot; step=&quot;10&quot;&gt;
+  &lt;m3e-card slot=&quot;start&quot;&gt;&lt;/m3e-card&gt;
+  &lt;m3e-card slot=&quot;end&quot;&gt;&lt;/m3e-card&gt;
+&lt;/m3e-split-pane&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Detents</m3e-heading>
+      <p>
+        Use the <code>detents</code> attribute to define the positions a split pane can snap to during resizing. A split
+        pane may have no detents, a single detent, or multiple detents. Detents influence how the pane resizes, how it
+        responds to drag gestures, and how the drag handle behaves during keyboard interaction. When detents are
+        present, the drag handle snaps to the nearest detent as the user moves it and <code>step</code> is ignored; when
+        no detents are defined, the split pane resizes freely without snapping.
+      </p>
+      <p>
+        Double-clicking the drag handle, or pressing <code>ENTER</code> or <code>SPACE</code> when it is focused, will
+        cycle to the next detent. Use the <code>wrap-detents</code> attribute to allow cycling to wrap from the last
+        detent back to the first.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-split-pane value="50" detents="0 25 50 75 100" wrap-detents>
+            <m3e-card slot="start"></m3e-card>
+            <m3e-card slot="end"></m3e-card>
+          </m3e-split-pane>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-split-pane value=&quot;50&quot; detents=&quot;0 25 50 75 100&quot;  wrap-detents&gt;
+  &lt;m3e-card slot=&quot;start&quot;&gt;&lt;/m3e-card&gt;
+  &lt;m3e-card slot=&quot;end&quot;&gt;&lt;/m3e-card&gt;
+&lt;/m3e-split-pane&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+      <p>
+        Use the <code>disabled</code> attribute to disable resizing. When disabled, the drag handle is hidden from
+        interaction, pointer and keyboard input are ignored, and the split pane remains fixed at its current value.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-split-pane value="50" disabled>
+            <m3e-card slot="start"></m3e-card>
+            <m3e-card slot="end"></m3e-card>
+          </m3e-split-pane>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-split-pane value=&quot;50&quot; disabled&gt;
+  &lt;m3e-card slot=&quot;start&quot;&gt;&lt;/m3e-card&gt;
+  &lt;m3e-card slot=&quot;end&quot;&gt;&lt;/m3e-card&gt;
+&lt;/m3e-split-pane&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Conditional rendering</m3e-heading>
+      <p>
+        You can conditionally render the start or end pane either by omitting content from the corresponding slot or by
+        applying the <code>hidden</code> attribute to slotted elements. When all assigned elements in a slot are hidden,
+        the split pane treats that side as empty and updates the layout so the visible pane fully occupies the available
+        space without modifying the current <code>value</code>.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-split-pane value="50">
+            <m3e-card slot="start"></m3e-card>
+            <m3e-card slot="end" hidden></m3e-card>
+          </m3e-split-pane>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-split-pane value=&quot;50&quot;&gt;
+  &lt;m3e-card slot=&quot;start&quot;&gt;&lt;/m3e-card&gt;
+  &lt;m3e-card slot=&quot;end&quot; hidden&gt;&lt;/m3e-card&gt;
+&lt;/m3e-split-pane&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Nested panes</m3e-heading>
+      <p>
+        Split panes can be nested to create complex layouts, allowing you to build multi-pane workspaces by combining
+        multiple binary splits.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-split-pane value="25" class="complex">
+            <m3e-card slot="start"></m3e-card>
+            <m3e-split-pane slot="end" value="50" orientation="vertical">
+              <m3e-card slot="start"></m3e-card>
+              <m3e-card slot="end"></m3e-card>
+            </m3e-split-pane>
+          </m3e-split-pane>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-split-pane value=&quot;25&quot; class=&quot;complex&quot;&gt;
+  &lt;m3e-card slot=&quot;start&quot;&gt;&lt;/m3e-card&gt;
+  &lt;m3e-split-pane slot=&quot;end&quot; value=&quot;50&quot; orientation=&quot;vertical&quot;&gt;
+    &lt;m3e-card slot=&quot;start&quot;&gt;&lt;/m3e-card&gt;
+    &lt;m3e-card slot=&quot;end&quot;&gt;&lt;/m3e-card&gt;
+  &lt;/m3e-split-pane&gt;
+&lt;/m3e-split-pane&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Form Associated</m3e-heading>
+      <p>
+        This component participates in form submission as a
+        <a
+          href="https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-face"
+          target="_blank"
+          rel="noopener noreferrer"
+          >form-associated custom element</a
+        >
+        (FACE), contributing its state to the form data. The <code>name</code> attribute defines the key under which the
+        component's value is submitted in a form. When not disabled, the current <code>value</code> is submitted.
+      </p>
+      <p>
+        The component honors the <code>disabled</code> state as a <strong>property-only</strong> control. When disabled
+        at runtime, it does <em>not</em> sprout a <code>disabled</code> attribute into the DOM.
+      </p>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Split panes use the ARIA <code>role="separator"</code>, indicating that the drag handle is an interactive
+        control used to adjust the relative size of two regions.
+      </p>
+      <p>
+        The drag handle uses <code>aria-controls</code> to reference the pane it resizes. The start pane is wrapped in
+        an internal container element with a stable ID, and the drag handle's <code>aria-controls</code> attribute
+        points to that container. This allows assistive technologies to understand which region is affected when the
+        user adjusts the split pane.
+      </p>
+      <p>
+        The split pane supports a <code>label</code> attribute, which maps directly to the drag handle's
+        <code>aria-label</code>. This allows you to provide a clear, descriptive name for screen reader users, such as
+        “Resize panels” or “Adjust split view”.
+      </p>
+      <p>
+        The component exposes its orientation, current position, and size constraints through standard ARIA attributes
+        so assistive technologies can accurately convey the layout to users. These attributes allow screen readers to
+        announce how the split pane is arranged, how far the drag handle has been moved, and what the allowable range of
+        movement is.
+      </p>
+      <ul>
+        <li>
+          <code>aria-orientation</code> communicates whether the panes are arranged horizontally or vertically, helping
+          users understand the spatial direction in which the drag handle can be moved.
+        </li>
+        <li>
+          <code>aria-valuenow</code> reports the drag handle's current position as a percentage, allowing screen readers
+          to announce the exact size of the start pane.
+        </li>
+        <li>
+          <code>aria-valuemin</code> and <code>aria-valuemax</code> define the minimum and maximum allowed sizes,
+          ensuring users know the full range of movement and whether further adjustment is possible.
+        </li>
+        <li>
+          <code>aria-valuetext</code> provides a human-readable description of the current size (for example, “Left pane
+          20%, right pane 80%” or “Top pane collapsed”), improving clarity for screen reader users. You may customize
+          this text by supplying a <code>valueFormatter</code> function, which allows full control over how the size is
+          described. This is useful for localization, or presenting alternative formats.
+        </li>
+      </ul>
+
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        The <code>@m3e/web</code> package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/split-pane.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;tslib&quot;: &quot;https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm&quot;,
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;lit/&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/&quot;,
+      &quot;lit-html&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/+esm&quot;,
+      &quot;lit-html/directive.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directive.js&quot;,
+      &quot;lit-html/directives/if-defined.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/if-defined.js&quot;,
+      &quot;lit-html/directives/class-map.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js&quot;,
+      &quot;@lit/reactive-element&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm&quot;,
+      &quot;@lit/reactive-element/&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/&quot;,
+      &quot;@m3e/web/core&quot;: &quot;/node_modules/@m3e/web/dist/core.js&quot;,
+      &quot;@m3e/web/core/bidi&quot;: &quot;/node_modules/@m3e/web/dist/core-bidi.js&quot;,
+      &quot;@m3e/web/core/layout&quot;: &quot;/node_modules/@m3e/web/dist/core-layout.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production builds, use the minified files to ensure optimal load performance.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        The <code>@m3e/web</code> package includes a
+        <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which documents the properties,
+        attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer only="m3e-split-pane" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.0/dist/custom-elements.json">
+      </api-viewer>
+    </m3e-theme>
+  </body>
+</html>
