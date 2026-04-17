@@ -38,6 +38,7 @@ const inputs = [
   "segmented-button",
   "select",
   "shape",
+  "skeleton",
   "slide-group",
   "slider",
   "snackbar",

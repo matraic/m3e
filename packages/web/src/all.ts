@@ -35,6 +35,7 @@ export * from "./search";
 export * from "./segmented-button";
 export * from "./select";
 export * from "./shape";
+export * from "./skeleton";
 export * from "./slide-group";
 export * from "./slider";
 export * from "./snackbar";

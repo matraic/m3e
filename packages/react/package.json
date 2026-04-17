@@ -163,6 +163,10 @@
       "types": "./dist/src/shape/index.d.ts",
       "default": "./dist/shape.js"
     },
+    "./skeleton": {
+      "types": "./dist/src/skeleton/index.d.ts",
+      "default": "./dist/skeleton.js"
+    },
     "./slide-group": {
       "types": "./dist/src/slide-group/index.d.ts",
       "default": "./dist/slide-group.js"

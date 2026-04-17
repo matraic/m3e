@@ -13,3 +13,4 @@ export * from "./resolveElementById";
 export * from "./resolveFragmentUrl";
 export * from "./scrollIntoViewIfNeeded";
 export * from "./VelocityTracker";
+export * from "./waitForUpgrade";
