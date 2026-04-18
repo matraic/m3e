@@ -164,6 +164,30 @@
         >
       </m3e-card>
 
+      <m3e-heading variant="headline" size="small" level="3">Dividers</m3e-heading>
+      <p>
+        Use the <code>start-divider</code> or <code>end-divider</code> to separate the drawer from the content using a
+        divider when <code>mode="side"</code>. When the <code>mode="auto"</code> and resolves to <code>side</code>, the
+        dividers are shown as well.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-drawer-container end end-mode="side" end-divider>
+            <div>Main content</div>
+            <div slot="end">End drawer</div>
+          </m3e-drawer-container>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-drawer-container end end-mode=&quot;side&quot; end-divider&gt;
+  &lt;div&gt;Main content&lt;/div&gt;
+  &lt;div slot=&quot;end&quot;&gt;End drawer&lt;/div&gt;
+&lt;/m3e-drawer-container&gt;
+</pre
+        >
+      </m3e-card>
+
       <m3e-heading variant="headline" size="small" level="3">Toggle</m3e-heading>
       <p>
         Use the <code>m3e-drawer-toggle</code> to toggle the opened state of a drawer. This component should be nested
