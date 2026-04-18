@@ -167,7 +167,9 @@ export class M3eSelectElement
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);
   /** @private */ readonly #keyUpHandler = (e: KeyboardEvent) => this.#handleKeyUp(e);
   /** @private */ readonly #menuToggleHandler = (e: ToggleEvent) => this.#handleMenuToggle(e);
-  /** @private */ readonly #menuPointerDownHandler = (e: MouseEvent) => this.#handleMenuPointerDown(e);
+  /** @private */ readonly #menuPointerDownHandler = (e: PointerEvent) => this.#handleMenuPointerDown(e);
+  /** @private */ readonly #menuPointerUpHandler = (e: PointerEvent) => this.#handleMenuPointerUp(e);
+  /** @private */ #menuPressedOption?: M3eOptionElement;
 
   /** @private */ private readonly _listKeyManager = new ListKeyManager<M3eOptionElement>()
     .withWrap()
@@ -472,8 +474,11 @@ export class M3eSelectElement
   }
 
   /** @private */
-  #handleMenuPointerDown(e: MouseEvent): void {
+  #handleMenuPointerDown(e: PointerEvent): void {
+    this.#menuPressedOption = undefined;
+
     if (e.button === 2) return;
+    // Prevent click to avoid stealing focus.
     e.preventDefault();
     e.stopImmediatePropagation();
 
@@ -482,17 +487,36 @@ export class M3eSelectElement
     );
 
     if (option && !option.disabled) {
+      this.#menuPressedOption = option;
+    }
+  }
+
+  /** @private */
+  #handleMenuPointerUp(e: PointerEvent): void {
+    const pressedOption = this.#menuPressedOption;
+    this.#menuPressedOption = undefined;
+
+    if (e.button === 2) return;
+
+    if (!pressedOption) return;
+
+    const option = <M3eOptionElement | undefined>(
+      e.composedPath().find((x) => x instanceof HTMLElement && x.tagName === "M3E-OPTION")
+    );
+
+    if (option === pressedOption) {
       this.#selectOption(option);
       this._listKeyManager.setActiveItem(option);
-
-      if (!this.multi) {
-        if (!prefersReducedMotion()) {
-          setTimeout(() => this.#hideMenu(), 150);
-        } else {
-          this.#hideMenu();
-        }
-      } else {
+      if (this.multi) {
         this.requestUpdate();
+      }
+    }
+
+    if (!this.multi) {
+      if (!prefersReducedMotion()) {
+        setTimeout(() => this.#hideMenu(), 150);
+      } else {
+        this.#hideMenu();
       }
     }
   }
@@ -532,6 +556,7 @@ export class M3eSelectElement
     this.#menu.remove();
     this.#menu.removeEventListener("toggle", this.#menuToggleHandler);
     this.#menu.removeEventListener("pointerdown", this.#menuPointerDownHandler);
+    this.#menu.removeEventListener("pointerup", this.#menuPointerUpHandler);
     this.#menu = undefined;
 
     this.ariaExpanded = "false";
@@ -585,6 +610,7 @@ export class M3eSelectElement
     this.#menu.fitAnchorWidth = true;
     this.#menu.addEventListener("toggle", this.#menuToggleHandler);
     this.#menu.addEventListener("pointerdown", this.#menuPointerDownHandler);
+    this.#menu.addEventListener("pointerup", this.#menuPointerUpHandler);
 
     if (this.#clone) {
       this.#menu.replaceChildren(...this.#clone.childNodes);

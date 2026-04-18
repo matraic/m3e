@@ -103,6 +103,8 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
   /** @private */ readonly #changeHandler = () => this.#handleChange();
   /** @private */ readonly #menuToggleHandler = (e: ToggleEvent) => this.#handleMenuToggle(e);
   /** @private */ readonly #menuPointerDownHandler = (e: PointerEvent) => this.#handleMenuPointerDown(e);
+  /** @private */ readonly #menuPointerUpHandler = (e: PointerEvent) => this.#handleMenuPointerUp(e);
+  /** @private */ #menuPressedOption?: M3eOptionElement;
 
   /** @private */ private readonly _listKeyManager = new ListKeyManager<M3eOptionElement>()
     .withWrap()
@@ -553,7 +555,10 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
 
   /** @private */
   #handleMenuPointerDown(e: PointerEvent): void {
+    this.#menuPressedOption = undefined;
+
     if (e.button === 2) return;
+    // Prevent click to avoid stealing focus.
     e.preventDefault();
     e.stopImmediatePropagation();
 
@@ -562,13 +567,32 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
     );
 
     if (option && !option.disabled) {
+      this.#menuPressedOption = option;
+    }
+  }
+
+  /** @private */
+  #handleMenuPointerUp(e: PointerEvent): void {
+    const pressedOption = this.#menuPressedOption;
+    this.#menuPressedOption = undefined;
+
+    if (e.button === 2) return;
+
+    if (!pressedOption) return;
+
+    const option = <M3eOptionElement | undefined>(
+      e.composedPath().find((x) => x instanceof HTMLElement && x.tagName === "M3E-OPTION")
+    );
+
+    if (option === pressedOption) {
       this._listKeyManager.setActiveItem(option);
       this.#selectOption(option);
-      if (!prefersReducedMotion()) {
-        setTimeout(() => this.#hideMenu(), 150);
-      } else {
-        this.#hideMenu();
-      }
+    }
+
+    if (!prefersReducedMotion()) {
+      setTimeout(() => this.#hideMenu(), 150);
+    } else {
+      this.#hideMenu();
     }
   }
 
@@ -611,6 +635,7 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
     this.#menu.remove();
     this.#menu.removeEventListener("toggle", this.#menuToggleHandler);
     this.#menu.removeEventListener("pointerdown", this.#menuPointerDownHandler);
+    this.#menu.removeEventListener("pointerup", this.#menuPointerUpHandler);
     this.#menu = undefined;
 
     if (this.#input) {
@@ -660,6 +685,7 @@ export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), 
     this.#menu.fitAnchorWidth = true;
     this.#menu.addEventListener("toggle", this.#menuToggleHandler);
     this.#menu.addEventListener("pointerdown", this.#menuPointerDownHandler);
+    this.#menu.addEventListener("pointerup", this.#menuPointerUpHandler);
 
     this.#projectClone();
 
