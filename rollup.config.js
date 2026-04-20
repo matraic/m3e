@@ -5,7 +5,7 @@ import babel from "@rollup/plugin-babel";
 
 const banner = `/**
  * @license MIT
- * Copyright (c) 2025 matraic
+ * Copyright (c) 2025–2026 matraic
  * See LICENSE file in the project root for full license text.
  */`;
 
