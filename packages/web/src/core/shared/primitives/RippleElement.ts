@@ -20,7 +20,7 @@ import { RippleToken } from "./RippleToken";
  *
  * The pressed state actives either using both pointer and keyboard events. For keyboard events, `SPACE` activate a ripple.
  *
- * Alternately, you can use the `show` and `hide` methods to programmatically control the ripple.
+ * Alternatively, you can use the `show` and `hide` methods to programmatically control the ripple.
  *
  * @example
  * The following example illustrates attaching a ripple to an interactive element. In this example, the parenting div

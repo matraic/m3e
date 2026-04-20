@@ -20,7 +20,7 @@ import { ElevationToken } from "./ElevationToken";
  * The component can also be attached to another element using the `for` attribute.  When attached, elevation will
  * be lifted by 1 level on hover. This can be disabled using the `disabled` attribute.
  *
- * Alternately, use the `attach` and `detach` methods to programmatically attach and detach this element to another.
+ * Alternatively, use the `attach` and `detach` methods to programmatically attach and detach this element to another.
  *
  * @example
  * The following example illustrates basic markup. Note how the parenting element's position is `relative`. A parenting

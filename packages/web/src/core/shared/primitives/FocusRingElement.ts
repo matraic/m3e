@@ -18,7 +18,7 @@ import { FocusRingToken } from "./FocusRingToken";
  * The focus ring is displayed when the interactive element receives visible focus and hidden when focus is lost.
  * This can be disabled using the `disabled` attribute.
  *
- * Alternately, you can use the `show` and `hide` methods to programmatically control the focus ring.
+ * Alternatively, you can use the `show` and `hide` methods to programmatically control the focus ring.
  *
  * @example
  * The following example illustrates attaching a focus ring to an interactive element. In this example, the parenting div
