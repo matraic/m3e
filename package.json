@@ -10,7 +10,8 @@
     "lint": "npm run lint --workspaces",
     "all": "npm run build && npm run cem && npm run lint",
     "clean": "npm run clean --workspaces",
-    "release": "npm publish --access public --workspaces"
+    "release": "npm publish --access public --workspace=@m3e/web --workspace=@m3e/react",
+    "release:icons": "npm publish --access public --workspace=@m3e/icons"
   },
   "type": "module",
   "devDependencies": {
