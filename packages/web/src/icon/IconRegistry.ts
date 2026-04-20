@@ -16,11 +16,11 @@ export type SvgIconInfo = {
 
 /** Represents the fill-axis SVG data for a single icon. */
 export type SvgIconFillSet = {
-  /** The unfilled (FILL=0) SVG representation of the icon. */
-  outlined: SvgIconInfo;
+  /** The unfilled (FILL=0) SVG representation (or path assuming viewBox="0 -960 960 960") of the icon. */
+  outlined: SvgIconInfo | string;
 
-  /** The filled (FILL=1) SVG representation of the icon. */
-  filled: SvgIconInfo;
+  /** The filled (FILL=1) SVG representation (or path assuming viewBox="0 -960 960 960") of the icon. */
+  filled: SvgIconInfo | string;
 };
 
 /**
@@ -40,8 +40,24 @@ export class IconRegistry {
    * @param {SvgIconFillSet} fillSet The SVG data for both fill states (outlined and filled) of the icon.
    */
   static addIcon(name: string, variant: IconVariant, fillSet: SvgIconFillSet): void {
-    this.#validateSvgIconInfo(name, variant, fillSet.outlined);
-    this.#validateSvgIconInfo(name, variant, fillSet.filled);
+    const trustOutlinedViewBox = typeof fillSet.outlined === "string";
+    const trustFilledViewBox = typeof fillSet.filled === "string";
+
+    if (typeof fillSet.outlined === "string") {
+      fillSet.outlined = {
+        viewBox: "0 -960 960 960",
+        path: fillSet.outlined,
+      };
+    }
+    if (typeof fillSet.filled === "string") {
+      fillSet.filled = {
+        viewBox: "0 -960 960 960",
+        path: fillSet.filled,
+      };
+    }
+
+    this.#validateSvgIconInfo(name, variant, fillSet.outlined, trustOutlinedViewBox);
+    this.#validateSvgIconInfo(name, variant, fillSet.filled, trustFilledViewBox);
 
     if (window !== undefined) {
       const key = this.#createKey(name, variant);
@@ -113,8 +129,8 @@ export class IconRegistry {
   }
 
   /** @private */
-  static #validateSvgIconInfo(name: string, variant: IconVariant, info: SvgIconInfo): void {
-    if (!VIEW_BOX_PATTERN.test(info.viewBox)) {
+  static #validateSvgIconInfo(name: string, variant: IconVariant, info: SvgIconInfo, trustViewBox = false): void {
+    if (!trustViewBox && !VIEW_BOX_PATTERN.test(info.viewBox)) {
       throw new Error(`Unable to register icon '${name}' for variant '${variant}'. Invalid viewbox data.`);
     }
     if (!PATH_DATA_PATTERN.test(info.path)) {

@@ -3,7 +3,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const PATH_DATA_PATTERN = /^[MmLlHhVvCcSsQqTtAaZz0-9.,\s-]+$/;
-const VIEW_BOX_PATTERN = /^-?\d+(\.\d+)?\s+-?\d+(\.\d+)?\s+-?\d+(\.\d+)?\s+-?\d+(\.\d+)?$/;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -28,30 +27,22 @@ for (const variant of variants) {
     const svg = fs.readFileSync(path.join(variantDir, `${iconName}.svg`), "utf8");
     const svgFill = fs.readFileSync(path.join(variantDir, `${iconName}-fill.svg`), "utf8");
 
-    const svgViewBox = svg.match(/<svg[^>]*viewBox="([^"]+)"/)?.[1];
     const svgPath = svg.match(/<path[^>]*d="([^"]+)"/)?.[1];
 
     if (!PATH_DATA_PATTERN.test(svgPath)) {
       console.error(`Unable to register icon '${iconName}' for variant '${variant}'. Invalid outlined path data.`);
     }
-    if (!VIEW_BOX_PATTERN.test(svgViewBox)) {
-      console.error(`Unable to register icon '${iconName}' for variant '${variant}'. Invalid outlined viewbox data.`);
-    }
 
-    const svgFillViewBox = svgFill.match(/<svg[^>]*viewBox="([^"]+)"/)?.[1];
     const svgFillPath = svgFill.match(/<path[^>]*d="([^"]+)"/)?.[1];
 
     if (!PATH_DATA_PATTERN.test(svgFillPath)) {
       console.error(`Unable to register icon '${iconName}' for variant '${variant}'. Invalid filled path data.`);
     }
-    if (!VIEW_BOX_PATTERN.test(svgViewBox)) {
-      console.error(`Unable to register icon '${iconName}' for variant '${variant}'. Invalid filled viewbox data.`);
-    }
 
     fs.writeFileSync(
       path.join(variantDistDir, `${iconName}.js`),
       `import { registerIcon } from '@m3e/web/icon';
-registerIcon('${iconName}','${variant}',{outlined:{viewBox:'${svgViewBox}',path:'${svgPath}'},filled:{viewBox:'${svgFillViewBox}', path: '${svgFillPath}'}});`,
+registerIcon('${iconName}','${variant}',{outlined:'${svgPath}',filled:'${svgFillPath}'});`,
     );
   }
 
