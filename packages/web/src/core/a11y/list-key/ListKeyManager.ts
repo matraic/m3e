@@ -254,9 +254,8 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
       case "PageUp":
         if (modifierAllowed && this.pageUpAndDown) {
           e.preventDefault();
-          const prev = (this.directionality === "ltr" ? this.#findPreviousByIndex : this.#findNextByIndex)(
-            this.activeItem ? Math.max(0, this.items.indexOf(this.activeItem) - this.pageDelta) : 0,
-          );
+          const index = this.activeItem ? Math.max(0, this.items.indexOf(this.activeItem) - this.pageDelta) : 0;
+          const prev = this.directionality === "ltr" ? this.#findPreviousByIndex(index) : this.#findNextByIndex(index);
           if (prev) {
             this.setActiveItem(prev);
           }
@@ -267,11 +266,10 @@ export class ListKeyManager<T extends HTMLElement & TypeaheadItem> extends ListM
       case "PageDown":
         if (modifierAllowed && this.pageUpAndDown) {
           e.preventDefault();
-          const next = (this.directionality === "ltr" ? this.#findNextByIndex : this.#findPreviousByIndex)(
-            this.activeItem
-              ? Math.min(this.items.length - 1, this.items.indexOf(this.activeItem) + this.pageDelta)
-              : this.items.length - 1,
-          );
+          const index = this.activeItem
+            ? Math.min(this.items.length - 1, this.items.indexOf(this.activeItem) + this.pageDelta)
+            : this.items.length - 1;
+          const next = this.directionality === "ltr" ? this.#findNextByIndex(index) : this.#findPreviousByIndex(index);
           if (next) {
             this.setActiveItem(next);
           }
