@@ -49,6 +49,7 @@ Below is a list of all packages in this monorepo, with a short summary and insta
 | -------------------------------------------- | -------------------------------------- | ------------------------ |
 | [**@m3e/web**](./packages/web/README.md)     | Platform‑native Web Components for M3E | `npm install @m3e/web`   |
 | [**@m3e/react**](./packages/react/README.md) | React bindings for M3E Web Components  | `npm install @m3e/react` |
+| [**@m3e/icons**](./packages/icons/README.md) | Icons for M3E Web Components           | `npm install @m3e/icons` |
 
 ## 📍 Roadmap
 
