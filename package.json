@@ -1,7 +1,8 @@
 {
   "workspaces": [
     "packages/web",
-    "packages/react"
+    "packages/react",
+    "packages/icons"
   ],
   "scripts": {
     "build": "npm run build --workspaces",

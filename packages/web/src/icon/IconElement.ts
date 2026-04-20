@@ -3,8 +3,10 @@ import { property, query } from "lit/decorators.js";
 
 import { customElement, Role } from "@m3e/web/core";
 
+import { IconRegistry } from "./IconRegistry";
 import { IconVariant } from "./IconVariant";
 import { IconGrade } from "./IconGrade";
+import { IconWeight } from "./IconWeight";
 
 /**
  * A small symbol used to easily identify an action or category.
@@ -81,9 +83,15 @@ export class M3eIconElement extends Role(LitElement, "img") {
     :host([variant="sharp"]) .icon {
       font-family: "Material Symbols Sharp";
     }
+    svg {
+      font-size: inherit;
+      width: 1em;
+      height: 1em;
+    }
   `;
 
   /** @private */ @query(".icon") private readonly _icon?: HTMLSpanElement;
+  /** @private */ #iconRegistryUnobserve?: () => void;
 
   /** The name of the icon. */
   @property() name: string = "";
@@ -110,7 +118,7 @@ export class M3eIconElement extends Role(LitElement, "img") {
    * A value from 100 to 700 indicating the weight of the icon.
    * @default 400
    */
-  @property({ type: Number }) weight = 400;
+  @property({ type: Number }) weight: IconWeight = 400;
 
   /**
    * A value from 20 to 48 indicating the optical size of the icon.
@@ -129,6 +137,26 @@ export class M3eIconElement extends Role(LitElement, "img") {
     }
 
     super.connectedCallback();
+  }
+
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.#iconRegistryUnobserve?.();
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("name") && !IconRegistry.isIconRegistered(this.name, this.variant)) {
+      this.#iconRegistryUnobserve = IconRegistry.observe(this.name, this.variant, () => {
+        this.requestUpdate();
+        this.#iconRegistryUnobserve?.();
+        this.#iconRegistryUnobserve = undefined;
+      });
+    }
   }
 
   /** @inheritdoc */
@@ -154,7 +182,9 @@ export class M3eIconElement extends Role(LitElement, "img") {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="icon" aria-hidden="true">${this.name}</div>`;
+    return IconRegistry.isIconRegistered(this.name, this.variant)
+      ? IconRegistry.renderIcon(this.name, this.variant, this.filled)
+      : html`<div class="icon" aria-hidden="true">${this.name}</div>`;
   }
 }
 

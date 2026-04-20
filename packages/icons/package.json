@@ -1,0 +1,43 @@
+{
+  "name": "@m3e/icons",
+  "version": "2.3.1",
+  "description": "Icons for M3E Web Components",
+  "author": "matraic <matraic@yahoo.com>",
+  "license": "MIT",
+  "homepage": "https://matraic.github.io/m3e/#/components/icon.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matraic/m3e.git"
+  },
+  "keywords": [
+    "material design",
+    "material symbols",
+    "icons"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./outlined": "./dist/outlined/index.js",
+    "./outlined/*": "./dist/outlined/*.js",
+    "./filled": "./dist/filled/index.js",
+    "./filled/*": "./dist/filled/*.js",
+    "./rounded": "./dist/rounded/index.js",
+    "./rounded/*": "./dist/rounded/*.js",
+    "./sharp": "./dist/sharp/index.js",
+    "./sharp/*": "./dist/sharp/*.js"
+  },
+  "scripts": {
+    "build": "rimraf dist && node build.js",
+    "cem": "echo \"@m3e/icons: skipping cem\"",
+    "lint": "echo \"@m3e/icons: skipping lint\"",
+    "clean": "rimraf dist"
+  },
+  "peerDependencies": {
+    "@m3e/web": "^2.3.1"
+  },
+  "devDependencies": {
+    "@material-symbols/svg-400": "^0.44.2"
+  }
+}
