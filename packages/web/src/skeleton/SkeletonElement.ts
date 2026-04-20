@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, DesignToken, ReconnectedCallback, waitForUpgrade } from "@m3e/web/core";
+import { customElement, DesignToken, ReconnectedCallback, registerStyleSheet, waitForUpgrade } from "@m3e/web/core";
 import { positionAnchor } from "@m3e/web/core/anchoring";
 
 import { SkeletonShape } from "./SkeletonShape";
@@ -45,6 +45,73 @@ import { SkeletonAnimation } from "./SkeletonAnimation";
  */
 @customElement("m3e-skeleton")
 export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
+  static {
+    if (window !== undefined) {
+      registerStyleSheet(css`
+        @property --_m3e-skeleton-wave-pct {
+          syntax: "<number>";
+          inherits: true;
+          initial-value: 0;
+        }
+        @property --_m3e-skeleton-pulse-norm {
+          syntax: "<number>";
+          inherits: true;
+          initial-value: 0;
+        }
+        :root {
+          --_m3e-skeleton-wave-span: 40vw;
+          --_m3e-skeleton-pulse-min: 0.06;
+        }
+      `);
+
+      const reducedMediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const forcedColorsMediaQuery = window.matchMedia("(forced-colors: active)");
+
+      let waveAnimation: Animation | null = null;
+      let pulseAnimation: Animation | null = null;
+
+      function startAnimations(): void {
+        waveAnimation = document.documentElement.animate(
+          [{ ["--_m3e-skeleton-wave-pct"]: 0 }, { ["--_m3e-skeleton-wave-pct"]: 1 }],
+          {
+            duration: 2100,
+            iterations: Infinity,
+            easing: "linear",
+          },
+        );
+
+        pulseAnimation = document.documentElement.animate(
+          [
+            { ["--_m3e-skeleton-pulse-norm"]: 0 },
+            { ["--_m3e-skeleton-pulse-norm"]: 1 },
+            { ["--_m3e-skeleton-pulse-norm"]: 0 },
+          ],
+          {
+            duration: 1200,
+            iterations: Infinity,
+            easing: "ease-in-out",
+          },
+        );
+      }
+
+      function applyMotionState(): void {
+        if (reducedMediaQuery.matches || forcedColorsMediaQuery.matches) {
+          waveAnimation?.pause();
+          pulseAnimation?.pause();
+        } else {
+          waveAnimation?.play();
+          pulseAnimation?.play();
+        }
+      }
+
+      startAnimations();
+      applyMotionState();
+
+      reducedMediaQuery.addEventListener("change", applyMotionState);
+      forcedColorsMediaQuery.addEventListener("change", applyMotionState);
+    }
+  }
+
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -93,43 +160,34 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
       left: 0;
       width: 100%;
       height: 100%;
-      animation: pulse 1.2s ease-in-out infinite;
+      opacity: calc(
+        var(--m3e-skeleton-accent-opacity, 0.06) + (1 - var(--m3e-skeleton-accent-opacity, 0.06)) *
+          var(--_m3e-skeleton-pulse-norm)
+      );
       background-color: var(--m3e-skeleton-tint-color, ${DesignToken.color.surfaceDim});
     }
     :host([animation="wave"]:not([loaded])) .shape::after {
       content: "";
       position: absolute;
       top: 0;
-      left: -150%;
+      left: 0;
+      width: 100%;
       height: 100%;
-      width: 150%;
-      opacity: var(--m3e-skeleton-accent-opacity, 6%);
-      background: linear-gradient(
+      background-image: linear-gradient(
         90deg,
-        transparent,
-        var(--m3e-skeleton-accent-color, ${DesignToken.color.onSurface}),
-        transparent
+        transparent 0%,
+        transparent 35%,
+        var(--m3e-skeleton-accent-color, ${DesignToken.color.onSurface}) 50%,
+        transparent 65%,
+        transparent 100%
       );
-      animation: wave 2.1s linear infinite;
-    }
-    @keyframes pulse {
-      0% {
-        opacity: 1;
-      }
-      50% {
-        opacity: var(--m3e-skeleton-accent-opacity, 6%);
-      }
-      100% {
-        opacity: 1;
-      }
-    }
-    @keyframes wave {
-      0% {
-        left: -150%;
-      }
-      100% {
-        left: 100%;
-      }
+      background-attachment: fixed;
+      background-size: calc(100vw + var(--_m3e-skeleton-wave-span) * 2) 100%;
+      background-position-x: calc(
+        var(--_m3e-skeleton-wave-pct) * (100vw + var(--_m3e-skeleton-wave-span) * 2) - var(--_m3e-skeleton-wave-span)
+      );
+
+      opacity: var(--m3e-skeleton-accent-opacity, 0.06);
     }
     @media (forced-colors: active) {
       :host([loaded]) .shape {
