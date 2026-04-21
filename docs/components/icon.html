@@ -30,17 +30,23 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.3.1/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.3.1/dist/core-a11y.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.3.2/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.3.2/dist/core-a11y.min.js",
+          "@m3e/web/icon": "https://cdn.jsdelivr.net/npm/@m3e/web@2.3.2/dist/icon.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.1/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.1/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.1/dist/toc.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.1/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.1/dist/icon.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.2/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.2/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.2/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.2/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.2/dist/icon.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icons/dist/outlined/search.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icons/dist/outlined/home.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icons/dist/outlined/settings.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icons/dist/outlined/favorite.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/icons/dist/outlined/notifications.js"></script>
     <script src="../main.js"></script>
   </head>
   <body id="body">
@@ -76,6 +82,10 @@
           Can I Use's Variable Fonts
         </a>
         to determine whether your user's browser supports variable fonts.
+      </p>
+      <p>
+        Alternatively, the <code>@m3e/icons</code> package provides SVG versions of Material Symbols that register
+        automatically with <code>m3e-icon</code>. See the SVG Icons section below for usage details.
       </p>
 
       <m3e-card variant="filled" class="install"><pre slot="content">import "@m3e/web/icon";</pre></m3e-card>
@@ -131,6 +141,48 @@
       <p>
         The <code>optical-size</code> attribute supports values from <code>20</code> to <code>48</code> indicating the
         optical size of the icon.
+      </p>
+
+      <m3e-heading variant="headline" size="small" level="3">SVG icons</m3e-heading>
+
+      <p>
+        As an alternative to use of variable fonts, you can use the <code>@m3e/icons</code> package for applications
+        that prefer SVG-based icons. This package supplies SVG data sourced from
+        <code>@material-symbols/svg-400</code> and integrates with the existing <code>m3e-icon</code> component through
+        an internal icon registry.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-icon variant="outlined" name="search"></m3e-icon>
+          <m3e-icon variant="outlined" name="home"></m3e-icon>
+          <m3e-icon variant="outlined" name="settings"></m3e-icon>
+          <m3e-icon variant="outlined" name="favorite"></m3e-icon>
+          <m3e-icon variant="outlined" name="notifications"></m3e-icon>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+import "@m3e/icons/outlined/search";
+import "@m3e/icons/outlined/home";
+import "@m3e/icons/outlined/settings";
+import "@m3e/icons/outlined/favorite";
+import "@m3e/icons/outlined/notifications";</pre
+        >
+      </m3e-card>
+      <p>
+        Icons are organized by Material Symbols variant families (<code>outlined</code>, <code>rounded</code>,
+        <code>sharp</code>). You can register a specific icon by importing its module:
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">import "@m3e/icons/outlined/search";</pre>
+      </m3e-card>
+      <p>Or register an entire variant family at once:</p>
+      <m3e-card variant="filled" class="install"><pre slot="content">import "@m3e/icons/outlined";</pre></m3e-card>
+
+      <p>
+        Each icon module performs a side-effect registration with the internal registry used by
+        <code>m3e-icon</code>. Once registered, the icon becomes available for rendering. If an icon is not registered,
+        it will fall back to the Material Symbols variable font.
       </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
@@ -197,7 +249,7 @@
       </p>
       <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
 
-      <api-viewer only="m3e-icon" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.1/dist/custom-elements.json">
+      <api-viewer only="m3e-icon" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.3.2/dist/custom-elements.json">
       </api-viewer>
     </m3e-theme>
   </body>

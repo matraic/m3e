@@ -32,8 +32,8 @@ Planned components which have not yet entered development:
 
 ## 🏛️ Past Milestones
 
-- **2.3.0 — 2.3.1 — Feature release + patch releases**
-  Added `@m3e/web/split-pane` and `@m3e/web/skeleton`, bug fixes.
+- **2.3.0 — 2.3.2 — Feature release + patch releases**
+  Added `@m3e/web/split-pane`, `@m3e/web/skeleton`, and `@m3e/icons`, bug fixes.
 
 - **2.2.0 — 2.2.2 — Feature release + patch releases**
   Added `@m3e/web/calendar`, `@m3e/web/datepicker`, `@m3e/web/search`, and `change` event to `@m3e/web/autocomplete`, bug fixes.
