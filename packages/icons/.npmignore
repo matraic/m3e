@@ -1,2 +1,3 @@
 .prettierignore
 build.js
+!dist/
