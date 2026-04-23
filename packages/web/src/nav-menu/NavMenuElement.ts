@@ -289,10 +289,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
           } else {
             const parent = item.parentItem;
             if (parent) {
-              requestAnimationFrame(() => {
-                parent.collapse();
-                this[selectionManager].setActiveItem(parent);
-              });
+              this[selectionManager].setActiveItem(parent);
             }
           }
         } else if (item.hasChildItems && !item.open) {
@@ -310,10 +307,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
           } else {
             const parent = item.parentItem;
             if (parent) {
-              requestAnimationFrame(() => {
-                parent.collapse();
-                this[selectionManager].setActiveItem(parent);
-              });
+              this[selectionManager].setActiveItem(parent);
             }
           }
         } else if (item.hasChildItems && !item.open) {
