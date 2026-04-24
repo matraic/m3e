@@ -264,7 +264,9 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
         e.preventDefault();
 
         if (e.key === " " && item.ripple && !item.ripple.visible) {
+          item.ripple.centered = true;
           item.ripple.show(0, 0, true);
+          item.ripple.centered = false;
         }
 
         if (item.hasChildItems) {
