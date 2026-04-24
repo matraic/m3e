@@ -29,10 +29,9 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  *
  * @description
  * The `m3e-nav-menu-item` component represents an expandable, selectable item within a navigation menu.
- * It supports nested child items, selection, disabled and indeterminate states, and emits events for
- * open/close transitions. The component is highly customizable via slots and CSS custom properties, and
- * is designed for accessible, keyboard-navigable menu structures.
- *
+ * It supports nested child items, selection and disabled states, and emits events for open/close transitions.
+ * The component is highly customizable via slots and CSS custom properties, and is designed for accessible,
+ * keyboard-navigable menu structures.
  *
  * @example
  * The following example illustrates a navigation menu with a top-level group of menu items.
@@ -96,7 +95,6 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  * @slot toggle-icon - Renders the toggle icon.
  *
  * @attr disabled - Whether the element is disabled.
- * @attr indeterminate - Whether the element's selected / checked state is indeterminate.
  * @attr open - Whether the item is expanded.
  * @attr selected - Whether the item is selected.
  *

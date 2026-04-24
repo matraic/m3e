@@ -100,12 +100,11 @@ This section details the attributes, slots, events, and CSS custom properties av
 
 #### ⚙️ Attributes
 
-| Attribute       | Type      | Default | Description                                                 |
-| --------------- | --------- | ------- | ----------------------------------------------------------- |
-| `disabled`      | `boolean` | `false` | Whether the item is disabled.                               |
-| `indeterminate` | `boolean` | `false` | Whether the item's selected/checked state is indeterminate. |
-| `open`          | `boolean` | `false` | Whether the item is expanded.                               |
-| `selected`      | `boolean` | `false` | Whether the item is selected.                               |
+| Attribute  | Type      | Default | Description                   |
+| ---------- | --------- | ------- | ----------------------------- |
+| `disabled` | `boolean` | `false` | Whether the item is disabled. |
+| `open`     | `boolean` | `false` | Whether the item is expanded. |
+| `selected` | `boolean` | `false` | Whether the item is selected. |
 
 #### 🔔 Events
 
