@@ -398,6 +398,9 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       );
     }
     @media (forced-colors: active) {
+      .base {
+        transition: none;
+      }
       :host(:disabled) ::slotted([slot="leading"]),
       :host(:disabled) ::slotted([slot="leading-icon"]),
       :host(:disabled) .content,
