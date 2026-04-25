@@ -452,7 +452,7 @@ export class M3eTreeItemElement extends Selected(
         class="group"
         role="group"
         aria-hidden="${ifDefined(this._hasChildItems ? undefined : "true")}"
-        ?open="${this._hasChildItems && this.open}"
+        ?open="${this.open}"
         @opening="${this.#handleCollapsibleEvent}"
         @opened="${this.#handleCollapsibleEvent}"
         @closing="${this.#handleCollapsibleEvent}"
@@ -525,7 +525,6 @@ export class M3eTreeItemElement extends Selected(
   /** @private */
   #handleTreeChange(): void {
     this._multi = this.#tree?.multi === true;
-    console.log(this._multi);
     setCustomState(this, "-multi", this._multi);
   }
 
