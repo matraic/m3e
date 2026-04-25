@@ -84,6 +84,30 @@ export class M3ePseudoCheckboxElement extends CheckedIndeterminate(Disabled(Role
         transparent
       );
     }
+    svg {
+      pointer-events: none;
+    }
+    @media (forced-colors: active) {
+      :host(:not([disabled])[checked]),
+      :host(:not([disabled])[indeterminate]) {
+        border-color: Highlight;
+        background-color: Highlight;
+        color: HighlightText;
+      }
+      :host(:not([disabled]):not([checked]):not([indeterminate])) {
+        border-color: CanvasText;
+        background: Canvas;
+      }
+      :host([disabled]:not([checked]):not([indeterminate])) {
+        border-color: GrayText;
+        background-color: Canvas;
+      }
+      :host([disabled][checked]),
+      :host([disabled][indeterminate]) {
+        background-color: GrayText;
+        color: Canvas;
+      }
+    }
   `;
 
   /** @inheritdoc */

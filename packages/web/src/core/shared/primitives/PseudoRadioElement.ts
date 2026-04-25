@@ -54,6 +54,23 @@ export class M3ePseudoRadioElement extends Checked(Disabled(Role(LitElement, "no
     :host([disabled]) {
       color: color-mix(in srgb, var(--m3e-radio-disabled-icon-color, ${DesignToken.color.onSurface}) 38%, transparent);
     }
+    @media (forced-colors: active) {
+      :host {
+        border-radius: 50%;
+      }
+      :host(:not([checked])) {
+        color: CanvasText;
+        background-color: Canvas;
+      }
+      :host([checked]) {
+        color: HighlightText;
+        background-color: Highlight;
+      }
+      :host([disabled]) {
+        color: GrayText;
+        background-color: Canvas;
+      }
+    }
   `;
 
   /** @inheritdoc */
