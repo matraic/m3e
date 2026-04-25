@@ -22,7 +22,7 @@ The following components are planned for future release:
 
 ## 🏛️ Past Milestones
 
-- **2.4.0 — Feature release**
+- **2.4.0 — 2.4.1 Feature release + patch releases**
   Added `@m3e/web/tree`, bug fixes.
 
 - **2.3.0 — 2.3.2 — Feature release + patch releases**
