@@ -52,6 +52,7 @@ const inputs = [
   "toc",
   "toolbar",
   "tooltip",
+  "tree",
 ];
 
 export default createConfig({

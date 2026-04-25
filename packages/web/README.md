@@ -72,6 +72,7 @@ Below is a list of all modules in this monorepo, with a short summary and import
 | [**@m3e/web/toc**](https://github.com/matraic/m3e/tree/HEAD/packages/web/src/toc/README.md)                               | Hierarchical, interactive table of contents for in-page navigation, with automatic heading detection.                                                                 | `import "@m3e/web/toc";`                |
 | [**@m3e/web/toolbar**](https://github.com/matraic/m3e/tree/HEAD/packages/web/src/toolbar/README.md)                       | Presents contextual actions, navigation, and controls, supporting orientation, shape, and variant customization.                                                      | `import "@m3e/web/toolbar";`            |
 | [**@m3e/web/tooltip**](https://github.com/matraic/m3e/tree/HEAD/packages/web/src/tooltip/README.md)                       | Provides contextual information in response to user interaction, positioned relative to a target element.                                                             | `import "@m3e/web/tooltip";`            |
+| [**@m3e/web/tree**](https://github.com/matraic/m3e/tree/HEAD/packages/web/src/tree/README.md)                             | Presents hierarchical data in a tree structure.                                                                                                                       | `import "@m3e/web/tree";`               |
 
 ## 📍 Roadmap
 

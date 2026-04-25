@@ -61,7 +61,8 @@
     "theme",
     "toc",
     "toolbar",
-    "tooltip"
+    "tooltip",
+    "tree"
   ],
   "type": "module",
   "exports": {
@@ -288,6 +289,10 @@
     "./tooltip": {
       "types": "./dist/src/tooltip/index.d.ts",
       "default": "./dist/tooltip.js"
+    },
+    "./tree": {
+      "types": "./dist/src/tree/index.d.ts",
+      "default": "./dist/tree.js"
     },
     "./all": {
       "types": "./dist/src/all.d.ts",

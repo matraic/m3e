@@ -49,3 +49,4 @@ export * from "./theme";
 export * from "./toc";
 export * from "./toolbar";
 export * from "./tooltip";
+export * from "./tree";

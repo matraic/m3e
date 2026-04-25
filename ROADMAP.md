@@ -10,17 +10,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ### ✨ Components
 
-The following components are planned for future release.
-
-#### 🛠️ In Progress
-
-Components in early stages of development include:
-
-- Tree
-
-#### 🔮 Not Yet Started
-
-Planned components which have not yet entered development:
+The following components are planned for future release:
 
 - Inputs (Numeric, Masked, Date, Datetime)
 - Time Picker
