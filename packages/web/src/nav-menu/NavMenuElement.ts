@@ -181,20 +181,44 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
   }
 
   /**
-   * Expands the specified items, or all items if no items are provided.
-   * @param {M3eNavMenuItemElement | undefined} items The items to expand.
+   * Expands all items, and optionally, all descendants.
+   * @param {boolean} [descendants=false] Whether to expand all descendants.
    */
-  expand(items?: M3eNavMenuItemElement[]): void {
-    (items ?? this[selectionManager].items).forEach((x) => x.expand());
+  expand(descendants?: boolean): void;
+
+  /**
+   * Expands the specified items, and optionally, all descendants.
+   * @param {M3eNavMenuItemElement[]} items The items to expand.
+   * @param {boolean} [descendants=false] Whether to expand all descendants.
+   */
+  expand(items: M3eNavMenuItemElement[], descendants?: boolean): void;
+
+  /** @internal */
+  expand(itemsOrDescendants?: M3eNavMenuItemElement[] | boolean, maybeDescendants: boolean = false): void {
+    const items = Array.isArray(itemsOrDescendants) ? itemsOrDescendants : this[selectionManager].items;
+    const descendants = typeof itemsOrDescendants === "boolean" ? itemsOrDescendants : maybeDescendants;
+    items.forEach((x) => x.expand(descendants));
   }
 
   /**
-   * Collapses the specified items, or all items if no items are provided.
-   * @param {M3eNavMenuItemElement | undefined} items The items to collapse.
+   * Collapses all items, and optionally, all descendants.
+   * @param {boolean} [descendants=false] Whether to collapse all descendants.
    */
-  collapse(items?: M3eNavMenuItemElement[]): void {
-    (items ?? this[selectionManager].items).forEach((x) => x.collapse());
+  collapse(descendants?: boolean): void;
 
+  /**
+   * Collapses the specified items, and optionally, all descendants.
+   * @param {M3eNavMenuItemElement[]} items The items to collapse.
+   * @param {boolean} [descendants=false] Whether to collapse all descendants.
+   */
+  collapse(items: M3eNavMenuItemElement[], descendants?: boolean): void;
+
+  /** @internal */
+  collapse(itemsOrDescendants?: M3eNavMenuItemElement[] | boolean, maybeDescendants: boolean = false): void {
+    const items = Array.isArray(itemsOrDescendants) ? itemsOrDescendants : this[selectionManager].items;
+    const descendants = typeof itemsOrDescendants === "boolean" ? itemsOrDescendants : maybeDescendants;
+
+    items.forEach((x) => x.collapse(descendants));
     const activeItem = this[selectionManager].activeItem;
     if (activeItem && !activeItem.visible) {
       for (let parent = activeItem.parentItem; parent; parent = parent.parentItem) {
