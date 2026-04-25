@@ -4,7 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 2.3.0 Release
+- 2.4.0 Release
 
 ## 🔮 Future
 
@@ -21,6 +21,9 @@ The following components are planned for future release:
 - MCP Server enabling IDEs and AI tools to query local knowledge about components and documentation
 
 ## 🏛️ Past Milestones
+
+- **2.4.0 — Feature release**
+  Added `@m3e/web/tree`, bug fixes.
 
 - **2.3.0 — 2.3.2 — Feature release + patch releases**
   Added `@m3e/web/split-pane`, `@m3e/web/skeleton`, and `@m3e/icons`, bug fixes.
