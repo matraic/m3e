@@ -39,7 +39,6 @@ Please review and adhere to the [Code of Conduct](CODE_OF_CONDUCT.md) to foster 
 
 - Follow Material 3 design and accessibility standards.
 - Write clean, modular, and well-documented code.
-- Include tests for new features and bug fixes.
 - Use conventional commit messages.
 - Be responsive to feedback during code review.
 
