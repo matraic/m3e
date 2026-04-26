@@ -47,16 +47,17 @@ This section details the attributes, slots, events, and CSS custom properties av
 
 #### ⚙️ Attributes
 
-| Attribute       | Type      | Default | Description                                                                                   |
-| --------------- | --------- | ------- | --------------------------------------------------------------------------------------------- |
-| `detent`        | `number`  | `0`     | The zero-based index of the detent the sheet should open to.                                  |
-| `detents`       | `string`  | —       | Detents (discrete height states) the sheet can snap to.                                       |
-| `handle`        | `boolean` | `false` | Whether to display a drag handle and enable the top region of the sheet as a gesture surface. |
-| `handle-label`  | `string`  | —       | The accessible label given to the drag handle.                                                |
-| `hideable`      | `boolean` | `false` | Whether the bottom sheet can hide when swiped down.                                           |
-| `hide-friction` | `number`  | —       | The friction coefficient to hide the sheet, or set it to the next closest expanded detent.    |
-| `modal`         | `boolean` | `false` | Whether the bottom sheet behaves as a modal.                                                  |
-| `open`          | `boolean` | `false` | Whether the bottom sheet is open.                                                             |
+| Attribute         | Type      | Default | Description                                                                                                                            |
+| ----------------- | --------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `detent`          | `number`  | `0`     | The zero-based index of the detent the sheet should open to.                                                                           |
+| `detents`         | `string`  | —       | Detents (discrete height states) the sheet can snap to.                                                                                |
+| `handle`          | `boolean` | `false` | Whether to display a drag handle and enable the top region of the sheet as a gesture surface.                                          |
+| `handle-label`    | `string`  | —       | The accessible label given to the drag handle.                                                                                         |
+| `hideable`        | `boolean` | `false` | Whether the bottom sheet can hide when swiped down.                                                                                    |
+| `hide-friction`   | `number`  | —       | The friction coefficient to hide the sheet.                                                                                            |
+| `modal`           | `boolean` | `false` | Whether the bottom sheet behaves as a modal.                                                                                           |
+| `open`            | `boolean` | `false` | Whether the bottom sheet is open.                                                                                                      |
+| `overshoot-limit` | `number`  | `4`     | A fractional value, between 0 and 100, indicating the maximum visual overshoot allowed when dragging past the minimum or maximum size. |
 
 #### 🧩 Slots
 

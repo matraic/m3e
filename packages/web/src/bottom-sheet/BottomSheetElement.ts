@@ -80,9 +80,10 @@ import "@m3e/web/core/a11y";
  * @attr handle - Whether to display a drag handle and enable the top region of the sheet as a gesture surface for dragging between detents.
  * @attr handle-label - The accessible label given to the drag handle.
  * @attr hideable - Whether the bottom sheet can hide when its swiped down.
- * @attr hide-friction - The friction coefficient to hide the sheet, or set it to the next closest expanded detent.
+ * @attr hide-friction - The friction coefficient to hide the sheet.
  * @attr modal - Whether the bottom sheet behaves as modal.
  * @attr open - Whether the bottom sheet is open.
+ * @attr overshoot-limit - A fractional value, between 0 and 100, indicating the maximum visual overshoot allowed when dragging past the minimum or maximum size.
  *
  * @fires opening - Emitted when the sheet begins to open.
  * @fires opened - Emitted when the sheet has opened.
@@ -370,7 +371,13 @@ export class M3eBottomSheetElement extends EventAttribute(
   });
 
   /** @private */ #trigger: Element | null = null;
-  /** @private */ #dragState?: { startY: number; startHeight: number; maxHeight: number; minHeight: number };
+  /** @private */ #dragState?: {
+    startY: number;
+    startHeight: number;
+    effectiveMaxHeight: number;
+    maxHeight: number;
+    minHeight: number;
+  };
   /** @private */ #dragged = false;
   /** @private */ #activeDetent = 0;
   /** @private */ #requestDetent?: number;
@@ -422,10 +429,16 @@ export class M3eBottomSheetElement extends EventAttribute(
   @property({ type: Boolean, reflect: true }) hideable = false;
 
   /**
-   * The friction coefficient to hide the sheet, or set it to the next closest expanded detent.
+   * The friction coefficient to hide the sheet.
    * @default 0.5
    */
   @property({ attribute: "hide-friction", type: Number }) hideFriction = 0.5;
+
+  /**
+   * A fractional value, between 0 and 100, indicating the maximum visual overshoot allowed when dragging past the minimum or maximum size.
+   * @default 4
+   */
+  @property({ attribute: "overshoot-limit", type: Number }) overshootLimit = 4;
 
   /**
    * Shows the sheet.
@@ -650,10 +663,15 @@ export class M3eBottomSheetElement extends EventAttribute(
     this.#velocityTracker.reset();
     this.#velocityTracker.add(e.clientY);
 
+    const maxHeight = this.#computeMaxHeight();
+    const effectiveMaxHeight =
+      this.detents.length > 0 ? Math.max(...this.detents.map((x) => this.#computeDetentHeight(x))) : maxHeight;
+
     this.#dragState = {
       startY: e.clientY,
       startHeight: this.clientHeight,
-      maxHeight: this.#computeMaxHeight(),
+      effectiveMaxHeight,
+      maxHeight,
       minHeight: this.#computeMinHeight(),
     };
     this.#dragged = false;
@@ -675,11 +693,23 @@ export class M3eBottomSheetElement extends EventAttribute(
 
     let newHeight = this.#dragState.startHeight - (e.clientY - this.#dragState.startY);
     if (newHeight < this.#dragState.minHeight) {
-      const overshoot = (this.#dragState.minHeight - newHeight) * this.hideFriction;
-      newHeight = this.#dragState.minHeight - overshoot;
+      if (this.hideable) {
+        const overshoot = (this.#dragState.minHeight - newHeight) * this.hideFriction;
+        newHeight = this.#dragState.minHeight - overshoot;
+      } else {
+        const overshoot = this.#dragState.minHeight - newHeight;
+        const overshootLimit = this.#dragState.maxHeight * (this.overshootLimit / 100);
+        const compressed = (overshootLimit * overshoot) / (overshoot + overshootLimit);
+        newHeight = this.#dragState.minHeight - compressed;
+      }
+    } else if (newHeight > this.#dragState.effectiveMaxHeight) {
+      const overshoot = newHeight - this.#dragState.effectiveMaxHeight;
+      const overshootLimit = this.#dragState.maxHeight * (this.overshootLimit / 100);
+      const compressed = (overshootLimit * overshoot) / (overshoot + overshootLimit);
+      newHeight = this.#dragState.effectiveMaxHeight + compressed;
     }
 
-    this.#updateHeight(Math.min(this.#dragState.maxHeight, newHeight));
+    this.#updateHeight(newHeight);
     this.#dragged = true;
   }
 
@@ -725,6 +755,8 @@ export class M3eBottomSheetElement extends EventAttribute(
           this.#snapToDetent(this.#getClosestDetent());
         } else if (this.clientHeight < this.#dragState.minHeight) {
           this.#snapToHeight(this.#dragState.minHeight);
+        } else if (this.clientHeight > this.#dragState.effectiveMaxHeight) {
+          this.#snapToHeight(this.#dragState.effectiveMaxHeight);
         }
       }
     } finally {
