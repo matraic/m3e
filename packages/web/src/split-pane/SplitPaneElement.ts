@@ -73,6 +73,7 @@ import { SplitPaneOrientation } from "./SplitPaneOrientation";
  * @attr max - A fractional value, between 0 and 100, indicating the maximum size of the start pane.
  * @attr min - A fractional value, between 0 and 100, indicating the minimum size of the start pane.
  * @attr orientation - The orientation of the split.
+ * @attr overshoot-limit - A fractional value, between 0 and 100, indicating the maximum visual overshoot allowed when dragging past the minimum or maximum size.
  * @attr step - A fractional value, between 0 and 100, indicating the increment by which to adjust the value when resized via keyboard.
  * @attr value - A fractional value, between 0 and 100, indicating the size of the start pane.
  * @attr wrap-detents - Whether cycling through detents will wrap.
@@ -231,9 +232,8 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
   /** @private */ @query(".base") private _base!: HTMLElement;
   /** @private */ @query(".drag-handle") private _dragHandle!: HTMLElement;
 
-  /** @private */ #dragPos = 0;
+  /** @private */ #dragState?: { startPos: number; startValue: number; cachedSize: number; min: number; max: number };
   /** @private */ #valueChanged = false;
-  /** @private */ #cachedSize = 0;
   /** @private */ #snapAnimation?: Animation;
 
   /** @private */
@@ -275,6 +275,12 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
    * @default 100
    */
   @property({ type: Number }) max = 100;
+
+  /**
+   * A fractional value, between 0 and 100, indicating the maximum visual overshoot allowed when dragging past the minimum or maximum size.
+   * @default 4
+   */
+  @property({ attribute: "overshoot-limit", type: Number }) overshootLimit = 4;
 
   /**
    * A fractional value, between 0 and 100, indicating the increment by which to adjust the value when resized via keyboard.
@@ -548,21 +554,56 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
 
     this._dragHandle.setPointerCapture(e.pointerId);
     this.#valueChanged = false;
-    this.#dragPos = this.currentOrientation === "vertical" ? e.clientY : e.clientX;
-    this.#cachedSize = this.currentOrientation === "vertical" ? this.clientHeight : this.clientWidth;
+
+    let min = this.min;
+    if (min === 0 && this.detents.length > 0) {
+      const detent = this.#getClosestDetent(0);
+      if (detent > -1) {
+        min = this.#computeDetent(this.detents[detent]) ?? this.min;
+      }
+    }
+
+    let max = this.max;
+    if (max === 100 && this.detents.length > 0) {
+      const detent = this.#getClosestDetent(100);
+      if (detent > -1) {
+        max = this.#computeDetent(this.detents[detent]) ?? this.max;
+      }
+    }
+
+    this.#dragState = {
+      startPos: this.currentOrientation === "vertical" ? e.clientY : e.clientX,
+      startValue: this.value,
+      cachedSize: this.currentOrientation === "vertical" ? this.clientHeight : this.clientWidth,
+      min,
+      max,
+    };
   }
 
   /** @private */
   #handlePointerMove(e: PointerEvent): void {
-    if (!this._dragHandle.hasPointerCapture(e.pointerId)) return;
+    if (!this._dragHandle.hasPointerCapture(e.pointerId) || !this.#dragState) return;
 
     const pos = this.currentOrientation === "vertical" ? e.clientY : e.clientX;
-    let delta = this.#cachedSize > 0 ? ((pos - this.#dragPos) / this.#cachedSize) * 100 : 0;
+
+    let delta =
+      this.#dragState.cachedSize > 0 ? ((pos - this.#dragState.startPos) / this.#dragState.cachedSize) * 100 : 0;
     if (M3eDirectionality.current === "rtl" && this.currentOrientation !== "vertical") {
       delta = -delta;
     }
-    if (this.#changeValue(this.value + delta, false)) {
-      this.#dragPos = pos;
+
+    let value = this.#dragState.startValue + delta;
+    if (value < this.#dragState.min) {
+      const overshoot = this.#dragState.min - value;
+      const compressed = (this.overshootLimit * overshoot) / (overshoot + this.overshootLimit);
+      value = this.#dragState.min - compressed;
+    } else if (value > this.#dragState.max) {
+      const overshoot = value - this.#dragState.max;
+      const compressed = (this.overshootLimit * overshoot) / (overshoot + this.overshootLimit);
+      value = this.#dragState.max + compressed;
+    }
+
+    if (this.#changeValue(value, false, true)) {
       this.#valueChanged = true;
     }
   }
@@ -572,8 +613,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
     if (e.pointerType === "mouse" && e.button > 1) return;
     if (this._dragHandle.hasPointerCapture(e.pointerId)) {
       this._dragHandle.releasePointerCapture(e.pointerId);
-      this.#dragPos = 0;
-      this.#cachedSize = 0;
+      this.#dragState = undefined;
 
       const detent = this.#getClosestDetent(this.value);
       if (detent >= 0) {
@@ -581,6 +621,10 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
         if (value !== undefined) {
           this.#snapToValue(value, false);
         }
+      } else if (this.value < this.min) {
+        this.#snapToValue(this.min, false);
+      } else if (this.value > this.max) {
+        this.#snapToValue(this.max, false);
       }
 
       if (this.#valueChanged) {
@@ -728,10 +772,13 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
   }
 
   /** @private */
-  #changeValue(value: number, emitChange = true): boolean {
+  #changeValue(value: number, emitChange = true, allowOvershoot = false): boolean {
     this.#clearSnapAnimation();
 
-    value = Math.max(this.min, Math.min(this.max, value));
+    if (!allowOvershoot) {
+      value = Math.max(this.min, Math.min(this.max, value));
+    }
+
     if (value != this.value) {
       const prev = this.value;
       this.value = value;

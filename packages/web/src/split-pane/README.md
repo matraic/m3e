@@ -36,16 +36,17 @@ This section details the attributes, slots, and CSS custom properties available 
 
 ### ⚙️ Attributes
 
-| Attribute      | Type                                   | Default          | Description                                                                                                             |
-| -------------- | -------------------------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `detents`      | `string`                               |                  | Detents (discrete sizes) the start pane can snap to.                                                                    |
-| `label`        | `string`                               | `"Resize panes"` | The accessible label given to the movable drag handle.                                                                  |
-| `max`          | `number`                               | `100`            | A fractional value, between 0 and 100, indicating the maximum size of the start pane.                                   |
-| `min`          | `number`                               | `0`              | A fractional value, between 0 and 100, indicating the minimum size of the start pane.                                   |
-| `orientation`  | `"horizontal" \| "vertical" \| "auto"` | `"horizontal"`   | The orientation of the split.                                                                                           |
-| `step`         | `number`                               | `1`              | A fractional value, between 0 and 100, indicating the increment by which to adjust the value when resized via keyboard. |
-| `value`        | `number`                               | `50`             | A fractional value, between 0 and 100, indicating the size of the start pane.                                           |
-| `wrap-detents` | `boolean`                              | `false`          | Whether cycling through detents will wrap.                                                                              |
+| Attribute         | Type                                   | Default          | Description                                                                                                                            |
+| ----------------- | -------------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `detents`         | `string`                               |                  | Detents (discrete sizes) the start pane can snap to.                                                                                   |
+| `label`           | `string`                               | `"Resize panes"` | The accessible label given to the movable drag handle.                                                                                 |
+| `max`             | `number`                               | `100`            | A fractional value, between 0 and 100, indicating the maximum size of the start pane.                                                  |
+| `min`             | `number`                               | `0`              | A fractional value, between 0 and 100, indicating the minimum size of the start pane.                                                  |
+| `orientation`     | `"horizontal" \| "vertical" \| "auto"` | `"horizontal"`   | The orientation of the split.                                                                                                          |
+| `overshoot-limit` | `number`                               | `4`              | A fractional value, between 0 and 100, indicating the maximum visual overshoot allowed when dragging past the minimum or maximum size. |
+| `step`            | `number`                               | `1`              | A fractional value, between 0 and 100, indicating the increment by which to adjust the value when resized via keyboard.                |
+| `value`           | `number`                               | `50`             | A fractional value, between 0 and 100, indicating the size of the start pane.                                                          |
+| `wrap-detents`    | `boolean`                              | `false`          | Whether cycling through detents will wrap.                                                                                             |
 
 ### 🧩 Slots
 
