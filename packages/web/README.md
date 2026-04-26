@@ -1,6 +1,11 @@
 # @m3e/web
 
-Material 3 (M3) introduces a new era of expressive design, focusing on personalization, dynamic color, and enhanced accessibility. The `@m3e/web` package provides a comprehensive suite of reusable components, each crafted to deliver seamless integration, consistent theming, and intuitive user experiences.
+@m3e/web is a modern, from‑scratch implementation of [Material Design 3](https://m3.material.io/), built entirely with [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). It delivers a complete, spec‑aligned component suite with dynamic color, expressive motion, and full accessibility — all without framework dependencies.
+
+## 🔗 Showcase & Documentation
+
+Explore the full component suite, live demos, and usage examples:  
+**<https://matraic.github.io/m3e>**
 
 ## 🛡️ Disclaimer
 

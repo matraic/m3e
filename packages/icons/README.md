@@ -1,6 +1,6 @@
 # @m3e/icons
 
-The @m3e/icons package provides SVG‑based icon modules for M3E Web Components, supplying icons for use with the `m3e-icon` component. Each icon is a standalone ES module that registers itself when imported.
+The `@m3e/icons` package provides SVG‑based icon modules for the [`@m3e/web`](https://github.com/matraic/m3e/tree/main/packages/web) component suite. Each icon is a standalone ES module that registers itself when imported, making it available to the `m3e-icon` component.
 
 ## Examples
 

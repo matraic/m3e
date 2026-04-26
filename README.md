@@ -1,10 +1,11 @@
 # M3E
 
-Welcome to the M3E (Material 3 Expressive) monorepo—a unified collection of robust, customizable Web Components built with the latest Material Design 3 guidelines. This repository empowers developers to create visually rich, adaptive, and accessible user interfaces for modern web applications.
+Welcome to the M3E (Material 3 Expressive) monorepo — a unified collection of robust, customizable [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components) built with the latest [Material Design 3](https://m3.material.io/) guidelines. This repository empowers developers to create visually rich, adaptive, and accessible user interfaces for modern web applications.
 
-## 📝 Overview
+## 🔗 Showcase & Documentation
 
-Material 3 (M3) introduces a new era of expressive design, focusing on personalization, dynamic color, and enhanced accessibility. This monorepo provides a comprehensive suite of reusable components, each crafted to deliver seamless integration, consistent theming, and intuitive user experiences.
+Explore the full component suite, live demos, and usage examples:  
+**<https://matraic.github.io/m3e>**
 
 ## 🛡️ Disclaimer
 
