@@ -18,6 +18,7 @@ const inputs = [
   "card",
   "checkbox",
   "chips",
+  "content-pane",
   "datepicker",
   "dialog",
   "divider",

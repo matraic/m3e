@@ -59,6 +59,10 @@
       "types": "./dist/src/chips/index.d.ts",
       "default": "./dist/chips.js"
     },
+    "./content-pane": {
+      "types": "./dist/src/content-pane/index.d.ts",
+      "default": "./dist/content-pane.js"
+    },
     "./core": {
       "types": "./dist/src/core/index.d.ts",
       "default": "./dist/core.js"

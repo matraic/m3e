@@ -12,6 +12,7 @@ const inputs = [
   "card",
   "checkbox",
   "chips",
+  "content-pane",
   "core",
   "datepicker",
   "dialog",

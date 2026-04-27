@@ -3,6 +3,7 @@ export * from "./computeLineCount";
 export * from "./focusWhenReady";
 export * from "./forcedColorsActive";
 export * from "./generateClipPaths";
+export * from "./getScrollbarWidth";
 export * from "./getTextContent";
 export * from "./guid";
 export * from "./hasAssignedNodes";

@@ -23,6 +23,7 @@
     "card",
     "checkbox",
     "chips",
+    "content-pane",
     "datepicker",
     "dialog",
     "divider",
@@ -133,6 +134,10 @@
     "./chips": {
       "types": "./dist/src/chips/index.d.ts",
       "default": "./dist/chips.js"
+    },
+    "./content-pane": {
+      "types": "./dist/src/content-pane/index.d.ts",
+      "default": "./dist/content-pane.js"
     },
     "./datepicker": {
       "types": "./dist/src/datepicker/index.d.ts",
