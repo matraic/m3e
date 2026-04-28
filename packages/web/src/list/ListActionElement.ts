@@ -8,6 +8,8 @@ import { selectionManager } from "@m3e/web/core/a11y";
 import { M3eListItemElement } from "./ListItemElement";
 import { M3eListItemButtonElement } from "./ListItemButtonElement";
 
+import "./ListItemButtonElement";
+
 /**
  * An item in a list that performs an action.
  *

@@ -2,7 +2,6 @@ export * from "./ActionListElement";
 export * from "./ExpandableListItemElement";
 export * from "./ListActionElement";
 export * from "./ListElement";
-export * from "./ListItemButtonElement";
 export * from "./ListItemContentType";
 export * from "./ListItemElement";
 export * from "./ListOptionElement";
