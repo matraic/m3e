@@ -59,9 +59,13 @@ const _clickHandler = Symbol("_clickHandler");
  * Mixin to augment an element with behavior that supports functioning as a link.
  * @template T The type of the base class.
  * @param {T} base The base class.
+ * @param {boolean} [disableClick=false] Whether to disable the default click handler.
  * @returns {Constructor<LinkButtonMixin>} A constructor that implements `LinkButtonMixin`.
  */
-export function LinkButton<T extends Constructor<LitElement>>(base: T): Constructor<LinkButtonMixin> & T {
+export function LinkButton<T extends Constructor<LitElement>>(
+  base: T,
+  disableClick: boolean = false,
+): Constructor<LinkButtonMixin> & T {
   abstract class _LinkButtonMixin extends base implements LinkButtonMixin {
     private [_clickHandler] = async (e: Event) => {
       if (isDisabledInteractiveMixin(this) && this.disabledInteractive) {
@@ -137,7 +141,9 @@ export function LinkButton<T extends Constructor<LitElement>>(base: T): Construc
     /** @inheritdoc */
     override connectedCallback(): void {
       super.connectedCallback();
-      this.addEventListener("click", this[_clickHandler]);
+      if (!disableClick) {
+        this.addEventListener("click", this[_clickHandler]);
+      }
 
       if (this.hasAttribute("href") && this.role === "button") {
         this.role = "link";
@@ -147,7 +153,9 @@ export function LinkButton<T extends Constructor<LitElement>>(base: T): Construc
     /** @inheritdoc */
     override disconnectedCallback(): void {
       super.disconnectedCallback();
-      this.removeEventListener("click", this[_clickHandler]);
+      if (!disableClick) {
+        this.removeEventListener("click", this[_clickHandler]);
+      }
     }
 
     /** @internal */
@@ -181,7 +189,7 @@ export function LinkButton<T extends Constructor<LitElement>>(base: T): Construc
             bubbles: true,
             cancelable: true,
             view: window,
-          })
+          }),
         );
       } else {
         (e.target as HTMLLinkElement).removeAttribute("aria-hidden");

@@ -89,7 +89,7 @@ import { M3eListItemButtonElement } from "./ListItemButtonElement";
  * @cssprop --m3e-list-item-disabled-media-opacity - Opacity for media when disabled.
  */
 @customElement("m3e-list-action")
-export class M3eListActionElement extends LinkButton(M3eListItemElement) {
+export class M3eListActionElement extends LinkButton(M3eListItemElement, true) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
