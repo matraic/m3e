@@ -12,6 +12,7 @@ const inputs = [
   "avatar",
   "badge",
   "bottom-sheet",
+  "breadcrumb",
   "button",
   "button-group",
   "calendar",

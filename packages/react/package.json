@@ -35,6 +35,10 @@
       "types": "./dist/src/bottom-sheet/index.d.ts",
       "default": "./dist/bottom-sheet.js"
     },
+    "./breadcrumb": {
+      "types": "./dist/src/breadcrumb/index.d.ts",
+      "default": "./dist/breadcrumb.js"
+    },
     "./button": {
       "types": "./dist/src/button/index.d.ts",
       "default": "./dist/button.js"
