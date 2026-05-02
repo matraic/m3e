@@ -94,14 +94,14 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
       );
       --m3e-ripple-color: var(--m3e-breadcrumb-item-label-pressed-state-layer-color, ${DesignToken.color.primary});
     }
-    :host([current]:not(:disabled)) .base {
+    :host([current]) .base {
       color: var(--m3e-breadcrumb-item-last-color, ${DesignToken.color.onSurface});
     }
     :host(:not(:disabled):not([current])) {
       cursor: pointer;
       user-select: none;
     }
-    :host(:disabled) .base {
+    :host(:disabled:not([current])) .base {
       color: color-mix(
         in srgb,
         var(--m3e-breadcrumb-item-disabled-color, ${DesignToken.color.onSurface})
@@ -165,6 +165,25 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
   protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
     super.firstUpdated(_changedProperties);
     [this._focusRing, this._stateLayer, this._ripple].forEach((x) => x?.attach(this));
+  }
+
+  /** @inheritdoc */
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+
+    if (changedProperties.has("disabled") || changedProperties.has("current")) {
+      this.ariaDisabled = this.disabled && !this.current ? "true" : null;
+    }
+
+    if (changedProperties.has("current")) {
+      if (this.current) {
+        this.role = null;
+      } else if (this.hasAttribute("href")) {
+        this.role = "link";
+      } else {
+        this.role = "button";
+      }
+    }
   }
 
   /** @inheritdoc */
