@@ -10,6 +10,7 @@ export * from "./calendar";
 export * from "./card";
 export * from "./checkbox";
 export * from "./chips";
+export * from "./content-pane";
 export * from "./core";
 export * from "./datepicker";
 export * from "./dialog";
