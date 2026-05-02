@@ -46,6 +46,7 @@ export class M3eContentPaneElement extends ReconnectedCallback(LitElement) {
       border-radius: inherit;
       box-sizing: border-box;
       overflow-y: auto;
+      outline: none;
       padding-block: var(--m3e-content-pane-container-padding, ${DesignToken.shape.corner.value.extraLarge});
       padding-inline-start: var(--m3e-content-pane-container-padding, ${DesignToken.shape.corner.value.extraLarge});
       padding-inline-end: calc(
