@@ -141,11 +141,25 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
   /** @private */ @query(".state-layer") private readonly _stateLayer?: M3eStateLayerElement;
   /** @private */ @query(".ripple") private readonly _ripple?: M3eRippleElement;
 
+  /** @private */ #clickHandler = (e: Event) => this.#handleClick(e);
+
   /**
    * Indicates the current item in the breadcrumb path.
    * @default undefined
    */
   @property({ reflect: true }) current?: BreadcrumbItemCurrent;
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    this.addEventListener("click", this.#clickHandler);
+    super.connectedCallback();
+  }
+
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener("click", this.#clickHandler);
+  }
 
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
@@ -172,6 +186,14 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
   /** @private */
   #handleSlotChange(e: Event): void {
     setCustomState(this, "-icon-only", isIconOnly(e.target as HTMLSlotElement));
+  }
+
+  /** @private */
+  #handleClick(e: Event): void {
+    // If current and link, disable default link click handler behavior.
+    if (this.current && this.href) {
+      e.preventDefault();
+    }
   }
 }
 

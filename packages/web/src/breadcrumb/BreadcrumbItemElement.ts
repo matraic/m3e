@@ -51,7 +51,7 @@ import "./BreadcrumbItemButtonElement";
  * @cssprop --m3e-breadcrumb-item-disabled-opacity - Disabled opacity used by the breadcrumb item button.
  */
 @customElement("m3e-breadcrumb-item")
-export class M3eBreadcrumbItemElement extends LinkButton(AttachInternals(Role(LitElement, "listitem"))) {
+export class M3eBreadcrumbItemElement extends LinkButton(AttachInternals(Role(LitElement, "listitem")), true) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
