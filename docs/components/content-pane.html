@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Divider for M3E</title>
+    <title>Content Pane for M3E</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Divider for M3E" />
+    <meta name="description" content="Content Pane for M3E" />
     <base href="./" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,8 +17,8 @@
       rel="stylesheet"
     />
     <link href="../main.css" rel="stylesheet" />
-    <link href="divider.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
+    <link href="content-pane.css" rel="stylesheet" />
     <script type="importmap">
       {
         "imports": {
@@ -32,7 +32,9 @@
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
           "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/core-a11y.min.js"
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/core-a11y.min.js",
+          "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/core-anchoring.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/core-bidi.min.js"
         }
       }
     </script>
@@ -40,109 +42,76 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/card.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/heading.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/icon.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/list.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/divider.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/content-pane.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body id="body">
     <m3e-theme strong-focus>
       <m3e-toc class="toc" for="body">
         <span slot="overline">On this page</span>
-        <span slot="title">Divider</span>
+        <span slot="title">Content Pane</span>
       </m3e-toc>
 
-      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Divider</m3e-heading>
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Content Pane</m3e-heading>
       <p>
-        The <code>m3e-divider</code> component visually separates content within layouts, lists, or containers using a
-        thin, unobtrusive line.
+        The <code>m3e-content-pane</code> component renders a shaped surface with padding and vertical scrolling for
+        document-like content.
       </p>
 
-      <m3e-card variant="filled" class="install"><pre slot="content">import "@m3e/web/divider";</pre></m3e-card>
+      <m3e-card variant="filled" class="install"><pre slot="content">import "@m3e/web/content-pane";</pre></m3e-card>
 
       <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
-      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
-
-      <m3e-heading variant="headline" size="small" level="3">Lists</m3e-heading>
       <p>
-        The following example illustrates use of the <code>m3e-divider</code> to provide separators between items in a
-        <code>m3e-list</code>. For more information on lists, see <a href="../components/list.html">List</a>.
+        Use the <code>m3e-content-pane</code> to render a shaped surface with padding and vertical scrolling for
+        document-like content. Inline padding is automatically adjusted to provide uniform spacing by compensating for
+        platform scrollbar width, ensuring the content remains visually centered.
       </p>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-list>
-            <m3e-list-item>Item 1</m3e-list-item>
-            <m3e-divider></m3e-divider>
-            <m3e-list-item>Item 2</m3e-list-item>
-            <m3e-divider></m3e-divider>
-            <m3e-list-item>Item 3</m3e-list-item>
-          </m3e-list>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
-&lt;m3e-list&gt;
-  &lt;m3e-list-item&gt;Item 1&lt;/m3e-list-item&gt;
-  &lt;m3e-divider&gt;&lt;/m3e-divider&gt;
-  &lt;m3e-list-item&gt;Item 2&lt;/m3e-list-item&gt;
-  &lt;m3e-divider&gt;&lt;/m3e-divider&gt;
-  &lt;m3e-list-item&gt;Item 3&lt;/m3e-list-item&gt;
-&lt;/m3e-list&gt;</pre
-        >
-      </m3e-card>
-
-      <m3e-heading variant="headline" size="small" level="3">Standalone</m3e-heading>
-      <p>A <code>m3e-divider</code> can be used on its own to create a horizontal (or vertical) line.</p>
-
-      <m3e-heading variant="headline" size="small" level="3">Inset</m3e-heading>
       <p>
-        Use the <code>inset</code> attribute to control whether the divider is inset. Alternatively, use
-        <code>inset-start</code> and <code>inset-end</code> to control the start or end inset.
+        The following example is shown inside a filled card to demonstrate the content pane's default surface color and
+        shape.
       </p>
-      <m3e-card variant="outlined">
+
+      <m3e-card variant="filled">
         <div slot="content">
-          <m3e-divider></m3e-divider>
-          <br />
-          <m3e-divider inset></m3e-divider>
-          <br />
-          <m3e-divider inset-start></m3e-divider>
-          <br />
-          <m3e-divider inset-end></m3e-divider>
+          <m3e-content-pane>
+            <m3e-heading m3e-toc-ignore variant="display" size="large">Content header</m3e-heading>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae ligula at ipsum pulvinar tincidunt.
+              Integer feugiat, tortor non aliquet facilisis, velit risus faucibus lorem, vitae porttitor justo arcu nec
+              sapien. Curabitur euismod, urna vel placerat dictum, augue sem ullamcorper velit, id interdum neque magna
+              non nisl. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.
+              Suspendisse potenti. Praesent ac orci eget urna volutpat fermentum. Donec non mi sed sapien gravida
+              aliquet. Vivamus at orci id libero scelerisque convallis. Pellentesque habitant morbi tristique senectus
+              et netus et malesuada fames ac turpis egestas. Cras ac erat id velit pharetra luctus. Mauris sed nisl sed
+              arcu facilisis tincidunt. Aliquam erat volutpat. Sed sit amet massa non magna gravida cursus. Sed
+              vulputate, velit id suscipit convallis, lorem ipsum varius neque, sed porttitor lacus justo vitae libero.
+              Integer at felis vel lacus porta posuere. Aenean non lorem ac nulla gravida tincidunt. Pellentesque vel
+              urna id libero dictum gravida. Donec sit amet velit nec sapien ultricies tincidunt. Vivamus in augue id
+              libero sodales tincidunt. Integer id lorem nec sapien bibendum tincidunt. Sed id lacus non justo viverra
+              tincidunt. Curabitur id risus vitae justo tincidunt gravida. Vivamus id ligula non ipsum porta tincidunt.
+              Pellentesque id lorem nec sapien dictum tincidunt. Integer id lorem nec sapien bibendum tincidunt.
+            </p>
+          </m3e-content-pane>
         </div>
       </m3e-card>
+
       <m3e-card variant="filled" class="example">
         <pre slot="content">
-&lt;m3e-divider&gt;&lt;/m3e-divider&gt;
-&lt;m3e-divider inset&gt;&lt;/m3e-divider&gt;
-&lt;m3e-divider inset-start&gt;&lt;/m3e-divider&gt;
-&lt;m3e-divider inset-end&gt;&lt;/m3e-divider&gt;</pre
-        >
-      </m3e-card>
-
-      <m3e-heading variant="headline" size="small" level="3">Orientation</m3e-heading>
-      <p>Use the <code>vertical</code> attribute to control whether a divider is oriented vertically.</p>
-
-      <m3e-card variant="outlined">
-        <div slot="content" class="vertical-example">
-          <m3e-divider vertical></m3e-divider>
-          <m3e-divider vertical inset></m3e-divider>
-          <m3e-divider vertical inset-start></m3e-divider>
-          <m3e-divider vertical inset-end></m3e-divider>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
-&lt;m3e-divider vertical&gt;&lt;/m3e-divider&gt;
-&lt;m3e-divider vertical inset&gt;&lt;/m3e-divider&gt;
-&lt;m3e-divider vertical inset-start&gt;&lt;/m3e-divider&gt;
-&lt;m3e-divider vertical inset-end&gt;&lt;/m3e-divider&gt;</pre
+&lt;m3e-content-pane&gt;
+  &lt;m3e-heading variant=&quot;display&quot; size=&quot;large&quot;&gt;Content header&lt;/m3e-heading&gt;
+  &lt;p&gt;
+    &lt;!-- Content omitted for brevity --&gt;
+  &lt;/p&gt;
+&lt;/m3e-content-pane&gt;</pre
         >
       </m3e-card>
 
       <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
       <p>
-        The <code>m3e-divider</code> applies the ARIA <code>role="separator"</code>, implementing a non-focusable
-        separator used to separate content.
+        By default, content panes are not given an ARIA role, indicating that they are treated as neutral, non-semantic
+        elements in the accessibility tree unless explicitly referenced or annotated.
       </p>
 
       <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
@@ -155,9 +124,9 @@
         >. To use it directly in a browser without a bundler, use a module script similar to the following.
       </p>
 
-      <m3e-card variant="filled" class="install">
+      <m3e-card variant="filled" class="example">
         <pre slot="content">
-&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/divider.js&quot;&gt;&lt;/script&gt;</pre
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/content-pane.js&quot;&gt;&lt;/script&gt;</pre
         >
       </m3e-card>
       <p>
@@ -167,7 +136,7 @@
           target="_blank"
           >import map</a
         >
-        to include dependencies.
+        to include additional dependencies.
       </p>
       <m3e-card variant="filled" class="install">
         <pre slot="content">
@@ -179,8 +148,6 @@
       &quot;lit/&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/&quot;,
       &quot;lit-html&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/+esm&quot;,
       &quot;lit-html/directive.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directive.js&quot;,
-      &quot;lit-html/directives/if-defined.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/if-defined.js&quot;,
-      &quot;lit-html/directives/class-map.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js&quot;,
       &quot;@lit/reactive-element&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm&quot;,
       &quot;@lit/reactive-element/&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/&quot;,
       &quot;@m3e/web/core&quot;: &quot;/node_modules/@m3e/web/dist/core.js&quot;
@@ -198,8 +165,7 @@
         attributes, slots, events and CSS custom properties of each component.
       </p>
       <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
-
-      <api-viewer only="m3e-divider" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/custom-elements.json">
+      <api-viewer only="m3e-content-pane" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/custom-elements.json">
       </api-viewer>
     </m3e-theme>
   </body>

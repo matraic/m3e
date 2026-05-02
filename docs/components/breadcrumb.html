@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Breadcrumb for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Breadcrumb for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "tslib": "https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm",
+          "lit": "https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm",
+          "lit/": "https://cdn.jsdelivr.net/npm/lit@3.3.0/",
+          "lit-html": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/+esm",
+          "lit-html/directive.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directive.js",
+          "lit-html/directives/if-defined.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/if-defined.js",
+          "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
+          "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
+          "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/core-a11y.min.js",
+          "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/core-anchoring.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/core-bidi.min.js"
+        }
+      }
+    </script>
+    <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/icon.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/breadcrumb.min.js"></script>
+    <script src="../main.js"></script>
+  </head>
+  <body id="body">
+    <m3e-theme strong-focus>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Breadcrumb</span>
+      </m3e-toc>
+
+      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Breadcrumb</m3e-heading>
+      <p>
+        The <code>m3e-breadcrumb</code> and <code>m3e-breadcrumb-item</code> components work together to display a
+        hierarchical navigation trail.
+      </p>
+
+      <m3e-card variant="filled" class="install"><pre slot="content">import "@m3e/web/breadcrumb";</pre></m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+      <m3e-heading variant="headline" size="small" level="3">Anatomy</m3e-heading>
+      <p>
+        To create a breadcrumb trail, place your items inside an <code>m3e-breadcrumb</code> element. Each
+        <code>m3e-breadcrumb-item</code> represents one level in the navigation hierarchy, starting with the broadest
+        level and ending with the most specific. The final item is treated as the current level automatically, while the
+        earlier items describe the path that leads to it.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-breadcrumb>
+            <m3e-breadcrumb-item>Dashboard</m3e-breadcrumb-item>
+            <m3e-breadcrumb-item>Reports</m3e-breadcrumb-item>
+            <m3e-breadcrumb-item>Annual</m3e-breadcrumb-item>
+          </m3e-breadcrumb>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-breadcrumb&gt;
+  &lt;m3e-breadcrumb-item&gt;Dashboard&lt;/m3e-breadcrumb-item&gt;
+  &lt;m3e-breadcrumb-item&gt;Reports&lt;/m3e-breadcrumb-item&gt;
+  &lt;m3e-breadcrumb-item&gt;Annual&lt;/m3e-breadcrumb-item&gt;
+&lt;/m3e-breadcrumb&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Links</m3e-heading>
+      <p>
+        Breadcrumb items can also behave like links by specifying a URL using the <code>href</code> attribute. You can
+        also specify <code>target</code>, and <code>rel</code> similar to native anchor tags. Links are not supported
+        for the last item in a breadcrumb because the current level is not interactive.
+      </p>
+
+      <m3e-breadcrumb>
+        <m3e-breadcrumb-item href="https://developer.mozilla.org/en-US/docs/Web" target="_blank">
+          Web
+        </m3e-breadcrumb-item>
+        <m3e-breadcrumb-item href="https://developer.mozilla.org/en-US/docs/Web/API" target="_blank">
+          API
+        </m3e-breadcrumb-item>
+        <m3e-breadcrumb-item> Web Components </m3e-breadcrumb-item>
+      </m3e-breadcrumb>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-breadcrumb&gt;
+  &lt;m3e-breadcrumb-item href=&quot;https://developer.mozilla.org/en-US/docs/Web&quot; target=&quot;_blank&quot;&gt;Web&lt;/m3e-breadcrumb-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-breadcrumb&gt;
+</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Icons</m3e-heading>
+      <p>
+        Use the <code>icon</code> slot to render an icon before the label of an item. For icon-only items, simply place
+        an icon in the default slot. Use <code>item-label</code> to provide an accessible label to the inner button of
+        an icon-only item.
+      </p>
+      <p>When using <code>m3e-icon</code>, the icon in the current breadcrumb item will automatically be filled.</p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-breadcrumb>
+            <m3e-breadcrumb-item item-label="Dashboard"><m3e-icon name="dashboard"></m3e-icon></m3e-breadcrumb-item>
+            <m3e-breadcrumb-item><m3e-icon slot="icon" name="analytics"></m3e-icon>Reports</m3e-breadcrumb-item>
+            <m3e-breadcrumb-item><m3e-icon slot="icon" name="calendar_month"></m3e-icon>Annual</m3e-breadcrumb-item>
+          </m3e-breadcrumb>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-breadcrumb&gt;
+  &lt;m3e-breadcrumb-item item-label=&quot;Dashboard&quot;&gt;
+    &lt;m3e-icon name=&quot;dashboard&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-breadcrumb-item&gt;
+  &lt;m3e-breadcrumb-item&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;analytics&quot;&gt;&lt;/m3e-icon&gt;Reports
+  &lt;/m3e-breadcrumb-item&gt;
+  &lt;m3e-breadcrumb-item&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;calendar_month&quot;&gt;&lt;/m3e-icon&gt;Annual
+  &lt;/m3e-breadcrumb-item&gt;
+&lt;/m3e-breadcrumb&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Custom separators</m3e-heading>
+      <p>
+        Use the <code>separator</code> slot to provide a custom visual separator. The slotted element is cloned into
+        each item's shadow root, replacing the default separator.
+      </p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-breadcrumb>
+            <span slot="separator">/</span>
+            <m3e-breadcrumb-item>Dashboard</m3e-breadcrumb-item>
+            <m3e-breadcrumb-item>Reports</m3e-breadcrumb-item>
+            <m3e-breadcrumb-item>Annual</m3e-breadcrumb-item>
+          </m3e-breadcrumb>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-breadcrumb&gt;
+  &lt;span slot=&quot;separator&quot;&gt;/&lt;/span&gt;
+  &lt;m3e-breadcrumb-item&gt;Dashboard&lt;/m3e-breadcrumb-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-breadcrumb&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="small" level="3">Wrapping</m3e-heading>
+      <p>
+        Breadcrumbs do not wrap by default. When horizontal space is limited, the last item is truncated with an
+        ellipsis. Use the <code>wrap</code> attribute if you want the breadcrumb to wrap lines instead.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-breadcrumb wrap>
+            <m3e-breadcrumb-item>Lorem ipsum dolor sit amet</m3e-breadcrumb-item>
+            <m3e-breadcrumb-item>Consectetur adipiscing elit sed do</m3e-breadcrumb-item>
+            <m3e-breadcrumb-item>Tempor incididunt ut labore et dolore</m3e-breadcrumb-item>
+            <m3e-breadcrumb-item>Magna aliqua ut enim ad minim veniam</m3e-breadcrumb-item>
+            <m3e-breadcrumb-item> Quis nostrud exercitation ullamco laboris nisi ut aliquip </m3e-breadcrumb-item>
+          </m3e-breadcrumb>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-breadcrumb wrap&gt;
+  &lt;!-- Items omitted for brevity --&gt;
+&lt;/m3e-breadcrumb&gt;</pre
+        >
+      </m3e-card>
+
+      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+      <p>
+        Breadcrumbs are given ARIA <code>role="navigation"</code>, indicating that the component represents a
+        navigational landmark. Internally, breadcrumbs organize items within a list, with each item exposed using ARIA
+        <code>role="listitem"</code> to identify it as a step in the breadcrumb trail for assistive technologies. Each
+        breadcrumb item encapsulates its slotted content in either an element with <code>role="button"</code> or
+        <code>role="link"</code>, with the role chosen based on whether an <code>href</code> attribute is set.
+      </p>
+      <p>
+        Separators have <code>aria-hidden="true"</code> to ensure they are always hidden from assistive technologies.
+      </p>
+      <p>
+        When disabled, a breadcrumb item applies <code>aria-disabled="true"</code> to the internal button or link to
+        convey to assistive technologies that the item is present but not actionable.
+      </p>
+      <p>
+        When <code>current</code> is set, the item becomes non-interactive and exposes only
+        <code>role="listitem"</code>. No internal button or link is rendered, and no interactive role is applied. The
+        component reflects the value of <code>current</code> to <code>aria-current</code> on the internal wrapper
+        element that contains the slotted content. If no <code>current</code> value is explicitly provided, the last
+        breadcrumb item automatically receives <code>aria-current="page"</code> to indicate the user's current position.
+        The <code>current</code> attribute accepts the same values as the ARIA <code>aria-current</code> attribute,
+        including <code>page</code>, <code>step</code>, <code>location</code>, <code>date</code>, <code>time</code>, and
+        <code>true</code>.
+      </p>
+      <p>
+        For icon-only items, use the <code>item-label</code> attribute to provide an accessible name for the item's
+        internal button or link.
+      </p>
+      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+      <p>
+        The <code>@m3e/web</code> package uses
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+          target="_blank"
+          >JavaScript Modules</a
+        >. To use it directly in a browser without a bundler, use a module script similar to the following.
+      </p>
+
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/breadcrumb.js&quot;&gt;&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>
+        In addition, you must use an
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+          target="_blank"
+          >import map</a
+        >
+        to include additional dependencies.
+      </p>
+      <m3e-card variant="filled" class="install">
+        <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;tslib&quot;: &quot;https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm&quot;,
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;lit/&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/&quot;,
+      &quot;lit-html&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/+esm&quot;,
+      &quot;lit-html/directive.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directive.js&quot;,
+      &quot;lit-html/directives/if-defined.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/if-defined.js&quot;,
+      &quot;@lit/reactive-element&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm&quot;,
+      &quot;@lit/reactive-element/&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/&quot;,
+      &quot;@m3e/web/core&quot;: &quot;/node_modules/@m3e/web/dist/core.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+        >
+      </m3e-card>
+      <p>For production builds, use the minified files to ensure optimal load performance.</p>
+
+      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+      <p>
+        The <code>@m3e/web</code> package includes a
+        <strong>Custom Elements Manifest</strong> (<code>custom-elements.json</code>), which documents the properties,
+        attributes, slots, events and CSS custom properties of each component.
+      </p>
+      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+      <api-viewer only="m3e-breadcrumb" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/custom-elements.json">
+      </api-viewer>
+      <api-viewer
+        only="m3e-breadcrumb-item"
+        src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.0/dist/custom-elements.json"
+      >
+      </api-viewer>
+    </m3e-theme>
+  </body>
+</html>

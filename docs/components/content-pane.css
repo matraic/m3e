@@ -1,0 +1,3 @@
+div[slot="content"] > m3e-content-pane {
+  height: 300px;
+}

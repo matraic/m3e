@@ -4,7 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 2.4.0 Release
+- 2.5.0 Release
 
 ## 🔮 Future
 
@@ -14,6 +14,7 @@ The following components are planned for future release:
 
 - Inputs (Numeric, Masked, Date, Datetime)
 - Time Picker
+- Carousel
 
 ### 📜 Building with AI
 
@@ -21,6 +22,9 @@ The following components are planned for future release:
 - MCP Server enabling IDEs and AI tools to query local knowledge about components and documentation
 
 ## 🏛️ Past Milestones
+
+- **2.5.0 Feature release**
+  Added `@m3e/web/breadcrumb`, `@m3e/web/content-pane`, bug fixes.
 
 - **2.4.0 — 2.4.1 Feature release + patch releases**
   Added `@m3e/web/tree`, bug fixes.
