@@ -390,7 +390,7 @@ export class M3eRichTooltipElement extends TooltipElementBase {
 
   /** @private */
   #handleContentSlotChange(e: Event): void {
-    this._interactive = M3eInteractivityChecker.findInteractiveElements(this).length > 0;
+    this._interactive = M3eInteractivityChecker.findInteractiveElements(this, true).length > 0;
     this.#contentText = getTextContent(e.target as HTMLSlotElement, true);
     this.#updateMessage();
   }
@@ -401,7 +401,7 @@ export class M3eRichTooltipElement extends TooltipElementBase {
       ?.querySelector(".base")
       ?.classList.toggle("has-actions", hasAssignedNodes(e.target as HTMLSlotElement));
 
-    this._interactive = M3eInteractivityChecker.findInteractiveElements(this).length > 0;
+    this._interactive = M3eInteractivityChecker.findInteractiveElements(this, true).length > 0;
     this.#updateMessage();
   }
 
