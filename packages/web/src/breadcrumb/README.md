@@ -90,5 +90,7 @@ This section describes the attributes and slots available for the breadcrumb com
 | `--m3e-breadcrumb-item-label-focus-state-layer-color`   | Focus state layer color for label breadcrumb items.       |
 | `--m3e-breadcrumb-item-label-pressed-state-layer-color` | Pressed state layer color for label breadcrumb items.     |
 | `--m3e-breadcrumb-item-last-color`                      | Color used for the current breadcrumb item.               |
+| `--m3e-breadcrumb-item-icon-label-space`                | Space between icon and label.                             |
+| `--m3e-breadcrumb-item-icon-size`                       | Size of the icon.                                         |
 | `--m3e-breadcrumb-item-disabled-color`                  | Disabled color used by the breadcrumb item button.        |
 | `--m3e-breadcrumb-item-disabled-opacity`                | Disabled opacity used by the breadcrumb item button.      |

@@ -49,6 +49,8 @@ import "./BreadcrumbItemButtonElement";
  * @cssprop --m3e-breadcrumb-item-label-focus-state-layer-color - Focus state layer color for label breadcrumb items.
  * @cssprop --m3e-breadcrumb-item-label-pressed-state-layer-color - Pressed state layer color for label breadcrumb items.
  * @cssprop --m3e-breadcrumb-item-last-color - Color used for the current breadcrumb item.
+ * @cssprop --m3e-breadcrumb-item-icon-label-space - Space between icon and label.
+ * @cssprop --m3e-breadcrumb-item-icon-size - Size of the icon.
  * @cssprop --m3e-breadcrumb-item-disabled-color - Disabled color used by the breadcrumb item button.
  * @cssprop --m3e-breadcrumb-item-disabled-opacity - Disabled opacity used by the breadcrumb item button.
  */
@@ -136,6 +138,7 @@ export class M3eBreadcrumbItemElement extends LinkButton(AttachInternals(Role(Li
         download="${ifDefined(this.download || undefined)}"
         rel="${ifDefined(this.rel || undefined)}"
       >
+        <slot name="icon" slot="icon"></slot>
         <slot @slotchange="${this.#handleSlotChange}"></slot>
       </m3e-breadcrumb-item-button>
       ${this.#renderSeparator()}

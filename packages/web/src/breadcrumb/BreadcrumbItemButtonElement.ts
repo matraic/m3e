@@ -43,6 +43,19 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
       position: relative;
       border-radius: var(--m3e-breadcrumb-item-shape, ${DesignToken.shape.corner.full});
       height: calc(var(--m3e-breadcrumb-item-container-height, 2.5rem) + ${DesignToken.density.calc(-1)});
+      column-gap: var(--m3e-breadcrumb-item-icon-label-space, 0.5rem);
+    }
+    .icon {
+      font-size: var(--m3e-breadcrumb-item--icon-size, 1.25rem);
+      --m3e-icon-size: var(--m3e-breadcrumb-item--icon-size, 1.25rem);
+    }
+    ::slotted([slot="icon"]) {
+      font-size: inherit !important;
+      flex: none;
+    }
+    ::slotted(svg[slot="icon"]) {
+      width: 1em;
+      height: 1em;
     }
     :host(:state(-icon-only)) .overflow {
       flex: none;
@@ -195,6 +208,7 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
             <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
             <m3e-ripple class="ripple" ?disabled="${this.disabled}"></m3e-ripple>
             ${this[renderPseudoLink]()}`}
+      <slot class="icon" name="icon" aria-hidden="true"></slot>
       <m3e-text-overflow class="overflow">
         <slot @slotchange="${this.#handleSlotChange}"></slot>
       </m3e-text-overflow>
