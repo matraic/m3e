@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
@@ -126,6 +126,14 @@ export class M3eBreadcrumbItemElement extends LinkButton(AttachInternals(Role(Li
   }
 
   /** @inheritdoc */
+  protected override updated(_changedProperties: PropertyValues<this>): void {
+    super.updated(_changedProperties);
+    if (_changedProperties.has("current")) {
+      this.#updateIconFilled();
+    }
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base">
       <m3e-breadcrumb-item-button
@@ -138,7 +146,7 @@ export class M3eBreadcrumbItemElement extends LinkButton(AttachInternals(Role(Li
         download="${ifDefined(this.download || undefined)}"
         rel="${ifDefined(this.rel || undefined)}"
       >
-        <slot name="icon" slot="icon"></slot>
+        <slot name="icon" slot="icon" @slotchange="${this.#handleIconSlotChange}"></slot>
         <slot @slotchange="${this.#handleSlotChange}"></slot>
       </m3e-breadcrumb-item-button>
       ${this.#renderSeparator()}
@@ -157,8 +165,19 @@ export class M3eBreadcrumbItemElement extends LinkButton(AttachInternals(Role(Li
   }
 
   /** @private */
+  #handleIconSlotChange(): void {
+    this.#updateIconFilled();
+  }
+
+  /** @private */
   #handleSlotChange(e: Event): void {
     setCustomState(this, "-icon-only", isIconOnly(e.target as HTMLSlotElement));
+    this.#updateIconFilled();
+  }
+
+  /** @private */
+  #updateIconFilled(): void {
+    this.querySelectorAll("m3e-icon").forEach((x) => (x.filled = this.current !== undefined && this.current !== null));
   }
 
   /** @internal */
