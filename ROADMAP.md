@@ -23,7 +23,7 @@ The following components are planned for future release:
 
 ## 🏛️ Past Milestones
 
-- **2.5.0 Feature release**
+- **2.5.0 — 2.5.1 Feature release + patch releases**
   Added `@m3e/web/breadcrumb`, `@m3e/web/content-pane`, bug fixes.
 
 - **2.4.0 — 2.4.1 Feature release + patch releases**
