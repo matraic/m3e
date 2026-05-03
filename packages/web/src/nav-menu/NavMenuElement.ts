@@ -383,9 +383,15 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
   /** @private */
   #updateFocusVisible(): void {
-    const focused = this.matches(":focus") || this.matches(":focus-within");
+    const focusWithin = this.matches(":focus-within");
+    const focused = focusWithin || this.matches(":focus");
     const focusVisible =
-      focused && !this.#ignoreFocusVisible && (this.matches(":focus-visible") || forcedColorsActive());
+      focused &&
+      !this.#ignoreFocusVisible &&
+      (forcedColorsActive() ||
+        this.matches(":focus-visible") ||
+        (focusWithin && this.querySelector("a:focus-visible") !== null));
+
     this[selectionManager].items.forEach((x) => {
       const active = x === this[selectionManager].activeItem;
       this.#updateItemFocusVisible(x, active && focused, active && focusVisible);
