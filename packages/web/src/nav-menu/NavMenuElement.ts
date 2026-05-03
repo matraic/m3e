@@ -4,6 +4,7 @@ import {
   customElement,
   DesignToken,
   FocusController,
+  forcedColorsActive,
   PressedController,
   registerStyleSheet,
   Role,
@@ -357,7 +358,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
   /** @private */
   #handlePointerDown(e: Event): void {
-    if (!e.defaultPrevented && !this.#ignoreFocusVisible) {
+    if (!e.defaultPrevented && !this.#ignoreFocusVisible && !forcedColorsActive()) {
       this.#ignoreFocusVisible = true;
 
       const item = e
@@ -383,7 +384,8 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
   /** @private */
   #updateFocusVisible(): void {
     const focused = this.matches(":focus") || this.matches(":focus-within");
-    const focusVisible = !this.#ignoreFocusVisible && this.matches(":focus-visible");
+    const focusVisible =
+      focused && !this.#ignoreFocusVisible && (this.matches(":focus-visible") || forcedColorsActive());
     this[selectionManager].items.forEach((x) => {
       const active = x === this[selectionManager].activeItem;
       this.#updateItemFocusVisible(x, active && focused, active && focusVisible);

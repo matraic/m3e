@@ -315,17 +315,25 @@ export class M3eNavMenuItemElement extends Selected(
       :host(:disabled) .base {
         color: GrayText;
       }
-      :host(:not([selected]):not(:disabled)) .base {
-        color: ButtonText;
+      :host(:not(:disabled)) .base {
+        color: LinkText;
       }
-      :host([selected]:not(:state(-with-items)):not(:disabled)) .base {
-        forced-color-adjust: none;
-        color: ButtonFace;
-        background-color: ButtonText;
-      }
+      :host([selected]:not(:state(-with-items)):not(:disabled)) .base,
       :host([selected]:state(-with-items):not(:disabled)) .base {
+        forced-color-adjust: none;
         background-color: unset;
-        color: ButtonText;
+        color: Highlight;
+      }
+      :host([selected]:not(:state(-with-items)):not(:disabled)) .base::after {
+        content: "";
+        position: absolute;
+        inset-inline-start: calc(calc(var(--m3e-nav-menu-item-padding, 1.5rem) / 2) - calc(0.375rem / 2));
+        inset-block-start: 50%;
+        width: 0.375rem;
+        height: 0.375rem;
+        border-radius: 50%;
+        transform: translateY(-50%);
+        background-color: currentColor;
       }
     }
   `;
