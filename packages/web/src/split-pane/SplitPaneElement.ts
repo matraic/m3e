@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
@@ -123,11 +123,8 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
     :host(:state(-vertical)) .base {
       flex-direction: column;
     }
-    :host(:state(-with-start):state(-with-end)) .base:not(:has(.drag-handle[hidden])) .start {
+    :host(:state(-with-start):state(-with-end)) .start {
       flex: 0 1 calc(var(--_split-pane-value) - calc(var(--m3e-split-pane-drag-handle-container-width, 1.5rem) / 2));
-    }
-    :host(:state(-with-start):state(-with-end)) .base:has(.drag-handle[hidden]) .start {
-      flex: 0 1 var(--_split-pane-value);
     }
     :host(:not(:state(-with-end))) .start {
       flex: 1 1 auto;
@@ -157,8 +154,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       --m3e-state-layer-focus-color: var(--m3e-split-pane-drag-handle-focus-color, ${DesignToken.color.onSurface});
       --m3e-state-layer-focus-opacity: var(--m3e-split-pane-drag-handle-focus-opacity, 10%);
     }
-    :host(:is(:not(:state(-with-start)), :not(:state(-with-end)))) .drag-handle,
-    .drag-handle[hidden] {
+    :host(:is(:not(:state(-with-start)), :not(:state(-with-end)))) .drag-handle {
       display: none;
     }
     :host(:not(:state(-pressed))) .drag-handle:not([aria-disabled]) {
@@ -454,10 +450,10 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       id="drag-handle"
       class="drag-handle"
       role="separator"
-      ?hidden="${this.disabled}"
-      tabindex="0"
+      tabindex="${ifDefined(this.disabled ? undefined : 0)}"
       aria-label="${this.label}"
       aria-controls="start"
+      aria-disabled="${ifDefined(this.disabled ? "true" : undefined)}"
       aria-orientation="${this.currentOrientation === "horizontal" ? "vertical" : "horizontal"}"
       aria-valuemin="${this.min}"
       aria-valuemax="${this.max}"
@@ -471,11 +467,13 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       @keydown="${this.#handleKeyDown}"
       @dblclick="${this.#cycleDetent}"
     >
-      <div class="handle">
-        <m3e-focus-ring for="drag-handle"></m3e-focus-ring>
-        <m3e-state-layer for="drag-handle"></m3e-state-layer>
-      </div>
-      <div class="touch"></div>
+      ${this.disabled
+        ? nothing
+        : html`<div class="handle">
+              <m3e-focus-ring for="drag-handle"></m3e-focus-ring>
+              <m3e-state-layer for="drag-handle"></m3e-state-layer>
+            </div>
+            <div class="touch"></div>`}
     </div>`;
   }
 
