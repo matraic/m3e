@@ -132,7 +132,11 @@ export const ButtonStyle: CSSResultGroup = css`
       outline-color: ButtonText;
     }
     :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .label,
-    :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .icon {
+    :host([variant]:hover:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .label,
+    :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected]):focus) .label,
+    :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .icon,
+    :host([variant]:hover:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .icon,
+    :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected]):focus) .icon {
       color: ButtonText;
     }
     :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]) .base {
@@ -140,7 +144,11 @@ export const ButtonStyle: CSSResultGroup = css`
       outline: none;
     }
     :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]) .label,
-    :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]) .icon {
+    :host([variant]:hover:not(:disabled):not([disabled-interactive])[toggle][selected]) .label,
+    :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]:focus) .label,
+    :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]) .icon,
+    :host([variant]:hover:not(:disabled):not([disabled-interactive])[toggle][selected]) .icon,
+    :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]:focus) .icon {
       forced-color-adjust: none;
       color: ButtonFace;
       background-color: ButtonText;
