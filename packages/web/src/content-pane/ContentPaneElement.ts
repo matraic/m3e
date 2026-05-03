@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 
 import { customElement, DesignToken, getScrollbarWidth, ReconnectedCallback } from "@m3e/web/core";
 
@@ -39,6 +39,9 @@ export class M3eContentPaneElement extends ReconnectedCallback(LitElement) {
       overflow: hidden;
       border-radius: var(--m3e-content-pane-container-shape, ${DesignToken.shape.corner.extraLarge});
       background-color: var(--m3e-content-pane-container-color, ${DesignToken.color.surface});
+      transition: ${unsafeCSS(
+        `border-radius ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standard}`,
+      )};
     }
     .scroll-container {
       width: inherit;
@@ -57,6 +60,11 @@ export class M3eContentPaneElement extends ReconnectedCallback(LitElement) {
       );
       scrollbar-color: ${DesignToken.scrollbar.color};
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
+    }
+    @media (prefers-reduced-motion) {
+      .base {
+        transition: none;
+      }
     }
   `;
 
