@@ -94,9 +94,6 @@ export const IconButtonStyle: CSSResultGroup = css`
     flex-shrink: 1;
     min-width: 0;
   }
-  :host(:state(-grouped):not(:state(-connected)):state(-adjacent-pressed):not(:state(-pressed))) .label {
-    text-overflow: clip;
-  }
   :host(:state(-grouped):not(:state(-connected)):state(-pressed):not([disabled-interactive]):not(:disabled)) {
     flex-shrink: 0;
     flex-basis: calc(
@@ -116,7 +113,6 @@ export const IconButtonStyle: CSSResultGroup = css`
       background-color: ButtonFace;
       outline-color: ButtonText;
     }
-    :host([variant]:not(:disabled):not([disabled-interactive]):not([toggle])) .label,
     :host([variant]:not(:disabled):not([disabled-interactive]):not([toggle])) .icon {
       color: ButtonText;
     }
@@ -124,9 +120,6 @@ export const IconButtonStyle: CSSResultGroup = css`
       background-color: ButtonFace;
       outline-color: ButtonText;
     }
-    :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .label,
-    :host([variant]:hover:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .label,
-    :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected]):focus) .label,
     :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .icon,
     :host([variant]:hover:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .icon,
     :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected]):focus) .icon {
@@ -136,9 +129,6 @@ export const IconButtonStyle: CSSResultGroup = css`
       background-color: ButtonText;
       outline: none;
     }
-    :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]) .label,
-    :host([variant]:hover:not(:disabled):not([disabled-interactive])[toggle][selected]) .label,
-    :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]:focus) .label,
     :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]) .icon,
     :host([variant]:hover:not(:disabled):not([disabled-interactive])[toggle][selected]) .icon,
     :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]:focus) .icon {
@@ -151,8 +141,6 @@ export const IconButtonStyle: CSSResultGroup = css`
       outline-color: GrayText;
       background-color: unset;
     }
-    :host([variant]:disabled) .label,
-    :host([variant][disabled-interactive]) .label,
     :host([variant]:disabled) .icon,
     :host([variant][disabled-interactive]) .icon {
       color: GrayText;
