@@ -152,7 +152,7 @@ export const SearchViewStyle: CSSResultGroup = css`
   :host(:state(-docked)[contained]) .results {
     background-color: ${SearchViewToken.containerColor};
   }
-  :host(:state(-docked):not([contained])[open]) .view,
+  :host(:state(-docked):not([contained])) .view,
   :host(:state(-docked)[contained]) .results {
     border-radius: ${SearchViewToken.dockedContainerShape};
   }
@@ -188,7 +188,7 @@ export const SearchViewStyle: CSSResultGroup = css`
       transform: scaleY(0.8);
     }
   }
-  :host(:state(-docked)[contained]) .view {
+  :host(:state(-docked)) .view {
     background-color: transparent;
   }
   :host(:state(-docked):not([open])) .view {
