@@ -6,6 +6,16 @@ window.addEventListener("DOMContentLoaded", () => {
     const parentTheme = window.parent.document.querySelector("m3e-theme");
     theme.scheme = parentTheme.scheme;
     theme.color = parentTheme.color;
+
+    switch (parentTheme.scheme) {
+      case "light":
+      case "dark":
+        document.documentElement.style.colorScheme = parentTheme.scheme;
+        break;
+      default:
+        document.documentElement.style.colorScheme = parentTheme.isDark ? "dark" : "light";
+        break;
+    }
   }
   document.body.classList.add("loaded");
 });
@@ -23,7 +33,8 @@ window.addEventListener("message", (e) => {
           document.documentElement.style.colorScheme = e.data.scheme;
           break;
         default:
-          document.documentElement.style.colorScheme = "";
+          const parentTheme = window.parent.document.querySelector("m3e-theme");
+          document.documentElement.style.colorScheme = parentTheme.isDark ? "dark" : "light";
           break;
       }
       document.querySelector("m3e-theme").scheme = e.data.scheme;
