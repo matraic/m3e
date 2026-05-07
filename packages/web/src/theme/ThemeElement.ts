@@ -43,6 +43,8 @@ import { MotionScheme } from "./MotionScheme";
  * ```
  * @tag m3e-theme
  *
+ * @slot - Renders content styled by the theme.
+ *
  * @attr color - The hex color from which to derive dynamic color palettes.
  * @attr contrast - The contrast level of the theme.
  * @attr density - The density scale (0, -1, -2).
