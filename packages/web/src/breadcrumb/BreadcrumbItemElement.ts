@@ -21,6 +21,7 @@ import "./BreadcrumbItemButtonElement";
  * @tag m3e-breadcrumb-item
  *
  * @slot - Renders the content of the breadcrumb item.
+ * @slot icon - Renders an icon before the item's label.
  *
  * @attr item-label - The accessible label used by the internal breadcrumb button.
  * @attr disabled - Whether the breadcrumb item is disabled.

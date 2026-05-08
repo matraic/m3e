@@ -23,6 +23,8 @@ import { customElement } from "../decorators";
  *
  * @tag m3e-slide
  *
+ * @slot - Renders the items through which to cycle.
+ *
  * @attr selected-index - The zero-based index of the visible item.
  *
  * @cssprop --m3e-slide-animation-duration - The duration of transitions between slotted items.

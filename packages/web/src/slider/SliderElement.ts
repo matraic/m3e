@@ -46,6 +46,8 @@ import { SliderSize } from "./SliderSize";
  *
  * @tag m3e-slider
  *
+ * @slot - Renders the thumbs of the slider.
+ *
  * @attr disabled - Whether the element is disabled.
  * @attr discrete - Whether to show tick marks.
  * @attr labelled - Whether to show value labels when activated.
