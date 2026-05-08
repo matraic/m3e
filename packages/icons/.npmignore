@@ -1,3 +1,3 @@
 .prettierignore
-build.js
+/build.js
 !dist/
