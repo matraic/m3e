@@ -320,7 +320,11 @@ export class M3eMonthViewElement extends CalendarViewElementBase {
     this.activeDate = new Date(item.dataset["value"]);
     this.activeDate = clampDate(this.activeDate, this.minDate, this.maxDate);
 
-    if (this.rangeStart) {
+    if (this.rangeEnd) {
+      this.rangeStart = this.activeDate;
+      this.rangeEnd = null;
+      this.#clearRangeHighlight();
+    } else if (this.rangeStart) {
       if (compareDate(this.activeDate, this.rangeStart) < 0) {
         this.rangeStart = this.activeDate;
         this.rangeEnd = null;
@@ -403,7 +407,7 @@ export class M3eMonthViewElement extends CalendarViewElementBase {
   /** @private */
   #setRangeHighlight(item: HTMLElement): void {
     this.#clearRangeHighlight();
-    if (this.rangeStart && item.dataset["value"]) {
+    if (this.rangeStart && !this.rangeEnd && item.dataset["value"]) {
       if (compareDate(new Date(item.dataset["value"]), this.rangeStart) > 0) {
         item.parentElement!.classList.add("range-highlight-end");
       }
