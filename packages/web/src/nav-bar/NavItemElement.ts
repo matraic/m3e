@@ -8,6 +8,7 @@ import {
   Disabled,
   DisabledInteractive,
   Focusable,
+  hasAssignedNodes,
   KeyboardClick,
   LinkButton,
   M3eFocusRingElement,
@@ -16,6 +17,7 @@ import {
   renderPseudoLink,
   Role,
   Selected,
+  setCustomState,
 } from "@m3e/web/core";
 
 import { selectionManager } from "@m3e/web/core/a11y";
@@ -162,6 +164,11 @@ export class M3eNavItemElement extends LinkButton(
     ::slotted([slot="selected-icon"]) {
       width: 1em;
       font-size: var(--m3e-nav-item-icon-size, 1.5rem) !important;
+    }
+    :host(:not([selected])) slot[name="selected-icon"],
+    :host(:not(:state(-with-selected-icon))) slot[name="selected-icon"],
+    :host([selected]:state(-with-selected-icon)) slot[name="icon"] {
+      display: none;
     }
     :host(:not([selected]):not(:disabled):not([disabled-interactive])) .outer {
       --m3e-state-layer-hover-color: var(
@@ -402,8 +409,9 @@ export class M3eNavItemElement extends LinkButton(
           <div class="touch" aria-hidden="true"></div>
           <div class="base">
             <div class="icon-wrapper" aria-hidden="true">
-              <div class="icon">
-                <slot name="icon" aria-hidden="true"></slot>
+              <div class="icon" aria-hidden="true">
+                <slot name="icon"></slot>
+                <slot name="selected-icon" @slotchange="${this.#handleSelectedIconSlotChange}"></slot>
               </div>
             </div>
             <div class="label">
@@ -425,6 +433,11 @@ export class M3eNavItemElement extends LinkButton(
     } else {
       this.selected = false;
     }
+  }
+
+  /** @private */
+  #handleSelectedIconSlotChange(e: Event): void {
+    setCustomState(this, "-with-selected-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 }
 
