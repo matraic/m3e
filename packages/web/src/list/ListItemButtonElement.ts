@@ -93,9 +93,3 @@ export class M3eListItemButtonElement extends KeyboardClick(
     </div>`;
   }
 }
-
-declare global {
-  interface HTMLElementTagNameMap {
-    "m3e-list-item-button": M3eListItemButtonElement;
-  }
-}
