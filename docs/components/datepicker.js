@@ -19,6 +19,35 @@ window.addEventListener("DOMContentLoaded", () => {
 
   document.querySelector("#blackout-dates").blackoutDates = (date) => isWeekend(date);
   document.querySelector("#special-dates").specialDates = (date) => isHoliday(date);
+
+  // Alternate range picker with external inputs
+  const rangePicker = document.querySelector("#alternate_range_picker");
+  const fieldStart = document.querySelector("#alternate_field_start");
+  const fieldEnd = document.querySelector("#alternate_field_end");
+
+  const formatForInput = (d) => {
+    if (!d) return "";
+    const dt = new Date(d);
+    return dt.toISOString().split('T')[0];
+  };
+
+  fieldStart.value = formatForInput(rangePicker.rangeStart);
+  fieldEnd.value = formatForInput(rangePicker.rangeEnd);
+  
+  rangePicker.addEventListener("change", () => {
+    fieldStart.value = formatForInput(rangePicker.rangeStart);
+    fieldEnd.value = formatForInput(rangePicker.rangeEnd);
+  });
+
+  fieldStart.addEventListener("change", () => {
+    const parsed = parseDateInput(fieldStart.value);
+    if (parsed) rangePicker.rangeStart = parsed;
+  });
+
+  fieldEnd.addEventListener("change", () => {
+    const parsed = parseDateInput(fieldEnd.value);
+    if (parsed) rangePicker.rangeEnd = parsed;
+  });
 });
 
 function toLocaleDateString(date) {
@@ -58,4 +87,10 @@ function isHoliday(date) {
   if (iso === "2026-09-07") return true;
 
   return false;
+}
+
+function parseDateInput(value) {
+  if (!value) return null;
+  const [y, m, d] = value.split('-').map(Number);
+  return new Date(y, m - 1, d); // construct local-date to avoid UTC shift
 }
