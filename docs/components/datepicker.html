@@ -300,6 +300,98 @@ picker.addEventListener(&quot;change&quot;, () =&gt; {
         >
       </m3e-card>
 
+      <m3e-heading variant="title" size="large" level="4">Alternate range datepicker</m3e-heading>
+      <p>
+        You can use two <code>date</code> type inputs inside a formfield to separate range-start and range-end inputs, this approach needs a little more tweaking since using <code>date</code> inputs will add a webkit datepicker, you can get rid of this element with some custom css styling.
+      </p>
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-form-field variant="outlined">
+            <input class="date-input" type="date" id="alternate_field_start"/>
+            <input class="date-input" type="date" id="alternate_field_end"/>
+            
+            <m3e-icon-button slot="suffix">
+              <m3e-icon name="calendar_today"></m3e-icon>
+              <m3e-datepicker-toggle for="alternate_range_picker"></m3e-datepicker-toggle>
+            </m3e-icon-button>
+          </m3e-form-field>
+
+          <m3e-datepicker
+            id="alternate_range_picker"
+            range-start="2026-01-01"
+            start-at="2026-01-01"
+          ></m3e-datepicker>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;input class=&quot;date-input&quot; type=&quot;date&quot; id=&quot;alternate_field_start&quot;/&gt;
+  &lt;input class=&quot;date-input&quot; type=&quot;date&quot; id=&quot;alternate_field_end&quot;/&gt;
+  
+  &lt;m3e-icon-button slot=&quot;suffix&quot;&gt;
+    &lt;m3e-icon name=&quot;calendar_today&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;m3e-datepicker-toggle for=&quot;alternate_range_picker&quot;&gt;&lt;/m3e-datepicker-toggle&gt;
+  &lt;/m3e-icon-button&gt;
+&lt;/m3e-form-field&gt;
+
+&lt;m3e-datepicker
+  id=&quot;alternate_range_picker&quot;
+  range-start=&quot;2026-01-01&quot;
+  start-at=&quot;2026-01-01&quot;
+&gt;&lt;/m3e-datepicker&gt;
+        </pre>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+const rangePicker = document.querySelector(&quot;#alternate_range_picker&quot;);
+const fieldStart = document.querySelector(&quot;#alternate_field_start&quot;);
+const fieldEnd = document.querySelector(&quot;#alternate_field_end&quot;);
+
+const formatForInput = (d) =&gt; {
+  if (!d) return &quot;&quot;;
+  const dt = new Date(d);
+  return dt.toISOString().split('T')[0];
+};
+
+fieldStart.value = formatForInput(rangePicker.rangeStart);
+fieldEnd.value = formatForInput(rangePicker.rangeEnd);
+
+rangePicker.addEventListener(&quot;change&quot;, () =&gt; {
+  fieldStart.value = formatForInput(rangePicker.rangeStart);
+  fieldEnd.value = formatForInput(rangePicker.rangeEnd);
+});
+
+function parseDateInput(value) {
+  if (!value) return null;
+  const [y, m, d] = value.split('-').map(Number);
+  return new Date(y, m - 1, d); // construct local-date to avoid UTC shift
+}
+
+fieldStart.addEventListener(&quot;change&quot;, () =&gt; {
+  const parsed = parseDateInput(fieldStart.value);
+  if (parsed) rangePicker.rangeStart = parsed;
+});
+
+fieldEnd.addEventListener(&quot;change&quot;, () =&gt; {
+  const parsed = parseDateInput(fieldEnd.value);
+  if (parsed) rangePicker.rangeEnd = parsed;
+});
+        </pre>
+      </m3e-card>
+      <p>
+        CSS styles to remove default datepicker
+      </p>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+input[type=&quot;date&quot;]::-webkit-inner-spin-button,
+input[type=&quot;date&quot;]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+        </pre>
+      </m3e-card>
+
       <m3e-heading variant="headline" size="small" level="3">Min and max dates</m3e-heading>
       <p>
         Use the <code>min-date</code> and <code>max-date</code> to disable all dates on the calendar before or after the
