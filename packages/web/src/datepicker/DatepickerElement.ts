@@ -588,7 +588,12 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
     if (["date", "rangeStart", "rangeEnd"].some((x) => changedProperties.has(<keyof M3eDatepickerElement>x))) {
       this.#clearSelectionState();
     }
-
+    if (changedProperties.has("rangeStart") && this.rangeStart && !changedProperties.has("date")) {
+      this.date = new Date(this.rangeStart);
+    }
+    if (changedProperties.has("rangeEnd") && this.rangeEnd && !changedProperties.has("date")) {
+      this.date = new Date(this.rangeEnd);
+    }
     if (changedProperties.has("variant")) {
       this.#breakpointUnobserve?.();
 

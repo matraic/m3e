@@ -483,6 +483,18 @@ export class M3eCalendarElement extends LitElement {
     if (changedProperties.has("startAt")) {
       this._activeDate = new Date(this.startAt ?? this.date ?? this._today);
     }
+    if (changedProperties.has("rangeStart") && this.rangeStart) {
+      this._activeDate = new Date(this.rangeStart);
+      if (!changedProperties.has("date")) {
+        this.date = new Date(this.rangeStart);
+      }
+    }
+    if (changedProperties.has("rangeEnd") && this.rangeEnd) {
+      this._activeDate = new Date(this.rangeEnd);
+      if (!changedProperties.has("date")) {
+        this.date = new Date(this.rangeEnd);
+      }
+    }
     if (changedProperties.has("startView")) {
       this._activeView = this.startView;
     }
