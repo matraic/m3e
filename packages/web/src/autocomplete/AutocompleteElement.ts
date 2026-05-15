@@ -12,7 +12,6 @@ import {
   addCustomState,
   customElement,
   MutationController,
-  EventAttribute,
 } from "@m3e/web/core";
 
 import { ListKeyManager, M3eLiveAnnouncer } from "@m3e/web/core/a11y";
@@ -70,7 +69,7 @@ import { AutocompleteQueryEventDetail } from "./AutocompleteQueryEventDetail";
  * @fires change - Emitted when the committed value changes due to selecting an option or clearing the input.
  */
 @customElement("m3e-autocomplete")
-export class M3eAutocompleteElement extends EventAttribute(HtmlFor(LitElement), "query") {
+export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

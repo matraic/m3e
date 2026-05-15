@@ -6,7 +6,6 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import {
   DisabledInteractive,
   Disabled,
-  EventAttribute,
   Role,
   DesignToken,
   hasAssignedNodes,
@@ -94,10 +93,7 @@ import { M3eChipElement } from "./ChipElement";
  * @cssprop --m3e-chip-with-avatar-padding-start - Start padding when an avatar is present.
  */
 @customElement("m3e-input-chip")
-export class M3eInputChipElement extends EventAttribute(
-  DisabledInteractive(Disabled(Role(M3eChipElement, "row"))),
-  "remove",
-) {
+export class M3eInputChipElement extends DisabledInteractive(Disabled(Role(M3eChipElement, "row"))) {
   /** Indicates that this custom element participates in form submission, validation, and form state restoration. */
   static readonly formAssociated = true;
 

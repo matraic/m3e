@@ -2,14 +2,7 @@
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 
-import {
-  AttachInternals,
-  customElement,
-  EventAttribute,
-  hasAssignedNodes,
-  registerStyleSheet,
-  setCustomState,
-} from "@m3e/web/core";
+import { AttachInternals, customElement, hasAssignedNodes, registerStyleSheet, setCustomState } from "@m3e/web/core";
 
 import "@m3e/web/icon-button";
 
@@ -70,7 +63,7 @@ import { SearchBarLightDomStyle, SearchBarStyle } from "./styles";
  * @cssprop --m3e-search-bar-actions-gap - Gap between action icons.
  */
 @customElement("m3e-search-bar")
-export class M3eSearchBarElement extends EventAttribute(AttachInternals(LitElement), "clear") {
+export class M3eSearchBarElement extends AttachInternals(LitElement) {
   static {
     registerStyleSheet(SearchBarLightDomStyle);
   }

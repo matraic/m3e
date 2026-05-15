@@ -7,7 +7,6 @@ import {
   customElement,
   computeCssSize,
   DesignToken,
-  EventAttribute,
   focusWhenReady,
   hasAssignedNodes,
   hasCustomState,
@@ -125,14 +124,7 @@ import "@m3e/web/core/a11y";
  * @cssprop --m3e-bottom-sheet-header-tracking - Letter spacing (tracking) for the sheet header.
  */
 @customElement("m3e-bottom-sheet")
-export class M3eBottomSheetElement extends EventAttribute(
-  ReconnectedCallback(SuppressInitialAnimation(AttachInternals(LitElement))),
-  "opening",
-  "opened",
-  "cancel",
-  "closing",
-  "closed",
-) {
+export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAnimation(AttachInternals(LitElement))) {
   static {
     registerStyleSheet(css`
       @property --_bottom-sheet-height {

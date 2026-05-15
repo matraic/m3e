@@ -7,7 +7,6 @@ import {
   AttachInternals,
   customElement,
   debounce,
-  EventAttribute,
   FocusController,
   InertController,
   prefersReducedMotion,
@@ -98,11 +97,7 @@ import "./SearchBarElement";
  * @cssprop --m3e-search-view-docked-scrim-opacity - Opacity of the scrim behind the docked view.
  */
 @customElement("m3e-search-view")
-export class M3eSearchViewElement extends EventAttribute(
-  ReconnectedCallback(AttachInternals(LitElement)),
-  "clear",
-  "query",
-) {
+export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(LitElement)) {
   static {
     registerStyleSheet(SearchViewLightDomStyle);
   }

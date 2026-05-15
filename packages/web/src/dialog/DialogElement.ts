@@ -7,7 +7,6 @@ import {
   AttachInternals,
   customElement,
   DesignToken,
-  EventAttribute,
   focusWhenReady,
   ScrollLockController,
   setCustomState,
@@ -78,14 +77,7 @@ import "@m3e/web/icon-button";
  * @cssprop --m3e-dialog-content-tracking - Letter spacing for the dialog content.
  */
 @customElement("m3e-dialog")
-export class M3eDialogElement extends EventAttribute(
-  AttachInternals(LitElement),
-  "opening",
-  "opened",
-  "cancel",
-  "closing",
-  "closed",
-) {
+export class M3eDialogElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

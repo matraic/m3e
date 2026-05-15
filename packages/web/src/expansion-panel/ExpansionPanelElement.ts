@@ -7,7 +7,6 @@ import {
   AttachInternals,
   customElement,
   Disabled,
-  EventAttribute,
   hasAssignedNodes,
   ReconnectedCallback,
   setCustomState,
@@ -90,13 +89,7 @@ import { M3eExpansionHeaderElement } from "./ExpansionHeaderElement";
  * @cssprop --m3e-expansion-panel-actions-divider-color - Color of the divider above actions.
  */
 @customElement("m3e-expansion-panel")
-export class M3eExpansionPanelElement extends EventAttribute(
-  Disabled(ReconnectedCallback(AttachInternals(LitElement, true))),
-  "opening",
-  "opened",
-  "closing",
-  "closed",
-) {
+export class M3eExpansionPanelElement extends Disabled(ReconnectedCallback(AttachInternals(LitElement, true))) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = ExpansionPanelStyle;
 

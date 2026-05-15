@@ -8,7 +8,6 @@ import {
   customElement,
   DesignToken,
   Disabled,
-  EventAttribute,
   hasAssignedNodes,
   hasCustomState,
   M3eFocusRingElement,
@@ -137,11 +136,7 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  * @cssprop --m3e-nav-menu-item-vertical-inset - Vertical margin for first/last child items.
  */
 @customElement("m3e-nav-menu-item")
-export class M3eNavMenuItemElement extends Selected(
-  Disabled(
-    EventAttribute(AttachInternals(Role(LitElement, "treeitem"), true), "opening", "opened", "closing", "closed"),
-  ),
-) {
+export class M3eNavMenuItemElement extends Selected(Disabled(AttachInternals(Role(LitElement, "treeitem"), true))) {
   static {
     registerStyleSheet(css`
       m3e-nav-menu-item > m3e-divider {

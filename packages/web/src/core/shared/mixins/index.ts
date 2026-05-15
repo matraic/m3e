@@ -6,7 +6,6 @@ export * from "./ConstraintValidation";
 export * from "./Dirty";
 export * from "./Disabled";
 export * from "./DisabledInteractive";
-export * from "./EventAttribute";
 export * from "./Focusable";
 export * from "./FormAssociated";
 export * from "./FormSubmitter";

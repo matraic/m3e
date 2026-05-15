@@ -8,7 +8,6 @@ import {
   customElement,
   DesignToken,
   Disabled,
-  EventAttribute,
   hasAssignedNodes,
   M3eFocusRingElement,
   M3eRippleElement,
@@ -74,11 +73,7 @@ import type { M3eTreeElement } from "./TreeElement";
  * @cssprop --m3e-tree-item-disabled-color-opacity - Opacity for disabled item text color.
  */
 @customElement("m3e-tree-item")
-export class M3eTreeItemElement extends Selected(
-  Disabled(
-    EventAttribute(AttachInternals(Role(LitElement, "treeitem"), true), "opening", "opened", "closing", "closed"),
-  ),
-) {
+export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(LitElement, "treeitem"), true))) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
