@@ -76,7 +76,7 @@ export class M3eTocItemElement extends Selected(Disabled(AttachInternals(Role(Li
       font-weight: var(--m3e-toc-item-selected-font-weight, ${DesignToken.typescale.emphasized.body.large.fontWeight});
       line-height: var(--m3e-toc-item-selected-line-height, ${DesignToken.typescale.emphasized.body.large.lineHeight});
       letter-spacing: var(--m3e-toc-item-selected-tracking, ${DesignToken.typescale.emphasized.body.large.tracking});
-      color: var(--m3e-toc-item-selected-color, ${DesignToken.color.onSecondaryContainer});
+      color: var(--m3e-toc-item-selected-color, ${DesignToken.color.onSurface});
     }
     .base {
       justify-content: unset;
