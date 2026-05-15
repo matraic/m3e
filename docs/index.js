@@ -60,6 +60,15 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const contrastButton = document.querySelector("#contrast-button");
+  if (contrastButton) {
+    contrastButton?.addEventListener("change", () => {
+      const theme = document.querySelector("m3e-theme");
+      theme.contrast = contrastButton.value;
+      frame.contentWindow.postMessage({ type: "contrast-change", contrast: theme.contrast }, "*");
+    });
+  }
+
   const directionalityButton = document.querySelector("#directionality-button");
   if (directionalityButton) {
     directionalityButton?.addEventListener("change", () => {

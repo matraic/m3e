@@ -6,6 +6,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const parentTheme = window.parent.document.querySelector("m3e-theme");
     theme.scheme = parentTheme.scheme;
     theme.color = parentTheme.color;
+    theme.contrast = parentTheme.contrast;
 
     switch (parentTheme.scheme) {
       case "light":
@@ -24,6 +25,10 @@ window.addEventListener("message", (e) => {
   switch (e.data?.type) {
     case "color-change":
       document.querySelector("m3e-theme").color = e.data.color;
+      break;
+
+    case "contrast-change":
+      document.querySelector("m3e-theme").contrast = e.data.contrast;
       break;
 
     case "color-scheme-change":
