@@ -188,7 +188,7 @@ export class M3eNavItemElement extends LinkButton(
       color: var(--m3e-nav-item-inactive-label-text-color, ${DesignToken.color.onSurfaceVariant});
     }
     :host(:not([selected]):not(:disabled):not([disabled-interactive])) .icon {
-      color: var(--m3e-nav-item-inactive-icon-color, ${DesignToken.color.onSecondaryContainer});
+      color: var(--m3e-nav-item-inactive-icon-color, ${DesignToken.color.onSurfaceVariant});
     }
     :host([selected]:not(:disabled):not([disabled-interactive])) .outer {
       --m3e-state-layer-hover-color: var(
