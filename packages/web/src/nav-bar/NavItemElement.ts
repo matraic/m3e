@@ -204,12 +204,13 @@ export class M3eNavItemElement extends LinkButton(
         ${DesignToken.color.onSecondaryContainer}
       );
     }
-    :host([selected]:not(:disabled):not([disabled-interactive])) .label {
+    :host([selected]:not(:disabled):not([disabled-interactive]):not([orientation="horizontal"])) .label {
       color: var(--m3e-nav-item-active-label-text-color, ${DesignToken.color.secondary});
     }
     :host([selected]:not(:disabled):not([disabled-interactive])) .state-layer {
       background-color: var(--m3e-nav-item-active-container-color, ${DesignToken.color.secondaryContainer});
     }
+    :host([selected]:not(:disabled):not([disabled-interactive])[orientation="horizontal"]) .label,
     :host([selected]:not(:disabled):not([disabled-interactive])) .icon {
       color: var(--m3e-nav-item-active-icon-color, ${DesignToken.color.onSecondaryContainer});
     }
