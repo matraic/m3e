@@ -85,6 +85,7 @@ export class M3eIconElement extends Role(LitElement, "img") {
       font-family: "Material Symbols Sharp";
     }
     svg {
+      fill: currentColor;
       font-size: inherit;
       width: 1em;
       height: 1em;
