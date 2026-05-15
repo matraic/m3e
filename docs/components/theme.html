@@ -366,6 +366,156 @@
         >
       </m3e-card>
 
+      <m3e-heading variant="headline" size="small" level="3">Contrast</m3e-heading>
+      <p>
+        Themes support three contrast levels: <code>standard</code> (default), <code>medium</code>, and
+        <code>high</code>. Use the <code>contrast</code> attribute to control how strongly tones are separated within
+        the theme.
+      </p>
+      <p>The following illustrates how colors are adjusted for high contrast.</p>
+
+      <m3e-card variant="outlined">
+        <div slot="content">
+          <m3e-theme color="#4285F4" contrast="high">
+            <div class="swatch-grid">
+              <div class="swatch primary">
+                <div class="swatch-label">Primary</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-primary">
+                <div class="swatch-label">On Primary</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch primary-container">
+                <div class="swatch-label">Primary Container</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-primary-container">
+                <div class="swatch-label">On Primary Container</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch secondary">
+                <div class="swatch-label">Secondary</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-secondary">
+                <div class="swatch-label">On Secondary</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch secondary-container">
+                <div class="swatch-label">Secondary Container</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-secondary-container">
+                <div class="swatch-label">On Secondary Container</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch tertiary">
+                <div class="swatch-label">Tertiary</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-tertiary">
+                <div class="swatch-label">On Tertiary</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch tertiary-container">
+                <div class="swatch-label">Tertiary Container</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-tertiary-container">
+                <div class="swatch-label">On Tertiary Container</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch error">
+                <div class="swatch-label">Error</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-error">
+                <div class="swatch-label">On Error</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch error-container">
+                <div class="swatch-label">Error Container</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-error-container">
+                <div class="swatch-label">On Error Container</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch background">
+                <div class="swatch-label">Background</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-background">
+                <div class="swatch-label">On Background</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch surface">
+                <div class="swatch-label">Surface</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-surface">
+                <div class="swatch-label">On Surface</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch surface-variant">
+                <div class="swatch-label">Surface Variant</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch on-surface-variant">
+                <div class="swatch-label">On Surface Variant</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch inverse-surface">
+                <div class="swatch-label">Inverse Surface</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch inverse-on-surface">
+                <div class="swatch-label">Inverse On Surface</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch outline">
+                <div class="swatch-label">Outline</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch outline-variant">
+                <div class="swatch-label">Outline Variant</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch shadow">
+                <div class="swatch-label">Shadow</div>
+                <div class="swatch-box"></div>
+              </div>
+              <div class="swatch scrim">
+                <div class="swatch-label">Scrim</div>
+                <div class="swatch-box"></div>
+              </div>
+
+              <div class="swatch surface-tint">
+                <div class="swatch-label">Surface Tint</div>
+                <div class="swatch-box"></div>
+              </div>
+            </div>
+          </m3e-theme>
+        </div>
+      </m3e-card>
+      <m3e-card variant="filled" class="example">
+        <pre slot="content">
+&lt;m3e-theme color=&quot;#4285F4&quot; contrast=&quot;high&quot;&gt;
+  &lt;!-- Swatches omitted for brevity --&gt;
+&lt;/m3e-theme&gt;
+</pre
+        >
+      </m3e-card>
+
       <m3e-heading variant="headline" size="small" level="3">Density</m3e-heading>
       <p>
         Use the <code>density</code> attribute to control layout compactness across density-aware components within a
