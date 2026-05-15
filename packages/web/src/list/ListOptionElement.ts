@@ -155,7 +155,7 @@ export class M3eListOptionElement extends KeyboardClick(
       :host([selected]) .focus-ring {
         border-radius: var(--m3e-list-item-selected-container-shape, ${DesignToken.shape.corner.large});
       }
-      :host([selected]:not(:disabled)) .base {
+      :host([selected]:not(:disabled)) .content {
         color: var(--m3e-list-item-selected-label-text-color, ${DesignToken.color.onSecondaryContainer});
       }
       :host([selected]:not(:disabled)) ::slotted([slot="overline"]) {
