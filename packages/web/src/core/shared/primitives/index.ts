@@ -1,5 +1,6 @@
 export * from "./ActionElementBase";
 export * from "./CollapsibleElement";
+export * from "./CollapsibleOrientation";
 export * from "./ElevationElement";
 export * from "./ElevationLevel";
 export * from "./FocusRingElement";

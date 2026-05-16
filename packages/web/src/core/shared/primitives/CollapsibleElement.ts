@@ -7,6 +7,7 @@ import { addCustomState, AttachInternals, deleteCustomState, setCustomState } fr
 import { DesignToken } from "../tokens";
 import { prefersReducedMotion } from "../utils";
 import { customElement } from "../decorators";
+import { CollapsibleOrientation } from "./CollapsibleOrientation";
 
 /**
  * A container used to expand and collapse content.
@@ -23,6 +24,7 @@ import { customElement } from "../decorators";
  * @slot - Renders the collapsible content.
  *
  * @attr open - Whether content is visible.
+ * @attr orientation - Orientation of collapsible content.
  *
  * @fires opening - Emitted when the collapsible begins to open.
  * @fires opened - Emitted when the collapsible has opened.
@@ -37,8 +39,10 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
   static override styles: CSSResultGroup = css`
     :host {
       display: block;
-      height: 0px;
       overflow: hidden;
+    }
+    :host([orientation="vertical"]) {
+      height: 0px;
       transition: ${unsafeCSS(`visibility var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
           ${DesignToken.motion.easing.standard},
         height var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
@@ -48,20 +52,40 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
         padding-bottom var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
           ${DesignToken.motion.easing.standard}`)};
     }
+    :host([orientation="horizontal"]) {
+      width: 0px;
+      transition: ${unsafeCSS(`visibility var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
+          ${DesignToken.motion.easing.standard},
+        width var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
+          ${DesignToken.motion.easing.standard},
+        padding-left var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
+          ${DesignToken.motion.easing.standard},
+        padding-right var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
+          ${DesignToken.motion.easing.standard}`)};
+    }
     :host(:not(:state(-closing)):not([open])) {
       visibility: hidden;
     }
-    :host(:not([open])) {
+    :host([orientation="vertical"]:not([open])) {
       min-height: unset !important;
       padding-top: 0px !important;
       padding-bottom: 0px !important;
     }
+    :host([orientation="horizontal"]:not([open])) {
+      min-width: unset !important;
+      padding-left: 0px !important;
+      padding-right: 0px !important;
+    }
     :host(:state(-no-animate)) {
       transition-duration: 0ms;
     }
-    :host(:state(-opening)),
-    :host(:state(-closing)) {
+    :host([orientation="vertical"]:state(-opening)),
+    :host([orientation="vertical"]:state(-closing)) {
       overflow-y: hidden !important;
+    }
+    :host([orientation="horizontal"]:state(-opening)),
+    :host([orientation="horizontal"]:state(-closing)) {
+      overflow-x: hidden !important;
     }
     :host(:state(-overflows)) {
       scrollbar-gutter: stable;
@@ -85,6 +109,12 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
    */
   @property({ type: Boolean, reflect: true }) open = false;
 
+  /**
+   * Orientation of collapsible content.
+   * @default "vertical"
+   */
+  @property({ reflect: true }) orientation: CollapsibleOrientation = "vertical";
+
   /** @inheritdoc */
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
@@ -107,7 +137,11 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
 
       if (!prefersReducedMotion()) {
         this.#autoSize();
-        setCustomState(this, "-overflows", this.clientHeight < this.scrollHeight);
+        setCustomState(
+          this,
+          "-overflows",
+          this.orientation === "vertical" ? this.clientHeight < this.scrollHeight : this.clientWidth < this.scrollWidth,
+        );
         this.#clearSize();
       }
 
@@ -180,17 +214,21 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
 
   /** @private */
   #autoSize(): void {
-    this.style.height = "auto";
+    this.style[this.orientation === "vertical" ? "height" : "width"] = "auto";
   }
 
   /** @private */
   #clearSize(): void {
-    this.style.height = "";
+    this.style[this.orientation === "vertical" ? "height" : "width"] = "";
   }
 
   /** @private */
   #actualSize(): void {
-    this.style.height = `${this.scrollHeight}px`;
+    if (this.orientation === "vertical") {
+      this.style.height = `${this.scrollHeight}px`;
+    } else {
+      this.style.width = `${this.scrollWidth}px`;
+    }
   }
 }
 

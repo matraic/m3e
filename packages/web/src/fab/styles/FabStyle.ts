@@ -38,12 +38,7 @@ export const FabStyle: CSSResultGroup = css`
     align-items: center;
   }
   .label {
-    justify-self: center;
-    flex: 1 1 auto;
-    text-align: center;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     transition: ${unsafeCSS(`color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`)};
   }
   .icon {
@@ -67,7 +62,6 @@ export const FabStyle: CSSResultGroup = css`
     width: 1em;
     height: 1em;
   }
-  :host(:not([extended])) ::slotted([slot="label"]),
   .base.with-menu ::slotted([slot="label"]),
   .base:not(.with-menu) ::slotted([slot="close-icon"]),
   .base:not(.with-menu) .close-icon,

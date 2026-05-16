@@ -473,9 +473,11 @@ export class M3eFabElement extends KeyboardClick(
             />
           </svg>
         </slot>
-        <div class="label">
-          <slot name="label" @slotchange="${this.#handleSlotChange}"></slot>
-        </div>
+        <m3e-collapsible class="label-wrapper" orientation="horizontal" ?open="${this.extended}">
+          <div class="label">
+            <slot name="label" @slotchange="${this.#handleSlotChange}"></slot>
+          </div>
+        </m3e-collapsible>
       </div>
     </div>`;
   }
