@@ -150,7 +150,7 @@ export class M3eNavRailElement extends M3eNavBarElement {
 
   /** @inheritdoc @internal */
   protected override _updateItems(): void {
-    const items = M3eInteractivityChecker.findInteractiveElements(this);
+    const items = M3eInteractivityChecker.findInteractiveElements(this, true);
     const { added } = this.#focusKeyManager.setItems(items);
     if (!this.#focusKeyManager.activeItem) {
       const active = added.find((x) => !x.hasAttribute("disabled"));

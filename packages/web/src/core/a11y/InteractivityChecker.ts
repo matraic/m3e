@@ -5,14 +5,17 @@ export class M3eInteractivityChecker {
    * @param {Element} element The element to test.
    * @param {readonly Element[]} [parents = undefined] The known parent elements to test. The default value is `undefined`.
    * @param {boolean} [allowVisiblyHidden=false] Whether to allow visibly hidden elements as focusable.
+   * @param {boolean} [allowDisabled=false] Whether to allow disabled elements as focusable.
    * @returns {boolean} Whether `element` can receive focus.
    */
-  static isFocusable(element: Element, parents?: readonly Element[], allowVisiblyHidden: boolean = false): boolean {
-    if (
-      element.matches(
-        `:is(button,input,select,textarea,object,:is(a,area)[href],[tabindex]:not([tabindex='-1']),[contenteditable=true]):not(:disabled,[disabled]${allowVisiblyHidden ? "" : ",[hidden]"})`,
-      )
-    ) {
+  static isFocusable(
+    element: Element,
+    parents?: readonly Element[],
+    allowVisiblyHidden: boolean = false,
+    allowDisabled: boolean = false,
+  ): boolean {
+    const selectors = `:is(button,input,select,textarea,object,:is(a,area)[href],[tabindex]${allowDisabled ? "" : ":not([tabindex='-1'])"},[contenteditable=true])${allowDisabled ? "" : ":not(:disabled,[disabled])"}${allowVisiblyHidden ? "" : ":not([hidden])"}`;
+    if (element.matches(selectors)) {
       return (
         !this.#isVisiblyHidden(element, allowVisiblyHidden) && !this.#cannotFocusParent(parents, allowVisiblyHidden)
       );
@@ -65,7 +68,7 @@ export class M3eInteractivityChecker {
 
     for (let node = walker.nextNode(); node; node = walker.nextNode()) {
       const element = <HTMLElement>walker.currentNode;
-      if (this.isFocusable(element, undefined, allowVisiblyHidden)) {
+      if (this.isFocusable(element, undefined, allowVisiblyHidden, true)) {
         elements.push(element);
       }
     }
