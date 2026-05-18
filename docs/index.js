@@ -3,7 +3,10 @@ import { M3eDirectionality } from "@m3e/web/core/bidi";
 window.addEventListener("DOMContentLoaded", () => {
   M3eDirectionality.observe(() => {
     const frame = document.querySelector("#content-frame");
-    frame.contentWindow.postMessage({ type: "direction-change", dir: M3eDirectionality.current }, "*");
+    frame.contentWindow.postMessage(
+      { type: "direction-change", dir: M3eDirectionality.current },
+      window.location.origin,
+    );
   });
 
   const frame = document.querySelector("#content-frame");
@@ -35,7 +38,7 @@ window.addEventListener("DOMContentLoaded", () => {
     color.value = document.querySelector("m3e-theme").color;
     color.addEventListener("change", () => {
       document.querySelector("m3e-theme").color = color.value;
-      frame.contentWindow.postMessage({ type: "color-change", color: color.value }, "*");
+      frame.contentWindow.postMessage({ type: "color-change", color: color.value }, window.location.origin);
     });
   }
 
@@ -56,7 +59,7 @@ window.addEventListener("DOMContentLoaded", () => {
           break;
       }
       theme.scheme = colorSchemeButton.value;
-      frame.contentWindow.postMessage({ type: "color-scheme-change", scheme: theme.scheme }, "*");
+      frame.contentWindow.postMessage({ type: "color-scheme-change", scheme: theme.scheme }, window.location.origin);
     });
   }
 
@@ -65,7 +68,7 @@ window.addEventListener("DOMContentLoaded", () => {
     contrastButton?.addEventListener("change", () => {
       const theme = document.querySelector("m3e-theme");
       theme.contrast = contrastButton.value;
-      frame.contentWindow.postMessage({ type: "contrast-change", contrast: theme.contrast }, "*");
+      frame.contentWindow.postMessage({ type: "contrast-change", contrast: theme.contrast }, window.location.origin);
     });
   }
 

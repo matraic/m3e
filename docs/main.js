@@ -22,6 +22,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener("message", (e) => {
+  if (e.origin !== window.location.origin) return;
   switch (e.data?.type) {
     case "color-change":
       document.querySelector("m3e-theme").color = e.data.color;
