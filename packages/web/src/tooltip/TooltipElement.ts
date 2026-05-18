@@ -63,7 +63,7 @@ export class M3eTooltipElement extends TooltipElementBase {
       margin: unset;
       border: unset;
       word-break: normal;
-      overflow-wrap: anywhere;
+      overflow-wrap: break-word;
       padding: var(--m3e-tooltip-padding, 0.25rem 0.5rem);
       min-width: var(--m3e-tooltip-min-width, 2.5rem);
       max-width: var(--m3e-tooltip-max-width, 12.5rem);
