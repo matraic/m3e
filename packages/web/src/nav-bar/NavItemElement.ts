@@ -14,6 +14,7 @@ import {
   M3eFocusRingElement,
   M3eRippleElement,
   M3eStateLayerElement,
+  ReconnectedCallback,
   renderPseudoLink,
   ResizeController,
   resumeAnimation,
@@ -96,10 +97,12 @@ import { NavItemOrientation } from "./NavItemOrientation";
  * @cssprop --m3e-vertical-nav-item-active-indicator-margin - Margin for the active indicator in vertical orientation.
  */
 @customElement("m3e-nav-item")
-export class M3eNavItemElement extends SuppressInitialAnimation(
-  LinkButton(
-    Selected(
-      KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))),
+export class M3eNavItemElement extends ReconnectedCallback(
+  SuppressInitialAnimation(
+    LinkButton(
+      Selected(
+        KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))),
+      ),
     ),
   ),
 ) {
@@ -481,6 +484,12 @@ export class M3eNavItemElement extends SuppressInitialAnimation(
   }
 
   /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.#initResizeObserver();
+  }
+
+  /** @inheritdoc */
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
 
@@ -508,10 +517,7 @@ export class M3eNavItemElement extends SuppressInitialAnimation(
   protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
     super.firstUpdated(_changedProperties);
     [this._focusRing, this._stateLayer, this._ripple].forEach((x) => x?.attach(this));
-
-    if (this._stateLayer) {
-      this.#resizeController.observe(this._stateLayer);
-    }
+    this.#initResizeObserver();
   }
 
   /** @inheritdoc */
@@ -572,6 +578,13 @@ export class M3eNavItemElement extends SuppressInitialAnimation(
   #handleStateLayerResize(entries: ResizeObserverEntry[]): void {
     if (entries.length === 0 || this.orientation === "vertical") return;
     this._inner?.style.setProperty("--_expanded-width", `${entries[0].contentRect.width}px`);
+  }
+
+  /** @private */
+  #initResizeObserver(): void {
+    if (this._stateLayer && this.#inRail) {
+      this.#resizeController.observe(this._stateLayer);
+    }
   }
 }
 
