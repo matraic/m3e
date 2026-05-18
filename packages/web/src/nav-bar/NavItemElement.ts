@@ -406,11 +406,16 @@ export class M3eNavItemElement extends ReconnectedCallback(
       :host(:state(-first):not(:state(-no-animate))[orientation="horizontal"]) .icon-wrapper,
       :host(:not(:state(-first)):not(:state(-no-animate))[orientation="vertical"]) .icon-wrapper,
       :host(:not(:state(-first)):not(:state(-no-animate))[orientation="horizontal"]) .icon-wrapper,
-      :host(:state(-first):not(:state(-no-animate))[orientation="vertical"]) .icon-wrapper {
+      :host(:state(-first):not(:state(-no-animate))[orientation="vertical"]) .icon-wrapper,
+      :host(:not(:state(-no-animate))[orientation="vertical"]) .state-layer,
+      :host(:not(:state(-no-animate))[orientation="vertical"]) .ripple,
+      :host(:not(:state(-no-animate))[orientation="horizontal"]) .label,
+      :host(:not(:state(-no-animate))[orientation="vertical"]) .label {
         animation: none;
       }
       :host(:not(:state(-no-animate))) .state-layer,
-      :host(:not(:state(-no-animate))) .ripple {
+      :host(:not(:state(-no-animate))) .ripple,
+      :host(:not(:state(-no-animate))) .base {
         transition: none;
       }
     }
