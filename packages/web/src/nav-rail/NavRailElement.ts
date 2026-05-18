@@ -1,6 +1,13 @@
-import { css, CSSResultGroup } from "lit";
+import { css, CSSResultGroup, unsafeCSS } from "lit";
 
-import { customElement, DesignToken, registerStyleSheet } from "@m3e/web/core";
+import {
+  customElement,
+  DesignToken,
+  registerStyleSheet,
+  setCustomState,
+  SuppressInitialAnimation,
+} from "@m3e/web/core";
+
 import { M3eInteractivityChecker, RovingTabIndexManager, selectionManager } from "@m3e/web/core/a11y";
 import { M3eNavBarElement, NavItemOrientation } from "@m3e/web/nav-bar";
 
@@ -44,23 +51,26 @@ import { M3eNavBarElement, NavItemOrientation } from "@m3e/web/nav-bar";
  * @cssprop --m3e-nav-rail-top-space - Top block padding for the nav rail.
  * @cssprop --m3e-nav-rail-bottom-space - Bottom block padding for the nav rail.
  * @cssprop --m3e-nav-rail-compact-width - Width of the nav rail in compact mode.
- * @cssprop --m3e-nav-rail-expanded-inline-padding - Inline padding for expanded nav rail.
- * @cssprop --m3e-nav-rail-expanded-min-width - Minimum width of the nav rail in expanded mode.
- * @cssprop --m3e-nav-rail-expanded-max-width - Maximum width of the nav rail in expanded mode.
+ * @cssprop --m3e-nav-rail-inline-padding - Inline padding for nav rail.
+ * @cssprop --m3e-nav-rail-expanded-width - Width of the nav rail in expanded mode.
  * @cssprop --m3e-nav-rail-expanded-item-height - Height of nav items in expanded mode.
  * @cssprop --m3e-nav-rail-button-item-space - Space below icon buttons and FABs.
- * @cssprop --m3e-nav-rail-expanded-icon-button-inset - Inset for icon buttons in expanded mode.
+ * @cssprop --m3e-nav-rail-icon-button-inset - Inset for icon buttons.
+ * @cssprop --m3e-nav-rail-expanded-inline-padding - Deprecated, use `--m3e-nav-rail-inline-padding`.
+ * @cssprop --m3e-nav-rail-expanded-min-width - Deprecated, use `--m3e-nav-rail-expanded-width`.
+ * @cssprop --m3e-nav-rail-expanded-max-width - Deprecated, use `--m3e-nav-rail-expanded-width`.
+ * @cssprop --m3e-nav-rail-expanded-icon-button-inset - Deprecated, use `--m3e-nav-rail-icon-button-inset`.
  */
 @customElement("m3e-nav-rail")
-export class M3eNavRailElement extends M3eNavBarElement {
+export class M3eNavRailElement extends SuppressInitialAnimation(M3eNavBarElement) {
   static {
     registerStyleSheet(css`
       m3e-nav-rail > m3e-icon-button,
       m3e-nav-rail > m3e-fab {
         margin-block-end: var(--m3e-nav-rail-button-item-space, 1rem);
       }
-      m3e-nav-rail:not(:state(-compact)) > m3e-icon-button {
-        margin-inline-start: var(--m3e-nav-rail-expanded-icon-button-inset, 0.5rem);
+      m3e-nav-rail > m3e-icon-button {
+        margin-inline-start: var(--m3e-nav-rail-icon-button-inset, 0.5rem);
       }
     `);
   }
@@ -74,37 +84,32 @@ export class M3eNavRailElement extends M3eNavBarElement {
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
     }
+    :host(:not(:state(-no-animate))) {
+      transition: ${unsafeCSS(`width ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standard}`)};
+    }
     .base {
       display: flex;
-      width: 100%;
-      min-width: inherit;
-      max-width: inherit;
+      width: inherit;
       flex-direction: column;
+      align-items: flex-start;
+      box-sizing: border-box;
       padding-block-start: var(--m3e-nav-rail-top-space, 2.75rem);
       padding-block-end: var(--m3e-nav-rail-bottom-space, 0.5rem);
+      padding-inline: var(--m3e-nav-rail-inline-padding, 1.25rem);
     }
     :host(:state(-compact)) {
       width: var(--m3e-nav-rail-compact-width, 6rem);
     }
-    :host(:state(-compact)) ::slotted(m3e-fab) {
-      align-self: center;
+    :host(:not(:state(-compact))) {
+      width: var(--m3e-nav-rail-expanded-width, 13.75rem);
     }
     :host(:not(:state(-compact))) {
-      min-width: var(--m3e-nav-rail-expanded-min-width, 13.75rem);
-      max-width: var(--m3e-nav-rail-expanded-max-width, 22.5rem);
-    }
-    :host(:not(:state(-compact))) .base {
-      padding-inline: var(--m3e-nav-rail-expanded-inline-padding, 1.25rem);
-      align-items: flex-start;
       --m3e-horizontal-nav-item-active-indicator-height: var(--m3e-nav-rail-expanded-item-height, 3.5rem);
       --_nav-item-align-self: stretch;
       --_nav-item-justify-content: flex-start;
     }
     ::slotted(*) {
       flex: none;
-    }
-    :host(:state(-compact)) ::slotted(m3e-icon-button) {
-      align-self: center;
     }
     ::slotted(m3e-fab) {
       --m3e-fab-container-elevation: ${DesignToken.elevation.level0};
@@ -117,6 +122,11 @@ export class M3eNavRailElement extends M3eNavBarElement {
       --m3e-fab-lowered-focus-container-elevation: ${DesignToken.elevation.level0};
       --m3e-fab-lowered-pressed-container-elevation: ${DesignToken.elevation.level0};
       --m3e-fab-lowered-hover-container-elevation: ${DesignToken.elevation.level1};
+    }
+    @media (prefers-reduced-motion) {
+      :host(:not(:state(-no-animate))) {
+        transition: none;
+      }
     }
   `;
 
@@ -158,6 +168,8 @@ export class M3eNavRailElement extends M3eNavBarElement {
         this.#focusKeyManager.updateActiveItem(active);
       }
     }
+
+    this.items.forEach((x, i) => setCustomState(x, "-first", i === 0));
 
     super._updateItems();
   }

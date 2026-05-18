@@ -25,6 +25,7 @@ import { CollapsibleOrientation } from "./CollapsibleOrientation";
  *
  * @attr open - Whether content is visible.
  * @attr orientation - Orientation of collapsible content.
+ * @attr no-animate - Whether to disable animation.
  *
  * @fires opening - Emitted when the collapsible begins to open.
  * @fires opened - Emitted when the collapsible has opened.
@@ -76,6 +77,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
       padding-left: 0px !important;
       padding-right: 0px !important;
     }
+    :host([no-animate]),
     :host(:state(-no-animate)) {
       transition-duration: 0ms;
     }
@@ -115,6 +117,12 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
    */
   @property({ reflect: true }) orientation: CollapsibleOrientation = "vertical";
 
+  /**
+   * Whether to disable animation.
+   * @default false
+   */
+  @property({ attribute: "no-animate", type: Boolean, reflect: true }) noAnimate = false;
+
   /** @inheritdoc */
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
@@ -135,7 +143,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
     if (this.open) {
       this.#hasOpened = true;
 
-      if (!prefersReducedMotion()) {
+      if (!(prefersReducedMotion() || this.noAnimate)) {
         this.#autoSize();
         setCustomState(
           this,
@@ -153,7 +161,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
       deleteCustomState(this, "-no-animate");
       this.#actualSize();
 
-      if (prefersReducedMotion()) {
+      if (prefersReducedMotion() || this.noAnimate) {
         this.#autoSize();
         deleteCustomState(this, "-opening");
         this.dispatchEvent(new Event("opened"));
@@ -180,7 +188,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
         deleteCustomState(this, "-no-animate");
       }
 
-      if (prefersReducedMotion()) {
+      if (prefersReducedMotion() || this.noAnimate) {
         this.#clearSize();
         deleteCustomState(this, "-closing");
         this.dispatchEvent(new Event("closed"));

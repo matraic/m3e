@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { property, query } from "lit/decorators.js";
 
 import {
@@ -15,9 +15,12 @@ import {
   M3eRippleElement,
   M3eStateLayerElement,
   renderPseudoLink,
+  ResizeController,
+  resumeAnimation,
   Role,
   Selected,
   setCustomState,
+  SuppressInitialAnimation,
 } from "@m3e/web/core";
 
 import { selectionManager } from "@m3e/web/core/a11y";
@@ -93,8 +96,12 @@ import { NavItemOrientation } from "./NavItemOrientation";
  * @cssprop --m3e-vertical-nav-item-active-indicator-margin - Margin for the active indicator in vertical orientation.
  */
 @customElement("m3e-nav-item")
-export class M3eNavItemElement extends LinkButton(
-  Selected(KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true)))))),
+export class M3eNavItemElement extends SuppressInitialAnimation(
+  LinkButton(
+    Selected(
+      KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))),
+    ),
+  ),
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -154,16 +161,28 @@ export class M3eNavItemElement extends LinkButton(
       position: relative;
       width: 100%;
     }
+    :host(:not(:state(-no-animate))) .base {
+      transition: ${unsafeCSS(
+        `margin-top ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`,
+      )};
+    }
     .icon {
       position: absolute;
     }
     .label {
       vertical-align: middle;
     }
+    :host([orientation="horizontal"]) .label {
+      white-space: nowrap;
+    }
     ::slotted([slot="icon"]),
     ::slotted([slot="selected-icon"]) {
       width: 1em;
       font-size: var(--m3e-nav-item-icon-size, 1.5rem) !important;
+    }
+    :host(:not(:state(-no-animate))) .state-layer,
+    :host(:not(:state(-no-animate))) .ripple {
+      transition: ${unsafeCSS(`height ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
     }
     :host(:not([selected])) slot[name="selected-icon"],
     :host(:not(:state(-with-selected-icon))) slot[name="selected-icon"],
@@ -230,8 +249,12 @@ export class M3eNavItemElement extends LinkButton(
       flex-direction: column;
       row-gap: var(--m3e-nav-item-spacing, 0.25rem);
     }
+    :host([orientation="horizongal"]) .base {
+      margin-top: 0;
+    }
     :host([orientation="vertical"]) .base {
-      margin-block: var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem);
+      margin-top: var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem);
+      margin-bottom: var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem);
     }
     :host([orientation="vertical"]) .state-layer,
     :host([orientation="vertical"]) .ripple {
@@ -243,6 +266,20 @@ export class M3eNavItemElement extends LinkButton(
     :host([orientation="vertical"]) .icon-wrapper {
       width: var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem);
     }
+
+    :host(:not(:state(-no-animate))[orientation="vertical"]) .state-layer,
+    :host(:not(:state(-no-animate))[orientation="vertical"]) .ripple {
+      animation: collapse ${DesignToken.motion.duration.medium1};
+    }
+    @keyframes collapse {
+      from {
+        width: var(--_expanded-width, var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem));
+      }
+      to {
+        width: var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem);
+      }
+    }
+
     :host([orientation="vertical"]) .state-layer,
     :host([orientation="vertical"]) .ripple,
     :host([orientation="vertical"]) .icon-wrapper {
@@ -276,13 +313,63 @@ export class M3eNavItemElement extends LinkButton(
     :host([orientation="horizontal"]) .base {
       column-gap: var(--m3e-nav-item-spacing, 0.25rem);
     }
+    :host([orientation="horizontal"]) .state-layer,
+    :host([orientation="horizontal"]) .ripple,
     :host([orientation="horizontal"]) .inner {
       height: var(--m3e-horizontal-nav-item-active-indicator-height, 2.5rem);
+    }
+    :host([orientation="horizontal"]) .inner {
       width: fit-content;
     }
     .state-layer,
     .ripple {
       margin-inline: auto;
+    }
+    :host(:state(-first):not(:state(-no-animate))[orientation="horizontal"]) .icon-wrapper,
+    :host(:not(:state(-first)):not(:state(-no-animate))[orientation="vertical"]) .icon-wrapper {
+      animation: ${unsafeCSS(`slide-down ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
+    }
+    :host(:not(:state(-first)):not(:state(-no-animate))[orientation="horizontal"]) .icon-wrapper,
+    :host(:state(-first):not(:state(-no-animate))[orientation="vertical"]) .icon-wrapper {
+      animation: ${unsafeCSS(`slide-up ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
+    }
+    @keyframes slide-down {
+      from {
+        transform: translateY(calc(0px - var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem)));
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+    @keyframes slide-up {
+      from {
+        transform: translateY(var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem));
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+    :host(:not(:state(-no-animate))[orientation="horizontal"]) .label {
+      animation: horizontal-fade-in ${DesignToken.motion.duration.short2};
+    }
+    :host(:not(:state(-no-animate))[orientation="vertical"]) .label {
+      animation: vertical-fade-in ${DesignToken.motion.duration.short2};
+    }
+    @keyframes horizontal-fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes vertical-fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
     :host(:disabled) .label,
     :host([disabled-interactive]) .label {
@@ -312,6 +399,18 @@ export class M3eNavItemElement extends LinkButton(
       bottom: 0px;
       z-index: 1;
     }
+    @media (prefers-reduced-motion) {
+      :host(:state(-first):not(:state(-no-animate))[orientation="horizontal"]) .icon-wrapper,
+      :host(:not(:state(-first)):not(:state(-no-animate))[orientation="vertical"]) .icon-wrapper,
+      :host(:not(:state(-first)):not(:state(-no-animate))[orientation="horizontal"]) .icon-wrapper,
+      :host(:state(-first):not(:state(-no-animate))[orientation="vertical"]) .icon-wrapper {
+        animation: none;
+      }
+      :host(:not(:state(-no-animate))) .state-layer,
+      :host(:not(:state(-no-animate))) .ripple {
+        transition: none;
+      }
+    }
     @media (forced-colors: active) {
       :host(:disabled) .label,
       :host([disabled-interactive]) .label,
@@ -337,10 +436,17 @@ export class M3eNavItemElement extends LinkButton(
     }
   `;
 
+  /** @private */ #inRail = false;
   /** @private */ readonly #clickHandler = (e: Event) => this.#handleClick(e);
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;
   /** @private */ @query(".state-layer") private readonly _stateLayer?: M3eStateLayerElement;
   /** @private */ @query(".ripple") private readonly _ripple?: M3eRippleElement;
+  /** @private */ @query(".inner") private readonly _inner?: HTMLElement;
+
+  /** @private */ readonly #resizeController = new ResizeController(this, {
+    target: null,
+    callback: (entries) => this.#handleStateLayerResize(entries),
+  });
 
   /**
    * The layout orientation of the item.
@@ -353,8 +459,16 @@ export class M3eNavItemElement extends LinkButton(
     return this.closest("m3e-nav-bar") ?? this.closest("m3e-nav-rail") ?? null;
   }
 
+  /** @internal */
+  override [resumeAnimation](): void {
+    if (this.#inRail) {
+      super[resumeAnimation]();
+    }
+  }
+
   /** @inheritdoc */
   override connectedCallback(): void {
+    this.#inRail = this.closest("m3e-nav-rail") !== null;
     super.connectedCallback();
     this.addEventListener("click", this.#clickHandler, { capture: true });
   }
@@ -363,6 +477,7 @@ export class M3eNavItemElement extends LinkButton(
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.removeEventListener("click", this.#clickHandler, { capture: true });
+    this.#inRail = false;
   }
 
   /** @inheritdoc */
@@ -393,11 +508,16 @@ export class M3eNavItemElement extends LinkButton(
   protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
     super.firstUpdated(_changedProperties);
     [this._focusRing, this._stateLayer, this._ripple].forEach((x) => x?.attach(this));
+
+    if (this._stateLayer) {
+      this.#resizeController.observe(this._stateLayer);
+    }
   }
 
   /** @inheritdoc */
   protected override render(): unknown {
     const disabled = this.disabled || this.disabledInteractive;
+    const label = html`<div class="label"><slot></slot></div>`;
     return html`${this.orientation === "vertical"
         ? html`<m3e-focus-ring class="focus-ring" inward></m3e-focus-ring>`
         : nothing}
@@ -410,14 +530,21 @@ export class M3eNavItemElement extends LinkButton(
           <div class="touch" aria-hidden="true"></div>
           <div class="base">
             <div class="icon-wrapper" aria-hidden="true">
-              <div class="icon" aria-hidden="true">
+              <div class="icon">
                 <slot name="icon"></slot>
                 <slot name="selected-icon" @slotchange="${this.#handleSelectedIconSlotChange}"></slot>
               </div>
             </div>
-            <div class="label">
-              <slot></slot>
-            </div>
+
+            <m3e-collapsible
+              orientation="horizontal"
+              ?no-animate="${!this.#inRail}"
+              ?open="${this.orientation === "horizontal"}"
+            >
+              ${this.orientation === "horizontal" ? label : nothing}
+            </m3e-collapsible>
+
+            ${this.orientation === "horizontal" ? nothing : label}
           </div>
         </div>
       </div>`;
@@ -439,6 +566,12 @@ export class M3eNavItemElement extends LinkButton(
   /** @private */
   #handleSelectedIconSlotChange(e: Event): void {
     setCustomState(this, "-with-selected-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+  }
+
+  /** @private */
+  #handleStateLayerResize(entries: ResizeObserverEntry[]): void {
+    if (entries.length === 0 || this.orientation === "vertical") return;
+    this._inner?.style.setProperty("--_expanded-width", `${entries[0].contentRect.width}px`);
   }
 }
 
