@@ -22,7 +22,13 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener("message", (e) => {
-  if (e.origin !== window.location.origin) return;
+  const allowedOrigin = window.location.origin;
+  if (e.origin !== allowedOrigin) {
+    return;
+  }
+  if (!e.data || typeof e.data !== "object") {
+    return;
+  }
   switch (e.data?.type) {
     case "color-change":
       document.querySelector("m3e-theme").color = e.data.color;
