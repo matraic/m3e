@@ -40,7 +40,10 @@ function buttonVariantStyle(variant: ButtonVariant): CSSResult {
     :host([variant="${unsafeCSS(variant)}"]:hover:not(:disabled):not([disabled-interactive])) .base {
       outline-color: ${ButtonVariantToken[variant].hover.outlineColor ?? unsafeCSS("unset")};
     }
-    :host([variant="${unsafeCSS(variant)}"]:state(-pressed):not(:disabled):not([disabled-interactive])) .base {
+    :host(
+        [variant="${unsafeCSS(variant)}"]:is(:state(--pressed), :--pressed):not(:disabled):not([disabled-interactive])
+      )
+      .base {
       outline-color: ${ButtonVariantToken[variant].pressed.outlineColor ?? unsafeCSS("unset")};
     }
     :host([variant="${unsafeCSS(variant)}"]:not(:disabled):not([disabled-interactive])) .label {
@@ -72,11 +75,14 @@ function buttonVariantStyle(variant: ButtonVariant): CSSResult {
     :host([variant="${unsafeCSS(variant)}"][toggle][selected]:hover:not(:disabled):not([disabled-interactive])) .label {
       color: ${ButtonVariantToken[variant].hover.selectedLabelTextColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]:state(-pressed):not(:disabled):not([disabled-interactive])) .label {
+    :host(
+        [variant="${unsafeCSS(variant)}"]:is(:state(--pressed), :--pressed):not(:disabled):not([disabled-interactive])
+      )
+      .label {
       color: ${ButtonVariantToken[variant].pressed.labelTextColor};
     }
     :host(
-        [variant="${unsafeCSS(variant)}"][toggle]:not([selected]):state(-pressed):not(:disabled):not(
+        [variant="${unsafeCSS(variant)}"][toggle]:not([selected]):is(:state(--pressed), :--pressed):not(:disabled):not(
             [disabled-interactive]
           )
       )
@@ -84,7 +90,9 @@ function buttonVariantStyle(variant: ButtonVariant): CSSResult {
       color: ${ButtonVariantToken[variant].pressed.unselectedLabelTextColor};
     }
     :host(
-        [variant="${unsafeCSS(variant)}"][toggle][selected]:state(-pressed):not(:disabled):not([disabled-interactive])
+        [variant="${unsafeCSS(variant)}"][toggle][selected]:is(:state(--pressed), :--pressed):not(:disabled):not(
+            [disabled-interactive]
+          )
       )
       .label {
       color: ${ButtonVariantToken[variant].pressed.selectedLabelTextColor};
@@ -118,11 +126,14 @@ function buttonVariantStyle(variant: ButtonVariant): CSSResult {
     :host([variant="${unsafeCSS(variant)}"][toggle][selected]:hover:not(:disabled):not([disabled-interactive])) .icon {
       color: ${ButtonVariantToken[variant].hover.selectedIconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]:state(-pressed):not(:disabled):not([disabled-interactive])) .icon {
+    :host(
+        [variant="${unsafeCSS(variant)}"]:is(:state(--pressed), :--pressed):not(:disabled):not([disabled-interactive])
+      )
+      .icon {
       color: ${ButtonVariantToken[variant].pressed.iconColor};
     }
     :host(
-        [variant="${unsafeCSS(variant)}"][toggle]:not([selected]):state(-pressed):not(:disabled):not(
+        [variant="${unsafeCSS(variant)}"][toggle]:not([selected]):is(:state(--pressed), :--pressed):not(:disabled):not(
             [disabled-interactive]
           )
       )
@@ -130,7 +141,9 @@ function buttonVariantStyle(variant: ButtonVariant): CSSResult {
       color: ${ButtonVariantToken[variant].pressed.unselectedIconColor};
     }
     :host(
-        [variant="${unsafeCSS(variant)}"][toggle][selected]:state(-pressed):not(:disabled):not([disabled-interactive])
+        [variant="${unsafeCSS(variant)}"][toggle][selected]:is(:state(--pressed), :--pressed):not(:disabled):not(
+            [disabled-interactive]
+          )
       )
       .icon {
       color: ${ButtonVariantToken[variant].pressed.selectedIconColor};

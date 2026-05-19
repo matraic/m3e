@@ -156,7 +156,7 @@ export class M3eFilterChipSetElement extends Labelled(
     }
 
     if (changedProperties.has("hideSelectionIndicator")) {
-      this.chips.forEach((x) => setCustomState(x, "-hide-selection", this.hideSelectionIndicator));
+      this.chips.forEach((x) => setCustomState(x, "--hide-selection", this.hideSelectionIndicator));
     }
   }
 
@@ -172,7 +172,7 @@ export class M3eFilterChipSetElement extends Labelled(
   /** @private */
   #handleSlotChange() {
     const { added } = this[selectionManager].setItems([...this.querySelectorAll("m3e-filter-chip")]);
-    added.forEach((x) => setCustomState(x, "-hide-selection", this.hideSelectionIndicator));
+    added.forEach((x) => setCustomState(x, "--hide-selection", this.hideSelectionIndicator));
     this.#updateChipRole();
   }
 

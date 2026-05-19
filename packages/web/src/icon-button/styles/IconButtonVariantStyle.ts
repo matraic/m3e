@@ -41,7 +41,10 @@ function iconButtonVariantStyle(variant: IconButtonVariant | "elevated"): CSSRes
     :host([variant="${unsafeCSS(variant)}"]:hover:not(:disabled):not([disabled-interactive])) .base {
       outline-color: ${IconButtonVariantToken[variant].hover.outlineColor ?? unsafeCSS("unset")};
     }
-    :host([variant="${unsafeCSS(variant)}"]:state(-pressed):not(:disabled):not([disabled-interactive])) .base {
+    :host(
+        [variant="${unsafeCSS(variant)}"]:is(:state(--pressed), :--pressed):not(:disabled):not([disabled-interactive])
+      )
+      .base {
       outline-color: ${IconButtonVariantToken[variant].pressed.outlineColor ?? unsafeCSS("unset")};
     }
     :host([variant="${unsafeCSS(variant)}"]:not(:disabled):not([disabled-interactive])) .icon {
@@ -73,11 +76,14 @@ function iconButtonVariantStyle(variant: IconButtonVariant | "elevated"): CSSRes
     :host([variant="${unsafeCSS(variant)}"][toggle][selected]:hover:not(:disabled):not([disabled-interactive])) .icon {
       color: ${IconButtonVariantToken[variant].hover.selectedIconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]:state(-pressed):not(:disabled):not([disabled-interactive])) .icon {
+    :host(
+        [variant="${unsafeCSS(variant)}"]:is(:state(--pressed), :--pressed):not(:disabled):not([disabled-interactive])
+      )
+      .icon {
       color: ${IconButtonVariantToken[variant].pressed.iconColor};
     }
     :host(
-        [variant="${unsafeCSS(variant)}"][toggle]:not([selected]):state(-pressed):not(:disabled):not(
+        [variant="${unsafeCSS(variant)}"][toggle]:not([selected]):is(:state(--pressed), :--pressed):not(:disabled):not(
             [disabled-interactive]
           )
       )
@@ -85,7 +91,9 @@ function iconButtonVariantStyle(variant: IconButtonVariant | "elevated"): CSSRes
       color: ${IconButtonVariantToken[variant].pressed.unselectedIconColor};
     }
     :host(
-        [variant="${unsafeCSS(variant)}"][toggle][selected]:state(-pressed):not(:disabled):not([disabled-interactive])
+        [variant="${unsafeCSS(variant)}"][toggle][selected]:is(:state(--pressed), :--pressed):not(:disabled):not(
+            [disabled-interactive]
+          )
       )
       .icon {
       color: ${IconButtonVariantToken[variant].pressed.selectedIconColor};

@@ -97,7 +97,7 @@ export class M3eTreeElement extends Role(LitElement, "tree") {
   static {
     // NOTE: unsafeCSS used here due to linting error with use of '>'.
     registerStyleSheet(css`
-      ${unsafeCSS(`m3e-tree:has(> m3e-tree-item:state(-with-items)) {
+      ${unsafeCSS(`m3e-tree:has(> m3e-tree-item:is(:state(--with-items), :--with-items)) {
         --_tree-item-toggle-display: flex;
       }`)}
     `);

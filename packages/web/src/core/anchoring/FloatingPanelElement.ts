@@ -72,7 +72,7 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
       padding-block: var(--m3e-floating-panel-container-padding-block, 0.25rem);
       padding-inline: var(--m3e-floating-panel-container-padding-inline, 0.25rem);
     }
-    :host(:not(:state(-no-animate))) {
+    :host(:not(:is(:state(--no-animate), :--no-animate))) {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}, 
             transform ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard},
@@ -91,10 +91,10 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
     :host::backdrop {
       background-color: transparent;
     }
-    :host(:state(-bottom)) {
+    :host(:is(:state(--bottom), :--bottom)) {
       transform-origin: top;
     }
-    :host(:state(-top)) {
+    :host(:is(:state(--top), :--top)) {
       transform-origin: bottom;
     }
     @starting-style {
@@ -103,7 +103,7 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
       }
     }
     @media (prefers-reduced-motion) {
-      :host(:not(:state(-no-animate))) {
+      :host(:not(:is(:state(--no-animate), :--no-animate))) {
         transition: none;
       }
     }
@@ -224,8 +224,8 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
         offset: this.anchorOffset > 0 ? this.anchorOffset : undefined,
       },
       (x, y, position) => {
-        setCustomState(this, "-top", position.includes("top"));
-        setCustomState(this, "-bottom", position.includes("bottom"));
+        setCustomState(this, "--top", position.includes("top"));
+        setCustomState(this, "--bottom", position.includes("bottom"));
 
         if (M3eDirectionality.current === "rtl") {
           this.style.right = `${window.innerWidth - x - this.clientWidth}px`;

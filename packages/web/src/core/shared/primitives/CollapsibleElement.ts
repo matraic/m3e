@@ -64,7 +64,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
         padding-right var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
           ${DesignToken.motion.easing.standard}`)};
     }
-    :host(:not(:state(-closing)):not([open])) {
+    :host(:not(:is(:state(--closing), :--closing)):not([open])) {
       visibility: hidden;
     }
     :host([orientation="vertical"]:not([open])) {
@@ -78,18 +78,18 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
       padding-right: 0px !important;
     }
     :host([no-animate]),
-    :host(:state(-no-animate)) {
+    :host(:is(:state(--no-animate), :--no-animate)) {
       transition-duration: 0ms;
     }
-    :host([orientation="vertical"]:state(-opening)),
-    :host([orientation="vertical"]:state(-closing)) {
+    :host([orientation="vertical"]:is(:state(--opening), :--opening)),
+    :host([orientation="vertical"]:is(:state(--closing), :--closing)) {
       overflow-y: hidden !important;
     }
-    :host([orientation="horizontal"]:state(-opening)),
-    :host([orientation="horizontal"]:state(-closing)) {
+    :host([orientation="horizontal"]:is(:state(--opening), :--opening)),
+    :host([orientation="horizontal"]:is(:state(--closing), :--closing)) {
       overflow-x: hidden !important;
     }
-    :host(:state(-overflows)) {
+    :host(:is(:state(--overflows), :--overflows)) {
       scrollbar-gutter: stable;
     }
     ::slotted(*) {
@@ -127,7 +127,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
 
-    addCustomState(this, "-no-animate");
+    addCustomState(this, "--no-animate");
 
     if (!this.#slotChanged) {
       if (this.open) {
@@ -147,23 +147,23 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
         this.#autoSize();
         setCustomState(
           this,
-          "-overflows",
+          "--overflows",
           this.orientation === "vertical" ? this.clientHeight < this.scrollHeight : this.clientWidth < this.scrollWidth,
         );
         this.#clearSize();
       }
 
-      deleteCustomState(this, "-closing");
-      addCustomState(this, "-opening");
+      deleteCustomState(this, "--closing");
+      addCustomState(this, "--opening");
       this.dispatchEvent(new Event("opening"));
 
       this.#clearSize();
-      deleteCustomState(this, "-no-animate");
+      deleteCustomState(this, "--no-animate");
       this.#actualSize();
 
       if (prefersReducedMotion() || this.noAnimate) {
         this.#autoSize();
-        deleteCustomState(this, "-opening");
+        deleteCustomState(this, "--opening");
         this.dispatchEvent(new Event("opened"));
       } else {
         this.addEventListener(
@@ -171,7 +171,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
           () => {
             if (this.open) {
               this.#autoSize();
-              deleteCustomState(this, "-opening");
+              deleteCustomState(this, "--opening");
               this.dispatchEvent(new Event("opened"));
             }
           },
@@ -179,18 +179,18 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
         );
       }
     } else {
-      deleteCustomState(this, "-opening");
-      addCustomState(this, "-closing");
+      deleteCustomState(this, "--opening");
+      addCustomState(this, "--closing");
       this.dispatchEvent(new Event("closing"));
 
       this.#actualSize();
       if (this.#hasOpened) {
-        deleteCustomState(this, "-no-animate");
+        deleteCustomState(this, "--no-animate");
       }
 
       if (prefersReducedMotion() || this.noAnimate) {
         this.#clearSize();
-        deleteCustomState(this, "-closing");
+        deleteCustomState(this, "--closing");
         this.dispatchEvent(new Event("closed"));
       } else {
         requestAnimationFrame(() => {
@@ -199,7 +199,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
             "transitionend",
             () => {
               if (!this.open) {
-                deleteCustomState(this, "-closing");
+                deleteCustomState(this, "--closing");
                 this.dispatchEvent(new Event("closed"));
               }
             },

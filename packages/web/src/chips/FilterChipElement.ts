@@ -108,7 +108,7 @@ export class M3eFilterChipElement extends Selected(
   static override styles: CSSResultGroup = [
     M3eChipElement.styles,
     css`
-      :host([selected]:not(:state(-hide-selection))) .wrapper {
+      :host([selected]:not(:is(:state(--hide-selection), :--hide-selection))) .wrapper {
         padding-inline-start: var(--m3e-chip-with-icon-padding-start, 0.5rem);
       }
       .icon {
@@ -124,18 +124,18 @@ export class M3eFilterChipElement extends Selected(
         color: var(--m3e-chip-selected-leading-icon-color, ${DesignToken.color.onSecondaryContainer});
       }
       :host(:not([selected])) .check,
-      :host(:state(-hide-selection)) .check,
-      :host(:state(-hide-selection):not(:state(-with-icon))) .icon {
+      :host(:is(:state(--hide-selection), :--hide-selection)) .check,
+      :host(:is(:state(--hide-selection), :--hide-selection):not(:is(:state(--with-icon), :--with-icon))) .icon {
         display: none;
       }
-      :host(:not(:state(-with-icon))) .icon {
+      :host(:not(:is(:state(--with-icon), :--with-icon))) .icon {
         margin-inline-start: calc(0px - var(--m3e-chip-with-icon-padding-start, 0.5rem));
         transition: margin-inline-start ${DesignToken.motion.spring.fastEffects};
       }
       :host([selected]) .icon {
         margin-inline-start: 0;
       }
-      :host([selected]:not(:state(-hide-selection))) ::slotted([slot="icon"]) {
+      :host([selected]:not(:is(:state(--hide-selection), :--hide-selection))) ::slotted([slot="icon"]) {
         display: none !important;
       }
       :host(:not(:disabled):not([disabled-interactive]):not([selected])) .base {
@@ -188,7 +188,7 @@ export class M3eFilterChipElement extends Selected(
       }
       @media (prefers-reduced-motion) {
         .base,
-        :host(:not(:state(-with-icon))) .icon {
+        :host(:not(:is(:state(--with-icon), :--with-icon))) .icon {
           transition: none;
         }
       }

@@ -133,12 +133,12 @@ export class M3eSearchBarElement extends AttachInternals(LitElement) {
 
   /** @private */
   #handleLeadingSlotChange(e: Event): void {
-    setCustomState(this, "-with-leading", hasAssignedNodes(e.target as HTMLSlotElement));
+    setCustomState(this, "--with-leading", hasAssignedNodes(e.target as HTMLSlotElement));
   }
 
   /** @private */
   #handleTrailingSlotChange(e: Event): void {
-    setCustomState(this, "-with-trailing", hasAssignedNodes(e.target as HTMLSlotElement));
+    setCustomState(this, "--with-trailing", hasAssignedNodes(e.target as HTMLSlotElement));
   }
 
   /** @private */
@@ -164,7 +164,7 @@ export class M3eSearchBarElement extends AttachInternals(LitElement) {
 
   /** @private */
   #handleInputInput(): void {
-    setCustomState(this, "-clearable", this.clearable && (this.#input?.value ?? "").length > 0);
+    setCustomState(this, "--clearable", this.clearable && (this.#input?.value ?? "").length > 0);
   }
 
   /** @private */

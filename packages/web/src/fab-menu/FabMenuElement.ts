@@ -92,7 +92,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       background-color: transparent;
       display: none;
     }
-    :host(:not(:state(-no-animate))) {
+    :host(:not(:is(:state(--no-animate), :--no-animate))) {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.spring.fastEffects}, 
         transform ${DesignToken.motion.spring.fastSpatial},
@@ -136,11 +136,11 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     :host {
       transform: scaleX(0.8);
     }
-    :host(:state(-left)) {
+    :host(:is(:state(--left), :--left)) {
       align-items: flex-start;
       transform-origin: left;
     }
-    :host(:state(-right)) {
+    :host(:is(:state(--right), :--right)) {
       align-items: flex-end;
       transform-origin: right;
     }
@@ -161,7 +161,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       }
     }
     @media (prefers-reduced-motion) {
-      :host(:not(:state(-no-animate))) {
+      :host(:not(:is(:state(--no-animate), :--no-animate))) {
         transition: none;
       }
     }
@@ -235,8 +235,8 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
         offset: 8,
       },
       (x, y, position) => {
-        setCustomState(this, "-right", position.includes("end"));
-        setCustomState(this, "-left", position.includes("start"));
+        setCustomState(this, "--right", position.includes("end"));
+        setCustomState(this, "--left", position.includes("start"));
         if (M3eDirectionality.current === "rtl") {
           this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
           this.style.left = "";

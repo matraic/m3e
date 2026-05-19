@@ -60,10 +60,10 @@ export class M3eScrollContainerElement extends AttachInternals(LitElement) {
     :host(:not([thin])) {
       scrollbar-width: ${DesignToken.scrollbar.width};
     }
-    :host(:not(:focus-visible):state(-above)) {
+    :host(:not(:focus-visible):is(:state(--above), :--above)) {
       border-top-color: var(--m3e-divider-color, ${DesignToken.color.outlineVariant});
     }
-    :host(:not(:focus-visible):state(-below)) {
+    :host(:not(:focus-visible):is(:state(--below), :--below)) {
       border-bottom-color: var(--m3e-divider-color, ${DesignToken.color.outlineVariant});
     }
     :host(:focus-visible) {
@@ -80,10 +80,10 @@ export class M3eScrollContainerElement extends AttachInternals(LitElement) {
         border-top: var(--m3e-divider-thickness, 1px) solid Canvas;
         border-bottom: var(--m3e-divider-thickness, 1px) solid Canvas;
       }
-      :host(:not(:focus-visible):state(-above)) {
+      :host(:not(:focus-visible):is(:state(--above), :--above)) {
         border-top-color: GrayText;
       }
-      :host(:not(:focus-visible):state(-below)) {
+      :host(:not(:focus-visible):is(:state(--below), :--below)) {
         border-bottom-color: GrayText;
       }
     }
@@ -139,8 +139,8 @@ export class M3eScrollContainerElement extends AttachInternals(LitElement) {
       (this.dividers === "below" || this.dividers === "above-below") &&
       this.scrollHeight - this.scrollTop - this.clientHeight > 1;
 
-    setCustomState(this, "-above", before);
-    setCustomState(this, "-below", after);
+    setCustomState(this, "--above", before);
+    setCustomState(this, "--below", after);
   }
 }
 

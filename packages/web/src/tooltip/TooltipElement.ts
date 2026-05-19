@@ -98,7 +98,7 @@ export class M3eTooltipElement extends TooltipElementBase {
         display ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
-    :host(:state(-multiline)) .base {
+    :host(:is(:state(--multiline), :--multiline)) .base {
       text-align: start;
     }
     .base::backdrop {
@@ -217,7 +217,7 @@ export class M3eTooltipElement extends TooltipElementBase {
   #handleToggle(e: ToggleEvent): void {
     if (e.newState === "open") {
       const multiline = this._base.getBoundingClientRect().height > parseFloat(getComputedStyle(this._base).minHeight);
-      setCustomState(this, "-multiline", multiline);
+      setCustomState(this, "--multiline", multiline);
     }
   }
 }

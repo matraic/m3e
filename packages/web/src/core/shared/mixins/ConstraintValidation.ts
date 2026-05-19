@@ -164,7 +164,7 @@ export function ConstraintValidation<T extends Constructor<LitElement & FormAsso
 
       this[internals].setValidity(validity, validityMessage);
       this.ariaInvalid = invalid ? "true" : null;
-      setCustomState(this, "-invalid", invalid === true);
+      setCustomState(this, "--invalid", invalid === true);
 
       if (isLabelledMixin(this)) {
         this[updateLabels]?.();

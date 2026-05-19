@@ -57,17 +57,17 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
       width: 1em;
       height: 1em;
     }
-    :host(:state(-icon-only)) .overflow {
+    :host(:is(:state(--icon-only), :--icon-only)) .overflow {
       flex: none;
     }
-    :host(:not(:state(-icon-only))),
-    :host(:not(:state(-icon-only))) .base {
+    :host(:not(:is(:state(--icon-only), :--icon-only))),
+    :host(:not(:is(:state(--icon-only), :--icon-only))) .base {
       min-width: 0;
     }
-    :host(:state(-icon-only):not([current]):not(:disabled)) .base {
+    :host(:is(:state(--icon-only), :--icon-only):not([current]):not(:disabled)) .base {
       color: var(--m3e-breadcrumb-item-icon-color, ${DesignToken.color.onSurfaceVariant});
     }
-    :host(:state(-icon-only)) .base {
+    :host(:is(:state(--icon-only), :--icon-only)) .base {
       width: calc(var(--m3e-breadcrumb-item-container-height, 2.5rem) + ${DesignToken.density.calc(-1)});
       padding-inline: var(--m3e-breadcrumb-item-icon-padding-inline, 0px);
       --m3e-state-layer-hover-color: var(
@@ -80,10 +80,10 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
       );
       --m3e-ripple-color: var(--m3e-breadcrumb-item-icon-pressed-state-layer-color, ${DesignToken.color.onSurface});
     }
-    :host(:not(:state(-icon-only)):not([current]):not(:disabled)) .base {
+    :host(:not(:is(:state(--icon-only), :--icon-only)):not([current]):not(:disabled)) .base {
       color: var(--m3e-breadcrumb-item-label-color, ${DesignToken.color.primary});
     }
-    :host(:not(:state(-icon-only))) .base {
+    :host(:not(:is(:state(--icon-only), :--icon-only))) .base {
       font-size: var(--m3e-breadcrumb-item-label-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(
         --m3e-breadcrumb-item-label-font-weight,
@@ -95,7 +95,7 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
       );
       letter-spacing: var(--m3e-breadcrumb-item-label-tracking, ${DesignToken.typescale.standard.label.large.tracking});
     }
-    :host(:not(:state(-icon-only))) .base {
+    :host(:not(:is(:state(--icon-only), :--icon-only))) .base {
       padding-inline: var(--m3e-breadcrumb-item-label-padding-inline, 0.75rem);
       --m3e-state-layer-hover-color: var(
         --m3e-breadcrumb-item-label-hover-state-layer-color,
@@ -139,8 +139,8 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
       z-index: 1;
     }
     @media (forced-colors: active) {
-      :host(:state(-icon-only):not([current]):not(:disabled)) .base,
-      :host(:not(:state(-icon-only)):not([current]):not(:disabled)) .base {
+      :host(:is(:state(--icon-only), :--icon-only):not([current]):not(:disabled)) .base,
+      :host(:not(:is(:state(--icon-only), :--icon-only)):not([current]):not(:disabled)) .base {
         color: LinkText;
         outline: 1px solid LinkText;
       }
@@ -218,7 +218,7 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
 
   /** @private */
   #handleSlotChange(e: Event): void {
-    setCustomState(this, "-icon-only", isIconOnly(e.target as HTMLSlotElement));
+    setCustomState(this, "--icon-only", isIconOnly(e.target as HTMLSlotElement));
   }
 
   /** @private */

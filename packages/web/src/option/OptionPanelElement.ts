@@ -139,20 +139,20 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
           ${DesignToken.typescale.standard.label.large.tracking}
         );
       }
-      :host(:state(-no-data)) slot:not([name]),
-      :host(:state(-loading)) slot:not([name]),
-      :host(:state(-loading)) .no-data,
-      :host(:not(:state(-no-data))) .no-data,
-      :host(:not(:state(-with-no-data))) .no-data,
-      :host(:not(:state(-loading))) .loading,
-      :host(:not(:state(-with-loading))) .loading {
+      :host(:is(:state(--no-data), :--no-data)) slot:not([name]),
+      :host(:is(:state(--loading), :--loading)) slot:not([name]),
+      :host(:is(:state(--loading), :--loading)) .no-data,
+      :host(:not(:is(:state(--no-data), :--no-data))) .no-data,
+      :host(:not(:is(:state(--with-no-data), :--with-no-data))) .no-data,
+      :host(:not(:is(:state(--loading), :--loading))) .loading,
+      :host(:not(:is(:state(--with-loading), :--with-loading))) .loading {
         display: none;
       }
-      :host(:state(-no-data)) .base,
-      :host(:state(-loading)) .base {
+      :host(:is(:state(--no-data), :--no-data)) .base,
+      :host(:is(:state(--loading), :--loading)) .base {
         overflow-y: hidden;
       }
-      :host(:state(-with-loading-indicator)) .loading {
+      :host(:is(:state(--with-loading-indicator), :--with-loading-indicator)) .loading {
         padding: 0;
         justify-content: center;
       }
@@ -198,15 +198,15 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
 
   /** @private */
   #handleNoDataSlotChange(e: Event): void {
-    setCustomState(this, "-with-no-data", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-no-data", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
   #handleLoadingSlotChange(e: Event): void {
-    setCustomState(this, "-with-loading", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-loading", hasAssignedNodes(<HTMLSlotElement>e.target));
     setCustomState(
       this,
-      "-with-loading-indicator",
+      "--with-loading-indicator",
       this.querySelector("m3e-loading-indicator[slot='loading'], m3e-circular-progress-indicator[slot='loading']") !==
         null,
     );
@@ -221,19 +221,19 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
     for (let i = 0; i < options.length; i++) {
       const option = options[i];
       if (option.hidden === true) {
-        deleteCustomState(option, "-first");
-        deleteCustomState(option, "-last");
+        deleteCustomState(option, "--first");
+        deleteCustomState(option, "--last");
       } else if (!first && !(option.parentElement instanceof M3eOptGroupElement)) {
-        addCustomState(option, "-first");
+        addCustomState(option, "--first");
         first = true;
-        addCustomState(option, "-last");
+        addCustomState(option, "--last");
         last = option;
       } else {
-        deleteCustomState(option, "-first");
+        deleteCustomState(option, "--first");
         if (last) {
-          deleteCustomState(last, "-last");
+          deleteCustomState(last, "--last");
         }
-        addCustomState(option, "-last");
+        addCustomState(option, "--last");
         last = option;
       }
     }

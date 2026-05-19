@@ -104,34 +104,34 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
         ${DesignToken.shape.corner.large}
       );
     }
-    :host([variant="segmented"]) ::slotted(:state(-first)),
-    :host([variant="segmented"]) ::slotted(:state(-has-previous-open):not([open])) {
+    :host([variant="segmented"]) ::slotted(:is(:state(--first), :--first)),
+    :host([variant="segmented"]) ::slotted(:is(:state(--has-previous-open), :--has-previous-open):not([open])) {
       --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
     }
-    :host([variant="segmented"]) ::slotted(:state(-has-next-open):not([open])),
-    :host([variant="segmented"]) ::slotted(:state(-last)) {
+    :host([variant="segmented"]) ::slotted(:is(:state(--has-next-open), :--has-next-open):not([open])),
+    :host([variant="segmented"]) ::slotted(:is(:state(--last), :--last)) {
       --_list-item-bottom-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
     }
     :host([variant="segmented"]) ::slotted(m3e-divider) {
       display: none;
     }
-    :host(:state(-has-leading-video)) {
+    :host(:is(:state(--has-leading-video), :--has-leading-video)) {
       --_list-item-leading-reserved-display: block;
       --_list-item-leading-reserved-space: var(--m3e-list-item-video-width, 6.25rem);
     }
-    :host([variant="standard"]:state(-has-leading-video)) {
+    :host([variant="standard"]:is(:state(--has-leading-video), :--has-leading-video)) {
       --_list-item-leading-reserved-outset: var(--m3e-list-item-leading-space, 1rem);
       --_list-item-trailing-reserved-outset: var(--m3e-list-item-trailing-space, 1rem);
     }
-    :host(:state(-has-leading-image)) {
+    :host(:is(:state(--has-leading-image), :--has-leading-image)) {
       --_list-item-leading-reserved-display: block;
       --_list-item-leading-reserved-space: var(--m3e-list-item-image-width, 3.5rem);
     }
-    :host(:state(-has-leading-avatar)) {
+    :host(:is(:state(--has-leading-avatar), :--has-leading-avatar)) {
       --_list-item-leading-reserved-display: block;
       --_list-item-leading-reserved-space: var(--m3e-avatar-size, 2.5rem);
     }
-    :host(:state(-has-leading-icon)) {
+    :host(:is(:state(--has-leading-icon), :--has-leading-icon)) {
       --_list-item-leading-reserved-display: block;
       --_list-item-leading-reserved-space: var(--m3e-list-item-icon-size, 1.5rem);
     }
@@ -194,8 +194,8 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
       .filter((x) => x instanceof M3eListItemElement);
 
     this.#items.forEach((x, i) => {
-      setCustomState(x, "-first", i === 0);
-      setCustomState(x, "-last", i === this.#items.length - 1);
+      setCustomState(x, "--first", i === 0);
+      setCustomState(x, "--last", i === this.#items.length - 1);
     });
 
     this.notifyItemsChange();
@@ -220,7 +220,7 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
     }
 
     ["video", "image", "avatar", "icon"].forEach((x) => {
-      setCustomState(this, `-has-leading-${x}`, this.leadingContentType === x);
+      setCustomState(this, `--has-leading-${x}`, this.leadingContentType === x);
     });
   }
 
@@ -237,7 +237,7 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
     }
 
     ["video", "image", "avatar", "icon"].forEach((x) => {
-      setCustomState(this, `-has-trailing-${x}`, this.trailingContentType === x);
+      setCustomState(this, `--has-trailing-${x}`, this.trailingContentType === x);
     });
   }
 }

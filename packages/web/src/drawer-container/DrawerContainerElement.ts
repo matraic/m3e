@@ -127,7 +127,7 @@ export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInterna
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-    addCustomState(this, "-no-animate");
+    addCustomState(this, "--no-animate");
   }
 
   /** @inheritdoc */
@@ -245,10 +245,10 @@ export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInterna
       }
     }
 
-    if (hasCustomState(this, "-no-animate")) {
+    if (hasCustomState(this, "--no-animate")) {
       // Force synchronous layout flush
       void this.offsetTop;
-      deleteCustomState(this, "-no-animate");
+      deleteCustomState(this, "--no-animate");
     }
   }
 
@@ -261,12 +261,12 @@ export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInterna
 
   /** @private */
   #clearMode(): void {
-    deleteCustomState(this, "-start-over");
-    deleteCustomState(this, "-start-push");
-    deleteCustomState(this, "-start-side");
-    deleteCustomState(this, "-end-over");
-    deleteCustomState(this, "-end-push");
-    deleteCustomState(this, "-end-side");
+    deleteCustomState(this, "--start-over");
+    deleteCustomState(this, "--start-push");
+    deleteCustomState(this, "--start-side");
+    deleteCustomState(this, "--end-over");
+    deleteCustomState(this, "--end-push");
+    deleteCustomState(this, "--end-side");
   }
 
   /** @inheritdoc */
@@ -307,8 +307,8 @@ export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInterna
 
     this.#clearMode();
 
-    addCustomState(this, `-start-${this._startMode}`);
-    addCustomState(this, `-end-${this._endMode}`);
+    addCustomState(this, `--start-${this._startMode}`);
+    addCustomState(this, `--end-${this._endMode}`);
 
     if (autoClose && (autoCloseStart || autoCloseEnd)) {
       if (autoCloseStart) {

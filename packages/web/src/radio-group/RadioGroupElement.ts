@@ -137,7 +137,7 @@ export class M3eRadioGroupElement extends Labelled(
 
       case "aria-invalid":
         this.radios.forEach((x) => {
-          setCustomState(x, "-invalid", newValue === "true");
+          setCustomState(x, "--invalid", newValue === "true");
           x[updateLabels]?.();
         });
         break;

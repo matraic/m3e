@@ -117,26 +117,26 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       height: 100%;
       overflow: hidden;
     }
-    :host(:not(:state(-vertical))) .base {
+    :host(:not(:is(:state(--vertical), :--vertical))) .base {
       flex-direction: row;
     }
-    :host(:state(-vertical)) .base {
+    :host(:is(:state(--vertical), :--vertical)) .base {
       flex-direction: column;
     }
-    :host(:state(-with-start):state(-with-end)) .start {
+    :host(:is(:state(--with-start), :--with-start):is(:state(--with-end), :--with-end)) .start {
       flex: 0 1 calc(var(--_split-pane-value) - calc(var(--m3e-split-pane-drag-handle-container-width, 1.5rem) / 2));
     }
-    :host(:not(:state(-with-end))) .start {
+    :host(:not(:is(:state(--with-end), :--with-end))) .start {
       flex: 1 1 auto;
     }
-    :host(:state(-with-end)) .end {
+    :host(:is(:state(--with-end), :--with-end)) .end {
       flex: 1 1 auto;
     }
-    :host(:not(:state(-with-end))) .end {
+    :host(:not(:is(:state(--with-end), :--with-end))) .end {
       display: none;
     }
-    :host(:not(:state(-animating))) .start[inert],
-    :host(:not(:state(-animating))) .end[inert] {
+    :host(:not(:is(:state(--animating), :--animating))) .start[inert],
+    :host(:not(:is(:state(--animating), :--animating))) .end[inert] {
       visibility: hidden;
     }
     .drag-handle {
@@ -154,13 +154,14 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       --m3e-state-layer-focus-color: var(--m3e-split-pane-drag-handle-focus-color, ${DesignToken.color.onSurface});
       --m3e-state-layer-focus-opacity: var(--m3e-split-pane-drag-handle-focus-opacity, 10%);
     }
-    :host(:is(:not(:state(-with-start)), :not(:state(-with-end)))) .drag-handle {
+    :host(:is(:not(:is(:state(--with-start), :--with-start)), :not(:is(:state(--with-end), :--with-end))))
+      .drag-handle {
       display: none;
     }
-    :host(:not(:state(-pressed))) .drag-handle:not([aria-disabled]) {
+    :host(:not(:is(:state(--pressed), :--pressed))) .drag-handle:not([aria-disabled]) {
       cursor: grab;
     }
-    :host(:state(-pressed)) .drag-handle:not([aria-disabled]) {
+    :host(:is(:state(--pressed), :--pressed)) .drag-handle:not([aria-disabled]) {
       cursor: grabbing;
     }
     .handle {
@@ -178,34 +179,34 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
-    :host(:not(:state(-pressed))) .handle {
+    :host(:not(:is(:state(--pressed), :--pressed))) .handle {
       background-color: var(--m3e-split-pane-drag-handle-color, ${DesignToken.color.outline});
       border-radius: var(--m3e-split-pane-drag-handle-shape, ${DesignToken.shape.corner.full});
     }
-    :host(:state(-pressed)) .handle {
+    :host(:is(:state(--pressed), :--pressed)) .handle {
       background-color: var(--m3e-split-pane-drag-handle-pressed-color, ${DesignToken.color.onSurface});
       border-radius: var(--m3e-split-pane-drag-handle-pressed-shape, ${DesignToken.shape.corner.medium});
     }
-    :host(:not(:state(-vertical))) .drag-handle {
+    :host(:not(:is(:state(--vertical), :--vertical))) .drag-handle {
       flex-direction: column;
       width: var(--m3e-split-pane-drag-handle-container-width, 1.5rem);
     }
-    :host(:not(:state(-vertical)):not(:state(-pressed))) .handle {
+    :host(:not(:is(:state(--vertical), :--vertical)):not(:is(:state(--pressed), :--pressed))) .handle {
       width: var(--m3e-split-pane-drag-handle-width, 0.25rem);
       height: var(--m3e-split-pane-drag-handle-height, 3rem);
     }
-    :host(:not(:state(-vertical)):state(-pressed)) .handle {
+    :host(:not(:is(:state(--vertical), :--vertical)):is(:state(--pressed), :--pressed)) .handle {
       width: var(--m3e-split-pane-drag-handle-pressed-width, 0.75rem);
       height: var(--m3e-split-pane-drag-handle-pressed-height, 3.25rem);
     }
-    :host(:state(-vertical)) .drag-handle {
+    :host(:is(:state(--vertical), :--vertical)) .drag-handle {
       height: var(--m3e-split-pane-drag-handle-container-width, 1.5rem);
     }
-    :host(:state(-vertical):not(:state(-pressed))) .handle {
+    :host(:is(:state(--vertical), :--vertical):not(:is(:state(--pressed), :--pressed))) .handle {
       width: var(--m3e-split-pane-drag-handle-height, 3rem);
       height: var(--m3e-split-pane-drag-handle-width, 0.25rem);
     }
-    :host(:state(-vertical):state(-pressed)) .handle {
+    :host(:is(:state(--vertical), :--vertical):is(:state(--pressed), :--pressed)) .handle {
       width: var(--m3e-split-pane-drag-handle-pressed-height, 3.25rem);
       height: var(--m3e-split-pane-drag-handle-pressed-width, 0.75rem);
     }
@@ -215,8 +216,8 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       }
     }
     @media (forced-colors: active) {
-      :host(:state(-pressed)) .handle,
-      :host(:not(:state(-pressed))) .handle {
+      :host(:is(:state(--pressed), :--pressed)) .handle,
+      :host(:not(:is(:state(--pressed), :--pressed))) .handle {
         background-color: ButtonText;
       }
     }
@@ -237,7 +238,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
     target: null,
     isPressedKey: (key) => key === " ",
     minPressedDuration: 150,
-    callback: (pressed) => setCustomState(this, "-pressed", pressed && !this.disabled),
+    callback: (pressed) => setCustomState(this, "--pressed", pressed && !this.disabled),
   });
 
   /** @private */
@@ -479,12 +480,12 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
 
   /** @private */
   #handleStartSlotChange(e: Event): void {
-    this.#handleSlotChange(e.target as HTMLSlotElement, this.#startMutationController, "-with-start");
+    this.#handleSlotChange(e.target as HTMLSlotElement, this.#startMutationController, "--with-start");
   }
 
   /** @private */
   #handleEndSlotChange(e: Event): void {
-    this.#handleSlotChange(e.target as HTMLSlotElement, this.#endMutationController, "-with-end");
+    this.#handleSlotChange(e.target as HTMLSlotElement, this.#endMutationController, "--with-end");
   }
 
   /** @private */
@@ -507,7 +508,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
   #updatePaneVisibility(pane: "start" | "end"): void {
     setCustomState(
       this,
-      `-with-${pane}`,
+      `--with-${pane}`,
       this.#hasVisibleElements(this.shadowRoot?.querySelector<HTMLSlotElement>(`slot[name='${pane}']`)),
     );
   }
@@ -534,12 +535,12 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
 
   /** @private */
   #updateOrientation(): void {
-    setCustomState(this, "-vertical", this.currentOrientation === "vertical");
+    setCustomState(this, "--vertical", this.currentOrientation === "vertical");
   }
 
   /** @private */
   #clearOrientation(): void {
-    deleteCustomState(this, "-vertical");
+    deleteCustomState(this, "--vertical");
     this._orientation = undefined;
     this.#breakpointUnobserve?.();
     this.#breakpointUnobserve = undefined;
@@ -870,7 +871,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
     if (value === this.value) return;
 
     if (!prefersReducedMotion()) {
-      addCustomState(this, "-animating");
+      addCustomState(this, "--animating");
 
       this.#snapAnimation = this._base.animate(
         [{ "--_split-pane-value": `${this.value}%` }, { "--_split-pane-value": `${value}%` }],
@@ -882,7 +883,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       this.#snapAnimation.onfinish = () => {
         this.#changeValue(value, emitChange);
         this.#snapAnimation = undefined;
-        deleteCustomState(this, "-animating");
+        deleteCustomState(this, "--animating");
       };
     } else {
       this.#changeValue(value, emitChange);

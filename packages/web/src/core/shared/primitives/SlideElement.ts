@@ -61,7 +61,7 @@ export class M3eSlideElement extends AttachInternals(LitElement) {
       position: relative;
       inset-inline-start: 0;
     }
-    :host(:state(-no-animate)) ::slotted(*) {
+    :host(:is(:state(--no-animate), :--no-animate)) ::slotted(*) {
       transition: none;
     }
     @media (prefers-reduced-motion) {
@@ -82,7 +82,7 @@ export class M3eSlideElement extends AttachInternals(LitElement) {
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-    addCustomState(this, "-no-animate");
+    addCustomState(this, "--no-animate");
   }
 
   /** @inheritdoc */
@@ -91,15 +91,15 @@ export class M3eSlideElement extends AttachInternals(LitElement) {
 
     if (changedProperties.has("selectedIndex")) {
       if (this.selectedIndex === null) {
-        addCustomState(this, "-no-animate");
+        addCustomState(this, "--no-animate");
       }
 
       this.#updateItems();
 
-      if (this.selectedIndex !== null && hasCustomState(this, "-no-animate")) {
+      if (this.selectedIndex !== null && hasCustomState(this, "--no-animate")) {
         requestAnimationFrame(() => {
           if (this.selectedIndex !== null) {
-            deleteCustomState(this, "-no-animate");
+            deleteCustomState(this, "--no-animate");
           }
         });
       }

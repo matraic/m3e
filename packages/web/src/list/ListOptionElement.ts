@@ -145,7 +145,7 @@ export class M3eListOptionElement extends KeyboardClick(
       :host(:not(:disabled)) {
         cursor: pointer;
       }
-      :host(:state(-three-line)) .indicator {
+      :host(:is(:state(--three-line), :--three-line)) .indicator {
         align-self: flex-start;
         margin-top: var(--m3e-list-item-three-line-top-offset, 0.25rem);
       }
@@ -206,8 +206,8 @@ export class M3eListOptionElement extends KeyboardClick(
           ${DesignToken.state.pressedStateLayerOpacity}
         );
       }
-      :host(:state(-hide-selection)) .indicator,
-      :host(:not(:state(-hide-selection))) ::slotted([slot="trailing"]) {
+      :host(:is(:state(--hide-selection), :--hide-selection)) .indicator,
+      :host(:not(:is(:state(--hide-selection), :--hide-selection))) ::slotted([slot="trailing"]) {
         display: none;
       }
       @media (forced-colors: active) {

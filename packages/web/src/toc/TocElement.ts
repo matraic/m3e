@@ -138,9 +138,9 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
       overflow: hidden;
       line-clamp: 2;
     }
-    :host(:not(:state(-with-overline))) .overline,
-    :host(:not(:state(-with-title))) .title,
-    :host(:not(:state(-with-overline)):not(:state(-with-title))) .header {
+    :host(:not(:is(:state(--with-overline), :--with-overline))) .overline,
+    :host(:not(:is(:state(--with-title), :--with-title))) .title,
+    :host(:not(:is(:state(--with-overline), :--with-overline)):not(:is(:state(--with-title), :--with-title))) .header {
       display: none;
     }
     ::slotted([slot="overline"]) {
@@ -157,7 +157,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
       letter-spacing: var(--m3e-toc-title-tracking, ${DesignToken.typescale.standard.headline.small.tracking});
       color: var(--m3e-toc-title-color, ${DesignToken.color.onSurface});
     }
-    :host(:state(-no-animate)) .active-indicator {
+    :host(:is(:state(--no-animate), :--no-animate)) .active-indicator {
       transition: none;
     }
     @media (prefers-reduced-motion) {
@@ -179,7 +179,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
       if (this._activeIndicator) {
         const item = this.#selectionManager.selectedItems[0];
         if (!item) {
-          setCustomState(this, "-no-animate", true);
+          setCustomState(this, "--no-animate", true);
           this._activeIndicator.style.top = `0px`;
           this._activeIndicator.style.height = `0px`;
           this._activeIndicator.style.visibility = "hidden";
@@ -189,8 +189,8 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
           this._activeIndicator.style.height = `${item.clientHeight}px`;
           this._activeIndicator.style.visibility = item.clientHeight == 0 ? "hidden" : "";
 
-          if (hasCustomState(this, "-no-animate")) {
-            setTimeout(() => setCustomState(this, "-no-animate", false), 40);
+          if (hasCustomState(this, "--no-animate")) {
+            setTimeout(() => setCustomState(this, "--no-animate", false), 40);
           }
         }
       }
@@ -287,7 +287,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
       ]);
 
       if (!this.#selectionManager.activeItem) {
-        setCustomState(this, "-no-animate", true);
+        setCustomState(this, "--no-animate", true);
         this.#selectionManager.updateActiveItem(added.find((x) => !x.disabled));
       }
 
@@ -336,12 +336,12 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
 
   /** @private */
   #handleOverlineSlotChange(e: Event): void {
-    setCustomState(this, "-with-overline", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-overline", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
   #handleTitleSlotChange(e: Event): void {
-    setCustomState(this, "-with-title", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-title", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */

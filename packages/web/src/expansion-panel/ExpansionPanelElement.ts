@@ -273,7 +273,7 @@ export class M3eExpansionPanelElement extends Disabled(ReconnectedCallback(Attac
 
   /** @private */
   #handleActionsSlotChange(e: Event): void {
-    setCustomState(this, "-with-actions", hasAssignedNodes(e.target as HTMLSlotElement));
+    setCustomState(this, "--with-actions", hasAssignedNodes(e.target as HTMLSlotElement));
   }
 
   /** @private */

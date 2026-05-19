@@ -8,7 +8,6 @@ import {
   computeCssSize,
   DesignToken,
   focusWhenReady,
-  hasAssignedNodes,
   hasCustomState,
   prefersReducedMotion,
   ResizeController,
@@ -158,19 +157,19 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       color: var(--m3e-bottom-sheet-color, ${DesignToken.color.onSurface});
       background-color: var(--m3e-bottom-sheet-container-color, ${DesignToken.color.surfaceContainerLow});
     }
-    :host(:not(:state(-no-animate))) {
+    :host(:not(:is(:state(--no-animate), :--no-animate))) {
       transition: ${unsafeCSS(
         `transform ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standardDecelerate},
         border-radius ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standard}`,
       )};
     }
-    :host(:not([modal]):not(:state(-full))) .elevation {
+    :host(:not([modal]):not(:is(:state(--full), :--full))) .elevation {
       --m3e-elevation-level: var(--m3e-bottom-sheet-elevation, ${DesignToken.elevation.level1});
     }
-    :host([modal]:not(:state(-full))) .elevation {
+    :host([modal]:not(:is(:state(--full), :--full))) .elevation {
       --m3e-elevation-level: var(--m3e-bottom-sheet-modal-elevation, ${DesignToken.elevation.level1});
     }
-    :host(:state(-full)) .elevation {
+    :host(:is(:state(--full), :--full)) .elevation {
       --m3e-elevation-level: var(--m3e-bottom-sheet-full-elevation, ${DesignToken.elevation.level1});
     }
     :host(:not([modal])) {
@@ -181,19 +180,19 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       border-radius: var(--m3e-bottom-sheet-minimized-container-shape, ${DesignToken.shape.corner.none});
       transform: translateX(-50%) translateY(100%);
     }
-    :host(:not([modal])[open]:not(:state(-full))),
-    :host([modal]:not(:state(-full)):popover-open) {
+    :host(:not([modal])[open]:not(:is(:state(--full), :--full))),
+    :host([modal]:not(:is(:state(--full), :--full)):popover-open) {
       border-radius: var(--m3e-bottom-sheet-container-shape, ${DesignToken.shape.corner.extraLargeTop});
     }
-    :host(:not([modal])[open]:state(-full)),
-    :host([modal]:state(-full):popover-open) {
+    :host(:not([modal])[open]:is(:state(--full), :--full)),
+    :host([modal]:is(:state(--full), :--full):popover-open) {
       border-radius: var(--m3e-bottom-sheet-full-container-shape, ${DesignToken.shape.corner.extraLargeTop});
     }
     :host(:not([modal])[open]),
     :host([modal]:popover-open) {
       transform: translateX(-50%) translateY(0);
     }
-    :host([modal]:not(:state(-no-animate)))::backdrop {
+    :host([modal]:not(:is(:state(--no-animate), :--no-animate)))::backdrop {
       transition: ${unsafeCSS(
         `background-color ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
         overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete,
@@ -207,7 +206,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
         transparent
       );
     }
-    :host([modal]:popover-open:not(:state(-no-animate)))::backdrop {
+    :host([modal]:popover-open:not(:is(:state(--no-animate), :--no-animate)))::backdrop {
       transition: ${unsafeCSS(
         `background-color ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard}, 
         overlay ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard} allow-discrete,
@@ -293,7 +292,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       visibility: visible;
       height: var(--m3e-bottom-sheet-handle-container-height, 1.5rem);
     }
-    :host(:not(:state(-no-animate))) .handle-row {
+    :host(:not(:is(:state(--no-animate), :--no-animate))) .handle-row {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard},
         padding ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard},
@@ -323,16 +322,16 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       );
     }
     @media (prefers-reduced-motion) {
-      :host(:not(:state(-no-animate))),
-      :host([modal]:not(:state(-no-animate)))::backdrop,
-      :host([modal]:popover-open:not(:state(-no-animate)))::backdrop,
-      :host(:not(:state(-no-animate))) .handle-row {
+      :host(:not(:is(:state(--no-animate), :--no-animate))),
+      :host([modal]:not(:is(:state(--no-animate), :--no-animate)))::backdrop,
+      :host([modal]:popover-open:not(:is(:state(--no-animate), :--no-animate)))::backdrop,
+      :host(:not(:is(:state(--no-animate), :--no-animate))) .handle-row {
         transition: none;
       }
     }
     @media (forced-colors: active) {
-      :host([modal]:not(:state(-no-animate)))::backdrop,
-      :host([modal]:popover-open:not(:state(-no-animate)))::backdrop {
+      :host([modal]:not(:is(:state(--no-animate), :--no-animate)))::backdrop,
+      :host([modal]:popover-open:not(:is(:state(--no-animate), :--no-animate)))::backdrop {
         transition: none;
       }
       .base {
@@ -612,7 +611,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
                 </div>
               </div>`
             : nothing}
-          <slot name="header" @slotchange="${this.#handleHeaderSlotChange}"></slot>
+          <slot name="header"></slot>
         </div>
         <div class="body">
           <div class="content">
@@ -636,11 +635,6 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       this.#cachedHeaderHeight = header.clientHeight;
       this.#resizeController.observe(header);
     }
-  }
-
-  /** @private */
-  #handleHeaderSlotChange(e: Event): void {
-    setCustomState(this, "has-header", hasAssignedNodes(e.target as HTMLSlotElement));
   }
 
   /** @private */
@@ -787,7 +781,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
     }
 
     const maxHeight = this.#computeMaxHeight();
-    if (hasCustomState(this, "-full")) {
+    if (hasCustomState(this, "--full")) {
       this.#updateHeight(maxHeight);
     } else if (this.clientHeight > maxHeight) {
       this.#updateHeight(maxHeight);
@@ -1018,7 +1012,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
   /** @private */
   #updateHeight(height: number): void {
     this.style.setProperty("--_bottom-sheet-height", `${height}px`);
-    setCustomState(this, "-full", height === this.#computeMaxHeight());
+    setCustomState(this, "--full", height === this.#computeMaxHeight());
     const content = this.shadowRoot?.querySelector<HTMLElement>(".content");
     if (content) {
       content.inert = height <= this.#computePeekHeight();

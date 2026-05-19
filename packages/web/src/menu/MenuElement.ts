@@ -143,17 +143,17 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
       --m3e-focus-ring-outward-offset: 0px;
       --m3e-focus-ring-growth-factor: 1.5;
     }
-    :host(:not(:state(-active))) {
+    :host(:not(:is(:state(--active), :--active))) {
       border-radius: var(--m3e-menu-container-shape, ${DesignToken.shape.corner.small});
     }
-    :host(:not(:state(-active))) .base {
+    :host(:not(:is(:state(--active), :--active))) .base {
       --m3e-menu-item-first-child-shape: ${DesignToken.shape.corner.extraSmall};
       --m3e-menu-item-last-child-shape: ${DesignToken.shape.corner.extraSmall};
     }
-    :host(:state(-active)) {
+    :host(:is(:state(--active), :--active)) {
       border-radius: var(--m3e-menu-active-container-shape, ${DesignToken.shape.corner.large});
     }
-    :host(:not(:state(-no-animate))) {
+    :host(:not(:is(:state(--no-animate), :--no-animate))) {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}, 
         transform ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard},
@@ -175,16 +175,16 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
       display: block;
       opacity: 1;
     }
-    :host(:state(-bottom)) {
+    :host(:is(:state(--bottom), :--bottom)) {
       transform-origin: top;
     }
-    :host(:state(-top)) {
+    :host(:is(:state(--top), :--top)) {
       transform-origin: bottom;
     }
-    :host(:state(-shift-down)) {
+    :host(:is(:state(--shift-down), :--shift-down)) {
       margin-top: calc(0px - var(--m3e-menu-container-padding-block, 0.25rem));
     }
-    :host(:state(-shift-up)) {
+    :host(:is(:state(--shift-up), :--shift-up)) {
       margin-top: var(--m3e-menu-container-padding-block, 0.25rem);
     }
     :host([variant="vibrant"]) {
@@ -238,7 +238,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
       }
     }
     @media (prefers-reduced-motion) {
-      :host(:not(:state(-no-animate))) {
+      :host(:not(:is(:state(--no-animate), :--no-animate))) {
         transition: none;
       }
     }
@@ -375,13 +375,13 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
       },
       (x, y, position) => {
         if (!this.submenu) {
-          setCustomState(this, "-top", position.includes("top"));
-          setCustomState(this, "-bottom", position.includes("bottom"));
+          setCustomState(this, "--top", position.includes("top"));
+          setCustomState(this, "--bottom", position.includes("bottom"));
         } else if (this.#trigger) {
           const top = this.#getAbsolutePosition(this.#trigger).y;
-          setCustomState(this, "-shift-down", false);
-          setCustomState(this, "-shift-up", false);
-          setCustomState(this, Math.round(y) === Math.round(top) ? "-shift-down" : "-shift-up", true);
+          setCustomState(this, "--shift-down", false);
+          setCustomState(this, "--shift-up", false);
+          setCustomState(this, Math.round(y) === Math.round(top) ? "--shift-down" : "--shift-up", true);
         }
 
         if (M3eDirectionality.current === "rtl") {
@@ -480,8 +480,8 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
     }
 
     this.#listManager.items.forEach((x, i) => {
-      setCustomState(x, "-first", i === 0 && !x.previousElementSibling);
-      setCustomState(x, "-last", i === this.#listManager.items.length - 1);
+      setCustomState(x, "--first", i === 0 && !x.previousElementSibling);
+      setCustomState(x, "--last", i === this.#listManager.items.length - 1);
     });
   }
 
@@ -558,17 +558,17 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
   _activate(): void {
     if (this !== M3eMenuElement.__activeMenu) {
       if (M3eMenuElement.__activeMenu) {
-        deleteCustomState(M3eMenuElement.__activeMenu, "-active");
+        deleteCustomState(M3eMenuElement.__activeMenu, "--active");
       }
       M3eMenuElement.__activeMenu = this;
-      addCustomState(M3eMenuElement.__activeMenu, "-active");
+      addCustomState(M3eMenuElement.__activeMenu, "--active");
     }
   }
 
   /** @private */
   #deactivate(): void {
     if (this === M3eMenuElement.__activeMenu) {
-      deleteCustomState(M3eMenuElement.__activeMenu, "-active");
+      deleteCustomState(M3eMenuElement.__activeMenu, "--active");
       M3eMenuElement.__activeMenu = undefined;
     }
   }

@@ -154,10 +154,10 @@ export class M3eInputChipElement extends DisabledInteractive(Disabled(Role(M3eCh
         opacity: var(--m3e-chip-disabled-avatar-opacity, 38%);
         color: var(--m3e-chip-disabled-icon-color, ${DesignToken.color.onSurface});
       }
-      :host(:state(-with-avatar)) ::slotted([slot="icon"]) {
+      :host(:is(:state(--with-avatar), :--with-avatar)) ::slotted([slot="icon"]) {
         display: none;
       }
-      :host(:state(-with-avatar)) .wrapper {
+      :host(:is(:state(--with-avatar), :--with-avatar)) .wrapper {
         padding-inline-start: var(--m3e-chip-with-avatar-padding-start, 0.25rem);
       }
       @media (forced-colors: active) {
@@ -199,7 +199,7 @@ export class M3eInputChipElement extends DisabledInteractive(Disabled(Role(M3eCh
     this.removeAttribute("tabindex");
 
     if (changedProperties.has("removable")) {
-      setCustomState(this, "-with-trailing-icon", this.removable);
+      setCustomState(this, "--with-trailing-icon", this.removable);
     }
   }
 
@@ -263,7 +263,7 @@ export class M3eInputChipElement extends DisabledInteractive(Disabled(Role(M3eCh
 
   /** @private */
   #handleAvatarSlotChange(e: Event): void {
-    setCustomState(this, "-with-avatar", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-avatar", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */

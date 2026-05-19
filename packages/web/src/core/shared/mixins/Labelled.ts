@@ -82,7 +82,7 @@ export function Labelled<T extends Constructor<LitElement & AttachInternalsMixin
       const focusable = this.hasAttribute("tabindex");
       const disabled =
         (isDisabledMixin(this) && this.disabled) || (isDisabledInteractiveMixin(this) && this.disabledInteractive);
-      const invalid = isTouchedMixin(this) && this.touched && (this.ariaInvalid || hasCustomState(this, "-invalid"));
+      const invalid = isTouchedMixin(this) && this.touched && (this.ariaInvalid || hasCustomState(this, "--invalid"));
 
       for (const label of this.labels ?? []) {
         label.style.userSelect = focusable ? "none" : "";

@@ -172,7 +172,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       width: 100%;
       --_tab-grow: 1;
     }
-    :host(:state(-no-animate)) .active-indicator {
+    :host(:is(:state(--no-animate), :--no-animate)) .active-indicator {
       transition: none;
     }
     @media (prefers-reduced-motion) {
@@ -204,7 +204,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
     new ResizeController(this, {
       skipInitial: true,
       callback: () => {
-        addCustomState(this, "-no-animate");
+        addCustomState(this, "--no-animate");
         this.#updateInkBar();
       },
     });
@@ -275,7 +275,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    addCustomState(this, "-no-animate");
+    addCustomState(this, "--no-animate");
     this.#directionalitySubscription = M3eDirectionality.observe(() => {
       this.requestUpdate();
       this[selectionManager].directionality = M3eDirectionality.current;
@@ -410,8 +410,8 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
     this._tablist.style.setProperty("--_tabs-active-tab-position", `${left}px`);
     this._tablist.style.setProperty("--_tabs-active-tab-size", `${width}px`);
 
-    if (width > 0 && hasCustomState(this, "-no-animate")) {
-      setTimeout(() => deleteCustomState(this, "-no-animate"));
+    if (width > 0 && hasCustomState(this, "--no-animate")) {
+      setTimeout(() => deleteCustomState(this, "--no-animate"));
     }
   }
 }

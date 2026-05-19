@@ -334,7 +334,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     super.update(changedProperties);
 
     if (changedProperties.has("hideNoData") && this.hideNoData && this.#menu) {
-      setCustomState(this.#menu, "-no-data", false);
+      setCustomState(this.#menu, "--no-data", false);
     }
 
     if (changedProperties.has("loading")) {
@@ -350,7 +350,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
       } else if (this.#menu && !this.#shouldShowMenu) {
         this.#hideMenu();
       } else if (this.#menu) {
-        deleteCustomState(this.#menu, "-loading");
+        deleteCustomState(this.#menu, "--loading");
       } else if (this.#hasFocus) {
         this.#showMenu();
       }
@@ -394,7 +394,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     const { added } = this._listKeyManager.setItems([...this.#clone.querySelectorAll("m3e-option")]);
     added.forEach((x) => {
       x.id = x.id || `${this.#id}-option-${this._listKeyManager.items.indexOf(x)}`;
-      setCustomState(x, "-hide-selection-indicator", this.hideSelectionIndicator);
+      setCustomState(x, "--hide-selection-indicator", this.hideSelectionIndicator);
     });
 
     if (this.#menu) {
@@ -726,8 +726,8 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
   /** @private */
   #updateMenuState(menu: M3eOptionPanelElement, count: number): void {
-    setCustomState(menu, "-loading", this.loading);
-    setCustomState(menu, "-no-data", count == 0);
+    setCustomState(menu, "--loading", this.loading);
+    setCustomState(menu, "--no-data", count == 0);
   }
 
   /** @private */
@@ -843,21 +843,21 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
       if (clone.hidden === true) {
         this.#deactivateOption(clone);
-        deleteCustomState(clone, "-first");
-        deleteCustomState(clone, "-last");
+        deleteCustomState(clone, "--first");
+        deleteCustomState(clone, "--last");
       } else {
         newCount++;
         if (!first && !(clone.parentElement instanceof M3eOptGroupElement)) {
-          addCustomState(clone, "-first");
+          addCustomState(clone, "--first");
           first = true;
-          addCustomState(clone, "-last");
+          addCustomState(clone, "--last");
           last = clone;
         } else {
-          deleteCustomState(clone, "-first");
+          deleteCustomState(clone, "--first");
           if (last) {
-            deleteCustomState(last, "-last");
+            deleteCustomState(last, "--last");
           }
-          addCustomState(clone, "-last");
+          addCustomState(clone, "--last");
           last = clone;
         }
       }

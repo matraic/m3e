@@ -146,7 +146,7 @@ export class M3eSelectElement
       height: 1em;
       font-size: var(--m3e-select-icon-size, 1.5rem);
     }
-    :host(:state(-open)) .focus-ring {
+    :host(:is(:state(--open), :--open)) .focus-ring {
       display: none;
     }
   `;
@@ -331,7 +331,7 @@ export class M3eSelectElement
     super.update(changedProperties);
 
     if (changedProperties.has("hideSelectionIndicator")) {
-      this.#options.forEach((x) => setCustomState(x, "-hide-selection-indicator", this.hideSelectionIndicator));
+      this.#options.forEach((x) => setCustomState(x, "--hide-selection-indicator", this.hideSelectionIndicator));
     }
   }
 
@@ -377,7 +377,7 @@ export class M3eSelectElement
     const { added } = this._listKeyManager.setItems([...this.#clone.querySelectorAll("m3e-option")]);
     added.forEach((x) => {
       x.id = x.id || `${this.#id}-option-${this._listKeyManager.items.indexOf(x)}`;
-      setCustomState(x, "-hide-selection-indicator", this.hideSelectionIndicator);
+      setCustomState(x, "--hide-selection-indicator", this.hideSelectionIndicator);
     });
 
     this._options = [...this.querySelectorAll("m3e-option")];
@@ -565,7 +565,7 @@ export class M3eSelectElement
     this.removeAttribute("aria-activedescendant");
     this.requestUpdate();
 
-    deleteCustomState(this, "-open");
+    deleteCustomState(this, "--open");
     this.#formField?.notifyControlStateChange();
 
     this.dispatchEvent(
@@ -625,7 +625,7 @@ export class M3eSelectElement
 
     setTimeout(() => {
       this.#menu?.show(this, this.#formField?.menuAnchor);
-      addCustomState(this, "-open");
+      addCustomState(this, "--open");
     });
   }
 
@@ -634,7 +634,7 @@ export class M3eSelectElement
     if (!this.#menu) return;
 
     this.#menu.hide();
-    deleteCustomState(this, "-open");
+    deleteCustomState(this, "--open");
   }
 
   /** @private */

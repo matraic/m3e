@@ -43,11 +43,11 @@ export const SearchBarStyle: CSSResultGroup = css`
     box-sizing: border-box;
     min-width: 3rem;
   }
-  :host(:not(:state(-clearable))) .clear {
+  :host(:not(:is(:state(--clearable), :--clearable))) .clear {
     display: none;
   }
-  :host(:state(-with-leading)) slot[name="leading"],
-  :host(:state(-with-trailing)) slot[name="trailing"] {
+  :host(:is(:state(--with-leading), :--with-leading)) slot[name="leading"],
+  :host(:is(:state(--with-trailing), :--with-trailing)) slot[name="trailing"] {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,22 +70,23 @@ export const SearchBarStyle: CSSResultGroup = css`
     line-height: ${SearchBarToken.inputTextLineHeight};
     letter-spacing: ${SearchBarToken.inputTextTracking};
   }
-  :host(:state(-with-leading)) .base {
+  :host(:is(:state(--with-leading), :--with-leading)) .base {
     padding-inline-start: ${SearchBarToken.leadingSpace};
   }
-  :host(:not(:state(-with-leading))) .base {
+  :host(:not(:is(:state(--with-leading), :--with-leading))) .base {
     padding-inline-start: ${SearchBarToken.noActionsLeadingSpace};
   }
-  :host(:is(:state(-with-trailing), :state(-clearable))) .base {
+  :host(:is(:is(:state(--with-trailing), :--with-trailing), :is(:state(--clearable), :--clearable))) .base {
     padding-inline-end: ${SearchBarToken.trailingSpace};
   }
-  :host(:not(:is(:state(-with-trailing), :state(-clearable)))) .base {
+  :host(:not(:is(:is(:state(--with-trailing), :--with-trailing), :is(:state(--clearable), :--clearable)))) .base {
     padding-inline-end: ${SearchBarToken.noActionsTrailingSpace};
   }
-  :host(:state(-with-leading)) ::slotted([slot="input"]) {
+  :host(:is(:state(--with-leading), :--with-leading)) ::slotted([slot="input"]) {
     margin-inline-start: ${SearchBarToken.leadingActionsTrailingSpace};
   }
-  :host(:is(:state(-with-trailing), :state(-clearable))) ::slotted([slot="input"]) {
+  :host(:is(:is(:state(--with-trailing), :--with-trailing), :is(:state(--clearable), :--clearable)))
+    ::slotted([slot="input"]) {
     margin-inline-end: ${SearchBarToken.trailingActionsLeadingSpace};
   }
   slot[name="leading"] {

@@ -185,12 +185,12 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
     .spacer {
       flex: 1 1 auto;
     }
-    :host(:state(-docked)) {
+    :host(:is(:state(--docked), :--docked)) {
       position: absolute;
       background-color: var(--m3e-datepicker-docked-container-color, ${DesignToken.color.surfaceContainer});
       border-radius: var(--m3e-datepicker-docked-container-shape, ${DesignToken.shape.corner.large});
     }
-    :host(:state(-modal)) {
+    :host(:is(:state(--modal), :--modal)) {
       position: fixed;
       inset: 0;
       margin: auto;
@@ -198,7 +198,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
       background-color: var(--m3e-datepicker-modal-container-color, ${DesignToken.color.surfaceContainerHigh});
       border-radius: var(--m3e-datepicker-modal-container-shape, ${DesignToken.shape.corner.extraLarge});
     }
-    :host(:not(:state(-no-animate))) {
+    :host(:not(:is(:state(--no-animate), :--no-animate))) {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}, 
         transform ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard},
@@ -214,21 +214,21 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
       display: inline-flex;
       opacity: 1;
     }
-    :host(:state(-docked))::backdrop {
+    :host(:is(:state(--docked), :--docked))::backdrop {
       background-color: transparent;
     }
-    :host(:state(-modal))::backdrop {
+    :host(:is(:state(--modal), :--modal))::backdrop {
       background-color: color-mix(in srgb, var(--m3e-dialog-scrim-color, ${DesignToken.color.scrim}) 0%, transparent);
       margin-inline-end: -20px;
     }
-    :host(:state(-modal):not(:popover-open))::backdrop {
+    :host(:is(:state(--modal), :--modal):not(:popover-open))::backdrop {
       transition: ${unsafeCSS(
         `background-color ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
         overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete,
         visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
-    :host(:state(-modal):popover-open)::backdrop {
+    :host(:is(:state(--modal), :--modal):popover-open)::backdrop {
       background-color: color-mix(
         in srgb,
         var(--m3e-dialog-scrim-color, ${DesignToken.color.scrim}) var(--m3e-dialog-scrim-opacity, 32%),
@@ -240,22 +240,22 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
         visibility ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
-    :host(:state(-bottom)) {
+    :host(:is(:state(--bottom), :--bottom)) {
       transform-origin: top;
     }
-    :host(:state(-top)) {
+    :host(:is(:state(--top), :--top)) {
       transform-origin: bottom;
     }
     @starting-style {
       :host(:popover-open) {
         transform: scaleY(0.8);
       }
-      :host(:state(-modal):popover-open)::backdrop {
+      :host(:is(:state(--modal), :--modal):popover-open)::backdrop {
         background-color: color-mix(in srgb, var(--m3e-dialog-scrim-color, ${DesignToken.color.scrim}) 0%, transparent);
       }
     }
     @media (prefers-reduced-motion) {
-      :host(:not(:state(-no-animate))) {
+      :host(:not(:is(:state(--no-animate), :--no-animate))) {
         transition: none;
       }
     }
@@ -449,8 +449,8 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
 
     this.#clearAnchoring();
 
-    deleteCustomState(this, "-docked");
-    deleteCustomState(this, "-modal");
+    deleteCustomState(this, "--docked");
+    deleteCustomState(this, "--modal");
 
     this.removeEventListener("toggle", this.#toggleHandler);
     document.removeEventListener("click", this.#documentClickHandler);
@@ -675,16 +675,16 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
     switch (this.currentVariant) {
       case "docked":
         this.ariaModal = null;
-        deleteCustomState(this, "-modal");
-        addCustomState(this, "-docked");
+        deleteCustomState(this, "--modal");
+        addCustomState(this, "--docked");
         this.#scrollLockController.unlock();
         this.#inertController.unlock();
         break;
 
       case "modal":
         this.ariaModal = "true";
-        deleteCustomState(this, "-docked");
-        addCustomState(this, "-modal");
+        deleteCustomState(this, "--docked");
+        addCustomState(this, "--modal");
         if (this.isOpen) {
           this.#scrollLockController.lock();
           this.#inertController.lock();
@@ -712,8 +712,8 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
           shift: "both",
         },
         (x, y, position) => {
-          setCustomState(this, "-top", position.includes("top"));
-          setCustomState(this, "-bottom", position.includes("bottom"));
+          setCustomState(this, "--top", position.includes("top"));
+          setCustomState(this, "--bottom", position.includes("bottom"));
 
           if (M3eDirectionality.current === "rtl") {
             this.style.right = `${window.innerWidth - x - this.clientWidth}px`;

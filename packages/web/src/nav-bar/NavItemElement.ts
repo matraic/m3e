@@ -164,7 +164,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
       position: relative;
       width: 100%;
     }
-    :host(:not(:state(-no-animate))) .base {
+    :host(:not(:is(:state(--no-animate), :--no-animate))) .base {
       transition: ${unsafeCSS(
         `margin-top ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`,
       )};
@@ -183,13 +183,13 @@ export class M3eNavItemElement extends ReconnectedCallback(
       width: 1em;
       font-size: var(--m3e-nav-item-icon-size, 1.5rem) !important;
     }
-    :host(:not(:state(-no-animate))) .state-layer,
-    :host(:not(:state(-no-animate))) .ripple {
+    :host(:not(:is(:state(--no-animate), :--no-animate))) .state-layer,
+    :host(:not(:is(:state(--no-animate), :--no-animate))) .ripple {
       transition: ${unsafeCSS(`height ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
     }
     :host(:not([selected])) slot[name="selected-icon"],
-    :host(:not(:state(-with-selected-icon))) slot[name="selected-icon"],
-    :host([selected]:state(-with-selected-icon)) slot[name="icon"] {
+    :host(:not(:is(:state(--with-selected-icon), :--with-selected-icon))) slot[name="selected-icon"],
+    :host([selected]:is(:state(--with-selected-icon), :--with-selected-icon)) slot[name="icon"] {
       display: none;
     }
     :host(:not([selected]):not(:disabled):not([disabled-interactive])) .outer {
@@ -270,8 +270,8 @@ export class M3eNavItemElement extends ReconnectedCallback(
       width: var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem);
     }
 
-    :host(:not(:state(-no-animate))[orientation="vertical"]) .state-layer,
-    :host(:not(:state(-no-animate))[orientation="vertical"]) .ripple {
+    :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .state-layer,
+    :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .ripple {
       animation: collapse ${DesignToken.motion.duration.medium1};
     }
     @keyframes collapse {
@@ -328,12 +328,16 @@ export class M3eNavItemElement extends ReconnectedCallback(
     .ripple {
       margin-inline: auto;
     }
-    :host(:state(-first):not(:state(-no-animate))[orientation="horizontal"]) .icon-wrapper,
-    :host(:not(:state(-first)):not(:state(-no-animate))[orientation="vertical"]) .icon-wrapper {
+    :host(:is(:state(--first), :--first):not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"])
+      .icon-wrapper,
+    :host(:not(:is(:state(--first), :--first)):not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"])
+      .icon-wrapper {
       animation: ${unsafeCSS(`slide-down ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
     }
-    :host(:not(:state(-first)):not(:state(-no-animate))[orientation="horizontal"]) .icon-wrapper,
-    :host(:state(-first):not(:state(-no-animate))[orientation="vertical"]) .icon-wrapper {
+    :host(:not(:is(:state(--first), :--first)):not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"])
+      .icon-wrapper,
+    :host(:is(:state(--first), :--first):not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"])
+      .icon-wrapper {
       animation: ${unsafeCSS(`slide-up ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
     }
     @keyframes slide-down {
@@ -352,10 +356,10 @@ export class M3eNavItemElement extends ReconnectedCallback(
         transform: translateY(0);
       }
     }
-    :host(:not(:state(-no-animate))[orientation="horizontal"]) .label {
+    :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"]) .label {
       animation: horizontal-fade-in ${DesignToken.motion.duration.short2};
     }
-    :host(:not(:state(-no-animate))[orientation="vertical"]) .label {
+    :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .label {
       animation: vertical-fade-in ${DesignToken.motion.duration.short2};
     }
     @keyframes horizontal-fade-in {
@@ -403,19 +407,25 @@ export class M3eNavItemElement extends ReconnectedCallback(
       z-index: 1;
     }
     @media (prefers-reduced-motion) {
-      :host(:state(-first):not(:state(-no-animate))[orientation="horizontal"]) .icon-wrapper,
-      :host(:not(:state(-first)):not(:state(-no-animate))[orientation="vertical"]) .icon-wrapper,
-      :host(:not(:state(-first)):not(:state(-no-animate))[orientation="horizontal"]) .icon-wrapper,
-      :host(:state(-first):not(:state(-no-animate))[orientation="vertical"]) .icon-wrapper,
-      :host(:not(:state(-no-animate))[orientation="vertical"]) .state-layer,
-      :host(:not(:state(-no-animate))[orientation="vertical"]) .ripple,
-      :host(:not(:state(-no-animate))[orientation="horizontal"]) .label,
-      :host(:not(:state(-no-animate))[orientation="vertical"]) .label {
+      :host(:is(:state(--first), :--first):not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"])
+        .icon-wrapper,
+      :host(:not(:is(:state(--first), :--first)):not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"])
+        .icon-wrapper,
+      :host(
+          :not(:is(:state(--first), :--first)):not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"]
+        )
+        .icon-wrapper,
+      :host(:is(:state(--first), :--first):not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"])
+        .icon-wrapper,
+      :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .state-layer,
+      :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .ripple,
+      :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"]) .label,
+      :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .label {
         animation: none;
       }
-      :host(:not(:state(-no-animate))) .state-layer,
-      :host(:not(:state(-no-animate))) .ripple,
-      :host(:not(:state(-no-animate))) .base {
+      :host(:not(:is(:state(--no-animate), :--no-animate))) .state-layer,
+      :host(:not(:is(:state(--no-animate), :--no-animate))) .ripple,
+      :host(:not(:is(:state(--no-animate), :--no-animate))) .base {
         transition: none;
       }
     }
@@ -576,7 +586,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
 
   /** @private */
   #handleSelectedIconSlotChange(e: Event): void {
-    setCustomState(this, "-with-selected-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-selected-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */

@@ -193,10 +193,10 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
     ::slotted([slot="actions"][end]) {
       justify-content: flex-end;
     }
-    :host(:not(:state(-with-actions))) .content {
+    :host(:not(:is(:state(--with-actions), :--with-actions))) .content {
       margin-bottom: 1.5rem;
     }
-    :host(:not(:state(-with-actions))) .actions {
+    :host(:not(:is(:state(--with-actions), :--with-actions))) .actions {
       display: none;
     }
     .close {
@@ -435,7 +435,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
   /** @private */
   #handleActionsSlotChange(e: Event): void {
     this._withActions = (<HTMLSlotElement>e.target).assignedNodes({ flatten: true }).length > 0;
-    setCustomState(this, "-with-actions", this._withActions);
+    setCustomState(this, "--with-actions", this._withActions);
   }
 }
 

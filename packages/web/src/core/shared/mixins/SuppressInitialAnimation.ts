@@ -25,12 +25,12 @@ export function SuppressInitialAnimation<T extends Constructor<LitElement & Atta
     override connectedCallback(): void {
       super.connectedCallback();
 
-      addCustomState(this, "-no-animate");
+      addCustomState(this, "--no-animate");
       this[resumeAnimation]();
     }
     /** @internal */
     [resumeAnimation](): void {
-      requestAnimationFrame(() => deleteCustomState(this, "-no-animate"));
+      requestAnimationFrame(() => deleteCustomState(this, "--no-animate"));
     }
   }
   return _SuppressInitialAnimation;

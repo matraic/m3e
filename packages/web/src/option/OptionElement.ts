@@ -83,7 +83,7 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
       --m3e-state-layer-focus-color: var(--m3e-option-container-focus-color, ${DesignToken.color.onSurface});
       --m3e-ripple-color: var(--m3e-option-ripple-color, ${DesignToken.color.onSurface});
     }
-    :host(:not([aria-disabled="true"]):not(:state(-empty))[selected]) .base {
+    :host(:not([aria-disabled="true"]):not(:is(:state(--empty), :--empty))[selected]) .base {
       color: var(--m3e-option-selected-color, ${DesignToken.color.onTertiaryContainer});
       background-color: var(--m3e-option-selected-container-color, ${DesignToken.color.tertiaryContainer});
       --m3e-state-layer-hover-color: var(
@@ -117,19 +117,19 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
       border-radius: var(--m3e-option-shape, ${DesignToken.shape.corner.extraSmall});
       transition: ${unsafeCSS(`border-radius ${DesignToken.motion.spring.fastEffects}`)};
     }
-    :host([selected]:not(:state(-first))) .base {
+    :host([selected]:not(:is(:state(--first), :--first))) .base {
       border-top-left-radius: var(--m3e-option-selected-shape, ${DesignToken.shape.corner.medium});
       border-top-right-radius: var(--m3e-option-selected-shape, ${DesignToken.shape.corner.medium});
     }
-    :host([selected]:not(:state(-last))) .base {
+    :host([selected]:not(:is(:state(--last), :--last))) .base {
       border-bottom-left-radius: var(--m3e-option-selected-shape, ${DesignToken.shape.corner.medium});
       border-bottom-right-radius: var(--m3e-option-selected-shape, ${DesignToken.shape.corner.medium});
     }
-    :host(:state(-first)) .base {
+    :host(:is(:state(--first), :--first)) .base {
       border-top-left-radius: var(--m3e-option-first-child-shape, ${DesignToken.shape.corner.medium});
       border-top-right-radius: var(--m3e-option-first-child-shape, ${DesignToken.shape.corner.medium});
     }
-    :host(:state(-last)) .base {
+    :host(:is(:state(--last), :--last)) .base {
       border-bottom-left-radius: var(--m3e-option-last-child-shape, ${DesignToken.shape.corner.medium});
       border-bottom-right-radius: var(--m3e-option-last-child-shape, ${DesignToken.shape.corner.medium});
     }
@@ -171,8 +171,8 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
       width: 0px;
       font-size: var(--m3e-option-icon-size, 1.25rem);
     }
-    :host(:state(-empty)) .icon,
-    :host(:state(-hide-selection-indicator)) .icon,
+    :host(:is(:state(--empty), :--empty)) .icon,
+    :host(:is(:state(--hide-selection-indicator), :--hide-selection-indicator)) .icon,
     :host(:not([selected])) .check {
       display: none;
     }
@@ -294,7 +294,7 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
   /** @private */
   #handleSlotChange(e: Event): void {
     this.#textContent = getTextContent(<HTMLSlotElement>e.target);
-    setCustomState(this, "-empty", this.isEmpty);
+    setCustomState(this, "--empty", this.isEmpty);
 
     if (this.selected) {
       this.closest<LitElement>("m3e-select")?.requestUpdate?.();

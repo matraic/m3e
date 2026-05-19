@@ -117,8 +117,16 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         color: currentColor;
         transition: opacity ${DesignToken.motion.duration.extraLong1};
       }
-      m3e-form-field[float-label="auto"]:not(:state(-float-label)):state(-with-label) input::placeholder,
-      m3e-form-field[float-label="auto"]:not(:state(-float-label)):state(-with-label) textarea::placeholder {
+      m3e-form-field[float-label="auto"]:not(:is(:state(--float-label), :--float-label)):is(
+          :state(--with-label),
+          :--with-label
+        )
+        input::placeholder,
+      m3e-form-field[float-label="auto"]:not(:is(:state(--float-label), :--float-label)):is(
+          :state(--with-label),
+          :--with-label
+        )
+        textarea::placeholder {
         opacity: 0;
         transition: opacity 0s;
       }
@@ -146,7 +154,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       width: var(--m3e-form-field-width, 14.5rem);
       color: var(--_form-field-color);
     }
-    :host(:not(:state(-disabled))) .base {
+    :host(:not(:is(:state(--disabled), :--disabled))) .base {
       cursor: var(--_form-field-cursor);
     }
     .base {
@@ -212,7 +220,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         line-height ${DesignToken.motion.duration.short4}`,
       )};
     }
-    :host(:state(-with-select)) .label {
+    :host(:is(:state(--with-select), :--with-select)) .label {
       margin-inline-end: 1.5rem;
     }
     ::slotted([slot="label"]) {
@@ -238,7 +246,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     :host([hide-subscript="always"]) .subscript {
       display: none;
     }
-    :host([hide-subscript="auto"]:not(:state(-invalid))) .subscript {
+    :host([hide-subscript="auto"]:not(:is(:state(--invalid), :--invalid))) .subscript {
       opacity: 0;
       margin-top: 0px;
       margin-bottom: 0.25rem;
@@ -248,16 +256,17 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         margin-bottom ${DesignToken.motion.duration.short4}`,
       )};
     }
-    :host([hide-subscript="auto"]:not(:state(-invalid)):focus-within) .subscript,
-    :host([hide-subscript="auto"]:not(:state(-invalid)):state(-pressed)) .subscript {
+    :host([hide-subscript="auto"]:not(:is(:state(--invalid), :--invalid)):focus-within) .subscript,
+    :host([hide-subscript="auto"]:not(:is(:state(--invalid), :--invalid)):is(:state(--pressed), :--pressed))
+      .subscript {
       opacity: 1;
       margin-top: 0.25rem;
       margin-bottom: 0;
     }
-    :host(:state(-invalid)) .hint {
+    :host(:is(:state(--invalid), :--invalid)) .hint {
       display: none;
     }
-    :host(:not(:state(-invalid))) .error {
+    :host(:not(:is(:state(--invalid), :--invalid))) .error {
       display: none;
     }
     ::slotted(input),
@@ -285,33 +294,36 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       flex: 1 1 auto;
       min-width: 0;
     }
-    :host([float-label="auto"]:not(:state(-float-label)):not(:state(-pressed))) .label {
+    :host([float-label="auto"]:not(:is(:state(--float-label), :--float-label)):not(:is(:state(--pressed), :--pressed)))
+      .label {
       font-size: inherit;
     }
 
-    :host([float-label="auto"]:not(:state(-float-label)):state(-with-label)) .prefix-text,
-    :host([float-label="auto"]:not(:state(-float-label)):state(-with-label)) .suffix-text {
+    :host([float-label="auto"]:not(:is(:state(--float-label), :--float-label)):is(:state(--with-label), :--with-label))
+      .prefix-text,
+    :host([float-label="auto"]:not(:is(:state(--float-label), :--float-label)):is(:state(--with-label), :--with-label))
+      .suffix-text {
       opacity: 0;
       transition: opacity 0s;
     }
     .prefix {
       margin-inline-start: 1rem;
     }
-    :host(:state(-with-prefix)) .prefix {
+    :host(:is(:state(--with-prefix), :--with-prefix)) .prefix {
       margin-inline-end: 1rem;
       margin-inline-start: 0.75rem;
     }
     .suffix {
       margin-inline-end: 1rem;
     }
-    :host(:state(-with-suffix)) .suffix {
+    :host(:is(:state(--with-suffix), :--with-suffix)) .suffix {
       margin-inline-start: 0.25rem;
       margin-inline-end: 0.5rem;
     }
-    :host(:state(-with-suffix):state(-with-select)) .suffix {
+    :host(:is(:state(--with-suffix), :--with-suffix):is(:state(--with-select), :--with-select)) .suffix {
       margin-inline-start: unset;
     }
-    :host(:state(-with-select)) .suffix-text {
+    :host(:is(:state(--with-select), :--with-select)) .suffix-text {
       display: none;
     }
     :host([variant="outlined"]) .label {
@@ -336,10 +348,15 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       transition-property: max-width, margin-inline-end;
       transition-duration: 1ms;
     }
-    :host([variant="outlined"]:state(-required):not([hide-required-marker])) .pseudo-label {
+    :host([variant="outlined"]:is(:state(--required), :--required):not([hide-required-marker])) .pseudo-label {
       margin-inline-end: 0.25rem;
     }
-    :host([variant="outlined"][float-label="auto"]:not(:state(-float-label)):not(:state(-pressed))) .pseudo-label {
+    :host(
+        [variant="outlined"][float-label="auto"]:not(:is(:state(--float-label), :--float-label)):not(
+            :is(:state(--pressed), :--pressed)
+          )
+      )
+      .pseudo-label {
       max-width: 0;
       margin-inline-end: 0px;
       transition-delay: ${DesignToken.motion.duration.short2};
@@ -352,7 +369,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       border-color: var(--_form-field-outline-color);
       transition: border-color ${DesignToken.motion.duration.short4};
     }
-    :host([variant="outlined"]:not(:state(-with-label))) .outline-notch {
+    :host([variant="outlined"]:not(:is(:state(--with-label), :--with-label))) .outline-notch {
       display: none;
     }
     :host([variant="outlined"]) .outline-start {
@@ -375,12 +392,12 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       border-start-end-radius: var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall});
       border-end-end-radius: var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall});
     }
-    :host([variant="outlined"]:state(-with-prefix)) .outline-start {
+    :host([variant="outlined"]:is(:state(--with-prefix), :--with-prefix)) .outline-start {
       min-width: calc(1.25rem + var(--_prefix-width, 0px) + 0.25rem);
     }
-    :host([variant="outlined"]:not(:state(-disabled))) .base:hover .outline,
-    :host([variant="outlined"]:not(:state(-disabled)):focus-within) .outline,
-    :host([variant="outlined"]:not(:state(-disabled)):state(-pressed)) .outline {
+    :host([variant="outlined"]:not(:is(:state(--disabled), :--disabled))) .base:hover .outline,
+    :host([variant="outlined"]:not(:is(:state(--disabled), :--disabled)):focus-within) .outline,
+    :host([variant="outlined"]:not(:is(:state(--disabled), :--disabled)):is(:state(--pressed), :--pressed)) .outline {
       --_form-field-outline-size: 2px;
     }
     :host([variant="outlined"]) .subscript {
@@ -394,7 +411,12 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         ${DesignToken.typescale.standard.body.small.fontSize}
       );
     }
-    :host([variant="outlined"][float-label="auto"]:not(:state(-float-label)):not(:state(-pressed))) .label {
+    :host(
+        [variant="outlined"][float-label="auto"]:not(:is(:state(--float-label), :--float-label)):not(
+            :is(:state(--pressed), :--pressed)
+          )
+      )
+      .label {
       margin-top: unset;
       line-height: calc(3.5rem + ${DesignToken.density.calc(-2)});
       --_form-field-label-font-size: var(
@@ -422,9 +444,10 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       border-color: var(--_form-field-outline-color);
       background-color: var(--_form-field-container-color);
     }
-    :host([variant="filled"]:not(:state(-disabled))) .base:hover::before,
-    :host([variant="filled"]:not(:state(-disabled)):focus-within) .base::before,
-    :host([variant="filled"]:not(:state(-disabled)):state(-pressed)) .base::before {
+    :host([variant="filled"]:not(:is(:state(--disabled), :--disabled))) .base:hover::before,
+    :host([variant="filled"]:not(:is(:state(--disabled), :--disabled)):focus-within) .base::before,
+    :host([variant="filled"]:not(:is(:state(--disabled), :--disabled)):is(:state(--pressed), :--pressed))
+      .base::before {
       border-width: 3px;
     }
     :host([variant="filled"]) .base::after {
@@ -450,7 +473,12 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     :host([variant="filled"]) .label {
       top: calc(0.5rem + ${DesignToken.density.calc(-2)});
     }
-    :host([variant="filled"][float-label="auto"]:not(:state(-float-label)):not(:state(-pressed))) .label {
+    :host(
+        [variant="filled"][float-label="auto"]:not(:is(:state(--float-label), :--float-label)):not(
+            :is(:state(--pressed), :--pressed)
+          )
+      )
+      .label {
       top: 0px;
       line-height: calc(3.5rem + ${DesignToken.density.calc(-2)} - 0.0625rem);
       --_form-field-label-font-size: var(
@@ -458,7 +486,8 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         ${DesignToken.typescale.standard.body.small.fontSize}
       );
     }
-    :host(:not(:state(-disabled)):not(:focus-within):not(:state(-pressed))) .base:hover {
+    :host(:not(:is(:state(--disabled), :--disabled)):not(:focus-within):not(:is(:state(--pressed), :--pressed)))
+      .base:hover {
       --_form-field-hover-container-color: color-mix(
         in srgb,
         var(--m3e-form-field-hover-container-color, ${DesignToken.color.onSurface})
@@ -466,43 +495,66 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         transparent
       );
     }
-    :host(:not(:state(-disabled)):not(:state(-invalid))) {
+    :host(:not(:is(:state(--disabled), :--disabled)):not(:is(:state(--invalid), :--invalid))) {
       color: var(--m3e-form-field-color, ${DesignToken.color.onSurface});
     }
-    :host([variant="outlined"]:not(:state(-disabled)):not(:state(-invalid))) .base {
+    :host([variant="outlined"]:not(:is(:state(--disabled), :--disabled)):not(:is(:state(--invalid), :--invalid)))
+      .base {
       --_form-field-outline-color: var(--m3e-form-field-outline-color, ${DesignToken.color.outline});
     }
-    :host([variant="filled"]:not(:state(-disabled)):not(:state(-invalid))) .base {
+    :host([variant="filled"]:not(:is(:state(--disabled), :--disabled)):not(:is(:state(--invalid), :--invalid))) .base {
       --_form-field-outline-color: var(--m3e-form-field-outline-color, ${DesignToken.color.onSurfaceVariant});
     }
-    :host([variant="outlined"]:not(:state(-disabled)):not(:state(-invalid)):focus-within) .base,
-    :host([variant="outlined"]:not(:state(-disabled)):not(:state(-invalid)):state(-pressed)) .base,
-    :host([variant="filled"]:not(:state(-disabled)):not(:state(-invalid)):focus-within) .base,
-    :host([variant="filled"]:not(:state(-disabled)):not(:state(-invalid)):state(-pressed)) .base {
+    :host(
+        [variant="outlined"]:not(:is(:state(--disabled), :--disabled)):not(
+            :is(:state(--invalid), :--invalid)
+          ):focus-within
+      )
+      .base,
+    :host(
+        [variant="outlined"]:not(:is(:state(--disabled), :--disabled)):not(:is(:state(--invalid), :--invalid)):is(
+            :state(--pressed),
+            :--pressed
+          )
+      )
+      .base,
+    :host(
+        [variant="filled"]:not(:is(:state(--disabled), :--disabled)):not(
+            :is(:state(--invalid), :--invalid)
+          ):focus-within
+      )
+      .base,
+    :host(
+        [variant="filled"]:not(:is(:state(--disabled), :--disabled)):not(:is(:state(--invalid), :--invalid)):is(
+            :state(--pressed),
+            :--pressed
+          )
+      )
+      .base {
       --_form-field-outline-color: var(--m3e-form-field-focused-outline-color, ${DesignToken.color.primary});
       --_form-field-label-color: var(--m3e-form-field-focused-color, ${DesignToken.color.primary});
     }
-    :host(:not(:state(-disabled))) .base {
+    :host(:not(:is(:state(--disabled), :--disabled))) .base {
       --_form-field-container-color: var(
         --m3e-form-field-container-color,
         ${DesignToken.color.surfaceContainerHighest}
       );
     }
-    :host(:not(:state(-disabled)):state(-invalid)) .base {
+    :host(:not(:is(:state(--disabled), :--disabled)):is(:state(--invalid), :--invalid)) .base {
       --_form-field-label-color: var(--m3e-form-field-invalid-color, ${DesignToken.color.error});
       --_form-field-outline-color: var(--m3e-form-field-invalid-color, ${DesignToken.color.error});
     }
-    :host(:not(:state(-disabled)):state(-invalid)) .subscript {
+    :host(:not(:is(:state(--disabled), :--disabled)):is(:state(--invalid), :--invalid)) .subscript {
       color: var(--m3e-form-field-invalid-color, ${DesignToken.color.error});
     }
-    :host(:state(-disabled)) {
+    :host(:is(:state(--disabled), :--disabled)) {
       color: color-mix(
         in srgb,
         var(--m3e-form-field-disabled-color, ${DesignToken.color.onSurface}) var(--m3e-form-field-disabled-opacity, 38%),
         transparent
       );
     }
-    :host(:state(-disabled)) .base {
+    :host(:is(:state(--disabled), :--disabled)) .base {
       --_form-field-container-color: color-mix(
         in srgb,
         var(--m3e-form-field-disabled-container-color, ${DesignToken.color.onSurface})
@@ -510,9 +562,9 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         transparent
       );
     }
-    :host(:state(-no-animate)) *,
-    :host(:state(-no-animate)) *::before,
-    :host(:state(-no-animate)) *::after {
+    :host(:is(:state(--no-animate), :--no-animate)) *,
+    :host(:is(:state(--no-animate), :--no-animate)) *::before,
+    :host(:is(:state(--no-animate), :--no-animate)) *::after {
       transition: none !important;
     }
     @media (forced-colors: active) {
@@ -522,7 +574,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       :host {
         --_form-field-outline-color: CanvasText;
       }
-      :host(:state(-disabled)) {
+      :host(:is(:state(--disabled), :--disabled)) {
         --_form-field-input-color: GrayText;
         --_form-field-color: GrayText;
         --_form-field-label-color: GrayText;
@@ -567,10 +619,10 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     target: null,
     callback: (focused) => {
       focused = focused && !(this.#control?.disabled ?? true);
-      setCustomState(this, "-no-animate", false);
+      setCustomState(this, "--no-animate", false);
       this.#focused = focused;
       if (focused) {
-        setCustomState(this, "-float-label", true);
+        setCustomState(this, "--float-label", true);
       } else {
         this._invalid = !(this.#control?.checkValidity?.() ?? true);
         this.notifyControlStateChange();
@@ -600,7 +652,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   /** @private */
   readonly #pressedController = new PressedController(this, {
     target: null,
-    callback: (pressed) => setCustomState(this, "-pressed", pressed && !(this.#control?.disabled ?? true)),
+    callback: (pressed) => setCustomState(this, "--pressed", pressed && !(this.#control?.disabled ?? true)),
   });
 
   /** @private */ #focused = false;
@@ -614,7 +666,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   constructor() {
     super();
 
-    new HoverController(this, { callback: () => setCustomState(this, "-no-animate", false) });
+    new HoverController(this, { callback: () => setCustomState(this, "--no-animate", false) });
   }
 
   /** @private */
@@ -664,18 +716,18 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
    */
   notifyControlStateChange(checkValidity: boolean = false): void {
     this._required = this.#control?.required === true;
-    setCustomState(this, "-required", this._required);
-    setCustomState(this, "-disabled", this.#control?.disabled === true);
-    setCustomState(this, "-readonly", isReadOnlyMixin(this.#control) && this.#control.readOnly === true);
+    setCustomState(this, "--required", this._required);
+    setCustomState(this, "--disabled", this.#control?.disabled === true);
+    setCustomState(this, "--readonly", isReadOnlyMixin(this.#control) && this.#control.readOnly === true);
     if (this.floatLabel === "auto") {
-      setCustomState(this, "-float-label", this.#shouldFloatLabel || this.#focused);
+      setCustomState(this, "--float-label", this.#shouldFloatLabel || this.#focused);
     }
 
     if (checkValidity) {
       this._invalid = !(this.#control?.checkValidity?.() ?? true);
     }
 
-    setCustomState(this, "-invalid", this._invalid);
+    setCustomState(this, "--invalid", this._invalid);
 
     this._validationMessage = this.#control?.validationMessage ?? "";
     if (!this.isUpdatePending) {
@@ -687,7 +739,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   override connectedCallback(): void {
     super.connectedCallback();
     // Label animations are disabled on initial paint.
-    setCustomState(this, "-no-animate", true);
+    setCustomState(this, "--no-animate", true);
   }
 
   /** @inheritdoc */
@@ -794,19 +846,19 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   /** @private */
   #handleLabelSlotChange(e: Event): void {
     const assignedElements = (<HTMLSlotElement>e.target).assignedElements({ flatten: true });
-    setCustomState(this, "-with-label", assignedElements.length > 0);
+    setCustomState(this, "--with-label", assignedElements.length > 0);
     this._pseudoLabel = assignedElements[0]?.textContent ?? "";
   }
 
   /** @private */
   #handlePrefixSlotChange(e: Event): void {
-    setCustomState(this, "-with-prefix", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-prefix", hasAssignedNodes(<HTMLSlotElement>e.target));
     this.#resizeController.observe(this._prefix);
   }
 
   /** @private */
   #handleSuffixSlotChange(e: Event): void {
-    setCustomState(this, "-with-suffix", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-suffix", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
@@ -875,8 +927,8 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       this._base.style.removeProperty("--_form-field-cursor");
     }
 
-    setCustomState(this, "-with-select", this.#control?.tagName === "M3E-SELECT");
-    if (hasCustomState(this, "-with-select")) {
+    setCustomState(this, "--with-select", this.#control?.tagName === "M3E-SELECT");
+    if (hasCustomState(this, "--with-select")) {
       this._base.style.setProperty("--_form-field-cursor", "pointer");
     }
 

@@ -67,8 +67,8 @@ export class M3eBreadcrumbItemElement extends LinkButton(AttachInternals(Role(Li
       align-items: center;
       height: 100%;
     }
-    :host(:not(:state(-icon-only))[current]),
-    :host(:not(:state(-icon-only))[current]) .base {
+    :host(:not(:is(:state(--icon-only), :--icon-only))[current]),
+    :host(:not(:is(:state(--icon-only), :--icon-only))[current]) .base {
       min-width: 0;
     }
     .button {
@@ -172,7 +172,7 @@ export class M3eBreadcrumbItemElement extends LinkButton(AttachInternals(Role(Li
 
   /** @private */
   #handleSlotChange(e: Event): void {
-    setCustomState(this, "-icon-only", isIconOnly(e.target as HTMLSlotElement));
+    setCustomState(this, "--icon-only", isIconOnly(e.target as HTMLSlotElement));
     this.#updateIconFilled();
   }
 

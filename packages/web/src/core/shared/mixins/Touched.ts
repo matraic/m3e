@@ -45,7 +45,7 @@ export function Touched<T extends Constructor<LitElement & AttachInternalsMixin>
 
     /** Whether the user has interacted when the element. */
     get touched(): boolean {
-      return hasCustomState(this, "-touched");
+      return hasCustomState(this, "--touched");
     }
 
     /** Whether the user has not interacted when the element. */
@@ -68,12 +68,12 @@ export function Touched<T extends Constructor<LitElement & AttachInternalsMixin>
 
     /** Marks the element as touched. */
     markAsTouched(): void {
-      addCustomState(this, "-touched");
+      addCustomState(this, "--touched");
     }
 
     /** Marks the element as untouched. */
     markAsUntouched(): void {
-      deleteCustomState(this, "-touched");
+      deleteCustomState(this, "--touched");
     }
   }
 

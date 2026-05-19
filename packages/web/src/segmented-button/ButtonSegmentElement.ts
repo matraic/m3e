@@ -160,8 +160,8 @@ export class M3eButtonSegmentElement extends Dirty(
     :host(:not(:disabled)) {
       cursor: pointer;
     }
-    :host([checked]:not(:state(-hide-selection))) .wrapper,
-    :host(:state(-with-icon)) .wrapper {
+    :host([checked]:not(:is(:state(--hide-selection), :--hide-selection))) .wrapper,
+    :host(:is(:state(--with-icon), :--with-icon)) .wrapper {
       padding-inline-start: var(--m3e-segmented-button-with-icon-padding-start, 0.75rem);
     }
     :host(:not(:disabled)[checked]) .base {
@@ -199,7 +199,7 @@ export class M3eButtonSegmentElement extends Dirty(
     :host(:not(:disabled):not([checked])) .icon {
       color: var(--m3e-segmented-button-unselected-icon-color, ${DesignToken.color.onSurface});
     }
-    :host(:not(:state(-with-icon))) .icon {
+    :host(:not(:is(:state(--with-icon), :--with-icon))) .icon {
       margin-inline-start: calc(0px - var(--m3e-segmented-button-spacing, 0.5rem));
       transition: margin-inline-start ${DesignToken.motion.spring.fastEffects};
     }
@@ -209,14 +209,14 @@ export class M3eButtonSegmentElement extends Dirty(
       font-size: var(--m3e-segmented-button-icon-size, 1.125rem) !important;
     }
     :host(:not([checked])) .check,
-    :host(:state(-hide-selection)) .check,
-    :host(:state(-hide-selection):not(:state(-with-icon))) .icon {
+    :host(:is(:state(--hide-selection), :--hide-selection)) .check,
+    :host(:is(:state(--hide-selection), :--hide-selection):not(:is(:state(--with-icon), :--with-icon))) .icon {
       display: none;
     }
     :host([checked]) .icon {
       margin-inline-start: 0;
     }
-    :host([checked]:not(:state(-hide-selection))) ::slotted([slot="icon"]) {
+    :host([checked]:not(:is(:state(--hide-selection), :--hide-selection))) ::slotted([slot="icon"]) {
       display: none !important;
     }
     :host(:disabled) .base {
@@ -381,7 +381,7 @@ export class M3eButtonSegmentElement extends Dirty(
 
   /** @private */
   #handleIconSlotChange(e: Event): void {
-    setCustomState(this, "-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */

@@ -232,9 +232,9 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     :host([size="extra-large"]) .track {
       height: var(--m3e-slider-extra-large-track-height, 6rem);
     }
-    :host(:state(-animating)) .track-active,
-    :host(:state(-animating)) .track-inactive.start,
-    :host(:state(-animating)) .track-inactive.end {
+    :host(:is(:state(--animating), :--animating)) .track-active,
+    :host(:is(:state(--animating), :--animating)) .track-inactive.start,
+    :host(:is(:state(--animating), :--animating)) .track-inactive.end {
       transition: ${unsafeCSS(`margin-inline-start ${DesignToken.motion.spring.fastEffects},
         width ${DesignToken.motion.spring.fastEffects}`)};
     }
@@ -696,8 +696,8 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
       max = Math.min(max, this.upperThumb.value ?? this.max);
     }
 
-    if (hasCustomState(this, "-animating")) {
-      deleteCustomState(this, "-animating");
+    if (hasCustomState(this, "--animating")) {
+      deleteCustomState(this, "--animating");
       this.#activeThumb.style.transition = "";
     }
 
@@ -812,12 +812,12 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     if (thumb.value === value) return;
     const prev = thumb.value;
     if (animate && !prefersReducedMotion()) {
-      addCustomState(this, "-animating");
+      addCustomState(this, "--animating");
       thumb.addEventListener(
         "transitionend",
         () => {
           thumb.style.transition = "";
-          deleteCustomState(this, "-animating");
+          deleteCustomState(this, "--animating");
         },
         { once: true },
       );

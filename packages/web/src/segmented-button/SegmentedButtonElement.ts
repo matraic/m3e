@@ -76,15 +76,15 @@ export class M3eSegmentedButtonElement extends Labelled(
       vertical-align: middle;
       align-items: center;
     }
-    ::slotted(:state(-first)) {
+    ::slotted(:is(:state(--first), :--first)) {
       border-start-start-radius: var(--m3e-segmented-button-start-shape, ${DesignToken.shape.corner.full});
       border-end-start-radius: var(--m3e-segmented-button-start-shape, ${DesignToken.shape.corner.full});
     }
-    ::slotted(:state(-last)) {
+    ::slotted(:is(:state(--last), :--last)) {
       border-start-end-radius: var(--m3e-segmented-button-end-shape, ${DesignToken.shape.corner.full});
       border-end-end-radius: var(--m3e-segmented-button-end-shape, ${DesignToken.shape.corner.full});
     }
-    ::slotted(:not(:state(-first))) {
+    ::slotted(:not(:is(:state(--first), :--first))) {
       --_segmented-button-left-border: none;
     }
   `;
@@ -182,7 +182,7 @@ export class M3eSegmentedButtonElement extends Labelled(
     }
 
     if (changedProperties.has("hideSelectionIndicator")) {
-      this.segments.forEach((x) => setCustomState(x, "-hide-selection", this.hideSelectionIndicator));
+      this.segments.forEach((x) => setCustomState(x, "--hide-selection", this.hideSelectionIndicator));
     }
   }
 
@@ -198,10 +198,10 @@ export class M3eSegmentedButtonElement extends Labelled(
   /** @private */
   #handleSlotChange() {
     const { added } = this[selectionManager].setItems([...this.querySelectorAll("m3e-button-segment")]);
-    added.forEach((x) => setCustomState(x, "-hide-selection", this.hideSelectionIndicator));
+    added.forEach((x) => setCustomState(x, "--hide-selection", this.hideSelectionIndicator));
     this[selectionManager].items.forEach((segment, i) => {
-      setCustomState(segment, "-first", i == 0);
-      setCustomState(segment, "-last", i == this[selectionManager].items.length - 1);
+      setCustomState(segment, "--first", i == 0);
+      setCustomState(segment, "--last", i == this[selectionManager].items.length - 1);
     });
   }
 

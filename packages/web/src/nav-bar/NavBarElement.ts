@@ -161,7 +161,7 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
   protected _updateItems(): void {
     const orientation: NavItemOrientation = this.currentMode === "compact" ? "vertical" : "horizontal";
     this._updateOrientation(orientation);
-    setCustomState(this, "-compact", orientation === "vertical");
+    setCustomState(this, "--compact", orientation === "vertical");
   }
 
   /** @internal */

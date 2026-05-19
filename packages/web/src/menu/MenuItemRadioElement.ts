@@ -139,12 +139,12 @@ export class M3eMenuItemRadioElement extends Checked(Role(MenuItemElementBase, "
 
   /** @private */
   #handleIconSlotChange(e: Event): void {
-    setCustomState(this, "-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
   #handleTrailingIconSlotChange(e: Event): void {
-    setCustomState(this, "-with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */

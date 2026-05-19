@@ -150,14 +150,14 @@ export class M3eSelectionListElement extends Labelled(
     }
 
     if (changedProperties.has("hideSelectionIndicator")) {
-      this[selectionManager].items.forEach((x) => setCustomState(x, "-hide-selection", this.hideSelectionIndicator));
+      this[selectionManager].items.forEach((x) => setCustomState(x, "--hide-selection", this.hideSelectionIndicator));
     }
   }
 
   /** @inheritdoc */
   override notifyItemsChange(): void {
     const { added } = this[selectionManager].setItems(this.items.filter((x) => x instanceof M3eListOptionElement));
-    added.forEach((x) => setCustomState(x, "-hide-selection", this.hideSelectionIndicator));
+    added.forEach((x) => setCustomState(x, "--hide-selection", this.hideSelectionIndicator));
 
     if (!this[selectionManager].activeItem) {
       this[selectionManager].updateActiveItem(added.find((x) => !x.disabled));

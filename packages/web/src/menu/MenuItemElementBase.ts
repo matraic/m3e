@@ -88,19 +88,19 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       border-radius: var(--m3e-menu-item-shape, ${DesignToken.shape.corner.extraSmall});
       transition: ${unsafeCSS(`border-radius ${DesignToken.motion.spring.fastEffects}`)};
     }
-    :host([checked]:not(:state(-first))) .base {
+    :host([checked]:not(:is(:state(--first), :--first))) .base {
       border-top-left-radius: var(--m3e-menu-item-selected-shape, ${DesignToken.shape.corner.medium});
       border-top-right-radius: var(--m3e-menu-item-selected-shape, ${DesignToken.shape.corner.medium});
     }
-    :host([checked]:not(:state(-last))) .base {
+    :host([checked]:not(:is(:state(--last), :--last))) .base {
       border-bottom-left-radius: var(--m3e-menu-item-selected-shape, ${DesignToken.shape.corner.medium});
       border-bottom-right-radius: var(--m3e-menu-item-selected-shape, ${DesignToken.shape.corner.medium});
     }
-    :host(:state(-first)) .base {
+    :host(:is(:state(--first), :--first)) .base {
       border-top-left-radius: var(--m3e-menu-item-first-child-shape, ${DesignToken.shape.corner.medium});
       border-top-right-radius: var(--m3e-menu-item-first-child-shape, ${DesignToken.shape.corner.medium});
     }
-    :host(:state(-last)) .base {
+    :host(:is(:state(--last), :--last)) .base {
       border-bottom-left-radius: var(--m3e-menu-item-last-child-shape, ${DesignToken.shape.corner.medium});
       border-bottom-right-radius: var(--m3e-menu-item-last-child-shape, ${DesignToken.shape.corner.medium});
     }

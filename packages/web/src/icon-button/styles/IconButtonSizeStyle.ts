@@ -28,24 +28,38 @@ function iconButtonStyle(size: IconButtonSize): CSSResult {
       outline-offset: calc(0px - ${IconButtonSizeToken[size].outlineThickness});
       outline-width: ${IconButtonSizeToken[size].outlineThickness};
     }
-    :host(:not(:state(-connected))[size="${unsafeCSS(size)}"][shape="rounded"]:not(:state(-pressed))) .base {
+    :host(
+        :not(:is(:state(--connected), :--connected))[size="${unsafeCSS(size)}"][shape="rounded"]:not(
+            :is(:state(--pressed), :--pressed)
+          )
+      )
+      .base {
       border-radius: var(--_button-shape, ${IconButtonSizeToken[size].shapeRound});
     }
-    :host(:not(:state(-connected))[size="${unsafeCSS(size)}"][shape="square"]) .base {
+    :host(:not(:is(:state(--connected), :--connected))[size="${unsafeCSS(size)}"][shape="square"]) .base {
       border-radius: ${IconButtonSizeToken[size].shapeSquare};
     }
-    :host(:not(:state(-connected))[size="${unsafeCSS(size)}"][shape="rounded"][toggle][selected]:not(:state(-pressed)))
+    :host(
+        :not(:is(:state(--connected), :--connected))[size="${unsafeCSS(size)}"][shape="rounded"][toggle][selected]:not(
+            :is(:state(--pressed), :--pressed)
+          )
+      )
       .base {
       border-radius: ${IconButtonSizeToken[size].selectedShapeRound};
     }
-    :host(:not(:state(-connected))[size="${unsafeCSS(size)}"][shape="square"][toggle][selected]:not(:state(-pressed)))
+    :host(
+        :not(:is(:state(--connected), :--connected))[size="${unsafeCSS(size)}"][shape="square"][toggle][selected]:not(
+            :is(:state(--pressed), :--pressed)
+          )
+      )
       .base {
       border-radius: var(--_button-shape, ${IconButtonSizeToken[size].selectedShapeSquare});
     }
-    :host(:not(:state(-connected))[size="${unsafeCSS(size)}"]:state(-pressed)) .base {
+    :host(:not(:is(:state(--connected), :--connected))[size="${unsafeCSS(size)}"]:is(:state(--pressed), :--pressed))
+      .base {
       border-radius: ${IconButtonSizeToken[size].shapePressedMorph};
     }
-    :host(:state(-connected)[size="${unsafeCSS(size)}"][shape="rounded"]) .base {
+    :host(:is(:state(--connected), :--connected)[size="${unsafeCSS(size)}"][shape="rounded"]) .base {
       border-start-start-radius: var(
         --_button-rounded-start-shape,
         var(--_button-shape, ${IconButtonSizeToken[size].shapeRound})
@@ -63,16 +77,21 @@ function iconButtonStyle(size: IconButtonSize): CSSResult {
         var(--_button-shape, ${IconButtonSizeToken[size].shapeRound})
       );
     }
-    :host(:state(-connected)[size="${unsafeCSS(size)}"][shape="square"]) .base {
+    :host(:is(:state(--connected), :--connected)[size="${unsafeCSS(size)}"][shape="square"]) .base {
       border-start-start-radius: var(--_button-square-start-shape, ${IconButtonSizeToken[size].shapeSquare});
       border-end-start-radius: var(--_button-square-start-shape, ${IconButtonSizeToken[size].shapeSquare});
       border-start-end-radius: var(--_button-square-end-shape, ${IconButtonSizeToken[size].shapeSquare});
       border-end-end-radius: var(--_button-square-end-shape, ${IconButtonSizeToken[size].shapeSquare});
     }
-    :host(:state(-connected)[size="${unsafeCSS(size)}"][shape="square"][toggle][selected]:not(:state(-pressed))) .base {
+    :host(
+        :is(:state(--connected), :--connected)[size="${unsafeCSS(size)}"][shape="square"][toggle][selected]:not(
+            :is(:state(--pressed), :--pressed)
+          )
+      )
+      .base {
       border-radius: var(--_button-shape, ${IconButtonSizeToken[size].selectedShapeSquare});
     }
-    :host(:state(-connected)[size="${unsafeCSS(size)}"]:state(-pressed)) .base {
+    :host(:is(:state(--connected), :--connected)[size="${unsafeCSS(size)}"]:is(:state(--pressed), :--pressed)) .base {
       border-start-start-radius: var(
         --_button-start-shape-pressed-morph,
         ${IconButtonSizeToken[size].shapePressedMorph}

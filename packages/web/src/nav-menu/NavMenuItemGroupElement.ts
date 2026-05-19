@@ -51,7 +51,7 @@ export class M3eNavMenuItemGroupElement extends AttachInternals(Role(LitElement,
     :host {
       display: contents;
     }
-    :host(:not(:state(-with-label))) .label {
+    :host(:not(:is(:state(--with-label), :--with-label))) .label {
       display: none;
     }
     .label {
@@ -59,12 +59,12 @@ export class M3eNavMenuItemGroupElement extends AttachInternals(Role(LitElement,
       margin-block-end: var(--m3e-nav-menu-item-group-label-space, 1rem);
       flex: none;
     }
-    :host(:state(-divided)) .label {
+    :host(:is(:state(--divided), :--divided)) .label {
       margin-block-start: calc(
         var(--m3e-nav-menu-item-group-label-space, 1rem) - var(--m3e-nav-menu-divider-margin, 0.25rem)
       );
     }
-    :host(:not(:state(-divided))) .label {
+    :host(:not(:is(:state(--divided), :--divided))) .label {
       margin-block-start: var(--m3e-nav-menu-item-group-label-space, 1rem);
     }
   `;
@@ -76,13 +76,13 @@ export class M3eNavMenuItemGroupElement extends AttachInternals(Role(LitElement,
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-    setCustomState(this, "-divided", this.previousElementSibling?.tagName === "M3E-DIVIDER");
+    setCustomState(this, "--divided", this.previousElementSibling?.tagName === "M3E-DIVIDER");
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    deleteCustomState(this, "-divided");
+    deleteCustomState(this, "--divided");
   }
 
   /** @inheritdoc */
@@ -113,7 +113,7 @@ export class M3eNavMenuItemGroupElement extends AttachInternals(Role(LitElement,
         this.removeAttribute("aria-labelledby");
       }
     }
-    setCustomState(this, "-with-label", this.#label !== undefined);
+    setCustomState(this, "--with-label", this.#label !== undefined);
   }
 }
 

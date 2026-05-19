@@ -31,8 +31,8 @@ export const ButtonStyle: CSSResultGroup = css`
     left: 0;
     right: 0;
   }
-  :host(:state(-pressed)) .base,
-  :host(:state(-resting)) .base {
+  :host(:is(:state(--pressed), :--pressed)) .base,
+  :host(:is(:state(--resting), :--resting)) .base {
     transition: ${unsafeCSS(`background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard},
           border-radius ${DesignToken.motion.spring.fastEffects}`)};
   }
@@ -86,24 +86,44 @@ export const ButtonStyle: CSSResultGroup = css`
     bottom: 0px;
     z-index: 1;
   }
-  :host(:state(-grouped):state(-connected)) {
+  :host(:is(:state(--grouped), :--grouped):is(:state(--connected), :--connected)) {
     flex: 1 1 auto;
   }
-  :host(:state(-grouped):not(:state(-connected))) {
+  :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) {
     transition: ${unsafeCSS(`padding-inline ${DesignToken.motion.spring.fastEffects}`)};
   }
-  :host(:state(-grouped):not(:state(-connected)):not(:state(-adjacent-pressed)):not(:state(-pressed))) {
+  :host(
+    :is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):not(
+        :is(:state(--adjacent-pressed), :--adjacent-pressed)
+      ):not(:is(:state(--pressed), :--pressed))
+  ) {
     flex-shrink: 0;
     flex-grow: 0;
   }
-  :host(:state(-grouped):not(:state(-connected)):state(-adjacent-pressed):not(:state(-pressed))) {
+  :host(
+    :is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):is(
+        :state(--adjacent-pressed),
+        :--adjacent-pressed
+      ):not(:is(:state(--pressed), :--pressed))
+  ) {
     flex-shrink: 1;
     min-width: 0;
   }
-  :host(:state(-grouped):not(:state(-connected)):state(-adjacent-pressed):not(:state(-pressed))) .label {
+  :host(
+      :is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):is(
+          :state(--adjacent-pressed),
+          :--adjacent-pressed
+        ):not(:is(:state(--pressed), :--pressed))
+    )
+    .label {
     text-overflow: clip;
   }
-  :host(:state(-grouped):not(:state(-connected)):state(-pressed):not([disabled-interactive]):not(:disabled)) {
+  :host(
+    :is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):is(
+        :state(--pressed),
+        :--pressed
+      ):not([disabled-interactive]):not(:disabled)
+  ) {
     flex-shrink: 0;
     flex-basis: calc(
       var(--_button-width) + calc(var(--_button-width) * var(--m3e-standard-button-group-width-multiplier, 0.15))
@@ -115,8 +135,8 @@ export const ButtonStyle: CSSResultGroup = css`
     .icon {
       transition: none;
     }
-    :host(:state(-pressed)) .base,
-    :host(:state(-resting)) .base {
+    :host(:is(:state(--pressed), :--pressed)) .base,
+    :host(:is(:state(--resting), :--resting)) .base {
       transition: ${unsafeCSS(`border-radius ${DesignToken.motion.spring.fastEffects}`)};
     }
     :host([variant]:not(:disabled):not([disabled-interactive]):not([toggle])) .base {
@@ -189,8 +209,8 @@ export const ButtonStyle: CSSResultGroup = css`
     }
   }
   @media (prefers-reduced-motion) {
-    :host(:state(-pressed)) .base,
-    :host(:state(-resting)) .base,
+    :host(:is(:state(--pressed), :--pressed)) .base,
+    :host(:is(:state(--resting), :--resting)) .base,
     .base,
     .label,
     .icon {

@@ -559,7 +559,7 @@ export class M3eButtonElement extends KeyboardClick(
 
   /** Whether the button is contained by a button group. */
   get grouped() {
-    return hasCustomState(this, "-grouped");
+    return hasCustomState(this, "--grouped");
   }
 
   /** @inheritdoc */
@@ -599,11 +599,11 @@ export class M3eButtonElement extends KeyboardClick(
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    ["-pressed", "-resting", "-grouped", "-connected"].forEach((x) => deleteCustomState(this, x));
+    ["--pressed", "--resting", "--grouped", "--connected"].forEach((x) => deleteCustomState(this, x));
     this._base?.style.removeProperty("--_button-shape");
     this.style.removeProperty("--_button-width");
     this.style.removeProperty("--_adjacent-button-width");
-    deleteCustomState(this, "-adjacent-pressed");
+    deleteCustomState(this, "--adjacent-pressed");
 
     this.removeEventListener("click", this.#clickHandler);
   }
@@ -622,8 +622,8 @@ export class M3eButtonElement extends KeyboardClick(
       (_changedProperties.has("disabled") && this.disabled) ||
       (_changedProperties.has("disabledInteractive") && this.disabledInteractive)
     ) {
-      deleteCustomState(this, "-pressed");
-      deleteCustomState(this, "-resting");
+      deleteCustomState(this, "--pressed");
+      deleteCustomState(this, "--resting");
     }
 
     if (_changedProperties.has("toggle") || _changedProperties.has("selected")) {
@@ -665,7 +665,7 @@ export class M3eButtonElement extends KeyboardClick(
   /** @private */
   @debounce(40)
   private _handleResize(): void {
-    if (this.grouped && !hasCustomState(this, "-pressed")) {
+    if (this.grouped && !hasCustomState(this, "--pressed")) {
       this.style.setProperty("--_button-width", `${this.clientWidth}px`);
       this.#updateButtonShape(true);
     }
@@ -685,8 +685,8 @@ export class M3eButtonElement extends KeyboardClick(
 
   /** @private */
   #handlePressedChange(pressed: boolean): void {
-    setCustomState(this, "-pressed", pressed);
-    setCustomState(this, "-resting", !pressed);
+    setCustomState(this, "--pressed", pressed);
+    setCustomState(this, "--resting", !pressed);
 
     const group = this.closest("m3e-button-group");
     if (group) {
@@ -698,13 +698,13 @@ export class M3eButtonElement extends KeyboardClick(
         const button = buttons[i];
         if (i === index - 1) {
           button.style.setProperty("--_adjacent-button-width", `${clientWidth}px`);
-          setCustomState(button, "-adjacent-pressed", pressed);
+          setCustomState(button, "--adjacent-pressed", pressed);
         } else if (i === index + 1) {
           button.style.setProperty("--_adjacent-button-width", `${clientWidth}px`);
-          setCustomState(button, "-adjacent-pressed", pressed);
+          setCustomState(button, "--adjacent-pressed", pressed);
         } else {
           button.style.removeProperty("--_adjacent-button-width");
-          deleteCustomState(button, "-adjacent-pressed");
+          deleteCustomState(button, "--adjacent-pressed");
         }
       }
     }

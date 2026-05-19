@@ -15,9 +15,10 @@ function buttonStyle(size: ButtonSize): CSSResult {
       column-gap: ${ButtonSizeToken[size].iconLabelSpace};
     }
     :host(
-        [size="${unsafeCSS(size)}"]:state(-grouped):not(:state(-connected)):state(-adjacent-pressed):not(
-            :state(-pressed)
-          )
+        [size="${unsafeCSS(size)}"]:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):is(
+            :state(--adjacent-pressed),
+            :--adjacent-pressed
+          ):not(:is(:state(--pressed), :--pressed))
       )
       .wrapper {
       padding-inline-start: calc(
@@ -45,24 +46,33 @@ function buttonStyle(size: ButtonSize): CSSResult {
       outline-offset: calc(0px - ${ButtonSizeToken[size].outlineThickness});
       outline-width: ${ButtonSizeToken[size].outlineThickness};
     }
-    :host(:not(:state(-connected))[size="${unsafeCSS(size)}"][shape="rounded"]) .base {
+    :host(:not(:is(:state(--connected), :--connected))[size="${unsafeCSS(size)}"][shape="rounded"]) .base {
       border-radius: var(--_button-shape, ${ButtonSizeToken[size].shapeRound});
     }
-    :host(:not(:state(-connected))[size="${unsafeCSS(size)}"][shape="rounded"][toggle][selected]:not(:state(-pressed)))
+    :host(
+        :not(:is(:state(--connected), :--connected))[size="${unsafeCSS(size)}"][shape="rounded"][toggle][selected]:not(
+            :is(:state(--pressed), :--pressed)
+          )
+      )
       .base {
       border-radius: ${ButtonSizeToken[size].selectedShapeRound};
     }
-    :host(:not(:state(-connected))[size="${unsafeCSS(size)}"][shape="square"]) .base {
+    :host(:not(:is(:state(--connected), :--connected))[size="${unsafeCSS(size)}"][shape="square"]) .base {
       border-radius: ${ButtonSizeToken[size].shapeSquare};
     }
-    :host(:not(:state(-connected))[size="${unsafeCSS(size)}"][shape="square"][toggle][selected]:not(:state(-pressed)))
+    :host(
+        :not(:is(:state(--connected), :--connected))[size="${unsafeCSS(size)}"][shape="square"][toggle][selected]:not(
+            :is(:state(--pressed), :--pressed)
+          )
+      )
       .base {
       border-radius: var(--_button-shape, ${ButtonSizeToken[size].selectedShapeSquare});
     }
-    :host(:not(:state(-connected))[size="${unsafeCSS(size)}"]:state(-pressed)) .base {
+    :host(:not(:is(:state(--connected), :--connected))[size="${unsafeCSS(size)}"]:is(:state(--pressed), :--pressed))
+      .base {
       border-radius: ${ButtonSizeToken[size].shapePressedMorph};
     }
-    :host(:state(-connected)[size="${unsafeCSS(size)}"][shape="rounded"]) .base {
+    :host(:is(:state(--connected), :--connected)[size="${unsafeCSS(size)}"][shape="rounded"]) .base {
       border-start-start-radius: var(
         --_button-rounded-start-shape,
         var(--_button-shape, ${ButtonSizeToken[size].shapeRound})
@@ -80,16 +90,21 @@ function buttonStyle(size: ButtonSize): CSSResult {
         var(--_button-shape, ${ButtonSizeToken[size].shapeRound})
       );
     }
-    :host(:state(-connected)[size="${unsafeCSS(size)}"][shape="square"]) .base {
+    :host(:is(:state(--connected), :--connected)[size="${unsafeCSS(size)}"][shape="square"]) .base {
       border-start-start-radius: var(--_button-square-start-shape, ${ButtonSizeToken[size].shapeSquare});
       border-end-start-radius: var(--_button-square-start-shape, ${ButtonSizeToken[size].shapeSquare});
       border-start-end-radius: var(--_button-square-end-shape, ${ButtonSizeToken[size].shapeSquare});
       border-end-end-radius: var(--_button-square-end-shape, ${ButtonSizeToken[size].shapeSquare});
     }
-    :host(:state(-connected)[size="${unsafeCSS(size)}"][shape="square"][toggle][selected]:not(:state(-pressed))) .base {
+    :host(
+        :is(:state(--connected), :--connected)[size="${unsafeCSS(size)}"][shape="square"][toggle][selected]:not(
+            :is(:state(--pressed), :--pressed)
+          )
+      )
+      .base {
       border-radius: var(--_button-shape, ${ButtonSizeToken[size].selectedShapeSquare});
     }
-    :host(:state(-connected)[size="${unsafeCSS(size)}"]:state(-pressed)) .base {
+    :host(:is(:state(--connected), :--connected)[size="${unsafeCSS(size)}"]:is(:state(--pressed), :--pressed)) .base {
       border-start-start-radius: var(--_button-start-shape-pressed-morph, ${ButtonSizeToken[size].shapePressedMorph});
       border-end-start-radius: var(--_button-start-shape-pressed-morph, ${ButtonSizeToken[size].shapePressedMorph});
       border-start-end-radius: var(--_button-end-shape-pressed-morph, ${ButtonSizeToken[size].shapePressedMorph});

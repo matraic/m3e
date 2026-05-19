@@ -43,7 +43,7 @@ export function Dirty<T extends Constructor<LitElement & AttachInternalsMixin>>(
 
     /** Whether the user has modified the value of the element. */
     get dirty(): boolean {
-      return hasCustomState(this, "-dirty");
+      return hasCustomState(this, "--dirty");
     }
 
     /** Whether the user has not modified the value of the element. */
@@ -66,12 +66,12 @@ export function Dirty<T extends Constructor<LitElement & AttachInternalsMixin>>(
 
     /** Marks the element as pristine. */
     markAsPristine(): void {
-      deleteCustomState(this, "-dirty");
+      deleteCustomState(this, "--dirty");
     }
 
     /** Marks the element as dirty. */
     markAsDirty(): void {
-      addCustomState(this, "-dirty");
+      addCustomState(this, "--dirty");
     }
   }
 

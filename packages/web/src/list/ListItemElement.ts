@@ -132,31 +132,31 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
         `border-radius ${DesignToken.motion.spring.fastEffects}, background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
       )};
     }
-    :host(:state(-one-line)) {
+    :host(:is(:state(--one-line), :--one-line)) {
       min-height: calc(var(--m3e-list-item-one-line-height, 3.5rem) + ${DesignToken.density.calc(-3)});
     }
-    :host(:state(-one-line)) .base {
+    :host(:is(:state(--one-line), :--one-line)) .base {
       padding-block-start: var(--m3e-list-item-one-line-top-space, 0.5rem);
       padding-block-end: var(--m3e-list-item-one-line-bottom-space, 0.5rem);
     }
-    :host(:state(-two-line)) {
+    :host(:is(:state(--two-line), :--two-line)) {
       min-height: calc(var(--m3e-list-item-two-line-height, 4.5rem) + ${DesignToken.density.calc(-3)});
     }
-    :host(:state(-two-line)) .base {
+    :host(:is(:state(--two-line), :--two-line)) .base {
       padding-block-start: var(--m3e-list-item-two-line-top-space, 0.5rem);
       padding-block-end: var(--m3e-list-item-two-line-bottom-space, 0.5rem);
     }
-    :host(:state(-three-line)) {
+    :host(:is(:state(--three-line), :--three-line)) {
       min-height: calc(var(--m3e-list-item-three-line-height, 5.5rem) + ${DesignToken.density.calc(-3)});
     }
-    :host(:state(-three-line)) .base {
+    :host(:is(:state(--three-line), :--three-line)) .base {
       padding-block-start: var(--m3e-list-item-three-line-top-space, 0.75rem);
       padding-block-end: var(--m3e-list-item-three-line-bottom-space, 0.75rem);
     }
-    :host(:not(:state(-three-line))) .base {
+    :host(:not(:is(:state(--three-line), :--three-line))) .base {
       align-items: center;
     }
-    :host(:state(-three-line)) .base {
+    :host(:is(:state(--three-line), :--three-line)) .base {
       align-items: flex-start;
     }
     :host(:not(:disabled):not([selected])) .base:not(.hover).focus-visible:not(.pressed) {
@@ -230,15 +230,15 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       line-height: var(--m3e-list-item-line-height, ${DesignToken.typescale.standard.body.large.lineHeight});
       letter-spacing: var(--m3e-list-item-tracking, ${DesignToken.typescale.standard.body.large.tracking});
     }
-    :host(:state(-has-leading)) slot[name="leading"],
-    :host(:state(-has-trailing)) slot[name="trailing"] {
+    :host(:is(:state(--has-leading), :--has-leading)) slot[name="leading"],
+    :host(:is(:state(--has-trailing), :--has-trailing)) slot[name="trailing"] {
       display: flex;
       justify-content: center;
     }
-    :host(:not(:state(-has-leading))) slot[name="leading"] {
+    :host(:not(:is(:state(--has-leading), :--has-leading))) slot[name="leading"] {
       display: var(--_list-item-leading-reserved-display, contents);
     }
-    :host(:not(:state(-has-trailing))) slot[name="trailing"] {
+    :host(:not(:is(:state(--has-trailing), :--has-trailing))) slot[name="trailing"] {
       display: var(--_list-item-trailing-reserved-display, contents);
     }
     slot[name="leading"] {
@@ -480,16 +480,16 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
   #updateMultiline(): void {
     const content = this.shadowRoot?.querySelector<HTMLElement>(".content") ?? null;
     const lines = content === null ? 0 : computeLineCount(content);
-    setCustomState(this, "-one-line", lines <= 1);
-    setCustomState(this, "-two-line", lines == 2);
-    setCustomState(this, "-three-line", lines > 2);
+    setCustomState(this, "--one-line", lines <= 1);
+    setCustomState(this, "--two-line", lines == 2);
+    setCustomState(this, "--three-line", lines > 2);
   }
 
   /** @internal */
   protected _handleLeadingSlotChange(e: Event): void {
     const contentType = this.#leadingContentType;
     this.#leadingContentType = this.#getSlotContentType(e.target as HTMLSlotElement);
-    setCustomState(this, "-has-leading", this.#leadingContentType !== undefined);
+    setCustomState(this, "--has-leading", this.#leadingContentType !== undefined);
     if (contentType !== this.#leadingContentType) {
       this.closest<M3eListElement>("m3e-list,m3e-action-list,m3e-selection-list")?.notifyLeadingContentTypeChange(
         contentType,
@@ -502,7 +502,7 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
   protected _handleTrailingSlotChange(e: Event): void {
     const contentType = this.#trailingContentType;
     this.#trailingContentType = this.#getSlotContentType(e.target as HTMLSlotElement);
-    setCustomState(this, "-has-trailing", this.#trailingContentType !== undefined);
+    setCustomState(this, "--has-trailing", this.#trailingContentType !== undefined);
     if (contentType !== this.#trailingContentType) {
       this.closest<M3eListElement>("m3e-list,m3e-action-list,m3e-selection-list")?.notifyTrailingContentTypeChange(
         contentType,

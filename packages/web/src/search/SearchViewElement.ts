@@ -401,14 +401,14 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
 
   /** @private */
   #updateMode(): void {
-    setCustomState(this, "-fullscreen", this.currentMode === "fullscreen");
-    setCustomState(this, "-docked", this.currentMode === "docked");
+    setCustomState(this, "--fullscreen", this.currentMode === "fullscreen");
+    setCustomState(this, "--docked", this.currentMode === "docked");
   }
 
   /** @private */
   #updateClearableState(): void {
     this._clearable = (this.#input?.value ?? "").length > 0;
-    setCustomState(this, "-clearable", this._clearable);
+    setCustomState(this, "--clearable", this._clearable);
   }
 
   /** @private */

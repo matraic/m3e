@@ -126,7 +126,7 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
     .toggle {
       display: var(--_tree-item-toggle-display, none);
     }
-    :host(:not(:state(-with-icon))) .icon {
+    :host(:not(:is(:state(--with-icon), :--with-icon))) .icon {
       display: none;
     }
     .inset {
@@ -135,10 +135,10 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
     :host([open]) .toggle-icon {
       transform: rotate(90deg);
     }
-    :host(:not(:state(-with-items))) .toggle {
+    :host(:not(:is(:state(--with-items), :--with-items))) .toggle {
       visibility: hidden;
     }
-    :host(:not(:state(-with-items))) .group {
+    :host(:not(:is(:state(--with-items), :--with-items))) .group {
       display: none;
     }
     ::slotted([slot="selected-icon"]),
@@ -155,8 +155,8 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
       transition: ${unsafeCSS(`transform var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
         ${DesignToken.motion.easing.standard}`)};
     }
-    :host(:state(-with-open-toggle-icon)[open]) slot[name="toggle-icon"],
-    :host(:state(-with-open-toggle-icon):not([open])) slot[name="open-toggle-icon"] {
+    :host(:is(:state(--with-open-toggle-icon), :--with-open-toggle-icon)[open]) slot[name="toggle-icon"],
+    :host(:is(:state(--with-open-toggle-icon), :--with-open-toggle-icon):not([open])) slot[name="open-toggle-icon"] {
       display: none;
     }
     :host(:not(:disabled)) .base {
@@ -223,8 +223,8 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
         color: CanvasText;
         background-color: Canvas;
       }
-      :host([selected]:not(:state(-multi)):not(:disabled)) slot[name="icon"],
-      :host([selected]:not(:state(-multi)):not(:disabled)) slot[name="label"] {
+      :host([selected]:not(:is(:state(--multi), :--multi)):not(:disabled)) slot[name="icon"],
+      :host([selected]:not(:is(:state(--multi), :--multi)):not(:disabled)) slot[name="label"] {
         color: Highlight;
       }
     }
@@ -467,12 +467,12 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
 
   /** @private */
   #handleOpenToggleIconSlotChange(e: Event): void {
-    setCustomState(this, "-with-open-toggle-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-open-toggle-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
   #handleIconSlotChange(e: Event): void {
-    setCustomState(this, "-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
@@ -492,7 +492,7 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
 
     const hadChildItems = this._hasChildItems;
     this._hasChildItems = this.#items.length > 0;
-    setCustomState(this, "-with-items", this._hasChildItems);
+    setCustomState(this, "--with-items", this._hasChildItems);
 
     if (hadChildItems || this._hasChildItems) {
       if (this._multi && this.#tree?.cascade) {
@@ -520,7 +520,7 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
   /** @private */
   #handleTreeChange(): void {
     this._multi = this.#tree?.multi === true;
-    setCustomState(this, "-multi", this._multi);
+    setCustomState(this, "--multi", this._multi);
   }
 
   /** @private */

@@ -84,7 +84,7 @@ export class M3eNavRailElement extends SuppressInitialAnimation(M3eNavBarElement
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
     }
-    :host(:not(:state(-no-animate))) {
+    :host(:not(:is(:state(--no-animate), :--no-animate))) {
       transition: ${unsafeCSS(`width ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standard}`)};
     }
     .base {
@@ -97,13 +97,13 @@ export class M3eNavRailElement extends SuppressInitialAnimation(M3eNavBarElement
       padding-block-end: var(--m3e-nav-rail-bottom-space, 0.5rem);
       padding-inline: var(--m3e-nav-rail-inline-padding, 1.25rem);
     }
-    :host(:state(-compact)) {
+    :host(:is(:state(--compact), :--compact)) {
       width: var(--m3e-nav-rail-compact-width, 6rem);
     }
-    :host(:not(:state(-compact))) {
+    :host(:not(:is(:state(--compact), :--compact))) {
       width: var(--m3e-nav-rail-expanded-width, 13.75rem);
     }
-    :host(:not(:state(-compact))) {
+    :host(:not(:is(:state(--compact), :--compact))) {
       --m3e-horizontal-nav-item-active-indicator-height: var(--m3e-nav-rail-expanded-item-height, 3.5rem);
       --_nav-item-align-self: stretch;
       --_nav-item-justify-content: flex-start;
@@ -124,7 +124,7 @@ export class M3eNavRailElement extends SuppressInitialAnimation(M3eNavBarElement
       --m3e-fab-lowered-hover-container-elevation: ${DesignToken.elevation.level1};
     }
     @media (prefers-reduced-motion) {
-      :host(:not(:state(-no-animate))) {
+      :host(:not(:is(:state(--no-animate), :--no-animate))) {
         transition: none;
       }
     }
@@ -169,7 +169,7 @@ export class M3eNavRailElement extends SuppressInitialAnimation(M3eNavBarElement
       }
     }
 
-    this.items.forEach((x, i) => setCustomState(x, "-first", i === 0));
+    this.items.forEach((x, i) => setCustomState(x, "--first", i === 0));
 
     super._updateItems();
   }

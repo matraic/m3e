@@ -187,12 +187,12 @@ export class M3eMenuItemElement extends LinkButton(Role(MenuItemElementBase, "me
 
   /** @private */
   #iconSlotChangeHandler(e: Event): void {
-    setCustomState(this, "-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
   #trailingIconSlotChangeHandler(e: Event): void {
-    setCustomState(this, "-with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */

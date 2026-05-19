@@ -160,16 +160,16 @@ export class M3eChipElement extends AttachInternals(LitElement) {
         transparent
       );
     }
-    :host(:state(-with-icon)) .wrapper {
+    :host(:is(:state(--with-icon), :--with-icon)) .wrapper {
       padding-inline-start: var(--m3e-chip-with-icon-padding-start, 0.5rem);
     }
-    :host(:not(:state(-with-icon))) .wrapper {
+    :host(:not(:is(:state(--with-icon), :--with-icon))) .wrapper {
       padding-inline-start: var(--m3e-chip-padding-start, 1rem);
     }
-    :host(:state(-with-trailing-icon)) .wrapper {
+    :host(:is(:state(--with-trailing-icon), :--with-trailing-icon)) .wrapper {
       padding-inline-end: var(--m3e-chip-with-icon-padding-end, 0.5rem);
     }
-    :host(:not(:state(-with-trailing-icon))) .wrapper {
+    :host(:not(:is(:state(--with-trailing-icon), :--with-trailing-icon))) .wrapper {
       padding-inline-end: var(--m3e-chip-padding-end, 1rem);
     }
     ::slotted([slot="icon"]),
@@ -332,12 +332,12 @@ export class M3eChipElement extends AttachInternals(LitElement) {
 
   /** @private */
   #handleIconSlotChange(e: Event): void {
-    setCustomState(this, "-with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
   #handleTrailingIconSlotChange(e: Event): void {
-    setCustomState(this, "-with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setCustomState(this, "--with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
