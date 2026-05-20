@@ -26,6 +26,7 @@ window.addEventListener("DOMContentLoaded", () => {
     if (menuItem) {
       menuItem.selected = true;
     }
+    frame.removeAttribute("hidden");
   });
 
   // Only allow "[segment/]*file.html" paths, no suspicious characters

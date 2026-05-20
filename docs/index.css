@@ -26,6 +26,9 @@ main {
   width: 100%;
   border: none;
 }
+.docs-frame[hidden] {
+  visibility: hidden;
+}
 #settings-drawer {
   display: flex;
   flex-direction: column;
