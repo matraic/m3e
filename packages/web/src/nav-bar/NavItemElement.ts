@@ -166,7 +166,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
     }
     :host(:not(:is(:state(--no-animate), :--no-animate))) .base {
       transition: ${unsafeCSS(
-        `margin-top ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`,
+        `margin-top ${DesignToken.motion.duration.short1} ${DesignToken.motion.easing.standard}`,
       )};
     }
     .icon {
@@ -185,7 +185,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
     }
     :host(:not(:is(:state(--no-animate), :--no-animate))) .state-layer,
     :host(:not(:is(:state(--no-animate), :--no-animate))) .ripple {
-      transition: ${unsafeCSS(`height ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
+      transition: ${unsafeCSS(`height ${DesignToken.motion.duration.short1} ${DesignToken.motion.easing.standard}`)};
     }
     :host(:not([selected])) slot[name="selected-icon"],
     :host(:not(:is(:state(--with-selected-icon), :--with-selected-icon))) slot[name="selected-icon"],
@@ -269,7 +269,6 @@ export class M3eNavItemElement extends ReconnectedCallback(
     :host([orientation="vertical"]) .icon-wrapper {
       width: var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem);
     }
-
     :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .state-layer,
     :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .ripple {
       animation: collapse ${DesignToken.motion.duration.medium1};
@@ -342,7 +341,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
     }
     @keyframes slide-down {
       from {
-        transform: translateY(calc(0px - var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem)));
+        transform: translateY(-4px);
       }
       to {
         transform: translateY(0);
@@ -350,17 +349,17 @@ export class M3eNavItemElement extends ReconnectedCallback(
     }
     @keyframes slide-up {
       from {
-        transform: translateY(var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem));
+        transform: translateY(4px);
       }
       to {
         transform: translateY(0);
       }
     }
     :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"]) .label {
-      animation: horizontal-fade-in ${DesignToken.motion.duration.short2};
+      animation: horizontal-fade-in ${DesignToken.motion.duration.medium1};
     }
     :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .label {
-      animation: vertical-fade-in ${DesignToken.motion.duration.short2};
+      animation: vertical-fade-in ${DesignToken.motion.duration.medium1};
     }
     @keyframes horizontal-fade-in {
       from {
