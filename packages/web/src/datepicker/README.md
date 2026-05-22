@@ -24,6 +24,7 @@ This section details the attributes, events, and CSS custom properties available
 | `start-at`                  | `string`                            |                       | A date specifying the period (month or year) to start the calendar in.                |
 | `min-date`                  | `string`                            |                       | The minimum date that can be selected.                                                |
 | `max-date`                  | `string`                            |                       | The maximum date that can be selected.                                                |
+| `range`                     | `boolean`                           | `false`               | Whether a range of dates can be selected.                                             |
 | `range-start`               | `string`                            |                       | Start of a date range.                                                                |
 | `range-end`                 | `string`                            |                       | End of a date range.                                                                  |
 | `start-view`                | `"month" \| "year" \| "multi-year"` | `"month"`             | The initial view used to select a date.                                               |

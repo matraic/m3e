@@ -53,6 +53,7 @@ import { DatepickerVariant } from "./DatepickerVariant";
  * @attr date - The selected date.
  * @attr max-date - The maximum date that can be selected.
  * @attr min-date - The minimum date that can be selected.
+ * @attr range - Whether a range of dates can be selected.
  * @attr range-end - End of a date range.
  * @attr range-start - Start of a date range.
  * @attr start-at - A date specifying the period (month or year) to start the calendar in.
@@ -331,6 +332,12 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
   @property({ attribute: "max-date", converter: dateConverter }) maxDate: Date | null = null;
 
   /**
+   * Whether a range of dates can be selected.
+   * @default false
+   */
+  @property({ type: Boolean }) range = false;
+
+  /**
    * Start of a date range.
    * @default null
    */
@@ -566,18 +573,34 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
   #renderHeader(): unknown {
     if (this.currentVariant === "docked") return nothing;
 
+    const rangeStart = this._rangeStart ?? this.rangeStart;
+    const rangeEnd = this._rangeStart ? this._rangeEnd : (this._rangeEnd ?? this.rangeEnd);
     const selectedDate = this._date ?? this.date;
 
     return html`<div class="supporting-text">${this.label}</div>
-      <div class="headline">
-        ${selectedDate
-          ? new Intl.DateTimeFormat(navigator.language, {
-              weekday: "short",
+      ${rangeStart
+        ? html`<div class="headline">
+            ${new Intl.DateTimeFormat(navigator.language, {
               month: "short",
               day: "numeric",
-            }).format(selectedDate)
-          : "––"}
-      </div>
+            }).format(rangeStart) +
+            " – " +
+            (rangeEnd
+              ? new Intl.DateTimeFormat(navigator.language, {
+                  month: "short",
+                  day: "numeric",
+                }).format(rangeEnd)
+              : "")}
+          </div>`
+        : html`<div class="headline">
+            ${selectedDate
+              ? new Intl.DateTimeFormat(navigator.language, {
+                  weekday: "short",
+                  month: "short",
+                  day: "numeric",
+                }).format(selectedDate)
+              : "––"}
+          </div>`}
       <div class="divider"></div>`;
   }
 
@@ -587,6 +610,9 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
 
     if (["date", "rangeStart", "rangeEnd"].some((x) => changedProperties.has(<keyof M3eDatepickerElement>x))) {
       this.#clearSelectionState();
+    }
+    if (changedProperties.has("rangeStart") && this.rangeStart) {
+      this.range = true;
     }
     if (changedProperties.has("rangeStart") && this.rangeStart && !changedProperties.has("date")) {
       this.date = new Date(this.rangeStart);
@@ -628,6 +654,11 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
     this._date = this._calendar.date;
     this._rangeStart = this._calendar.rangeStart;
     this._rangeEnd = this._calendar.rangeEnd;
+
+    if (this.range && !this._rangeStart && this._date) {
+      this._rangeStart = new Date(this._date);
+      this._calendar.rangeStart = this._rangeStart;
+    }
   }
 
   /** @private */
