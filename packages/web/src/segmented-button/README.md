@@ -41,10 +41,11 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🔔 Events
 
-| Event    | Description                                          |
-| -------- | ---------------------------------------------------- |
-| `input`  | Emitted when the checked state of a segment changes. |
-| `change` | Emitted when the checked state of a segment changes. |
+| Event         | Description                                               |
+| ------------- | --------------------------------------------------------- |
+| `beforeinput` | Dispatched before the checked state of a segment changes. |
+| `input`       | Dispatched when the checked state of a segment changes.   |
+| `change`      | Dispatched when the checked state of a segment changes.   |
 
 #### 🧩 Slots
 
@@ -73,10 +74,11 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🔔 Events
 
-| Event    | Description                             |
-| -------- | --------------------------------------- |
-| `input`  | Emitted when the checked state changes. |
-| `change` | Emitted when the checked state changes. |
+| Event         | Description                                  |
+| ------------- | -------------------------------------------- |
+| `beforeinput` | Dispatched before the checked state changes. |
+| `input`       | Dispatched when the checked state changes.   |
+| `change`      | Dispatched when the checked state changes.   |
 
 #### 🧩 Slots
 

@@ -22,6 +22,7 @@ export const M3eStep = createComponent({
   elementClass: M3eStepElement,
   react: React,
   events: {
+    onBeforeInput: "beforeinput",
     onInput: "input",
     onChange: "change",
     onClick: "click",

@@ -44,10 +44,12 @@ This section details the attributes, events and CSS custom properties available 
 
 #### 🔔 Events
 
-| Event    | Description                             |
-| -------- | --------------------------------------- |
-| `input`  | Emitted when the checked state changes. |
-| `change` | Emitted when the checked state changes. |
+| Event         | Description                                                                   |
+| ------------- | ----------------------------------------------------------------------------- |
+| `beforeinput` | Emitted before the checked state changes.                                     |
+| `input`       | Emitted when the checked state changes.                                       |
+| `invalid`     | Emitted when a form is submitted and the element fails constraint validation. |
+| `change`      | Emitted when the checked state changes.                                       |
 
 ### 🎛️ CSS Custom Properties
 

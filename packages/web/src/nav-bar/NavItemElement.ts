@@ -63,9 +63,10 @@ import { NavItemOrientation } from "./NavItemOrientation";
  * @attr selected - A value indicating whether the element is selected.
  * @attr target - The target of the link button.
  *
- * @fires input - Emitted when the selected state changes.
- * @fires change - Emitted when the selected state changes.
- * @fires click - Emitted when the element is clicked.
+ * @fires beforeinput - Dispatched before the selected state changes.
+ * @fires input - Dispatched when the selected state changes.
+ * @fires change - Dispatched when the selected state changes.
+ * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-nav-item-label-text-font-size - Font size for the label text.
  * @cssprop --m3e-nav-item-label-text-font-weight - Font weight for the label text.
@@ -574,12 +575,12 @@ export class M3eNavItemElement extends ReconnectedCallback(
   #handleClick(e: Event): void {
     if (e.defaultPrevented) return;
 
-    this.selected = true;
-    if (this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
+    if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
+      this.selected = true;
       this.navBar?.[selectionManager].notifySelectionChange(this);
+
+      this.dispatchEvent(new Event("input", { bubbles: true }));
       this.dispatchEvent(new Event("change", { bubbles: true }));
-    } else {
-      this.selected = false;
     }
   }
 

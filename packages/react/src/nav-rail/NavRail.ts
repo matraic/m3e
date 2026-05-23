@@ -22,6 +22,8 @@ export const M3eNavRail = createComponent({
   elementClass: M3eNavRailElement,
   react: React,
   events: {
+    onBeforeInput: "beforeinput",
+    onInput: "input",
     onChange: "change",
   },
 });

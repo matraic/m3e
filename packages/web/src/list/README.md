@@ -267,11 +267,12 @@ This section details the attributes, slots, events, and CSS custom properties av
 
 #### 📡 Events
 
-| Event    | Description                              |
-| -------- | ---------------------------------------- |
-| `input`  | Emitted when the selected state changes. |
-| `change` | Emitted when the selected state changes. |
-| `click`  | Emitted when the element is clicked.     |
+| Event         | Description                                   |
+| ------------- | --------------------------------------------- |
+| `beforeinput` | Dispatched before the selected state changes. |
+| `input`       | Dispatched when the selected state changes.   |
+| `change`      | Dispatched when the selected state changes.   |
+| `click`       | Dispatched when the element is clicked.       |
 
 #### 🎛️ CSS Custom Properties
 
@@ -397,10 +398,11 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 📡 Events
 
-| Event    | Description                                           |
-| -------- | ----------------------------------------------------- |
-| `input`  | Emitted when the selected state of an option changes. |
-| `change` | Emitted when the selected state of an option changes. |
+| Event         | Description                                                |
+| ------------- | ---------------------------------------------------------- |
+| `beforeinput` | Dispatched before the selected state of an option changes. |
+| `input`       | Dispatched when the selected state of an option changes.   |
+| `change`      | Dispatched when the selected state of an option changes.   |
 
 #### 🎛️ CSS Custom Properties
 

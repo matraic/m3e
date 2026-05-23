@@ -22,6 +22,7 @@ export const M3eSwitch = createComponent({
   elementClass: M3eSwitchElement,
   react: React,
   events: {
+    onBeforeInput: "beforeinput",
     onInput: "input",
     onChange: "change",
     onClick: "click",

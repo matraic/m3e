@@ -46,7 +46,9 @@ import { M3eNavBarElement, NavItemOrientation } from "@m3e/web/nav-bar";
  *
  * @attr mode - The mode in which items in the rail are presented.
  *
- * @fires change - Emitted when the selected state of an item changes.
+ * @fires beforeinput - Dispatched before the selected state of an item changes.
+ * @fires input - Dispatched when the selected state of an item changes.
+ * @fires change - Dispatched when the selected state of an item changes.
  *
  * @cssprop --m3e-nav-rail-top-space - Top block padding for the nav rail.
  * @cssprop --m3e-nav-rail-bottom-space - Bottom block padding for the nav rail.

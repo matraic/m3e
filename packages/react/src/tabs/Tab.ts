@@ -22,6 +22,7 @@ export const M3eTab = createComponent({
   elementClass: M3eTabElement,
   react: React,
   events: {
+    onBeforeInput: "beforeinput",
     onInput: "input",
     onChange: "change",
     onClick: "click",

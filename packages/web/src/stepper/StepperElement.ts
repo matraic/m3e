@@ -81,6 +81,8 @@ import { StepperOrientation } from "./StepperOrientation";
  * @slot step - Renders a step.
  * @slot panel - Renders a panel.
  *
+ * @fires beforeinput - Dispatched before the selected state of a step changes.
+ * @fires input - Dispatched when the selected state of a step changes.
  * @fires change - Emitted when the selected step changes.
  *
  * @cssprop --m3e-step-divider-thickness - Thickness of the divider line between steps.
@@ -324,7 +326,17 @@ export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitEl
    * @param index The zero-based index of the step to which to move.
    * @returns {boolean} Whether the stepper moved to the specified `index`.
    */
+
   moveTo(index: number): boolean {
+    if (this._moveTo(index)) {
+      this.dispatchEvent(new Event("change", { bubbles: true }));
+      return true;
+    }
+    return false;
+  }
+
+  /** @internal */
+  _moveTo(index: number): boolean {
     const selectedStep = this.selectedStep;
     if (selectedStep && selectedStep.index === index) {
       return true;
@@ -358,12 +370,10 @@ export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitEl
 
       this._selectedIndex = index;
       this[selectionManager].select(this.selectedStep);
-      this.dispatchEvent(new Event("change", { bubbles: true }));
       return true;
     } else {
       if (selectedStep) {
         this[selectionManager].deselect(selectedStep);
-        this.dispatchEvent(new Event("change", { bubbles: true }));
       }
       return false;
     }
@@ -458,7 +468,7 @@ export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitEl
   /** @private */
   #handleChange(e: Event): void {
     e.stopPropagation();
-    // Note: change event emitted from moveTo.
+    this.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
   /** @private */

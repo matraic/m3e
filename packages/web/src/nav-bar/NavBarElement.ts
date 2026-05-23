@@ -35,7 +35,9 @@ import { NavBarMode } from "./NavBarMode";
  *
  * @attr mode - The mode in which items in the bar are presented.
  *
- * @fires change - Emitted when the selected state of an item changes.
+ * @fires beforeinput - Dispatched before the selected state of an item changes.
+ * @fires input - Dispatched when the selected state of an item changes.
+ * @fires change - Dispatched when the selected state of an item changes.
  *
  * @cssprop --m3e-nav-bar-height - Height of the navigation bar.
  * @cssprop --m3e-nav-bar-container-color - Background color of the navigation bar container.

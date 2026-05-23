@@ -38,8 +38,9 @@ import { M3eListOptionElement } from "./ListOptionElement";
  * @attr multi - Whether multiple items can be selected.
  * @attr variant - The appearance variant of the list.
  *
- * @fires input - Emitted when the selected state of an option changes.
- * @fires change - Emitted when the selected state of an option changes.
+ * @fires beforeinput - Dispatched before the selected state of an option changes.
+ * @fires input - Dispatched when the selected state of an option changes.
+ * @fires change - Dispatched when the selected state of an option changes.
  *
  * @cssprop --m3e-list-divider-inset-start-size - Start inset for dividers within the list.
  * @cssprop --m3e-list-divider-inset-end-size - End inset for dividers within the list.

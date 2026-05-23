@@ -78,8 +78,9 @@ import { SplitPaneOrientation } from "./SplitPaneOrientation";
  * @attr value - A fractional value, between 0 and 100, indicating the size of the start pane.
  * @attr wrap-detents - Whether cycling through detents will wrap.
  *
- * @fires input - Fired continuously while the user adjusts the drag handle.
- * @fires change - Fired when the user finishes adjusting the drag handle.
+ * @fires beforeinput - Dispatched continuously before the user adjusts the drag handle.
+ * @fires input - Dispatched continuously while the user adjusts the drag handle.
+ * @fires change - Dispatched when the user finishes adjusting the drag handle.
  *
  * @cssprop --m3e-split-pane-drag-handle-hover-color - Color used for the drag handle hover state.
  * @cssprop --m3e-split-pane-drag-handle-hover-opacity - Opacity used for the drag handle hover state.
@@ -627,7 +628,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       }
 
       if (this.#valueChanged) {
-        this.dispatchEvent(new Event("change", { bubbles: true, composed: true }));
+        this.dispatchEvent(new Event("change", { bubbles: true }));
         this.#valueChanged = false;
       }
     }
@@ -774,22 +775,20 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
   #changeValue(value: number, emitChange = true, allowOvershoot = false): boolean {
     this.#clearSnapAnimation();
 
-    if (!allowOvershoot) {
-      value = Math.max(this.min, Math.min(this.max, value));
-    }
+    if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
+      if (!allowOvershoot) {
+        value = Math.max(this.min, Math.min(this.max, value));
+      }
 
-    if (value != this.value) {
-      const prev = this.value;
-      this.value = value;
-
-      if (this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
+      if (value != this.value) {
+        this.value = value;
         this._base.style.setProperty("--_split-pane-value", `${this.value}%`);
+
+        this.dispatchEvent(new Event("input", { bubbles: true }));
         if (emitChange) {
-          this.dispatchEvent(new Event("change", { bubbles: true, composed: true }));
+          this.dispatchEvent(new Event("change", { bubbles: true }));
         }
         return true;
-      } else {
-        this.value = prev;
       }
     }
     return false;

@@ -84,6 +84,7 @@ import { IconButtonWidth } from "./IconButtonWidth";
  * @attr variant - The appearance variant of the button.
  * @attr width - The width of the button.
  *
+ * @fires beforeinput - Dispatched before a toggle button's selected state changes.
  * @fires input - Dispatched when a toggle button's selected state changes.
  * @fires change - Dispatched when a toggle button's selected state changes.
  * @fires click - Emitted when the element is clicked.
@@ -563,15 +564,11 @@ export class M3eIconButtonElement extends KeyboardClick(
     }
 
     if (this.toggle && !e.defaultPrevented) {
-      this.selected = !this.selected;
-
-      // Dispatch an input event and if not prevented, dispatch a change event.
-      // Otherwise, reset the selected state.
-
-      if (this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
-        this.dispatchEvent(new Event("change", { bubbles: true }));
-      } else {
+      if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
         this.selected = !this.selected;
+
+        this.dispatchEvent(new Event("input", { bubbles: true }));
+        this.dispatchEvent(new Event("change", { bubbles: true }));
       }
     }
   }

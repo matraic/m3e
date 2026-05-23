@@ -36,9 +36,11 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🔔 Events
 
-| Event    | Description                                        |
-| -------- | -------------------------------------------------- |
-| `change` | Emitted when the selected state of an item changes |
+| Event         | Description                                              |
+| ------------- | -------------------------------------------------------- |
+| `beforeinput` | Dispatched before the selected state of an item changes. |
+| `input`       | Dispatched when the selected state of an item changes.   |
+| `change`      | Dispatched when the selected state of an item changes    |
 
 #### 🧩 Slots
 
@@ -73,10 +75,11 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🔔 Events
 
-| Event    | Description                              |
-| -------- | ---------------------------------------- |
-| `input`  | Emitted when the selected state changes. |
-| `change` | Emitted when the selected state changes. |
+| Event         | Description                                   |
+| ------------- | --------------------------------------------- |
+| `beforeinput` | Dispatched before the selected state changes. |
+| `input`       | Dispatched when the selected state changes.   |
+| `change`      | Dispatched when the selected state changes.   |
 
 #### 🧩 Slots
 

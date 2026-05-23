@@ -58,9 +58,10 @@ import { SwitchIcons } from "./SwitchIcons";
  * @attr name - The name that identifies the element when submitting the associated form.
  * @attr value - A string representing the value of the switch.
  *
- * @fires input - Emitted when the checked state changes.
- * @fires change - Emitted when the checked state changes.
- * @fires click - Emitted when the element is clicked.
+ * @fires beforeinput - Dispatched before the checked state changes.
+ * @fires input - Dispatched when the checked state changes.
+ * @fires change - Dispatched when the checked state changes.
+ * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-switch-selected-icon-color - Color of the icon when the switch is selected.
  * @cssprop --m3e-switch-selected-icon-size - Size of the icon in the selected state.
@@ -253,11 +254,12 @@ export class M3eSwitchElement extends Labelled(
   /** @private */
   #handleClick(e: Event): void {
     if (e.defaultPrevented) return;
-    this.checked = !this.checked;
-    if (this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
-      this.dispatchEvent(new Event("change", { bubbles: true }));
-    } else {
+
+    if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
       this.checked = !this.checked;
+
+      this.dispatchEvent(new Event("input", { bubbles: true }));
+      this.dispatchEvent(new Event("change", { bubbles: true }));
     }
 
     // Prevent default avoids double-click in FireFox.

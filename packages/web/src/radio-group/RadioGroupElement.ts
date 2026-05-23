@@ -52,7 +52,9 @@ import { M3eRadioElement } from "./RadioElement";
  * @attr name - The name that identifies the element when submitting the associated form.
  * @attr required - Whether the element is required.
  *
- * @fires change - Emitted when the checked state of a radio button changes.
+ * @fires beforeinput - Dispatched before the checked state of a radio button changes.
+ * @fires input - Dispatched when the checked state of a radio button changes.
+ * @fires change - Dispatched when the checked state of a radio button changes.
  */
 @customElement("m3e-radio-group")
 export class M3eRadioGroupElement extends Labelled(

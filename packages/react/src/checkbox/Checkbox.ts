@@ -22,6 +22,7 @@ export const M3eCheckbox = createComponent({
   elementClass: M3eCheckboxElement,
   react: React,
   events: {
+    onBeforeInput: "beforeinput",
     onInput: "input",
     onInvalid: "invalid",
     onChange: "change",

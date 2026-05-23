@@ -56,6 +56,14 @@ This section details the attributes, slots and CSS custom properties available f
 | _(default)_ | Renders the icon of the button.         |
 | `selected`  | Renders an icon when selected (toggle). |
 
+### 🔔 Events
+
+| Event         | Description                                                 |
+| ------------- | ----------------------------------------------------------- |
+| `beforeinput` | Dispatched before a toggle button's selected state changes. |
+| `input`       | Dispatched when a toggle button's selected state changes.   |
+| `change`      | Dispatched when a toggle button's selected state changes.   |
+
 ### 🎛️ CSS Custom Properties
 
 #### 🧱 Size Properties

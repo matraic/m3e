@@ -55,6 +55,14 @@ This section details the attributes, slots and CSS custom properties available f
 | `selected`      | Renders label when toggle button is selected. |
 | `selected-icon` | Renders icon before label when selected.      |
 
+### 🔔 Events
+
+| Event         | Description                                                 |
+| ------------- | ----------------------------------------------------------- |
+| `beforeinput` | Dispatched before a toggle button's selected state changes. |
+| `input`       | Dispatched when a toggle button's selected state changes.   |
+| `change`      | Dispatched when a toggle button's selected state changes.   |
+
 ### 🎛️ CSS Custom Properties
 
 #### 🧱 Size Properties

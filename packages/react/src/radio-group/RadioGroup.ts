@@ -22,6 +22,8 @@ export const M3eRadioGroup = createComponent({
   elementClass: M3eRadioGroupElement,
   react: React,
   events: {
+    onBeforeInput: "beforeinput",
+    onInput: "input",
     onChange: "change",
   },
 });

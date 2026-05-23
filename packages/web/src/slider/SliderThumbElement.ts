@@ -46,9 +46,10 @@ import {
  * @attr name - The name that identifies the element when submitting the associated form.
  * @attr value - The value of the thumb.
  *
- * @fires input - Emitted when the value changes.
- * @fires change - Emitted when the value changes.
- * @fires click - Emitted when the element is clicked.
+ * @fires beforeinput - Dispatched before the value changes.
+ * @fires input - Dispatched when the value changes.
+ * @fires change - Dispatched when the value changes.
+ * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-slider-thumb-width - Width of the slider thumb.
  * @cssprop --m3e-slider-thumb-padding - Horizontal padding around the thumb.

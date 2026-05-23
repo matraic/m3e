@@ -337,10 +337,11 @@ This section details the attributes, events, slots, and CSS custom properties av
 
 #### 🔔 Events
 
-| Event    | Description                              |
-| -------- | ---------------------------------------- |
-| `input`  | Emitted when the selected state changes. |
-| `change` | Emitted when the selected state changes. |
+| Event         | Description                                   |
+| ------------- | --------------------------------------------- |
+| `beforeinput` | Dispatched before the selected state changes. |
+| `input`       | Dispatched when the selected state changes.   |
+| `change`      | Dispatched when the selected state changes.   |
 
 #### 🎛️ CSS Custom Properties
 
@@ -406,10 +407,11 @@ This section details the attributes, events, slots, and CSS custom properties av
 
 #### 🔔 Events
 
-| Event    | Description                                        |
-| -------- | -------------------------------------------------- |
-| `input`  | Emitted when the selected state of a chip changes. |
-| `change` | Emitted when the selected state of a chip changes. |
+| Event         | Description                                             |
+| ------------- | ------------------------------------------------------- |
+| `beforeinput` | Dispatched before the selected state of a chip changes. |
+| `input`       | Dispatched when the selected state of a chip changes.   |
+| `change`      | Dispatched when the selected state of a chip changes.   |
 
 #### 🧩 Slots
 

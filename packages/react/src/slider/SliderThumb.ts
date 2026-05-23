@@ -22,6 +22,7 @@ export const M3eSliderThumb = createComponent({
   elementClass: M3eSliderThumbElement,
   react: React,
   events: {
+    onBeforeInput: "beforeinput",
     onInput: "input",
     onChange: "change",
     onClick: "click",

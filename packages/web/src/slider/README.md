@@ -50,10 +50,11 @@ This section details the attributes, events and CSS custom properties available 
 
 #### 🔔 Events
 
-| Event    | Description                     |
-| -------- | ------------------------------- |
-| `input`  | Emitted when the value changes. |
-| `change` | Emitted when the value changes. |
+| Event         | Description                                     |
+| ------------- | ----------------------------------------------- |
+| `beforeinput` | Dispatched before the value of a thumb changes. |
+| `input`       | Dispatched when the value of a thumb changes.   |
+| `change`      | Dispatched when the value of a thumb changes.   |
 
 #### 🎛️ CSS Custom Properties
 
@@ -108,10 +109,11 @@ This section details the attributes, events and CSS custom properties available 
 
 #### 🔔 Events
 
-| Event    | Description                     |
-| -------- | ------------------------------- |
-| `input`  | Emitted when the value changes. |
-| `change` | Emitted when the value changes. |
+| Event         | Description                          |
+| ------------- | ------------------------------------ |
+| `beforeinput` | Dispatched before the value changes. |
+| `input`       | Dispatched when the value changes.   |
+| `change`      | Dispatched when the value changes.   |
 
 #### 🎛️ CSS Custom Properties
 

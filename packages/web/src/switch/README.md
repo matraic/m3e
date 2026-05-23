@@ -41,10 +41,11 @@ This section details the attributes, events and CSS custom properties available 
 
 #### 🔔 Events
 
-| Event    | Description                             |
-| -------- | --------------------------------------- |
-| `input`  | Emitted when the checked state changes. |
-| `change` | Emitted when the checked state changes. |
+| Event         | Description                                  |
+| ------------- | -------------------------------------------- |
+| `beforeinput` | Dispatched before the checked state changes. |
+| `input`       | Dispatched when the checked state changes.   |
+| `change`      | Dispatched when the checked state changes.   |
 
 ### 🎛️ CSS Custom Properties
 

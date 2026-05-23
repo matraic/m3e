@@ -22,6 +22,7 @@ export const M3eFilterChipSet = createComponent({
   elementClass: M3eFilterChipSetElement,
   react: React,
   events: {
+    onBeforeInput: "beforeinput",
     onInput: "input",
     onChange: "change",
   },

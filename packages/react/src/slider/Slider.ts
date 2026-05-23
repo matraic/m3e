@@ -21,4 +21,9 @@ export const M3eSlider = createComponent({
   tagName: "m3e-slider",
   elementClass: M3eSliderElement,
   react: React,
+  events: {
+    onBeforeInput: "beforeinput",
+    onInput: "input",
+    onChange: "change",
+  },
 });

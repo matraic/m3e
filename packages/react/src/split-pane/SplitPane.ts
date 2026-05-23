@@ -22,6 +22,7 @@ export const M3eSplitPane = createComponent({
   elementClass: M3eSplitPaneElement,
   react: React,
   events: {
+    onBeforeInput: "beforeinput",
     onInput: "input",
     onChange: "change",
   },

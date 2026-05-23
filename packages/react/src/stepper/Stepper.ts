@@ -22,6 +22,8 @@ export const M3eStepper = createComponent({
   elementClass: M3eStepperElement,
   react: React,
   events: {
+    onBeforeInput: "beforeinput",
+    onInput: "input",
     onChange: "change",
   },
 });

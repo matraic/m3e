@@ -44,9 +44,10 @@ import { M3eListItemElement } from "./ListItemElement";
  * @attr disabled - Whether the element is disabled.
  * @attr selected - Whether the element is selected.
  *
- * @fires input - Emitted when the selected state changes.
- * @fires change - Emitted when the selected state changes.
- * @fires click - Emitted when the element is clicked.
+ * @fires beforeinput - Dispatched before the selected state changes.
+ * @fires input - Dispatched when the selected state changes.
+ * @fires change - Dispatched when the selected state changes.
+ * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-list-item-between-space - Horizontal gap between elements.
  * @cssprop --m3e-list-item-padding-inline - Horizontal padding for the list item.
@@ -320,13 +321,12 @@ export class M3eListOptionElement extends KeyboardClick(
     if (e.defaultPrevented || !selectionList) return;
 
     if (selectionList.multi || !this.selected) {
-      const selected = this.selected;
-      this.selected = !this.selected;
-      if (this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
+      if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
+        this.selected = !this.selected;
         selectionList[selectionManager].notifySelectionChange(this);
+
+        this.dispatchEvent(new Event("input", { bubbles: true }));
         this.dispatchEvent(new Event("change", { bubbles: true }));
-      } else {
-        this.selected = selected;
       }
     }
   }

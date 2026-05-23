@@ -57,9 +57,10 @@ import { selectionManager } from "@m3e/web/core/a11y";
  * @attr required - Whether the element is required.
  * @attr value - A string representing the value of the radio.
  *
- * @fires input - Emitted when the checked state changes.
- * @fires change - Emitted when the checked state changes.
- * @fires click - Emitted when the element is clicked.
+ * @fires beforeinput - Dispatched before the checked state changes.
+ * @fires input - Dispatched when the checked state changes.
+ * @fires change - Dispatched when the checked state changes.
+ * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-radio-container-size - Base size of the radio button container.
  * @cssprop --m3e-radio-icon-size - Size of the radio icon inside the wrapper.
@@ -273,12 +274,13 @@ export class M3eRadioElement extends Labelled(
   /** @private */
   #handleClick(e: Event): void {
     if (e.defaultPrevented || this.checked || this.disabled) return;
-    this.checked = true;
-    if (this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
+
+    if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
+      this.checked = true;
       this.#notifySelectionChange();
+
+      this.dispatchEvent(new Event("input", { bubbles: true }));
       this.dispatchEvent(new Event("change", { bubbles: true }));
-    } else {
-      this.checked = false;
     }
 
     // Prevent default avoids double-click in FireFox.

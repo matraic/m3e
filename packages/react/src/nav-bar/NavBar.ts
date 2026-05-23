@@ -22,6 +22,8 @@ export const M3eNavBar = createComponent({
   elementClass: M3eNavBarElement,
   react: React,
   events: {
+    onBeforeInput: "beforeinput",
+    onInput: "input",
     onChange: "change",
   },
 });

@@ -59,6 +59,7 @@ import {
  * @attr required - Whether the element is required.
  * @attr value - A string representing the value of the checkbox.
  *
+ * @fires beforeinput - Dispatched before the checked state changes.
  * @fires input - Emitted when the checked state changes.
  * @fires invalid - Emitted when a form is submitted and the element fails constraint validation.
  * @fires change - Emitted when the checked state changes.
@@ -423,12 +424,12 @@ export class M3eCheckboxElement extends Labelled(
   #handleClick(e: Event): void {
     if (e.defaultPrevented) return;
 
-    this.checked = !this.checked;
-    if (this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
-      this.indeterminate = false;
-      this.dispatchEvent(new Event("change", { bubbles: true }));
-    } else {
+    if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
       this.checked = !this.checked;
+      this.indeterminate = false;
+
+      this.dispatchEvent(new Event("input", { bubbles: true }));
+      this.dispatchEvent(new Event("change", { bubbles: true }));
     }
 
     // Prevent default avoids double-click in FireFox.

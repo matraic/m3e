@@ -22,6 +22,7 @@ export const M3eRadio = createComponent({
   elementClass: M3eRadioElement,
   react: React,
   events: {
+    onBeforeInput: "beforeinput",
     onInput: "input",
     onChange: "change",
     onClick: "click",

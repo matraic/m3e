@@ -49,9 +49,10 @@ import { M3eChipElement } from "./ChipElement";
  * @attr value - A string representing the value of the chip.
  * @attr variant - The appearance variant of the chip.
  *
- * @fires input - Emitted when the selected state changes.
- * @fires change - Emitted when the selected state changes.
- * @fires click - Emitted when the element is clicked.
+ * @fires beforeinput - Dispatched before the selected state changes.
+ * @fires input - Dispatched when the selected state changes.
+ * @fires change - Dispatched when the selected state changes.
+ * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-chip-container-shape - Border radius of the chip container.
  * @cssprop --m3e-chip-container-height - Base height of the chip container before density adjustment.
@@ -250,13 +251,12 @@ export class M3eFilterChipElement extends Selected(
   #handleClick(e: Event): void {
     if (e.defaultPrevented) return;
 
-    const selected = this.selected;
-    this.selected = !this.selected;
-    if (this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
+    if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
+      this.selected = !this.selected;
       this.closest("m3e-filter-chip-set")?.[selectionManager].notifySelectionChange(this);
+
+      this.dispatchEvent(new Event("input", { bubbles: true }));
       this.dispatchEvent(new Event("change", { bubbles: true }));
-    } else {
-      this.selected = selected;
     }
   }
 }

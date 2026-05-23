@@ -73,8 +73,9 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * @attr panel-class - Class or list of classes to be applied to the select's overlay panel.
  * @attr required - Whether the element is required.
  *
- * @fires input - Emitted when the selected state changes.
- * @fires change - Emitted when the selected state changes.
+ * @fires beforeinput - Dispatched before the selected state changes.
+ * @fires input - Dispatched when the selected state changes.
+ * @fires change - Dispatched when the selected state changes.
  *
  * @cssprop --m3e-form-field-font-size - The font size of the select control.
  * @cssprop --m3e-form-field-font-weight - The font weight of the select control.
@@ -671,10 +672,10 @@ export class M3eSelectElement
     const selected = this.multi ? !option.selected : true;
     if (option.selected === selected) return;
 
-    option.selected = selected;
-    this.#updateSelectionState(option);
+    if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
+      option.selected = selected;
+      this.#updateSelectionState(option);
 
-    if (this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
       if (!this.multi) {
         this.#selected
           .filter((x) => x !== option)
@@ -686,10 +687,9 @@ export class M3eSelectElement
 
       this.requestUpdate();
       this.#formField?.notifyControlStateChange();
+
+      this.dispatchEvent(new Event("input", { bubbles: true }));
       this.dispatchEvent(new Event("change", { bubbles: true }));
-    } else {
-      option.selected = !selected;
-      this.#updateSelectionState(option);
     }
   }
 }

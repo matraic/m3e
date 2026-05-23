@@ -46,9 +46,11 @@ This section details the attributes, events, slots and CSS custom properties ava
 
 #### 🔔 Events
 
-| Event    | Description                            |
-| -------- | -------------------------------------- |
-| `change` | Emitted when the selected tab changes. |
+| Event         | Description                                            |
+| ------------- | ------------------------------------------------------ |
+| `beforeinput` | Dispatched before the selected state of a tab changes. |
+| `input`       | Dispatched when the selected state of a tab changes.   |
+| `change`      | Emitted when the selected tab changes.                 |
 
 #### 🧩 Slots
 
@@ -82,6 +84,14 @@ This section details the attributes, slots and CSS custom properties available f
 | `disabled` | `boolean` | `false` | Whether the element is disabled.                                             |
 | `for`      | `string`  |         | The identifier of the interactive control to which this element is attached. |
 | `selected` | `boolean` | `false` | Whether the element is selected.                                             |
+
+#### 🔔 Events
+
+| Event         | Description                                   |
+| ------------- | --------------------------------------------- |
+| `beforeinput` | Dispatched before the selected state changes. |
+| `input`       | Dispatched when the selected state changes.   |
+| `change`      | Dispatched when the selected state changes.   |
 
 #### 🧩 Slots
 

@@ -52,6 +52,7 @@ import { M3eFilterChipElement } from "./FilterChipElement";
  * @attr name - The name that identifies the element when submitting the associated form.
  * @attr vertical - Whether the element is oriented vertically.
  *
+ * @fires beforeinput - Dispatched before the selected state of a chip changes.
  * @fires input - Emitted when the selected state of a chip changes.
  * @fires change - Emitted when the selected state of a chip changes.
  *

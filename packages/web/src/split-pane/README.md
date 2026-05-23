@@ -55,6 +55,14 @@ This section details the attributes, slots, and CSS custom properties available 
 | `start` | Renders content at the logical start side of the pane. |
 | `end`   | Renders content at the logical end side of the pane.   |
 
+### 🔔 Events
+
+| Event         | Description                                                      |
+| ------------- | ---------------------------------------------------------------- |
+| `beforeinput` | Dispatched continuously before the user adjusts the drag handle. |
+| `input`       | Dispatched continuously while the user adjusts the drag handle.  |
+| `change`      | Dispatched when the user finishes adjusting the drag handle.     |
+
 ### 🎛️ CSS Custom Properties
 
 | Property                                       | Description                                           |

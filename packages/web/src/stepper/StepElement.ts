@@ -88,9 +88,10 @@ import { M3eStepPanelElement } from "./StepPanelElement";
  * @attr optional - Whether the step is optional.
  * @attr selected - Whether the element is selected.
  *
- * @fires input - Emitted when the selected state changes.
- * @fires change - Emitted when the selected state changes.
- * @fires click - Emitted when the element is clicked.
+ * @fires beforeinput - Dispatched before the selected state changes.
+ * @fires input - Dispatched when the selected state changes.
+ * @fires change - Dispatched when the selected state changes.
+ * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-step-shape - Border radius of the step container, defining its visual shape.
  * @cssprop --m3e-step-padding - Internal padding of the step container, used for layout spacing.
@@ -391,14 +392,13 @@ export class M3eStepElement extends Selected(
 
     if (e.defaultPrevented || this.selected) return;
 
-    this.selected = true;
     if (
-      this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true })) &&
-      this.closest("m3e-stepper")?.moveTo(this.index)
+      this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true })) &&
+      this.closest("m3e-stepper")?._moveTo(this.index)
     ) {
+      this.selected = true;
+      this.dispatchEvent(new Event("input", { bubbles: true }));
       this.dispatchEvent(new Event("change", { bubbles: true }));
-    } else {
-      this.selected = false;
     }
   }
 }

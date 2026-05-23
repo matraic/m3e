@@ -56,6 +56,10 @@ import { SliderSize } from "./SliderSize";
  * @attr step - The value at which the thumb will snap.
  * @attr size - The size of the slider.
  *
+ * @fires beforeinput - Dispatched before the value of a thumb changes.
+ * @fires input - Dispatched when the value of a thumb changes.
+ * @fires change - Dispatched when the value of a thumb changes.
+ *
  * @cssprop --m3e-slider-min-width - Minimum inline size of the slider host.
  * @cssprop --m3e-slider-small-height - Height of the slider when size is small or extra-small.
  * @cssprop --m3e-slider-medium-height - Height of the slider when size is medium.
@@ -375,6 +379,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
   /** @private */
   @state() private _ticks = new Array<{ value: number; active: boolean }>();
 
+  /** @private */ readonly #changedThumbs = new Set<M3eSliderThumbElement>();
   /** @private */ #thumbs = new Array<M3eSliderThumbElement>();
   /** @private */ #activeThumb?: M3eSliderThumbElement;
   /** @private */ #cachedWidth = 0;
@@ -469,6 +474,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
+    this.#changedThumbs.clear();
     this.#directionalitySubscription?.();
   }
 
@@ -490,6 +496,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
       @pointermove="${this.#handlePointerMove}"
       @pointerup="${this.#handlePointerUp}"
       @keydown="${this.#handleKeyDown}"
+      @keyup="${this.#handleKeyUp}"
       @value-change="${this.#handleThumbChange}"
     >
       <div class="track" aria-hidden="true">
@@ -633,9 +640,9 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
       e.target.setPointerCapture(e.pointerId);
     }
 
-    this.#activeThumb = e.composedPath().find((x) => x instanceof M3eSliderThumbElement) as
-      | M3eSliderThumbElement
-      | undefined;
+    this.#changedThumbs.clear();
+
+    this.#activeThumb = e.composedPath().find((x) => x instanceof M3eSliderThumbElement);
 
     if (this.#activeThumb) {
       return;
@@ -714,15 +721,14 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     }
 
     if (this.#activeThumb && !this.#activeThumb.disabled) {
+      this.#commitThumb(this.#activeThumb);
       this.#activeThumb.focus();
     }
   }
 
   /** @private */
   #handleKeyDown(e: KeyboardEvent): void {
-    this.#activeThumb = e.composedPath().find((x) => x instanceof M3eSliderThumbElement) as
-      | M3eSliderThumbElement
-      | undefined;
+    this.#activeThumb = e.composedPath().find((x) => x instanceof M3eSliderThumbElement);
 
     if (!this.#activeThumb) return;
 
@@ -801,6 +807,14 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
   }
 
   /** @private */
+  #handleKeyUp(e: KeyboardEvent): void {
+    const activeThumb = e.composedPath().find((x) => x instanceof M3eSliderThumbElement);
+    if (activeThumb) {
+      this.#commitThumb(activeThumb);
+    }
+  }
+
+  /** @private */
   #handleThumbChange(e: Event): void {
     e.stopPropagation();
     this.#updateThumbs();
@@ -810,26 +824,33 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
   /** @private */
   #changeThumb(thumb: M3eSliderThumbElement, value: number, animate = false): void {
     if (thumb.value === value) return;
-    const prev = thumb.value;
-    if (animate && !prefersReducedMotion()) {
-      addCustomState(this, "--animating");
-      thumb.addEventListener(
-        "transitionend",
-        () => {
-          thumb.style.transition = "";
-          deleteCustomState(this, "--animating");
-        },
-        { once: true },
-      );
-      thumb.style.transition = `transform ${DesignToken.motion.spring.fastEffects}`;
+
+    if (thumb.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
+      if (animate && !prefersReducedMotion()) {
+        addCustomState(this, "--animating");
+        thumb.addEventListener(
+          "transitionend",
+          () => {
+            thumb.style.transition = "";
+            deleteCustomState(this, "--animating");
+          },
+          { once: true },
+        );
+        thumb.style.transition = `transform ${DesignToken.motion.spring.fastEffects}`;
+      }
+      this.#changedThumbs.add(thumb);
+      thumb.value = value;
+      thumb.markAsDirty();
+      thumb.markAsTouched();
+      thumb.dispatchEvent(new Event("input", { bubbles: true }));
     }
-    thumb.value = value;
-    thumb.markAsDirty();
-    thumb.markAsTouched();
-    if (thumb.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
-      thumb.dispatchEvent(new Event("change", { bubbles: true, composed: true }));
-    } else {
-      thumb.value = prev;
+  }
+
+  /** @private */
+  #commitThumb(thumb: M3eSliderThumbElement): void {
+    if (this.#changedThumbs.has(thumb)) {
+      thumb.dispatchEvent(new Event("change", { bubbles: true }));
+      this.#changedThumbs.delete(thumb);
     }
   }
 }

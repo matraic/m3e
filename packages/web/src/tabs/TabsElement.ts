@@ -63,7 +63,9 @@ const MIN_PRIMARY_TAB_WIDTH = 24;
  * @attr stretch - Whether tabs are stretched to fill the header.
  * @attr variant - The appearance variant of the tabs.
  *
- * @fires change - Emitted when the selected tab changes.
+ * @fires beforeinput - Dispatched before the selected state of a tab changes.
+ * @fires input - Dispatched when the selected state of a tab changes.
+ * @fires change - Dispatched when the selected tab changes.
  *
  * @cssprop --m3e-tabs-paginator-button-icon-size - Overrides the icon size for paginator buttons.
  * @cssprop --m3e-tabs-active-indicator-color - Color of the active tab indicator.

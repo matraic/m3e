@@ -22,6 +22,7 @@ export const M3eSelect = createComponent({
   elementClass: M3eSelectElement,
   react: React,
   events: {
+    onBeforeInput: "beforeinput",
     onInput: "input",
     onChange: "change",
   },

@@ -59,8 +59,9 @@ import { M3eButtonSegmentElement } from "./ButtonSegmentElement";
  * @attr multi - Whether multiple options can be selected.
  * @attr name - The name that identifies the element when submitting the associated form.
  *
- * @fires input - Emitted when the checked state of a segment changes.
- * @fires change - Emitted when the checked state of a segment changes.
+ * @fires beforeinput - Dispatched before the checked state of a segment changes.
+ * @fires input - Dispatched when the checked state of a segment changes.
+ * @fires change - Dispatched when the checked state of a segment changes.
  *
  * @cssprop --m3e-segmented-button-start-shape - Border radius for the first segment in a segmented button.
  * @cssprop --m3e-segmented-button-end-shape - Border radius for the last segment in a segmented button.

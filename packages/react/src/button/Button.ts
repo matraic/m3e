@@ -22,6 +22,7 @@ export const M3eButton = createComponent({
   elementClass: M3eButtonElement,
   react: React,
   events: {
+    onBeforeInput: "beforeinput",
     onInput: "input",
     onChange: "change",
     onClick: "click",

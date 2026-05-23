@@ -50,8 +50,9 @@ import { addAriaReferencedId, removeAriaReferencedId, selectionManager } from "@
  * @attr for - The identifier of the interactive control to which this element is attached.
  * @attr selected - Whether the element is selected.
  *
- * @fires input - Emitted when the selected state changes.
- * @fires change - Emitted when the selected state changes.
+ * @fires beforeinput - Dispatched before the selected state changes.
+ * @fires input - Dispatched when the selected state changes.
+ * @fires change - Dispatched when the selected state changes.
  * @fires click - Emitted when the element is clicked.
  *
  * @cssprop --m3e-tab-font-size - Font size for tab label.
@@ -249,12 +250,11 @@ export class M3eTabElement extends Selected(
 
     if (e.defaultPrevented || this.selected) return;
 
-    this.selected = true;
-    if (this.dispatchEvent(new Event("input", { bubbles: true, composed: true, cancelable: true }))) {
+    if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
+      this.selected = true;
       this.closest("m3e-tabs")?.[selectionManager].notifySelectionChange(this);
+      this.dispatchEvent(new Event("input", { bubbles: true }));
       this.dispatchEvent(new Event("change", { bubbles: true }));
-    } else {
-      this.selected = false;
     }
   }
 }

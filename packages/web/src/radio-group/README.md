@@ -42,9 +42,11 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🔔 Events
 
-| Event    | Description                                               |
-| -------- | --------------------------------------------------------- |
-| `change` | Emitted when the checked state of a radio button changes. |
+| Event         | Description                                                    |
+| ------------- | -------------------------------------------------------------- |
+| `beforeinput` | Dispatched before the checked state of a radio button changes. |
+| `input`       | Dispatched when the checked state of a radio button changes.   |
+| `change`      | Dispatched when the checked state of a radio button changes.   |
 
 #### 🧩 Slots
 
@@ -68,10 +70,11 @@ This section details the attributes, events and CSS custom properties available 
 
 #### 🔔 Events
 
-| Event    | Description                             |
-| -------- | --------------------------------------- |
-| `input`  | Emitted when the checked state changes. |
-| `change` | Emitted when the checked state changes. |
+| Event         | Description                                  |
+| ------------- | -------------------------------------------- |
+| `beforeinput` | Dispatched before the checked state changes. |
+| `input`       | Dispatched when the checked state changes.   |
+| `change`      | Dispatched when the checked state changes.   |
 
 #### 🎛️ CSS Custom Properties
 
