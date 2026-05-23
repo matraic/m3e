@@ -1,5 +1,5 @@
 /**
- * Emitted when the search view needs data for the current term.
+ * Dispatched when the search view needs data for the current term.
  *
  * This event fires in two situations:
  * - When the search view opened

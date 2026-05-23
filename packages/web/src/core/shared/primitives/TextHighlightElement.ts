@@ -32,7 +32,7 @@ import { TextHighlightMode } from "./TextHighlightMode";
  * @attr mode - The mode in which to highlight text.
  * @attr term - The term to highlight.
  *
- * @fires highlight - Emitted when content is highlighted.
+ * @fires highlight - Dispatched when content is highlighted.
  *
  * @cssprop --m3e-text-highlight-container-color - Background color applied to highlighted text ranges.
  * @cssprop --m3e-text-highlight-color - Foreground color of highlighted text content.

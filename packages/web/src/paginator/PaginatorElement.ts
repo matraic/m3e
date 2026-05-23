@@ -60,7 +60,7 @@ import { PaginatorPageEventDetail } from "./PaginatorPageEventDetail";
  * @attr previous-page-label - The accessible label given to the button used to move to the previous page.
  * @attr show-first-last-buttons - Whether to show first/last buttons.
  *
- * @fires page - Emitted when a user selects a different page size or navigates to another page.
+ * @fires page - Dispatched when a user selects a different page size or navigates to another page.
  *
  * @cssprop --m3e-paginator-font-size - The font size used for paginator text.
  * @cssprop --m3e-paginator-font-weight - The font weight used for paginator text.

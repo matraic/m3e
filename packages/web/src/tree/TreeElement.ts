@@ -87,7 +87,7 @@ import { M3eTreeItemElement } from "./TreeItemElement";
  * @attr multi - Whether multiple items can be selected.
  * @attr cascade -Whether multiple item selection cascades to child items.
  *
- * @fires change - Emitted when the selected state changes.
+ * @fires change - Dispatched when the selected state changes.
  *
  * @cssprop --m3e-tree-scrollbar-width - Width of the tree scrollbar.
  * @cssprop --m3e-tree-scrollbar-color - Color of the tree scrollbar.

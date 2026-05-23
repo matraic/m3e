@@ -1,5 +1,5 @@
 /**
- * Emitted when the autocomplete needs option data for the current term.
+ * Dispatched when the autocomplete needs option data for the current term.
  *
  * This event fires in two situations:
  * - When the input receives focus and no options are available yet

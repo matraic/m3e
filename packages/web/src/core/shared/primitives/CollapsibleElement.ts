@@ -27,10 +27,10 @@ import { CollapsibleOrientation } from "./CollapsibleOrientation";
  * @attr orientation - Orientation of collapsible content.
  * @attr no-animate - Whether to disable animation.
  *
- * @fires opening - Emitted when the collapsible begins to open.
- * @fires opened - Emitted when the collapsible has opened.
- * @fires closing - Emitted when the collapsible begins to close.
- * @fires closed - Emitted when the collapsible has closed.
+ * @fires opening - Dispatched when the collapsible begins to open.
+ * @fires opened - Dispatched when the collapsible has opened.
+ * @fires closing - Dispatched when the collapsible begins to close.
+ * @fires closed - Dispatched when the collapsible has closed.
  *
  * @cssprop --m3e-collapsible-animation-duration - The duration of the expand / collapse animation.
  */

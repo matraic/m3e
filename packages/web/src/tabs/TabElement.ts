@@ -53,7 +53,7 @@ import { addAriaReferencedId, removeAriaReferencedId, selectionManager } from "@
  * @fires beforeinput - Dispatched before the selected state changes.
  * @fires input - Dispatched when the selected state changes.
  * @fires change - Dispatched when the selected state changes.
- * @fires click - Emitted when the element is clicked.
+ * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-tab-font-size - Font size for tab label.
  * @cssprop --m3e-tab-font-weight - Font weight for tab label.

@@ -164,7 +164,7 @@ This section details the attributes, slots, events and CSS custom properties ava
 | ------------- | ------------------------------------------------------- |
 | `beforeinput` | Dispatched before the selected state of a step changes. |
 | `input`       | Dispatched when the selected state of a step changes.   |
-| `change`      | Emitted when the selected step changes.                 |
+| `change`      | Dispatched when the selected step changes.              |
 
 #### 🧩 Slots
 

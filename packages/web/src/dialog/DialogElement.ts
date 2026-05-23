@@ -51,11 +51,11 @@ import "@m3e/web/icon-button";
  * @attr no-focus-trap - Whether to disable focus trapping, which keeps keyboard `Tab` navigation within the dialog.
  * @attr open - Whether the dialog is open.
  *
- * @fires opening - Emitted when the dialog begins to open.
- * @fires opened - Emitted when the dialog has opened.
- * @fires cancel - Emitted when the dialog is cancelled.
- * @fires closing - Emitted when the dialog begins to close.
- * @fires closed - Emitted when the dialog has closed.
+ * @fires opening - Dispatched when the dialog begins to open.
+ * @fires opened - Dispatched when the dialog has opened.
+ * @fires cancel - Dispatched when the dialog is cancelled.
+ * @fires closing - Dispatched when the dialog begins to close.
+ * @fires closed - Dispatched when the dialog has closed.
  *
  * @cssprop --m3e-dialog-shape - Border radius of the dialog container.
  * @cssprop --m3e-dialog-min-width - Minimum width of the dialog.

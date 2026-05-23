@@ -79,7 +79,7 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * @attr value - The value associated with the element's name when it's submitted with form data.
  * @attr variant - The appearance variant of the button.
  *
- * @fires click - Emitted when the element is clicked.
+ * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-fab-container-height - Height of the FAB container for all size variants.
  * @cssprop --m3e-fab-label-text-font-size - Font size for the FAB label text for all size variants.

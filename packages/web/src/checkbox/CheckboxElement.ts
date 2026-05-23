@@ -60,10 +60,10 @@ import {
  * @attr value - A string representing the value of the checkbox.
  *
  * @fires beforeinput - Dispatched before the checked state changes.
- * @fires input - Emitted when the checked state changes.
- * @fires invalid - Emitted when a form is submitted and the element fails constraint validation.
- * @fires change - Emitted when the checked state changes.
- * @fires click - Emitted when the element is clicked.
+ * @fires input - Dispatched when the checked state changes.
+ * @fires invalid - Dispatched when a form is submitted and the element fails constraint validation.
+ * @fires change - Dispatched when the checked state changes.
+ * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-checkbox-icon-size - Size of the checkbox icon inside the container.
  * @cssprop --m3e-checkbox-container-size - Base size of the checkbox container.

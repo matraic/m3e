@@ -173,9 +173,9 @@ This section details the attributes, slots, events, and CSS custom properties av
 
 #### 📡 Events
 
-| Event   | Description                          |
-| ------- | ------------------------------------ |
-| `click` | Emitted when the element is clicked. |
+| Event   | Description                             |
+| ------- | --------------------------------------- |
+| `click` | Dispatched when the element is clicked. |
 
 #### 🎛️ CSS Custom Properties
 
@@ -442,12 +442,12 @@ This section details the attributes, slots, events, and CSS custom properties av
 
 #### 📡 Events
 
-| Event     | Description                            |
-| --------- | -------------------------------------- |
-| `opening` | Emitted when the item begins to open.  |
-| `opened`  | Emitted when the item has opened.      |
-| `closing` | Emitted when the item begins to close. |
-| `closed`  | Emitted when the item has closed.      |
+| Event     | Description                               |
+| --------- | ----------------------------------------- |
+| `opening` | Dispatched when the item begins to open.  |
+| `opened`  | Dispatched when the item has opened.      |
+| `closing` | Dispatched when the item begins to close. |
+| `closed`  | Dispatched when the item has closed.      |
 
 #### 🎛️ CSS Custom Properties
 

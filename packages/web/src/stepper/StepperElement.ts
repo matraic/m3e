@@ -83,7 +83,7 @@ import { StepperOrientation } from "./StepperOrientation";
  *
  * @fires beforeinput - Dispatched before the selected state of a step changes.
  * @fires input - Dispatched when the selected state of a step changes.
- * @fires change - Emitted when the selected step changes.
+ * @fires change - Dispatched when the selected step changes.
  *
  * @cssprop --m3e-step-divider-thickness - Thickness of the divider line between steps.
  * @cssprop --m3e-step-divider-color - Color of the divider line between steps.

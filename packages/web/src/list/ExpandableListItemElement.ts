@@ -52,10 +52,10 @@ import { M3eListItemElement } from "./ListItemElement";
  * @attr disabled - Whether the element is disabled.
  * @attr open - Whether the item is expanded.
  *
- * @fires opening - Emitted when the item begins to open.
- * @fires opened - Emitted when the item has opened.
- * @fires closing - Emitted when the item begins to close.
- * @fires closed - Emitted when the item has closed.
+ * @fires opening - Dispatched when the item begins to open.
+ * @fires opened - Dispatched when the item has opened.
+ * @fires closing - Dispatched when the item begins to close.
+ * @fires closed - Dispatched when the item has closed.
  *
  * @cssprop --m3e-expandable-list-item-toggle-icon-container-width - Width of the toggle icon container.
  * @cssprop --m3e-expandable-list-item-toggle-icon-container-shape - Border radius of the toggle icon container.

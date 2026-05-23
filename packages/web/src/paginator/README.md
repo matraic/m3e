@@ -42,9 +42,9 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 ### 🔔 Events
 
-| Event  | Description                                                                                                                                         |
-| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `page` | Emitted when a user selects a different page size or navigates to another page. Event detail: `{ previousPageIndex, pageIndex, pageSize, length }`. |
+| Event  | Description                                                                                                                                            |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `page` | Dispatched when a user selects a different page size or navigates to another page. Event detail: `{ previousPageIndex, pageIndex, pageSize, length }`. |
 
 ### 🧩 Slots
 

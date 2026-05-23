@@ -50,7 +50,7 @@ This section details the attributes, events, slots and CSS custom properties ava
 | ------------- | ------------------------------------------------------ |
 | `beforeinput` | Dispatched before the selected state of a tab changes. |
 | `input`       | Dispatched when the selected state of a tab changes.   |
-| `change`      | Emitted when the selected tab changes.                 |
+| `change`      | Dispatched when the selected tab changes.              |
 
 #### 🧩 Slots
 

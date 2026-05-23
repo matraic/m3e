@@ -59,10 +59,10 @@ import { M3eExpansionHeaderElement } from "./ExpansionHeaderElement";
  * @attr toggle-direction - The direction of the expansion toggle.
  * @attr toggle-position - The position of the expansion toggle.
  *
- * @fires opening - Emitted when the expansion panel begins to open.
- * @fires opened - Emitted when the expansion panel has opened.
- * @fires closing - Emitted when the expansion panel begins to close.
- * @fires closed - Emitted when the expansion panel has closed.
+ * @fires opening - Dispatched when the expansion panel begins to open.
+ * @fires opened - Dispatched when the expansion panel has opened.
+ * @fires closing - Dispatched when the expansion panel begins to close.
+ * @fires closed - Dispatched when the expansion panel has closed.
  *
  * @cssprop --m3e-expansion-header-collapsed-height - Height of the header when the panel is collapsed.
  * @cssprop --m3e-expansion-header-expanded-height - Height of the header when the panel is expanded.

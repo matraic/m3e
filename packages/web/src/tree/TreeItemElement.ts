@@ -45,11 +45,11 @@ import type { M3eTreeElement } from "./TreeElement";
  * @attr open - Whether the item is expanded.
  * @attr selected - Whether the item is selected.
  *
- * @fires opening - Emitted when the item begins to open.
- * @fires opened - Emitted when the item has opened.
- * @fires closing - Emitted when the item begins to close.
- * @fires closed - Emitted when the item has closed.
- * @fires click - Emitted when the element is clicked.
+ * @fires opening - Dispatched when the item begins to open.
+ * @fires opened - Dispatched when the item has opened.
+ * @fires closing - Dispatched when the item begins to close.
+ * @fires closed - Dispatched when the item has closed.
+ * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-tree-item-font-size - Font size for the item label.
  * @cssprop --m3e-tree-item-font-weight - Font weight for the item label.

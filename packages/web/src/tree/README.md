@@ -82,9 +82,9 @@ The next example demonstrates multi-selection with cascading selection state.
 
 #### 🔔 Events
 
-| Event    | Description                              |
-| -------- | ---------------------------------------- |
-| `change` | Emitted when the selected state changes. |
+| Event    | Description                                 |
+| -------- | ------------------------------------------- |
+| `change` | Dispatched when the selected state changes. |
 
 #### 🧩 Slots
 
@@ -112,13 +112,13 @@ The next example demonstrates multi-selection with cascading selection state.
 
 #### 🔔 Events
 
-| Event     | Description                            |
-| --------- | -------------------------------------- |
-| `opening` | Emitted when the item begins to open.  |
-| `opened`  | Emitted when the item has opened.      |
-| `closing` | Emitted when the item begins to close. |
-| `closed`  | Emitted when the item has closed.      |
-| `click`   | Emitted when the element is clicked.   |
+| Event     | Description                               |
+| --------- | ----------------------------------------- |
+| `opening` | Dispatched when the item begins to open.  |
+| `opened`  | Dispatched when the item has opened.      |
+| `closing` | Dispatched when the item begins to close. |
+| `closed`  | Dispatched when the item has closed.      |
+| `click`   | Dispatched when the element is clicked.   |
 
 #### 🧩 Slots
 

@@ -63,7 +63,7 @@ import "./YearViewElement";
  * @attr previous-multi-year-label - The accessible label given to the button used to move to the previous 24 years.
  * @attr next-multi-year-label - The accessible label given to the button used to move to the next 24 years.
  *
- * @fires change - Emitted when the selected date changes.
+ * @fires change - Dispatched when the selected date changes.
  *
  * @cssprop --m3e-calendar-container-color - Background color of the container surface.
  * @cssprop --m3e-calendar-container-elevation - Elevation shadow applied to the container surface.

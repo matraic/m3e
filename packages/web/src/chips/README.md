@@ -236,9 +236,9 @@ This section details the attributes, events, slots, and CSS custom properties av
 
 #### 🔔 Events
 
-| Event    | Description                                                                  |
-| -------- | ---------------------------------------------------------------------------- |
-| `remove` | Emitted when the remove button is clicked or DELETE or BACKSPACE is pressed. |
+| Event    | Description                                                                     |
+| -------- | ------------------------------------------------------------------------------- |
+| `remove` | Dispatched when the remove button is clicked or DELETE or BACKSPACE is pressed. |
 
 #### 🎛️ CSS Custom Properties
 
@@ -296,9 +296,9 @@ This section details the attributes, events, slots, and CSS custom properties av
 
 #### 🔔 Events
 
-| Event    | Description                                                |
-| -------- | ---------------------------------------------------------- |
-| `change` | Emitted when a chip is added to, or removed from, the set. |
+| Event    | Description                                                   |
+| -------- | ------------------------------------------------------------- |
+| `change` | Dispatched when a chip is added to, or removed from, the set. |
 
 #### 🧩 Slots
 

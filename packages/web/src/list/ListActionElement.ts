@@ -32,7 +32,7 @@ import "./ListItemButtonElement";
  * @attr rel - The relationship between the `target` of the link button and the document.
  * @attr target - The target of the link button.
  *
- * @fires click - Emitted when the element is clicked.
+ * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-list-item-between-space - Horizontal gap between elements.
  * @cssprop --m3e-list-item-padding-inline - Horizontal padding for the list item.

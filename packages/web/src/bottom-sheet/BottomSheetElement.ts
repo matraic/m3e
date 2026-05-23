@@ -83,11 +83,11 @@ import "@m3e/web/core/a11y";
  * @attr open - Whether the bottom sheet is open.
  * @attr overshoot-limit - A fractional value, between 0 and 100, indicating the maximum visual overshoot allowed when dragging past the minimum or maximum size.
  *
- * @fires opening - Emitted when the sheet begins to open.
- * @fires opened - Emitted when the sheet has opened.
- * @fires cancel - Emitted when the sheet is cancelled.
- * @fires closing - Emitted when the sheet begins to close.
- * @fires closed - Emitted when the sheet has closed.
+ * @fires opening - Dispatched when the sheet begins to open.
+ * @fires opened - Dispatched when the sheet has opened.
+ * @fires cancel - Dispatched when the sheet is cancelled.
+ * @fires closing - Dispatched when the sheet begins to close.
+ * @fires closed - Dispatched when the sheet has closed.
  *
  * @cssprop --m3e-bottom-sheet-width - The width of the sheet.
  * @cssprop --m3e-bottom-sheet-max-width - The maximum width of the sheet.

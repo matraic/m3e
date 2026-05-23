@@ -77,12 +77,12 @@ This section details the attributes, events, slots and CSS custom properties ava
 
 #### 🔔 Events
 
-| Event Name | Description                                       |
-| ---------- | ------------------------------------------------- |
-| `opening`  | Emitted when the expansion panel begins to open.  |
-| `opened`   | Emitted when the expansion panel has opened.      |
-| `closing`  | Emitted when the expansion panel begins to close. |
-| `closed`   | Emitted when the expansion panel has closed.      |
+| Event Name | Description                                          |
+| ---------- | ---------------------------------------------------- |
+| `opening`  | Dispatched when the expansion panel begins to open.  |
+| `opened`   | Dispatched when the expansion panel has opened.      |
+| `closing`  | Dispatched when the expansion panel begins to close. |
+| `closed`   | Dispatched when the expansion panel has closed.      |
 
 #### 🧩 Slots
 

@@ -1,4 +1,4 @@
-/** Emitted when a user selects a different page size or navigates to another page. */
+/** Dispatched when a user selects a different page size or navigates to another page. */
 export interface PaginatorPageEventDetail {
   /** The zero-based index of the current page index. */
   pageIndex: number;

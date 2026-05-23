@@ -68,7 +68,7 @@ import { CardOrientation } from "./CardOrientation";
  * @attr orientation - The orientation of the card.
  * @attr variant - The appearance variant of the card.
  *
- * @fires click - Emitted when the element is clicked.
+ * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-card-padding - Internal spacing for all slotted regions
  * @cssprop --m3e-card-shape - Corner radius of the card container.

@@ -57,7 +57,7 @@ import { DrawerContainerStyle } from "./styles";
  * @attr start-mode - The behavior mode of the start drawer.
  * @attr start-divider - Whether to show a divider between the start drawer and content for `side` mode.
  *
- * @fires change - Emitted when the state of the start or end drawers change.
+ * @fires change - Dispatched when the state of the start or end drawers change.
  *
  * @cssprop --m3e-drawer-container-color - The background color of the drawer container.
  * @cssprop --m3e-drawer-container-elevation - The elevation level of the drawer container.

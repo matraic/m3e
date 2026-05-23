@@ -64,9 +64,9 @@ import { AutocompleteQueryEventDetail } from "./AutocompleteQueryEventDetail";
  * @slot loading - Renders content when loading options.
  * @slot no-data - Renders content when there are no options to show.
  *
- * @fires toggle - Emitted when the options menu opens or closes.
- * @fires query - Emitted when the input is focused or when the user modifies its value.
- * @fires change - Emitted when the committed value changes due to selecting an option or clearing the input.
+ * @fires toggle - Dispatched when the options menu opens or closes.
+ * @fires query - Dispatched when the input is focused or when the user modifies its value.
+ * @fires change - Dispatched when the committed value changes due to selecting an option or clearing the input.
  */
 @customElement("m3e-autocomplete")
 export class M3eAutocompleteElement extends HtmlFor(LitElement) {

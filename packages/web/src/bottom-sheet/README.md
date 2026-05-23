@@ -68,13 +68,13 @@ This section details the attributes, slots, events, and CSS custom properties av
 
 #### 🔔 Events
 
-| Event     | Description                             |
-| --------- | --------------------------------------- |
-| `opening` | Emitted when the sheet begins to open.  |
-| `opened`  | Emitted when the sheet has opened.      |
-| `cancel`  | Emitted when the sheet is cancelled.    |
-| `closing` | Emitted when the sheet begins to close. |
-| `closed`  | Emitted when the sheet has closed.      |
+| Event     | Description                                |
+| --------- | ------------------------------------------ |
+| `opening` | Dispatched when the sheet begins to open.  |
+| `opened`  | Dispatched when the sheet has opened.      |
+| `cancel`  | Dispatched when the sheet is cancelled.    |
+| `closing` | Dispatched when the sheet begins to close. |
+| `closed`  | Dispatched when the sheet has closed.      |
 
 #### 🎛️ CSS Custom Properties
 

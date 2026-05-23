@@ -31,7 +31,7 @@ import "./BreadcrumbItemButtonElement";
  * @attr download - A value indicating whether the internal link target will be downloaded, optionally specifying a file name.
  * @attr rel - The relationship between the internal link target and the document.
  *
- * @fires click - Emitted when the element is clicked.
+ * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-breadcrumb-item-shape - Shape of the internal breadcrumb item button.
  * @cssprop --m3e-breadcrumb-item-container-height - Height of the internal breadcrumb item button container.

@@ -57,7 +57,7 @@ import { InputChipSetChangeEventDetail } from "./InputChipSetChangeEventDetail";
  * @attr required - Whether a value is required for the element.
  * @attr vertical - Whether the element is oriented vertically.
  *
- * @fires change - Emitted when a chip is added to, or removed from, the set.
+ * @fires change - Dispatched when a chip is added to, or removed from, the set.
  *
  * @cssprop --m3e-chip-set-spacing - The spacing (gap) between chips in the set.
  */

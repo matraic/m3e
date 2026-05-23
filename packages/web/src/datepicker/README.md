@@ -42,11 +42,11 @@ This section details the attributes, events, and CSS custom properties available
 
 ### 🔔 Events
 
-| Event          | Description                                      |
-| -------------- | ------------------------------------------------ |
-| `change`       | Emitted when the selected date or range changes. |
-| `beforetoggle` | Emitted before the toggle state changes.         |
-| `toggle`       | Emitted after the toggle state has changed.      |
+| Event          | Description                                         |
+| -------------- | --------------------------------------------------- |
+| `change`       | Dispatched when the selected date or range changes. |
+| `beforetoggle` | Emitted before the toggle state changes.            |
+| `toggle`       | Emitted after the toggle state has changed.         |
 
 ### 🎛️ CSS Custom Properties
 

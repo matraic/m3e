@@ -50,9 +50,9 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 ### 📡 Events
 
-| Event    | Description                             |
-| -------- | --------------------------------------- |
-| `change` | Emitted when the selected date changes. |
+| Event    | Description                                |
+| -------- | ------------------------------------------ |
+| `change` | Dispatched when the selected date changes. |
 
 ### 🎨 CSS Custom Properties
 

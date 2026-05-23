@@ -53,8 +53,8 @@ import { M3eFilterChipElement } from "./FilterChipElement";
  * @attr vertical - Whether the element is oriented vertically.
  *
  * @fires beforeinput - Dispatched before the selected state of a chip changes.
- * @fires input - Emitted when the selected state of a chip changes.
- * @fires change - Emitted when the selected state of a chip changes.
+ * @fires input - Dispatched when the selected state of a chip changes.
+ * @fires change - Dispatched when the selected state of a chip changes.
  *
  * @cssprop --m3e-chip-set-spacing - The spacing (gap) between chips in the set.
  */
