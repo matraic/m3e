@@ -23,7 +23,39 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
   document.body.classList.add("loaded");
+
+  document.querySelectorAll("api-viewer").forEach((apiViewer) => hideCssCustomPropertyTypeColumns(apiViewer));
 });
+
+function hideCssCustomPropertyTypeColumns(apiViewer) {
+  const id = setInterval(() => {
+    try {
+      if (apiViewer.shadowRoot.querySelector("*")) {
+        clearInterval(id);
+
+        const stack = [apiViewer];
+        while (stack.length) {
+          const node = stack.pop();
+
+          if (node.nodeType === Node.ELEMENT_NODE && node.classList?.contains("column-name-css")) {
+            node.style.flexBasis = "100%";
+            node.nextElementSibling.style.display = "none";
+          }
+
+          if (node.shadowRoot) {
+            stack.push(node.shadowRoot);
+          }
+
+          if (node.childNodes) {
+            for (const child of node.childNodes) {
+              stack.push(child);
+            }
+          }
+        }
+      }
+    } catch (e) {}
+  }, 100);
+}
 
 window.addEventListener("message", (e) => {
   const allowedOrigin = window.location.origin;
