@@ -133,8 +133,20 @@ export class M3eThemeElement extends LitElement {
   override connectedCallback(): void {
     super.connectedCallback();
 
-    if (this.shadowRoot && !this.shadowRoot.adoptedStyleSheets.includes(this.#styleSheet)) {
-      this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, this.#styleSheet];
+    if (this.parentElement instanceof HTMLBodyElement) {
+      if (this.shadowRoot?.adoptedStyleSheets.includes(this.#styleSheet)) {
+        this.shadowRoot.adoptedStyleSheets = this.shadowRoot.adoptedStyleSheets.filter((x) => x !== this.#styleSheet);
+      }
+      if (!document.adoptedStyleSheets.includes(this.#styleSheet)) {
+        document.adoptedStyleSheets = [this.#styleSheet, ...document.adoptedStyleSheets];
+      }
+    } else {
+      if (document.adoptedStyleSheets.includes(this.#styleSheet)) {
+        document.adoptedStyleSheets = document.adoptedStyleSheets.filter((x) => x !== this.#styleSheet);
+      }
+      if (this.shadowRoot && !this.shadowRoot.adoptedStyleSheets.includes(this.#styleSheet)) {
+        this.shadowRoot.adoptedStyleSheets = [this.#styleSheet, ...this.shadowRoot.adoptedStyleSheets];
+      }
     }
 
     this.#light = matchMedia("(prefers-color-scheme: light)");
@@ -154,6 +166,10 @@ export class M3eThemeElement extends LitElement {
       x?.removeEventListener("change", this.#colorSchemeChangeHandler),
     );
     this.#light = this.#dark = this.#forcedColor = undefined;
+
+    if (document.adoptedStyleSheets.includes(this.#styleSheet)) {
+      document.adoptedStyleSheets = document.adoptedStyleSheets.filter((x) => x !== this.#styleSheet);
+    }
   }
 
   /** @inheritdoc */
@@ -218,10 +234,16 @@ export class M3eThemeElement extends LitElement {
     css += `--m3e-scrollbar-thumb-color: ${hexFromArgb(scheme.neutralPalette.tone(60))};`;
     css += `--m3e-focus-ring-visibility: ${this.strongFocus ? "visible" : "hidden"};`;
 
-    this.#styleSheet.replaceSync(`:host { ${css} }`);
-
     if (this.parentElement instanceof HTMLBodyElement) {
-      const computedStyle = getComputedStyle(this);
+      this.#styleSheet.replaceSync(`
+        html { ${css} }
+        @media not (forced-colors: active) {
+          body { 
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+            scrollbar-color: ${DesignToken.scrollbar.color};
+          }
+        }`);
 
       switch (this.scheme) {
         case "light":
@@ -240,22 +262,8 @@ export class M3eThemeElement extends LitElement {
               break;
           }
       }
-
-      if (this.#forcedColor?.matches) {
-        this.parentElement.style.backgroundColor =
-          this.parentElement.style.color =
-          this.parentElement.ownerDocument.documentElement.style.scrollbarColor =
-          this.parentElement.style.scrollbarColor =
-            "";
-      } else {
-        this.parentElement.style.backgroundColor = computedStyle.getPropertyValue("--md-sys-color-background");
-        this.parentElement.style.color = computedStyle.getPropertyValue("--md-sys-color-on-background");
-
-        this.parentElement.ownerDocument.documentElement.style.scrollbarColor =
-          this.parentElement.style.scrollbarColor = `${computedStyle.getPropertyValue(
-            "--m3e-scrollbar-thumb-color",
-          )} ${computedStyle.getPropertyValue("--m3e-scrollbar-track-color")}`;
-      }
+    } else {
+      this.#styleSheet.replaceSync(`:host { ${css} }`);
     }
 
     if (this.#firstUpdated) {
