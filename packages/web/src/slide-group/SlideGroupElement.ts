@@ -52,7 +52,6 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
     :host {
       display: flex;
       flex-wrap: nowrap;
-      overflow: hidden;
     }
     :host([vertical]) {
       flex-direction: column;
@@ -90,10 +89,21 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
       display: inherit;
       flex-wrap: inherit;
       flex-direction: inherit;
-      overflow: inherit;
       position: relative;
       border-top: var(--m3e-slide-group-divider-top);
       border-bottom: var(--m3e-slide-group-divider-bottom);
+      scrollbar-width: none;
+    }
+    .content::-webkit-scrollbar {
+      display: none;
+    }
+    :host([vertical]) .content {
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    :host(:not([vertical])) .content {
+      overflow-x: auto;
+      overflow-y: hidden;
     }
   `;
 
