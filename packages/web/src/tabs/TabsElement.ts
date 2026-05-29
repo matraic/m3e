@@ -9,7 +9,9 @@ import {
   deleteCustomState,
   DesignToken,
   hasCustomState,
+  prefersReducedMotion,
   ResizeController,
+  VelocityTracker,
 } from "@m3e/web/core";
 
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
@@ -174,11 +176,28 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       width: 100%;
       --_tab-grow: 1;
     }
+    .tabs.sliding ::slotted([slot="panel"]) {
+      transform: translateX(var(--_tabs-slide-offset-x));
+      visibility: var(--_tabs-slide-visibility, "hidden");
+    }
+    .tabs.snap ::slotted([slot="panel"]) {
+      transition: ${unsafeCSS(
+        `inset-inline-start var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard},
+        transform var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard},
+        visibility var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard} allow-discrete`,
+      )};
+    }
+    .tabs:not(.sliding) ::slotted([slot="panel"]) {
+      transform: translateX(0);
+    }
     :host(:is(:state(--no-animate), :--no-animate)) .active-indicator {
       transition: none;
     }
     @media (prefers-reduced-motion) {
       .active-indicator {
+        transition: none;
+      }
+      .tabs.snap ::slotted([slot="panel"]) {
         transition: none;
       }
     }
@@ -193,6 +212,8 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
   /** @private */ #directionalitySubscription?: () => void;
   /** @private */ @query(".tablist") private readonly _tablist!: HTMLElement;
   /** @private */ @state() _selectedIndex: number | null = null;
+  /** @private */ #swipe?: { x: number; y: number; currentX?: number; dir?: "horizontal" | "vertical" };
+  /** @private */ readonly #velocityTracker = new VelocityTracker();
 
   /** @internal */
   readonly [selectionManager] = new SelectionManager<M3eTabElement>()
@@ -311,7 +332,15 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
     }
 
     return html` ${this.headerPosition === "before" ? this.#renderHeader() : nothing}
-      <m3e-slide class="tabs" selected-index="${ifDefined(panelIndex)}">
+      <m3e-slide
+        class="tabs"
+        selected-index="${ifDefined(panelIndex)}"
+        @pointerdown="${this.#handleTabsPointerDown}"
+        @pointermove="${this.#handleTabsPointerMove}"
+        @pointerup="${this.#handleTabsPointerUp}"
+        @pointercancel="${this.#handleTabsPointerCancel}"
+        @lostpointercapture="${this.#handleTabsLostPointerCapture}"
+      >
         <slot name="panel"></slot>
       </m3e-slide>
       ${this.headerPosition === "after" ? this.#renderHeader() : nothing}`;
@@ -384,6 +413,130 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
     }
     this._selectedIndex = selectedIndex;
     this.#updateInkBar();
+  }
+
+  /** @private */
+  #handleTabsPointerDown(e: PointerEvent): void {
+    if (e.pointerType !== "touch") {
+      return; // swipe only supported for touch
+    }
+
+    (<HTMLElement>e.currentTarget).setPointerCapture(e.pointerId);
+    this.#swipe = { x: e.clientX, y: e.clientY };
+    this.#velocityTracker.reset();
+    this.#velocityTracker.add(e.clientX);
+  }
+
+  /** @private */
+  #handleTabsPointerMove(e: PointerEvent): void {
+    if (!this.#swipe || !(<HTMLElement>e.currentTarget).hasPointerCapture(e.pointerId)) {
+      return;
+    }
+
+    let dx = e.clientX - this.#swipe.x;
+    const dy = e.clientY - this.#swipe.y;
+
+    if (this.selectedIndex === 0 && dx > 0) {
+      dx = 0;
+    }
+
+    if (this.selectedIndex === this.tabs.length - 1 && dx < 0) {
+      dx = 0;
+    }
+
+    if (!this.#swipe.dir) {
+      if (Math.abs(dx) > 10) {
+        this.#swipe.dir = "horizontal";
+      } else if (Math.abs(dy) > 10) {
+        this.#swipe.dir = "vertical";
+      } else {
+        return;
+      }
+    }
+
+    if (this.#swipe.dir === "vertical") {
+      return;
+    }
+
+    this.#velocityTracker.add(e.clientX);
+    this.#swipe.currentX = dx;
+
+    this.shadowRoot?.querySelector("m3e-slide")?.classList.add("sliding");
+    this.selectedTab?.control?.style.setProperty("--_tabs-slide-offset-x", `${dx}px`);
+
+    const nextTab = this.tabs[dx > 0 ? this.selectedIndex - 1 : this.selectedIndex + 1];
+    nextTab?.control?.style.setProperty("--_tabs-slide-offset-x", `${dx}px`);
+    nextTab?.control?.style.setProperty("--_tabs-slide-visibility", "visible");
+
+    const prevTab = this.tabs[dx > 0 ? this.selectedIndex + 1 : this.selectedIndex - 1];
+    prevTab?.control?.style.removeProperty("--_tabs-slide-offset-x");
+    prevTab?.control?.style.removeProperty("--_tabs-slide-visibility");
+  }
+
+  /** @private */
+  #handleTabsPointerUp(e: PointerEvent): void {
+    if (!(<HTMLElement>e.currentTarget).hasPointerCapture(e.pointerId)) {
+      return;
+    }
+    (<HTMLElement>e.currentTarget).releasePointerCapture(e.pointerId);
+    if (this.#swipe && this.#swipe.dir === "horizontal" && this.#swipe.currentX !== undefined) {
+      const dx = this.#swipe.currentX;
+      const threshold = this.clientWidth * 0.33;
+      const velocity = this.#velocityTracker.getVelocity();
+      const significantVelocityThreshold = e.pointerType === "touch" ? 1200 : 500;
+
+      this.#endSwipeGesture();
+
+      if (Math.abs(dx) > threshold || Math.abs(velocity) > significantVelocityThreshold) {
+        if (dx > threshold) {
+          // go to the previous tab only if its not disabled.
+          if (this.selectedIndex > 0 && this.tabs.length > 1 && !this.tabs[this.selectedIndex - 1].disabled) {
+            this.selectedIndex--;
+          }
+        } else if (dx < -threshold) {
+          // go to the next tab only if its not disabled.
+          if (this.selectedIndex < this.tabs.length - 1 && !this.tabs[this.selectedIndex + 1].disabled) {
+            this.selectedIndex++;
+          }
+        }
+      }
+    } else {
+      this.#endSwipeGesture();
+    }
+  }
+
+  /** @private */
+  #handleTabsPointerCancel(e: PointerEvent): void {
+    if ((<HTMLElement>e.currentTarget).hasPointerCapture(e.pointerId)) {
+      (<HTMLElement>e.currentTarget).releasePointerCapture(e.pointerId);
+      this.#endSwipeGesture();
+    }
+  }
+
+  /** @private */
+  #handleTabsLostPointerCapture(): void {
+    this.#endSwipeGesture();
+  }
+
+  /** @private */
+  #endSwipeGesture(): void {
+    this.#swipe = undefined;
+    this.#velocityTracker.reset();
+
+    const slide = this.shadowRoot?.querySelector("m3e-slide");
+    if (!slide || !slide.classList.contains("sliding")) {
+      return;
+    }
+    slide.classList.add("snap");
+
+    if (!prefersReducedMotion()) {
+      slide.addEventListener("transitionend", () => slide.classList.remove("snap"), { once: true });
+    }
+    slide.classList.remove("sliding");
+    this.tabs.forEach((x) => {
+      x.control?.style.removeProperty("--_tabs-slide-offset-x");
+      x.control?.style.removeProperty("--_tabs-slide-visibility");
+    });
   }
 
   /** @private */
