@@ -37,7 +37,7 @@ This section details the attributes, events, slots and CSS custom properties ava
 
 | Attribute             | Type                         | Default           | Description                                                                 |
 | --------------------- | ---------------------------- | ----------------- | --------------------------------------------------------------------------- |
-| `disable-pagination`  | `boolean`                    | `false`           | Whether scroll buttons are disabled.                                        |
+| `disable-pagination`  | `boolean` \| `"auto"`        | `false`           | Whether scroll buttons are disabled.                                        |
 | `header-position`     | `"before"` \| `"after"`      | `"before"`        | The position of the tab headers.                                            |
 | `next-page-label`     | `string`                     | `"Next page"`     | The accessible label given to the button used to move to the previous page. |
 | `previous-page-label` | `string`                     | `"Previous page"` | The accessible label given to the button used to move to the next page.     |

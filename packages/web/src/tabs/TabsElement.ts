@@ -237,7 +237,30 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
    * Whether scroll buttons are disabled.
    * @default false
    */
-  @property({ attribute: "disable-pagination", type: Boolean }) disablePagination = false;
+  @property({ attribute: false }) get disablePagination(): boolean | "auto" {
+    switch (this.getAttribute("disable-pagination")) {
+      case "auto":
+        return "auto";
+      case "":
+      case "true":
+        return true;
+      default:
+        return false;
+    }
+  }
+  set disablePagination(value: boolean | "auto") {
+    switch (value) {
+      case false:
+        this.removeAttribute("disable-pagination");
+        break;
+      case true:
+        this.toggleAttribute("disable-pagination", true);
+        break;
+      case "auto":
+        this.setAttribute("disable-pagination", "auto");
+        break;
+    }
+  }
 
   /**
    * The position of the tab headers.
@@ -353,7 +376,9 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       threshold="8"
       previous-page-label="${this.previousPageLabel}"
       next-page-label="${this.nextPageLabel}"
-      ?disabled="${this.disablePagination}"
+      ?disabled="${this.disablePagination === "auto"
+        ? matchMedia("(hover: none) and (pointer: coarse)").matches
+        : this.disablePagination}"
     >
       <slot name="prev-icon" slot="prev-icon">
         ${M3eDirectionality.current === "ltr"
