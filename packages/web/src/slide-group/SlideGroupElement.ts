@@ -256,6 +256,7 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
   /** @private */
   @debounce(40)
   private _updatePaging(): void {
+    const canPage = this._canPage;
     if (this.disabled) {
       this._canPage = false;
     } else if (!this.vertical) {
@@ -280,6 +281,11 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
 
     if (!this._canPage) {
       this._canPageStart = this._canPageEnd = false;
+    }
+
+    if (canPage != this._canPage) {
+      // Emit internal (undocumented) event for use with tabs.
+      this.dispatchEvent(new CustomEvent("pagination-changed"));
     }
   }
 }

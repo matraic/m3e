@@ -16,6 +16,7 @@ import {
 
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { M3eSlideGroupElement } from "@m3e/web/slide-group";
 
 import "@m3e/web/slide-group";
 
@@ -210,7 +211,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
   `;
 
   /** @private */ #directionalitySubscription?: () => void;
-  /** @private */ @query(".tablist") private readonly _tablist!: HTMLElement;
+  /** @private */ @query(".tablist") private readonly _tablist!: M3eSlideGroupElement;
   /** @private */ @state() _selectedIndex: number | null = null;
   /** @private */ #swipe?: { x: number; y: number; currentX?: number; dir?: "horizontal" | "vertical" };
   /** @private */ readonly #velocityTracker = new VelocityTracker();
@@ -218,6 +219,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
   /** @internal */
   readonly [selectionManager] = new SelectionManager<M3eTabElement>()
     .onSelectedItemsChange(() => this.#handleSelectedChange())
+    .onActiveItemChange(() => this.#handleActiveItemChange())
     .withHomeAndEnd()
     .withWrap()
     .withDirectionality(M3eDirectionality.current);
@@ -228,7 +230,12 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       skipInitial: true,
       callback: () => {
         addCustomState(this, "--no-animate");
-        this.#updateInkBar();
+        const activeTab = this[selectionManager].activeItem ?? this.selectedTab;
+        if (activeTab) {
+          this.#scrollTabIntoView(activeTab, true);
+        } else {
+          this.#updateInkBar();
+        }
       },
     });
   }
@@ -379,6 +386,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       ?disabled="${this.disablePagination === "auto"
         ? matchMedia("(hover: none) and (pointer: coarse)").matches
         : this.disablePagination}"
+      @pagination-changed="${this.#handleTabsPaginationChange}"
     >
       <slot name="prev-icon" slot="prev-icon">
         ${M3eDirectionality.current === "ltr"
@@ -437,7 +445,28 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       selectedIndex = null;
     }
     this._selectedIndex = selectedIndex;
-    this.#updateInkBar();
+
+    if (selected) {
+      this.#scrollTabIntoView(selected, hasCustomState(this, "--no-animate"));
+    } else {
+      this.#updateInkBar();
+    }
+  }
+
+  /** @private */
+  #handleActiveItemChange(): void {
+    if (this[selectionManager].activeItem) {
+      this.#scrollTabIntoView(this[selectionManager].activeItem, hasCustomState(this, "--no-animate"));
+    }
+  }
+
+  /** @private */
+  #handleTabsPaginationChange(): void {
+    if (this.disablePagination) return;
+    const activeTab = this[selectionManager].activeItem ?? this.selectedTab;
+    if (activeTab) {
+      this.#scrollTabIntoView(activeTab, true);
+    }
   }
 
   /** @private */
@@ -562,6 +591,34 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       x.control?.style.removeProperty("--_tabs-slide-offset-x");
       x.control?.style.removeProperty("--_tabs-slide-visibility");
     });
+  }
+
+  /** @private */
+  async #scrollTabIntoView(tab: M3eTabElement, instant: boolean): Promise<void> {
+    await this.updateComplete;
+    for (const tab of this.tabs) {
+      await tab.updateComplete;
+    }
+
+    await this._tablist?.updateComplete;
+
+    const scrollMargin = 48;
+    const scrollContainer = this._tablist?.scrollContainer;
+    if (!scrollContainer) return;
+
+    scrollContainer?.scrollTo({
+      behavior: instant ? "instant" : "smooth",
+      top: 0,
+      left: Math.min(
+        tab.offsetLeft - scrollContainer.offsetLeft - scrollMargin,
+        Math.max(
+          tab.offsetLeft + tab.offsetWidth - scrollContainer.offsetWidth - scrollContainer.offsetLeft + scrollMargin,
+          scrollContainer.scrollLeft,
+        ),
+      ),
+    });
+
+    this.#updateInkBar();
   }
 
   /** @private */
