@@ -285,7 +285,7 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
 
     if (canPage != this._canPage) {
       // Emit internal (undocumented) event for use with tabs.
-      this.dispatchEvent(new CustomEvent("pagination-changed"));
+      this["dispatchEvent"](new CustomEvent("pagination-changed"));
     }
   }
 }
