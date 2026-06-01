@@ -3,11 +3,11 @@ import { property } from "lit/decorators.js";
 
 import {
   argbFromHex,
-  CorePalette,
-  DynamicColor,
   DynamicScheme,
+  Hct,
   hexFromArgb,
   MaterialDynamicColors,
+  themeFromSourceColor,
 } from "@material/material-color-utilities";
 
 import { customElement, DesignToken } from "@m3e/web/core";
@@ -191,30 +191,35 @@ export class M3eThemeElement extends LitElement {
   /** @private */
   #apply(forceReflow: boolean): void {
     const color = argbFromHex(this.color);
-    const palette = CorePalette.of(color);
+    const theme = themeFromSourceColor(color);
     const scheme = new DynamicScheme({
-      sourceColorArgb: color,
+      sourceColorHct: Hct.fromInt(color),
       variant: 1,
       contrastLevel: this.#getContrastLevel(),
       isDark: this.isDark,
-      primaryPalette: palette.a1,
-      secondaryPalette: palette.a2,
-      tertiaryPalette: palette.a3,
-      neutralPalette: palette.n1,
-      neutralVariantPalette: palette.n2,
+      primaryPalette: theme.palettes.primary,
+      secondaryPalette: theme.palettes.secondary,
+      tertiaryPalette: theme.palettes.tertiary,
+      neutralPalette: theme.palettes.neutral,
+      neutralVariantPalette: theme.palettes.neutralVariant,
+      errorPalette: theme.palettes.error,
     });
 
     let css = "";
 
-    for (const key in MaterialDynamicColors) {
-      if (!key.endsWith("PaletteKeyColor")) {
-        const dynamicColor: unknown = MaterialDynamicColors[key as keyof MaterialDynamicColors];
-        if (dynamicColor instanceof DynamicColor) {
-          css += `--md-sys-color-${key.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()}: ${hexFromArgb(
-            dynamicColor.getArgb(scheme),
-          )};`;
-        }
-      }
+    const colors = new MaterialDynamicColors();
+    const allColors = [
+      ...colors.allColors,
+      colors.surfaceVariant(),
+      colors.shadow(),
+      colors.scrim(),
+      colors.surfaceTint(),
+    ];
+
+    for (const color of allColors) {
+      const token = `--md-sys-color-${color.name.replace(/_/g, "-").toLowerCase()}`;
+      const hex = hexFromArgb(color.getArgb(scheme));
+      css += `${token}: ${hex};`;
     }
 
     if (this.motion === "expressive") {
