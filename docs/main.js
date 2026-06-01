@@ -24,22 +24,28 @@ window.addEventListener("DOMContentLoaded", () => {
   }
   document.body.classList.add("loaded");
 
-  document.querySelectorAll("api-viewer").forEach((apiViewer) => hideCssCustomPropertyTypeColumns(apiViewer));
+  document.querySelectorAll("api-viewer").forEach((apiViewer) => updateApiViewer(apiViewer));
 });
 
-function hideCssCustomPropertyTypeColumns(apiViewer) {
+function updateApiViewer(apiViewer) {
   const id = setInterval(() => {
     try {
       if (apiViewer.shadowRoot.querySelector("*")) {
         clearInterval(id);
 
+        const tabs = [];
         const stack = [apiViewer];
+
         while (stack.length) {
           const node = stack.pop();
 
-          if (node.nodeType === Node.ELEMENT_NODE && node.classList?.contains("column-name-css")) {
-            node.style.flexBasis = "100%";
-            node.nextElementSibling.style.display = "none";
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            if (node.classList?.contains("column-name-css")) {
+              node.style.flexBasis = "100%";
+              node.nextElementSibling.style.display = "none";
+            } else if (node.tagName === "API-VIEWER-TAB" && !node.hidden) {
+              tabs.push(node);
+            }
           }
 
           if (node.shadowRoot) {
@@ -52,9 +58,19 @@ function hideCssCustomPropertyTypeColumns(apiViewer) {
             }
           }
         }
+
+        ensureTabSelected(tabs[tabs.length - 1]);
       }
     } catch (e) {}
   }, 100);
+}
+
+function ensureTabSelected(tab) {
+  if (tab && tab.getAttribute("aria-selected") !== "true") {
+    const y = window.scrollY;
+    tab.click();
+    queueMicrotask(() => window.scrollTo(0, y));
+  }
 }
 
 window.addEventListener("message", (e) => {
