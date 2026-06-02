@@ -85,7 +85,7 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(LitElem
       --_polygon-oval: polygon(${ShapePolygon["oval"]});
     }
     .active-indicator.animate {
-      animation: rotate 4998ms infinite;
+      animation: rotate 4550ms infinite;
     }
     @keyframes rotate {
       0% {
