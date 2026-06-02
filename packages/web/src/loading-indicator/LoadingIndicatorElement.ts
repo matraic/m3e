@@ -77,10 +77,10 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(LitElem
       will-change: transform, clip-path;
 
       --_polygon-soft-burst: polygon(${ShapePolygon["soft-burst"]});
-      --_polygon-7-sided-cookie: polygon(${ShapePolygon["7-sided-cookie"]});
+      --_polygon-9-sided-cookie: polygon(${ShapePolygon["9-sided-cookie"]});
       --_polygon-pentagon: polygon(${ShapePolygon["pentagon"]});
       --_polygon-pill: polygon(${ShapePolygon["pill"]});
-      --_polygon-very-sunny: polygon(${ShapePolygon["very-sunny"]});
+      --_polygon-sunny: polygon(${ShapePolygon["sunny"]});
       --_polygon-4-sided-cookie: polygon(${ShapePolygon["4-sided-cookie"]});
       --_polygon-oval: polygon(${ShapePolygon["oval"]});
     }
@@ -94,7 +94,7 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(LitElem
         animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
       }
       14% {
-        clip-path: var(--_polygon-7-sided-cookie);
+        clip-path: var(--_polygon-9-sided-cookie);
         transform: rotate(154deg);
         animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
       }
@@ -109,7 +109,7 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(LitElem
         animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
       }
       57% {
-        clip-path: var(--_polygon-very-sunny);
+        clip-path: var(--_polygon-sunny);
         transform: rotate(617deg);
         animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
       }
