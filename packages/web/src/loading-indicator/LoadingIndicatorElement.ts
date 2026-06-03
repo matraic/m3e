@@ -84,48 +84,57 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(LitElem
       --_polygon-4-sided-cookie: polygon(${ShapePolygon["4-sided-cookie"]});
       --_polygon-oval: polygon(${ShapePolygon["oval"]});
     }
-    .active-indicator.animate {
-      animation: rotate 4550ms infinite;
+    .container.animate .active-indicator-wrapper {
+      animation: rotate-outer 4666ms linear infinite;
+      transform-origin: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      will-change: transform;
     }
-    @keyframes rotate {
+    @keyframes rotate-outer {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    .container.animate .active-indicator {
+      animation: rotate-inner 4666ms cubic-bezier(0.34, 0.88, 0.34, 1) infinite;
+    }
+    @keyframes rotate-inner {
       0% {
         clip-path: var(--_polygon-soft-burst);
         transform: rotate(0deg);
-        animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
       }
       14% {
         clip-path: var(--_polygon-9-sided-cookie);
-        transform: rotate(154deg);
-        animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
+        transform: rotate(154deg) scale(1);
       }
       29% {
         clip-path: var(--_polygon-pentagon);
-        transform: rotate(309deg);
-        animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
+        transform: rotate(309deg) scale(1);
       }
       43% {
         clip-path: var(--_polygon-pill);
-        transform: rotate(463deg);
-        animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
+        transform: rotate(463deg) scale(1);
       }
       57% {
         clip-path: var(--_polygon-sunny);
-        transform: rotate(617deg);
-        animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
+        transform: rotate(617deg) scale(1);
       }
       71% {
         clip-path: var(--_polygon-4-sided-cookie);
-        transform: rotate(771deg);
-        animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
+        transform: rotate(771deg) scale(1);
       }
       83% {
         clip-path: var(--_polygon-oval);
-        transform: rotate(926deg);
-        animation-timing-function: cubic-bezier(0.5, 0.2, 0, 0.8);
+        transform: rotate(926deg) scale(1);
       }
       100% {
         clip-path: var(--_polygon-soft-burst);
-        transform: rotate(1080deg);
+        transform: rotate(1080deg) scale(1);
       }
     }
     @media (forced-colors: active) {
@@ -136,7 +145,7 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(LitElem
   `;
 
   /** @private */
-  @query(".active-indicator") private readonly _activeIndicator?: HTMLElement;
+  @query(".container") private readonly _container?: HTMLElement;
 
   /**
    * The appearance variant of the indicator.
@@ -155,25 +164,27 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(LitElem
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this._activeIndicator?.classList.toggle("animate", false);
+    this._container?.classList.toggle("animate", false);
   }
 
   /** @inheritdoc */
   override reconnectedCallback(): void {
     super.reconnectedCallback();
-    this._activeIndicator?.classList.toggle("animate", true);
+    this._container?.classList.toggle("animate", true);
   }
 
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
-    this._activeIndicator?.classList.toggle("animate", true);
+    this._container?.classList.toggle("animate", true);
   }
 
   /** @inheritdoc */
   override render() {
     return html`<div class="container" aria-hidden="true">
-      <div class="active-indicator"></div>
+      <div class="active-indicator-wrapper">
+        <div class="active-indicator"></div>
+      </div>
     </div>`;
   }
 }
