@@ -53,7 +53,8 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
       margin: 0;
       padding: 0;
       opacity: 0;
-      transform: scale(0.8);
+      transform: scaleY(0.8);
+      transform-origin: bottom;
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
         transform ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
@@ -67,12 +68,12 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
     :host(:popover-open) {
       visibility: visible;
       opacity: 1;
-      transform: scale(1);
+      transform: scaleY(1);
     }
     @starting-style {
       :host(:popover-open) {
         opacity: 0;
-        transform: scale(0.8);
+        transform: scaleY(0.8);
       }
     }
     .base {
