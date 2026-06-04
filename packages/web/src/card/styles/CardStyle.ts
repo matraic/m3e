@@ -32,6 +32,8 @@ export const CardStyle: CSSResult = css`
     position: relative;
     box-sizing: border-box;
     border-radius: ${CardToken.shape};
+  }
+  :host([actionable]) .base {
     transition: ${unsafeCSS(
       `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard},
       border-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
@@ -159,7 +161,7 @@ export const CardStyle: CSSResult = css`
     z-index: 1;
   }
   @media (forced-colors: active) {
-    .base {
+    :host([actionable]) .base {
       transition: none;
     }
     :host([variant]) .base {
@@ -174,7 +176,7 @@ export const CardStyle: CSSResult = css`
     }
   }
   @media (prefers-reduced-motion) {
-    .base {
+    :host([actionable]) .base {
       transition: none;
     }
   }
