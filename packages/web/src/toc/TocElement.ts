@@ -59,6 +59,9 @@ import { TocGenerator, TocNode } from "./TocGenerator";
  * @attr max-depth - The maximum depth of the table of contents.
  *
  * @cssprop --m3e-toc-width - Width of the table of contents.
+ * @cssprop --m3e-toc-container-color - Background color of the table of contents container.
+ * @cssprop --m3e-toc-container-padding-inline - Inline padding of the table of contents container.
+ * @cssprop --m3e-toc-container-padding-block - Block padding of the table of contents container.
  * @cssprop --m3e-toc-item-shape - Border radius of TOC items and active indicator.
  * @cssprop --m3e-toc-active-indicator-color - Border color of the active indicator.
  * @cssprop --m3e-toc-active-indicator-animation-duration - Animation duration for the active indicator.
@@ -81,11 +84,28 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   static override styles: CSSResultGroup = css`
     :host {
       display: inline-block;
+      width: calc(var(--m3e-toc-width, 9.75rem));
+    }
+    .base {
+      border-radius: var(--m3e-toc-container-shape, ${DesignToken.shape.corner.none});
+      box-sizing: border-box;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+    }
+    .scroll-container {
+      height: inherit;
+      width: inherit;
+      box-sizing: inherit;
+      background-color: var(--m3e-toc-container-color, transparent);
+      border-radius: inherit;
+      padding-inline: var(--m3e-toc-container-padding-inline, 0px);
+      padding-block: var(--m3e-toc-container-padding-block, 0px);
       position: relative;
       overflow-y: auto;
+      overflow-x: hidden;
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
-      width: var(--m3e-toc-width, 9.75rem);
     }
     ul {
       list-style: none;
@@ -106,8 +126,8 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
       position: absolute;
       pointer-events: none;
       box-sizing: border-box;
-      left: 0;
-      right: 0;
+      left: var(--m3e-toc-container-padding-inline, 0px);
+      right: var(--m3e-toc-container-padding-inline, 0px);
 
       border-radius: var(--m3e-toc-item-shape, ${DesignToken.shape.corner.largeIncreased});
       border: 1px solid var(--m3e-toc-active-indicator-color, ${DesignToken.color.outline});
@@ -169,6 +189,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
 
   /** @private */ @state() private _toc: Array<TocNode> = [];
   /** @private */ @query(".active-indicator") private readonly _activeIndicator!: HTMLElement;
+  /** @private */ @query(".scroll-container") private readonly _scrollContainer!: HTMLElement;
   /** @private */ #ignoreScroll = false;
 
   /** @private */ readonly #selectionManager = new SelectionManager<M3eTocItemElement>()
@@ -184,7 +205,18 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
           this._activeIndicator.style.height = `0px`;
           this._activeIndicator.style.visibility = "hidden";
         } else {
-          scrollIntoViewIfNeeded(item, this, { block: "nearest", behavior: "smooth" });
+          const scrollContainer = this._scrollContainer;
+
+          if (item === this.#selectionManager.items[0]) {
+            scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
+          } else if (item === this.#selectionManager.items[this.#selectionManager.items.length - 1]) {
+            scrollContainer.scrollTo({
+              top: scrollContainer.scrollHeight - scrollContainer.clientHeight,
+              behavior: "smooth",
+            });
+          } else {
+            scrollIntoViewIfNeeded(item, this._scrollContainer, { block: "nearest", behavior: "smooth" });
+          }
           this._activeIndicator.style.top = `${item.offsetTop}px`;
           this._activeIndicator.style.height = `${item.clientHeight}px`;
           this._activeIndicator.style.visibility = item.clientHeight == 0 ? "hidden" : "";
@@ -307,19 +339,23 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="header">
-        <div class="overline">
-          <slot name="overline" @slotchange="${this.#handleOverlineSlotChange}"></slot>
+    return html`<div class="base">
+      <div class="scroll-container">
+        <div class="header">
+          <div class="overline">
+            <slot name="overline" @slotchange="${this.#handleOverlineSlotChange}"></slot>
+          </div>
+          <div class="title">
+            <slot name="title" @slotchange="${this.#handleTitleSlotChange}"></slot>
+          </div>
         </div>
-        <div class="title">
-          <slot name="title" @slotchange="${this.#handleTitleSlotChange}"></slot>
-        </div>
+        <slot></slot>
+        <ul class="list">
+          ${this._toc.map((x) => this.#renderNode(x))}
+        </ul>
+        <div class="active-indicator" aria-hidden="true"></div>
       </div>
-      <slot></slot>
-      <ul class="list">
-        ${this._toc.map((x) => this.#renderNode(x))}
-      </ul>
-      <div class="active-indicator" aria-hidden="true"></div>`;
+    </div>`;
   }
 
   /** @private */

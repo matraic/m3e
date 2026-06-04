@@ -50,24 +50,27 @@ import "@m3e/web/toc";
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                        | Description                                      |
-| ----------------------------------------------- | ------------------------------------------------ |
-| `--m3e-toc-width`                               | Width of the table of contents.                  |
-| `--m3e-toc-item-shape`                          | Border radius of TOC items and active indicator. |
-| `--m3e-toc-active-indicator-color`              | Border color of the active indicator.            |
-| `--m3e-toc-active-indicator-animation-duration` | Animation duration for the active indicator.     |
-| `--m3e-toc-item-padding`                        | Inline padding for TOC items and header.         |
-| `--m3e-toc-header-space`                        | Block space below and between header elements.   |
-| `--m3e-toc-overline-font-size`                  | Font size for the overline slot.                 |
-| `--m3e-toc-overline-font-weight`                | Font weight for the overline slot.               |
-| `--m3e-toc-overline-line-height`                | Line height for the overline slot.               |
-| `--m3e-toc-overline-tracking`                   | Letter spacing for the overline slot.            |
-| `--m3e-toc-overline-color`                      | Text color for the overline slot.                |
-| `--m3e-toc-title-font-size`                     | Font size for the title slot.                    |
-| `--m3e-toc-title-font-weight`                   | Font weight for the title slot.                  |
-| `--m3e-toc-title-line-height`                   | Line height for the title slot.                  |
-| `--m3e-toc-title-tracking`                      | Letter spacing for the title slot.               |
-| `--m3e-toc-title-color`                         | Text color for the title slot.                   |
+| Property                                        | Description                                          |
+| ----------------------------------------------- | ---------------------------------------------------- |
+| `--m3e-toc-width`                               | Width of the table of contents.                      |
+| `--m3e-toc-container-color`                     | Background color of the table of contents container. |
+| `--m3e-toc-container-padding-inline`            | Inline padding of the table of contents container.   |
+| `--m3e-toc-container-padding-block`             | Block padding of the table of contents container.    |
+| `--m3e-toc-item-shape`                          | Border radius of TOC items and active indicator.     |
+| `--m3e-toc-active-indicator-color`              | Border color of the active indicator.                |
+| `--m3e-toc-active-indicator-animation-duration` | Animation duration for the active indicator.         |
+| `--m3e-toc-item-padding`                        | Inline padding for TOC items and header.             |
+| `--m3e-toc-header-space`                        | Block space below and between header elements.       |
+| `--m3e-toc-overline-font-size`                  | Font size for the overline slot.                     |
+| `--m3e-toc-overline-font-weight`                | Font weight for the overline slot.                   |
+| `--m3e-toc-overline-line-height`                | Line height for the overline slot.                   |
+| `--m3e-toc-overline-tracking`                   | Letter spacing for the overline slot.                |
+| `--m3e-toc-overline-color`                      | Text color for the overline slot.                    |
+| `--m3e-toc-title-font-size`                     | Font size for the title slot.                        |
+| `--m3e-toc-title-font-weight`                   | Font weight for the title slot.                      |
+| `--m3e-toc-title-line-height`                   | Line height for the title slot.                      |
+| `--m3e-toc-title-tracking`                      | Letter spacing for the title slot.                   |
+| `--m3e-toc-title-color`                         | Text color for the title slot.                       |
 
 ### 🗂️ m3e-toc-item
 
