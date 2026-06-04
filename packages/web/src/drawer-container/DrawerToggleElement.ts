@@ -89,13 +89,19 @@ export class M3eDrawerToggleElement extends HtmlFor(ActionElementBase) {
     if (container) {
       this.#togglingDrawer = true;
       try {
+        let changed = false;
         if (this.control.slot === "start") {
           container.start = !container.start;
+          changed = true;
         } else if (this.control.slot === "end") {
           container.end = !container.end;
+          changed = true;
         }
         if (container.isUpdatePending) {
           await container.updateComplete;
+        }
+        if (changed) {
+          container.dispatchEvent(new Event("change", { bubbles: true }));
         }
         await this.#updateToggle(container, false);
       } finally {

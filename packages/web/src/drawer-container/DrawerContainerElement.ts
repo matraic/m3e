@@ -155,12 +155,10 @@ export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInterna
     if (changedProperties.has("start")) {
       if (this.start && this.end && this._endMode !== "side") {
         this.end = false;
-        this.dispatchEvent(new Event("change", { bubbles: true }));
       }
     } else if (changedProperties.has("end")) {
       if (this.end && this.start && this._startMode !== "side") {
         this.start = false;
-        this.dispatchEvent(new Event("change", { bubbles: true }));
       }
     }
   }
@@ -270,7 +268,7 @@ export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInterna
   }
 
   /** @inheritdoc */
-  #updateMode(breakpoints?: Map<string, boolean>, autoClose = false) {
+  async #updateMode(breakpoints?: Map<string, boolean>, autoClose = false): Promise<void> {
     let autoCloseStart = false,
       autoCloseEnd = false;
     if (this.startMode === "auto") {
@@ -318,6 +316,9 @@ export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInterna
         this.end = false;
       }
 
+      if (this.isUpdatePending) {
+        await this.updateComplete;
+      }
       this.dispatchEvent(new Event("change", { bubbles: true }));
     }
   }
