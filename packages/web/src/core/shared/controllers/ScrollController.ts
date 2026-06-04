@@ -61,7 +61,7 @@ export class ScrollController extends MonitorControllerBase {
       for (const ancestor of this.#scrollContainers.get(target)!) {
         (ancestor === document.documentElement ? document : ancestor).removeEventListener(
           "scroll",
-          this.#scrollHandler
+          this.#scrollHandler,
         );
       }
       this.#scrollContainers.delete(target);
@@ -69,12 +69,39 @@ export class ScrollController extends MonitorControllerBase {
   }
 
   /** @private */
+  #getShadowScrollContainer(element: Element): Element | null {
+    const root = element.shadowRoot;
+    if (!root) return null;
+
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT);
+
+    let node: Node | null = walker.currentNode;
+    while (node) {
+      if (node instanceof Element && this.#isScrollable(node)) return node;
+      node = walker.nextNode();
+    }
+
+    return null;
+  }
+
+  /** @private */
+  #isScrollable(element: Element): boolean {
+    const style = getComputedStyle(element);
+    return /(auto|scroll)/.test(style.overflow + style.overflowY + style.overflowX);
+  }
+
+  /** @private */
   #getScrollContainers(element: Element): Element[] {
     const ancestors = new Array<Element>();
+
+    const shadowScrollContainer = this.#getShadowScrollContainer(element);
+    if (shadowScrollContainer) {
+      ancestors.push(shadowScrollContainer);
+    }
+
     let ancestor: Element | null = element;
     while (ancestor) {
-      const style = getComputedStyle(ancestor);
-      if (/(auto|scroll)/.test(style.overflow + style.overflowY + style.overflowX)) {
+      if (this.#isScrollable(ancestor)) {
         ancestors.push(ancestor);
       }
       ancestor = ancestor.parentElement;
