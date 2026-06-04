@@ -30,149 +30,147 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core-a11y.min.js",
-          "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core-anchoring.min.js",
-          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core-bidi.min.js",
-          "@m3e/web/core/platform": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core-platform.min.js",
-          "@m3e/web/form-field": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/form-field.min.js",
-          "@m3e/web/select": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/select.min.js",
-          "@m3e/web/option": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/option.min.js",
-          "@m3e/web/icon-button": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/icon-button.min.js",
-          "@m3e/web/tooltip": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/tooltip.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-a11y.min.js",
+          "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-anchoring.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-bidi.min.js",
+          "@m3e/web/core/platform": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-platform.min.js",
+          "@m3e/web/form-field": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/form-field.min.js",
+          "@m3e/web/select": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/select.min.js",
+          "@m3e/web/option": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/option.min.js",
+          "@m3e/web/icon-button": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/icon-button.min.js",
+          "@m3e/web/tooltip": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/tooltip.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/toc.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/paginator.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/content-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/paginator.min.js"></script>
     <script src="../main.js"></script>
   </head>
-  <body id="body">
-    <m3e-theme strong-focus>
-      <m3e-toc class="toc" for="body">
-        <span slot="overline">On this page</span>
-        <span slot="title">Paginator</span>
-      </m3e-toc>
+  <body>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Paginator</m3e-heading>
+        <p>
+          The <code>m3e-paginator</code> component is a compact, accessible paginator control for navigating paged data
+          sets. It provides semantic first/previous/next/last navigation controls and an optional page-size selector.
+        </p>
+        <m3e-card variant="outlined" class="install"><pre slot="content">import "@m3e/web/paginator";</pre></m3e-card>
 
-      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Paginator</m3e-heading>
-      <p>
-        The <code>m3e-paginator</code> component is a compact, accessible paginator control for navigating paged data
-        sets. It provides semantic first/previous/next/last navigation controls and an optional page-size selector.
-      </p>
-      <m3e-card variant="filled" class="install"><pre slot="content">import "@m3e/web/paginator";</pre></m3e-card>
+        <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+        <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
 
-      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
-      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+        <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+        <p>
+          At minimum, you must specify the total number of items being paged and the page size. Use the
+          <code>length</code> and <code>page-size</code> attributes of the <code>m3e-paginator</code> component,
+          respectively. By default, <code>page-size</code> is set to 50.
+        </p>
+        <p>
+          When a user interacts with the paginator, it emits a <code>page</code> event. This event can be used to update
+          any associated data view and includes the following properties:
+        </p>
+        <ul>
+          <li><strong>pageIndex</strong>: <em>number</em> — The zero-based index of the current page.</li>
+          <li>
+            <strong>previousPageIndex</strong>: <em>number</em> (optional) — The zero-based index of the previously
+            selected page.
+          </li>
+          <li><strong>pageSize</strong>: <em>number | "all"</em> — The current page size.</li>
+          <li><strong>length</strong>: <em>number</em> — The total number of items being paged.</li>
+        </ul>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-paginator length="100"></m3e-paginator>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">&lt;m3e-paginator length=&quot;100&quot;&gt;&lt;/m3e-paginator&gt;</pre>
+        </m3e-card>
 
-      <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
-      <p>
-        At minimum, you must specify the total number of items being paged and the page size. Use the
-        <code>length</code> and <code>page-size</code> attributes of the <code>m3e-paginator</code> component,
-        respectively. By default, <code>page-size</code> is set to 50.
-      </p>
-      <p>
-        When a user interacts with the paginator, it emits a <code>page</code> event. This event can be used to update
-        any associated data view and includes the following properties:
-      </p>
-      <ul>
-        <li><strong>pageIndex</strong>: <em>number</em> — The zero-based index of the current page.</li>
-        <li>
-          <strong>previousPageIndex</strong>: <em>number</em> (optional) — The zero-based index of the previously
-          selected page.
-        </li>
-        <li><strong>pageSize</strong>: <em>number | "all"</em> — The current page size.</li>
-        <li><strong>length</strong>: <em>number</em> — The total number of items being paged.</li>
-      </ul>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-paginator length="100"></m3e-paginator>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">&lt;m3e-paginator length=&quot;100&quot;&gt;&lt;/m3e-paginator&gt;</pre>
-      </m3e-card>
-
-      <m3e-heading variant="headline" size="small" level="3">Page sizes</m3e-heading>
-      <p>
-        The <code>page-sizes</code> attribute lets you define which page size options are available to users. It accepts
-        a comma-separated list of values and may include <code>"all"</code>. By default, <code>page-sizes</code> is set
-        to <code>"5,10,25,50,100"</code>.
-      </p>
-      <p>
-        The current <code>page-size</code> will always appear in the dropdown, event if its not included in
-        <code>page-sizes</code>.
-      </p>
-      <p>
-        When <code>page-size</code> is set to <code>"all"</code>, the range label and navigation actions are hidden.
-      </p>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-paginator length="100" page-sizes="10,50,all" page-size="all"></m3e-paginator>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+        <m3e-heading variant="headline" size="small" level="3">Page sizes</m3e-heading>
+        <p>
+          The <code>page-sizes</code> attribute lets you define which page size options are available to users. It
+          accepts a comma-separated list of values and may include <code>"all"</code>. By default,
+          <code>page-sizes</code> is set to <code>"5,10,25,50,100"</code>.
+        </p>
+        <p>
+          The current <code>page-size</code> will always appear in the dropdown, event if its not included in
+          <code>page-sizes</code>.
+        </p>
+        <p>
+          When <code>page-size</code> is set to <code>"all"</code>, the range label and navigation actions are hidden.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-paginator length="100" page-sizes="10,50,all" page-size="all"></m3e-paginator>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;m3e-paginator length=&quot;100&quot; page-sizes=&quot;10,50,all&quot; page-size=&quot;all&quot;&gt;&lt;/m3e-paginator&gt;</pre
-        >
-      </m3e-card>
+          >
+        </m3e-card>
 
-      <m3e-heading variant="headline" size="small" level="3">Navigation actions</m3e-heading>
-      <p>
-        By default, the first and last page buttons are hidden. Use the <code>show-first-last-buttons</code> attribute
-        to show them.
-      </p>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-paginator length="100" show-first-last-buttons></m3e-paginator>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+        <m3e-heading variant="headline" size="small" level="3">Navigation actions</m3e-heading>
+        <p>
+          By default, the first and last page buttons are hidden. Use the <code>show-first-last-buttons</code> attribute
+          to show them.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-paginator length="100" show-first-last-buttons></m3e-paginator>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;m3e-paginator length=&quot;100&quot; show-first-last-buttons&gt;&lt;/m3e-paginator&gt;</pre
-        >
-      </m3e-card>
+          >
+        </m3e-card>
 
-      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
-      <p>
-        The paginator uses ARIA <code>role="group"</code> to semantically group its child controls. You must add an
-        <code>aria-label</code> or <code>aria-labelledby</code> attribute to each <code>m3e-paginator</code> with a
-        label that describes the content controlled by the pagination control.
-      </p>
-      <p>
-        You can use the <code>first-page-label</code>, <code>previous-page-label</code>, <code>next-page-label</code>,
-        and <code>last-page-label</code> attributes to change the accessible labels of navigation actions.
-      </p>
+        <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+        <p>
+          The paginator uses ARIA <code>role="group"</code> to semantically group its child controls. You must add an
+          <code>aria-label</code> or <code>aria-labelledby</code> attribute to each <code>m3e-paginator</code> with a
+          label that describes the content controlled by the pagination control.
+        </p>
+        <p>
+          You can use the <code>first-page-label</code>, <code>previous-page-label</code>, <code>next-page-label</code>,
+          and <code>last-page-label</code> attributes to change the accessible labels of navigation actions.
+        </p>
 
-      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
-      <p>
-        The <code>@m3e/web</code> package uses
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
-          target="_blank"
-          >JavaScript Modules</a
-        >. To use it directly in a browser without a bundler, use a module script similar to the following.
-      </p>
+        <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package uses
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+            target="_blank"
+            >JavaScript Modules</a
+          >. To use it directly in a browser without a bundler, use a module script similar to the following.
+        </p>
 
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/paginator.js&quot;&gt;&lt;/script&gt;</pre
-        >
-      </m3e-card>
-      <p>
-        In addition, you must use an
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
-          target="_blank"
-          >import map</a
-        >
-        to include additional dependencies.
-      </p>
-      <m3e-card variant="filled" class="install">
-        <pre slot="content">
+          >
+        </m3e-card>
+        <p>
+          In addition, you must use an
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+            target="_blank"
+            >import map</a
+          >
+          to include additional dependencies.
+        </p>
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
 &lt;script type=&quot;importmap&quot;&gt;
   {
     &quot;imports&quot;: {
@@ -198,20 +196,27 @@
     }
   }
 &lt;/script&gt;</pre
-        >
-      </m3e-card>
-      <p>For production builds, use the minified files to ensure optimal load performance.</p>
+          >
+        </m3e-card>
+        <p>For production builds, use the minified files to ensure optimal load performance.</p>
 
-      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
-      <p>
-        The <code>@m3e/web</code> package includes a
-        <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank">Custom Elements Manifest</a>
-        (<code>custom-elements.json</code>), which documents the properties, attributes, slots, events and CSS custom
-        properties of each component.
-      </p>
-      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
-      <api-viewer only="m3e-paginator" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/custom-elements.json">
-      </api-viewer>
-    </m3e-theme>
+        <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package includes a
+          <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank"
+            >Custom Elements Manifest</a
+          >
+          (<code>custom-elements.json</code>), which documents the properties, attributes, slots, events and CSS custom
+          properties of each component.
+        </p>
+        <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+        <api-viewer only="m3e-paginator" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/custom-elements.json">
+        </api-viewer>
+      </m3e-content-pane>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Paginator</span>
+      </m3e-toc>
+    </div>
   </body>
 </html>

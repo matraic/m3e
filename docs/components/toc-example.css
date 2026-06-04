@@ -1,3 +1,6 @@
+:root {
+  --md-sys-color-background: var(--md-sys-color-surface-container-lowest);
+}
 html {
   overflow-y: auto;
 }

@@ -30,66 +30,67 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core-a11y.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-a11y.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-bidi.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/icon.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/toc.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/button.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/icon-button.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/button-group.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/content-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/icon.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/button.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/icon-button.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/button-group.min.js"></script>
     <script src="../main.js"></script>
   </head>
-  <body id="body">
-    <m3e-theme strong-focus>
-      <m3e-toc class="toc" for="body">
-        <span slot="overline">On this page</span>
-        <span slot="title">Button Group</span>
-      </m3e-toc>
+  <body>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Button Group</m3e-heading>
+        <p>The <code>m3e-button-group</code> component arranges multiple into a unified, expressive layout.</p>
 
-      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Button Group</m3e-heading>
-      <p>The <code>m3e-button-group</code> component arranges multiple into a unified, expressive layout.</p>
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">import "@m3e/web/button-group";</pre>
+        </m3e-card>
 
-      <m3e-card variant="filled" class="install"><pre slot="content">import "@m3e/web/button-group";</pre></m3e-card>
+        <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+        <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
 
-      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
-      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
-
-      <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
-      <p>
-        There are two appearance variants: <code>standard</code> (default) and <code>connected</code>. Use the
-        <code>variant</code> attribute to change the appearance.
-      </p>
-      <p>Standard button groups add interaction between adjacent buttons</p>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-button-group>
-            <m3e-icon-button>
-              <m3e-icon name="arrow_back"></m3e-icon>
-            </m3e-icon-button>
-            <m3e-icon-button>
-              <m3e-icon name="arrow_forward"></m3e-icon>
-            </m3e-icon-button>
-            <m3e-icon-button width="wide" variant="filled">
-              <m3e-icon name="add"></m3e-icon>
-            </m3e-icon-button>
-            <m3e-icon-button>
-              <m3e-icon name="picture_in_picture"></m3e-icon>
-            </m3e-icon-button>
-            <m3e-icon-button>
-              <m3e-icon name="more_vert"></m3e-icon>
-            </m3e-icon-button>
-          </m3e-button-group>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+        <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+        <p>
+          There are two appearance variants: <code>standard</code> (default) and <code>connected</code>. Use the
+          <code>variant</code> attribute to change the appearance.
+        </p>
+        <p>Standard button groups add interaction between adjacent buttons</p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-button-group>
+              <m3e-icon-button>
+                <m3e-icon name="arrow_back"></m3e-icon>
+              </m3e-icon-button>
+              <m3e-icon-button>
+                <m3e-icon name="arrow_forward"></m3e-icon>
+              </m3e-icon-button>
+              <m3e-icon-button width="wide" variant="filled">
+                <m3e-icon name="add"></m3e-icon>
+              </m3e-icon-button>
+              <m3e-icon-button>
+                <m3e-icon name="picture_in_picture"></m3e-icon>
+              </m3e-icon-button>
+              <m3e-icon-button>
+                <m3e-icon name="more_vert"></m3e-icon>
+              </m3e-icon-button>
+            </m3e-button-group>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;m3e-button-group&gt;
   &lt;m3e-icon-button&gt;
     &lt;m3e-icon name=&quot;arrow_back&quot;&gt;&lt;/m3e-icon&gt;
@@ -107,77 +108,77 @@
     &lt;m3e-icon name=&quot;more_vert&quot;&gt;&lt;/m3e-icon&gt;
   &lt;/m3e-icon-button&gt;
 &lt;/m3e-button-group&gt;</pre
-        >
-      </m3e-card>
-      <p>
-        Connected button groups behave similarly to standard groups, except they don't affect adjacent buttons and fill
-        available space.
-      </p>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-button-group variant="connected">
-            <m3e-button variant="tonal" toggle>Start</m3e-button>
-            <m3e-button variant="tonal" toggle>Directions</m3e-button>
-            <m3e-button variant="tonal" toggle>Share</m3e-button>
-          </m3e-button-group>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+          >
+        </m3e-card>
+        <p>
+          Connected button groups behave similarly to standard groups, except they don't affect adjacent buttons and
+          fill available space.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-button-group variant="connected">
+              <m3e-button variant="tonal" toggle>Start</m3e-button>
+              <m3e-button variant="tonal" toggle>Directions</m3e-button>
+              <m3e-button variant="tonal" toggle>Share</m3e-button>
+            </m3e-button-group>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;m3e-button-group variant=&quot;connected&quot;&gt;
   &lt;m3e-button variant=&quot;tonal&quot; toggle&gt;Start&lt;/m3e-button&gt;
   &lt;m3e-button variant=&quot;tonal&quot; toggle&gt;Directions&lt;/m3e-button&gt;
   &lt;m3e-button variant=&quot;tonal&quot; toggle&gt;Share&lt;/m3e-button&gt;
 &lt;/m3e-button-group&gt;</pre
-        >
-      </m3e-card>
-      <p>Icon buttons will also grow to fill available space.</p>
-      <m3e-card variant="outlined" class="example">
-        <div slot="content">
-          <m3e-button-group variant="connected">
-            <m3e-icon-button variant="tonal" toggle>
-              <m3e-icon name="format_bold"></m3e-icon>
-            </m3e-icon-button>
-            <m3e-icon-button variant="tonal" toggle>
-              <m3e-icon name="format_italic"></m3e-icon>
-            </m3e-icon-button>
-            <m3e-icon-button variant="tonal" toggle>
-              <m3e-icon name="format_underlined"></m3e-icon>
-            </m3e-icon-button>
-          </m3e-button-group>
-        </div>
-      </m3e-card>
+          >
+        </m3e-card>
+        <p>Icon buttons will also grow to fill available space.</p>
+        <m3e-card variant="outlined" class="example">
+          <div slot="content">
+            <m3e-button-group variant="connected">
+              <m3e-icon-button variant="tonal" toggle>
+                <m3e-icon name="format_bold"></m3e-icon>
+              </m3e-icon-button>
+              <m3e-icon-button variant="tonal" toggle>
+                <m3e-icon name="format_italic"></m3e-icon>
+              </m3e-icon-button>
+              <m3e-icon-button variant="tonal" toggle>
+                <m3e-icon name="format_underlined"></m3e-icon>
+              </m3e-icon-button>
+            </m3e-button-group>
+          </div>
+        </m3e-card>
 
-      <m3e-heading variant="headline" size="small" level="3">Sizes</m3e-heading>
-      <p>
-        There are five size variants used to control spacing between button:
-        <code>extra-small</code>, <code>small</code> (default), <code>medium</code>, <code>large</code>, and
-        <code>extra-large</code>. Use the <code>size</code> attribute control spacing. To create buttons with a uniform
-        size, set each button's <code>size</code> to the same size as the button group.
-      </p>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-button-group size="large">
-            <m3e-icon-button size="large">
-              <m3e-icon name="arrow_back"></m3e-icon>
-            </m3e-icon-button>
-            <m3e-icon-button size="large">
-              <m3e-icon name="arrow_forward"></m3e-icon>
-            </m3e-icon-button>
-            <m3e-icon-button size="large" width="wide" variant="filled">
-              <m3e-icon name="add"></m3e-icon>
-            </m3e-icon-button>
-            <m3e-icon-button size="large">
-              <m3e-icon name="picture_in_picture"></m3e-icon>
-            </m3e-icon-button>
-            <m3e-icon-button size="large">
-              <m3e-icon name="more_vert"></m3e-icon>
-            </m3e-icon-button>
-          </m3e-button-group>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+        <m3e-heading variant="headline" size="small" level="3">Sizes</m3e-heading>
+        <p>
+          There are five size variants used to control spacing between button:
+          <code>extra-small</code>, <code>small</code> (default), <code>medium</code>, <code>large</code>, and
+          <code>extra-large</code>. Use the <code>size</code> attribute control spacing. To create buttons with a
+          uniform size, set each button's <code>size</code> to the same size as the button group.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-button-group size="large">
+              <m3e-icon-button size="large">
+                <m3e-icon name="arrow_back"></m3e-icon>
+              </m3e-icon-button>
+              <m3e-icon-button size="large">
+                <m3e-icon name="arrow_forward"></m3e-icon>
+              </m3e-icon-button>
+              <m3e-icon-button size="large" width="wide" variant="filled">
+                <m3e-icon name="add"></m3e-icon>
+              </m3e-icon-button>
+              <m3e-icon-button size="large">
+                <m3e-icon name="picture_in_picture"></m3e-icon>
+              </m3e-icon-button>
+              <m3e-icon-button size="large">
+                <m3e-icon name="more_vert"></m3e-icon>
+              </m3e-icon-button>
+            </m3e-button-group>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;m3e-button-group size=&quot;large&quot;&gt;
   &lt;m3e-icon-button size=&quot;large&quot;&gt;
     &lt;m3e-icon name=&quot;arrow_back&quot;&gt;&lt;/m3e-icon&gt;
@@ -195,49 +196,49 @@
     &lt;m3e-icon name=&quot;more_vert&quot;&gt;&lt;/m3e-icon&gt;
   &lt;/m3e-icon-button&gt;
 &lt;/m3e-button-group&gt;</pre
-        >
-      </m3e-card>
-      <p>Connected button groups always have the same spacing between buttons, regardless of size.</p>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-button-group size="large" variant="connected">
-            <m3e-button variant="tonal" size="large" toggle>Start</m3e-button>
-            <m3e-button variant="tonal" size="large" toggle>Directions</m3e-button>
-            <m3e-button variant="tonal" size="large" toggle>Share</m3e-button>
-          </m3e-button-group>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+          >
+        </m3e-card>
+        <p>Connected button groups always have the same spacing between buttons, regardless of size.</p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-button-group size="large" variant="connected">
+              <m3e-button variant="tonal" size="large" toggle>Start</m3e-button>
+              <m3e-button variant="tonal" size="large" toggle>Directions</m3e-button>
+              <m3e-button variant="tonal" size="large" toggle>Share</m3e-button>
+            </m3e-button-group>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;m3e-button-group size=&quot;large&quot; variant=&quot;connected&quot;&gt;
   &lt;m3e-button variant=&quot;tonal&quot; size=&quot;large&quot; toggle&gt;Start&lt;/m3e-button&gt;
   &lt;m3e-button variant=&quot;tonal&quot; size=&quot;large&quot; toggle&gt;Directions&lt;/m3e-button&gt;
   &lt;m3e-button variant=&quot;tonal&quot; size=&quot;large&quot; toggle&gt;Share&lt;/m3e-button&gt;
 &lt;/m3e-button-group&gt;</pre
-        >
-      </m3e-card>
-      <m3e-heading variant="headline" size="small" level="3">Selection</m3e-heading>
-      <p>
-        Button groups containing toggle buttons support both single-select and multi-select modes. Use the
-        <code>multi</code> attribute to allow multiple toggle buttons to be selected simultaneously.
-      </p>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-button-group multi>
-            <m3e-icon-button variant="tonal" toggle>
-              <m3e-icon name="format_bold"></m3e-icon>
-            </m3e-icon-button>
-            <m3e-icon-button variant="tonal" toggle>
-              <m3e-icon name="format_italic"></m3e-icon>
-            </m3e-icon-button>
-            <m3e-icon-button variant="tonal" toggle>
-              <m3e-icon name="format_underlined"></m3e-icon>
-            </m3e-icon-button>
-          </m3e-button-group>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+          >
+        </m3e-card>
+        <m3e-heading variant="headline" size="small" level="3">Selection</m3e-heading>
+        <p>
+          Button groups containing toggle buttons support both single-select and multi-select modes. Use the
+          <code>multi</code> attribute to allow multiple toggle buttons to be selected simultaneously.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-button-group multi>
+              <m3e-icon-button variant="tonal" toggle>
+                <m3e-icon name="format_bold"></m3e-icon>
+              </m3e-icon-button>
+              <m3e-icon-button variant="tonal" toggle>
+                <m3e-icon name="format_italic"></m3e-icon>
+              </m3e-icon-button>
+              <m3e-icon-button variant="tonal" toggle>
+                <m3e-icon name="format_underlined"></m3e-icon>
+              </m3e-icon-button>
+            </m3e-button-group>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;m3e-button-group multi&gt;
   &lt;m3e-icon-button variant=&quot;tonal&quot; toggle&gt;
     &lt;m3e-icon name=&quot;format_bold&quot;&gt;&lt;/m3e-icon&gt;
@@ -249,56 +250,57 @@
     &lt;m3e-icon name=&quot;format_underlined&quot;&gt;&lt;/m3e-icon&gt;
   &lt;/m3e-icon-button&gt;
 &lt;/m3e-button-group&gt;</pre
-        >
-      </m3e-card>
+          >
+        </m3e-card>
 
-      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
-      <p>
-        By default, button groups are given the ARIA role <code>group</code>, indicating a set of related user interface
-        elements that are grouped together. For a single-select group containing one or more toggle buttons, button
-        groups are given the ARIA role <code>radiogroup</code> and buttons are given the role <code>radio</code>.
-      </p>
-      <p>
-        Always provide an accessible label via <code>aria-label</code> or <code>aria-labelledby</code> for each button
-        group.
-      </p>
+        <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+        <p>
+          By default, button groups are given the ARIA role <code>group</code>, indicating a set of related user
+          interface elements that are grouped together. For a single-select group containing one or more toggle buttons,
+          button groups are given the ARIA role <code>radiogroup</code> and buttons are given the role
+          <code>radio</code>.
+        </p>
+        <p>
+          Always provide an accessible label via <code>aria-label</code> or <code>aria-labelledby</code> for each button
+          group.
+        </p>
 
-      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
-      <p>
-        The <code>@m3e/web</code> package uses
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
-          target="_blank"
-          >JavaScript Modules</a
-        >. To use it directly in a browser without a bundler, use a module script similar to the following.
-      </p>
+        <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package uses
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+            target="_blank"
+            >JavaScript Modules</a
+          >. To use it directly in a browser without a bundler, use a module script similar to the following.
+        </p>
 
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/button-group.js&quot;&gt;&lt;/script&gt;</pre
-        >
-      </m3e-card>
-      <p>
-        You also need a module script for <code>@m3e/button</code> and <code>@m3e/icon-button</code> due to being a
-        dependency.
-      </p>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+          >
+        </m3e-card>
+        <p>
+          You also need a module script for <code>@m3e/button</code> and <code>@m3e/icon-button</code> due to being a
+          dependency.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/button.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/icon-button.js&quot;&gt;&lt;/script&gt;</pre
-        >
-      </m3e-card>
-      <p>
-        In addition, you must use an
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
-          target="_blank"
-          >import map</a
-        >
-        to include additional dependencies.
-      </p>
-      <m3e-card variant="filled" class="install">
-        <pre slot="content">
+          >
+        </m3e-card>
+        <p>
+          In addition, you must use an
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+            target="_blank"
+            >import map</a
+          >
+          to include additional dependencies.
+        </p>
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
 &lt;script type=&quot;importmap&quot;&gt;
   {
     &quot;imports&quot;: {
@@ -315,20 +317,27 @@
     }
   }
 &lt;/script&gt;</pre
-        >
-      </m3e-card>
-      <p>For production builds, use the minified files to ensure optimal load performance.</p>
+          >
+        </m3e-card>
+        <p>For production builds, use the minified files to ensure optimal load performance.</p>
 
-      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
-      <p>
-        The <code>@m3e/web</code> package includes a
-        <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank">Custom Elements Manifest</a>
-        (<code>custom-elements.json</code>), which documents the properties, attributes, slots, events and CSS custom
-        properties of each component.
-      </p>
-      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
-      <api-viewer only="m3e-button-group" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/custom-elements.json">
-      </api-viewer>
-    </m3e-theme>
+        <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package includes a
+          <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank"
+            >Custom Elements Manifest</a
+          >
+          (<code>custom-elements.json</code>), which documents the properties, attributes, slots, events and CSS custom
+          properties of each component.
+        </p>
+        <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+        <api-viewer only="m3e-button-group" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/custom-elements.json">
+        </api-viewer>
+      </m3e-content-pane>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Button Group</span>
+      </m3e-toc>
+    </div>
   </body>
 </html>

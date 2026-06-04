@@ -2,6 +2,9 @@ api-viewer,
 api-viewer::part(tab-panel) {
   background: unset;
 }
+api-viewer {
+  background-color: var(--md-sys-color-surface);
+}
 api-viewer::part(tab-panel) {
   border-inline-start: 1px solid var(--md-sys-color-outline-variant);
 }
@@ -43,6 +46,7 @@ api-viewer::part(docs-tag) {
   border: none;
   background-color: var(--md-sys-color-surface-variant);
   text-shadow: 0 1px 1px var(--md-sys-color-surface-variant);
+  color: var(--md-sys-color-on-surface-variant);
   border-radius: 0.25rem;
   font-size: 0.875em;
 }

@@ -32,96 +32,94 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core-a11y.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-a11y.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/toc.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/shape.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/content-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/shape.min.js"></script>
     <script src="../main.js"></script>
   </head>
-  <body id="body">
-    <m3e-theme strong-focus>
-      <m3e-toc class="toc" for="body">
-        <span slot="overline">On this page</span>
-        <span slot="title">Shape</span>
-      </m3e-toc>
+  <body>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Shape</m3e-heading>
+        <p>
+          The <code>m3e-shape</code> component allows you to use abstract shapes thoughtfully to add emphasis and
+          decorative flair, including built-in shape morphing.
+        </p>
 
-      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Shape</m3e-heading>
-      <p>
-        The <code>m3e-shape</code> component allows you to use abstract shapes thoughtfully to add emphasis and
-        decorative flair, including built-in shape morphing.
-      </p>
+        <m3e-card variant="outlined" class="install"><pre slot="content">import "@m3e/web/shape";</pre></m3e-card>
 
-      <m3e-card variant="filled" class="install"><pre slot="content">import "@m3e/web/shape";</pre></m3e-card>
+        <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+        <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
 
-      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
-      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+        <m3e-heading variant="headline" size="small" level="3">Shapes</m3e-heading>
 
-      <m3e-heading variant="headline" size="small" level="3">Shapes</m3e-heading>
-
-      <p>
-        The <code>m3e-shape</code> allows you to easily use shapes from the
-        <a href="https://m3.material.io/styles/shape" target="_blank">Material Design 3 Shape Library</a> to to add
-        emphasis and decorative flair.
-      </p>
-      <p>
-        It supports 31 shapes, specified using the <code>name</code> attribute: <code>4-leaf-clover</code>
-        <code>4-sided-cookie</code>, <code>6-sided-cookie</code>, <code>7-sided-cookie</code>,
-        <code>8-leaf-clover</code>, <code>9-sided-cookie</code>, <code>12-sided-cookie</code>, <code>arch</code>,
-        <code>arrow</code>, <code>boom</code>, <code>bun</code>, <code>burst</code>, <code>circle</code>,
-        <code>diamond</code>, <code>fan</code>, <code>flower</code>, <code>gem</code>, <code>ghost-ish</code>,
-        <code>heart</code>, <code>hexagon</code>, <code>oval</code>, <code>pentagon</code>, <code>pill</code>,
-        <code>pixel-circle</code>, <code>pixel-triangle</code>, <code>puffy</code>, <code>puffy-diamond</code>,
-        <code>semicircle</code>, <code>slanted</code>, <code>soft-boom</code>, <code>soft-burst</code>,
-        <code>square</code>, <code>sunny</code>, <code>triangle</code>, and <code>very-sunny</code>.
-      </p>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-shape name="12-sided-cookie"></m3e-shape>
-          <m3e-shape name="9-sided-cookie"></m3e-shape>
-          <m3e-shape name="8-leaf-clover"></m3e-shape>
-          <m3e-shape name="7-sided-cookie"></m3e-shape>
-          <m3e-shape name="6-sided-cookie"></m3e-shape>
-          <m3e-shape name="4-sided-cookie"></m3e-shape>
-          <m3e-shape name="4-leaf-clover"></m3e-shape>
-          <br />
-          <m3e-shape name="arch"></m3e-shape>
-          <m3e-shape name="arrow"></m3e-shape>
-          <m3e-shape name="boom"></m3e-shape>
-          <m3e-shape name="bun"></m3e-shape>
-          <m3e-shape name="diamond"></m3e-shape>
-          <m3e-shape name="fan"></m3e-shape>
-          <m3e-shape name="flower"></m3e-shape>
-          <br />
-          <m3e-shape name="gem"></m3e-shape>
-          <m3e-shape name="ghost-ish"></m3e-shape>
-          <m3e-shape name="heart"></m3e-shape>
-          <m3e-shape name="hexagon"></m3e-shape>
-          <m3e-shape name="pentagon"></m3e-shape>
-          <m3e-shape name="pill"></m3e-shape>
-          <m3e-shape name="pixel-circle"></m3e-shape>
-          <br />
-          <m3e-shape name="pixel-triangle"></m3e-shape>
-          <m3e-shape name="puffy"></m3e-shape>
-          <m3e-shape name="puffy-diamond"></m3e-shape>
-          <m3e-shape name="semicircle"></m3e-shape>
-          <m3e-shape name="slanted"></m3e-shape>
-          <m3e-shape name="soft-boom"></m3e-shape>
-          <m3e-shape name="soft-burst"></m3e-shape>
-          <br />
-          <m3e-shape name="square"></m3e-shape>
-          <m3e-shape name="circle"></m3e-shape>
-          <m3e-shape name="triangle"></m3e-shape>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+        <p>
+          The <code>m3e-shape</code> allows you to easily use shapes from the
+          <a href="https://m3.material.io/styles/shape" target="_blank">Material Design 3 Shape Library</a> to to add
+          emphasis and decorative flair.
+        </p>
+        <p>
+          It supports 31 shapes, specified using the <code>name</code> attribute: <code>4-leaf-clover</code>
+          <code>4-sided-cookie</code>, <code>6-sided-cookie</code>, <code>7-sided-cookie</code>,
+          <code>8-leaf-clover</code>, <code>9-sided-cookie</code>, <code>12-sided-cookie</code>, <code>arch</code>,
+          <code>arrow</code>, <code>boom</code>, <code>bun</code>, <code>burst</code>, <code>circle</code>,
+          <code>diamond</code>, <code>fan</code>, <code>flower</code>, <code>gem</code>, <code>ghost-ish</code>,
+          <code>heart</code>, <code>hexagon</code>, <code>oval</code>, <code>pentagon</code>, <code>pill</code>,
+          <code>pixel-circle</code>, <code>pixel-triangle</code>, <code>puffy</code>, <code>puffy-diamond</code>,
+          <code>semicircle</code>, <code>slanted</code>, <code>soft-boom</code>, <code>soft-burst</code>,
+          <code>square</code>, <code>sunny</code>, <code>triangle</code>, and <code>very-sunny</code>.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-shape name="12-sided-cookie"></m3e-shape>
+            <m3e-shape name="9-sided-cookie"></m3e-shape>
+            <m3e-shape name="8-leaf-clover"></m3e-shape>
+            <m3e-shape name="7-sided-cookie"></m3e-shape>
+            <m3e-shape name="6-sided-cookie"></m3e-shape>
+            <m3e-shape name="4-sided-cookie"></m3e-shape>
+            <m3e-shape name="4-leaf-clover"></m3e-shape>
+            <br />
+            <m3e-shape name="arch"></m3e-shape>
+            <m3e-shape name="arrow"></m3e-shape>
+            <m3e-shape name="boom"></m3e-shape>
+            <m3e-shape name="bun"></m3e-shape>
+            <m3e-shape name="diamond"></m3e-shape>
+            <m3e-shape name="fan"></m3e-shape>
+            <m3e-shape name="flower"></m3e-shape>
+            <br />
+            <m3e-shape name="gem"></m3e-shape>
+            <m3e-shape name="ghost-ish"></m3e-shape>
+            <m3e-shape name="heart"></m3e-shape>
+            <m3e-shape name="hexagon"></m3e-shape>
+            <m3e-shape name="pentagon"></m3e-shape>
+            <m3e-shape name="pill"></m3e-shape>
+            <m3e-shape name="pixel-circle"></m3e-shape>
+            <br />
+            <m3e-shape name="pixel-triangle"></m3e-shape>
+            <m3e-shape name="puffy"></m3e-shape>
+            <m3e-shape name="puffy-diamond"></m3e-shape>
+            <m3e-shape name="semicircle"></m3e-shape>
+            <m3e-shape name="slanted"></m3e-shape>
+            <m3e-shape name="soft-boom"></m3e-shape>
+            <m3e-shape name="soft-burst"></m3e-shape>
+            <br />
+            <m3e-shape name="square"></m3e-shape>
+            <m3e-shape name="circle"></m3e-shape>
+            <m3e-shape name="triangle"></m3e-shape>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;m3e-shape name=&quot;12-sided-cookie&quot;&gt;&lt;/m3e-shape&gt;
 &lt;m3e-shape name=&quot;9-sided-cookie&quot;&gt;&lt;/m3e-shape&gt;
 &lt;m3e-shape name=&quot;8-leaf-clover&quot;&gt;&lt;/m3e-shape&gt;
@@ -157,37 +155,37 @@
 &lt;m3e-shape name=&quot;square&quot;&gt;&lt;/m3e-shape&gt;
 &lt;m3e-shape name=&quot;circle&quot;&gt;&lt;/m3e-shape&gt;
 &lt;m3e-shape name=&quot;triangle&quot;&gt;&lt;/m3e-shape&gt;</pre
-        >
-      </m3e-card>
+          >
+        </m3e-card>
 
-      <m3e-heading variant="headline" size="small" level="3">Images and video</m3e-heading>
-      <p>Nest images or videos inside a <code>m3e-shape</code> to clip them using the shape.</p>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-shape name="sunny" class="image-shape">
-            <img src="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480" />
-          </m3e-shape>
-          <m3e-shape name="sunny" class="image-shape">
-            <video
-              autoplay
-              loop
-              poster="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480"
-              preload="auto"
-            >
-              <source
-                src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.webm"
-                type="video/webm"
-              />
-              <source
-                src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.mp4"
-                type="video/mp4"
-              />
-            </video>
-          </m3e-shape>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+        <m3e-heading variant="headline" size="small" level="3">Images and video</m3e-heading>
+        <p>Nest images or videos inside a <code>m3e-shape</code> to clip them using the shape.</p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-shape name="sunny" class="image-shape">
+              <img src="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480" />
+            </m3e-shape>
+            <m3e-shape name="sunny" class="image-shape">
+              <video
+                autoplay
+                loop
+                poster="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480"
+                preload="auto"
+              >
+                <source
+                  src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.webm"
+                  type="video/webm"
+                />
+                <source
+                  src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </m3e-shape>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;m3e-shape name=&quot;sunny&quot;&gt;
   &lt;img src=&quot;https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480&quot; /&gt;
 &lt;/m3e-shape&gt;
@@ -208,53 +206,53 @@
     /&gt;
   &lt;/video&gt;
 &lt;/m3e-shape&gt;</pre
-        >
-      </m3e-card>
+          >
+        </m3e-card>
 
-      <m3e-heading variant="headline" size="small" level="3">Morphing</m3e-heading>
-      <p>
-        All shape paths are normalized to the same number of points allowing shapes to be morphed using CSS
-        <code>clip-path</code> transitions.
-      </p>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-shape id="morph"> </m3e-shape>
-        </div>
-      </m3e-card>
-      <br />
+        <m3e-heading variant="headline" size="small" level="3">Morphing</m3e-heading>
+        <p>
+          All shape paths are normalized to the same number of points allowing shapes to be morphed using CSS
+          <code>clip-path</code> transitions.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-shape id="morph"> </m3e-shape>
+          </div>
+        </m3e-card>
+        <br />
 
-      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
-      <p>
-        By default, shapes are not given an ARIA role, indicating that they are treated as neutral, non-semantic
-        elements in the accessibility tree unless explicitly referenced or annotated.
-      </p>
+        <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+        <p>
+          By default, shapes are not given an ARIA role, indicating that they are treated as neutral, non-semantic
+          elements in the accessibility tree unless explicitly referenced or annotated.
+        </p>
 
-      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
-      <p>
-        The <code>@m3e/web</code> package uses
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
-          target="_blank"
-          >JavaScript Modules</a
-        >. To use it directly in a browser without a bundler, use a module script similar to the following.
-      </p>
+        <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package uses
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+            target="_blank"
+            >JavaScript Modules</a
+          >. To use it directly in a browser without a bundler, use a module script similar to the following.
+        </p>
 
-      <m3e-card variant="filled" class="install">
-        <pre slot="content">
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
 &lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/shape.js&quot;&gt;&lt;/script&gt;</pre
-        >
-      </m3e-card>
-      <p>
-        In addition, you must use an
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
-          target="_blank"
-          >import map</a
-        >
-        to include dependencies.
-      </p>
-      <m3e-card variant="filled" class="install">
-        <pre slot="content">
+          >
+        </m3e-card>
+        <p>
+          In addition, you must use an
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+            target="_blank"
+            >import map</a
+          >
+          to include dependencies.
+        </p>
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
 &lt;script type=&quot;importmap&quot;&gt;
   {
     &quot;imports&quot;: {
@@ -271,20 +269,27 @@
     }
   }
 &lt;/script&gt;</pre
-        >
-      </m3e-card>
-      <p>For production builds, use the minified files to ensure optimal load performance.</p>
+          >
+        </m3e-card>
+        <p>For production builds, use the minified files to ensure optimal load performance.</p>
 
-      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
-      <p>
-        The <code>@m3e/web</code> package includes a
-        <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank">Custom Elements Manifest</a>
-        (<code>custom-elements.json</code>), which documents the properties, attributes, slots, events and CSS custom
-        properties of each component.
-      </p>
-      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
-      <api-viewer only="m3e-shape" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/custom-elements.json">
-      </api-viewer>
-    </m3e-theme>
+        <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package includes a
+          <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank"
+            >Custom Elements Manifest</a
+          >
+          (<code>custom-elements.json</code>), which documents the properties, attributes, slots, events and CSS custom
+          properties of each component.
+        </p>
+        <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+        <api-viewer only="m3e-shape" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/custom-elements.json">
+        </api-viewer>
+      </m3e-content-pane>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Shape</span>
+      </m3e-toc>
+    </div>
   </body>
 </html>

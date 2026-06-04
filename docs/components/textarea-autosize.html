@@ -30,62 +30,60 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core-a11y.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-a11y.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/form-field.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/toc.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/textarea-autosize.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/textarea-autosize.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/content-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/form-field.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/textarea-autosize.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/textarea-autosize.min.js"></script>
     <script src="../main.js"></script>
   </head>
-  <body id="body">
-    <m3e-theme strong-focus>
-      <m3e-toc class="toc" for="body">
-        <span slot="overline">On this page</span>
-        <span slot="title">Textarea Autosize</span>
-      </m3e-toc>
+  <body>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Textarea Autosize</m3e-heading>
+        <p>
+          The <code>m3e-textarea-autosize</code> component automatically adjusts the height of a linked
+          <code>textarea</code> to fit its content, preserving layout integrity and user experience. This non-visual
+          element listens to input changes and applies dynamic resizing, constrained by optional row limits.
+        </p>
 
-      <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Textarea Autosize</m3e-heading>
-      <p>
-        The <code>m3e-textarea-autosize</code> component automatically adjusts the height of a linked
-        <code>textarea</code> to fit its content, preserving layout integrity and user experience. This non-visual
-        element listens to input changes and applies dynamic resizing, constrained by optional row limits.
-      </p>
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">import "@m3e/web/textarea-autosize";</pre>
+        </m3e-card>
 
-      <m3e-card variant="filled" class="install">
-        <pre slot="content">import "@m3e/web/textarea-autosize";</pre>
-      </m3e-card>
+        <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+        <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
 
-      <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
-      <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
-
-      <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
-      <p>
-        Use the <code>m3e-textarea-autosize</code> component to make a <code>textarea</code> automatically resize to fit
-        its content. Use the <code>for</code> attribute to specify the <code>textarea</code> to autosize. The following
-        example illustrates use of the <code>m3e-textarea-autosize</code> alongside a <code>m3e-form-field</code>. See
-        <a href="../components/form-field.html">Form Field</a> for more information.
-      </p>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-form-field variant="filled">
-            <label slot="label" for="field">Textarea Autosize</label>
-            <textarea id="field">
+        <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+        <p>
+          Use the <code>m3e-textarea-autosize</code> component to make a <code>textarea</code> automatically resize to
+          fit its content. Use the <code>for</code> attribute to specify the <code>textarea</code> to autosize. The
+          following example illustrates use of the <code>m3e-textarea-autosize</code> alongside a
+          <code>m3e-form-field</code>. See <a href="../components/form-field.html">Form Field</a> for more information.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="filled">
+              <label slot="label" for="field">Textarea Autosize</label>
+              <textarea id="field">
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</textarea
-            >
-          </m3e-form-field>
-          <m3e-textarea-autosize for="field"></m3e-textarea-autosize>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+              >
+            </m3e-form-field>
+            <m3e-textarea-autosize for="field"></m3e-textarea-autosize>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;m3e-form-field variant=&quot;filled&quot;&gt;
   &lt;label slot=&quot;label&quot; for=&quot;field&quot;&gt;Textarea Autosize&lt;/label&gt;
   &lt;textarea id=&quot;field&quot;&gt;
@@ -93,27 +91,27 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
   &lt;/textarea&gt;
 &lt;/m3e-form-field&gt;
 &lt;m3e-textarea-autosize for=&quot;field&quot;&gt;&lt;/m3e-textarea-autosize&gt;</pre
-        >
-      </m3e-card>
+          >
+        </m3e-card>
 
-      <m3e-heading variant="headline" size="small" level="3">Min and max rows</m3e-heading>
-      <p>
-        Use the <code>min-rows</code> and <code>max-rows</code> attributes to control the minimum and maximum number of
-        rows for a <code>textarea</code>.
-      </p>
-      <m3e-card variant="outlined">
-        <div slot="content">
-          <m3e-form-field variant="filled">
-            <label slot="label" for="field2">Textarea Autosize</label>
-            <textarea id="field2">
+        <m3e-heading variant="headline" size="small" level="3">Min and max rows</m3e-heading>
+        <p>
+          Use the <code>min-rows</code> and <code>max-rows</code> attributes to control the minimum and maximum number
+          of rows for a <code>textarea</code>.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="filled">
+              <label slot="label" for="field2">Textarea Autosize</label>
+              <textarea id="field2">
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</textarea
-            >
-          </m3e-form-field>
-          <m3e-textarea-autosize for="field2" max-rows="5"></m3e-textarea-autosize>
-        </div>
-      </m3e-card>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+              >
+            </m3e-form-field>
+            <m3e-textarea-autosize for="field2" max-rows="5"></m3e-textarea-autosize>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;m3e-form-field variant=&quot;filled&quot;&gt;
   &lt;label slot=&quot;label&quot; for=&quot;field&quot;&gt;Textarea Autosize&lt;/label&gt;
   &lt;textarea id=&quot;field&quot;&gt;
@@ -121,49 +119,49 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
   &lt;/textarea&gt;
 &lt;/m3e-form-field&gt;
 &lt;m3e-textarea-autosize for=&quot;field&quot; max-rows=&quot;5&quot;&gt;&lt;/m3e-textarea-autosize&gt;</pre
-        >
-      </m3e-card>
+          >
+        </m3e-card>
 
-      <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
-      <p>Use the <code>disabled</code> attribute to disable autosize.</p>
-      <m3e-card variant="filled" class="example">
-        <pre slot="content">
+        <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+        <p>Use the <code>disabled</code> attribute to disable autosize.</p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 &lt;m3e-textarea-autosize for=&quot;field&quot; disabled&gt;&lt;/m3e-textarea-autosize&gt;</pre
-        >
-      </m3e-card>
+          >
+        </m3e-card>
 
-      <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
-      <p>
-        The component is given ARIA <code>role="none"</code> indicating the element is presentational and should be
-        ignored by assistive technologies.
-      </p>
+        <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+        <p>
+          The component is given ARIA <code>role="none"</code> indicating the element is presentational and should be
+          ignored by assistive technologies.
+        </p>
 
-      <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
-      <p>
-        The <code>@m3e/web</code> package uses
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
-          target="_blank"
-          >JavaScript Modules</a
-        >. To use it directly in a browser without a bundler, use a module script similar to the following.
-      </p>
+        <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package uses
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+            target="_blank"
+            >JavaScript Modules</a
+          >. To use it directly in a browser without a bundler, use a module script similar to the following.
+        </p>
 
-      <m3e-card variant="filled" class="install">
-        <pre slot="content">
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
 &lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/textarea-autosize.js&quot;&gt;&lt;/script&gt;</pre
-        >
-      </m3e-card>
-      <p>
-        In addition, you must use an
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
-          target="_blank"
-          >import map</a
-        >
-        to include dependencies.
-      </p>
-      <m3e-card variant="filled" class="install">
-        <pre slot="content">
+          >
+        </m3e-card>
+        <p>
+          In addition, you must use an
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+            target="_blank"
+            >import map</a
+          >
+          to include dependencies.
+        </p>
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
 &lt;script type=&quot;importmap&quot;&gt;
   {
     &quot;imports&quot;: {
@@ -180,22 +178,29 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
     }
   }
 &lt;/script&gt;</pre
-        >
-      </m3e-card>
-      <p>For production builds, use the minified files to ensure optimal load performance.</p>
+          >
+        </m3e-card>
+        <p>For production builds, use the minified files to ensure optimal load performance.</p>
 
-      <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
-      <p>
-        The <code>@m3e/web</code> package includes a
-        <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank">Custom Elements Manifest</a>
-        (<code>custom-elements.json</code>), which documents the properties, attributes, slots, events and CSS custom
-        properties of each component.
-      </p>
-      <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
-      <api-viewer
-        only="m3e-textarea-autosize"
-        src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/custom-elements.json"
-      ></api-viewer>
-    </m3e-theme>
+        <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package includes a
+          <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank"
+            >Custom Elements Manifest</a
+          >
+          (<code>custom-elements.json</code>), which documents the properties, attributes, slots, events and CSS custom
+          properties of each component.
+        </p>
+        <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+        <api-viewer
+          only="m3e-textarea-autosize"
+          src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/custom-elements.json"
+        ></api-viewer>
+      </m3e-content-pane>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Textarea Autosize</span>
+      </m3e-toc>
+    </div>
   </body>
 </html>

@@ -30,62 +30,70 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-bidi.min.js",
+          "@m3e/web/core/layout": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-layout.min.js"
         }
       }
     </script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/split-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/content-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/theme.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
-    <m3e-theme strong-focus>
-      <m3e-heading variant="display" size="large" level="1">Overview</m3e-heading>
-      <p>
-        Welcome to the <strong>M3E Showcase</strong>, a curated presentation of modular, accessible, and expressive
-        <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components" target="_blank">Web Components</a> built
-        with fidelity to Google's <a href="https://m3.material.io/" target="_blank">Material Design 3</a>. This library
-        provides a comprehensive suite of reusable components, each crafted to deliver seamless integration, consistent
-        theming, and intuitive user experiences.
-      </p>
-      <div class="card-grid">
-        <m3e-card>
-          <m3e-heading slot="header" variant="title" size="large">Expressive Components</m3e-heading>
-          <p slot="content">
-            Leverages Material 3's design tokens, dynamic color, shape and motion systems for highly customizable UI
-            elements.
-          </p>
-        </m3e-card>
-        <m3e-card>
-          <m3e-heading slot="header" variant="title" size="large">Unified Architecture</m3e-heading>
-          <p slot="content">ESM-first with modular entry points and tree-shaking for minimal bundles.</p>
-        </m3e-card>
-        <m3e-card>
-          <m3e-heading slot="header" variant="title" size="large">Accessibility First</m3e-heading>
-          <p slot="content">
-            Built-in support for accessibility standards, ensuring inclusive experiences for all users.
-          </p>
-        </m3e-card>
-        <m3e-card>
-          <m3e-heading slot="header" variant="title" size="large">Theming & Personalization</m3e-heading>
-          <p slot="content">
-            Effortlessly adapt components to your brand or user preferences with Material 3's advanced theming
-            capabilities.
-          </p>
-        </m3e-card>
-        <m3e-card>
-          <m3e-heading slot="header" variant="title" size="large">Performance Optimized</m3e-heading>
-          <p slot="content">Lightweight, fast-loading components designed for modern web platforms.</p>
-        </m3e-card>
-        <m3e-card>
-          <m3e-heading slot="header" variant="title" size="large">Security Conscious</m3e-heading>
-          <p slot="content">
-            Built with secure-by-default patterns, including XSS-safe templating, Trusted Types compatibility, and
-            support for strong Content Security Policies (CSP).
-          </p>
-        </m3e-card>
-      </div>
-    </m3e-theme>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading variant="display" size="large" level="1">Overview</m3e-heading>
+        <p>
+          Welcome to the <strong>M3E Showcase</strong>, a curated presentation of modular, accessible, and expressive
+          <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components" target="_blank">Web Components</a> built
+          with fidelity to Google's <a href="https://m3.material.io/" target="_blank">Material Design 3</a>. This
+          library provides a comprehensive suite of reusable components, each crafted to deliver seamless integration,
+          consistent theming, and intuitive user experiences.
+        </p>
+
+        <div class="card-grid">
+          <m3e-card variant="outlined" class="callout">
+            <m3e-heading slot="header" variant="title" size="large">Expressive Components</m3e-heading>
+            <p slot="content">
+              Leverages Material 3's design tokens, dynamic color, shape and motion systems for highly customizable UI
+              elements.
+            </p>
+          </m3e-card>
+          <m3e-card variant="outlined" class="callout">
+            <m3e-heading slot="header" variant="title" size="large">Unified Architecture</m3e-heading>
+            <p slot="content">ESM-first with modular entry points and tree-shaking for minimal bundles.</p>
+          </m3e-card>
+          <m3e-card variant="outlined" class="callout">
+            <m3e-heading slot="header" variant="title" size="large">Accessibility First</m3e-heading>
+            <p slot="content">
+              Built-in support for accessibility standards, ensuring inclusive experiences for all users.
+            </p>
+          </m3e-card>
+          <m3e-card variant="outlined" class="callout">
+            <m3e-heading slot="header" variant="title" size="large">Theming & Personalization</m3e-heading>
+            <p slot="content">
+              Effortlessly adapt components to your brand or user preferences with Material 3's advanced theming
+              capabilities.
+            </p>
+          </m3e-card>
+          <m3e-card variant="outlined" class="callout">
+            <m3e-heading slot="header" variant="title" size="large">Performance Optimized</m3e-heading>
+            <p slot="content">Lightweight, fast-loading components designed for modern web platforms.</p>
+          </m3e-card>
+          <m3e-card variant="outlined" class="callout">
+            <m3e-heading slot="header" variant="title" size="large">Security Conscious</m3e-heading>
+            <p slot="content">
+              Built with secure-by-default patterns, including XSS-safe templating, Trusted Types compatibility, and
+              support for strong Content Security Policies (CSP).
+            </p>
+          </m3e-card>
+        </div>
+      </m3e-content-pane>
+    </div>
   </body>
 </html>

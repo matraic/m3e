@@ -22,10 +22,23 @@ window.addEventListener("DOMContentLoaded", () => {
         break;
     }
   }
-  document.body.classList.add("loaded");
 
+  const drawerContainer = window.parent.document.querySelector(".docs-drawer-container");
+  drawerContainer?.addEventListener("change", () => updateBodyMargin());
+  updateBodyMargin();
+
+  document.body.classList.add("loaded");
   document.querySelectorAll("api-viewer").forEach((apiViewer) => updateApiViewer(apiViewer));
 });
+
+function updateBodyMargin() {
+  const drawerContainer = window.parent.document.querySelector(".docs-drawer-container");
+  if (drawerContainer?.hasAttribute("start")) {
+    document.querySelector("#body").style.setProperty("--_margin-inline-start-multiplier", "0");
+  } else {
+    document.querySelector("#body").style.setProperty("--_margin-inline-start-multiplier", "1");
+  }
+}
 
 function updateApiViewer(apiViewer) {
   const id = setInterval(() => {
@@ -45,6 +58,13 @@ function updateApiViewer(apiViewer) {
               node.nextElementSibling.style.display = "none";
             } else if (node.tagName === "API-VIEWER-TAB" && !node.hidden) {
               tabs.push(node);
+            } else if (node.tagName === "API-VIEWER-TABS") {
+              const tablist = node.shadowRoot?.querySelector(".tabs");
+              if (tablist) {
+                tablist.style.scrollbarWidth = "thin";
+                tablist.style.scrollbarColor =
+                  "var(--m3e-scrollbar-thumb-color, #938f94) var(--m3e-scrollbar-track-color, transparent)";
+              }
             }
           }
 
@@ -67,9 +87,13 @@ function updateApiViewer(apiViewer) {
 
 function ensureTabSelected(tab) {
   if (tab && tab.getAttribute("aria-selected") !== "true") {
-    const y = window.scrollY;
+    const active = window.parent.document.activeElement;
     tab.click();
-    queueMicrotask(() => window.scrollTo(0, y));
+
+    active?.focus();
+    queueMicrotask(() =>
+      document.querySelector("#body")?.shadowRoot?.querySelector(".scroll-container")?.scrollTo(0, 0),
+    );
   }
 }
 

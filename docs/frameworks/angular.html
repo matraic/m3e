@@ -29,31 +29,37 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core-a11y.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-a11y.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-bidi.min.js",
+          "@m3e/web/core/layout": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-layout.min.js"
         }
       }
     </script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/split-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/content-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/theme.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
-    <m3e-theme strong-focus>
-      <m3e-heading variant="display" size="large" level="1">Angular</m3e-heading>
-      <p>
-        M3E does not require a dedicated Angular bindings package. Angular provides first-class support for Web
-        Components, allowing all M3E components to be used directly in Angular templates without additional wrappers.
-      </p>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading variant="display" size="large" level="1">Angular</m3e-heading>
+        <p>
+          M3E does not require a dedicated Angular bindings package. Angular provides first-class support for Web
+          Components, allowing all M3E components to be used directly in Angular templates without additional wrappers.
+        </p>
 
-      <p>
-        However, Angular requires the <code>CUSTOM_ELEMENTS_SCHEMA</code> to recognize custom elements. Add it to your
-        module definition:
-      </p>
+        <p>
+          However, Angular requires the <code>CUSTOM_ELEMENTS_SCHEMA</code> to recognize custom elements. Add it to your
+          module definition:
+        </p>
 
-      <m3e-card variant="filled">
-        <pre slot="content">
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 @NgModule({
@@ -61,10 +67,10 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
   imports: [...],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule {}
-  </pre
-        >
-      </m3e-card>
-    </m3e-theme>
+export class AppModule {}</pre
+          >
+        </m3e-card>
+      </m3e-content-pane>
+    </div>
   </body>
 </html>

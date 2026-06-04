@@ -29,53 +29,61 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/core-a11y.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-a11y.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/core-bidi.min.js"
         }
       }
     </script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.7/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/content-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.8/dist/theme.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
-    <m3e-theme strong-focus>
-      <m3e-heading variant="display" size="large" level="1">Motion</m3e-heading>
-      <p>
-        M3E primarily applies the
-        <a href="https://m3.material.io/styles/motion/easing-and-duration/applying-easing-and-duration" target="_blank">
-          Material Design 3 easing and duration
-        </a>
-        system to provide consistent, emotionally tuned transitions across components. A subset—including buttons,
-        loading indicators, and switches—have adopted the
-        <a href="https://m3.material.io/styles/motion/overview/how-it-works" target="_blank">
-          Material Design 3 motion physics system </a
-        >, bringing spring-based dynamics and velocity-aware responsiveness to components where expressive motion is
-        essential.
-      </p>
-      <m3e-heading variant="headline" size="medium" level="2">Design tokens</m3e-heading>
-      <p>
-        The
-        <a href="https://m3.material.io/foundations/design-tokens/overview" target="_blank"
-          >Material Design 3 design tokens</a
-        >
-        are implemented as custom CSS properties. Design tokens are named, platform-agnostic variables that represent
-        visual design decisions—such as color, typography, spacing, and elevation—in a reusable, consistent format.
-      </p>
-      <p>
-        Motion tokens are surfaced using the standardized prefix <code>--md-sys-motion-*</code> and are defaulted to
-        spec-aligned values. M3E provides the <a href="../components/theme.html">Theme</a> component which can be used
-        to systematically control whether <strong>standard</strong> or <strong>expressive</strong> motion schemes are
-        used through its <code>motion</code> attribute.
-      </p>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading variant="display" size="large" level="1">Motion</m3e-heading>
+        <p>
+          M3E primarily applies the
+          <a
+            href="https://m3.material.io/styles/motion/easing-and-duration/applying-easing-and-duration"
+            target="_blank"
+          >
+            Material Design 3 easing and duration
+          </a>
+          system to provide consistent, emotionally tuned transitions across components. A subset—including buttons,
+          loading indicators, and switches—have adopted the
+          <a href="https://m3.material.io/styles/motion/overview/how-it-works" target="_blank">
+            Material Design 3 motion physics system </a
+          >, bringing spring-based dynamics and velocity-aware responsiveness to components where expressive motion is
+          essential.
+        </p>
+        <m3e-heading variant="headline" size="medium" level="2">Design tokens</m3e-heading>
+        <p>
+          The
+          <a href="https://m3.material.io/foundations/design-tokens/overview" target="_blank"
+            >Material Design 3 design tokens</a
+          >
+          are implemented as custom CSS properties. Design tokens are named, platform-agnostic variables that represent
+          visual design decisions—such as color, typography, spacing, and elevation—in a reusable, consistent format.
+        </p>
+        <p>
+          Motion tokens are surfaced using the standardized prefix <code>--md-sys-motion-*</code> and are defaulted to
+          spec-aligned values. M3E provides the <a href="../components/theme.html">Theme</a> component which can be used
+          to systematically control whether <strong>standard</strong> or <strong>expressive</strong> motion schemes are
+          used through its <code>motion</code> attribute.
+        </p>
 
-      <m3e-heading variant="headline" size="medium" level="2">Reduced motion</m3e-heading>
-      <p>
-        M3E honors reduced motion system settings by dynamically disabling or simplifying transitions for users who
-        prefer minimal motion. Components respond to the <code>prefers-reduced-motion</code> media query, ensuring that
-        expressive motion never compromises comfort or accessibility.
-      </p>
-    </m3e-theme>
+        <m3e-heading variant="headline" size="medium" level="2">Reduced motion</m3e-heading>
+        <p>
+          M3E honors reduced motion system settings by dynamically disabling or simplifying transitions for users who
+          prefer minimal motion. Components respond to the <code>prefers-reduced-motion</code> media query, ensuring
+          that expressive motion never compromises comfort or accessibility.
+        </p>
+      </m3e-content-pane>
+    </div>
   </body>
 </html>
