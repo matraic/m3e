@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
+import { css, CSSResult, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
 import {
@@ -10,7 +10,7 @@ import {
   themeFromSourceColor,
 } from "@material/material-color-utilities";
 
-import { customElement, DesignToken } from "@m3e/web/core";
+import { customElement, DesignToken, registerStyleSheet } from "@m3e/web/core";
 
 import { ColorScheme } from "./ColorScheme";
 import { ContrastLevel } from "./ContrastLevel";
@@ -55,6 +55,59 @@ import { MotionScheme } from "./MotionScheme";
  */
 @customElement("m3e-theme")
 export class M3eThemeElement extends LitElement {
+  static {
+    if (typeof window !== "undefined") {
+      const composeCss = (token: Record<string, CSSResult>): string => {
+        let css = "";
+        for (const key in token) {
+          const cssVar = token[key].toString();
+          if (!cssVar.startsWith("var(")) continue;
+          const inner = cssVar.trim().slice(4, -1); // remove "var(" and ")"
+          const [prop, fallback] = inner.split(/,(.+)/).map((s) => s.trim());
+
+          if (!prop.startsWith("--") || !fallback) continue;
+          css += `${prop}:${fallback};`;
+        }
+
+        return css;
+      };
+
+      const omitKey = <T extends object, K extends keyof T>(obj: T, key: K): Omit<T, K> => {
+        const { [key]: _unused, ...rest } = obj;
+        void _unused;
+        return rest as Omit<T, K>;
+      };
+
+      let css = "";
+      css += composeCss(DesignToken.typescale.standard.display.large);
+      css += composeCss(DesignToken.typescale.standard.display.medium);
+      css += composeCss(DesignToken.typescale.standard.display.small);
+      css += composeCss(DesignToken.typescale.standard.headline.large);
+      css += composeCss(DesignToken.typescale.standard.headline.medium);
+      css += composeCss(DesignToken.typescale.standard.headline.small);
+      css += composeCss(DesignToken.typescale.standard.title.large);
+      css += composeCss(DesignToken.typescale.standard.title.medium);
+      css += composeCss(DesignToken.typescale.standard.title.small);
+      css += composeCss(DesignToken.typescale.standard.label.large);
+      css += composeCss(DesignToken.typescale.standard.label.medium);
+      css += composeCss(DesignToken.typescale.standard.label.small);
+      css += composeCss(DesignToken.typescale.standard.body.large);
+      css += composeCss(DesignToken.typescale.standard.body.medium);
+      css += composeCss(DesignToken.typescale.standard.body.small);
+      css += composeCss(DesignToken.elevation);
+      css += composeCss(DesignToken.shape.corner.value);
+      css += composeCss(omitKey(DesignToken.shape.corner, "value"));
+      css += composeCss(DesignToken.motion.duration);
+      css += composeCss(DesignToken.motion.easing);
+      css += composeCss(DesignToken.motion.spring);
+      css += composeCss(omitKey(DesignToken.density, "calc"));
+      css += composeCss(DesignToken.measurement);
+      css += composeCss(DesignToken.state);
+
+      registerStyleSheet(unsafeCSS(`html{${css}}`));
+    }
+  }
+
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {

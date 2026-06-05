@@ -1,6 +1,7 @@
 import { ColorToken } from "./ColorToken";
 import { DensityToken } from "./DensityToken";
 import { ElevationToken } from "./ElevationToken";
+import { MeasurementToken } from "./MeasurementToken";
 import { MotionToken } from "./MotionToken";
 import { ScrollbarToken } from "./ScrollbarToken";
 import { ShapeToken } from "./ShapeToken";
@@ -32,4 +33,7 @@ export const DesignToken = {
 
   /** Design tokens that control density. */
   density: DensityToken,
+
+  /** Design tokens that control measurement. */
+  measurement: MeasurementToken,
 } as const;
