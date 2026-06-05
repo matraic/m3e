@@ -22,6 +22,10 @@ body.loaded {
     opacity: 0;
   }
 }
+m3e-heading {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 m3e-heading + m3e-heading,
 m3e-heading + .install,
 .install + m3e-heading,
