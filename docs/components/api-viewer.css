@@ -26,6 +26,7 @@ api-viewer::part(select-label) {
 }
 api-viewer {
   width: 100%;
+  min-width: 0;
   max-width: unset;
   border-color: var(--md-sys-color-outline-variant);
   border-radius: 0.75rem;
