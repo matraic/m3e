@@ -84,9 +84,6 @@ api-viewer {
 m3e-heading + api-viewer {
   margin-top: 1rem;
 }
-api-viewer:last-child {
-  margin-bottom: 1rem;
-}
 api-viewer + api-viewer {
   margin-top: 1rem;
 }
