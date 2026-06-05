@@ -11,6 +11,7 @@ import {
   HtmlFor,
   IntersectionController,
   MutationController,
+  ResizeController,
   Role,
   ScrollController,
   scrollIntoViewIfNeeded,
@@ -197,6 +198,9 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
     .withVerticalOrientation()
     .disableRovingTabIndex()
     .onSelectedItemsChange(() => {
+      for (const target of this.#resizeController.targets) {
+        this.#resizeController.unobserve(target);
+      }
       if (this._activeIndicator) {
         const item = this.#selectionManager.selectedItems[0];
         if (!item) {
@@ -205,6 +209,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
           this._activeIndicator.style.height = `0px`;
           this._activeIndicator.style.visibility = "hidden";
         } else {
+          this.#resizeController.observe(item);
           const scrollContainer = this._scrollContainer;
 
           if (item === this.#selectionManager.items[0]) {
@@ -274,6 +279,18 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
       subtree: true,
     },
     callback: () => this._updateToc(),
+  });
+
+  /** @private */ readonly #resizeController = new ResizeController(this, {
+    target: null,
+    callback: () => {
+      const item = this.#selectionManager.selectedItems[0];
+      if (item && this._activeIndicator) {
+        this._activeIndicator.style.top = `${item.offsetTop}px`;
+        this._activeIndicator.style.height = `${item.clientHeight}px`;
+        this._activeIndicator.style.visibility = item.clientHeight == 0 ? "hidden" : "";
+      }
+    },
   });
 
   /**
