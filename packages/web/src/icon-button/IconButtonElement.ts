@@ -524,7 +524,7 @@ export class M3eIconButtonElement extends KeyboardClick(
     const clientWidth = this.getBoundingClientRect().width;
     const group = this.closest("m3e-button-group");
 
-    if (group) {
+    if (group && group.variant === "standard") {
       const buttons = [...group.querySelectorAll<HTMLElement & AttachInternalsMixin>("m3e-button,m3e-icon-button")];
       const index = buttons.indexOf(this);
 
