@@ -10,8 +10,8 @@ function buttonStyle(size: ButtonSize): CSSResult {
       height: ${ButtonSizeToken[size].containerHeight};
     }
     :host([size="${unsafeCSS(size)}"]) .wrapper {
-      padding-inline-start: calc(${ButtonSizeToken[size].leadingSpace} - calc(calc(var(--_adjacent-shrink, 0px) / 2)));
-      padding-inline-end: calc(${ButtonSizeToken[size].trailingSpace} - calc(calc(var(--_adjacent-shrink, 0px) / 2)));
+      padding-inline-start: calc(${ButtonSizeToken[size].leadingSpace} - calc(var(--_adjacent-shrink, 0px) / 2));
+      padding-inline-end: calc(${ButtonSizeToken[size].trailingSpace} - calc(var(--_adjacent-shrink, 0px) / 2));
       column-gap: ${ButtonSizeToken[size].iconLabelSpace};
     }
     :host([size="${unsafeCSS(size)}"]) .label {

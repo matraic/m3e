@@ -87,7 +87,7 @@ export const IconButtonStyle: CSSResultGroup = css`
     flex: 1 1 auto;
   }
   :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) {
-    transition: ${unsafeCSS(`flex-basis ${DesignToken.motion.spring.fastEffects}`)};
+    transition: ${unsafeCSS(`width ${DesignToken.motion.spring.fastEffects}`)};
   }
   :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) .wrapper {
     transition: ${unsafeCSS(`padding-inline ${DesignToken.motion.spring.fastEffects}`)};
@@ -101,7 +101,14 @@ export const IconButtonStyle: CSSResultGroup = css`
         :is(:state(--pressed), :--pressed, :state(--adjacent-pressed), :--adjacent-pressed)
       )
   ) {
-    flex-basis: var(--_button-width);
+    width: var(--_button-width);
+  }
+  :host(
+    :is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):not(
+        :is(:state(--pressed), :--pressed)
+      ):is(:state(--adjacent-pressed), :--adjacent-pressed)
+  ) {
+    width: calc(var(--_button-width) - var(--_adjacent-shrink, 0px));
   }
   :host(
     :is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):is(
@@ -109,7 +116,7 @@ export const IconButtonStyle: CSSResultGroup = css`
         :--pressed
       ):not([disabled-interactive]):not(:disabled)
   ) {
-    flex-basis: calc(
+    width: calc(
       var(--_button-width) + calc(var(--_button-width) * var(--m3e-standard-button-group-width-multiplier, 0.15))
     );
   }

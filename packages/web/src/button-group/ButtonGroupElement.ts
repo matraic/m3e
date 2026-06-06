@@ -11,6 +11,7 @@ import {
   customElement,
   prefersReducedMotion,
   hasCustomState,
+  waitForUpgrade,
 } from "@m3e/web/core";
 
 import { M3eButtonElement } from "@m3e/web/button";
@@ -351,10 +352,16 @@ export class M3eButtonGroupElement extends Role(LitElement, "group") {
   }
 
   /** @private */
-  #updateButtons(): void {
+  async #updateButtons(): Promise<void> {
     const buttons = this.buttons;
     for (const target of this.#pressedController.targets) {
       this.#pressedController.unobserve(target);
+    }
+    for (const button of this.buttons) {
+      await waitForUpgrade(button);
+      if (button.isUpdatePending) {
+        await button.updateComplete;
+      }
     }
     const canToggle = [...buttons].some((x) => x.toggle);
 

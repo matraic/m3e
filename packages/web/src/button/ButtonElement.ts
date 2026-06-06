@@ -652,7 +652,7 @@ export class M3eButtonElement extends KeyboardClick(
   @debounce(40)
   private _handleResize(): void {
     if (this.grouped && !hasCustomState(this, "--no-resize") && this !== document.activeElement) {
-      this.style.setProperty("--_button-width", `${this.clientWidth}px`);
+      this.style.setProperty("--_button-width", `${this.getBoundingClientRect().width}px`);
       this.#updateButtonShape(true);
     }
   }
@@ -712,7 +712,7 @@ export class M3eButtonElement extends KeyboardClick(
           this.addEventListener(
             "transitionend",
             (e) => {
-              if (e.propertyName === "flex-basis") {
+              if (e.propertyName === "width") {
                 queueMicrotask(() => {
                   // Pressed state is tested to ensure this runs only when the button
                   // is no longer pressed. This handles changes to pressed state in
