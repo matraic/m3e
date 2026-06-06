@@ -86,22 +86,22 @@ export const IconButtonStyle: CSSResultGroup = css`
   :host(:is(:state(--grouped), :--grouped):is(:state(--connected), :--connected)) {
     flex: 1 1 auto;
   }
-  :host(
-    :is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):not(
-        :is(:state(--adjacent-pressed), :--adjacent-pressed)
-      ):not(:is(:state(--pressed), :--pressed))
-  ) {
+  :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) {
+    transition: ${unsafeCSS(`flex-basis ${DesignToken.motion.spring.fastEffects}`)};
+  }
+  :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) .wrapper {
+    transition: ${unsafeCSS(`padding-inline ${DesignToken.motion.spring.fastEffects}`)};
+  }
+  :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) {
     flex-shrink: 0;
     flex-grow: 0;
   }
   :host(
-    :is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):is(
-        :state(--adjacent-pressed),
-        :--adjacent-pressed
-      ):not(:is(:state(--pressed), :--pressed))
+    :is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):not(
+        :is(:state(--pressed), :--pressed, :state(--adjacent-pressed), :--adjacent-pressed)
+      )
   ) {
-    flex-shrink: 1;
-    min-width: 0;
+    flex-basis: var(--_button-width);
   }
   :host(
     :is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):is(
@@ -109,7 +109,6 @@ export const IconButtonStyle: CSSResultGroup = css`
         :--pressed
       ):not([disabled-interactive]):not(:disabled)
   ) {
-    flex-shrink: 0;
     flex-basis: calc(
       var(--_button-width) + calc(var(--_button-width) * var(--m3e-standard-button-group-width-multiplier, 0.15))
     );
@@ -184,6 +183,8 @@ export const IconButtonStyle: CSSResultGroup = css`
     }
   }
   @media (prefers-reduced-motion) {
+    :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))),
+    :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) .wrapper,
     :host(:is(:state(--pressed), :--pressed)) .base,
     :host(:is(:state(--resting), :--resting)) .base,
     .base,

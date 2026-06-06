@@ -10,27 +10,9 @@ function buttonStyle(size: ButtonSize): CSSResult {
       height: ${ButtonSizeToken[size].containerHeight};
     }
     :host([size="${unsafeCSS(size)}"]) .wrapper {
-      padding-inline-start: ${ButtonSizeToken[size].leadingSpace};
-      padding-inline-end: ${ButtonSizeToken[size].trailingSpace};
+      padding-inline-start: calc(${ButtonSizeToken[size].leadingSpace} - calc(calc(var(--_adjacent-shrink, 0px) / 2)));
+      padding-inline-end: calc(${ButtonSizeToken[size].trailingSpace} - calc(calc(var(--_adjacent-shrink, 0px) / 2)));
       column-gap: ${ButtonSizeToken[size].iconLabelSpace};
-    }
-    :host(
-        [size="${unsafeCSS(size)}"]:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):is(
-            :state(--adjacent-pressed),
-            :--adjacent-pressed
-          ):not(:is(:state(--pressed), :--pressed))
-      )
-      .wrapper {
-      padding-inline-start: calc(
-        ${ButtonSizeToken[size].leadingSpace} - calc(
-            calc(var(--_adjacent-button-width) * var(--m3e-standard-button-group-width-multiplier, 0.15)) / 4.25
-          )
-      );
-      padding-inline-end: calc(
-        ${ButtonSizeToken[size].trailingSpace} - calc(
-            calc(var(--_adjacent-button-width) * var(--m3e-standard-button-group-width-multiplier, 0.15)) / 4.25
-          )
-      );
     }
     :host([size="${unsafeCSS(size)}"]) .label {
       font-size: ${ButtonSizeToken[size].labelTextFontSize};

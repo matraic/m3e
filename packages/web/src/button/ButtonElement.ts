@@ -26,6 +26,7 @@ import {
   setCustomState,
   AttachInternalsMixin,
   customElement,
+  addCustomState,
 } from "@m3e/web/core";
 
 import { ButtonShape } from "./ButtonShape";
@@ -492,14 +493,7 @@ export class M3eButtonElement extends KeyboardClick(
   constructor() {
     super();
 
-    new ResizeController(this, {
-      callback: () => {
-        if (this.grouped) {
-          this._handleResize();
-        }
-      },
-    });
-
+    new ResizeController(this, { callback: () => this._handleResize() });
     new FocusController(this, {
       callback: (focused) => {
         if (!this.disabledInteractive && !focused && !this.grouped) {
@@ -515,11 +509,7 @@ export class M3eButtonElement extends KeyboardClick(
         if (!this.disabled && !this.disabledInteractive) {
           if (pressed) {
             this.#updateButtonShape();
-            if (prefersReducedMotion()) {
-              this.#handlePressedChange(true);
-            } else {
-              requestAnimationFrame(() => this.#handlePressedChange(true));
-            }
+            this.#handlePressedChange(true);
           } else {
             this.#handlePressedChange(false);
           }
@@ -603,7 +593,7 @@ export class M3eButtonElement extends KeyboardClick(
     ["--pressed", "--resting", "--grouped", "--connected"].forEach((x) => deleteCustomState(this, x));
     this._base?.style.removeProperty("--_button-shape");
     this.style.removeProperty("--_button-width");
-    this.style.removeProperty("--_adjacent-button-width");
+    this.style.removeProperty("--_adjacent-shrink");
     deleteCustomState(this, "--adjacent-pressed");
 
     this.removeEventListener("click", this.#clickHandler);
@@ -661,7 +651,7 @@ export class M3eButtonElement extends KeyboardClick(
   /** @private */
   @debounce(40)
   private _handleResize(): void {
-    if (this.grouped && !hasCustomState(this, "--pressed")) {
+    if (this.grouped && !hasCustomState(this, "--no-resize") && this !== document.activeElement) {
       this.style.setProperty("--_button-width", `${this.clientWidth}px`);
       this.#updateButtonShape(true);
     }
@@ -681,28 +671,77 @@ export class M3eButtonElement extends KeyboardClick(
 
   /** @private */
   #handlePressedChange(pressed: boolean): void {
-    setCustomState(this, "--pressed", pressed);
-    setCustomState(this, "--resting", !pressed);
-
+    const clientWidth = this.getBoundingClientRect().width;
     const group = this.closest("m3e-button-group");
+
     if (group) {
-      const clientWidth = this.getBoundingClientRect().width;
       const buttons = [...group.querySelectorAll<HTMLElement & AttachInternalsMixin>("m3e-button,m3e-icon-button")];
       const index = buttons.indexOf(this);
 
-      for (let i = 0; i < buttons.length; i++) {
-        const button = buttons[i];
-        if (i === index - 1) {
-          button.style.setProperty("--_adjacent-button-width", `${clientWidth}px`);
-          setCustomState(button, "--adjacent-pressed", pressed);
-        } else if (i === index + 1) {
-          button.style.setProperty("--_adjacent-button-width", `${clientWidth}px`);
-          setCustomState(button, "--adjacent-pressed", pressed);
+      if (pressed) {
+        const multiplier = parseFloat(
+          getComputedStyle(this).getPropertyValue("--m3e-standard-button-group-width-multiplier") || "0.15",
+        );
+        let adjacentShrink = clientWidth * multiplier;
+        if (index > 0 && index < buttons.length - 1) {
+          adjacentShrink /= 2;
+        }
+
+        for (let i = 0; i < buttons.length; i++) {
+          if (i == index - 1 || i == index + 1) {
+            addCustomState(buttons[i], "--no-resize");
+            buttons[i].style.setProperty("--_adjacent-shrink", `${adjacentShrink}px`);
+            addCustomState(buttons[i], "--adjacent-pressed");
+          } else if (i == index) {
+            addCustomState(buttons[i], "--no-resize");
+            buttons[i].style.removeProperty("--_adjacent-shrink");
+            deleteCustomState(buttons[i], "--adjacent-pressed");
+          } else {
+            deleteCustomState(buttons[i], "--no-resize");
+            buttons[i].style.removeProperty("--_adjacent-shrink");
+            deleteCustomState(buttons[i], "--adjacent-pressed");
+          }
+        }
+      } else {
+        for (let i = 0; i < buttons.length; i++) {
+          if (i == index - 1 || i == index + 1) {
+            buttons[i].style.setProperty("--_adjacent-shrink", "0px");
+          }
+        }
+        if (!prefersReducedMotion()) {
+          this.addEventListener(
+            "transitionend",
+            (e) => {
+              if (e.propertyName === "flex-basis") {
+                queueMicrotask(() => {
+                  // Pressed state is tested to ensure this runs only when the button
+                  // is no longer pressed. This handles changes to pressed state in
+                  // quick succession.
+
+                  if (!hasCustomState(this, "--pressed")) {
+                    this.#cleanupAdjacentPressed(buttons);
+                  }
+                });
+              }
+            },
+            { once: true },
+          );
         } else {
-          button.style.removeProperty("--_adjacent-button-width");
-          deleteCustomState(button, "--adjacent-pressed");
+          this.#cleanupAdjacentPressed(buttons);
         }
       }
+    }
+
+    setCustomState(this, "--pressed", pressed);
+    setCustomState(this, "--resting", !pressed);
+  }
+
+  /** @private */
+  #cleanupAdjacentPressed(buttons: Array<HTMLElement & AttachInternalsMixin>): void {
+    for (const button of buttons) {
+      deleteCustomState(button, "--adjacent-pressed");
+      deleteCustomState(button, "--no-resize");
+      button.style.removeProperty("--_adjacent-shrink");
     }
   }
 }

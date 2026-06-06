@@ -9,6 +9,8 @@ import {
   setCustomState,
   addCustomState,
   customElement,
+  prefersReducedMotion,
+  hasCustomState,
 } from "@m3e/web/core";
 
 import { M3eButtonElement } from "@m3e/web/button";
@@ -286,16 +288,7 @@ export class M3eButtonGroupElement extends Role(LitElement, "group") {
     capture: true,
     minPressedDuration: 150,
     isPressedKey: (key) => key === " ",
-    callback: (pressed) => {
-      if (!this._base) return;
-      if (!pressed || this.variant === "connected") {
-        this._base.style.removeProperty("--_button-group-width");
-        this._base.classList.remove("pressed");
-      } else {
-        this._base.classList.add("pressed");
-        this._base.style.setProperty("--_button-group-width", `${this._base.getBoundingClientRect().width}px`);
-      }
-    },
+    callback: (pressed) => this.#handlePressedChange(pressed),
   });
 
   @query(".base") private readonly _base?: HTMLElement;
@@ -406,6 +399,42 @@ export class M3eButtonGroupElement extends Role(LitElement, "group") {
         button.selected = false;
       }
     }
+  }
+
+  /** @private */
+  #handlePressedChange(pressed: boolean): void {
+    const base = this._base;
+    if (!base) return;
+    if (!pressed || this.variant === "connected") {
+      const button = this.buttons.find((x) => x === document.activeElement);
+      if (!prefersReducedMotion() && button) {
+        button.addEventListener(
+          "transitionend",
+          () =>
+            queueMicrotask(() => {
+              // Pressed state is tested to ensure this runs only when the button
+              // is no longer pressed. This handles changes to pressed state in
+              // quick succession.
+
+              if (!hasCustomState(button, "--pressed")) {
+                this.#cleanupPressed(base);
+              }
+            }),
+          { once: true },
+        );
+      } else {
+        this.#cleanupPressed(base);
+      }
+    } else {
+      base.classList.add("pressed");
+      base.style.setProperty("--_button-group-width", `${base.getBoundingClientRect().width}px`);
+    }
+  }
+
+  /** @private */
+  #cleanupPressed(base: HTMLElement): void {
+    base.style.removeProperty("--_button-group-width");
+    base.classList.remove("pressed");
   }
 }
 
