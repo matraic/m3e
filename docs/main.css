@@ -31,6 +31,7 @@ m3e-heading + .install,
 .install + m3e-heading,
 .example + m3e-heading,
 .showcase + m3e-heading,
+api-viewer + m3e-heading,
 m3e-card + m3e-card {
   margin-block-start: 1rem;
 }
