@@ -2,7 +2,7 @@ window.addEventListener("beforeunload", () =>
   window.parent.document.querySelector(".docs-frame")?.setAttribute("hidden", "true"),
 );
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
   if (window.parent && window.parent.document && window.parent.document.documentElement) {
     document.documentElement.dir = window.parent.document.documentElement.dir;
 
@@ -27,8 +27,18 @@ window.addEventListener("DOMContentLoaded", () => {
   drawerContainer?.addEventListener("change", () => updateBodyMargin());
   updateBodyMargin();
 
+  const cem = await (await fetch("https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/custom-elements.json")).json();
+  mergeParsedTypes(cem);
+
+  const promises = [];
+  for (const apiViewer of document.querySelectorAll("api-viewer")) {
+    apiViewer.manifest = cem;
+    promises.push(updateApiViewer(apiViewer));
+  }
+
+  await Promise.all(promises);
+
   document.body.classList.add("loaded");
-  document.querySelectorAll("api-viewer").forEach((apiViewer) => updateApiViewer(apiViewer));
 });
 
 function updateBodyMargin() {
@@ -40,57 +50,75 @@ function updateBodyMargin() {
   }
 }
 
+function mergeParsedTypes(obj) {
+  if (obj.type && obj.parsedType && obj.parsedType.text && obj.parsedType.text.includes("|")) {
+    const parsedType = obj.parsedType.text.replace(/'/g, '"');
+    obj.type.text = `${obj.type.text} (${parsedType})`;
+    return;
+  }
+
+  for (const key in obj) {
+    const val = obj[key];
+
+    if (Array.isArray(val)) {
+      for (const item of val) mergeParsedTypes(item);
+    } else if (val && typeof val === "object") {
+      mergeParsedTypes(val);
+    }
+  }
+}
+
 function updateApiViewer(apiViewer) {
-  const id = setInterval(() => {
-    try {
-      if (apiViewer.shadowRoot.querySelector("*")) {
-        clearInterval(id);
+  return new Promise((resolve) => {
+    const id = setInterval(() => {
+      try {
+        if (apiViewer.shadowRoot.querySelector("*")) {
+          clearInterval(id);
 
-        const tabs = [];
-        const stack = [apiViewer];
+          const tabs = [];
+          const stack = [apiViewer];
 
-        while (stack.length) {
-          const node = stack.pop();
+          while (stack.length) {
+            const node = stack.pop();
 
-          if (node.nodeType === Node.ELEMENT_NODE) {
-            if (node.classList?.contains("column-name-css")) {
-              node.style.flexBasis = "100%";
-              node.nextElementSibling.style.display = "none";
-            } else if (node.tagName === "API-VIEWER-TAB" && !node.hidden) {
-              tabs.push(node);
-            } else if (node.tagName === "API-VIEWER-TABS") {
-              const tablist = node.shadowRoot?.querySelector(".tabs");
-              if (tablist) {
-                tablist.style.scrollbarWidth = "thin";
-                tablist.style.scrollbarColor =
-                  "var(--m3e-scrollbar-thumb-color, #938f94) var(--m3e-scrollbar-track-color, transparent)";
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              if (node.classList?.contains("column-name-css")) {
+                node.style.flexBasis = "100%";
+                node.nextElementSibling.style.display = "none";
+              } else if (node.tagName === "API-VIEWER-TAB" && !node.hidden) {
+                tabs.push(node);
+              } else if (node.tagName === "API-VIEWER-TABS") {
+                const tablist = node.shadowRoot?.querySelector(".tabs");
+                if (tablist) {
+                  tablist.style.scrollbarWidth = "thin";
+                  tablist.style.scrollbarColor =
+                    "var(--m3e-scrollbar-thumb-color, #938f94) var(--m3e-scrollbar-track-color, transparent)";
+                }
+              }
+            }
+
+            if (node.shadowRoot) {
+              stack.push(node.shadowRoot);
+            }
+
+            if (node.childNodes) {
+              for (const child of node.childNodes) {
+                stack.push(child);
               }
             }
           }
 
-          if (node.shadowRoot) {
-            stack.push(node.shadowRoot);
-          }
-
-          if (node.childNodes) {
-            for (const child of node.childNodes) {
-              stack.push(child);
-            }
-          }
+          ensureTabSelected(tabs[tabs.length - 1]);
+          resolve();
         }
-
-        ensureTabSelected(tabs[tabs.length - 1]);
-      }
-    } catch (e) {}
-  }, 100);
+      } catch (e) {}
+    }, 100);
+  });
 }
 
 function ensureTabSelected(tab) {
   if (tab && tab.getAttribute("aria-selected") !== "true") {
-    const active = window.parent.document.activeElement;
     tab.click();
-
-    active?.focus();
     queueMicrotask(() =>
       document.querySelector("#body")?.shadowRoot?.querySelector(".scroll-container")?.scrollTo(0, 0),
     );
