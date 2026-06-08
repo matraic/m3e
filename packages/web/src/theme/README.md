@@ -11,6 +11,7 @@ import "@m3e/web/theme";
 ## 🗂️ Elements
 
 - `m3e-theme` — A non-visual element responsible for application-level theming.
+- `m3e-theme-icon` — An icon that visually presents a preview of a theme.
 
 ## 🧪 Examples
 
@@ -24,9 +25,19 @@ The following example adds a top-level `m3e-theme` directly beneath a document's
 </body>
 ```
 
+The next example presents a preview of a teal light theme using a `m3e-theme-icon`.
+
+```html
+<m3e-theme-icon color="#004f4f" scheme="light"></m3e-theme-icon>
+```
+
 ## 📖 API Reference
 
-### ⚙️ Attributes
+### 🗂️ m3e-theme
+
+This section details the attributes, events, and slots available for the `m3e-theme` component.
+
+#### ⚙️ Attributes
 
 | Attribute      | Type                                                                                                                              | Default      | Description                                                |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------ | ---------------------------------------------------------- |
@@ -37,3 +48,38 @@ The following example adds a top-level `m3e-theme` directly beneath a document's
 | `strong-focus` | `boolean`                                                                                                                         | `false`      | Whether to enable strong focus indicators.                 |
 | `density`      | `number`                                                                                                                          | `0`          | The density scale (0, -1, -2).                             |
 | `motion`       | `"standard" \| "expressive"`                                                                                                      | `"standard"` | The motion scheme.                                         |
+
+#### 🔔 Events
+
+| Event    | Description                        |
+| -------- | ---------------------------------- |
+| `change` | Dispatched when the theme changes. |
+
+#### 🧩 Slots
+
+| Slot        | Description                          |
+| ----------- | ------------------------------------ |
+| _(default)_ | Renders content styled by the theme. |
+
+### 🗂️ m3e-theme-icon
+
+This section details the attributes and CSS custom properties available for the `m3e-theme-icon` component.
+
+#### ⚙️ Attributes
+
+| Attribute | Type                                                                                                                              | Default     | Description                                |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------- | ----------- | ------------------------------------------ |
+| `color`   | `string`                                                                                                                          | `"#6750A4"` | The hex color of the theme to preview      |
+| `variant` | `"monochrome" \| "neutral" \| "tonal-spot" \| "vibrant" \| "expressive" \| "fidelity" \| "rainbow" \| "fruit-salad" \| "content"` | `"content"` | The color variant of the theme to preview. |
+| `scheme`  | `"auto" \| "light" \| "dark"`                                                                                                     | `"auto"`    | The color scheme of the theme to preview.  |
+
+#### 🎛️ CSS Custom Properties
+
+| Property                           | Description                                                |
+| ---------------------------------- | ---------------------------------------------------------- |
+| `--m3e-theme-icon-size`            | Size of the theme icon.                                    |
+| `--m3e-theme-icon-shape`           | Border radius of the icon container.                       |
+| `--m3e-theme-icon-outline-color`   | Outline stroke color of the icon border.                   |
+| `--m3e-theme-icon-outline-opacity` | Opacity percentage applied to the outline color.           |
+| `--m3e-theme-icon-container-color` | Fill color for the container layer of the previewed theme. |
+| `--m3e-theme-icon-color`           | Fill color for the primary layer of the previewed theme.   |
