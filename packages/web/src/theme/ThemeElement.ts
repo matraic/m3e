@@ -15,6 +15,7 @@ import { customElement, DesignToken, registerStyleSheet } from "@m3e/web/core";
 import { ColorScheme } from "./ColorScheme";
 import { ContrastLevel } from "./ContrastLevel";
 import { MotionScheme } from "./MotionScheme";
+import { ThemeVariant } from "./ThemeVariant";
 
 /**
  * A non-visual element responsible for application-level theming.
@@ -50,6 +51,7 @@ import { MotionScheme } from "./MotionScheme";
  * @attr density - The density scale (0, -1, -2).
  * @attr scheme - The color scheme of the theme.
  * @attr strong-focus - Whether to enable strong focus indicators.
+ * @attr variant - The color variant of the theme.
  *
  * @fires change - Dispatched when the theme changes.
  */
@@ -128,6 +130,11 @@ export class M3eThemeElement extends LitElement {
    * @default "#6750A4"
    */
   @property() color = "#6750A4";
+
+  /** The color variant of the theme.
+   * @default "neutral"
+   */
+  @property() variant: ThemeVariant = "neutral";
 
   /**
    * The color scheme of the theme.
@@ -247,7 +254,7 @@ export class M3eThemeElement extends LitElement {
     const theme = themeFromSourceColor(color);
     const scheme = new DynamicScheme({
       sourceColorHct: Hct.fromInt(color),
-      variant: 1,
+      variant: this.#getVariant(),
       contrastLevel: this.#getContrastLevel(),
       isDark: this.isDark,
       primaryPalette: theme.palettes.primary,
@@ -329,6 +336,30 @@ export class M3eThemeElement extends LitElement {
     }
     if (forceReflow) {
       void document.body.offsetHeight;
+    }
+  }
+
+  /** @private */
+  #getVariant(): number {
+    switch (this.variant) {
+      case "neutral":
+        return 1;
+      case "tonal-spot":
+        return 2;
+      case "vibrant":
+        return 3;
+      case "expressive":
+        return 4;
+      case "fidelity":
+        return 5;
+      case "content":
+        return 6;
+      case "rainbow":
+        return 7;
+      case "fruit-salad":
+        return 8;
+      default:
+        return 0; // monochrome
     }
   }
 
