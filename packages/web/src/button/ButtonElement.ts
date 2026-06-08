@@ -482,6 +482,8 @@ export class M3eButtonElement extends KeyboardClick(
   /** The styles of the element. */
   static override styles: CSSResultGroup = [ButtonSizeStyle, ButtonVariantStyle, ButtonStyle];
 
+  /** @internal */ _adjacentPressedTimeout = -1;
+
   /** @private */ @query(".base") private readonly _base?: HTMLElement;
   /** @private */ @query(".elevation") private readonly _elevation?: M3eElevationElement;
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;
@@ -675,7 +677,16 @@ export class M3eButtonElement extends KeyboardClick(
     const group = this.closest("m3e-button-group");
 
     if (group && group.variant === "standard") {
-      const buttons = [...group.querySelectorAll<HTMLElement & AttachInternalsMixin>("m3e-button,m3e-icon-button")];
+      const buttons = [
+        ...group.querySelectorAll<HTMLElement & AttachInternalsMixin & { _adjacentPressedTimeout: number }>(
+          "m3e-button,m3e-icon-button",
+        ),
+      ];
+      for (const button of buttons) {
+        clearTimeout(button._adjacentPressedTimeout);
+        button._adjacentPressedTimeout = -1;
+      }
+
       const index = buttons.indexOf(this);
 
       if (pressed) {
@@ -713,15 +724,15 @@ export class M3eButtonElement extends KeyboardClick(
             "transitionend",
             (e) => {
               if (e.propertyName === "width") {
-                queueMicrotask(() => {
-                  // Pressed state is tested to ensure this runs only when the button
+                this._adjacentPressedTimeout = setTimeout(() => {
+                  // Pressed timeout is tested to ensure this runs only when the button
                   // is no longer pressed. This handles changes to pressed state in
                   // quick succession.
 
-                  if (!hasCustomState(this, "--pressed")) {
+                  if (this._adjacentPressedTimeout > -1) {
                     this.#cleanupAdjacentPressed(buttons);
                   }
-                });
+                }, 600);
               }
             },
             { once: true },
@@ -738,6 +749,7 @@ export class M3eButtonElement extends KeyboardClick(
 
   /** @private */
   #cleanupAdjacentPressed(buttons: Array<HTMLElement & AttachInternalsMixin>): void {
+    console.log("clearnup");
     for (const button of buttons) {
       deleteCustomState(button, "--adjacent-pressed");
       deleteCustomState(button, "--no-resize");
