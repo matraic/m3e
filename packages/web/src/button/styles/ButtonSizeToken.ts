@@ -30,7 +30,7 @@ type _ButtonSizeToken = {
 export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
   "extra-small": {
     containerHeight: unsafeCSS(
-      `calc(var(--m3e-button-extra-small-container-height, var(--m3e-button-container-height, 2rem)) + ${DesignToken.density.calc(0)})`,
+      `calc(var(--m3e-button-extra-small-container-height, var(--m3e-button-container-height, 2rem)) + ${DesignToken.density.calc(-3)})`,
     ),
     outlineThickness: unsafeCSS(
       "var(--m3e-button-extra-small-outline-thickness, var(--m3e-button-outline-thickness, 1px))",
@@ -71,7 +71,7 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
   },
   small: {
     containerHeight: unsafeCSS(
-      `calc(var(--m3e-button-small-container-height, var(--m3e-button-container-height, 2.5rem)) + ${DesignToken.density.calc(-1)})`,
+      `calc(var(--m3e-button-small-container-height, var(--m3e-button-container-height, 2.5rem)) + ${DesignToken.density.calc(-3)})`,
     ),
     outlineThickness: unsafeCSS("var(--m3e-button-small-outline-thickness, var(--m3e-button-outline-thickness, 1px))"),
     labelTextFontSize: unsafeCSS(
@@ -108,7 +108,7 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
   },
   medium: {
     containerHeight: unsafeCSS(
-      `calc(var(--m3e-button-medium-container-height, var(--m3e-button-container-height, 3.5rem)) + ${DesignToken.density.calc(-2)})`,
+      `calc(var(--m3e-button-medium-container-height, var(--m3e-button-container-height, 3.5rem)) + ${DesignToken.density.calc(-3)})`,
     ),
     outlineThickness: unsafeCSS("var(--m3e-button-medium-outline-thickness, var(--m3e-button-outline-thickness, 1px))"),
     labelTextFontSize: unsafeCSS(
