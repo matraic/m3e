@@ -30,14 +30,12 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
   /** Design tokens that control the `extra-small` `size` variant. */
   "extra-small": {
     containerHeight: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-small-container-height, var(--m3e-icon-button-container-height, 2rem)) + ${DesignToken.density.calc(0)})`,
+      `calc(var(--m3e-icon-button-extra-small-container-height, var(--m3e-icon-button-container-height, 2rem)) + ${DesignToken.density.calc(-3)})`,
     ),
     outlineThickness: unsafeCSS(
       "var(--m3e-icon-button-extra-small-outline-thickness, var(--m3e-icon-button-outline-thickness, 1px))",
     ),
-    iconSize: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-small-icon-size, var(--m3e-icon-button-icon-size, 1.25rem)) + ${DesignToken.density.calc(0)})`,
-    ),
+    iconSize: unsafeCSS(`var(--m3e-icon-button-extra-small-icon-size, var(--m3e-icon-button-icon-size, 1.25rem))`),
     shapeRound: unsafeCSS(
       `var(--m3e-icon-button-extra-small-shape-round, var(--m3e-icon-button-shape-round, ${DesignToken.shape.corner.full}))`,
     ),
@@ -54,36 +52,34 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
       `var(--m3e-icon-button-extra-small-shape-pressed-morph, var(--m3e-icon-button-shape-pressed-morph, ${DesignToken.shape.corner.small}))`,
     ),
     narrowLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-small-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 0.25rem)) + ${DesignToken.density.calc(0)})`,
+      `calc(var(--m3e-icon-button-extra-small-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 0.25rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     narrowTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-small-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 0.25rem)) + ${DesignToken.density.calc(0)})`,
+      `calc(var(--m3e-icon-button-extra-small-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 0.25rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     defaultLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-small-default-leading-space, var(--m3e-icon-button-default-leading-space, 0.375rem)) + ${DesignToken.density.calc(0)})`,
+      `calc(var(--m3e-icon-button-extra-small-default-leading-space, var(--m3e-icon-button-default-leading-space, 0.375rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     defaultTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-small-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 0.375rem)) + ${DesignToken.density.calc(0)})`,
+      `calc(var(--m3e-icon-button-extra-small-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 0.375rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     wideLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-small-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 0.625rem)) + ${DesignToken.density.calc(0)})`,
+      `calc(var(--m3e-icon-button-extra-small-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 0.625rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     wideTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-small-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 0.625rem)) + ${DesignToken.density.calc(0)})`,
+      `calc(var(--m3e-icon-button-extra-small-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 0.625rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
   },
 
   /** Design tokens that control the `small` `size` variant. */
   small: {
     containerHeight: unsafeCSS(
-      `calc(var(--m3e-icon-button-small-container-height, var(--m3e-icon-button-container-height, 2.5rem)) + ${DesignToken.density.calc(-1)})`,
+      `calc(var(--m3e-icon-button-small-container-height, var(--m3e-icon-button-container-height, 2.5rem)) + ${DesignToken.density.calc(-3)})`,
     ),
     outlineThickness: unsafeCSS(
       "var(--m3e-icon-button-small-outline-thickness, var(--m3e-icon-button-outline-thickness, 1px))",
     ),
-    iconSize: unsafeCSS(
-      `calc(var(--m3e-icon-button-small-icon-size, var(--m3e-icon-button-icon-size, 1.5rem)) + ${DesignToken.density.calc(-1)})`,
-    ),
+    iconSize: unsafeCSS(`var(--m3e-icon-button-small-icon-size, var(--m3e-icon-button-icon-size, 1.5rem))`),
     shapeRound: unsafeCSS(
       `var(--m3e-icon-button-small-shape-round, var(--m3e-icon-button-shape-round, ${DesignToken.shape.corner.full}))`,
     ),
@@ -100,36 +96,34 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
       `var(--m3e-icon-button-small-shape-pressed-morph, var(--m3e-icon-button-shape-pressed-morph, ${DesignToken.shape.corner.small}))`,
     ),
     narrowLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-small-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 0.25rem)) + ${DesignToken.density.calc(-1)})`,
+      `calc(var(--m3e-icon-button-small-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 0.25rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     narrowTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-small-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 0.25rem)) + ${DesignToken.density.calc(-1)})`,
+      `calc(var(--m3e-icon-button-small-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 0.25rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     defaultLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-small-default-leading-space, var(--m3e-icon-button-default-leading-space, 0.5rem)) + ${DesignToken.density.calc(-1)})`,
+      `calc(var(--m3e-icon-button-small-default-leading-space, var(--m3e-icon-button-default-leading-space, 0.5rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     defaultTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-small-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 0.5rem)) + ${DesignToken.density.calc(-1)})`,
+      `calc(var(--m3e-icon-button-small-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 0.5rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     wideLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-small-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 0.875rem)) + ${DesignToken.density.calc(-1)})`,
+      `calc(var(--m3e-icon-button-small-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 0.875rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     wideTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-small-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 0.875rem)) + ${DesignToken.density.calc(-1)})`,
+      `calc(var(--m3e-icon-button-small-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 0.875rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
   },
 
   /** Design tokens that control the `medium` `size` variant. */
   medium: {
     containerHeight: unsafeCSS(
-      `calc(var(--m3e-icon-button-medium-container-height, var(--m3e-icon-button-container-height, 3.5rem)) + ${DesignToken.density.calc(-2)})`,
+      `calc(var(--m3e-icon-button-medium-container-height, var(--m3e-icon-button-container-height, 3.5rem)) + ${DesignToken.density.calc(-3)})`,
     ),
     outlineThickness: unsafeCSS(
       "var(--m3e-icon-button-medium-outline-thickness, var(--m3e-icon-button-outline-thickness, 1px))",
     ),
-    iconSize: unsafeCSS(
-      `calc(var(--m3e-icon-button-medium-icon-size, var(--m3e-icon-button-icon-size, 1.5rem)) + ${DesignToken.density.calc(-2)})`,
-    ),
+    iconSize: unsafeCSS(`var(--m3e-icon-button-medium-icon-size, var(--m3e-icon-button-icon-size, 1.5rem))`),
     shapeRound: unsafeCSS(
       `var(--m3e-icon-button-medium-shape-round, var(--m3e-icon-button-shape-round, ${DesignToken.shape.corner.full}))`,
     ),
@@ -146,22 +140,22 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
       `var(--m3e-icon-button-medium-shape-pressed-morph, var(--m3e-icon-button-shape-pressed-morph, ${DesignToken.shape.corner.medium}))`,
     ),
     narrowLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-medium-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 0.75rem)) + ${DesignToken.density.calc(-2)})`,
+      `calc(var(--m3e-icon-button-medium-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 0.75rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     narrowTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-medium-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 0.75rem)) + ${DesignToken.density.calc(-2)})`,
+      `calc(var(--m3e-icon-button-medium-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 0.75rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     defaultLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-medium-default-leading-space, var(--m3e-icon-button-default-leading-space, 1rem)) + ${DesignToken.density.calc(-2)})`,
+      `calc(var(--m3e-icon-button-medium-default-leading-space, var(--m3e-icon-button-default-leading-space, 1rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     defaultTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-medium-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 1rem)) + ${DesignToken.density.calc(-2)})`,
+      `calc(var(--m3e-icon-button-medium-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 1rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     wideLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-medium-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 1.5rem)) + ${DesignToken.density.calc(-2)})`,
+      `calc(var(--m3e-icon-button-medium-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 1.5rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     wideTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-medium-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 1.5rem)) + ${DesignToken.density.calc(-2)})`,
+      `calc(var(--m3e-icon-button-medium-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 1.5rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
   },
 
@@ -173,9 +167,7 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
     outlineThickness: unsafeCSS(
       "var(--m3e-icon-button-large-outline-thickness, var(--m3e-icon-button-outline-thickness, 2px))",
     ),
-    iconSize: unsafeCSS(
-      `calc(var(--m3e-icon-button-large-icon-size, var(--m3e-icon-button-icon-size, 2rem)) + ${DesignToken.density.calc(-3)})`,
-    ),
+    iconSize: unsafeCSS(`var(--m3e-icon-button-large-icon-size, var(--m3e-icon-button-icon-size, 2rem))`),
     shapeRound: unsafeCSS(
       `var(--m3e-icon-button-large-shape-round, var(--m3e-icon-button-shape-round, ${DesignToken.shape.corner.full}))`,
     ),
@@ -192,22 +184,22 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
       `var(--m3e-icon-button-large-shape-pressed-morph, var(--m3e-icon-button-shape-pressed-morph, ${DesignToken.shape.corner.large}))`,
     ),
     narrowLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-large-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 1rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-icon-button-large-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 1rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     narrowTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-large-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 1rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-icon-button-large-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 1rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     defaultLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-large-default-leading-space, var(--m3e-icon-button-default-leading-space, 2rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-icon-button-large-default-leading-space, var(--m3e-icon-button-default-leading-space, 2rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     defaultTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-large-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 2rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-icon-button-large-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 2rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     wideLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-large-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 3rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-icon-button-large-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 3rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     wideTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-large-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 3rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-icon-button-large-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 3rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
   },
 
@@ -219,9 +211,7 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
     outlineThickness: unsafeCSS(
       "var(--m3e-icon-button-extra-large-outline-thickness, var(--m3e-icon-button-outline-thickness, 3px))",
     ),
-    iconSize: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-large-icon-size, var(--m3e-icon-button-icon-size, 2.5rem)) + ${DesignToken.density.calc(-3)})`,
-    ),
+    iconSize: unsafeCSS(`var(--m3e-icon-button-extra-large-icon-size, var(--m3e-icon-button-icon-size, 2.5rem))`),
     shapeRound: unsafeCSS(
       `var(--m3e-icon-button-extra-large-shape-round, var(--m3e-icon-button-shape-round, ${DesignToken.shape.corner.full}))`,
     ),
@@ -238,22 +228,22 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
       `var(--m3e-icon-button-extra-large-shape-pressed-morph, var(--m3e-icon-button-shape-pressed-morph, ${DesignToken.shape.corner.large}))`,
     ),
     narrowLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-large-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 2rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-icon-button-extra-large-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 2rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     narrowTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-large-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 2rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-icon-button-extra-large-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 2rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     defaultLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-large-default-leading-space, var(--m3e-icon-button-default-leading-space, 3rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-icon-button-extra-large-default-leading-space, var(--m3e-icon-button-default-leading-space, 3rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     defaultTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-large-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 3rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-icon-button-extra-large-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 3rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     wideLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-large-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 4.5rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-icon-button-extra-large-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 4.5rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     wideTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-large-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 4.5rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-icon-button-extra-large-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 4.5rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
   },
 } as const;
