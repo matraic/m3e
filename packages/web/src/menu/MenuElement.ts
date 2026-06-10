@@ -167,6 +167,20 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
     }
     :host(:not([submenu]):popover-open) {
       transform: scaleY(1);
+      animation: ${unsafeCSS(
+        `bounce-open ${DesignToken.motion.duration.medium1} ${DesignToken.motion.easing.standard}`,
+      )};
+    }
+    @keyframes bounce-open {
+      0% {
+        transform: scaleY(0.8);
+      }
+      70% {
+        transform: scaleY(1.02);
+      }
+      100% {
+        transform: scaleY(1);
+      }
     }
     :host::backdrop {
       background-color: transparent;
@@ -232,9 +246,6 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
     @starting-style {
       :host(:popover-open) {
         opacity: 0;
-      }
-      :host(:not([submenu]):popover-open) {
-        transform: scaleY(0.8);
       }
     }
     @media (prefers-reduced-motion) {
