@@ -28,7 +28,7 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       outline: none;
       user-select: none;
       flex: none;
-      height: var(--m3e-menu-item-container-height, 2.75rem);
+      height: calc(var(--m3e-menu-item-container-height, 2.75rem) + ${DesignToken.density.calc(-3)});
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:not(:disabled)) .base {
@@ -106,7 +106,10 @@ export abstract class MenuItemElementBase extends KeyboardClick(
     }
     .touch {
       position: absolute;
-      height: 3rem;
+      height: calc(
+        var(--m3e-menu-item-container-height, 2.75rem) + calc(var(--m3e-menu-gap, 0.125rem) * 2) +
+          ${DesignToken.density.calc(-3)}
+      );
       left: 0;
       right: 0;
     }
