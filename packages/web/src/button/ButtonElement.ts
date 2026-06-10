@@ -749,7 +749,6 @@ export class M3eButtonElement extends KeyboardClick(
 
   /** @private */
   #cleanupAdjacentPressed(buttons: Array<HTMLElement & AttachInternalsMixin>): void {
-    console.log("clearnup");
     for (const button of buttons) {
       deleteCustomState(button, "--adjacent-pressed");
       deleteCustomState(button, "--no-resize");
