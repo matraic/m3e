@@ -90,7 +90,7 @@ export class M3eChipElement extends AttachInternals(LitElement) {
         `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
       )};
       border-radius: var(--m3e-chip-container-shape, ${DesignToken.shape.corner.small});
-      height: calc(var(--m3e-chip-container-height, 2rem) + ${DesignToken.density.calc(-2)});
+      height: calc(var(--m3e-chip-container-height, 2rem) + ${DesignToken.density.calc(-3)});
       font-size: var(--m3e-chip-label-text-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(--m3e-chip-label-text-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-chip-label-text-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
