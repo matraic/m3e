@@ -273,7 +273,13 @@ export class M3eRadioElement extends Labelled(
 
   /** @private */
   #handleClick(e: Event): void {
-    if (e.defaultPrevented || this.checked || this.disabled) return;
+    if (e.defaultPrevented || this.checked) return;
+
+    if (this.disabled) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      return;
+    }
 
     if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
       this.checked = true;

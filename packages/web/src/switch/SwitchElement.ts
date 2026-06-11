@@ -255,6 +255,12 @@ export class M3eSwitchElement extends Labelled(
   #handleClick(e: Event): void {
     if (e.defaultPrevented) return;
 
+    if (this.disabled) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      return;
+    }
+
     if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
       this.checked = !this.checked;
 
