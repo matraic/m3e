@@ -248,20 +248,18 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     }
     :host([hide-subscript="auto"]:not(:is(:state(--invalid), :--invalid))) .subscript {
       opacity: 0;
-      margin-top: 0px;
-      margin-bottom: 0.25rem;
+      margin-top: 0.25rem;
+      transform: translateY(-0.25rem);
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short4}, 
-        margin-top ${DesignToken.motion.duration.short4}, 
-        margin-bottom ${DesignToken.motion.duration.short4}`,
+        transform ${DesignToken.motion.duration.short4}`,
       )};
     }
     :host([hide-subscript="auto"]:not(:is(:state(--invalid), :--invalid)):focus-within) .subscript,
     :host([hide-subscript="auto"]:not(:is(:state(--invalid), :--invalid)):is(:state(--pressed), :--pressed))
       .subscript {
       opacity: 1;
-      margin-top: 0.25rem;
-      margin-bottom: 0;
+      transform: translateY(0);
     }
     :host(:is(:state(--invalid), :--invalid)) .hint {
       display: none;
