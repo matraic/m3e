@@ -131,7 +131,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         transition: opacity 0s;
       }
       m3e-form-field[variant="outlined"] m3e-input-chip-set {
-        margin-block: calc(calc(3.5rem + ${DesignToken.density.calc(-2)}) / 4);
+        margin-block: calc(calc(3.5rem + ${DesignToken.density.calc(-3)}) / 4);
       }
       @media (prefers-reduced-motion) {
         m3e-form-field input::placeholder,
@@ -161,7 +161,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       display: flex;
       align-items: center;
       position: relative;
-      min-height: calc(3.5rem + ${DesignToken.density.calc(-2)});
+      min-height: calc(3.5rem + ${DesignToken.density.calc(-3)});
       --_form-field-label-font-size: var(
         --m3e-form-field-label-font-size,
         ${DesignToken.typescale.standard.body.small.fontSize}
@@ -403,7 +403,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       width: calc(100% - 2rem);
     }
     :host([variant="outlined"]) .content {
-      min-height: calc(3.5rem + ${DesignToken.density.calc(-2)});
+      min-height: calc(3.5rem + ${DesignToken.density.calc(-3)});
       --_form-field-label-font-size: var(
         --m3e-form-field-label-font-size,
         ${DesignToken.typescale.standard.body.small.fontSize}
@@ -416,7 +416,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       )
       .label {
       margin-top: unset;
-      line-height: calc(3.5rem + ${DesignToken.density.calc(-2)});
+      line-height: calc(3.5rem + ${DesignToken.density.calc(-3)});
       --_form-field-label-font-size: var(
         --m3e-form-field-label-font-size,
         ${DesignToken.typescale.standard.body.small.fontSize}
@@ -465,11 +465,11 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       width: calc(100% - 2rem);
     }
     :host([variant="filled"]) .content {
-      padding-top: calc(1.5rem + ${DesignToken.density.calc(-2)});
+      padding-top: calc(1.5rem + ${DesignToken.density.calc(-3)});
       margin-bottom: 0.5rem;
     }
     :host([variant="filled"]) .label {
-      top: calc(0.5rem + ${DesignToken.density.calc(-2)});
+      top: max(0px, calc(0.5rem + ${DesignToken.density.calc(-3)}));
     }
     :host(
         [variant="filled"][float-label="auto"]:not(:is(:state(--float-label), :--float-label)):not(
@@ -478,7 +478,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       )
       .label {
       top: 0px;
-      line-height: calc(3.5rem + ${DesignToken.density.calc(-2)} - 0.0625rem);
+      line-height: calc(3.5rem + ${DesignToken.density.calc(-3)} - 0.0625rem);
       --_form-field-label-font-size: var(
         --m3e-form-field-label-font-size,
         ${DesignToken.typescale.standard.body.small.fontSize}
