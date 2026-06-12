@@ -13,8 +13,8 @@ export const SwitchToken = {
     `var(--m3e-switch-unselected-icon-color, ${DesignToken.color.surfaceContainerHighest})`,
   ),
   unselectedIconSize: unsafeCSS("var(--m3e-switch-unselected-icon-size, 1rem)"),
-  trackHeight: unsafeCSS("var(--m3e-switch-track-height, 2rem)"),
-  trackWidth: unsafeCSS("var(--m3e-switch-track-width, 3.25rem)"),
+  trackHeight: unsafeCSS(`calc(var(--m3e-switch-track-height, 2rem) + ${DesignToken.density.calc(-3)})`),
+  trackWidth: unsafeCSS(`calc(var(--m3e-switch-track-width, 3.25rem) + ${DesignToken.density.calc(-3)})`),
   trackOutlineColor: unsafeCSS(`var(--m3e-switch-track-outline-color, ${DesignToken.color.outline})`),
   trackOutlineWidth: unsafeCSS("var(--m3e-switch-track-outline-width, 2px)"),
   trackShape: unsafeCSS(`var(--m3e-switch-track-shape, ${DesignToken.shape.corner.full})`),
@@ -22,18 +22,34 @@ export const SwitchToken = {
   unselectedTrackColor: unsafeCSS(
     `var(--m3e-switch-unselected-track-color, ${DesignToken.color.surfaceContainerHighest})`,
   ),
-  unselectedHandleHeight: unsafeCSS("var(--m3e-switch-unselected-handle-height, 1rem)"),
-  unselectedHandleWidth: unsafeCSS("var(--m3e-switch-unselected-handle-width, 1rem)"),
-  withIconHandleHeight: unsafeCSS("var(--m3e-switch-with-icon-handle-height, 1.5rem)"),
-  withIconHandleWidth: unsafeCSS("var(--m3e-switch-with-icon-handle-width, 1.5rem)"),
-  selectedHandleHeight: unsafeCSS("var(--m3e-switch-selected-handle-height, 1.5rem)"),
-  selectedHandleWidth: unsafeCSS("var(--m3e-switch-selected-handle-width, 1.5rem)"),
-  pressedHandleHeight: unsafeCSS("var(--m3e-switch-pressed-handle-height, 1.75rem)"),
-  pressedHandleWidth: unsafeCSS("var(--m3e-switch-pressed-handle-width, 1.75rem)"),
+  unselectedHandleHeight: unsafeCSS(
+    `calc(var(--m3e-switch-unselected-handle-height, 1rem) + ${DesignToken.density.calc(-3)})`,
+  ),
+  unselectedHandleWidth: unsafeCSS(
+    `calc(var(--m3e-switch-unselected-handle-width, 1rem) + ${DesignToken.density.calc(-3)})`,
+  ),
+  withIconHandleHeight: unsafeCSS(
+    `calc(var(--m3e-switch-with-icon-handle-height, 1.5rem) + ${DesignToken.density.calc(-3)})`,
+  ),
+  withIconHandleWidth: unsafeCSS(
+    `calc(var(--m3e-switch-with-icon-handle-width, 1.5rem) + ${DesignToken.density.calc(-3)})`,
+  ),
+  selectedHandleHeight: unsafeCSS(
+    `calc(var(--m3e-switch-selected-handle-height, 1.5rem) + ${DesignToken.density.calc(-3)})`,
+  ),
+  selectedHandleWidth: unsafeCSS(
+    `calc(var(--m3e-switch-selected-handle-width, 1.5rem) + ${DesignToken.density.calc(-3)})`,
+  ),
+  pressedHandleHeight: unsafeCSS(
+    `calc(var(--m3e-switch-pressed-handle-height, 1.75rem) + ${DesignToken.density.calc(-3)})`,
+  ),
+  pressedHandleWidth: unsafeCSS(
+    `calc(var(--m3e-switch-pressed-handle-width, 1.75rem) + ${DesignToken.density.calc(-3)})`,
+  ),
   handleShape: unsafeCSS(`var(--m3e-switch-handle-shape, ${DesignToken.shape.corner.full})`),
   selectedHandleColor: unsafeCSS(`var(--m3e-switch-selected-handle-color, ${DesignToken.color.onPrimary})`),
   unselectedHandleColor: unsafeCSS(`var(--m3e-switch-unselected-handle-color, ${DesignToken.color.outline})`),
-  stateLayerSize: unsafeCSS("var(--m3e-switch-state-layer-size, 2.5rem)"),
+  stateLayerSize: unsafeCSS(`calc(var(--m3e-switch-state-layer-size, 2.5rem) + ${DesignToken.density.calc(-3)})`),
   stateLayerShape: unsafeCSS(`var(--m3e-switch-state-layer-shape, ${DesignToken.shape.corner.full})`),
   disabledSelectedIconColor: unsafeCSS(
     `var(--m3e-switch-disabled-selected-icon-color, ${DesignToken.color.onSurface})`,
