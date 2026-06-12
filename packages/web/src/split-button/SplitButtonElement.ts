@@ -290,36 +290,16 @@ export class M3eSplitButtonElement extends Role(LitElement, "group") {
       --_button-end-shape-pressed-morph: var(--_trailing-button-shape, ${DesignToken.shape.corner.full});
     }
     .base {
-      --m3e-icon-button-extra-small-icon-size: calc(
-        var(--m3e-spit-button-extra-small-trailing-button-icon-size, 1.375rem) + ${DesignToken.density.calc(0)}
-      );
-      --m3e-button-extra-small-icon-size: calc(
-        var(--m3e-spit-button-extra-small-trailing-button-icon-size, 1.375rem) + ${DesignToken.density.calc(0)}
-      );
-      --m3e-icon-button-small-icon-size: calc(
-        var(--m3e-spit-button-small-trailing-button-icon-size, 1.375rem) + ${DesignToken.density.calc(-1)}
-      );
-      --m3e-button-small-icon-size: calc(
-        var(--m3e-spit-button-small-trailing-button-icon-size, 1.375rem) + ${DesignToken.density.calc(-1)}
-      );
-      --m3e-icon-button-medium-icon-size: calc(
-        var(--m3e-spit-button-medium-trailing-button-icon-size, 1.625rem) + ${DesignToken.density.calc(-2)}
-      );
-      --m3e-button-medium-icon-size: calc(
-        var(--m3e-spit-button-medium-trailing-button-icon-size, 1.625rem) + ${DesignToken.density.calc(-2)}
-      );
-      --m3e-icon-button-large-icon-size: calc(
-        var(--m3e-spit-button-large-trailing-button-icon-size, 2.375rem) + ${DesignToken.density.calc(-3)}
-      );
-      --m3e-button-large-icon-size: calc(
-        var(--m3e-spit-button-large-trailing-button-icon-size, 2.375rem) + ${DesignToken.density.calc(-3)}
-      );
-      --m3e-icon-button-extra-large-icon-size: calc(
-        var(--m3e-spit-button-extra-large-trailing-button-icon-size, 3.125rem) + ${DesignToken.density.calc(-3)}
-      );
-      --m3e-button-extra-large-icon-size: calc(
-        var(--m3e-spit-button-extra-large-trailing-button-icon-size, 3.125rem) + ${DesignToken.density.calc(-3)}
-      );
+      --m3e-icon-button-extra-small-icon-size: var(--m3e-spit-button-extra-small-trailing-button-icon-size, 1.375rem);
+      --m3e-button-extra-small-icon-size: var(--m3e-spit-button-extra-small-trailing-button-icon-size, 1.375rem);
+      --m3e-icon-button-small-icon-size: var(--m3e-spit-button-small-trailing-button-icon-size, 1.375rem);
+      --m3e-button-small-icon-size: var(--m3e-spit-button-small-trailing-button-icon-size, 1.375rem);
+      --m3e-icon-button-medium-icon-size: var(--m3e-spit-button-medium-trailing-button-icon-size, 1.625rem);
+      --m3e-button-medium-icon-size: var(--m3e-spit-button-medium-trailing-button-icon-size, 1.625rem);
+      --m3e-icon-button-large-icon-size: var(--m3e-spit-button-large-trailing-button-icon-size, 2.375rem);
+      --m3e-button-large-icon-size: var(--m3e-spit-button-large-trailing-button-icon-size, 2.375rem);
+      --m3e-icon-button-extra-large-icon-size: var(--m3e-spit-button-extra-large-trailing-button-icon-size, 3.125rem);
+      --m3e-button-extra-large-icon-size: var(--m3e-spit-button-extra-large-trailing-button-icon-size, 3.125rem);
     }
     :host([size="extra-small"]) .base {
       --m3e-connected-button-group-spacing: var(--m3e-split-button-extra-small-between-spacing, 0.125rem);
