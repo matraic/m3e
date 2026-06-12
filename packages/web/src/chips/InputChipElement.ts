@@ -120,7 +120,7 @@ export class M3eInputChipElement extends DisabledInteractive(Disabled(Role(M3eCh
       }
       .touch {
         top: calc(
-          0px - calc(calc(3rem - calc(var(--m3e-chip-container-height, 2rem) + ${DesignToken.density.calc(-2)})) / 2)
+          0px - calc(calc(3rem - calc(var(--m3e-chip-container-height, 2rem) + ${DesignToken.density.calc(-3)})) / 2)
         );
       }
       .wrapper {
