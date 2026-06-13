@@ -42,7 +42,7 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
       justify-content: center;
       position: relative;
       border-radius: var(--m3e-breadcrumb-item-shape, ${DesignToken.shape.corner.full});
-      height: calc(var(--m3e-breadcrumb-item-container-height, 2.5rem) + ${DesignToken.density.calc(-1)});
+      height: calc(var(--m3e-breadcrumb-item-container-height, 2.5rem) + ${DesignToken.density.calc(-3)});
       column-gap: var(--m3e-breadcrumb-item-icon-label-space, 0.5rem);
     }
     .icon {
@@ -68,7 +68,7 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
       color: var(--m3e-breadcrumb-item-icon-color, ${DesignToken.color.onSurfaceVariant});
     }
     :host(:is(:state(--icon-only), :--icon-only)) .base {
-      width: calc(var(--m3e-breadcrumb-item-container-height, 2.5rem) + ${DesignToken.density.calc(-1)});
+      width: calc(var(--m3e-breadcrumb-item-container-height, 2.5rem) + ${DesignToken.density.calc(-3)});
       padding-inline: var(--m3e-breadcrumb-item-icon-padding-inline, 0px);
       --m3e-state-layer-hover-color: var(
         --m3e-breadcrumb-item-icon-hover-state-layer-color,
