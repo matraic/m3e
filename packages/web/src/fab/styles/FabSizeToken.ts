@@ -42,16 +42,14 @@ export const FabSizeToken: Record<FabSize, _FabSizeToken> = {
     labelTextTracking: unsafeCSS(
       `var(--m3e-fab-small-label-text-tracking, var(--m3e-fab-label-text-tracking, ${DesignToken.typescale.standard.title.medium.tracking}))`,
     ),
-    iconSize: unsafeCSS(
-      `calc(var(--m3e-fab-small-icon-size, var(--m3e-fab-icon-size, 1.5rem)) + ${DesignToken.density.calc(-3)})`,
-    ),
+    iconSize: unsafeCSS("var(--m3e-fab-small-icon-size, var(--m3e-fab-icon-size, 1.5rem))"),
     extendedIconSize: unsafeCSS("var(--m3e-fab-small-icon-size, var(--m3e-fab-icon-size, 1.5rem))"),
     shape: unsafeCSS(`var(--m3e-fab-small-shape, var(--m3e-fab-shape, ${DesignToken.shape.corner.large}))`),
     leadingSpace: unsafeCSS(
-      `calc(var(--m3e-fab-small-leading-space, var(--m3e-fab-leading-space, 1rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-fab-small-leading-space, var(--m3e-fab-leading-space, 1rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     trailingSpace: unsafeCSS(
-      `calc(var(--m3e-fab-small-trailing-space, var(--m3e-fab-trailing-space, 1rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-fab-small-trailing-space, var(--m3e-fab-trailing-space, 1rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     iconLabelSpace: unsafeCSS("var(--m3e-fab-small-icon-label-space, var(--m3e-fab-icon-label-space, 0.5rem))"),
     extendedLeadingSpace: unsafeCSS("var(--m3e-fab-small-leading-space, var(--m3e-fab-leading-space, 1rem))"),
@@ -75,16 +73,14 @@ export const FabSizeToken: Record<FabSize, _FabSizeToken> = {
     labelTextTracking: unsafeCSS(
       `var(--m3e-fab-medium-label-text-tracking, var(--m3e-fab-label-text-tracking, ${DesignToken.typescale.standard.title.large.tracking}))`,
     ),
-    iconSize: unsafeCSS(
-      `calc(var(--m3e-fab-medium-icon-size, var(--m3e-fab-icon-size, 1.75rem)) + ${DesignToken.density.calc(-3)})`,
-    ),
+    iconSize: unsafeCSS("var(--m3e-fab-medium-icon-size, var(--m3e-fab-icon-size, 1.75rem))"),
     extendedIconSize: unsafeCSS("var(--m3e-fab-medium-icon-size, var(--m3e-fab-icon-size, 1.75rem))"),
     shape: unsafeCSS(`var(--m3e-fab-medium-shape, var(--m3e-fab-shape, ${DesignToken.shape.corner.largeIncreased}))`),
     leadingSpace: unsafeCSS(
-      `calc(var(--m3e-fab-medium-leading-space, var(--m3e-fab-leading-space, 1.625rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-fab-medium-leading-space, var(--m3e-fab-leading-space, 1.625rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     trailingSpace: unsafeCSS(
-      `calc(var(--m3e-fab-medium-trailing-space, var(--m3e-fab-trailing-space, 1.625rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-fab-medium-trailing-space, var(--m3e-fab-trailing-space, 1.625rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     iconLabelSpace: unsafeCSS("var(--m3e-fab-medium-icon-label-space, var(--m3e-fab-icon-label-space, 0.75rem))"),
     extendedLeadingSpace: unsafeCSS("var(--m3e-fab-medium-leading-space, var(--m3e-fab-leading-space, 1.625rem))"),
@@ -108,16 +104,14 @@ export const FabSizeToken: Record<FabSize, _FabSizeToken> = {
     labelTextTracking: unsafeCSS(
       `var(--m3e-fab-large-label-text-tracking, var(--m3e-fab-label-text-tracking, ${DesignToken.typescale.standard.headline.small.tracking}))`,
     ),
-    iconSize: unsafeCSS(
-      `calc(var(--m3e-fab-large-icon-size, var(--m3e-fab-icon-size, 2.25rem)) + ${DesignToken.density.calc(-3)})`,
-    ),
+    iconSize: unsafeCSS("calc(var(--m3e-fab-large-icon-size, var(--m3e-fab-icon-size, 2.25rem))"),
     extendedIconSize: unsafeCSS("var(--m3e-fab-large-icon-size, var(--m3e-fab-icon-size, 2.25rem))"),
     shape: unsafeCSS(`var(--m3e-fab-large-shape, var(--m3e-fab-shape, ${DesignToken.shape.corner.extraLarge}))`),
     leadingSpace: unsafeCSS(
-      `calc(var(--m3e-fab-large-leading-space, var(--m3e-fab-leading-space, 1.75rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-fab-large-leading-space, var(--m3e-fab-leading-space, 1.75rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     trailingSpace: unsafeCSS(
-      `calc(var(--m3e-fab-large-trailing-space, var(--m3e-fab-trailing-space, 1.75rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-fab-large-trailing-space, var(--m3e-fab-trailing-space, 1.75rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
     ),
     iconLabelSpace: unsafeCSS("var(--m3e-fab-large-icon-label-space, var(--m3e-fab-icon-label-space, 1rem))"),
     extendedLeadingSpace: unsafeCSS("var(--m3e-fab-large-leading-space, var(--m3e-fab-leading-space, 1.75rem))"),
