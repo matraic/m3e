@@ -87,9 +87,10 @@ export class M3ePaginatorElement extends Role(LitElement, "group") {
       justify-content: flex-end;
       padding-inline: 0.5rem;
       width: 100%;
+      --_density-scale: ${DesignToken.density.scale};
     }
     .form-field {
-      --md-sys-density-scale: -2;
+      --md-sys-density-scale: min(-2, var(--_density-scale));
       --m3e-form-field-font-size: var(--m3e-paginator-font-size, ${DesignToken.typescale.standard.body.small.fontSize});
       --m3e-form-field-font-weight: var(
         --m3e-paginator-font-weight,
