@@ -30,26 +30,26 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-a11y.min.js",
-          "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-anchoring.min.js",
-          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-bidi.min.js",
-          "@m3e/web/button": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/button.min.js",
-          "@m3e/web/icon-button": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/icon-button.min.js",
-          "@m3e/web/button-group": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/button-group.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-a11y.min.js",
+          "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-anchoring.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-bidi.min.js",
+          "@m3e/web/button": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/button.min.js",
+          "@m3e/web/icon-button": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/icon-button.min.js",
+          "@m3e/web/button-group": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/button-group.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/content-pane.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/toc.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/icon.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/menu.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/button-group.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/split-button.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/content-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/icon.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/menu.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/button-group.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/split-button.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -238,6 +238,58 @@
 &lt;/m3e-split-button&gt;
 &lt;!-- Additional sizes omitted for brevity --&gt;
 &lt;!-- Menu omitted for brevity --&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Density</m3e-heading>
+        <p>
+          Split buttons are density-aware and adjust their vertical spacing based on the
+          <code>--md-sys-density-scale</code> and <code>--md-sys-density-size</code> custom CSS properties. The default
+          density size is 4dp (0.25rem). Buttons and menus support negative density scales down to -3, with each step
+          reducing the visual height by one density unit. Regardless of visual size, buttons maintain a 48x48dp minimum
+          touch target to ensure reliable accessibility.
+        </p>
+        <p>The following illustrates applying -3 density to the buttons and menu of a split button.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-split-button size="extra-small" class="density-3">
+              <m3e-button slot="leading-button"><m3e-icon slot="icon" name="edit"></m3e-icon>Edit</m3e-button>
+              <m3e-icon-button slot="trailing-button">
+                <m3e-icon name="keyboard_arrow_down"></m3e-icon>
+                <m3e-menu-trigger for="menu3"></m3e-menu-trigger>
+              </m3e-icon-button>
+            </m3e-split-button>
+            <m3e-menu id="menu3" position-x="before" class="density-3">
+              <m3e-menu-item>Rename</m3e-menu-item>
+              <m3e-menu-item>Copy</m3e-menu-item>
+              <m3e-menu-item>Delete</m3e-menu-item>
+            </m3e-menu>
+          </div>
+        </m3e-card>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-split-button size=&quot;extra-small&quot; class=&quot;density-3&quot;&gt;
+  &lt;m3e-button slot=&quot;leading-button&quot;&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;edit&quot;&gt;&lt;/m3e-icon&gt;Edit
+  &lt;/m3e-button&gt;
+  &lt;m3e-icon-button slot=&quot;trailing-button&quot;&gt;
+    &lt;m3e-icon name=&quot;keyboard_arrow_down&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;m3e-menu-trigger for=&quot;menu&quot;&gt;&lt;/m3e-menu-trigger&gt;
+  &lt;/m3e-icon-button&gt;
+&lt;/m3e-split-button&gt;
+
+&lt;m3e-menu id=&quot;menu&quot; position-x=&quot;before&quot; class=&quot;density-3&quot;&gt;
+  &lt;!-- Menu items omitted for brevity --&gt;
+&lt;/m3e-menu&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.density-3 {
+  --md-sys-density-scale: -3;
+}</pre
           >
         </m3e-card>
 

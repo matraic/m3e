@@ -30,19 +30,19 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-a11y.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-a11y.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/content-pane.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/icon.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/toc.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/fab.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/content-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/icon.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/fab.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -212,6 +212,35 @@
   &lt;span slot=&quot;label&quot;&gt;Google&lt;/span&gt;
 &lt;/m3e-fab&gt;</pre
           >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Density</m3e-heading>
+
+        <p>
+          FABs are density-aware and adjust their vertical spacing based on the
+          <code>--md-sys-density-scale</code> and <code>--md-sys-density-size</code> custom CSS properties. The default
+          density size is 4dp (0.25rem). FABs support negative density scales down to -3, with each step reducing the
+          visual height by one density unit. Regardless of visual size, FABs maintain a 48x48dp minimum touch target to
+          ensure reliable accessibility.
+        </p>
+        <p>The following illustrates applying density to the <code>small</code> and <code>medium</code> sizes.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-fab size="small" class="density-3"><m3e-icon name="add"></m3e-icon></m3e-fab>
+            <m3e-fab size="small" class="density-2"><m3e-icon name="add"></m3e-icon></m3e-fab>
+            <m3e-fab size="small" class="density-1"><m3e-icon name="add"></m3e-icon></m3e-fab>
+            <m3e-fab size="small" class="density-0"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          </div>
+        </m3e-card>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-fab size="medium" class="density-3"><m3e-icon name="add"></m3e-icon></m3e-fab>
+            <m3e-fab size="medium" class="density-2"><m3e-icon name="add"></m3e-icon></m3e-fab>
+            <m3e-fab size="medium" class="density-1"><m3e-icon name="add"></m3e-icon></m3e-fab>
+            <m3e-fab size="medium" class="density-0"><m3e-icon name="add"></m3e-icon></m3e-fab>
+          </div>
         </m3e-card>
 
         <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>

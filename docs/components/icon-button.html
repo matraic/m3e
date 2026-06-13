@@ -30,19 +30,19 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-a11y.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-a11y.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/content-pane.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/icon.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/toc.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/icon-button.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/content-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/icon.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/icon-button.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -279,6 +279,69 @@
 &lt;m3e-icon-button variant=&quot;tonal&quot; href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;
   &lt;m3e-icon name=&quot;open_in_new_window&quot;&gt;&lt;/m3e-icon&gt;
 &lt;/m3e-icon-button&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Density</m3e-heading>
+        <p>
+          Icon buttons are density-aware and adjust their vertical spacing based on the
+          <code>--md-sys-density-scale</code> and <code>--md-sys-density-size</code> custom CSS properties. The default
+          density size is 4dp (0.25rem). Buttons support negative density scales down to -3, with each step reducing the
+          visual height by one density unit. Regardless of visual size, icon buttons maintain a 48x48dp minimum touch
+          target to ensure reliable accessibility.
+        </p>
+        <p>
+          The following illustrates applying density to the <code>extra-small</code> and <code>small</code> sized icon
+          buttons.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-icon-button class="density-3" variant="filled" size="extra-small">
+              <m3e-icon name="check"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button class="density-2" variant="filled" size="extra-small">
+              <m3e-icon name="check"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button class="density-1" variant="filled" size="extra-small">
+              <m3e-icon name="check"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button class="density-0" variant="filled" size="extra-small">
+              <m3e-icon name="check"></m3e-icon>
+            </m3e-icon-button>
+          </div>
+        </m3e-card>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-icon-button class="density-3" variant="filled" size="small">
+              <m3e-icon name="check"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button class="density-2" variant="filled" size="small">
+              <m3e-icon name="check"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button class="density-1" variant="filled" size="small">
+              <m3e-icon name="check"></m3e-icon>
+            </m3e-icon-button>
+            <m3e-icon-button class="density-0" variant="filled" size="small">
+              <m3e-icon name="check"></m3e-icon>
+            </m3e-icon-button>
+          </div>
+        </m3e-card>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-icon-button class=&quot;density-3&quot; variant=&quot;filled&quot; size=&quot;extra-small&quot;&gt;
+  &lt;m3e-icon name=&quot;check&quot;&gt;&lt;/m3e-icon&gt;
+&lt;/m3e-icon-button&gt;
+&lt;!-- Additional buttons omitted for brevity --&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.density-3 {
+  --md-sys-density-scale: -3;
+}
+/* Additional classes omitted for brevity */</pre
           >
         </m3e-card>
 

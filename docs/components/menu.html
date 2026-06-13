@@ -30,23 +30,23 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-a11y.min.js",
-          "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-anchoring.min.js",
-          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-bidi.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-a11y.min.js",
+          "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-anchoring.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-bidi.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/content-pane.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/button.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/icon.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/divider.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/toc.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/menu.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/content-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/button.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/icon.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/divider.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/menu.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -84,9 +84,9 @@
         <m3e-card variant="outlined" class="example">
           <pre slot="content">
 &lt;m3e-button&gt;
-  &lt;m3e-menu-trigger for=&quot;menu1&quot;&gt;Menu&lt;/m3e-menu-trigger&gt;
+  &lt;m3e-menu-trigger for=&quot;menu&quot;&gt;Menu&lt;/m3e-menu-trigger&gt;
 &lt;/m3e-button&gt;
-&lt;m3e-menu id=&quot;menu1&quot;&gt;
+&lt;m3e-menu id=&quot;menu&quot;&gt;
   &lt;m3e-menu-item&gt;Item 1&lt;/m3e-menu-item&gt;
   &lt;m3e-menu-item&gt;Item 2&lt;/m3e-menu-item&gt;
 &lt;/m3e-menu&gt;</pre
@@ -112,10 +112,8 @@
         </m3e-card>
         <m3e-card variant="outlined" class="example">
           <pre slot="content">
-&lt;m3e-button&gt;
-  &lt;m3e-menu-trigger for=&quot;menu1&quot;&gt;Menu&lt;/m3e-menu-trigger&gt;
-&lt;/m3e-button&gt;
-&lt;m3e-menu id=&quot;menu1&quot; variant=&quot;vibrant&quot;&gt;
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-menu id=&quot;menu&quot; variant=&quot;vibrant&quot;&gt;
   &lt;m3e-menu-item&gt;Item 1&lt;/m3e-menu-item&gt;
   &lt;m3e-menu-item&gt;Item 2&lt;/m3e-menu-item&gt;
 &lt;/m3e-menu&gt;</pre
@@ -163,10 +161,8 @@
         </m3e-card>
         <m3e-card variant="outlined" class="example">
           <pre slot="content">
-&lt;m3e-button&gt;
-  &lt;m3e-menu-trigger for=&quot;menu8&quot;&gt;Menu items with icons&lt;/m3e-menu-trigger&gt;
-&lt;/m3e-button&gt;
-&lt;m3e-menu id=&quot;menu8&quot;&gt;
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-menu id=&quot;menu&quot;&gt;
   &lt;m3e-menu-item&gt;
     &lt;m3e-icon slot=&quot;icon&quot; name=&quot;dialpad&quot;&gt;&lt;/m3e-icon&gt;
     Redial
@@ -210,7 +206,7 @@
         <m3e-card variant="outlined" class="example">
           <pre slot="content">
 &lt;!-- Trigger omitted for brevity --&gt;
-&lt;m3e-menu id=&quot;menu8&quot;&gt;
+&lt;m3e-menu id=&quot;menu&quot;&gt;
   &lt;m3e-menu-item disabled&gt;
     &lt;m3e-icon slot=&quot;icon&quot; name=&quot;dialpad&quot;&gt;&lt;/m3e-icon&gt;
     Redial
@@ -250,10 +246,8 @@
         </m3e-card>
         <m3e-card variant="outlined" class="example">
           <pre slot="content">
-&lt;m3e-button&gt;
-  &lt;m3e-menu-trigger for=&quot;menu2&quot;&gt;Menu with checkboxes&lt;/m3e-menu-trigger&gt;
-&lt;/m3e-button&gt;
-&lt;m3e-menu id=&quot;menu2&quot;&gt;
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-menu id=&quot;menu&quot;&gt;
   &lt;m3e-menu-item-checkbox checked&gt;
     &lt;m3e-icon slot=&quot;icon&quot; name=&quot;format_bold&quot;&gt;&lt;/m3e-icon&gt;
     Bold
@@ -289,10 +283,8 @@
         </m3e-card>
         <m3e-card variant="outlined" class="example">
           <pre slot="content">
-&lt;m3e-button&gt;
-  &lt;m3e-menu-trigger for=&quot;menu3&quot;&gt;Menu with radios&lt;/m3e-menu-trigger&gt;
-&lt;/m3e-button&gt;
-&lt;m3e-menu id=&quot;menu3&quot;&gt;
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-menu id=&quot;menu&quot;&gt;
   &lt;m3e-menu-item-radio checked&gt;Ascending&lt;/m3e-menu-item-radio&gt;
   &lt;m3e-menu-item-radio&gt;Descending&lt;/m3e-menu-item-radio&gt;
 &lt;/m3e-menu&gt;</pre
@@ -324,10 +316,8 @@
         </m3e-card>
         <m3e-card variant="outlined" class="example">
           <pre slot="content">
-&lt;m3e-button&gt;
-  &lt;m3e-menu-trigger for=&quot;menu4&quot;&gt;Menu with radio groups&lt;/m3e-menu-trigger&gt;
-&lt;/m3e-button&gt;
-&lt;m3e-menu id=&quot;menu4&quot;&gt;
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-menu id=&quot;menu&quot;&gt;
   &lt;m3e-menu-item-group&gt;
     &lt;m3e-menu-item-radio checked&gt;Ascending&lt;/m3e-menu-item-radio&gt;
     &lt;m3e-menu-item-radio&gt;Descending&lt;/m3e-menu-item-radio&gt;
@@ -376,28 +366,136 @@
         <m3e-card variant="outlined" class="example">
           <pre slot="content">
 &lt;m3e-button&gt;
-  &lt;m3e-menu-trigger for=&quot;menu5&quot;&gt;Menu with submenus&lt;/m3e-menu-trigger&gt;
+  &lt;m3e-menu-trigger for=&quot;menu1&quot;&gt;Menu with submenus&lt;/m3e-menu-trigger&gt;
 &lt;/m3e-button&gt;
-&lt;m3e-menu id=&quot;menu5&quot;&gt;
+&lt;m3e-menu id=&quot;menu1&quot;&gt;
   &lt;m3e-menu-item&gt;
-    &lt;m3e-menu-trigger for=&quot;menu6&quot;&gt;Fruits with A&lt;/m3e-menu-trigger&gt;
+    &lt;m3e-menu-trigger for=&quot;submenu1&quot;&gt;Fruits with A&lt;/m3e-menu-trigger&gt;
   &lt;/m3e-menu-item&gt;
   &lt;m3e-menu-item&gt;Grapes&lt;/m3e-menu-item&gt;
   &lt;m3e-menu-item&gt;Olive&lt;/m3e-menu-item&gt;
   &lt;m3e-menu-item&gt;Orange&lt;/m3e-menu-item&gt;
 &lt;/m3e-menu&gt;
-&lt;m3e-menu id=&quot;menu6&quot;&gt;
+&lt;m3e-menu id=&quot;submenu1&quot;&gt;
   &lt;m3e-menu-item&gt;Apricot&lt;/m3e-menu-item&gt;
   &lt;m3e-menu-item&gt;Avocado&lt;/m3e-menu-item&gt;
   &lt;m3e-menu-item&gt;
-    &lt;m3e-menu-trigger for=&quot;menu7&quot;&gt;Apples&lt;/m3e-menu-trigger&gt;
+    &lt;m3e-menu-trigger for=&quot;submenu2&quot;&gt;Apples&lt;/m3e-menu-trigger&gt;
   &lt;/m3e-menu-item&gt;
 &lt;/m3e-menu&gt;
-&lt;m3e-menu id=&quot;menu7&quot;&gt;
+&lt;m3e-menu id=&quot;submenu2&quot;&gt;
   &lt;m3e-menu-item&gt;Fuji&lt;/m3e-menu-item&gt;
   &lt;m3e-menu-item&gt;Granny Smith&lt;/m3e-menu-item&gt;
   &lt;m3e-menu-item&gt;Red Delicious&lt;/m3e-menu-item&gt;
 &lt;/m3e-menu&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Density</m3e-heading>
+        <p>
+          Menus are density-aware and adjust their vertical spacing based on the
+          <code>--md-sys-density-scale</code> and <code>--md-sys-density-size</code> custom CSS properties. The default
+          density size is 4dp (0.25rem). Menus support negative density scales down to -3, with each step reducing the
+          visual height by one density unit.
+        </p>
+
+        <p>The following illustrates applying density to menus.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-button>
+              <m3e-menu-trigger for="menu-density-3">Density -3</m3e-menu-trigger>
+            </m3e-button>
+            <m3e-menu id="menu-density-3" class="density-3">
+              <m3e-menu-item>
+                <m3e-icon slot="icon" name="stars"></m3e-icon>
+                Item 1
+              </m3e-menu-item>
+              <m3e-menu-item>
+                <m3e-icon slot="icon" name="stars"></m3e-icon>
+                Item 2
+              </m3e-menu-item>
+              <m3e-menu-item>
+                <m3e-icon slot="icon" name="stars"></m3e-icon>
+                Item 3
+              </m3e-menu-item>
+            </m3e-menu>
+
+            <m3e-button>
+              <m3e-menu-trigger for="menu-density-2">Density -2</m3e-menu-trigger>
+            </m3e-button>
+            <m3e-menu id="menu-density-2" class="density-2">
+              <m3e-menu-item>
+                <m3e-icon slot="icon" name="stars"></m3e-icon>
+                Item 1
+              </m3e-menu-item>
+              <m3e-menu-item>
+                <m3e-icon slot="icon" name="stars"></m3e-icon>
+                Item 2
+              </m3e-menu-item>
+              <m3e-menu-item>
+                <m3e-icon slot="icon" name="stars"></m3e-icon>
+                Item 3
+              </m3e-menu-item>
+            </m3e-menu>
+
+            <m3e-button>
+              <m3e-menu-trigger for="menu-density-1">Density -1</m3e-menu-trigger>
+            </m3e-button>
+            <m3e-menu id="menu-density-1" class="density-1">
+              <m3e-menu-item>
+                <m3e-icon slot="icon" name="stars"></m3e-icon>
+                Item 1
+              </m3e-menu-item>
+              <m3e-menu-item>
+                <m3e-icon slot="icon" name="stars"></m3e-icon>
+                Item 2
+              </m3e-menu-item>
+              <m3e-menu-item>
+                <m3e-icon slot="icon" name="stars"></m3e-icon>
+                Item 3
+              </m3e-menu-item>
+            </m3e-menu>
+
+            <m3e-button>
+              <m3e-menu-trigger for="menu-density-0">Density 0</m3e-menu-trigger>
+            </m3e-button>
+            <m3e-menu id="menu-density-0" class="density-0">
+              <m3e-menu-item>
+                <m3e-icon slot="icon" name="stars"></m3e-icon>
+                Item 1
+              </m3e-menu-item>
+              <m3e-menu-item>
+                <m3e-icon slot="icon" name="stars"></m3e-icon>
+                Item 2
+              </m3e-menu-item>
+              <m3e-menu-item>
+                <m3e-icon slot="icon" name="stars"></m3e-icon>
+                Item 3
+              </m3e-menu-item>
+            </m3e-menu>
+          </div>
+        </m3e-card>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;!-- Trigger omitted for brevity --&gt;
+&lt;m3e-menu id=&quot;menu&quot; class=&quot;density-3&quot;&gt;
+  &lt;m3e-menu-item&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;stars&quot;&gt;&lt;/m3e-icon&gt;
+    Item 1
+  &lt;/m3e-menu-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-menu&gt;
+&lt;!-- Additional menus omitted for brevity --&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.density-3 {
+  --md-sys-density-scale: -3;
+}
+/* Additional classes omitted for brevity */</pre
           >
         </m3e-card>
 

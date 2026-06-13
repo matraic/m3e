@@ -134,3 +134,15 @@ pre {
 .showcase m3e-button {
   max-width: 100%;
 }
+.density-3 {
+  --md-sys-density-scale: -3;
+}
+.density-2 {
+  --md-sys-density-scale: -2;
+}
+.density-1 {
+  --md-sys-density-scale: -1;
+}
+.density-0 {
+  --md-sys-density-scale: 0;
+}

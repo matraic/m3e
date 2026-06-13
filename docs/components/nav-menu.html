@@ -31,21 +31,21 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-a11y.min.js",
-          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-bidi.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-a11y.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-bidi.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/content-pane.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/icon.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/divider.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/toc.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/nav-menu.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/content-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/icon.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/divider.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/nav-menu.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -232,6 +232,70 @@
     &lt;!-- Additional items omitted for brevity --&gt;;
   &lt;/m3e-nav-menu-item&gt;
 &lt;/m3e-nav-menu&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Density</m3e-heading>
+        <p>
+          Nav menus are density-aware and adjust their vertical spacing based on the
+          <code>--md-sys-density-scale</code> and <code>--md-sys-density-size</code> custom CSS properties. The default
+          density size is 4dp (0.25rem). Nav menus support negative density scales down to -3, with each step reducing
+          the visual height by one density unit.
+        </p>
+
+        <p>The following illustrates applying a -3 density to nav menu.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-nav-menu class="density-3">
+              <m3e-nav-menu-item-group>
+                <m3e-heading m3e-toc-ignore slot="label" variant="label" size="large">Mail</m3e-heading>
+                <m3e-nav-menu-item>
+                  <m3e-icon slot="icon" name="mail"></m3e-icon>
+                  <span slot="label">Inbox</span>
+                  <span slot="badge">24</span>
+                </m3e-nav-menu-item>
+                <m3e-nav-menu-item>
+                  <m3e-icon slot="icon" name="send"></m3e-icon>
+                  <span slot="label">Outbox</span>
+                </m3e-nav-menu-item>
+                <m3e-nav-menu-item>
+                  <m3e-icon slot="icon" name="favorite"></m3e-icon>
+                  <span slot="label">Favorites</span>
+                </m3e-nav-menu-item>
+                <m3e-nav-menu-item>
+                  <m3e-icon slot="icon" name="delete"></m3e-icon>
+                  <span slot="label">Trash</span>
+                </m3e-nav-menu-item>
+              </m3e-nav-menu-item-group>
+              <m3e-divider></m3e-divider>
+              <m3e-nav-menu-item-group>
+                <m3e-heading m3e-toc-ignore slot="label" variant="label" size="large">Personal folders</m3e-heading>
+                <m3e-nav-menu-item>
+                  <m3e-icon slot="icon" name="folder"></m3e-icon>
+                  <span slot="label">Family</span>
+                </m3e-nav-menu-item>
+                <m3e-nav-menu-item>
+                  <m3e-icon slot="icon" name="folder"></m3e-icon>
+                  <span slot="label">Wedding</span>
+                </m3e-nav-menu-item>
+              </m3e-nav-menu-item-group>
+            </m3e-nav-menu>
+          </div>
+        </m3e-card>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-nav-menu class=&quot;density-3&quot;&gt;
+  &lt;!-- Items omitted for brevity --&gt;;
+&lt;/m3e-nav-menu&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.density-3 {
+  --md-sys-density-scale: -3;
+}</pre
           >
         </m3e-card>
 

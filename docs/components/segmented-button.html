@@ -30,20 +30,20 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-a11y.min.js",
-          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-bidi.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-a11y.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-bidi.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/content-pane.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/icon.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/toc.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/segmented-button.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/content-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/icon.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/segmented-button.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -256,6 +256,66 @@
           <strong>property-only</strong> control. When disabled at runtime, it does <em>not</em> sprout a
           <code>disabled</code> attribute into the DOM.
         </p>
+
+        <m3e-heading variant="headline" size="medium" level="2">Density</m3e-heading>
+        <p>
+          Segmented buttons are density-aware and adjust their vertical spacing based on the
+          <code>--md-sys-density-scale</code> and <code>--md-sys-density-size</code> custom CSS properties. The default
+          density size is 4dp (0.25rem). Segmented buttons support negative density scales down to -3, with each step
+          reducing the visual height by one density unit. Regardless of visual size, button segments maintain a 48x48dp
+          minimum touch target to ensure reliable accessibility.
+        </p>
+        <p>The following illustrates applying density to a segmented button.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-segmented-button class="density-3">
+              <m3e-button-segment checked>8 oz</m3e-button-segment>
+              <m3e-button-segment>12 oz</m3e-button-segment>
+              <m3e-button-segment>16 oz</m3e-button-segment>
+              <m3e-button-segment>20 oz</m3e-button-segment>
+            </m3e-segmented-button>
+            <br /><br />
+            <m3e-segmented-button class="density-2">
+              <m3e-button-segment checked>8 oz</m3e-button-segment>
+              <m3e-button-segment>12 oz</m3e-button-segment>
+              <m3e-button-segment>16 oz</m3e-button-segment>
+              <m3e-button-segment>20 oz</m3e-button-segment>
+            </m3e-segmented-button>
+            <br /><br />
+            <m3e-segmented-button class="density-1">
+              <m3e-button-segment checked>8 oz</m3e-button-segment>
+              <m3e-button-segment>12 oz</m3e-button-segment>
+              <m3e-button-segment>16 oz</m3e-button-segment>
+              <m3e-button-segment>20 oz</m3e-button-segment>
+            </m3e-segmented-button>
+            <br /><br />
+            <m3e-segmented-button class="density-0">
+              <m3e-button-segment checked>8 oz</m3e-button-segment>
+              <m3e-button-segment>12 oz</m3e-button-segment>
+              <m3e-button-segment>16 oz</m3e-button-segment>
+              <m3e-button-segment>20 oz</m3e-button-segment>
+            </m3e-segmented-button>
+          </div>
+        </m3e-card>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-segmented-button class=&quot;density-3&quot;&gt;
+  &lt;!-- Button segments omitted for brevity --&gt;
+&lt;/m3e-segmented-button&gt;
+
+&lt;!-- Additional segmented buttons omitted for brevity --&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.density-3 {
+  --md-sys-density-scale: -3;
+}
+/* Additional classes omitted for brevity */</pre
+          >
+        </m3e-card>
 
         <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
         <p>

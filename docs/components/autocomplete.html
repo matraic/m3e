@@ -30,28 +30,28 @@
           "lit-html/directives/class-map.js": "https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js",
           "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm",
           "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/",
-          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core.min.js",
-          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-a11y.min.js",
-          "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-anchoring.min.js",
-          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-bidi.min.js",
-          "@m3e/web/core/layout": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/core-layout.min.js",
-          "@m3e/web/option": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/option.min.js"
+          "@m3e/web/core": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core.min.js",
+          "@m3e/web/core/a11y": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-a11y.min.js",
+          "@m3e/web/core/anchoring": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-anchoring.min.js",
+          "@m3e/web/core/bidi": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-bidi.min.js",
+          "@m3e/web/core/layout": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/core-layout.min.js",
+          "@m3e/web/option": "https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/option.min.js"
         }
       }
     </script>
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/content-pane.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/card.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/heading.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/toc.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/form-field.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/option.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/theme.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/autocomplete.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/chips.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/icon-button.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/loading-indicator.min.js"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.10/dist/progress-indicator.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/content-pane.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/card.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/heading.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/toc.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/form-field.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/option.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/theme.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/autocomplete.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/chips.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/icon-button.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/loading-indicator.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.11/dist/progress-indicator.min.js"></script>
     <script src="autocomplete.js"></script>
     <script src="../main.js"></script>
   </head>
@@ -501,6 +501,88 @@ search.addEventListener(&quot;query&quot;, (e) =&gt; {
 &lt;m3e-autocomplete for=&quot;fruit&quot;&gt;
   &lt;!-- Options omitted for brevity --&gt;
 &lt;/m3e-autocomplete&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Density</m3e-heading>
+        <p>
+          Form fields and autocomplete panels are density-aware and adjust their vertical spacing based on the
+          <code>--md-sys-density-scale</code> and <code>--md-sys-density-size</code> custom CSS properties. The default
+          density size is 4dp (0.25rem). Both support negative density scales down to -3, with each step reducing the
+          visual height by one density unit.
+        </p>
+
+        <p>
+          The following illustrates applying density to both the <code>m3e-form-field</code> and
+          <code>m3e-autocomplete</code>'s panel via use of the <code>panel-class</code> attribute.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field class="density-3">
+              <label slot="label" for="d1">Density -3</label>
+              <input id="d1" />
+            </m3e-form-field>
+            <m3e-autocomplete for="d1" panel-class="density-3">
+              <m3e-option>Apples</m3e-option>
+              <m3e-option>Oranges</m3e-option>
+              <m3e-option>Bananas</m3e-option>
+              <m3e-option>Grapes</m3e-option>
+            </m3e-autocomplete>
+
+            <m3e-form-field class="density-2">
+              <label slot="label" for="d2">Density -2</label>
+              <input id="d2" />
+            </m3e-form-field>
+            <m3e-autocomplete for="d2" panel-class="density-2">
+              <m3e-option>Apples</m3e-option>
+              <m3e-option>Oranges</m3e-option>
+              <m3e-option>Bananas</m3e-option>
+              <m3e-option>Grapes</m3e-option>
+            </m3e-autocomplete>
+
+            <m3e-form-field class="density-1">
+              <label slot="label" for="d3">Density -1</label>
+              <input id="d3" />
+            </m3e-form-field>
+            <m3e-autocomplete for="d3" panel-class="density-1">
+              <m3e-option>Apples</m3e-option>
+              <m3e-option>Oranges</m3e-option>
+              <m3e-option>Bananas</m3e-option>
+              <m3e-option>Grapes</m3e-option>
+            </m3e-autocomplete>
+
+            <m3e-form-field class="density-0">
+              <label slot="label" for="d4">Density 0</label>
+              <input id="d4" />
+            </m3e-form-field>
+            <m3e-autocomplete for="d4" panel-class="density-0">
+              <m3e-option>Apples</m3e-option>
+              <m3e-option>Oranges</m3e-option>
+              <m3e-option>Bananas</m3e-option>
+              <m3e-option>Grapes</m3e-option>
+            </m3e-autocomplete>
+          </div>
+        </m3e-card>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field class=&quot;density-3&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;fld&quot;&gt;Density -3&lt;/label&gt;
+  &lt;input id=&quot;fld&quot; /&gt;
+&lt;/m3e-form-field&gt;
+&lt;m3e-autocomplete for=&quot;fld&quot; panel-class=&quot;density-3&quot;&gt;
+  &lt;!-- Options omitted for brevity --&gt;
+&lt;/m3e-autocomplete&gt;
+&lt;!-- Additional fields omitted for brevity --&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.density-3 {
+  --md-sys-density-scale: -3;
+}
+/* Additional classes omitted for brevity */</pre
           >
         </m3e-card>
 
