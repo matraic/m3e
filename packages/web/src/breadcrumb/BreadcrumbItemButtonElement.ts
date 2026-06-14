@@ -46,8 +46,8 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
       column-gap: var(--m3e-breadcrumb-item-icon-label-space, 0.5rem);
     }
     .icon {
-      font-size: var(--m3e-breadcrumb-item--icon-size, 1.25rem);
-      --m3e-icon-size: var(--m3e-breadcrumb-item--icon-size, 1.25rem);
+      font-size: var(--m3e-breadcrumb-item-icon-size, 1.25rem);
+      --m3e-icon-size: var(--m3e-breadcrumb-item-icon-size, 1.25rem);
     }
     ::slotted([slot="icon"]) {
       font-size: inherit !important;
