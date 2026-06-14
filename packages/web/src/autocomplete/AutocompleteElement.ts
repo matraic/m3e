@@ -712,13 +712,25 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     if (!this.#hasNoDataSlot && this.noDataLabel) {
       const noDataSpan = document.createElement("span");
       noDataSpan.slot = "no-data";
-      noDataSpan.textContent = this.noDataLabel;
+      noDataSpan.translate = false;
+
+      const text = document.createElement("span");
+      text.translate = true;
+      text.textContent = this.noDataLabel;
+      noDataSpan.append(text);
+
       children.push(noDataSpan);
     }
     if (!this.#hasLoadingSlot && this.loadingLabel) {
       const loadingSpan = document.createElement("span");
       loadingSpan.slot = "loading";
-      loadingSpan.textContent = this.loadingLabel;
+      loadingSpan.translate = false;
+
+      const text = document.createElement("span");
+      text.translate = true;
+      text.textContent = this.loadingLabel;
+      loadingSpan.append(text);
+
       children.push(loadingSpan);
     }
     this.#menu.replaceChildren(...children);
