@@ -74,9 +74,12 @@ export class M3eThemeElement extends LitElement {
         return css;
       };
 
-      const omitKey = <T extends object, K extends keyof T>(obj: T, key: K): Omit<T, K> => {
-        const { [key]: _unused, ...rest } = obj;
-        void _unused;
+      const omitKeys = <T extends object, K extends keyof T>(obj: T, ...keys: readonly K[]): Omit<T, K> => {
+        const rest = { ...obj };
+        for (const key of keys) {
+          delete rest[key];
+        }
+
         return rest as Omit<T, K>;
       };
 
@@ -98,11 +101,28 @@ export class M3eThemeElement extends LitElement {
       css += composeCss(DesignToken.typescale.standard.body.small);
       css += composeCss(DesignToken.elevation);
       css += composeCss(DesignToken.shape.corner.value);
-      css += composeCss(omitKey(DesignToken.shape.corner, "value"));
+      // Omit nonstandard tokens.
+      css += composeCss(
+        omitKeys(
+          DesignToken.shape.corner,
+          "value",
+          "extraLargeEnd",
+          "extraLargeStart",
+          "mediumTop",
+          "mediumEnd",
+          "mediumStart",
+          "smallTop",
+          "smallEnd",
+          "smallStart",
+          "extraSmallEnd",
+          "extraSmallStart",
+          "extraSmallBottom",
+        ),
+      );
       css += composeCss(DesignToken.motion.duration);
       css += composeCss(DesignToken.motion.easing);
       css += composeCss(DesignToken.motion.spring);
-      css += composeCss(omitKey(DesignToken.density, "calc"));
+      css += composeCss(omitKeys(DesignToken.density, "calc"));
       css += composeCss(DesignToken.measurement);
       css += composeCss(DesignToken.state);
 
