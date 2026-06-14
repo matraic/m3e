@@ -37,7 +37,7 @@ export const ShapeToken = {
 
     /** Extra large rounded asymmetric shape directed towards the top. */
     extraLargeTop: unsafeCSS(
-      `var(--md-sys-shape-corner-extra-large-top, ${CornerValue.extraLarge} ${CornerValue.extraLarge} ${CornerValue.none} ${CornerValue.none})`
+      `var(--md-sys-shape-corner-extra-large-top, ${CornerValue.extraLarge} ${CornerValue.extraLarge} ${CornerValue.none} ${CornerValue.none})`,
     ),
 
     /** Extra large rounded symmetric shape. */
@@ -45,27 +45,27 @@ export const ShapeToken = {
 
     /** Extra large rounded asymmetric shape directed towards the end. */
     extraLargeEnd: unsafeCSS(
-      `${CornerValue.none} ${CornerValue.extraLarge} ${CornerValue.extraLarge} ${CornerValue.none}`
+      `${CornerValue.none} ${CornerValue.extraLarge} ${CornerValue.extraLarge} ${CornerValue.none}`,
     ),
 
     /** Extra large rounded asymmetric shape directed towards the start. */
     extraLargeStart: unsafeCSS(
-      `${CornerValue.extraLarge} ${CornerValue.none} ${CornerValue.none} ${CornerValue.extraLarge}`
+      `${CornerValue.extraLarge} ${CornerValue.none} ${CornerValue.none} ${CornerValue.extraLarge}`,
     ),
 
     /** Large rounded asymmetric shape directed towards the top. */
     largeTop: unsafeCSS(
-      `var(--md-sys-shape-corner-large-top, ${CornerValue.large} ${CornerValue.large} ${CornerValue.none} ${CornerValue.none})`
+      `var(--md-sys-shape-corner-large-top, ${CornerValue.large} ${CornerValue.large} ${CornerValue.none} ${CornerValue.none})`,
     ),
 
     /** Large rounded asymmetric shape directed towards the end. */
     largeEnd: unsafeCSS(
-      `var(--md-sys-shape-corner-large-end, ${CornerValue.none} ${CornerValue.large} ${CornerValue.large} ${CornerValue.none})`
+      `var(--md-sys-shape-corner-large-end, ${CornerValue.none} ${CornerValue.large} ${CornerValue.large} ${CornerValue.none})`,
     ),
 
     /** Large rounded asymmetric shape directed towards the start. */
     largeStart: unsafeCSS(
-      `var(--md-sys-shape-corner-large-end, ${CornerValue.large} ${CornerValue.none} ${CornerValue.none} ${CornerValue.large})`
+      `var(--md-sys-shape-corner-large-start, ${CornerValue.large} ${CornerValue.none} ${CornerValue.none} ${CornerValue.large})`,
     ),
 
     /** Large rounded symmetric shape. */
@@ -97,7 +97,7 @@ export const ShapeToken = {
 
     /** Extra small rounded asymmetric shape directed towards the top. */
     extraSmallTop: unsafeCSS(
-      `var(--md-sys-shape-corner-extra-small-top, ${CornerValue.extraSmall} ${CornerValue.extraSmall} ${CornerValue.none} ${CornerValue.none})`
+      `var(--md-sys-shape-corner-extra-small-top, ${CornerValue.extraSmall} ${CornerValue.extraSmall} ${CornerValue.none} ${CornerValue.none})`,
     ),
 
     /** Extra small rounded symmetric shape. */
@@ -105,17 +105,17 @@ export const ShapeToken = {
 
     /** Extra small rounded asymmetric shape directed towards the end. */
     extraSmallEnd: unsafeCSS(
-      `${CornerValue.none} ${CornerValue.extraSmall} ${CornerValue.extraSmall} ${CornerValue.none}`
+      `${CornerValue.none} ${CornerValue.extraSmall} ${CornerValue.extraSmall} ${CornerValue.none}`,
     ),
 
     /** Extra small rounded asymmetric shape directed towards the start. */
     extraSmallStart: unsafeCSS(
-      `${CornerValue.extraSmall} ${CornerValue.none} ${CornerValue.none} ${CornerValue.extraSmall}`
+      `${CornerValue.extraSmall} ${CornerValue.none} ${CornerValue.none} ${CornerValue.extraSmall}`,
     ),
 
     /** Extra small rounded asymmetric shape directed towards the bottom. */
     extraSmallBottom: unsafeCSS(
-      `${CornerValue.none} ${CornerValue.none} ${CornerValue.extraSmall} ${CornerValue.extraSmall}`
+      `${CornerValue.none} ${CornerValue.none} ${CornerValue.extraSmall} ${CornerValue.extraSmall}`,
     ),
 
     /** No rounding. */
@@ -126,7 +126,7 @@ export const ShapeToken = {
 
     /** Increased extra large rounded symmetric shape. */
     extraLargeIncreased: unsafeCSS(
-      `var(--md-sys-shape-corner-extra-large-increased, ${CornerValue.extraLargeIncreased})`
+      `var(--md-sys-shape-corner-extra-large-increased, ${CornerValue.extraLargeIncreased})`,
     ),
 
     /** Extra extra large rounded symmetric shape. */
