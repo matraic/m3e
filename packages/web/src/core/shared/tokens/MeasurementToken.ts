@@ -1,49 +1,62 @@
 import { unsafeCSS } from "lit";
 
+function space(unit: number) {
+  return unsafeCSS(`var(--md-sys-measurement-space${unit}, ${0.5 * (unit / 100)}rem)`);
+}
+
 /** Design tokens that control measurements. */
 export const MeasurementToken = {
   /** Zero spacing. */
-  space0: unsafeCSS("var(--md-sys-measurement-space0, 0rem)"),
+  space0: space(0),
 
   /** 2dp spacing. */
-  space25: unsafeCSS("var(--md-sys-measurement-space25, 0.125rem)"),
+  space25: space(25),
 
   /** 4dp spacing. */
-  space50: unsafeCSS("var(--md-sys-measurement-space50, 0.25rem)"),
+  space50: space(50),
 
   /** 6dp spacing. */
-  space75: unsafeCSS("var(--md-sys-measurement-space75, 0.375rem)"),
+  space75: space(75),
 
   /** 8dp spacing. */
-  space100: unsafeCSS("var(--md-sys-measurement-space100, 0.5rem)"),
+  space100: space(100),
+
+  /** 10dp spacing. */
+  space125: space(125),
 
   /** 12dp spacing. */
-  space150: unsafeCSS("var(--md-sys-measurement-space150, 0.75rem)"),
+  space150: space(150),
+
+  /** 14dp spacing. */
+  space175: space(175),
 
   /** 16dp spacing. */
-  space200: unsafeCSS("var(--md-sys-measurement-space200, 1rem)"),
+  space200: space(200),
 
   /** 20dp spacing. */
-  space250: unsafeCSS("var(--md-sys-measurement-space250, 1.25rem)"),
+  space250: space(250),
+
+  /** 24dp spacing. */
+  space300: space(300),
 
   /** 32dp spacing. */
-  space300: unsafeCSS("var(--md-sys-measurement-space300, 2rem)"),
+  space400: space(400),
+
+  /** 36dp spacing. */
+  space450: space(450),
 
   /** 40dp spacing. */
-  space400: unsafeCSS("var(--md-sys-measurement-space400, 2.5rem)"),
+  space500: space(500),
 
   /** 48dp spacing. */
-  space500: unsafeCSS("var(--md-sys-measurement-space500, 3rem)"),
+  space600: space(600),
 
   /** 56dp spacing. */
-  space600: unsafeCSS("var(--md-sys-measurement-space600, 3.5rem)"),
+  space700: space(700),
 
   /** 64dp spacing. */
-  space700: unsafeCSS("var(--md-sys-measurement-space700, 4rem)"),
+  space800: space(800),
 
   /** 72dp spacing. */
-  space800: unsafeCSS("var(--md-sys-measurement-space800, 4.5rem)"),
-
-  /** 96dp spacing. */
-  space900: unsafeCSS("var(--md-sys-measurement-space900, 6rem)"),
+  space900: space(900),
 } as const;
