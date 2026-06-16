@@ -181,16 +181,8 @@ export function LinkButton<T extends Constructor<LitElement>>(
     /** @private */
     #handleLinkPointerDown(e: PointerEvent): void {
       if (e.button !== 2) {
+        // Preventing default cancel's link activation but will not cancel click.
         e.preventDefault();
-        e.stopImmediatePropagation();
-
-        this.dispatchEvent(
-          new MouseEvent("click", {
-            bubbles: true,
-            cancelable: true,
-            view: window,
-          }),
-        );
       } else {
         (e.target as HTMLLinkElement).removeAttribute("aria-hidden");
       }
