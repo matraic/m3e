@@ -104,7 +104,7 @@ export const FabSizeToken: Record<FabSize, _FabSizeToken> = {
     labelTextTracking: unsafeCSS(
       `var(--m3e-fab-large-label-text-tracking, var(--m3e-fab-label-text-tracking, ${DesignToken.typescale.standard.headline.small.tracking}))`,
     ),
-    iconSize: unsafeCSS("calc(var(--m3e-fab-large-icon-size, var(--m3e-fab-icon-size, 2.25rem))"),
+    iconSize: unsafeCSS("var(--m3e-fab-large-icon-size, var(--m3e-fab-icon-size, 2.25rem))"),
     extendedIconSize: unsafeCSS("var(--m3e-fab-large-icon-size, var(--m3e-fab-icon-size, 2.25rem))"),
     shape: unsafeCSS(`var(--m3e-fab-large-shape, var(--m3e-fab-shape, ${DesignToken.shape.corner.extraLarge}))`),
     leadingSpace: unsafeCSS(
