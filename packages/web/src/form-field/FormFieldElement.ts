@@ -346,6 +346,16 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       transition-property: max-width, margin-inline-end;
       transition-duration: 1ms;
     }
+    :host(
+        :is(:state(--required), :--required):not([hide-required-marker]):not(:is(:state(--with-label), :--with-label))
+      )
+      .pseudo-label,
+    :host(
+        :is(:state(--required), :--required):not([hide-required-marker]):not(:is(:state(--with-label), :--with-label))
+      )
+      .required-marker {
+      display: none;
+    }
     :host([variant="outlined"]:is(:state(--required), :--required):not([hide-required-marker])) .pseudo-label {
       margin-inline-end: 0.25rem;
     }
