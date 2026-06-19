@@ -366,9 +366,33 @@ export class M3eSelectElement
           </slot>
         </div>
       </div>
-      <div class="options" aria-hidden="true">
+      <div class="options" aria-hidden="true" @state-change="${this.#handleOptionStateChange}">
         <slot></slot>
       </div>`;
+  }
+
+  /** @private */
+  #handleOptionStateChange(e: Event): void {
+    if (!(e.target instanceof M3eOptionElement)) return;
+    e.stopImmediatePropagation();
+
+    const index = this.options.indexOf(e.target);
+    if (index == -1) return;
+
+    const clone = this.#options[index];
+    if (!clone) return;
+
+    clone.disabled = e.target.disabled;
+
+    if (clone.selected === e.target.selected) return;
+
+    clone.selected = e.target.selected;
+
+    if (!this.isUpdatePending) {
+      this.requestUpdate();
+    }
+
+    this.#formField?.notifyControlStateChange(true);
   }
 
   /** @private */

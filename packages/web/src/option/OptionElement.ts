@@ -270,6 +270,10 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
         });
       }
     }
+
+    if (changedProperties.has("selected") || changedProperties.has("disabled")) {
+      this["dispatchEvent"](new CustomEvent("state-change", { bubbles: true }));
+    }
   }
 
   /** @inheritdoc */
