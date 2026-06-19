@@ -359,9 +359,24 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="options" aria-hidden="true">
+    return html`<div class="options" aria-hidden="true" @state-change="${this.#handleOptionStateChange}">
       <slot></slot>
     </div>`;
+  }
+
+  /** @private */
+  #handleOptionStateChange(e: Event): void {
+    if (!(e.target instanceof M3eOptionElement)) return;
+    e.stopImmediatePropagation();
+
+    const index = this.options.indexOf(e.target);
+    if (index == -1) return;
+
+    const clone = this.#options[index];
+    if (!clone) return;
+
+    clone.disabled = e.target.disabled;
+    clone.selected = e.target.selected;
   }
 
   /** @private */
