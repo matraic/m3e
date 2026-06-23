@@ -625,6 +625,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   /** @private */
   readonly #focusController = new FocusController(this, {
     target: null,
+    filter: (e) => this.#ignoreEvent(e),
     callback: (focused) => {
       focused = focused && !(this.#control?.disabled ?? true);
       setCustomState(this, "--no-animate", false);
@@ -640,6 +641,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
 
   /** @private */ @query(".base") private readonly _base!: HTMLElement;
   /** @private */ @query(".prefix") private readonly _prefix!: HTMLElement;
+  /** @private */ @query(".suffix") private readonly _suffix!: HTMLElement;
   /** @private */ @query(".error") private readonly _error!: HTMLElement;
   /** @private */ @query(".hint") private readonly _hint!: HTMLElement;
 
@@ -660,6 +662,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   /** @private */
   readonly #pressedController = new PressedController(this, {
     target: null,
+    filter: (e) => this.#ignoreEvent(e),
     callback: (pressed) => setCustomState(this, "--pressed", pressed && !(this.#control?.disabled ?? true)),
   });
 
@@ -815,15 +818,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
               : nothing}
           </span>
         </div>
-        <div
-          class="suffix"
-          @click="${this.#stopPropagation}"
-          @focusin="${this.#stopPropagation}"
-          @focusout="${this.#stopPropagation}"
-          @pointerdown="${this.#stopPropagation}"
-          @keydown="${this.#stopPropagation}"
-          @keyup="${this.#stopPropagation}"
-        >
+        <div class="suffix">
           <slot name="suffix" @slotchange="${this.#handleSuffixSlotChange}"></slot>
         </div>
       </div>
@@ -843,12 +838,6 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
 
     this.#errorMutationController.observe(this._error);
     this.#handleErrorChange();
-  }
-
-  /** @private */
-  #stopPropagation(e: Event): void {
-    e.stopImmediatePropagation();
-    e.stopPropagation();
   }
 
   /** @private */
@@ -883,6 +872,8 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
 
   /** @private */
   #handleContainerClick(e: MouseEvent): void {
+    if (this.#ignoreEvent(e)) return;
+
     if (this.#control && !this.#focused && !this.#control.disabled) {
       if (this.#control.onContainerClick) {
         this.#control.onContainerClick(e);
@@ -908,6 +899,11 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   #handleFormReset(): void {
     this._invalid = false;
     setTimeout(() => this.notifyControlStateChange());
+  }
+
+  /** @private */
+  #ignoreEvent(e: Event): boolean {
+    return e.composed && e.composedPath().includes(this._suffix);
   }
 
   /** @private */

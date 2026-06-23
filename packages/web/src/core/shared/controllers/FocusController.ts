@@ -6,16 +6,23 @@ import { forcedColorsActive } from "../utils";
 /** The callback function invoked when the focused state of an element changes. */
 export type FocusControllerCallback = (focused: boolean, focusVisible: boolean, target: HTMLElement) => void;
 
+/** The callback function invoked to test whether an event should trigger a change to focused state. */
+export type FocusControllerFilterCallback = (e: Event) => boolean;
+
 /** Encapsulates options used to configure a `FocusController`. */
 export interface FocusControllerOptions extends MonitorControllerOptions {
   /** The callback invoked when the focused state of an element changes. */
   callback: FocusControllerCallback;
+
+  /** The callback function invoked to test whether an event should trigger a change to focused state. */
+  filter?: FocusControllerFilterCallback;
 }
 
 /** A `ReactiveController` used to monitor the focused state of one or more elements. */
 export class FocusController extends MonitorControllerBase {
   /** @private */ #touch = false;
   /** @private */ readonly #callback: FocusControllerCallback;
+  /** @private */ readonly #filter?: FocusControllerFilterCallback;
   /** @private */ readonly #keyDownHandler = (e: Event) => this.#handleKeyDown(e);
   /** @private */ readonly #focusInHandler = (e: Event) => this.#handleFocusIn(e);
   /** @private */ readonly #focusOutHandler = (e: Event) => this.#handleFocusOut(e);
@@ -34,6 +41,7 @@ export class FocusController extends MonitorControllerBase {
   constructor(host: ReactiveControllerHost & HTMLElement, options: FocusControllerOptions) {
     super(host, options);
     this.#callback = options.callback;
+    this.#filter = options.filter;
   }
 
   /** @inheritdoc */
@@ -80,6 +88,7 @@ export class FocusController extends MonitorControllerBase {
 
   /** @private */
   #handleKeyDown(e: Event): void {
+    if (this.#filter?.(e)) return;
     const target = e.currentTarget as HTMLElement;
     if (target.matches(":focus-within")) {
       this.#handleFocusIn(e);
@@ -88,6 +97,7 @@ export class FocusController extends MonitorControllerBase {
 
   /** @private */
   #handleFocusIn(e: Event): void {
+    if (this.#filter?.(e)) return;
     if (this.#touch) return;
     const target = e.currentTarget as HTMLElement;
     this.#callback(true, target.matches(":focus-visible") || this.#hadKeydown || forcedColorsActive(), target);
@@ -95,6 +105,7 @@ export class FocusController extends MonitorControllerBase {
 
   /** @private */
   #handleFocusOut(e: Event): void {
+    if (this.#filter?.(e)) return;
     if (this.#touch) return;
     this.#callback(false, false, e.currentTarget as HTMLElement);
   }

@@ -9,10 +9,16 @@ export type PressedControllerCallback = (
   target: HTMLElement,
 ) => void;
 
+/** The callback function invoked to test whether an event should trigger a change to pressed state. */
+export type PressedControllerFilterCallback = (e: Event) => boolean;
+
 /** Encapsulates options used to configure a `PressedController`. */
 export interface PressedControllerOptions extends MonitorControllerOptions {
   /** The callback invoked when the pressed state of an element changes. */
   callback: PressedControllerCallback;
+
+  /** The callback function invoked to test whether an event should trigger a change to pressed state. */
+  filter?: PressedControllerFilterCallback;
 
   /** The minimum amount of time, in milliseconds, to retain a pressed state. */
   minPressedDuration?: number;
@@ -32,6 +38,7 @@ export interface PressedControllerOptions extends MonitorControllerOptions {
 export class PressedController extends MonitorControllerBase {
   /** @private */ readonly #capture?: boolean;
   /** @private */ readonly #callback: PressedControllerCallback;
+  /** @private */ readonly #filter?: PressedControllerFilterCallback;
   /** @private */ readonly #isPressedKey?: (key: string) => boolean;
   /** @private */ readonly #pressedTargets = new Map<HTMLElement, number>();
   /** @private */ readonly #minPressedDuration: number;
@@ -52,6 +59,7 @@ export class PressedController extends MonitorControllerBase {
 
     this.#capture = options.capture;
     this.#callback = options.callback;
+    this.#filter = options.filter;
     this.#isPressedKey = options.isPressedKey;
     this.#minPressedDuration = options.minPressedDuration ?? 0;
   }
@@ -103,6 +111,7 @@ export class PressedController extends MonitorControllerBase {
 
   /** @private */
   #handlePointerDown(e: PointerEvent): void {
+    if (this.#filter?.(e)) return;
     if (e.pointerType === "mouse" && e.button > 1) return;
 
     for (const target of e.composedPath()) {
@@ -129,6 +138,7 @@ export class PressedController extends MonitorControllerBase {
 
   /** @private */
   #handleKeyDown(e: KeyboardEvent): void {
+    if (this.#filter?.(e)) return;
     if (e.target !== e.currentTarget) return;
     const target = e.currentTarget as HTMLElement;
 
