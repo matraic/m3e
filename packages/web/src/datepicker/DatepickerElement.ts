@@ -644,7 +644,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
 
   /** @private */
   #handleDocumentClick(e: MouseEvent): void {
-    if (!e.composedPath().some((x) => x instanceof M3eDatepickerElement || x === this.#trigger || x === this.#anchor)) {
+    if (!e.composedPath().some((x) => x instanceof M3eDatepickerElement || x === this.#trigger)) {
       this.hide();
     }
   }
