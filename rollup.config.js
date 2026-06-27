@@ -138,7 +138,7 @@ export const createAllEntryPoint = ({ externals = [], config = {} }) => {
   };
 };
 
-const createConfig = ({ inputs = [], externals = [], config = {} }) => {
+const createConfig = ({ inputs = [], externals = [], allExternals = [], config = {} }) => {
   const { disableMinification = defaultDisableMinification } = config;
 
   if (disableMinification) {
@@ -150,7 +150,7 @@ const createConfig = ({ inputs = [], externals = [], config = {} }) => {
   return [
     createDefaultEntryPoint({ config: config }),
     createInputsEntryPoint({ inputs: inputs, externals: externals, config: config }),
-    createAllEntryPoint({ externals: externals, config: config }),
+    createAllEntryPoint({ externals: allExternals, config: config }),
   ];
 };
 

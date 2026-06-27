@@ -60,6 +60,7 @@ const inputs = [
 export default createConfig({
   inputs: inputs,
   externals: [/^@m3e\//, "lit", "@lit/react", "react"],
+  allExternals: [/^@m3e\/web\//, "react"],
   config: {
     terserConfig: {
       compress: { directives: false },
