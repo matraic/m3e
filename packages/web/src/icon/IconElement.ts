@@ -186,7 +186,7 @@ export class M3eIconElement extends Role(LitElement, "img") {
   protected override render(): unknown {
     return IconRegistry.isIconRegistered(this.name, this.variant)
       ? IconRegistry.renderIcon(this.name, this.variant, this.filled)
-      : html`<div class="icon" aria-hidden="true">${this.name}</div>`;
+      : html`<div class="icon" aria-hidden="true" translate="no">${this.name}</div>`;
   }
 }
 
