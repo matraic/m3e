@@ -62,7 +62,7 @@
         <span slot="title">M3E — Material 3 Expressive for Every Framework</span>
         <span slot="subtitle">v2.5.13</span>
         <span slot="trailing">
-          <m3e-icon-button href="https://www.npmjs.com/package/@m3e/web" target="_blank">
+          <m3e-icon-button id="npm-button" href="https://www.npmjs.com/package/@m3e/web" target="_blank">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
               <!--!Font Awesome Free v7.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
               <path
@@ -70,6 +70,7 @@
               />
             </svg>
           </m3e-icon-button>
+          <m3e-tooltip for="npm-button">npm package</m3e-tooltip>
           <m3e-icon-button id="github-button" aria-label="Git" href="https://github.com/matraic/m3e" target="_blank">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
               <!--!Font Awesome Free v7.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
@@ -78,7 +79,7 @@
               />
             </svg>
           </m3e-icon-button>
-          <m3e-tooltip for="github-button">Github</m3e-tooltip>
+          <m3e-tooltip for="github-button">Github repository</m3e-tooltip>
           <m3e-icon-button id="settings-button" aria-label="Settings" toggle>
             <m3e-icon name="settings"></m3e-icon>
             <m3e-drawer-toggle for="settings-drawer"></m3e-drawer-toggle>
