@@ -68,6 +68,8 @@ export class HoverController extends MonitorControllerBase {
     target.removeEventListener("pointerenter", this.#pointerInHandler);
     target.removeEventListener("pointerleave", this.#pointerLeaveHandler);
     target.removeEventListener("touchend", this.#pointerLeaveHandler);
+
+    this.#clearDelays(target);
   }
 
   /** @private */
