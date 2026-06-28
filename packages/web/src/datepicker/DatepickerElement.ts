@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { property, query, state } from "lit/decorators.js";
-import { ifDefined } from "lit/directives/if-defined.js";
 
 import {
   addCustomState,
@@ -16,6 +15,7 @@ import {
   SuppressInitialAnimation,
   InertController,
   ReconnectedCallback,
+  prefersReducedMotion,
 } from "@m3e/web/core";
 
 import { positionAnchor } from "@m3e/web/core/anchoring";
@@ -269,6 +269,8 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
     }
   `;
 
+  /** @private */ #closeTimeout = -1;
+  /** @private */ @state() private _open = false;
   /** @private */ @state() private _date?: Date | null;
   /** @private */ @state() private _rangeStart?: Date | null;
   /** @private */ @state() private _rangeEnd?: Date | null;
@@ -292,6 +294,14 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
       this.#clearSelectionState();
       this.#anchorCleanup?.();
       this.#anchorCleanup = undefined;
+
+      clearTimeout(this.#closeTimeout);
+
+      if (!prefersReducedMotion()) {
+        this.#closeTimeout = setTimeout(() => (this._open = false), 100);
+      } else {
+        this._open = false;
+      }
     }
   };
 
@@ -484,19 +494,36 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
       this.hide();
     }
 
+    clearTimeout(this.#closeTimeout);
+
     if (this.currentVariant === "modal") {
       this.#scrollLockController.lock();
       this.#inertController.lock();
     }
 
+    // The calendar is rendered on demand
+    this._open = true;
+
+    // Wait for the calendar to render
+    if (this.isUpdatePending) {
+      await this.updateComplete;
+    }
+
     const calendar = this._calendar;
 
+    calendar.startView = this.startView;
+    calendar.startAt = this.startAt;
+    calendar.minDate = this.minDate;
+    calendar.maxDate = this.maxDate;
     calendar.date = this.date;
     calendar.rangeStart = this.rangeStart;
     calendar.rangeEnd = this.rangeEnd;
+    calendar.specialDates = this.specialDates;
+    calendar.blackoutDates = this.blackoutDates;
 
-    // Reset the start-view
-    calendar.requestUpdate("startView");
+    // Ensure the active view is reset
+    calendar.resetActiveView();
+
     if (calendar.isUpdatePending) {
       await calendar.updateComplete;
     }
@@ -508,7 +535,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
     await this.#updatePosition();
     this.showPopover();
 
-    await this._calendar.focusActiveCell();
+    await calendar.focusActiveCell();
   }
 
   /**
@@ -516,6 +543,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
    * @param {boolean} [restoreFocus=false] Whether to restore focus to the picker's trigger.
    */
   hide(restoreFocus: boolean = false): void {
+    if (!this.isOpen) return;
     if (this.currentVariant === "modal") {
       this.#scrollLockController.unlock();
       this.#inertController.unlock();
@@ -548,24 +576,8 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<m3e-focus-trap>
-      ${this.#renderHeader()}
-      <m3e-calendar
-        class="calendar"
-        start-view="${this.startView}"
-        start-at="${ifDefined(this.startAt?.toISOString())}"
-        min-date="${ifDefined(this.minDate?.toISOString())}"
-        max-date="${ifDefined(this.maxDate?.toISOString())}"
-        @change="${this.#handleCalendarChange}"
-      ></m3e-calendar>
-      <div class="actions">
-        ${this.clearable
-          ? html`<m3e-button @click="${this.#handleClearClick}">${this.clearLabel}</m3e-button>`
-          : nothing}
-        <div class="spacer" aria-hidden="true"></div>
-        <m3e-button @click="${this.#handleDismissClick}">${this.dismissLabel}</m3e-button>
-        <m3e-button @click="${this.#handleConfirmClick}">${this.confirmLabel}</m3e-button>
-      </div>
+    return html`<m3e-focus-trap ?disabled="${!this._open}">
+      ${this.#renderHeader()}${this.#renderCalendar()}${this.#renderActions()}
     </m3e-focus-trap>`;
   }
 
@@ -604,6 +616,24 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
       <div class="divider"></div>`;
   }
 
+  /** @private */
+  #renderCalendar(): unknown {
+    // Calendar is rendered only when open
+    return this._open
+      ? html`<m3e-calendar class="calendar" @change="${this.#handleCalendarChange}"></m3e-calendar>`
+      : nothing;
+  }
+
+  /** @private */
+  #renderActions(): unknown {
+    return html`<div class="actions">
+      ${this.clearable ? html`<m3e-button @click="${this.#handleClearClick}">${this.clearLabel}</m3e-button>` : nothing}
+      <div class="spacer" aria-hidden="true"></div>
+      <m3e-button @click="${this.#handleDismissClick}">${this.dismissLabel}</m3e-button>
+      <m3e-button @click="${this.#handleConfirmClick}">${this.confirmLabel}</m3e-button>
+    </div>`;
+  }
+
   /** @inheritdoc */
   protected override willUpdate(changedProperties: PropertyValues<this>): void {
     super.willUpdate(changedProperties);
@@ -632,32 +662,23 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
     }
   }
 
-  /** @inheritdoc */
-  protected override updated(_changedProperties: PropertyValues<this>): void {
-    super.updated(_changedProperties);
-
-    if (_changedProperties.has("specialDates") || _changedProperties.has("blackoutDates")) {
-      this._calendar.specialDates = this.specialDates;
-      this._calendar.blackoutDates = this.blackoutDates;
-    }
-  }
-
   /** @private */
   #handleDocumentClick(e: MouseEvent): void {
-    if (!e.composedPath().some((x) => x instanceof M3eDatepickerElement || x === this.#trigger)) {
+    if (this.isOpen && !e.composedPath().some((x) => x === this || x === this.#trigger)) {
       this.hide();
     }
   }
 
   /** @private */
-  #handleCalendarChange(): void {
-    this._date = this._calendar.date;
-    this._rangeStart = this._calendar.rangeStart;
-    this._rangeEnd = this._calendar.rangeEnd;
+  #handleCalendarChange(e: Event): void {
+    const calendar = <M3eCalendarElement>e.target;
+    this._date = calendar.date;
+    this._rangeStart = calendar.rangeStart;
+    this._rangeEnd = calendar.rangeEnd;
 
     if (this.range && !this._rangeStart && this._date) {
       this._rangeStart = new Date(this._date);
-      this._calendar.rangeStart = this._rangeStart;
+      calendar.rangeStart = this._rangeStart;
     }
   }
 

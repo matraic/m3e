@@ -15,6 +15,8 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { customElement, dateConverter, DesignToken } from "@m3e/web/core";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
+import "@m3e/web/tooltip";
+
 import { CalendarViewElementBase } from "./CalendarViewElementBase";
 import {
   addCalendarDays,
@@ -215,7 +217,9 @@ export class M3eMonthViewElement extends CalendarViewElementBase {
               html`<th scope="col">
                 <span class="visually-hidden">${x.long}</span>
                 <div id="weekday-${x.id}-month-${month}" aria-hidden="true">${x.narrow}</div>
-                <m3e-tooltip for="weekday-${x.id}-month-${month}">${x.long}</m3e-tooltip>
+                ${this.active
+                  ? html`<m3e-tooltip for="weekday-${x.id}-month-${month}">${x.long}</m3e-tooltip>`
+                  : nothing}
               </th>`,
           )}
         </tr>
@@ -271,6 +275,36 @@ export class M3eMonthViewElement extends CalendarViewElementBase {
           }
         }
       }
+    }
+
+    if (!this.active) {
+      return html`<td
+        role="gridcell"
+        class="${classMap({
+          current,
+          selected,
+          active,
+          special,
+          range,
+          "range-start": rangeStart,
+          "range-start-range": rangeStartRange,
+          "range-end": rangeEnd,
+        })}"
+      >
+        <div
+          id="${id}"
+          role="button"
+          class="item"
+          data-value="${value.toISOString()}"
+          tabindex="${active ? "0" : "-1"}"
+          aria-disabled="${ifDefined(disabled || undefined)}"
+          aria-current="${ifDefined(current ? "date" : undefined)}"
+          aria-pressed="${selected || rangeStart || rangeEnd}"
+        >
+          <m3e-state-layer class="state-layer" disabled disable-hover></m3e-state-layer>
+          <span aria-hidden="true">${value.getDate()}</span>
+        </div>
+      </td>`;
     }
 
     return html`<td

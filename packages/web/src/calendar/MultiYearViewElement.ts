@@ -88,6 +88,24 @@ export class M3eMultiYearViewElement extends CalendarViewElementBase {
 
     const id = `year-${year}`;
 
+    if (!this.active) {
+      return html`<td role="gridcell" class="${classMap({ current, selected, active })}">
+        <div
+          id="${id}"
+          class="item"
+          role="button"
+          tabindex="${active ? "0" : "-1"}"
+          data-value="${year}"
+          aria-disabled="${ifDefined(disabled || undefined)}"
+          aria-current="${ifDefined(current ? "date" : undefined)}"
+          aria-pressed="${selected}"
+        >
+          <m3e-state-layer class="state-layer" disabled disable-hover></m3e-state-layer>
+          <span>${yearFormat.format(new Date(year, 0, 1))}</span>
+        </div>
+      </td>`;
+    }
+
     return html`<td role="gridcell" class="${classMap({ current, selected, active })}">
       <div
         id="${id}"

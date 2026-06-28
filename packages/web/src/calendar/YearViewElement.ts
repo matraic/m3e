@@ -106,6 +106,24 @@ export class M3eYearViewElement extends CalendarViewElementBase {
 
     const id = `month-${month.date.getMonth()}`;
 
+    if (!this.active) {
+      return html`<td role="gridcell" class="${classMap({ current, selected, active })}">
+        <div
+          id="${id}"
+          class="item"
+          role="button"
+          tabindex="${active ? "0" : "-1"}"
+          data-value="${month.date.toISOString()}"
+          aria-disabled="${ifDefined(disabled || undefined)}"
+          aria-current="${ifDefined(current ? "date" : undefined)}"
+          aria-pressed="${selected}"
+        >
+          <m3e-state-layer class="state-layer" disabled disable-hover></m3e-state-layer>
+          <span aria-hidden="true">${month.narrow}</span>
+        </div>
+      </td>`;
+    }
+
     return html`<td role="gridcell" class="${classMap({ current, selected, active })}">
       <div
         id="${id}"

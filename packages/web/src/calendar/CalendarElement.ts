@@ -381,6 +381,11 @@ export class M3eCalendarElement extends LitElement {
     this._today = new Date();
   }
 
+  /** Resets the active view. */
+  resetActiveView(): void {
+    this._activeView = this.startView;
+  }
+
   /**
    * Moves the calendar to the previous period.
    * @returns {Promise<void>} A promise that resolves when the operation is complete.
@@ -496,7 +501,7 @@ export class M3eCalendarElement extends LitElement {
       }
     }
     if (changedProperties.has("startView")) {
-      this._activeView = this.startView;
+      this.resetActiveView();
     }
   }
 
@@ -586,6 +591,7 @@ export class M3eCalendarElement extends LitElement {
 
   /** @private */
   #renderView(view: CalendarView, offset: -1 | 0 | 1): unknown {
+    const active = view === this._activeView && offset === 0;
     const activeDate =
       offset < 0 ? this.#getPreviousPeriod(view) : offset > 0 ? this.#getNextPeriod(view) : new Date(this._activeDate);
 
@@ -595,8 +601,9 @@ export class M3eCalendarElement extends LitElement {
           class="view ${classMap({
             before: offset < 0,
             after: offset > 0,
-            active: view === this._activeView && offset === 0,
+            active,
           })}"
+          ?active="${active}"
           ?inert="${offset !== 0}"
           today="${this._today.toISOString()}"
           date="${ifDefined(this.date?.toISOString())}"
@@ -615,8 +622,9 @@ export class M3eCalendarElement extends LitElement {
           class="view ${classMap({
             before: offset < 0,
             after: offset > 0,
-            active: view === this._activeView && offset === 0,
+            active,
           })}"
+          ?active="${active}"
           ?inert="${offset !== 0}"
           today="${this._today.toISOString()}"
           date="${ifDefined(this.date?.toISOString())}"
@@ -632,8 +640,9 @@ export class M3eCalendarElement extends LitElement {
           class="view ${classMap({
             before: offset < 0,
             after: offset > 0,
-            active: view === this._activeView && offset === 0,
+            active,
           })}"
+          ?active="${active}"
           ?inert="${offset !== 0}"
           today="${this._today.toISOString()}"
           date="${ifDefined(this.date?.toISOString())}"

@@ -121,6 +121,9 @@ export abstract class CalendarViewElementBase extends LitElement {
 
   /** @private */ @query(".active > .item") private readonly _activeItem?: HTMLElement;
 
+  /** Whether the view is active. */
+  @property({ type: Boolean }) active = false;
+
   /** Today's date. */
   @property({ converter: dateConverter }) today: Date = new Date();
 
