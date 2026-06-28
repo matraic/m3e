@@ -37,6 +37,11 @@ export abstract class MonitorControllerBase implements ReactiveController {
     return this.#targets.values();
   }
 
+  /** Whether one or more targets are being monitored. */
+  get hasTargets(): boolean {
+    return this.#targets.size > 0;
+  }
+
   /** @inheritdoc */
   hostConnected(): void {
     // Target defaults to host unless explicitly null.
@@ -47,8 +52,7 @@ export abstract class MonitorControllerBase implements ReactiveController {
 
   /** @inheritdoc */
   hostDisconnected(): void {
-    this.#targets.forEach((x) => this.unobserve(x));
-    this.#targets.clear();
+    this.unobserveAll();
   }
 
   /** @inheritdoc */
@@ -83,6 +87,12 @@ export abstract class MonitorControllerBase implements ReactiveController {
   unobserve(target: HTMLElement): void {
     if (!this.#targets.delete(target)) return;
     this._unobserve(target);
+  }
+
+  /** Stops observing all targets. */
+  unobserveAll(): void {
+    this.#targets.forEach((x) => this.unobserve(x));
+    this.#targets.clear();
   }
 
   /**

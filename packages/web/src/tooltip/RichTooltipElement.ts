@@ -3,7 +3,7 @@ import { css, CSSResultGroup, html, PropertyValues, unsafeCSS } from "lit";
 import { property, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { customElement, DesignToken, getTextContent, hasAssignedNodes } from "@m3e/web/core";
+import { ClickOutsideController, customElement, DesignToken, getTextContent, hasAssignedNodes } from "@m3e/web/core";
 import { M3eAriaDescriber, M3eInteractivityChecker } from "@m3e/web/core/a11y";
 import { AnchorPosition } from "@m3e/web/core/anchoring";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
@@ -202,7 +202,10 @@ export class M3eRichTooltipElement extends TooltipElementBase {
   /** @private */ @state() private _hasSubhead = false;
   /** @private */ @state() private _interactive = false;
 
-  /** @private */ readonly #documentClickHandler = (e: MouseEvent) => this.#handleDocumentClick(e);
+  /** @private */ readonly #clickOutsideController = new ClickOutsideController(this, {
+    target: null,
+    callback: () => this.hide(),
+  });
 
   /**
    * The position of the tooltip.
@@ -260,24 +263,11 @@ export class M3eRichTooltipElement extends TooltipElementBase {
     </div>`;
   }
 
-  /** @inheritdoc */
-  override show(): Promise<void> {
-    if (this._interactive) {
-      document.addEventListener("click", this.#documentClickHandler);
-    }
-
-    return super.show();
-  }
-
   /**
    * Manually hides the tooltip.
    * @param [restoreFocus=true] Whether to restore focus to the element that triggered the interactive tooltip.
    */
   override hide(restoreFocus = true): void {
-    if (this._interactive) {
-      document.removeEventListener("click", this.#documentClickHandler);
-    }
-
     super.hide();
 
     if (restoreFocus && this._interactive && this.control && M3eInteractivityChecker.isFocusable(this.control)) {
@@ -340,15 +330,17 @@ export class M3eRichTooltipElement extends TooltipElementBase {
 
   /** @private */
   #handleBeforeToggle(e: ToggleEvent): void {
-    const forwarded = new ToggleEvent("beforetoggle", {
-      oldState: e.oldState,
-      newState: e.newState,
-      bubbles: true,
-      composed: true,
-      cancelable: e.cancelable,
-    });
-
-    if (!this.dispatchEvent(forwarded)) {
+    if (
+      !this.dispatchEvent(
+        new ToggleEvent("beforetoggle", {
+          oldState: e.oldState,
+          newState: e.newState,
+          bubbles: true,
+          composed: true,
+          cancelable: e.cancelable,
+        }),
+      )
+    ) {
       e.preventDefault();
       this.hide();
     }
@@ -356,20 +348,29 @@ export class M3eRichTooltipElement extends TooltipElementBase {
 
   /** @private */
   #handleToggle(e: ToggleEvent): void {
-    const forwarded = new ToggleEvent("toggle", {
-      oldState: e.oldState,
-      newState: e.newState,
-      bubbles: true,
-      composed: true,
-    });
-    this.dispatchEvent(forwarded);
-  }
+    switch (e.newState) {
+      case "open":
+        if (this._interactive) {
+          this.#clickOutsideController.observe(this);
+          if (this.control) {
+            this.#clickOutsideController.observe(this.control);
+          }
+        }
+        break;
 
-  /** @private */
-  #handleDocumentClick(e: MouseEvent): void {
-    if (!e.composedPath().some((x) => x instanceof M3eRichTooltipElement || x === this.control)) {
-      this.hide();
+      case "closed":
+        this.#clickOutsideController.unobserveAll();
+        break;
     }
+
+    this.dispatchEvent(
+      new ToggleEvent("toggle", {
+        oldState: e.oldState,
+        newState: e.newState,
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /** @private */

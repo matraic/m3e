@@ -13,6 +13,7 @@ import {
   customElement,
   SuppressInitialAnimation,
   registerStyleSheet,
+  ClickOutsideController,
 } from "@m3e/web/core";
 
 import { RovingTabIndexManager } from "@m3e/web/core/a11y";
@@ -274,7 +275,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
 
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);
   /** @private */ readonly #mouseEnterHandler = () => this.#handleMouseEnter();
-  /** @private */ readonly #documentClickHandler = (e: MouseEvent) => this.#handleDocumentClick(e);
+
   /** @private */ readonly #scrollController = new ScrollController(this, {
     target: null,
     callback: (target) =>
@@ -283,14 +284,31 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
         : this.hideAll(),
   });
 
+  /** @private */ readonly #clickOutsideController = new ClickOutsideController(this, {
+    target: null,
+    callback: (composedPath) => {
+      // If the menu isn't a submenu and no submenu is being clicked, close the entire menu
+      if (!this.submenu && !composedPath.some((x) => x instanceof M3eMenuElement)) {
+        this.hide();
+      }
+    },
+  });
+
   /** @private */ readonly #toggleHandler = (e: ToggleEvent) => {
-    if (e.newState === "closed") {
-      this.#anchorCleanup?.();
-      this.#anchorCleanup = undefined;
-    } else {
-      setTimeout(() => {
-        this.#listManager.setActiveItem(this.#listManager.items.find((x) => !x.disabled));
-      }, 40);
+    switch (e.newState) {
+      case "open":
+        this.#clickOutsideController.observe(this);
+        if (this.#trigger) {
+          this.#clickOutsideController.observe(this.#trigger);
+        }
+        setTimeout(() => this.#listManager.setActiveItem(this.#listManager.items.find((x) => !x.disabled)), 40);
+        break;
+
+      case "closed":
+        this.#clickOutsideController.unobserveAll();
+        this.#anchorCleanup?.();
+        this.#anchorCleanup = undefined;
+        break;
     }
   };
 
@@ -334,7 +352,6 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
     this.addEventListener("keydown", this.#keyDownHandler);
     this.addEventListener("mouseenter", this.#mouseEnterHandler);
     this.addEventListener("toggle", this.#toggleHandler);
-    document.addEventListener("click", this.#documentClickHandler);
   }
 
   /** @inheritdoc */
@@ -344,7 +361,6 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
     this.removeEventListener("keydown", this.#keyDownHandler);
     this.removeEventListener("mouseenter", this.#mouseEnterHandler);
     this.removeEventListener("toggle", this.#toggleHandler);
-    document.removeEventListener("click", this.#documentClickHandler);
 
     this.#deactivate();
   }
@@ -539,13 +555,6 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
   /** @private */
   #handleMouseEnter(): void {
     this._activate();
-  }
-
-  /** @private */
-  #handleDocumentClick(e: MouseEvent): void {
-    if (!this.submenu && !e.composedPath().some((x) => x instanceof M3eMenuElement || x === this.#trigger)) {
-      this.hide();
-    }
   }
 
   /** @private */

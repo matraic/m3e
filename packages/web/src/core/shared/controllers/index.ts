@@ -1,4 +1,5 @@
 export * from "./AnimationLoopController";
+export * from "./ClickOutsideController";
 export * from "./FocusController";
 export * from "./HoverController";
 export * from "./InertController";

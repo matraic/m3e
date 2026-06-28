@@ -10,6 +10,7 @@ import {
   ScrollController,
   SuppressInitialAnimation,
   ResizeController,
+  ClickOutsideController,
 } from "@m3e/web/core";
 
 import { M3eDirectionality } from "@m3e/web/core/bidi";
@@ -120,12 +121,25 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
   /** @private */ #anchor?: HTMLElement;
   /** @private */ #anchorCleanup?: () => void;
 
-  /** @private */ readonly #documentClickHandler = (e: MouseEvent) => this.#handleDocumentClick(e);
+  /** @private */ readonly #clickOutsideController = new ClickOutsideController(this, {
+    target: null,
+    callback: () => this.hide(),
+  });
 
   /** @private */ readonly #toggleHandler = (e: ToggleEvent) => {
-    if (e.newState === "closed") {
-      this.#anchorCleanup?.();
-      this.#anchorCleanup = undefined;
+    switch (e.newState) {
+      case "open":
+        this.#clickOutsideController.observe(this);
+        if (this.#anchor) {
+          this.#clickOutsideController.observe(this.#anchor);
+        }
+        break;
+
+      case "closed":
+        this.#clickOutsideController.unobserveAll();
+        this.#anchorCleanup?.();
+        this.#anchorCleanup = undefined;
+        break;
     }
   };
 
@@ -179,7 +193,6 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
 
     this.setAttribute("popover", "manual");
     this.addEventListener("toggle", this.#toggleHandler);
-    document.addEventListener("click", this.#documentClickHandler);
   }
 
   /** @inheritdoc */
@@ -187,7 +200,6 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
     super.disconnectedCallback();
 
     this.removeEventListener("toggle", this.#toggleHandler);
-    document.removeEventListener("click", this.#documentClickHandler);
   }
 
   /**
@@ -285,13 +297,6 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base"><slot></slot></div>`;
-  }
-
-  /** @private */
-  #handleDocumentClick(e: MouseEvent): void {
-    if (this.isOpen && !e.composedPath().some((x) => x === this || x === this.#anchor)) {
-      this.hide();
-    }
   }
 }
 

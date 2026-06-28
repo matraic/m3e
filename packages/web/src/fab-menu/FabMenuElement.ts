@@ -4,6 +4,7 @@ import { property } from "lit/decorators.js";
 
 import {
   AttachInternals,
+  ClickOutsideController,
   customElement,
   DesignToken,
   DisabledMixin,
@@ -20,7 +21,6 @@ import { positionAnchor } from "@m3e/web/core/anchoring";
 import { M3eFabElement } from "@m3e/web/fab";
 
 import { FabMenuVariant } from "./FabMenuVariant";
-import { M3eFabMenuItemElement } from "./FabMenuItemElement";
 
 /**
  * A menu, opened from a floating action button (FAB), used to display multiple related actions.
@@ -185,20 +185,31 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     .withVerticalOrientation();
 
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);
-  /** @private */ readonly #documentClickHandler = (e: MouseEvent) => this.#handleDocumentClick(e);
 
   /** @private */
   readonly #scrollController = new ScrollController(this, { target: null, callback: () => this.hide() });
 
+  /** @private */ readonly #clickOutsideController = new ClickOutsideController(this, {
+    target: null,
+    callback: () => this.hide(),
+  });
+
   /** @private */
   readonly #toggleHandler = (e: ToggleEvent) => {
-    if (e.newState === "closed") {
-      this.#anchoringCleanup?.();
-      this.#anchoringCleanup = undefined;
-    } else {
-      setTimeout(() => {
-        this.#listManager.setActiveItem(this.#listManager.items.find((x) => !x.disabled));
-      }, 40);
+    switch (e.newState) {
+      case "open":
+        this.#clickOutsideController.observe(this);
+        if (this.#trigger) {
+          this.#clickOutsideController.observe(this.#trigger);
+        }
+        setTimeout(() => this.#listManager.setActiveItem(this.#listManager.items.find((x) => !x.disabled)), 40);
+        break;
+
+      case "closed":
+        this.#clickOutsideController.unobserveAll();
+        this.#anchoringCleanup?.();
+        this.#anchoringCleanup = undefined;
+        break;
     }
   };
 
@@ -300,7 +311,6 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     this.setAttribute("popover", "manual");
     this.addEventListener("keydown", this.#keyDownHandler);
     this.addEventListener("toggle", this.#toggleHandler);
-    document.addEventListener("click", this.#documentClickHandler);
   }
 
   /** @inheritdoc */
@@ -309,7 +319,6 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
 
     this.removeEventListener("keydown", this.#keyDownHandler);
     this.removeEventListener("toggle", this.#toggleHandler);
-    document.removeEventListener("click", this.#documentClickHandler);
   }
 
   /** @inheritdoc */
@@ -341,13 +350,6 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       default:
         this.#listManager.onKeyDown(e);
         break;
-    }
-  }
-
-  /** @private */
-  #handleDocumentClick(e: MouseEvent): void {
-    if (!e.composedPath().some((x) => x instanceof M3eFabMenuItemElement || x === this.#trigger)) {
-      this.hide();
     }
   }
 
