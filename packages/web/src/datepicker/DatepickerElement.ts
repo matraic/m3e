@@ -453,8 +453,6 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
 
     this.setAttribute("popover", "manual");
     this.addEventListener("toggle", this.#toggleHandler);
-    document.addEventListener("click", this.#documentClickHandler);
-    document.addEventListener("keydown", this.#documentKeyDownHandler);
   }
 
   /** @inheritdoc */
@@ -535,6 +533,9 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
     await this.#updatePosition();
     this.showPopover();
 
+    document.addEventListener("click", this.#documentClickHandler);
+    document.addEventListener("keydown", this.#documentKeyDownHandler);
+
     await calendar.focusActiveCell();
   }
 
@@ -544,6 +545,10 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
    */
   hide(restoreFocus: boolean = false): void {
     if (!this.isOpen) return;
+
+    document.removeEventListener("click", this.#documentClickHandler);
+    document.removeEventListener("keydown", this.#documentKeyDownHandler);
+
     if (this.currentVariant === "modal") {
       this.#scrollLockController.unlock();
       this.#inertController.unlock();
