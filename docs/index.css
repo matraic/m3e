@@ -66,3 +66,19 @@ input[type="color"]::-webkit-color-swatch {
   border: none;
   border-radius: 50%;
 }
+.title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.title-text {
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.title-version {
+  flex: none;
+  min-width: 0;
+}

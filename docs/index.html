@@ -47,6 +47,7 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.13/dist/heading.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.13/dist/segmented-button.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.13/dist/badge.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.13/dist/chips.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.5.13/dist/theme.min.js"></script>
     <script type="module" src="index.js"></script>
     <link href="index.css" rel="stylesheet" />
@@ -59,8 +60,10 @@
           <m3e-icon slot="selected" name="menu_open"></m3e-icon>
           <m3e-drawer-toggle for="nav-drawer"></m3e-drawer-toggle>
         </m3e-icon-button>
-        <span slot="title">M3E — Material 3 Expressive for Every Framework</span>
-        <span slot="subtitle">v2.5.13</span>
+        <span slot="title" class="title">
+          <span class="title-text">M3E — Material 3 Expressive for Every Framework</span>
+          <m3e-chip class="title-version">v2.5.13</m3e-chip>
+        </span>
         <span slot="trailing">
           <m3e-icon-button id="npm-button" href="https://www.npmjs.com/package/@m3e/web" target="_blank">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
