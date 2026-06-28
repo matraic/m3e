@@ -35,20 +35,14 @@ export class LongPressController extends MonitorControllerBase {
     this.#threshold = options.threshold ?? 500;
   }
 
-  /**
-   * Starts observing the specified element.
-   * @param {HTMLElement} target The element to start observing.
-   */
+  /** @inheritdoc */
   protected override _observe(target: HTMLElement): void {
     target.addEventListener("touchstart", this.#touchStartHandler, { passive: true });
     target.addEventListener("touchend", this.#touchEndOrCancelHandler);
     target.addEventListener("touchcancel", this.#touchEndOrCancelHandler);
   }
 
-  /**
-   * Stops observing the specified element.
-   * @param {HTMLElement} target The element to stop observing.
-   */
+  /** @inheritdoc */
   protected override _unobserve(target: HTMLElement): void {
     target.removeEventListener("touchstart", this.#touchStartHandler);
     target.removeEventListener("touchend", this.#touchEndOrCancelHandler);
@@ -65,7 +59,7 @@ export class LongPressController extends MonitorControllerBase {
           this.#pressedTargets.add(target);
           this.#pressedTimeouts.delete(target);
           this.#callback(true, target);
-        }, this.#threshold)
+        }, this.#threshold),
       );
     }
   }

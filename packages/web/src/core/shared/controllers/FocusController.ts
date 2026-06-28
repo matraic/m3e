@@ -49,10 +49,7 @@ export class FocusController extends MonitorControllerBase {
     this.#filter = options.filter;
   }
 
-  /**
-   * Starts observing the specified element.
-   * @param {HTMLElement} target The element to start observing.
-   */
+  /** @inheritdoc */
   protected override _observe(target: HTMLElement): void {
     target.addEventListener("keydown", this.#keyDownHandler);
     target.addEventListener("focusin", this.#focusInHandler);
@@ -62,10 +59,7 @@ export class FocusController extends MonitorControllerBase {
     target.addEventListener("touchcancel", this.#touchEndHandler);
   }
 
-  /**
-   * Stops observing the specified element.
-   * @param {HTMLElement} target The element to stop observing.
-   */
+  /** @inheritdoc */
   protected override _unobserve(target: HTMLElement): void {
     target.removeEventListener("keydown", this.#keyDownHandler);
     target.removeEventListener("focusin", this.#focusInHandler);

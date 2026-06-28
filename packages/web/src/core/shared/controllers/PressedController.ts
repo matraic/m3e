@@ -83,10 +83,7 @@ export class PressedController extends MonitorControllerBase {
     this.#pressedTargets.clear();
   }
 
-  /**
-   * Starts observing the specified element.
-   * @param {HTMLElement} target The element to start observing.
-   */
+  /** @inheritdoc */
   protected override _observe(target: HTMLElement): void {
     target.addEventListener("pointerdown", this.#pointerDownHandler, { capture: this.#capture });
 
@@ -96,10 +93,7 @@ export class PressedController extends MonitorControllerBase {
     }
   }
 
-  /**
-   * Stops observing the specified element.
-   * @param {HTMLElement} target The element to stop observing.
-   */
+  /** @inheritdoc */
   protected override _unobserve(target: HTMLElement): void {
     target.removeEventListener("pointerdown", this.#pointerDownHandler, { capture: this.#capture });
 

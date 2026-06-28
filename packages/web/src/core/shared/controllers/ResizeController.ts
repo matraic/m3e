@@ -58,19 +58,13 @@ export class ResizeController extends MonitorControllerBase {
     this.#unobservedUpdate = false;
   }
 
-  /**
-   * Starts observing the specified element.
-   * @param {HTMLElement} target The element to start observing.
-   */
+  /** @inheritdoc */
   protected override _observe(target: HTMLElement): void {
     this.#observer?.observe(target, this.#config);
     this.#unobservedUpdate = true;
   }
 
-  /**
-   * Stops observing the specified element.
-   * @param {HTMLElement} target The element to stop observing.
-   */
+  /** @inheritdoc */
   protected override _unobserve(target: HTMLElement): void {
     this.#observer?.unobserve(target);
   }

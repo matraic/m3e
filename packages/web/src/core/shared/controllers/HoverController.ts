@@ -50,20 +50,14 @@ export class HoverController extends MonitorControllerBase {
     }
   }
 
-  /**
-   * Starts observing the specified element.
-   * @param {HTMLElement} target The element to start observing.
-   */
+  /** @inheritdoc */
   protected override _observe(target: HTMLElement): void {
     target.addEventListener("pointerenter", this.#pointerInHandler);
     target.addEventListener("pointerleave", this.#pointerLeaveHandler);
     target.addEventListener("touchend", this.#pointerLeaveHandler);
   }
 
-  /**
-   * Stops observing the specified element.
-   * @param {HTMLElement} target The element to stop observing.
-   */
+  /** @inheritdoc */
   protected override _unobserve(target: HTMLElement): void {
     target.removeEventListener("pointerenter", this.#pointerInHandler);
     target.removeEventListener("pointerleave", this.#pointerLeaveHandler);
