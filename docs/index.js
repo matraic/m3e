@@ -1,5 +1,3 @@
-import { M3eDirectionality } from "@m3e/web/core/bidi";
-
 window.addEventListener("DOMContentLoaded", () => {
   M3eDirectionality.observe(() => {
     const frame = document.querySelector("#content-frame");
