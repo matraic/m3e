@@ -54,7 +54,7 @@ export class FocusController extends MonitorControllerBase {
     target.addEventListener("keydown", this.#keyDownHandler);
     target.addEventListener("focusin", this.#focusInHandler);
     target.addEventListener("focusout", this.#focusOutHandler);
-    target.addEventListener("touchstart", this.#touchStartHandler);
+    target.addEventListener("touchstart", this.#touchStartHandler, { passive: true });
     target.addEventListener("touchend", this.#touchEndHandler);
     target.addEventListener("touchcancel", this.#touchEndHandler);
   }
