@@ -65,6 +65,12 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
     :host(:not([unbounded])) {
       overflow: hidden;
     }
+    :host(:not([unbounded])) .ripple {
+      contain: layout style paint;
+    }
+    :host([unbounded]) .ripple {
+      contain: layout style;
+    }
     .ripple {
       display: block;
       position: absolute;

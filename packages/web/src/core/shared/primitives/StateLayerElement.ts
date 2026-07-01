@@ -59,6 +59,7 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
       border-radius: inherit;
     }
     .layer {
+      contain: layout style paint;
       will-change: background-color;
       transition: ${unsafeCSS(`background-color ${StateLayerToken.duration} ${StateLayerToken.easing}`)};
     }

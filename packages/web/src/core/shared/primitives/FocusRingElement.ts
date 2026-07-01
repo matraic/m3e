@@ -60,6 +60,7 @@ export class M3eFocusRingElement extends HtmlFor(Role(LitElement, "none")) {
       outline: none;
     }
     .outline {
+      contain: layout style;
       position: absolute;
       left: 0;
       top: 0;
