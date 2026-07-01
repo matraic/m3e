@@ -1,6 +1,7 @@
 import {
   autoUpdate,
   computePosition,
+  ComputePositionReturn,
   flip,
   inline,
   limitShift,
@@ -29,6 +30,12 @@ export async function positionAnchor(
   options: AnchorOptions,
   update: (x: number, y: number, position: AnchorPosition) => void,
 ): Promise<() => void> {
+  const lastResult: Omit<ComputePositionReturn, "strategy" | "middlewareData"> = {
+    x: Number.MIN_SAFE_INTEGER,
+    y: Number.MIN_SAFE_INTEGER,
+    placement: "bottom",
+  };
+
   async function computeAnchorPosition() {
     const middleware = new Array<Middleware>();
 
@@ -57,7 +64,12 @@ export async function positionAnchor(
       platform: { ...platform, getOffsetParent: (x) => platform.getOffsetParent(x, offsetParent) },
     });
 
-    update(result.x, result.y, result.placement);
+    const { x, y, placement } = result;
+    if (lastResult.x !== x || lastResult.y !== y || lastResult.placement !== placement) {
+      update(x, y, placement);
+    }
+
+    Object.assign(lastResult, { x, y, placement });
   }
 
   await computeAnchorPosition();
