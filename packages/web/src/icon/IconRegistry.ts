@@ -59,15 +59,15 @@ export class IconRegistry {
     this.#validateSvgIconInfo(name, variant, fillSet.outlined, trustOutlinedViewBox);
     this.#validateSvgIconInfo(name, variant, fillSet.filled, trustFilledViewBox);
 
-    if (window !== undefined) {
-      const key = this.#createKey(name, variant);
-      this.#icons.set(key, {
-        outlined: svg`<svg viewBox="${fillSet.outlined.viewBox}"><path d="${fillSet.outlined.path}"/></svg>`,
-        filled: svg`<svg viewBox="${fillSet.filled.viewBox}"><path d="${fillSet.filled.path}"/></svg>`,
-      });
+    if (typeof window === "undefined") return;
 
-      this.#observers.get(key)?.forEach((x) => x());
-    }
+    const key = this.#createKey(name, variant);
+    this.#icons.set(key, {
+      outlined: svg`<svg viewBox="${fillSet.outlined.viewBox}"><path d="${fillSet.outlined.path}"/></svg>`,
+      filled: svg`<svg viewBox="${fillSet.filled.viewBox}"><path d="${fillSet.filled.path}"/></svg>`,
+    });
+
+    this.#observers.get(key)?.forEach((x) => x());
   }
 
   /**
