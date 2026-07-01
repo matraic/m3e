@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, LitElement, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
 import { customElement, DesignToken, ReconnectedCallback, registerStyleSheet, waitForUpgrade } from "@m3e/web/core";
@@ -45,8 +45,17 @@ import { SkeletonAnimation } from "./SkeletonAnimation";
  */
 @customElement("m3e-skeleton")
 export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
+  /** @private */ private static __pulseLoading = new Set<M3eSkeletonElement>();
+  /** @private */ private static __pulseAnimation: Animation;
+
+  /** @private */ private static __waveLoading = new Set<M3eSkeletonElement>();
+  /** @private */ private static __waveAnimation: Animation;
+
+  /** @private */ private static __reducedMediaQuery: MediaQueryList;
+  /** @private */ private static __forcedColorsMediaQuery: MediaQueryList;
+
   static {
-    if (window !== undefined) {
+    if (typeof window !== "undefined") {
       registerStyleSheet(css`
         @property --_m3e-skeleton-wave-pct {
           syntax: "<number>";
@@ -64,51 +73,38 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
         }
       `);
 
-      const reducedMediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-      const forcedColorsMediaQuery = window.matchMedia("(forced-colors: active)");
+      M3eSkeletonElement.__waveAnimation = document.documentElement.animate(
+        [{ ["--_m3e-skeleton-wave-pct"]: 0 }, { ["--_m3e-skeleton-wave-pct"]: 1 }],
+        {
+          duration: 2100,
+          iterations: Infinity,
+          easing: "linear",
+        },
+      );
 
-      let waveAnimation: Animation | null = null;
-      let pulseAnimation: Animation | null = null;
+      M3eSkeletonElement.__pulseAnimation = document.documentElement.animate(
+        [
+          { ["--_m3e-skeleton-pulse-norm"]: 0 },
+          { ["--_m3e-skeleton-pulse-norm"]: 1 },
+          { ["--_m3e-skeleton-pulse-norm"]: 0 },
+        ],
+        {
+          duration: 1200,
+          iterations: Infinity,
+          easing: "ease-in-out",
+        },
+      );
 
-      function startAnimations(): void {
-        waveAnimation = document.documentElement.animate(
-          [{ ["--_m3e-skeleton-wave-pct"]: 0 }, { ["--_m3e-skeleton-wave-pct"]: 1 }],
-          {
-            duration: 2100,
-            iterations: Infinity,
-            easing: "linear",
-          },
-        );
+      M3eSkeletonElement.__waveAnimation.pause();
+      M3eSkeletonElement.__pulseAnimation.pause();
 
-        pulseAnimation = document.documentElement.animate(
-          [
-            { ["--_m3e-skeleton-pulse-norm"]: 0 },
-            { ["--_m3e-skeleton-pulse-norm"]: 1 },
-            { ["--_m3e-skeleton-pulse-norm"]: 0 },
-          ],
-          {
-            duration: 1200,
-            iterations: Infinity,
-            easing: "ease-in-out",
-          },
-        );
-      }
+      M3eSkeletonElement.__reducedMediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      M3eSkeletonElement.__forcedColorsMediaQuery = window.matchMedia("(forced-colors: active)");
 
-      function applyMotionState(): void {
-        if (reducedMediaQuery.matches || forcedColorsMediaQuery.matches) {
-          waveAnimation?.pause();
-          pulseAnimation?.pause();
-        } else {
-          waveAnimation?.play();
-          pulseAnimation?.play();
-        }
-      }
-
-      startAnimations();
-      applyMotionState();
-
-      reducedMediaQuery.addEventListener("change", applyMotionState);
-      forcedColorsMediaQuery.addEventListener("change", applyMotionState);
+      M3eSkeletonElement.__reducedMediaQuery.addEventListener("change", () => M3eSkeletonElement.__updateAnimations());
+      M3eSkeletonElement.__forcedColorsMediaQuery.addEventListener("change", () =>
+        M3eSkeletonElement.__updateAnimations(),
+      );
     }
   }
 
@@ -234,12 +230,23 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.#clearShapes();
+    this.#unregisterLoading();
   }
 
   /** @inheritdoc */
   override reconnectedCallback(): void {
     super.reconnectedCallback();
     this.#createShapes();
+    this.#updateLoading();
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("loaded") || _changedProperties.has("animation")) {
+      this.#updateLoading();
+    }
   }
 
   /** @inheritdoc */
@@ -310,6 +317,62 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
 
     this.#anchoringCleanupMap.set(shape, anchoringCleanup);
     this.shadowRoot?.appendChild(shape);
+  }
+
+  /** @private */
+  #updateLoading(): void {
+    if (!this.loaded && this.animation !== "none") {
+      this.#registerLoading();
+    } else {
+      this.#unregisterLoading();
+    }
+  }
+
+  /** @private */
+  #registerLoading(): void {
+    switch (this.animation) {
+      case "pulse":
+        M3eSkeletonElement.__waveLoading.delete(this);
+        if (!M3eSkeletonElement.__pulseLoading.has(this)) {
+          M3eSkeletonElement.__pulseLoading.add(this);
+          M3eSkeletonElement.__updateAnimations();
+        }
+        break;
+
+      case "wave":
+        M3eSkeletonElement.__pulseLoading.delete(this);
+        if (!M3eSkeletonElement.__waveLoading.has(this)) {
+          M3eSkeletonElement.__waveLoading.add(this);
+          M3eSkeletonElement.__updateAnimations();
+        }
+        break;
+    }
+  }
+
+  /** @private */
+  #unregisterLoading(): void {
+    if (M3eSkeletonElement.__pulseLoading.delete(this) || M3eSkeletonElement.__waveLoading.delete(this)) {
+      M3eSkeletonElement.__updateAnimations();
+    }
+  }
+
+  /** @private */
+  static __updateAnimations(): void {
+    const pause = M3eSkeletonElement.__forcedColorsMediaQuery.matches || M3eSkeletonElement.__reducedMediaQuery.matches;
+    if (M3eSkeletonElement.__pulseLoading.size === 0 || pause) {
+      M3eSkeletonElement.__pulseAnimation.pause();
+    } else if (
+      M3eSkeletonElement.__pulseLoading.size > 0 &&
+      M3eSkeletonElement.__pulseAnimation.playState === "paused"
+    ) {
+      M3eSkeletonElement.__pulseAnimation.play();
+    }
+
+    if (M3eSkeletonElement.__waveLoading.size === 0 || pause) {
+      M3eSkeletonElement.__waveAnimation.pause();
+    } else if (M3eSkeletonElement.__waveLoading.size > 0 && M3eSkeletonElement.__waveAnimation.playState === "paused") {
+      M3eSkeletonElement.__waveAnimation.play();
+    }
   }
 }
 
