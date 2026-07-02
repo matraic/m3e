@@ -4,7 +4,7 @@ import { property } from "lit/decorators.js";
 import { customElement, DesignToken, getTextContent, setCustomState } from "@m3e/web/core";
 import { M3eAriaDescriber } from "@m3e/web/core/a11y";
 import { AnchorPosition } from "@m3e/web/core/anchoring";
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
 
 import { TooltipPosition } from "./TooltipPosition";
 import { TooltipElementBase } from "./TooltipElementBase";
@@ -132,6 +132,7 @@ export class M3eTooltipElement extends TooltipElementBase {
   `;
 
   /** @private */ #message?: string | null;
+  /** @private */ #anchorLastPosition?: { x: number; y: number; dir: Direction };
 
   /**
    * The position of the tooltip.
@@ -178,6 +179,18 @@ export class M3eTooltipElement extends TooltipElementBase {
   }
 
   /** @inheritdoc */
+  override show(): Promise<void> {
+    this.#anchorLastPosition = undefined;
+    return super.show();
+  }
+
+  /** @inheritdoc */
+  override hide(): void {
+    super.hide();
+    this.#anchorLastPosition = undefined;
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base" popover="manual" @toggle="${this.#handleToggle}">
       <slot @slotchange="${this.#handleSlotChange}"></slot>
@@ -186,14 +199,21 @@ export class M3eTooltipElement extends TooltipElementBase {
 
   /** @inheritdoc */
   protected _updatePosition(base: HTMLElement, x: number, y: number): void {
-    if (M3eDirectionality.current === "rtl") {
-      base.style.right = `${window.innerWidth - x - base.clientWidth}px`;
-      base.style.left = "";
-    } else {
-      base.style.left = `${x}px`;
-      base.style.right = "";
+    if (this.#anchorLastPosition?.dir !== M3eDirectionality.current || this.#anchorLastPosition?.x !== x) {
+      if (M3eDirectionality.current === "rtl") {
+        base.style.right = `${window.innerWidth - x - base.clientWidth}px`;
+        base.style.left = "";
+      } else {
+        base.style.left = `${x}px`;
+        base.style.right = "";
+      }
     }
-    base.style.top = `${y}px`;
+
+    if (this.#anchorLastPosition?.y !== y) {
+      base.style.top = `${y}px`;
+    }
+
+    this.#anchorLastPosition = { x, y, dir: M3eDirectionality.current };
   }
 
   /** @private */

@@ -6,7 +6,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { ClickOutsideController, customElement, DesignToken, getTextContent, hasAssignedNodes } from "@m3e/web/core";
 import { M3eAriaDescriber, M3eInteractivityChecker } from "@m3e/web/core/a11y";
 import { AnchorPosition } from "@m3e/web/core/anchoring";
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
 
 import { RichTooltipPosition } from "./RichTooltipPosition";
 import { TooltipElementBase } from "./TooltipElementBase";
@@ -199,6 +199,7 @@ export class M3eRichTooltipElement extends TooltipElementBase {
   /** @private */ #contentText = "";
   /** @private */ #message = "";
   /** @private */ #messageRegistered = false;
+  /** @private */ #anchorLastPosition?: { x: number; y: number; dir: Direction };
 
   /** @private */ @state() private _hasSubhead = false;
   /** @private */ @state() private _interactive = false;
@@ -264,12 +265,19 @@ export class M3eRichTooltipElement extends TooltipElementBase {
     </div>`;
   }
 
+  /** @inheritdoc */
+  override show(): Promise<void> {
+    this.#anchorLastPosition = undefined;
+    return super.show();
+  }
+
   /**
    * Manually hides the tooltip.
    * @param [restoreFocus=true] Whether to restore focus to the element that triggered the interactive tooltip.
    */
   override hide(restoreFocus = true): void {
     super.hide();
+    this.#anchorLastPosition = undefined;
 
     if (restoreFocus && this._interactive && this.control && M3eInteractivityChecker.isFocusable(this.control)) {
       this.control.focus();
@@ -318,15 +326,21 @@ export class M3eRichTooltipElement extends TooltipElementBase {
       }
     }
 
-    if (M3eDirectionality.current === "rtl") {
-      base.style.right = `${window.innerWidth - x - base.clientWidth}px`;
-      base.style.left = "";
-    } else {
-      base.style.left = `${x}px`;
-      base.style.right = "";
+    if (this.#anchorLastPosition?.dir !== M3eDirectionality.current || this.#anchorLastPosition.x !== x) {
+      if (M3eDirectionality.current === "rtl") {
+        base.style.right = `${window.innerWidth - x - base.clientWidth}px`;
+        base.style.left = "";
+      } else {
+        base.style.left = `${x}px`;
+        base.style.right = "";
+      }
     }
 
-    base.style.top = `${y}px`;
+    if (this.#anchorLastPosition?.y !== y) {
+      base.style.top = `${y}px`;
+    }
+
+    this.#anchorLastPosition = { x, y, dir: M3eDirectionality.current };
   }
 
   /** @private */
