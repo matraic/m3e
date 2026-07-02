@@ -97,6 +97,7 @@ export class M3eTabElement extends Selected(
       cursor: pointer;
     }
     .base {
+      contain: layout style;
       box-sizing: border-box;
       vertical-align: middle;
       display: inline-flex;
