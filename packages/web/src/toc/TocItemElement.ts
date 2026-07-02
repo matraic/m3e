@@ -44,6 +44,7 @@ export class M3eTocItemElement extends Selected(Disabled(AttachInternals(Role(Li
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
+      contain: layout style paint;
       display: inline-block;
       position: relative;
       user-select: none;

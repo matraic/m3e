@@ -88,6 +88,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
       width: calc(var(--m3e-toc-width, 9.75rem));
     }
     .base {
+      contain: layout style paint;
       border-radius: var(--m3e-toc-container-shape, ${DesignToken.shape.corner.none});
       box-sizing: border-box;
       overflow: hidden;
@@ -124,6 +125,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
       flex: none;
     }
     .active-indicator {
+      contain: layout style paint;
       position: absolute;
       pointer-events: none;
       box-sizing: border-box;
