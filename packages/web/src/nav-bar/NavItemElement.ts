@@ -156,6 +156,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
       flex: none;
     }
     .base {
+      contain: layout style;
       justify-content: unset;
       box-sizing: border-box;
       vertical-align: middle;

@@ -90,6 +90,7 @@ export class M3eNavRailElement extends SuppressInitialAnimation(M3eNavBarElement
       transition: ${unsafeCSS(`width ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standard}`)};
     }
     .base {
+      contain: layout style;
       display: flex;
       width: inherit;
       flex-direction: column;

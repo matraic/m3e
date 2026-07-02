@@ -56,6 +56,7 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
       min-height: var(--m3e-nav-bar-height, 4rem);
     }
     .base {
+      contain: layout style;
       display: flex;
       align-items: stretch;
       justify-content: center;
