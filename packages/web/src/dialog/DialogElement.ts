@@ -84,6 +84,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       display: contents;
     }
     .base {
+      contain: layout style;
       font: inherit;
       border: unset;
       outline: unset;
