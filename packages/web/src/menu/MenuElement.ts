@@ -134,6 +134,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
       display: none;
     }
     .base {
+      contain: layout style paint;
       display: flex;
       flex-direction: column;
       row-gap: var(--m3e-menu-gap, 0.125rem);
