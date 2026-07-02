@@ -84,6 +84,7 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     .base {
+      contain: layout style;
       display: flex;
       align-items: center;
       position: relative;
