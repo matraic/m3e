@@ -80,6 +80,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
+      contain: layout style;
       position: absolute;
       flex-direction: column;
       row-gap: var(--m3e-fab-menu-spacing, 0.25rem);
