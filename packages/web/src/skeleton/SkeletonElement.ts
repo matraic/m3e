@@ -133,6 +133,9 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
         transparent
       );
     }
+    :host(:not([loaded])) {
+      contain: layout style paint;
+    }
     :host(:not([loaded])) slot {
       visibility: hidden;
     }
