@@ -19,6 +19,7 @@ export const ExpansionHeaderStyle = css`
         ${DesignToken.motion.easing.standard}`)};
   }
   .base {
+    contain: layout style;
     box-sizing: border-box;
     width: 100%;
     height: 100%;
@@ -56,6 +57,7 @@ export const ExpansionHeaderStyle = css`
     align-items: center;
   }
   .toggle {
+    contain: layout style paint;
     display: flex;
     align-items: center;
     justify-content: center;

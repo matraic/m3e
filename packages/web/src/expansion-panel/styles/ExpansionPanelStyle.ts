@@ -53,6 +53,7 @@ export const ExpansionPanelStyle = css`
     height: 1em;
   }
   .content {
+    contain: layout style;
     padding: ${ExpansionPanelToken.contentPadding};
   }
   :host(:not(:is(:state(--with-actions), :--with-actions))) .actions {
