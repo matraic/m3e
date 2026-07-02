@@ -83,7 +83,7 @@ export class M3eExpansionHeaderElement extends KeyboardClick(
       <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"></m3e-state-layer>
       ${this.togglePosition === "before" ? this.#renderToggle() : nothing}
       <div class="content">
-        <slot></slot>
+        <m3e-text-overflow><slot></slot></m3e-text-overflow>
       </div>
       ${this.togglePosition === "after" ? this.#renderToggle() : nothing}
     </div>`;

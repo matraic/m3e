@@ -55,6 +55,7 @@ export const ExpansionHeaderStyle = css`
     flex: 1 1 auto;
     display: flex;
     align-items: center;
+    min-width: 0;
   }
   .toggle {
     contain: layout style paint;
