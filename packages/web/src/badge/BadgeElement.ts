@@ -55,6 +55,7 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
       vertical-align: baseline;
     }
     .base {
+      contain: layout style paint;
       width: 100%;
       height: 100%;
       display: flex;
