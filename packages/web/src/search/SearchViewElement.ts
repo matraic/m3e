@@ -17,7 +17,7 @@ import {
 } from "@m3e/web/core";
 
 import { positionAnchor } from "@m3e/web/core/anchoring";
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
 
 import "@m3e/web/core/a11y";
@@ -120,6 +120,7 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
   /** @private */ #openMode?: Exclude<SearchViewMode, "auto">;
 
   /** @private */ #anchorCleanup?: () => void;
+  /** @private */ #anchorLastPosition?: { x: number; y: number; width: number; dir: Direction };
   /** @private */ #breakpointUnobserve?: () => void;
   /** @private */ @query(".anchor") private readonly _anchor!: HTMLElement;
   /** @private */ @query(".view") private readonly _view!: HTMLElement;
@@ -497,6 +498,7 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
     const view = this._view;
 
     this.#anchorCleanup?.();
+    this.#anchorLastPosition = undefined;
     this.#anchorCleanup = await positionAnchor(
       view,
       this._anchor,
@@ -505,16 +507,28 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
       },
       (x, y) => {
         const view = this._view;
-        view.style.top = `${y - this._anchor.clientHeight}px`;
-        view.style.width = `${this._anchor.clientWidth}px`;
 
-        if (M3eDirectionality.current === "rtl") {
-          view.style.right = `${window.innerWidth - x - this.clientWidth}px`;
-          view.style.left = "";
-        } else {
-          view.style.left = `${x}px`;
-          view.style.right = "";
+        y -= this._anchor.clientHeight;
+        if (this.#anchorLastPosition?.y !== y) {
+          view.style.top = `${y}px`;
         }
+
+        const width = this._anchor.clientWidth;
+        if (this.#anchorLastPosition?.width !== width) {
+          view.style.width = `${width}px`;
+        }
+
+        if (this.#anchorLastPosition?.dir !== M3eDirectionality.current || this.#anchorLastPosition?.x !== x) {
+          if (M3eDirectionality.current === "rtl") {
+            view.style.right = `${window.innerWidth - x - this.clientWidth}px`;
+            view.style.left = "";
+          } else {
+            view.style.left = `${x}px`;
+            view.style.right = "";
+          }
+        }
+
+        this.#anchorLastPosition = { x, y, width, dir: M3eDirectionality.current };
       },
     );
 
@@ -578,6 +592,7 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
   #hideDocked(): void {
     this.#anchorCleanup?.();
     this.#anchorCleanup = undefined;
+    this.#anchorLastPosition = undefined;
 
     const view = this._view;
     view.classList.remove("closing");
@@ -623,6 +638,7 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
 
     const view = this._view;
     this.#anchorCleanup?.();
+    this.#anchorLastPosition = undefined;
 
     if (!prefersReducedMotion()) {
       const rect = view.getBoundingClientRect();
