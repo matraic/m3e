@@ -38,6 +38,7 @@ export const SearchViewStyle: CSSResultGroup = css`
     visibility: hidden;
   }
   .view {
+    contain: layout style;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;

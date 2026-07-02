@@ -27,6 +27,7 @@ export const SearchBarStyle: CSSResultGroup = css`
     height: ${SearchBarToken.containerHeight};
   }
   .base {
+    contain: layout style paint;
     cursor: text;
     display: flex;
     align-items: center;
