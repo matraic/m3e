@@ -223,6 +223,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       }
     }
     .base {
+      contain: layout style paint;
       display: flex;
       border-radius: inherit;
       flex-direction: column;
