@@ -84,6 +84,9 @@ export function hasCustomState(element: AttachInternalsMixin, state: string): bo
  * @param {string} state The custom state to add.
  */
 export function addCustomState(element: AttachInternalsMixin, state: string): void {
+  // Avoid style recalculation when element already has state.
+  if (hasCustomState(element, state)) return;
+
   // Since flushing custom state doesn't flush in Safari (affecting all iOS browsers),
   // a copy of custom state is retained locally so components can correctly read after write.
   if (_customState in element) {

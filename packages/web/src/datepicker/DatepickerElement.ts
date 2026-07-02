@@ -19,7 +19,7 @@ import {
 } from "@m3e/web/core";
 
 import { positionAnchor } from "@m3e/web/core/anchoring";
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
 import { M3eCalendarElement, CalendarView } from "@m3e/web/calendar";
 
@@ -282,6 +282,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
   /** @private */ #trigger?: HTMLElement;
   /** @private */ #anchor?: HTMLElement;
   /** @private */ #anchorCleanup?: () => void;
+  /** @private */ #anchorLastPosition?: { x: number; y: number; dir: Direction };
 
   /** @private */ readonly #scrollLockController = new ScrollLockController(this);
   /** @private */ readonly #inertController = new InertController(this);
@@ -294,6 +295,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
       this.#clearSelectionState();
       this.#anchorCleanup?.();
       this.#anchorCleanup = undefined;
+      this.#anchorLastPosition = undefined;
 
       clearTimeout(this.#closeTimeout);
 
@@ -759,6 +761,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
   async #updatePosition(): Promise<void> {
     if (this.currentVariant === "docked" && this.#trigger) {
       this.#anchorCleanup?.();
+      this.#anchorLastPosition = undefined;
       this.#anchorCleanup = await positionAnchor(
         this,
         this.#anchor ?? this.#trigger,
@@ -772,15 +775,21 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
           setCustomState(this, "--top", position.includes("top"));
           setCustomState(this, "--bottom", position.includes("bottom"));
 
-          if (M3eDirectionality.current === "rtl") {
-            this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
-            this.style.left = "";
-          } else {
-            this.style.left = `${x}px`;
-            this.style.right = "";
+          if (this.#anchorLastPosition?.dir !== M3eDirectionality.current || this.#anchorLastPosition?.x !== x) {
+            if (M3eDirectionality.current === "rtl") {
+              this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
+              this.style.left = "";
+            } else {
+              this.style.left = `${x}px`;
+              this.style.right = "";
+            }
           }
 
-          this.style.top = `${y}px`;
+          if (this.#anchorLastPosition?.y !== y) {
+            this.style.top = `${y}px`;
+          }
+
+          this.#anchorLastPosition = { x, y, dir: M3eDirectionality.current };
         },
       );
     } else {
@@ -792,6 +801,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
   #clearAnchoring(): void {
     this.#anchorCleanup?.();
     this.#anchorCleanup = undefined;
+    this.#anchorLastPosition = undefined;
     this.style.left = "";
     this.style.right = "";
     this.style.top = "";
