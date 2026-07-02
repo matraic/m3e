@@ -170,6 +170,7 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
 
   /** @private */ #directionalitySubscription?: () => void;
   /** @private */ #anchorCleanup?: () => void;
+  /** @private */ #anchorLastPosition?: { x: number; y: number };
 
   /**
    * The size of the badge.
@@ -238,6 +239,7 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
   #detach(): void {
     this.#anchorCleanup?.();
     this.#anchorCleanup = undefined;
+    this.#anchorLastPosition = undefined;
   }
 
   /** @private */
@@ -287,8 +289,15 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
         }
       }
 
-      this.style.left = `${x}px`;
-      this.style.top = `${y}px`;
+      if (this.#anchorLastPosition?.x !== x) {
+        this.style.left = `${x}px`;
+      }
+
+      if (this.#anchorLastPosition?.y !== y) {
+        this.style.top = `${y}px`;
+      }
+
+      this.#anchorLastPosition = { x, y };
     });
   }
 }
