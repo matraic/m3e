@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, DesignToken, HtmlFor } from "@m3e/web/core";
+import { customElement, DesignToken, HtmlFor, MutationController } from "@m3e/web/core";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 import { AnchorPosition, positionAnchor } from "@m3e/web/core/anchoring";
 
@@ -154,6 +154,20 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
     }
   `;
 
+  constructor() {
+    super();
+
+    new MutationController(this, {
+      config: {
+        childList: true,
+        subtree: true,
+        characterData: true,
+        attributes: false,
+      },
+      callback: () => this.#updatePadding(),
+    });
+  }
+
   /** @private */ #directionalitySubscription?: () => void;
   /** @private */ #anchorCleanup?: () => void;
 
@@ -205,12 +219,12 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base">
-      <slot @slotchange="${this.#handleSlotChange}"> <span aria-hidden="true">&nbsp;</span></slot>
+      <slot><span aria-hidden="true">&nbsp;</span></slot>
     </div>`;
   }
 
-  /** @internal */
-  #handleSlotChange() {
+  /** @private */
+  #updatePadding() {
     if (!this.isConnected) return;
     this.style.setProperty(
       "--_badge-padding",
