@@ -101,6 +101,7 @@ export class M3eRadioElement extends Labelled(
       cursor: pointer;
     }
     .base {
+      contain: layout style;
       box-sizing: border-box;
       vertical-align: middle;
       display: inline-flex;
