@@ -128,7 +128,8 @@ export class M3eStepElement extends Selected(
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
-      display: block;
+      display: flex;
+      flex-direction: column;
       outline: none;
       min-width: 0px;
       position: relative;
@@ -137,6 +138,7 @@ export class M3eStepElement extends Selected(
     }
     .base {
       contain: layout style;
+      flex: 1 1 auto;
       min-width: inherit;
       position: relative;
       border-radius: var(--m3e-step-shape, ${DesignToken.shape.corner.medium});
