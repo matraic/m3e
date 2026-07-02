@@ -85,6 +85,7 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
       transform: rotate(90deg);
     }
     .content {
+      contain: layout style;
       flex: 1 1 auto;
       display: inherit;
       flex-wrap: inherit;
