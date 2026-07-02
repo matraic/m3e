@@ -28,6 +28,7 @@ export const SwitchStyle = css`
     right: 0;
   }
   .base {
+    contain: layout style paint;
     display: flex;
     align-items: center;
     justify-content: center;

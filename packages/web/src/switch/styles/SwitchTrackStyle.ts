@@ -9,6 +9,7 @@ import { SwitchToken } from "./SwitchToken";
  */
 export const SwitchTrackStyle = css`
   .track {
+    contain: layout style;
     display: flex;
     align-items: center;
     position: relative;
