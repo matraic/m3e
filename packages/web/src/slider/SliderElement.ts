@@ -243,6 +243,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
         width ${DesignToken.motion.spring.fastEffects}`)};
     }
     .base {
+      contain: layout style;
       display: inline-flex;
       align-items: center;
       position: relative;
@@ -253,12 +254,14 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
       touch-action: none;
     }
     .track {
+      contain: layout style paint;
       position: relative;
       flex: 1 1 auto;
       touch-action: none;
     }
     .track-inactive,
     .track-active {
+      contain: layout style paint;
       position: absolute;
       height: 100%;
       touch-action: none;

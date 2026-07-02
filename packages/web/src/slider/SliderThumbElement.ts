@@ -83,6 +83,7 @@ export class M3eSliderThumbElement extends Dirty(
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     .base {
+      contain: layout style;
       box-sizing: border-box;
       vertical-align: middle;
       display: inline-flex;
