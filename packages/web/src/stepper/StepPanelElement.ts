@@ -68,6 +68,7 @@ export class M3eStepPanelElement extends Role(LitElement, "tabpanel") {
       display: block;
     }
     .content {
+      contain: layout style paint;
       display: flex;
       flex-direction: column;
       padding: var(--m3e-step-panel-padding, 1rem 1.5rem 1.5rem 1.5rem);

@@ -136,6 +136,7 @@ export class M3eStepElement extends Selected(
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     .base {
+      contain: layout style;
       min-width: inherit;
       position: relative;
       border-radius: var(--m3e-step-shape, ${DesignToken.shape.corner.medium});

@@ -143,6 +143,9 @@ export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitEl
       flex-direction: column;
       position: relative;
     }
+    .header {
+      contain: layout style;
+    }
     :host(:not(:is(:state(--vertical), :--vertical))) .header {
       display: flex;
       align-items: flex-start;
