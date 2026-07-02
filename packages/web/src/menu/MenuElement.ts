@@ -18,7 +18,7 @@ import {
 
 import { RovingTabIndexManager } from "@m3e/web/core/a11y";
 import { positionAnchor } from "@m3e/web/core/anchoring";
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
 
 import { M3eMenuItemElement } from "./MenuItemElement";
 import { MenuPositionX, MenuPositionY } from "./MenuPosition";
@@ -268,6 +268,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
 
   /** @private */ #trigger?: HTMLElement;
   /** @private */ #anchorCleanup?: () => void;
+  /** @private */ #anchorLastPosition?: { x: number; y: number; dir: Direction };
 
   /** @private */ readonly #listManager = new RovingTabIndexManager<MenuItemElementBase>()
     .withWrap()
@@ -309,6 +310,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
         this.#clickOutsideController.unobserveAll();
         this.#anchorCleanup?.();
         this.#anchorCleanup = undefined;
+        this.#anchorLastPosition = undefined;
         break;
     }
   };
@@ -412,12 +414,19 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
           setCustomState(this, Math.round(y) === Math.round(top) ? "--shift-down" : "--shift-up", true);
         }
 
-        if (M3eDirectionality.current === "rtl") {
-          this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
-        } else {
-          this.style.left = `${x}px`;
+        if (this.#anchorLastPosition?.dir !== M3eDirectionality.current || this.#anchorLastPosition?.x !== x) {
+          if (M3eDirectionality.current === "rtl") {
+            this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
+          } else {
+            this.style.left = `${x}px`;
+          }
         }
-        this.style.top = `${y}px`;
+
+        if (this.#anchorLastPosition?.y !== y) {
+          this.style.top = `${y}px`;
+        }
+
+        this.#anchorLastPosition = { x, y, dir: M3eDirectionality.current };
       },
     );
 
