@@ -58,6 +58,7 @@ export class M3eTooltipElement extends TooltipElementBase {
       display: contents;
     }
     .base {
+      contain: layout style paint;
       position: absolute;
       pointer-events: none;
       margin: unset;

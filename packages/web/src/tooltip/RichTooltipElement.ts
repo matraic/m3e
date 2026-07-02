@@ -82,6 +82,7 @@ export class M3eRichTooltipElement extends TooltipElementBase {
       display: contents;
     }
     .base {
+      contain: layout style;
       flex-direction: column;
       position: absolute;
       padding: unset;
