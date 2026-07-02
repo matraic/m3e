@@ -42,6 +42,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
+      contain: layout style paint;
       position: fixed;
       top: calc(100vh - var(--_snackbar-height, 0px) - var(--m3e-snackbar-margin, 1rem));
       display: inline-flex;
