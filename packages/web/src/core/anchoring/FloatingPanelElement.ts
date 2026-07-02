@@ -13,7 +13,7 @@ import {
   ClickOutsideController,
 } from "@m3e/web/core";
 
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
 
 import { positionAnchor } from "./positionAnchor";
 import { FloatingPanelScrollStrategy } from "./FloatingPanelScrollStrategy";
@@ -121,6 +121,7 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
   /** @private */ #trigger?: HTMLElement;
   /** @private */ #anchor?: HTMLElement;
   /** @private */ #anchorCleanup?: () => void;
+  /** @private */ #anchorLastPosition?: { x: number; y: number; dir: Direction };
 
   /** @private */ readonly #clickOutsideController = new ClickOutsideController(this, {
     target: null,
@@ -140,6 +141,7 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
         this.#clickOutsideController.unobserveAll();
         this.#anchorCleanup?.();
         this.#anchorCleanup = undefined;
+        this.#anchorLastPosition = undefined;
         break;
     }
   };
@@ -240,15 +242,21 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
         setCustomState(this, "--top", position.includes("top"));
         setCustomState(this, "--bottom", position.includes("bottom"));
 
-        if (M3eDirectionality.current === "rtl") {
-          this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
-          this.style.left = "";
-        } else {
-          this.style.left = `${x}px`;
-          this.style.right = "";
+        if (this.#anchorLastPosition?.dir !== M3eDirectionality.current || this.#anchorLastPosition?.x !== x) {
+          if (M3eDirectionality.current === "rtl") {
+            this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
+            this.style.left = "";
+          } else {
+            this.style.left = `${x}px`;
+            this.style.right = "";
+          }
         }
 
-        this.style.top = `${y}px`;
+        if (this.#anchorLastPosition?.y !== y) {
+          this.style.top = `${y}px`;
+        }
+
+        this.#anchorLastPosition = { x, y, dir: M3eDirectionality.current };
       },
     );
 
