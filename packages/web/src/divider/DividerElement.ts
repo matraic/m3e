@@ -48,6 +48,7 @@ export class M3eDividerElement extends Role(LitElement, "separator") {
       height: 100%;
     }
     .line {
+      contain: layout style paint;
       box-sizing: border-box;
       position: absolute;
     }
