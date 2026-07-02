@@ -17,6 +17,7 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   }
   .start,
   .end {
+    contain: layout style;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -79,6 +80,7 @@ export const DrawerContainerStyle: CSSResultGroup = css`
     box-sizing: border-box;
   }
   .content {
+    contain: layout style;
     position: relative;
     height: 100%;
     overflow: auto;
