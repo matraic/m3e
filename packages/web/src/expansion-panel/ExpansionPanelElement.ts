@@ -262,6 +262,10 @@ export class M3eExpansionPanelElement extends Disabled(ReconnectedCallback(Attac
         }
 
         break;
+
+      case " ":
+        e.preventDefault();
+        break;
     }
   }
 
