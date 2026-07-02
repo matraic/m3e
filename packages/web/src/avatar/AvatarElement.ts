@@ -59,6 +59,7 @@ export class M3eAvatarElement extends LitElement {
       width: var(--m3e-avatar-size, 2.5rem);
     }
     .base {
+      contain: layout style paint;
       user-select: none;
       white-space: nowrap;
       width: 100%;
