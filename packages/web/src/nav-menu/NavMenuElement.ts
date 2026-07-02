@@ -112,6 +112,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
       scrollbar-color: ${DesignToken.scrollbar.color};
     }
     .base {
+      contain: layout style;
       width: 100%;
       display: flex;
       flex-direction: column;
