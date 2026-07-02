@@ -35,6 +35,7 @@ export class M3eTabPanelElement extends Role(LitElement, "tabpanel") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
+      contain: layout style paint;
       display: block;
       overflow-y: auto;
       scrollbar-width: ${DesignToken.scrollbar.width};

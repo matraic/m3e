@@ -88,6 +88,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       position: relative;
     }
     .tablist {
+      contain: layout style;
       position: relative;
       box-sizing: border-box;
       flex: none;
@@ -108,6 +109,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       align-items: center;
     }
     .ink-bar {
+      contain: layout style paint;
       box-sizing: border-box;
       height: var(--_tabs-active-indicator-thickness);
     }
