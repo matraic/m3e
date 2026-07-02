@@ -48,6 +48,7 @@ export class M3ePseudoCheckboxElement extends CheckedIndeterminate(Disabled(Role
       border-radius: var(--m3e-checkbox-container-shape, 2px);
       box-sizing: border-box;
       flex: none;
+      contain: layout style paint;
     }
     :host(:not([checked]):not([indeterminate])) {
       border-width: var(--m3e-checkbox-unselected-outline-thickness, 2px);
