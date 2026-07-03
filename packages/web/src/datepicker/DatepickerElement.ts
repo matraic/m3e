@@ -521,9 +521,6 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
     calendar.specialDates = this.specialDates;
     calendar.blackoutDates = this.blackoutDates;
 
-    // Ensure the active view is reset
-    calendar.resetActiveView();
-
     if (calendar.isUpdatePending) {
       await calendar.updateComplete;
     }
