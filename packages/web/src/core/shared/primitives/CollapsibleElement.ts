@@ -64,6 +64,18 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
         padding-right var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
           ${DesignToken.motion.easing.standard}`)};
     }
+    :host([orientation="both"]) {
+      height: 0px;
+      width: 0px;
+      transition: ${unsafeCSS(`visibility var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
+          ${DesignToken.motion.easing.standard},
+        width var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
+          ${DesignToken.motion.easing.standard},
+        height var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
+          ${DesignToken.motion.easing.standard},
+        padding var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
+          ${DesignToken.motion.easing.standard}`)};
+    }
     :host(:not(:is(:state(--closing), :--closing)):not([open])) {
       visibility: hidden;
     }
@@ -77,6 +89,11 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
       padding-left: 0px !important;
       padding-right: 0px !important;
     }
+    :host([orientation="both"]:not([open])) {
+      min-height: unset !important;
+      min-width: unset !important;
+      padding: 0px !important;
+    }
     :host([no-animate]),
     :host(:is(:state(--no-animate), :--no-animate)) {
       transition-duration: 0ms;
@@ -87,6 +104,11 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
     }
     :host([orientation="horizontal"]:is(:state(--opening), :--opening)),
     :host([orientation="horizontal"]:is(:state(--closing), :--closing)) {
+      overflow-x: hidden !important;
+    }
+    :host([orientation="both"]:is(:state(--opening), :--opening)),
+    :host([orientation="both"]:is(:state(--closing), :--closing)) {
+      overflow-y: hidden !important;
       overflow-x: hidden !important;
     }
     :host(:is(:state(--overflows), :--overflows)) {
@@ -148,7 +170,11 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
         setCustomState(
           this,
           "--overflows",
-          this.orientation === "vertical" ? this.clientHeight < this.scrollHeight : this.clientWidth < this.scrollWidth,
+          this.orientation === "vertical"
+            ? this.clientHeight < this.scrollHeight
+            : this.orientation === "horizontal"
+              ? this.clientWidth < this.scrollWidth
+              : this.clientHeight < this.scrollHeight || this.clientWidth < this.scrollWidth,
         );
         this.#clearSize();
       }
@@ -222,20 +248,47 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
 
   /** @private */
   #autoSize(): void {
-    this.style[this.orientation === "vertical" ? "height" : "width"] = "auto";
+    switch (this.orientation) {
+      case "vertical":
+        this.style.height = "auto";
+        break;
+      case "horizontal":
+        this.style.width = "auto";
+        break;
+      case "both":
+        this.style.height = this.style.width = "auto";
+        break;
+    }
   }
 
   /** @private */
   #clearSize(): void {
-    this.style[this.orientation === "vertical" ? "height" : "width"] = "";
+    switch (this.orientation) {
+      case "vertical":
+        this.style.height = "";
+        break;
+      case "horizontal":
+        this.style.width = "";
+        break;
+      case "both":
+        this.style.height = this.style.width = "";
+        break;
+    }
   }
 
   /** @private */
   #actualSize(): void {
-    if (this.orientation === "vertical") {
-      this.style.height = `${this.scrollHeight}px`;
-    } else {
-      this.style.width = `${this.scrollWidth}px`;
+    switch (this.orientation) {
+      case "vertical":
+        this.style.height = `${this.scrollHeight}px`;
+        break;
+      case "horizontal":
+        this.style.width = `${this.scrollWidth}px`;
+        break;
+      case "both":
+        this.style.height = `${this.scrollHeight}px`;
+        this.style.width = `${this.scrollWidth}px`;
+        break;
     }
   }
 }
