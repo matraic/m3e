@@ -146,8 +146,10 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
   @property({ attribute: "no-animate", type: Boolean, reflect: true }) noAnimate = false;
 
   /** @inheritdoc */
-  protected override update(changedProperties: PropertyValues): void {
+  protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
+
+    const noAnimate = this.noAnimate || (changedProperties.has("orientation") && !changedProperties.has("open"));
 
     addCustomState(this, "--no-animate");
 
@@ -165,7 +167,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
     if (this.open) {
       this.#hasOpened = true;
 
-      if (!(prefersReducedMotion() || this.noAnimate)) {
+      if (!(noAnimate || prefersReducedMotion())) {
         this.#autoSize();
         setCustomState(
           this,
@@ -187,7 +189,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
       deleteCustomState(this, "--no-animate");
       this.#actualSize();
 
-      if (prefersReducedMotion() || this.noAnimate) {
+      if (noAnimate || prefersReducedMotion()) {
         this.#autoSize();
         deleteCustomState(this, "--opening");
         this.dispatchEvent(new Event("opened"));
@@ -214,7 +216,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
         deleteCustomState(this, "--no-animate");
       }
 
-      if (prefersReducedMotion() || this.noAnimate) {
+      if (noAnimate || prefersReducedMotion()) {
         this.#clearSize();
         deleteCustomState(this, "--closing");
         this.dispatchEvent(new Event("closed"));
