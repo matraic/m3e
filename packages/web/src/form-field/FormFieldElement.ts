@@ -419,6 +419,9 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         ${DesignToken.typescale.standard.body.small.fontSize}
       );
     }
+    :host([variant="outlined"]) .input {
+      padding: 8px 0px;
+    }
     :host(
         [variant="outlined"][float-label="auto"]:not(:is(:state(--float-label), :--float-label)):not(
             :is(:state(--pressed), :--pressed)
