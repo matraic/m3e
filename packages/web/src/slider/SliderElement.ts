@@ -636,6 +636,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
 
   /** @private */
   #handlePointerDown(e: PointerEvent): void {
+    this.#updateCachedDimensions(true);
     if (e.pointerType === "mouse" && e.button > 1) return;
     if (!this.lowerThumb || this.disabled) return;
 
