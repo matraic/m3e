@@ -45,11 +45,11 @@ import { SkeletonAnimation } from "./SkeletonAnimation";
  */
 @customElement("m3e-skeleton")
 export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
-  /** @private */ private static __pulseLoading = new Set<M3eSkeletonElement>();
-  /** @private */ private static __pulseAnimation: Animation;
+  /** Skeletons with a live per-instance animation, so preference changes re-sync them all. @private */
+  private static __animating = new Set<M3eSkeletonElement>();
 
-  /** @private */ private static __waveLoading = new Set<M3eSkeletonElement>();
-  /** @private */ private static __waveAnimation: Animation;
+  /** Shared timeline origin so every skeleton's wave/pulse stays in phase. @private */
+  private static __motionOrigin: number | null = null;
 
   /** @private */ private static __reducedMediaQuery: MediaQueryList;
   /** @private */ private static __forcedColorsMediaQuery: MediaQueryList;
@@ -73,38 +73,10 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
         }
       `);
 
-      M3eSkeletonElement.__waveAnimation = document.documentElement.animate(
-        [{ ["--_m3e-skeleton-wave-pct"]: 0 }, { ["--_m3e-skeleton-wave-pct"]: 1 }],
-        {
-          duration: 2100,
-          iterations: Infinity,
-          easing: "linear",
-        },
-      );
-
-      M3eSkeletonElement.__pulseAnimation = document.documentElement.animate(
-        [
-          { ["--_m3e-skeleton-pulse-norm"]: 0 },
-          { ["--_m3e-skeleton-pulse-norm"]: 1 },
-          { ["--_m3e-skeleton-pulse-norm"]: 0 },
-        ],
-        {
-          duration: 1200,
-          iterations: Infinity,
-          easing: "ease-in-out",
-        },
-      );
-
-      M3eSkeletonElement.__waveAnimation.pause();
-      M3eSkeletonElement.__pulseAnimation.pause();
-
       M3eSkeletonElement.__reducedMediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
       M3eSkeletonElement.__forcedColorsMediaQuery = window.matchMedia("(forced-colors: active)");
-
-      M3eSkeletonElement.__reducedMediaQuery.addEventListener("change", () => M3eSkeletonElement.__updateAnimations());
-      M3eSkeletonElement.__forcedColorsMediaQuery.addEventListener("change", () =>
-        M3eSkeletonElement.__updateAnimations(),
-      );
+      M3eSkeletonElement.__reducedMediaQuery.addEventListener("change", () => M3eSkeletonElement.__updateMotion());
+      M3eSkeletonElement.__forcedColorsMediaQuery.addEventListener("change", () => M3eSkeletonElement.__updateMotion());
     }
   }
 
@@ -211,6 +183,11 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
 
   /** @private */ readonly #anchoringCleanupMap = new Map<HTMLElement, () => void>();
 
+  /** @private */ #animation: Animation | null = null;
+
+  /** The animation mode `#animation` was created for, so mode changes recreate it. @private */
+  #animationMode: SkeletonAnimation | null = null;
+
   /**
    * The shape of the skeleton.
    * @default "auto"
@@ -233,7 +210,7 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.#clearShapes();
-    this.#unregisterLoading();
+    this.#stopMotion();
   }
 
   /** @inheritdoc */
@@ -322,59 +299,110 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
     this.shadowRoot?.appendChild(shape);
   }
 
-  /** @private */
+  /**
+   * Starts or stops this skeleton's own wave/pulse animation to reflect its current
+   * loaded/animation/connected state, then aligns its play/pause with the active
+   * accessibility and forced-colors preferences.
+   * @private
+   */
   #updateLoading(): void {
-    if (!this.loaded && this.animation !== "none") {
-      this.#registerLoading();
+    if (this.isConnected && !this.loaded && (this.animation === "wave" || this.animation === "pulse")) {
+      this.#startMotion();
     } else {
-      this.#unregisterLoading();
+      this.#stopMotion();
     }
   }
 
-  /** @private */
-  #registerLoading(): void {
-    switch (this.animation) {
-      case "pulse":
-        M3eSkeletonElement.__waveLoading.delete(this);
-        if (!M3eSkeletonElement.__pulseLoading.has(this)) {
-          M3eSkeletonElement.__pulseLoading.add(this);
-          M3eSkeletonElement.__updateAnimations();
-        }
-        break;
-
-      case "wave":
-        M3eSkeletonElement.__pulseLoading.delete(this);
-        if (!M3eSkeletonElement.__waveLoading.has(this)) {
-          M3eSkeletonElement.__waveLoading.add(this);
-          M3eSkeletonElement.__updateAnimations();
-        }
-        break;
+  /**
+   * Starts the wave/pulse animation on this skeleton itself rather than on
+   * `document.documentElement`. The `--_m3e-skeleton-*` properties are registered
+   * `inherits: true`, so animating them on the document root recalculates style for the
+   * whole document every frame; scoping to the instance limits that to its own subtree.
+   * Aligned to a shared timeline origin so multiple skeletons animate in phase, and
+   * re-created when the effect mode (wave vs pulse) changes.
+   * @private
+   */
+  #startMotion(): void {
+    if (this.#animation) {
+      if (this.#animationMode === this.animation) {
+        // Already running for the current mode; nothing to do but re-sync motion state.
+        this.#syncMotionState();
+        return;
+      }
+      // Effect mode changed (wave <-> pulse); tear down and recreate below.
+      this.#stopMotion();
     }
+
+    M3eSkeletonElement.__motionOrigin ??= (document.timeline.currentTime as number | null) ?? 0;
+
+    const animation =
+      this.animation === "pulse"
+        ? this.animate(
+            [
+              { ["--_m3e-skeleton-pulse-norm"]: 0 },
+              { ["--_m3e-skeleton-pulse-norm"]: 1 },
+              { ["--_m3e-skeleton-pulse-norm"]: 0 },
+            ],
+            {
+              duration: 1200,
+              iterations: Infinity,
+              easing: "ease-in-out",
+            },
+          )
+        : this.animate([{ ["--_m3e-skeleton-wave-pct"]: 0 }, { ["--_m3e-skeleton-wave-pct"]: 1 }], {
+            duration: 2100,
+            iterations: Infinity,
+            easing: "linear",
+          });
+
+    animation.startTime = M3eSkeletonElement.__motionOrigin;
+
+    this.#animation = animation;
+    this.#animationMode = this.animation;
+    M3eSkeletonElement.__animating.add(this);
+    this.#syncMotionState();
   }
 
   /** @private */
-  #unregisterLoading(): void {
-    if (M3eSkeletonElement.__pulseLoading.delete(this) || M3eSkeletonElement.__waveLoading.delete(this)) {
-      M3eSkeletonElement.__updateAnimations();
+  #stopMotion(): void {
+    if (!this.#animation) {
+      return;
+    }
+    this.#animation.cancel();
+    this.#animation = null;
+    this.#animationMode = null;
+    M3eSkeletonElement.__animating.delete(this);
+  }
+
+  /** Whether motion is currently suppressed for accessibility or forced-colors reasons. @private */
+  private static __motionDisabled(): boolean {
+    return M3eSkeletonElement.__reducedMediaQuery.matches || M3eSkeletonElement.__forcedColorsMediaQuery.matches;
+  }
+
+  /**
+   * Re-applies the current motion preference to every animating skeleton. Invoked when
+   * the reduced-motion or forced-colors preference changes.
+   * @private
+   */
+  private static __updateMotion(): void {
+    for (const skeleton of M3eSkeletonElement.__animating) {
+      skeleton.#syncMotionState();
     }
   }
 
-  /** @private */
-  static __updateAnimations(): void {
-    const pause = M3eSkeletonElement.__forcedColorsMediaQuery.matches || M3eSkeletonElement.__reducedMediaQuery.matches;
-    if (M3eSkeletonElement.__pulseLoading.size === 0 || pause) {
-      M3eSkeletonElement.__pulseAnimation.pause();
-    } else if (
-      M3eSkeletonElement.__pulseLoading.size > 0 &&
-      M3eSkeletonElement.__pulseAnimation.playState === "paused"
-    ) {
-      M3eSkeletonElement.__pulseAnimation.play();
+  /**
+   * Aligns this skeleton's animation play state with the current reduced-motion and
+   * forced-colors preferences.
+   * @private
+   */
+  #syncMotionState(): void {
+    if (!this.#animation) {
+      return;
     }
-
-    if (M3eSkeletonElement.__waveLoading.size === 0 || pause) {
-      M3eSkeletonElement.__waveAnimation.pause();
-    } else if (M3eSkeletonElement.__waveLoading.size > 0 && M3eSkeletonElement.__waveAnimation.playState === "paused") {
-      M3eSkeletonElement.__waveAnimation.play();
+    if (M3eSkeletonElement.__motionDisabled()) {
+      this.#animation.pause();
+    } else {
+      this.#animation.play();
     }
   }
 }
