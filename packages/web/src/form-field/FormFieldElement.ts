@@ -424,11 +424,6 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         ${DesignToken.typescale.standard.body.small.fontSize}
       );
     }
-    :host([variant="outlined"]) ::slotted(textarea) {
-      margin-block: calc(
-        var(--m3e-form-field-label-line-height, var(--md-sys-typescale-body-small-line-height, 1rem)) / 2
-      );
-    }
     :host(
         [variant="outlined"][float-label="auto"]:not(:is(:state(--float-label), :--float-label)):not(
             :is(:state(--pressed), :--pressed)
