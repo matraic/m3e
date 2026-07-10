@@ -133,6 +133,11 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       m3e-form-field[variant="outlined"] m3e-input-chip-set {
         margin-block: calc(calc(3.5rem + ${DesignToken.density.calc(-3)}) / 4);
       }
+      m3e-form-field[variant="outlined"] textarea {
+        margin-block: calc(
+          var(--m3e-form-field-label-line-height, var(--md-sys-typescale-body-small-line-height, 1rem)) / 2
+        );
+      }
       @media (prefers-reduced-motion) {
         m3e-form-field input::placeholder,
         m3e-form-field textarea::placeholder {
@@ -419,8 +424,10 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         ${DesignToken.typescale.standard.body.small.fontSize}
       );
     }
-    :host([variant="outlined"]) .input {
-      padding: 8px 0px;
+    :host([variant="outlined"]) ::slotted(textarea) {
+      margin-block: calc(
+        var(--m3e-form-field-label-line-height, var(--md-sys-typescale-body-small-line-height, 1rem)) / 2
+      );
     }
     :host(
         [variant="outlined"][float-label="auto"]:not(:is(:state(--float-label), :--float-label)):not(
