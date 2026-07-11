@@ -1,6 +1,9 @@
 # @m3e/web/datepicker
 
-The `m3e-datepicker` component presents a Material 3‑aligned date‑selection experience. It supports single‑date and range selection, docked and modal variants, anchored positioning, ARIA accessibility, focus management, and theming via CSS custom properties.
+The `m3e-datepicker` component presents a floating surface that provides structured navigation and
+selection across month, year, and multi-year views. It supports single-date and range selection, applies
+disabled rules including minimum, maximum, and blackout constraints, and provides styling hooks for special
+date states.
 
 ```ts
 import "@m3e/web/datepicker";
