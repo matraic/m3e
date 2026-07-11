@@ -158,6 +158,7 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
     super();
 
     new MutationController(this, {
+      skipInitial: true,
       config: {
         childList: true,
         subtree: true,
@@ -220,7 +221,7 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base">
-      <slot><span aria-hidden="true">&nbsp;</span></slot>
+      <slot @slotchange="${this.#updatePadding}"><span aria-hidden="true">&nbsp;</span></slot>
     </div>`;
   }
 
