@@ -272,9 +272,17 @@ export class M3eNavItemElement extends ReconnectedCallback(
     :host([orientation="vertical"]) .state-layer,
     :host([orientation="vertical"]) .ripple {
       top: var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem);
-      inset-inline-start: var(--_vertical-nav-item-inset-start);
-      right: unset;
       bottom: unset;
+    }
+    :host([orientation="vertical"]:dir(rtl)) .state-layer,
+    :host([orientation="vertical"]:dir(rtl)) .ripple {
+      right: var(--_vertical-nav-item-inset-start);
+      left: unset;
+    }
+    :host([orientation="vertical"]:not(:dir(rtl))) .state-layer,
+    :host([orientation="vertical"]:not(:dir(rtl))) .ripple {
+      left: var(--_vertical-nav-item-inset-start);
+      right: unset;
     }
     :host([orientation="vertical"]) .state-layer,
     :host([orientation="vertical"]) .ripple,
