@@ -422,6 +422,7 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
   /** @private */
   #resizeController = new ResizeController(this, { target: null, callback: () => this.#updateMultiline() });
 
+  /** @private */ #lines?: number;
   /** @private */ #leadingContentType: ListItemContentType;
   /** @private */ #trailingContentType: ListItemContentType;
 
@@ -480,9 +481,16 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
   #updateMultiline(): void {
     const content = this.shadowRoot?.querySelector<HTMLElement>(".content") ?? null;
     const lines = content === null ? 0 : computeLineCount(content);
-    setCustomState(this, "--one-line", lines <= 1);
-    setCustomState(this, "--two-line", lines == 2);
-    setCustomState(this, "--three-line", lines > 2);
+    if (this.#lines === lines) return;
+
+    this.#lines = lines;
+
+    // Defer state writes to rAF to avoid synchronous layout flush (forced reflow)
+    requestAnimationFrame(() => {
+      setCustomState(this, "--one-line", lines <= 1);
+      setCustomState(this, "--two-line", lines == 2);
+      setCustomState(this, "--three-line", lines > 2);
+    });
   }
 
   /** @internal */
