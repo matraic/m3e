@@ -23,5 +23,7 @@ export const M3eDatepicker = createComponent({
   react: React,
   events: {
     onChange: "change",
+    onBeforeToggle: "beforetoggle",
+    onToggle: "toggle",
   },
 });
