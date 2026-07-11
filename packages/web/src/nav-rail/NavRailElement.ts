@@ -103,6 +103,13 @@ export class M3eNavRailElement extends SuppressInitialAnimation(M3eNavBarElement
     :host(:is(:state(--compact), :--compact)) {
       width: var(--m3e-nav-rail-compact-width, 6rem);
     }
+    :host(:is(:state(--compact), :--compact)) .base {
+      --_vertical-nav-item-width: var(--m3e-nav-rail-compact-width, 6rem);
+      --_vertical-nav-item-margin-inline: calc(0px - var(--m3e-nav-rail-inline-padding, 1.25rem));
+      --_vertical-nav-item-inset-start: calc(
+        50% - calc(var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem)) / 2
+      );
+    }
     :host(:not(:is(:state(--compact), :--compact))) {
       width: var(--m3e-nav-rail-expanded-width, 13.75rem);
     }

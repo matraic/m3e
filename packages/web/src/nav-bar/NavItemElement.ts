@@ -127,12 +127,20 @@ export class M3eNavItemElement extends ReconnectedCallback(
       );
       letter-spacing: var(--m3e-nav-item-label-text-tracking, ${DesignToken.typescale.standard.label.medium.tracking});
       border-radius: var(--m3e-nav-item-shape, ${DesignToken.shape.corner.full});
-      min-width: var(--_nav-item-min-width);
       align-self: var(--_nav-item-align-self);
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
+    :host([orientation="vertical"]) {
+      min-width: var(--_vertical-nav-item-min-width);
+      width: var(--_vertical-nav-item-width);
+      margin-inline: var(--_vertical-nav-item-margin-inline);
+    }
     :host([orientation="horizontal"]) {
       max-width: fit-content;
+    }
+    :host([orientation="horizontal"]) .outer {
+      margin-inline-start: var(--_horizontal-nav-item-leading-space);
+      margin-inline-end: var(--_horizontal-nav-item-trailing-space);
     }
     :host(:not(:disabled):not([disabled-interactive])) {
       cursor: pointer;
@@ -264,12 +272,14 @@ export class M3eNavItemElement extends ReconnectedCallback(
     :host([orientation="vertical"]) .state-layer,
     :host([orientation="vertical"]) .ripple {
       top: var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem);
+      inset-inline-start: var(--_vertical-nav-item-inset-start);
+      right: unset;
       bottom: unset;
     }
     :host([orientation="vertical"]) .state-layer,
     :host([orientation="vertical"]) .ripple,
     :host([orientation="vertical"]) .icon-wrapper {
-      width: var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem);
+      min-width: var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem);
     }
     :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .state-layer,
     :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .ripple {

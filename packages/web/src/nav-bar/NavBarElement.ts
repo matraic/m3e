@@ -42,6 +42,8 @@ import { NavBarMode } from "./NavBarMode";
  * @cssprop --m3e-nav-bar-height - Height of the navigation bar.
  * @cssprop --m3e-nav-bar-container-color - Background color of the navigation bar container.
  * @cssprop --m3e-nav-bar-vertical-item-width - Minimum width of vertical nav items.
+ * @cssprop --m3e-nav-bar-horizontal-nav-item-leading-space - Leading space for horizontal nav items.
+ * @cssprop --m3e-nav-bar-horizontal-nav-item-trailing-space - Trailing space for horizontal nav items.
  */
 @customElement("m3e-nav-bar")
 export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(LitElement, "navigation"))) {
@@ -65,7 +67,9 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
       height: inherit;
       width: 100%;
       background-color: var(--m3e-nav-bar-container-color, ${DesignToken.color.surfaceContainer});
-      --_nav-item-min-width: var(--m3e-nav-bar-vertical-item-width, 7rem);
+      --_vertical-nav-item-min-width: var(--m3e-nav-bar-vertical-item-width, 7rem);
+      --_horizontal-nav-item-leading-space: var(--m3e-nav-bar-horizontal-nav-item-leading-space, 1rem);
+      --_horizontal-nav-item-trailing-space: var(--m3e-nav-bar-horizontal-nav-item-trailing-space, 1rem);
     }
   `;
 

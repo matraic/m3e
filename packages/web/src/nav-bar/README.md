@@ -50,11 +50,13 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🎛️ CSS Custom Properties
 
-| Property                            | Description                             |
-| ----------------------------------- | --------------------------------------- |
-| `--m3e-nav-bar-height`              | Height of the navigation bar.           |
-| `--m3e-nav-bar-container-color`     | Background color of the navigation bar. |
-| `--m3e-nav-bar-vertical-item-width` | Minimum width of vertical nav items.    |
+| Property                                           | Description                              |
+| -------------------------------------------------- | ---------------------------------------- |
+| `--m3e-nav-bar-height`                             | Height of the navigation bar.            |
+| `--m3e-nav-bar-container-color`                    | Background color of the navigation bar.  |
+| `--m3e-nav-bar-vertical-item-width`                | Minimum width of vertical nav items.     |
+| `--m3e-nav-bar-horizontal-nav-item-leading-space`  | Leading space for horizontal nav items.  |
+| `--m3e-nav-bar-horizontal-nav-item-trailing-space` | Trailing space for horizontal nav items. |
 
 ### 🗂️ m3e-nav-item
 
