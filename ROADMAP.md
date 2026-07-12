@@ -23,16 +23,16 @@ The following components are planned for future release:
 
 ## 🏛️ Past Milestones
 
-- **2.5.0 — 2.5.16 Feature release + patch releases**
+- **2.5.0 – 2.5.16 — Feature release + patch releases**
   Added `@m3e/web/breadcrumb`, `@m3e/web/content-pane`, bug fixes.
 
-- **2.4.0 — 2.4.1 Feature release + patch releases**
+- **2.4.0 – 2.4.1 — Feature release + patch releases**
   Added `@m3e/web/tree`, bug fixes.
 
-- **2.3.0 — 2.3.2 — Feature release + patch releases**
+- **2.3.0 – 2.3.2 — Feature release + patch releases**
   Added `@m3e/web/split-pane`, `@m3e/web/skeleton`, and `@m3e/icons`, bug fixes.
 
-- **2.2.0 — 2.2.2 — Feature release + patch releases**
+- **2.2.0 – 2.2.2 — Feature release + patch releases**
   Added `@m3e/web/calendar`, `@m3e/web/datepicker`, `@m3e/web/search`, and `change` event to `@m3e/web/autocomplete`, bug fixes.
 
 - **2.1.0 – 2.1.3 — Feature + patch releases**
