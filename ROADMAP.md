@@ -10,10 +10,13 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ### ✨ Components
 
+The following components are under development:
+
+- Time Picker
+
 The following components are planned for future release:
 
 - Inputs (Numeric, Masked, Date, Datetime)
-- Time Picker
 - Carousel
 
 ### 📜 Building with AI
