@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Timepicker for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Timepicker for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <script type="module" src="https://jspm.dev/api-viewer-element"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.6.0/dist/all.min.js"></script>
+    <script src="../main.js"></script>
+    <script src="./timepicker.js"></script>
+  </head>
+  <body>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Timepicker</m3e-heading>
+        <p>
+          The <code>m3e-timepicker</code> component presents a temporary surface for selecting time using dial and
+          keyboard modes. It supports hour and minute selection across 12-hour and 24-hour formats, enforces minimum and
+          maximum constraints, and adapts between docked and modal layouts based on available space.
+        </p>
+
+        <m3e-card variant="outlined" class="install"><pre slot="content">import "@m3e/web/timepicker";</pre></m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+        <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+        <m3e-heading variant="headline" size="small" level="3">Date string handling</m3e-heading>
+        <p>
+          Different browsers interpret date strings in inconsistent ways, especially when the string resembles an ISO
+          date but does not include a time or timezone. To ensure predictable behavior across environments,
+          <code>m3e-timepicker</code> uses a consistent, standards-aligned parsing model instead of relying on the
+          browser's built-in <code>Date.parse()</code> rules.
+        </p>
+        <p>
+          When <code>m3e-timepicker</code> receives a date string, it automatically detects whether the value matches
+          one of the ISO-8601 formats that can be parsed safely and unambiguously:
+        </p>
+        <ul>
+          <li><code>yyyy-MM-dd</code> — local date (no time, no timezone)</li>
+          <li><code>yyyy-MM-ddTHH:mm:ss</code> — local date and time</li>
+          <li><code>yyyy-MM-ddTHH:mm:ssZ</code> — UTC date and time</li>
+          <li><code>yyyy-MM-ddTHH:mm:ss±HH:mm</code> — date and time with an explicit timezone offset</li>
+        </ul>
+        <p>
+          Strings in these formats are converted into local <code>Date</code> objects without unexpected timezone
+          shifts. This prevents issues such as date-only values drifting into the previous or next day when interpreted
+          as UTC. If a string does not follow one of these ISO-compatible patterns, parsing may be ambiguous or
+          unsupported. For the most reliable results, use one of the formats above.
+        </p>
+
+        <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+        <p>
+          Use the <code>m3e-timepicker-toggle</code> to open a <code>m3e-timepicker</code>. This component should be
+          nested inside a clickable element and be associated with a picker by setting the for attribute to the id of
+          the picker to open.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld1">Time Field</label>
+              <input autocomplete="off" id="fld1" />
+              <m3e-icon-button aria-label="Open time picker" slot="suffix">
+                <m3e-icon name="schedule"></m3e-icon>
+                <m3e-timepicker-toggle for="timepicker"></m3e-timepicker-toggle>
+              </m3e-icon-button>
+              <span slot="hint">HH:MM</span>
+            </m3e-form-field>
+            <m3e-timepicker id="timepicker" variant="auto"></m3e-timepicker>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field&quot;&gt;Time Field&lt;/label&gt;
+  &lt;input autocomplete=&quot;off&quot; id=&quot;field&quot; /&gt;
+  &lt;m3e-icon-button slot=&quot;suffix&quot;&gt;
+    &lt;m3e-icon name=&quot;schedule&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;m3e-timepicker-toggle for=&quot;timepicker&quot;&gt;&lt;/m3e-timepicker-toggle&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;span slot=&quot;hint&quot;&gt;HH:MM&lt;/span&gt;
+&lt;/m3e-form-field&gt;
+&lt;m3e-timepicker id=&quot;timepicker&quot; variant=&quot;auto&quot;&gt;&lt;/m3e-timepicker&gt;
+</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+        <p>
+          The <code>m3e-timepicker</code> supports three appearance variants: <code>docked</code> (default),
+          <code>modal</code>, and <code>auto</code>. Use the <code>variant</code> attribute to control how the picker is
+          presented. When set to <code>auto</code>, the picker automatically selects the appropriate appearance based on
+          the current screen size.
+        </p>
+        <p>All examples in this page use <code>variant="auto"</code>.</p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">&lt;m3e-timepicker variant=&quot;auto&quot;&gt;&lt;/m3e-timepicker&gt;</pre>
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Orientation</m3e-heading>
+        <p>
+          The <code>m3e-timepicker</code> supports three orientations: <code>vertical</code> (default),
+          <code>horizontal</code>, and <code>auto</code>. Use the <code>orientation</code> attribute to control how the
+          picker is orientated. When set to <code>auto</code>, the picker automatically selects the appropriate
+          orientation based on the current screen size.
+        </p>
+        <p>
+          Typically, <code>orientation="auto"</code> should be pared with <code>variant="auto"</code> so that the picker
+          will swap between orientation and variant depending on viewport constraints.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld2">Time Field</label>
+              <input autocomplete="off" id="fld2" />
+              <m3e-icon-button aria-label="Open time picker" slot="suffix">
+                <m3e-icon name="schedule"></m3e-icon>
+                <m3e-timepicker-toggle for="timepicker2"></m3e-timepicker-toggle>
+              </m3e-icon-button>
+              <span slot="hint">HH:MM</span>
+            </m3e-form-field>
+            <m3e-timepicker id="timepicker2" variant="auto" orientation="horizontal"></m3e-timepicker>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-timepicker variant=&quot;auto&quot; orientation=&quot;horizontal&quot;&gt;&lt;/m3e-timepicker&gt;
+</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Modes</m3e-heading>
+        <p>
+          The <code>m3e-timepicker</code> supports two modes, <code>dial</code> (default), and <code>input</code>. Use
+          the <code>mode</code> attribute to set the default mode. Use the <code>hide-mode-toggle</code> attribute to
+          hide the button used to toggle between modes.
+        </p>
+        <p>
+          The following example illustrates the use of <code>mode="input"</code> and <code>hide-mode-toggle</code> to
+          force the timepicker to open in keyboard entry mode while preventing the user from switching back to the dial.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld3">Time Field</label>
+              <input autocomplete="off" id="fld3" />
+              <m3e-icon-button aria-label="Open time picker" slot="suffix">
+                <m3e-icon name="schedule"></m3e-icon>
+                <m3e-timepicker-toggle for="timepicker3"></m3e-timepicker-toggle>
+              </m3e-icon-button>
+              <span slot="hint">HH:MM</span>
+            </m3e-form-field>
+            <m3e-timepicker id="timepicker3" variant="auto" mode="input" hide-mode-toggle></m3e-timepicker>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-timepicker mode=&quot;input&quot; hide-mode-toggle&gt;&lt;/m3e-timepicker&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Time selection</m3e-heading>
+        <p>Use the <code>date</code> attribute to set the currently selected time.</p>
+        <p>
+          The OK button becomes enabled whenever the picker holds a complete, valid time, including cases where the
+          initial value was already valid and the user made no changes. Both the hour and minute fields must contain
+          valid, non-null values for the picker to construct a time; incomplete or invalid states keep the OK button
+          disabled. Clicking OK commits the current time to <code>date</code> and emits a <code>change</code> event. If
+          <code>date</code> is <code>null</code>, today's date is used.
+        </p>
+        <p>
+          Clicking Cancel dismisses the picker without committing any value. The current <code>date</code> and time
+          remain unchanged, and no <code>change</code> event is emitted. Cancel is always a non-committing action,
+          regardless of whether the selection was complete, valid, or modified.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld6">Time Field</label>
+              <input autocomplete="off" id="fld6" />
+              <m3e-icon-button aria-label="Open time picker" slot="suffix">
+                <m3e-icon name="schedule"></m3e-icon>
+                <m3e-timepicker-toggle for="timepicker6"></m3e-timepicker-toggle>
+              </m3e-icon-button>
+              <span slot="hint">HH:MM</span>
+            </m3e-form-field>
+            <m3e-timepicker id="timepicker6" variant="auto" date="2026-07-13T23:30:00Z"></m3e-timepicker>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;!-- Form field omitted for brevity --&gt;
+&lt;m3e-timepicker id=&quot;timepicker&quot; date=&quot;2026-07-13T23:30:00Z&quot;&gt;&lt;/m3e-datepicker&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+const picker = document.querySelector(&quot;#timepicker&quot;);
+const field = document.querySelector(&quot;#field&quot;);
+field.value = toLocaleTimeString(picker.date);
+picker.addEventListener(&quot;change&quot;, () =&gt; {
+  field.value = toLocaleTimeString(picker.date);
+});</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Hour format</m3e-heading>
+        <p>
+          The <code>format</code> attribute controls the hour cycle used by the timepicker. It accepts
+          <code>"12"</code> (default), <code>"24"</code>, or <code>"auto"</code>.
+        </p>
+
+        <ul>
+          <li><code>"12"</code> — forces a 12-hour clock with an AM/PM meridiem.</li>
+          <li><code>"24"</code> — forces a 24-hour clock without a meridiem.</li>
+          <li><code>"auto"</code> — selects 12-hour or 24-hour based on the user's locale.</li>
+        </ul>
+
+        <p>The following example illustrates a 24-hour clock without a meridiem.</p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld4">Time Field</label>
+              <input autocomplete="off" id="fld4" />
+              <m3e-icon-button aria-label="Open time picker" slot="suffix">
+                <m3e-icon name="schedule"></m3e-icon>
+                <m3e-timepicker-toggle for="timepicker4"></m3e-timepicker-toggle>
+              </m3e-icon-button>
+              <span slot="hint">HH:MM</span>
+            </m3e-form-field>
+            <m3e-timepicker id="timepicker4" variant="auto" format="24"></m3e-timepicker>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">&lt;m3e-timepicker format=&quot;24&quot;&gt;&lt;/m3e-timepicker&gt;</pre>
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Min and max times</m3e-heading>
+        <p>
+          Use the <code>min-time</code> and <code>max-time</code> attributes to disable all times in the picker before
+          or after the respective values.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld5">Time Field</label>
+              <input autocomplete="off" id="fld5" />
+              <m3e-icon-button aria-label="Open time picker" slot="suffix">
+                <m3e-icon name="schedule"></m3e-icon>
+                <m3e-timepicker-toggle for="timepicker5"></m3e-timepicker-toggle>
+              </m3e-icon-button>
+              <span slot="hint">HH:MM</span>
+            </m3e-form-field>
+            <m3e-timepicker id="timepicker5" variant="auto" min-time="8:15 AM" max-time="5:30 PM"></m3e-timepicker>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-timepicker min-time=&quot;8:15 AM&quot;  max-time=&quot;5:30 PM&quot;&gt;&lt;/m3e-timepicker&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Blackout times</m3e-heading>
+        <p>
+          In addition to <code>min-time</code> and <code>max-time</code> constraints, the
+          <code>blackoutTimes</code> property lets you provide a function that determines whether a given time is
+          disabled and cannot be selected. The function receives a <code>TimeParts</code> object containing the
+          <code>hour</code> and <code>minute</code>
+          values for the time being evaluated.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld7">Time Field</label>
+              <input autocomplete="off" id="fld7" />
+              <m3e-icon-button aria-label="Open time picker" slot="suffix">
+                <m3e-icon name="schedule"></m3e-icon>
+                <m3e-timepicker-toggle for="blackout-times"></m3e-timepicker-toggle>
+              </m3e-icon-button>
+              <span slot="hint">HH:MM</span>
+            </m3e-form-field>
+            <m3e-timepicker id="blackout-times" variant="auto"></m3e-timepicker>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+document.querySelector(&quot;#blackout-times&quot;).blackoutTimes = (t) =&gt; t.hour &lt; 8 || t.hour &gt; 18;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">À-la-carte usage</m3e-heading>
+        <p>
+          The package includes the <code>m3e-timepicker-input</code> and <code>m3e-timepicker-dial</code> components,
+          allowing you to use them in custom layouts or independently of <code>m3e-timepicker</code>.
+        </p>
+        <p>
+          The <code>for</code> attribute can be used on <code>m3e-timepicker-input</code> to reference a
+          <code>m3e-timepicker-dial</code> by ID. When present, the input automatically synchronizes its properties to
+          the referenced dial, keeping both components in sync without requiring manual event wiring.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-timepicker-input id="input" for="dial"></m3e-timepicker-input>
+            <m3e-timepicker-dial id="dial"></m3e-timepicker-dial>
+            <span id="inputValue">hour = , minute = </span>
+          </div>
+        </m3e-card>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-timepicker-input id=&quot;input&quot; for=&quot;dial&quot;&gt;&lt;/m3e-timepicker-input&gt;
+&lt;m3e-timepicker-dial id=&quot;dial&quot;&gt;&lt;/m3e-timepicker-dial&gt;
+&lt;span id=&quot;inputValue&quot;&gt;&lt;/span&gt;
+</pre
+          >
+        </m3e-card>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+document.querySelector(&quot;#input&quot;).addEventListener(&quot;change&quot;, (e) =&gt; {
+  const picker = e.target;
+  document.querySelector(&quot;#inputValue&quot;).innerText =
+    `hour = ${picker.hour ?? &quot;&quot;}, minute = ${picker.minute ?? &quot;&quot;}`;
+});
+</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+
+        <p>
+          Timepickers are given ARIA <code>role="dialog"</code> to identify the picker surface as a discrete interactive
+          region that opens above the page and requires user attention. When the picker is shown in its modal variant,
+          it also sets <code>aria-modal="true"</code> to indicate that the rest of the page is inert and that focus is
+          trapped within the dialog until it is dismissed. In docked mode, the picker omits
+          <code>aria-modal</code> entirely, since the surrounding page remains interactive and the surface behaves like
+          an anchored popover rather than a blocking dialog.
+        </p>
+        <p>
+          Timepicker toggles add <code>aria-haspopup="dialog"</code> to its parenting element indicating to assistive
+          technologies that activating the control will open a dialog.
+        </p>
+
+        <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package uses
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+            target="_blank"
+            >JavaScript Modules</a
+          >. To use it directly in a browser without a bundler, use a module script similar to the following.
+        </p>
+
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/timepicker.js&quot;&gt;&lt;/script&gt;</pre
+          >
+        </m3e-card>
+        <p>
+          In addition, you must use an
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+            target="_blank"
+            >import map</a
+          >
+          to include dependencies.
+        </p>
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;tslib&quot;: &quot;https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm&quot;,
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;lit/&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/&quot;,
+      &quot;lit-html&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/+esm&quot;,
+      &quot;lit-html/directive.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directive.js&quot;,
+      &quot;lit-html/directives/if-defined.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/if-defined.js&quot;,
+      &quot;lit-html/directives/class-map.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js&quot;,
+      &quot;@lit/reactive-element&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm&quot;,
+      &quot;@lit/reactive-element/&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/&quot;,
+      &quot;@m3e/web/core&quot;: &quot;/node_modules/@m3e/web/dist/core.js&quot;,
+      &quot;@m3e/web/core/a11y&quot;: &quot;/node_modules/@m3e/web/dist/core-a11y.js&quot;
+      &quot;@m3e/web/core/anchoring&quot;: &quot;/node_modules/@m3e/web/dist/core-anchoring.js&quot;,
+      &quot;@m3e/web/core/bidi&quot;: &quot;/node_modules/@m3e/web/dist/core-bidi.js&quot;,
+      &quot;@m3e/web/core/layout&quot;: &quot;/node_modules/@m3e/web/dist/core-layout.js&quot;
+      &quot;@m3e/web/button&quot;: &quot;/node_modules/@m3e/web/dist/button.js&quot;,
+      &quot;@m3e/web/icon-button&quot;: &quot;/node_modules/@m3e/web/dist/icon-button.js&quot;,
+    }
+  }
+&lt;/script&gt;</pre
+          >
+        </m3e-card>
+        <p>For production builds, use the minified files to ensure optimal load performance.</p>
+
+        <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package includes a
+          <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank"
+            >Custom Elements Manifest</a
+          >
+          (<code>custom-elements.json</code>), which documents the properties, attributes, slots, events and CSS custom
+          properties of each component.
+        </p>
+        <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+        <m3e-heading variant="headline" size="small" level="3">m3e-timepicker</m3e-heading>
+        <api-viewer only="m3e-timepicker"> </api-viewer>
+        <m3e-heading variant="headline" size="small" level="3">m3e-timepicker-dial</m3e-heading>
+        <api-viewer only="m3e-timepicker-dial"> </api-viewer>
+        <m3e-heading variant="headline" size="small" level="3">m3e-timepicker-input</m3e-heading>
+        <api-viewer only="m3e-timepicker-input"> </api-viewer>
+        <m3e-heading variant="headline" size="small" level="3">m3e-timepicker-toggle</m3e-heading>
+        <api-viewer only="m3e-timepicker-toggle"> </api-viewer>
+      </m3e-content-pane>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Timepicker</span>
+      </m3e-toc>
+    </div>
+  </body>
+</html>

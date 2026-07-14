@@ -4,15 +4,11 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 2.5.0 Release
+- 2.6.0 Release
 
 ## 🔮 Future
 
 ### ✨ Components
-
-The following components are under development:
-
-- Time Picker
 
 The following components are planned for future release:
 
@@ -25,6 +21,9 @@ The following components are planned for future release:
 - MCP Server enabling IDEs and AI tools to query local knowledge about components and documentation
 
 ## 🏛️ Past Milestones
+
+- **2.6.0 — Feature release**
+  Added `@m3e/web/timepicker`, bug fixes.
 
 - **2.5.0 – 2.5.16 — Feature release + patch releases**
   Added `@m3e/web/breadcrumb`, `@m3e/web/content-pane`, bug fixes.
