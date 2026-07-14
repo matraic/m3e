@@ -22,7 +22,7 @@ The following components are planned for future release:
 
 ## 🏛️ Past Milestones
 
-- **2.6.0 — Feature release**
+- **2.6.0 – 2.6.1 — Feature release + patch releases**
   Added `@m3e/web/timepicker`, bug fixes.
 
 - **2.5.0 – 2.5.16 — Feature release + patch releases**
