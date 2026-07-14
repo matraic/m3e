@@ -51,6 +51,7 @@ const inputs = [
   "tabs",
   "textarea-autosize",
   "theme",
+  "timepicker",
   "toc",
   "toolbar",
   "tooltip",

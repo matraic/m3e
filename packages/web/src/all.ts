@@ -48,6 +48,7 @@ export * from "./switch";
 export * from "./tabs";
 export * from "./textarea-autosize";
 export * from "./theme";
+export * from "./timepicker";
 export * from "./toc";
 export * from "./toolbar";
 export * from "./tooltip";

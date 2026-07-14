@@ -215,6 +215,10 @@
       "types": "./dist/src/theme/index.d.ts",
       "default": "./dist/theme.js"
     },
+    "./timepicker": {
+      "types": "./dist/src/timepicker/index.d.ts",
+      "default": "./dist/timepicker.js"
+    },
     "./toc": {
       "types": "./dist/src/toc/index.d.ts",
       "default": "./dist/toc.js"
