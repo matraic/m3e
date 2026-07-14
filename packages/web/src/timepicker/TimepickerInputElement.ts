@@ -337,6 +337,7 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
         @focus="${this.#handleFieldFocus}"
         @keydown="${this.#handleFieldKeyDown}"
         @input="${this.#handleFieldInput}"
+        @wheel="${this.#handleFieldWheel}"
         .value="${pad(view === "hour" ? (this.currentFormat === "12" ? this.hourOfPeriod : this.hour) : this.minute)}"
       />
       <m3e-collapsible aria-hidden="true" ?open="${!this.hideLabels}">
@@ -411,6 +412,23 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
     if (!/^\d$/.test(e.key)) {
       e.preventDefault();
     }
+  }
+
+  /** @private */
+  #handleFieldWheel(e: WheelEvent): void {
+    const input = <HTMLInputElement>e.target;
+    const view = <TimepickerView>input.id;
+
+    e.preventDefault();
+    const delta = Math.sign(e.deltaY);
+
+    if (delta > 0) {
+      this.#increment(view, -1, true);
+    } else if (delta < 0) {
+      this.#increment(view, 1, true);
+    }
+
+    this.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
   /** @private */
