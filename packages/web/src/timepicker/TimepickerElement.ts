@@ -690,6 +690,8 @@ export class M3eTimepickerElement extends SuppressInitialAnimation(
       this.#date = new Date(this.date ?? Date.now());
       this.#date.setHours(input.hour);
       this.#date.setMinutes(input.minute);
+      this.#date.setSeconds(0);
+      this.#date.setMilliseconds(0);
     }
 
     this.#validate();
