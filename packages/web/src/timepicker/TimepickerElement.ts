@@ -62,12 +62,14 @@ import "./TimepickerInputElement";
  * @attr format - Whether to use a 12‑hour or 24‑hour clock.
  * @attr max-time - The maximum time that can be selected.
  * @attr min-time - The minimum time that can be selected.
+ * @attr show-seconds - Whether to show seconds.
  * @attr confirm-label - Label given to the button used apply the selected date and close the picker.
  * @attr dismiss-label - Label given to the button used discard the selected date and close the picker.
  * @attr dial-label - Label given to the the picker when in dial mode.
  * @attr input-label - Label given to the the picker when in input mode.
  * @attr hour-label - Label for the hour field.
  * @attr minute-label - Label for the minute field.
+ * @attr second-label - Label for the second field.
  * @attr mode-toggle-label - The accessible label given to the mode toggle button.
  * @attr hide-mode-toggle - Whether to hide the mode toggle button.
  * @attr period-toggle-label - The accessible label given to the period toggle.
@@ -354,6 +356,12 @@ export class M3eTimepickerElement extends SuppressInitialAnimation(
   @property() format: TimepickerFormat = "12";
 
   /**
+   * Whether to show seconds.
+   * @default false
+   */
+  @property({ attribute: "show-seconds", type: Boolean }) showSeconds = false;
+
+  /**
    * The minimum time that can be selected.
    * @default null
    */
@@ -409,6 +417,12 @@ export class M3eTimepickerElement extends SuppressInitialAnimation(
    * @default "Minute"
    */
   @property({ attribute: "minute-label" }) minuteLabel = "Minute";
+
+  /**
+   * The label for the second field.
+   * @default "Second"
+   */
+  @property({ attribute: "second-label" }) secondLabel = "Second";
 
   /**
    * The accessible label given to the mode toggle button.
@@ -508,6 +522,7 @@ export class M3eTimepickerElement extends SuppressInitialAnimation(
     const input = this._input;
     input.hour = this.date?.getHours() ?? null;
     input.minute = this.date?.getMinutes() ?? null;
+    input.second = this.date?.getSeconds() ?? null;
     input.minTime = this.minTime;
     input.maxTime = this.maxTime;
     input.blackoutTimes = this.blackoutTimes;
@@ -592,6 +607,8 @@ export class M3eTimepickerElement extends SuppressInitialAnimation(
             period-toggle-label="${this.periodToggleLabel}"
             hour-label="${this.hourLabel}"
             minute-label="${this.minuteLabel}"
+            second-label="${this.secondLabel}"
+            ?show-seconds="${this.showSeconds}"
             orientation="${this.currentOrientation === "vertical" ? "horizontal" : "vertical"}"
             format="${this.format}"
             @change="${this.#handleInputChange}"
@@ -684,13 +701,13 @@ export class M3eTimepickerElement extends SuppressInitialAnimation(
   #handleInputChange(e: Event): void {
     const input = <M3eTimepickerInputElement>e.target;
 
-    if (input.hour === null || input.minute === null) {
+    if (input.hour === null || input.minute === null || (input.showSeconds && input.second === null)) {
       this.#date = null;
     } else {
       this.#date = new Date(this.date ?? Date.now());
       this.#date.setHours(input.hour);
       this.#date.setMinutes(input.minute);
-      this.#date.setSeconds(0);
+      this.#date.setSeconds(input.second ?? 0);
       this.#date.setMilliseconds(0);
     }
 
@@ -863,22 +880,25 @@ export class M3eTimepickerElement extends SuppressInitialAnimation(
 
     const hour = this.#date.getHours();
     const minute = this.#date.getMinutes();
+    const second = this.#date.getSeconds();
 
     if (this.minTime) {
-      if (hour < this.minTime.hour || (hour === this.minTime.hour && minute < this.minTime.minute)) {
+      const { hour: mh, minute: mm = 0, second: ms = 0 } = this.minTime;
+      if (hour < mh || (hour === mh && minute < mm) || (hour === mh && minute === mm && second < ms)) {
         this._invalid = true;
         return;
       }
     }
 
     if (this.maxTime) {
-      if (hour > this.maxTime.hour || (hour === this.maxTime.hour && minute > this.maxTime.minute)) {
+      const { hour: Mh, minute: Mm = 59, second: Ms = 59 } = this.maxTime;
+      if (hour > Mh || (hour === Mh && minute > Mm) || (hour === Mh && minute === Mm && second > Ms)) {
         this._invalid = true;
         return;
       }
     }
 
-    if (this.blackoutTimes?.({ hour, minute })) {
+    if (this.blackoutTimes?.({ hour, minute, second })) {
       this._invalid = true;
       return;
     }

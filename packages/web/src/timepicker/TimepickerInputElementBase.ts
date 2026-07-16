@@ -10,6 +10,7 @@ import { timeConverter, TimeParts } from "../core";
 export class TimepickerInputElementBase extends LitElement {
   /** @private */ #hour: number | null = null;
   /** @private */ #minute: number | null = null;
+  /** @private */ #second: number | null = null;
   /** @private */ #format: Exclude<TimepickerFormat, "auto"> = "12";
 
   /**
@@ -35,6 +36,17 @@ export class TimepickerInputElementBase extends LitElement {
   }
 
   /**
+   * The second, from 0..59.
+   * @default null
+   */
+  @property({ type: Number }) get second(): number | null {
+    return this.#second;
+  }
+  set second(value: number | null) {
+    this.#second = value === null ? null : Math.max(0, Math.min(value, 59));
+  }
+
+  /**
    * Whether to use a 12‑hour or 24‑hour clock.
    * @default "12"
    */
@@ -51,6 +63,12 @@ export class TimepickerInputElementBase extends LitElement {
    * @default "am"
    */
   @property() period: TimepickerPeriod = "am";
+
+  /**
+   * Whether to show seconds.
+   * @default false
+   */
+  @property({ attribute: "show-seconds", type: Boolean }) showSeconds = false;
 
   /**
    * The minimum time that can be selected.
@@ -114,43 +132,57 @@ export class TimepickerInputElementBase extends LitElement {
   /**
    * Determines whether the given hour is disabled.
    * @param {number} hour The hour to test.
-   * @returns Whether `hour` is disabled.
+   * @returns {boolean} Whether `hour` is disabled.
    */
   isHourDisabled(hour: number): boolean {
-    if ((this.minTime && hour < this.minTime.hour) || (this.maxTime && hour > this.maxTime.hour)) {
-      return true;
-    }
-    if (this.blackoutTimes) {
-      for (let minute = 0; minute < 60; minute++) {
-        if (!this.blackoutTimes({ hour, minute })) {
+    for (let m = 0; m < 60; m++) {
+      for (let s = 0; s < 60; s++) {
+        if (!this.isSecondDisabled(hour, m, s)) {
           return false;
         }
       }
-      return true;
     }
-    return false;
+    return true;
   }
 
   /**
    * Determines whether the given minute of an hour is disabled.
    * @param {number} hour The hour to test.
    * @param {number} minute The minute to test.
-   * @returns Whether `minute` is disabled for `hour`.
+   * @returns {boolean} Whether `minute` is disabled for `hour`.
    */
   isMinuteDisabled(hour: number, minute: number): boolean {
+    for (let s = 0; s < 60; s++) {
+      if (!this.isSecondDisabled(hour, minute, s)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Determines whether a given hour, minute, and second is disabled.
+   * @param {number} hour The hour to test.
+   * @param {number} minute The minute to test.
+   * @param {number} second The second to test.
+   * @returns {boolean} Whether `hour`, `minute`, and `second` is disabled.
+   */
+  isSecondDisabled(hour: number, minute: number, second: number): boolean {
     if (this.minTime) {
-      if (hour < this.minTime.hour || (hour === this.minTime.hour && minute < this.minTime.minute)) {
+      const { hour: mh, minute: mm = 0, second: ms = 0 } = this.minTime;
+      if (hour < mh || (hour === mh && minute < mm) || (hour === mh && minute === mm && second < ms)) {
         return true;
       }
     }
 
     if (this.maxTime) {
-      if (hour > this.maxTime.hour || (hour === this.maxTime.hour && minute > this.maxTime.minute)) {
+      const { hour: Mh, minute: Mm = 59, second: Ms = 59 } = this.maxTime;
+      if (hour > Mh || (hour === Mh && minute > Mm) || (hour === Mh && minute === Mm && second > Ms)) {
         return true;
       }
     }
 
-    if (this.blackoutTimes?.({ hour, minute })) {
+    if (this.blackoutTimes?.({ hour, minute, second })) {
       return true;
     }
 

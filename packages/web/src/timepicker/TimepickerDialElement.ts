@@ -28,6 +28,8 @@ import { TimepickerInputElementBase } from "./TimepickerInputElementBase";
  * @attr max-time - The maximum time that can be selected.
  * @attr min-time - The minimum time that can be selected.
  * @attr minute - The minute, from 0..59.
+ * @attr second - The second, from 0..59.
+ * @attr show-seconds - Whether to show seconds.
  * @attr period - The 12-hour time period.
  * @attr view - The view used to input time.
  *
@@ -117,6 +119,9 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
     }
     .dial.minute.hidden {
       transform: scale(0.8);
+    }
+    .dial.second.hidden {
+      transform: scale(1.2);
     }
     .center {
       position: absolute;
@@ -379,6 +384,8 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
     if (
       _changedProperties.has("hour") ||
       _changedProperties.has("minute") ||
+      _changedProperties.has("second") ||
+      _changedProperties.has("showSeconds") ||
       _changedProperties.has("view") ||
       _changedProperties.has("period") ||
       _changedProperties.has("minTime") ||
@@ -397,15 +404,14 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
       @pointermove="${this.#handlePointerMove}"
       @pointerup="${this.#handlePointerUp}"
     >
-      ${this.#renderHandle()} ${this.#renderHourFace()} ${this.#renderMinuteFace()}
+      ${this.#renderHandle()} ${this.#renderHourFace()} ${this.#renderMinuteFace()} ${this.#renderSecondFace()}
       <div class="center"></div>
     </div>`;
   }
 
   /** @private */
   #renderHandle(): unknown {
-    const showHand = (this.view === "hour" && this.hour !== null) || (this.view === "minute" && this.minute !== null);
-    return showHand ? html`<div class="handle"></div>` : nothing;
+    return this[this.view] !== null ? html`<div class="handle"></div>` : nothing;
   }
 
   /** @private */
@@ -455,6 +461,22 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
   }
 
   /** @private */
+  #renderSecondFace(): unknown {
+    if (!this.showSeconds) return nothing;
+
+    return html`<div class="${classMap({ dial: true, second: true, hidden: this.view !== "second" })}">
+      ${Array.from({ length: 60 }, (_, i) => {
+        if (i % 5 !== 0) return;
+        const angle = i * 6;
+        const label = i % 5 === 0 ? i.toString().padStart(2, "0") : "";
+        const active = i === this.second;
+        const disabled = this.hour !== null && this.minute !== null && this.isSecondDisabled(this.hour, this.minute, i);
+        return this.#renderNumeral(label, angle, active, disabled);
+      })}
+    </div>`;
+  }
+
+  /** @private */
   #renderNumeral(label: string, angle: number, active: boolean, disabled: boolean, inner: boolean = false): unknown {
     return html`<div
       class="${classMap({ numeral: true, inner, active, disabled })}"
@@ -490,6 +512,15 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
           angle = this.minute * 6;
           active = this.minute % 5 === 0;
           disabled = this.hour !== null && this.isMinuteDisabled(this.hour, this.minute);
+        }
+        break;
+
+      case "second":
+        if (this.second !== null) {
+          angle = this.second * 6;
+          active = this.second % 5 === 0;
+          disabled =
+            this.hour !== null && this.minute !== null && this.isSecondDisabled(this.hour, this.minute, this.second);
         }
         break;
     }
@@ -532,7 +563,9 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
               this.#isPointerInsideInnerRing(e, this.#dragState),
             ),
           )
-        : this.#changeMinute(this.#minuteFromAngle(this.#angleFromPointer(e, this.#dragState)));
+        : this.view === "minute"
+          ? this.#changeMinute(this.#minuteFromAngle(this.#angleFromPointer(e, this.#dragState)))
+          : this.#changeSecond(this.#secondFromAngle(this.#angleFromPointer(e, this.#dragState)));
   }
 
   /** @private */
@@ -552,7 +585,9 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
               this.#isPointerInsideInnerRing(e, this.#dragState),
             ),
           )
-        : this.#changeMinute(this.#minuteFromAngle(this.#angleFromPointer(e, this.#dragState)))) ||
+        : this.view === "minute"
+          ? this.#changeMinute(this.#minuteFromAngle(this.#angleFromPointer(e, this.#dragState)))
+          : this.#changeSecond(this.#secondFromAngle(this.#angleFromPointer(e, this.#dragState)))) ||
       this.#dragState.timeChanged;
   }
 
@@ -575,14 +610,29 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
     if (
       this.view === "hour" &&
       (this.#dragState.timeChanged ||
-        this.isHourDisabled(
+        !this.isHourDisabled(
           this.#hourFromAngle(
             this.#angleFromPointer(e, this.#dragState),
             this.#isPointerInsideInnerRing(e, this.#dragState),
           ),
-        ) !== true)
+        ))
     ) {
       this.view = "minute";
+      this.dispatchEvent(new CustomEvent("view-change"));
+    } else if (
+      this.view === "minute" &&
+      this.showSeconds &&
+      (this.#dragState.timeChanged ||
+        this.hour === null ||
+        !this.isMinuteDisabled(
+          this.hour,
+          this.#hourFromAngle(
+            this.#angleFromPointer(e, this.#dragState),
+            this.#isPointerInsideInnerRing(e, this.#dragState),
+          ),
+        ))
+    ) {
+      this.view = "second";
       this.dispatchEvent(new CustomEvent("view-change"));
     }
 
@@ -624,19 +674,35 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
   }
 
   /** @private */
-  #changeHour(hour: number): boolean {
-    if (this.hour !== hour && !this.isHourDisabled(hour)) {
-      this.hour = hour;
+  #secondFromAngle(angle: number): number {
+    return Math.round(angle / 6) % 60;
+  }
+
+  /** @private */
+  #changeHour(value: number): boolean {
+    if (this.hour !== value && !this.isHourDisabled(value)) {
+      this.hour = value;
       return true;
     }
     return false;
   }
 
   /** @private */
-  #changeMinute(minute: number): boolean {
-    if (this.hour !== null && this.isMinuteDisabled(this.hour, minute)) return false;
-    if (this.minute !== minute) {
-      this.minute = minute;
+  #changeMinute(value: number): boolean {
+    if (this.hour !== null && this.isMinuteDisabled(this.hour, value)) return false;
+    if (this.minute !== value) {
+      this.minute = value;
+      return true;
+    }
+    return false;
+  }
+
+  /** @private */
+  #changeSecond(value: number): boolean {
+    if (this.hour !== null && this.minute !== null && this.isSecondDisabled(this.hour, this.minute, value))
+      return false;
+    if (this.second !== value) {
+      this.second = value;
       return true;
     }
     return false;

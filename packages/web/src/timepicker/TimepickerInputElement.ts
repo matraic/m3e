@@ -29,11 +29,14 @@ import "./TimepickerInputPeriodToggleElement";
  * @attr max-time - The maximum time that can be selected.
  * @attr min-time - The minimum time that can be selected.
  * @attr minute - The minute, from 0..59.
+ * @attr second - The second, from 0..59.
+ * @attr show-seconds - Whether to show seconds.
  * @attr orientation - The orientation of the input.
  * @attr period - The 12-hour time period.
  * @attr view - The view used to input time.
  * @attr hour-label - The label for the hour field.
  * @attr minute-label - The label for the minute field.
+ * @attr second-label - The label for the second field.
  * @attr period-toggle-label - The accessible label given to the period toggle.
  *
  * @fires change - Dispatched when the selected time changes.
@@ -216,6 +219,12 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
   @property({ attribute: "minute-label" }) minuteLabel = "Minute";
 
   /**
+   * The label for the second field.
+   * @default "Second"
+   */
+  @property({ attribute: "second-label" }) secondLabel = "Second";
+
+  /**
    * The accessible label given to the period toggle.
    * @default "AM or PM"
    */
@@ -248,6 +257,8 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
     if (
       _changedProperties.has("hour") ||
       _changedProperties.has("minute") ||
+      _changedProperties.has("second") ||
+      _changedProperties.has("showSeconds") ||
       _changedProperties.has("view") ||
       _changedProperties.has("period") ||
       _changedProperties.has("format") ||
@@ -266,6 +277,8 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
       this.control.format = this.currentFormat;
       this.control.hour = this.hour;
       this.control.minute = this.minute;
+      this.control.second = this.second;
+      this.control.showSeconds = this.showSeconds;
       this.control.minTime = this.minTime;
       this.control.maxTime = this.maxTime;
       this.control.blackoutTimes = this.blackoutTimes;
@@ -279,6 +292,10 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
         ${this.#renderField("hour")}
         <div class="field-separator">:</div>
         ${this.#renderField("minute")}
+        ${this.showSeconds
+          ? html`<div class="field-separator">:</div>
+              ${this.#renderField("second")}`
+          : nothing}
         ${this.currentFormat === "12" && this.orientation === "horizontal"
           ? html`<m3e-timepicker-input-period-toggle
               class="period-toggle"
@@ -302,7 +319,7 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
   /** @private */
   #renderField(view: TimepickerView): unknown {
     const pad = (n: number | null) => (n === null ? "" : n < 10 ? "0" + n : String(n));
-    const label = view === "hour" ? this.hourLabel : this.minuteLabel;
+    const label = view === "hour" ? this.hourLabel : view === "minute" ? this.minuteLabel : this.secondLabel;
     const invalid = this.#isDisabled(this[view], view);
 
     let valueText: string | undefined;
@@ -313,7 +330,11 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
 
       valueText = new Intl.DateTimeFormat(
         navigator.language,
-        view === "hour" ? { hour: "numeric", hour12: this.currentFormat === "12" } : { minute: "2-digit" },
+        view === "hour"
+          ? { hour: "numeric", hour12: this.currentFormat === "12" }
+          : view === "minute"
+            ? { minute: "2-digit" }
+            : { second: "2-digit" },
       ).format(date);
     }
 
@@ -338,7 +359,15 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
         @keydown="${this.#handleFieldKeyDown}"
         @input="${this.#handleFieldInput}"
         @wheel="${this.#handleFieldWheel}"
-        .value="${pad(view === "hour" ? (this.currentFormat === "12" ? this.hourOfPeriod : this.hour) : this.minute)}"
+        .value="${pad(
+          view === "hour"
+            ? this.currentFormat === "12"
+              ? this.hourOfPeriod
+              : this.hour
+            : view === "minute"
+              ? this.minute
+              : this.second,
+        )}"
       />
       <m3e-collapsible aria-hidden="true" ?open="${!this.hideLabels}">
         <span class="label">${label}</span>
@@ -557,8 +586,10 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
   /** @private */
   #handleClockChange(): void {
     if (!this.control) return;
-    this.hour = (<M3eTimepickerDialElement>this.control).hour;
-    this.minute = (<M3eTimepickerDialElement>this.control).minute;
+    const dial = <M3eTimepickerDialElement>this.control;
+    this.hour = dial.hour;
+    this.minute = dial.minute;
+    this.second = dial.second;
     this.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
@@ -576,7 +607,10 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
       case "hour":
         return this.isHourDisabled(value);
       case "minute":
-        return this.hour != null && this.isMinuteDisabled(this.hour, value);
+        return this.hour !== null && this.isMinuteDisabled(this.hour, value);
+
+      case "second":
+        return this.hour != null && this.minute !== null && this.isSecondDisabled(this.hour, this.minute, value);
     }
   }
 }

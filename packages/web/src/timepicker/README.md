@@ -30,12 +30,16 @@ This section details the attributes, events and CSS custom properties available 
 | `orientation`         | `"vertical" \| "horizontal" \| "auto"` | `"vertical"`            | The orientation of the picker.               |
 | `date`                | `string`                               |                         | The selected date/time value.                |
 | `format`              | `"12" \| "24"`                         | `"12"`                  | Whether to use a 12-hour or 24-hour clock.   |
+| `max-time`            | `string`                               |                         | The maximum time that can be selected.       |
+| `min-time`            | `string`                               |                         | The minimum time that can be selected.       |
+| `show-seconds`        | `boolean`                              | `false`                 | Whether to show seconds.                     |
 | `confirm-label`       | `string`                               | `"OK"`                  | Label for the confirm button.                |
 | `dismiss-label`       | `string`                               | `"Cancel"`              | Label for the dismiss button.                |
 | `dial-label`          | `string`                               | `"Select time"`         | Label for the picker when in dial mode.      |
 | `input-label`         | `string`                               | `"Edit time"`           | Label for the picker when in input mode.     |
 | `hour-label`          | `string`                               | `"Hour"`                | Label for the hour field.                    |
 | `minute-label`        | `string`                               | `"Minute"`              | Label for the minute field.                  |
+| `second-label`        | `string`                               | `"Second"`              | Label for the second field.                  |
 | `mode-toggle-label`   | `string`                               | `"Toggle input picker"` | Accessible label for the mode toggle button. |
 | `hide-mode-toggle`    | `boolean`                              | `false`                 | Whether to hide the mode toggle button.      |
 | `period-toggle-label` | `string`                               | `"AM or PM"`            | Accessible label for the period toggle.      |
@@ -73,18 +77,23 @@ This section details the attributes, events and CSS custom properties available 
 
 #### ⚙️ Attributes
 
-| Attribute             | Type                         | Default        | Description                                |
-| --------------------- | ---------------------------- | -------------- | ------------------------------------------ |
-| `format`              | `"12" \| "24"`               | `"12"`         | Whether to use a 12-hour or 24-hour clock. |
-| `hide-labels`         | `boolean`                    | `false`        | Whether to hide the input field labels.    |
-| `hour`                | `number`                     |                | The hour value, from 0..23.                |
-| `minute`              | `number`                     |                | The minute value, from 0..59.              |
-| `orientation`         | `"horizontal" \| "vertical"` | `"horizontal"` | The orientation of the input.              |
-| `period`              | `string`                     |                | The 12-hour time period.                   |
-| `view`                | `string`                     |                | The input view state.                      |
-| `hour-label`          | `string`                     | `"Hour"`       | Label for the hour field.                  |
-| `minute-label`        | `string`                     | `"Minute"`     | Label for the minute field.                |
-| `period-toggle-label` | `string`                     | `"AM or PM"`   | Accessible label for the period toggle.    |
+| Attribute             | Type                             | Default        | Description                                |
+| --------------------- | -------------------------------- | -------------- | ------------------------------------------ |
+| `format`              | `"12" \| "24"`                   | `"12"`         | Whether to use a 12-hour or 24-hour clock. |
+| `hide-labels`         | `boolean`                        | `false`        | Whether to hide the input field labels.    |
+| `hour`                | `number`                         |                | The hour value, from 0..23.                |
+| `max-time`            | `string`                         |                | The maximum time that can be selected.     |
+| `min-time`            | `string`                         |                | The minimum time that can be selected.     |
+| `minute`              | `number`                         |                | The minute value, from 0..59.              |
+| `second`              | `number`                         |                | The second value, from 0..59.              |
+| `show-seconds`        | `boolean`                        | `false`        | Whether to show seconds.                   |
+| `orientation`         | `"horizontal" \| "vertical"`     | `"horizontal"` | The orientation of the input.              |
+| `period`              | `string`                         |                | The 12-hour time period.                   |
+| `view`                | `"hour" \| "minute" \| "second"` |                | The input view state.                      |
+| `hour-label`          | `string`                         | `"Hour"`       | Label for the hour field.                  |
+| `minute-label`        | `string`                         | `"Minute"`     | Label for the minute field.                |
+| `second-label`        | `string`                         | `"Second"`     | Label for the second field.                |
+| `period-toggle-label` | `string`                         | `"AM or PM"`   | Accessible label for the period toggle.    |
 
 #### 🔔 Events
 
@@ -111,13 +120,17 @@ This section details the attributes, events and CSS custom properties available 
 
 #### ⚙️ Attributes
 
-| Attribute | Type           | Default | Description                                |
-| --------- | -------------- | ------- | ------------------------------------------ |
-| `format`  | `"12" \| "24"` | `"12"`  | Whether to use a 12-hour or 24-hour clock. |
-| `hour`    | `number`       |         | The hour value, from 0..23.                |
-| `minute`  | `number`       |         | The minute value, from 0..59.              |
-| `period`  | `string`       |         | The 12-hour time period.                   |
-| `view`    | `string`       |         | The current dial view.                     |
+| Attribute      | Type                             | Default | Description                                |
+| -------------- | -------------------------------- | ------- | ------------------------------------------ |
+| `format`       | `"12" \| "24"`                   | `"12"`  | Whether to use a 12-hour or 24-hour clock. |
+| `hour`         | `number`                         |         | The hour value, from 0..23.                |
+| `max-time`     | `string`                         |         | The maximum time that can be selected.     |
+| `min-time`     | `string`                         |         | The minimum time that can be selected.     |
+| `minute`       | `number`                         |         | The minute value, from 0..59.              |
+| `second`       | `number`                         |         | The second value, from 0..59.              |
+| `show-seconds` | `boolean`                        | `false` | Whether to show seconds.                   |
+| `period`       | `string`                         |         | The 12-hour time period.                   |
+| `view`         | `"hour" \| "minute" \| "second"` |         | The current dial view.                     |
 
 #### 🔔 Events
 
