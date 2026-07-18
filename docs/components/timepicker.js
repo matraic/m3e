@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
   for (const toggle of document.querySelectorAll("m3e-timepicker-toggle")) {
     const picker = document.querySelector("#" + toggle.getAttribute("for"));
     const input = toggle.closest("m3e-form-field").querySelector("input");
-    input.value = toLocaleTimeString(picker.date);
+    input.value = toLocaleTimeString(picker.date, picker.showSeconds);
     picker.addEventListener("change", () => {
-      input.value = toLocaleTimeString(picker.date);
+      input.value = toLocaleTimeString(picker.date, picker.showSeconds);
     });
   }
 
@@ -15,6 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-function toLocaleTimeString(date) {
-  return !date ? "" : date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+function toLocaleTimeString(date, showSeconds) {
+  return !date
+    ? ""
+    : date.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: showSeconds ? "2-digit" : undefined,
+        hour12: true,
+      });
 }
