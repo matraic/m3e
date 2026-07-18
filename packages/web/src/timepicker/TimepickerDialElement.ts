@@ -89,9 +89,6 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
     .base.dragging {
       cursor: grabbing;
     }
-    .base.dragging .numeral {
-      pointer-events: none;
-    }
     .dial {
       position: absolute;
       inset: 0;
@@ -254,6 +251,7 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
     }
     .numeral {
       user-select: none;
+      pointer-events: none;
       touch-action: inherit;
       position: absolute;
       inset: 50%;
