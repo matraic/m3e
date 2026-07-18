@@ -1,10 +1,11 @@
 import { LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
+import { timeConverter, TimeParts } from "@m3e/web/core";
+
 import { TimepickerFormat } from "./TimepickerFormat";
 import { TimepickerView } from "./TimepickerView";
 import { TimepickerPeriod } from "./TimepickerPeriod";
-import { timeConverter, TimeParts } from "../core";
 
 /** A base implementation for an element used to input time. This class must be inherited. */
 export class TimepickerInputElementBase extends LitElement {
