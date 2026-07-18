@@ -192,6 +192,7 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
   `;
 
   /** @private */ readonly #clockChangeHandler = () => this.#handleClockChange();
+  /** @private */ readonly #clockInputHandler = () => this.#handleClockInput();
   /** @private */ readonly #clockViewChangeHandler = () => this.#handleClockViewChange();
 
   /**
@@ -237,6 +238,7 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
     if (this.control instanceof M3eTimepickerDialElement) {
       this.#syncControl();
       this.control.addEventListener("change", this.#clockChangeHandler);
+      this.control.addEventListener("input", this.#clockInputHandler);
       this.control.addEventListener("view-change", this.#clockViewChangeHandler);
     }
   }
@@ -245,6 +247,7 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
   override detach(): void {
     if (this.control instanceof M3eTimepickerDialElement) {
       this.control.removeEventListener("change", this.#clockChangeHandler);
+      this.control.removeEventListener("input", this.#clockInputHandler);
       this.control.removeEventListener("view-change", this.#clockViewChangeHandler);
     }
     super.detach();
@@ -581,6 +584,15 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
       this.hour = this.period === "am" ? (h === 12 ? 0 : h) : h === 12 ? 12 : h + 12;
       this.dispatchEvent(new Event("change", { bubbles: true }));
     }
+  }
+
+  /** @private */
+  #handleClockInput(): void {
+    if (!this.control) return;
+    const dial = <M3eTimepickerDialElement>this.control;
+    this.hour = dial.hour;
+    this.minute = dial.minute;
+    this.second = dial.second;
   }
 
   /** @private */

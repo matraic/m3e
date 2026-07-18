@@ -34,6 +34,7 @@ import { TimepickerInputElementBase } from "./TimepickerInputElementBase";
  * @attr view - The view used to input time.
  *
  * @fires change - Dispatched when the selected time changes.
+ * @fires input - Dispatched when the selected time changes.
  * @fires view-change - Dispatched when the view changes.
  *
  * @cssprop --m3e-timepicker-dial-container-size - Size of the dial container.
@@ -569,6 +570,10 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
         : this.view === "minute"
           ? this.#changeMinute(this.#minuteFromAngle(this.#angleFromPointer(e, this.#dragState)))
           : this.#changeSecond(this.#secondFromAngle(this.#angleFromPointer(e, this.#dragState)));
+
+    if (this.#dragState.timeChanged) {
+      this.dispatchEvent(new Event("input", { bubbles: true }));
+    }
   }
 
   /** @private */
@@ -577,11 +582,12 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
       !(e.currentTarget instanceof HTMLElement) ||
       !e.currentTarget.hasPointerCapture(e.pointerId) ||
       !this.#dragState
-    )
+    ) {
       return;
+    }
 
-    this.#dragState.timeChanged =
-      (this.view === "hour"
+    const changed =
+      this.view === "hour"
         ? this.#changeHour(
             this.#hourFromAngle(
               this.#angleFromPointer(e, this.#dragState),
@@ -590,8 +596,13 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
           )
         : this.view === "minute"
           ? this.#changeMinute(this.#minuteFromAngle(this.#angleFromPointer(e, this.#dragState)))
-          : this.#changeSecond(this.#secondFromAngle(this.#angleFromPointer(e, this.#dragState)))) ||
-      this.#dragState.timeChanged;
+          : this.#changeSecond(this.#secondFromAngle(this.#angleFromPointer(e, this.#dragState)));
+
+    this.#dragState.timeChanged = changed || this.#dragState.timeChanged;
+
+    if (changed) {
+      this.dispatchEvent(new Event("input", { bubbles: true }));
+    }
   }
 
   /** @private */

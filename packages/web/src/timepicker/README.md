@@ -137,6 +137,7 @@ This section details the attributes, events and CSS custom properties available 
 | Event         | Description                                |
 | ------------- | ------------------------------------------ |
 | `change`      | Dispatched when the selected time changes. |
+| `input`       | Dispatched when the selected time changes. |
 | `view-change` | Dispatched when the dial view changes.     |
 
 #### 🎛️ CSS Custom Properties
