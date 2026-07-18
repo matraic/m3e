@@ -566,8 +566,8 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
             ),
           )
         : this.view === "minute"
-          ? this.#changeMinute(this.#minuteFromAngle(this.#angleFromPointer(e, this.#dragState)))
-          : this.#changeSecond(this.#secondFromAngle(this.#angleFromPointer(e, this.#dragState)));
+          ? this.#changeMinute(this.#minuteOrSecondFromAngle(this.#angleFromPointer(e, this.#dragState), true))
+          : this.#changeSecond(this.#minuteOrSecondFromAngle(this.#angleFromPointer(e, this.#dragState), true));
 
     if (this.#dragState.timeChanged) {
       this.dispatchEvent(new Event("input", { bubbles: true }));
@@ -593,8 +593,8 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
             ),
           )
         : this.view === "minute"
-          ? this.#changeMinute(this.#minuteFromAngle(this.#angleFromPointer(e, this.#dragState)))
-          : this.#changeSecond(this.#secondFromAngle(this.#angleFromPointer(e, this.#dragState)));
+          ? this.#changeMinute(this.#minuteOrSecondFromAngle(this.#angleFromPointer(e, this.#dragState), false))
+          : this.#changeSecond(this.#minuteOrSecondFromAngle(this.#angleFromPointer(e, this.#dragState), false));
 
     this.#dragState.timeChanged = changed || this.#dragState.timeChanged;
 
@@ -681,13 +681,10 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
   }
 
   /** @private */
-  #minuteFromAngle(angle: number): number {
-    return Math.round(angle / 6) % 60;
-  }
-
-  /** @private */
-  #secondFromAngle(angle: number): number {
-    return Math.round(angle / 6) % 60;
+  #minuteOrSecondFromAngle(angle: number, snap: boolean): number {
+    return snap
+      ? (Math.round(angle / 30) * 5) % 60 // 5-minute ticks
+      : Math.round(angle / 6) % 60; // 1-minute resolution
   }
 
   /** @private */
