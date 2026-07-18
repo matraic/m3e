@@ -566,8 +566,12 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
             ),
           )
         : this.view === "minute"
-          ? this.#changeMinute(this.#minuteOrSecondFromAngle(this.#angleFromPointer(e, this.#dragState), true))
-          : this.#changeSecond(this.#minuteOrSecondFromAngle(this.#angleFromPointer(e, this.#dragState), true));
+          ? this.#changeMinute(
+              this.#minuteOrSecondFromAngle(this.#angleFromPointer(e, this.#dragState), this.minute === null),
+            )
+          : this.#changeSecond(
+              this.#minuteOrSecondFromAngle(this.#angleFromPointer(e, this.#dragState), this.second === null),
+            );
 
     if (this.#dragState.timeChanged) {
       this.dispatchEvent(new Event("input", { bubbles: true }));
