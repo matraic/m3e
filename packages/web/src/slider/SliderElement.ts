@@ -385,12 +385,11 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
   /** @private */ readonly #changedThumbs = new Set<M3eSliderThumbElement>();
   /** @private */ #thumbs = new Array<M3eSliderThumbElement>();
   /** @private */ #activeThumb?: M3eSliderThumbElement;
-  /** @private */ #cachedWidth = 0; // 逻辑宽度 (用于 CSS)
-  /** @private */ #cachedThumbWidth = 0; // 逻辑滑块宽度 (用于 CSS)
-  
-  /** @private */ #cachedClientLeft = 0; // 物理左边界 (用于鼠标计算)
-  /** @private */ #cachedClientRight = 0; // 物理右边界 (用于 RTL 鼠标计算)
-  /** @private */ #cachedClientWidth = 0; // 物理宽度 (用于鼠标计算)
+  /** @private */ #cachedWidth = 0;
+  /** @private */ #cachedThumbWidth = 0;
+  /** @private */ #cachedClientLeft = 0;
+  /** @private */ #cachedClientRight = 0;
+  /** @private */ #cachedClientWidth = 0;
 
   constructor() {
     super();
