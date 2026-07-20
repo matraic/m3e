@@ -571,8 +571,8 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     const step = this.step === 0 ? 1 : this.step;
     const numSteps = Math.floor((this.max - this.min) / step);
     
-    
-    const percentage = pos / this.#cachedClientWidth;
+    const thumbRatio = this.#cachedWidth ? this.#cachedThumbWidth / this.#cachedWidth : 0;
+    const percentage = (pos / this.#cachedClientWidth - thumbRatio / 2) / (1 - thumbRatio || 1);
     
     const fixedPercentage = Math.round(percentage * numSteps) / numSteps;
     const impreciseValue = fixedPercentage * (this.max - this.min) + this.min;
@@ -670,10 +670,18 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     }
 
     const value = this.#valueFromPoint(e);
+    let min = this.min;
+    let max = this.max;
+
+    if (this.#activeThumb === this.upperThumb) {
+      min = Math.max(min, this.lowerThumb?.value ?? 0);
+    } else if (this.upperThumb) {
+      max = Math.min(max, this.upperThumb.value ?? this.max);
+    }
 
     if (!this.upperThumb) {
       if (!this.lowerThumb.disabled) {
-        this.#changeThumb(this.lowerThumb, value, true);
+        this.#changeThumb(this.lowerThumb, Math.min(max, Math.max(min, value)), true);
         this.#activeThumb = this.lowerThumb;
       }
     } else {
@@ -682,21 +690,21 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
 
       if (value < lowerValue) {
         if (!this.lowerThumb.disabled) {
-          this.#changeThumb(this.lowerThumb, value, true);
+          this.#changeThumb(this.lowerThumb, Math.min(max, Math.max(min, value)), true);
           this.#activeThumb = this.lowerThumb;
         }
       } else if (value > upperValue) {
         if (!this.upperThumb.disabled) {
-          this.#changeThumb(this.upperThumb, value, true);
+          this.#changeThumb(this.upperThumb, Math.min(max, Math.max(min, value)), true);
           this.#activeThumb = this.upperThumb;
         }
       } else {
         const mid = (lowerValue + upperValue) / 2;
         if (value < mid && !this.lowerThumb.disabled) {
-          this.#changeThumb(this.lowerThumb, value, true);
+          this.#changeThumb(this.lowerThumb, Math.min(max, Math.max(min, value)), true);
           this.#activeThumb = this.lowerThumb;
         } else if (!this.upperThumb.disabled) {
-          this.#changeThumb(this.upperThumb, value, true);
+          this.#changeThumb(this.upperThumb, Math.min(max, Math.max(min, value)), true);
           this.#activeThumb = this.upperThumb;
         }
       }
