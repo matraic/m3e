@@ -387,7 +387,10 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
   /** @private */ #activeThumb?: M3eSliderThumbElement;
   /** @private */ #cachedWidth = 0;
   /** @private */ #cachedThumbWidth = 0;
-  /** @private */ #cachedLeft = 0;
+  
+  /** @private */ #cachedClientLeft = 0;
+  /** @private */ #cachedClientRight = 0;
+  /** @private */ #cachedClientWidth = 0;
 
   constructor() {
     super();
@@ -559,25 +562,37 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
 
   /** @private */
   #valueFromPoint(e: PointerEvent): number {
+    
     const pos =
       M3eDirectionality.current === "rtl"
-        ? this.#cachedLeft + this.#cachedWidth - e.clientX
-        : e.clientX - this.#cachedLeft;
+        ? this.#cachedClientRight - e.clientX
+        : e.clientX - this.#cachedClientLeft;
+        
     const step = this.step === 0 ? 1 : this.step;
     const numSteps = Math.floor((this.max - this.min) / step);
-    const percentage = pos / this.#cachedWidth;
+    
+    
+    const percentage = pos / this.#cachedClientWidth;
+    
     const fixedPercentage = Math.round(percentage * numSteps) / numSteps;
     const impreciseValue = fixedPercentage * (this.max - this.min) + this.min;
     return Math.round(impreciseValue / step) * step;
   }
-
+  
   /** @private */
   #updateCachedDimensions(force = false): void {
     if (!this.lowerThumb) return;
+    
+    
     this.#cachedWidth = !force && this.#cachedWidth > 0 ? this.#cachedWidth : this.clientWidth;
     this.#cachedThumbWidth =
       !force && this.#cachedThumbWidth > 0 ? this.#cachedThumbWidth : this.lowerThumb.clientWidth;
-    this.#cachedLeft = !force && this.#cachedLeft > 0 ? this.#cachedLeft : this.getBoundingClientRect().left;
+    
+    
+    const rect = this.getBoundingClientRect();
+    this.#cachedClientLeft = !force && this.#cachedClientLeft > 0 ? this.#cachedClientLeft : rect.left;
+    this.#cachedClientRight = !force && this.#cachedClientRight > 0 ? this.#cachedClientRight : rect.right;
+    this.#cachedClientWidth = !force && this.#cachedClientWidth > 0 ? this.#cachedClientWidth : rect.width;
   }
 
   /** @private */
@@ -636,7 +651,9 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
 
   /** @private */
   #handlePointerDown(e: PointerEvent): void {
+
     this.#updateCachedDimensions(true);
+
     if (e.pointerType === "mouse" && e.button > 1) return;
     if (!this.lowerThumb || this.disabled) return;
 
@@ -713,6 +730,11 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     }
 
     this.#changeThumb(this.#activeThumb, Math.min(max, Math.max(min, value)));
+
+    if (this.#activeThumb && !this.#activeThumb.disabled) {
+      this.#commitThumb(this.#activeThumb);
+    }
+    
   }
 
   /** @private */
