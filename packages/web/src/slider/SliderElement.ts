@@ -387,7 +387,9 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
   /** @private */ #activeThumb?: M3eSliderThumbElement;
   /** @private */ #cachedWidth = 0;
   /** @private */ #cachedThumbWidth = 0;
-  /** @private */ #cachedLeft = 0;
+  /** @private */ #cachedClientLeft = 0;
+  /** @private */ #cachedClientRight = 0;
+  /** @private */ #cachedClientWidth = 0;
 
   constructor() {
     super();
@@ -559,13 +561,18 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
 
   /** @private */
   #valueFromPoint(e: PointerEvent): number {
+    
     const pos =
       M3eDirectionality.current === "rtl"
-        ? this.#cachedLeft + this.#cachedWidth - e.clientX
-        : e.clientX - this.#cachedLeft;
+        ? this.#cachedClientRight - e.clientX
+        : e.clientX - this.#cachedClientLeft;
+        
     const step = this.step === 0 ? 1 : this.step;
     const numSteps = Math.floor((this.max - this.min) / step);
-    const percentage = pos / this.#cachedWidth;
+    
+    const thumbRatio = this.#cachedWidth ? this.#cachedThumbWidth / this.#cachedWidth : 0;
+    const percentage = (pos / this.#cachedClientWidth - thumbRatio / 2) / (1 - thumbRatio || 1);
+    
     const fixedPercentage = Math.round(percentage * numSteps) / numSteps;
     const impreciseValue = fixedPercentage * (this.max - this.min) + this.min;
     return Math.round(impreciseValue / step) * step;
@@ -574,10 +581,17 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
   /** @private */
   #updateCachedDimensions(force = false): void {
     if (!this.lowerThumb) return;
+    
+    
     this.#cachedWidth = !force && this.#cachedWidth > 0 ? this.#cachedWidth : this.clientWidth;
     this.#cachedThumbWidth =
       !force && this.#cachedThumbWidth > 0 ? this.#cachedThumbWidth : this.lowerThumb.clientWidth;
-    this.#cachedLeft = !force && this.#cachedLeft > 0 ? this.#cachedLeft : this.getBoundingClientRect().left;
+    
+    
+    const rect = this.getBoundingClientRect();
+    this.#cachedClientLeft = !force && this.#cachedClientLeft > 0 ? this.#cachedClientLeft : rect.left;
+    this.#cachedClientRight = !force && this.#cachedClientRight > 0 ? this.#cachedClientRight : rect.right;
+    this.#cachedClientWidth = !force && this.#cachedClientWidth > 0 ? this.#cachedClientWidth : rect.width;
   }
 
   /** @private */
@@ -636,7 +650,9 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
 
   /** @private */
   #handlePointerDown(e: PointerEvent): void {
+
     this.#updateCachedDimensions(true);
+
     if (e.pointerType === "mouse" && e.button > 1) return;
     if (!this.lowerThumb || this.disabled) return;
 
@@ -653,10 +669,18 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     }
 
     const value = this.#valueFromPoint(e);
+    let min = this.min;
+    let max = this.max;
+
+    if (this.#activeThumb === this.upperThumb) {
+      min = Math.max(min, this.lowerThumb?.value ?? 0);
+    } else if (this.upperThumb) {
+      max = Math.min(max, this.upperThumb.value ?? this.max);
+    }
 
     if (!this.upperThumb) {
       if (!this.lowerThumb.disabled) {
-        this.#changeThumb(this.lowerThumb, value, true);
+        this.#changeThumb(this.lowerThumb, Math.min(max, Math.max(min, value)), true);
         this.#activeThumb = this.lowerThumb;
       }
     } else {
@@ -665,21 +689,21 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
 
       if (value < lowerValue) {
         if (!this.lowerThumb.disabled) {
-          this.#changeThumb(this.lowerThumb, value, true);
+          this.#changeThumb(this.lowerThumb, Math.min(max, Math.max(min, value)), true);
           this.#activeThumb = this.lowerThumb;
         }
       } else if (value > upperValue) {
         if (!this.upperThumb.disabled) {
-          this.#changeThumb(this.upperThumb, value, true);
+          this.#changeThumb(this.upperThumb, Math.min(max, Math.max(min, value)), true);
           this.#activeThumb = this.upperThumb;
         }
       } else {
         const mid = (lowerValue + upperValue) / 2;
         if (value < mid && !this.lowerThumb.disabled) {
-          this.#changeThumb(this.lowerThumb, value, true);
+          this.#changeThumb(this.lowerThumb, Math.min(max, Math.max(min, value)), true);
           this.#activeThumb = this.lowerThumb;
         } else if (!this.upperThumb.disabled) {
-          this.#changeThumb(this.upperThumb, value, true);
+          this.#changeThumb(this.upperThumb, Math.min(max, Math.max(min, value)), true);
           this.#activeThumb = this.upperThumb;
         }
       }
