@@ -8,7 +8,6 @@ import {
   customElement,
   deleteCustomState,
   DesignToken,
-  hasCustomState,
   prefersReducedMotion,
   ResizeController,
   safeStyleMap,
@@ -296,6 +295,9 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
       height: var(--m3e-slider-tick-size, 0.25rem);
       border-radius: var(--m3e-slider-tick-shape, ${DesignToken.shape.corner.full});
     }
+    .tick.hidden {
+      visibility: hidden;
+    }
     :host(:not([disabled])) .track-inactive {
       background-color: var(--m3e-slider-inactive-track-color, ${DesignToken.color.secondaryContainer});
     }
@@ -380,7 +382,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
   @query(".base") private readonly _base?: HTMLElement;
 
   /** @private */
-  @state() private _ticks = new Array<{ value: number; active: boolean }>();
+  @state() private _ticks = new Array<{ value: number; active: boolean; hidden: boolean }>();
 
   /** @private */ readonly #changedThumbs = new Set<M3eSliderThumbElement>();
   /** @private */ #thumbs = new Array<M3eSliderThumbElement>();
@@ -515,9 +517,9 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
   }
 
   /** @private */
-  #renderTick(tick: { value: number; active: boolean }) {
+  #renderTick(tick: { value: number; active: boolean; hidden: boolean }) {
     return html`<div
-      class="tick ${tick.active ? "active" : "inactive"}"
+      class="tick ${tick.active ? "active" : "inactive"}${tick.hidden ? " hidden" : ""}"
       style="${safeStyleMap({
         transform: `translate(${M3eDirectionality.current === "rtl" ? -this.#pointFromValue(tick.value) : this.#pointFromValue(tick.value)}px, 0)`,
       })}"
@@ -637,15 +639,32 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     this._ticks = [];
     if (this.discrete && this.step > 1) {
       for (let i = this.min; i <= this.max; i += this.step) {
-        this._ticks.push({ value: i, active: active(i) });
+        this._ticks.push({ value: i, active: active(i), hidden: false });
       }
     } else {
-      this._ticks.push({ value: this.min, active: active(this.min) });
+      this._ticks.push({ value: this.min, active: active(this.min), hidden: false });
       if (this.min < 0 && this.max > 0) {
-        this._ticks.push({ value: 0, active: active(0) });
+        this._ticks.push({ value: 0, active: active(0), hidden: false });
       }
-      this._ticks.push({ value: this.max, active: active(this.max) });
+      this._ticks.push({ value: this.max, active: active(this.max), hidden: false });
     }
+    this.#updateTickOverlap();
+  }
+
+  /** @private */
+  #updateTickOverlap(): void {
+    if (this.#cachedWidth === 0 || this.#cachedThumbWidth === 0) return;
+    const thumbs = this.#thumbs.filter((t) => t.value != null);
+    if (thumbs.length === 0) return;
+    const thumbHalfWidth = this.#cachedThumbWidth / 2;
+    this._ticks = this._ticks.map((tick) => {
+      const tickPos = this.#pointFromValue(tick.value);
+      const hidden = thumbs.some((thumb) => {
+        const thumbPos = this.#pointFromValue(thumb.value!);
+        return Math.abs(tickPos - thumbPos) < thumbHalfWidth;
+      });
+      return { ...tick, hidden };
+    });
   }
 
   /** @private */
@@ -731,12 +750,8 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
       max = Math.min(max, this.upperThumb.value ?? this.max);
     }
 
-    if (hasCustomState(this, "--animating")) {
-      deleteCustomState(this, "--animating");
-      this.#activeThumb.style.transition = "";
-    }
-
-    this.#changeThumb(this.#activeThumb, Math.min(max, Math.max(min, value)));
+    const effectiveStep = this.step === 0 ? 1 : this.step;
+    this.#changeThumb(this.#activeThumb, Math.min(max, Math.max(min, value)), effectiveStep !== 1);
   }
 
   /** @private */
