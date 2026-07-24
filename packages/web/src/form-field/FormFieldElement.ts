@@ -287,6 +287,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       flex: 1 1 auto;
       min-width: 0;
       padding: unset;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     ::slotted(textarea) {
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
