@@ -298,8 +298,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       flex: 1 1 auto;
       min-width: 0;
     }
-    :host([float-label="auto"]:not(:is(:state(--float-label), :--float-label)):not(:is(:state(--pressed), :--pressed)))
-      .label {
+    :host([float-label="auto"]:not(:is(:state(--float-label), :--float-label))) .label {
       font-size: inherit;
     }
 
@@ -365,12 +364,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     :host([variant="outlined"]:is(:state(--required), :--required):not([hide-required-marker])) .pseudo-label {
       margin-inline-end: 0.25rem;
     }
-    :host(
-        [variant="outlined"][float-label="auto"]:not(:is(:state(--float-label), :--float-label)):not(
-            :is(:state(--pressed), :--pressed)
-          )
-      )
-      .pseudo-label {
+    :host([variant="outlined"][float-label="auto"]:not(:is(:state(--float-label), :--float-label))) .pseudo-label {
       max-width: 0;
       margin-inline-end: 0px;
       transition-delay: ${DesignToken.motion.duration.short2};
@@ -425,12 +419,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         ${DesignToken.typescale.standard.body.small.fontSize}
       );
     }
-    :host(
-        [variant="outlined"][float-label="auto"]:not(:is(:state(--float-label), :--float-label)):not(
-            :is(:state(--pressed), :--pressed)
-          )
-      )
-      .label {
+    :host([variant="outlined"][float-label="auto"]:not(:is(:state(--float-label), :--float-label))) .label {
       margin-top: unset;
       line-height: calc(3.5rem + ${DesignToken.density.calc(-3)});
       --_form-field-label-font-size: var(
@@ -487,12 +476,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     :host([variant="filled"]) .label {
       top: max(0px, calc(0.5rem + ${DesignToken.density.calc(-3)}));
     }
-    :host(
-        [variant="filled"][float-label="auto"]:not(:is(:state(--float-label), :--float-label)):not(
-            :is(:state(--pressed), :--pressed)
-          )
-      )
-      .label {
+    :host([variant="filled"][float-label="auto"]:not(:is(:state(--float-label), :--float-label))) .label {
       top: 0px;
       line-height: calc(3.5rem + ${DesignToken.density.calc(-3)} - 0.0625rem);
       --_form-field-label-font-size: var(
@@ -878,7 +862,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
 
   /** @private */
   #handleContainerClick(e: MouseEvent): void {
-    if (this.#ignoreEvent(e)) return;
+    if (this.#ignoreEvent(e, true)) return;
 
     if (this.#control && !this.#focused && !this.#control.disabled) {
       if (this.#control.onContainerClick) {
@@ -908,8 +892,12 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   }
 
   /** @private */
-  #ignoreEvent(e: Event): boolean {
-    return e.composed && e.composedPath().includes(this._suffix);
+  #ignoreEvent(e: Event, ignoreControl: boolean = false): boolean {
+    if (e.composed) {
+      const path = e.composedPath();
+      return path.includes(this._suffix) || (ignoreControl && this.control !== null && path.includes(this.control));
+    }
+    return false;
   }
 
   /** @private */
