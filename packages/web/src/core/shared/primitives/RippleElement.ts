@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, LitElement, PropertyValues } from "lit";
+import { css, CSSResultGroup, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
 import { PressedController } from "../controllers";
@@ -45,8 +45,6 @@ import { RippleToken } from "./RippleToken";
  * @cssprop --m3e-ripple-enter-duration - The duration for the enter animation (expansion from point of contact).
  * @cssprop --m3e-ripple-exit-duration - The duration for the exit animation (fade-out).
  * @cssprop --m3e-ripple-opacity - The opacity of the ripple.
- * @cssprop --m3e-ripple-scale-factor - The factor by which to scale the ripple.
- * @cssprop --m3e-ripple-shape - The shape of the ripple.
  */
 @customElement("m3e-ripple")
 export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
@@ -74,19 +72,21 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
     .ripple {
       display: block;
       position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      bottom: 0;
+      inset: 0;
       pointer-events: none;
       transform: scale(0);
-      border-radius: ${DesignToken.shape.corner.full};
-      background-color: color-mix(in srgb, ${RippleToken.color} ${RippleToken.opacity}, transparent);
-      will-change: background-color, opacity;
+      opacity: ${RippleToken.opacity};
+      border-radius: 50%;
+      filter: blur(20px);
+      background-color: ${RippleToken.color};
+      transition: ${unsafeCSS(
+        `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
+      )};
+      will-change: transform;
       animation: ripple ${RippleToken.enterDuration} linear;
     }
     .ripple.persistent.pressed {
-      transform: scale(${RippleToken.scaleFactor});
+      transform: scale(4);
     }
     .ripple.exit {
       transition: opacity ${RippleToken.exitDuration} cubic-bezier(0, 0, 0.2, 0.1);
@@ -94,12 +94,12 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
     }
     @keyframes ripple {
       to {
-        transform: scale(${RippleToken.scaleFactor});
+        transform: scale(4);
       }
     }
     @media (prefers-reduced-motion) {
       .ripple {
-        transform: scale(${RippleToken.scaleFactor});
+        transform: scale(4);
         animation-duration: 90ms;
       }
       .ripple.exit {
@@ -116,7 +116,7 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
   /** @private */ #ripple: HTMLElement | null = null;
   /** @private */ readonly #pressedController = new PressedController(this, {
     target: null,
-    minPressedDuration: 150,
+    minPressedDuration: 225,
     isPressedKey: (key) => key === " ",
     callback: (pressed, { x, y }) => this.#handlePressedChange(pressed, x, y),
   });
