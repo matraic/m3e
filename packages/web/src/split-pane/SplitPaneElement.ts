@@ -168,7 +168,6 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       cursor: grabbing;
     }
     .handle {
-      contain: layout style;
       position: relative;
       transition: ${unsafeCSS(`background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard},
         width ${DesignToken.motion.spring.fastEffects}, height ${DesignToken.motion.spring.fastEffects}`)};
