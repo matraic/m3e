@@ -374,7 +374,7 @@ export class M3eIconButtonElement extends KeyboardClick(
 
     new PressedController(this, {
       isPressedKey: (key) => key === " ",
-      minPressedDuration: 150,
+      minPressedDuration: 225,
       callback: (pressed) => {
         if (!this.disabled && !this.disabledInteractive) {
           if (pressed) {

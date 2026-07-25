@@ -188,7 +188,7 @@ export class M3eRadioElement extends Labelled(
 
   /** @private */ readonly #pressedController = new PressedController(this, {
     target: null,
-    minPressedDuration: 150,
+    minPressedDuration: 225,
     callback: (pressed) => {
       if (this.disabled) return;
       if (pressed) {

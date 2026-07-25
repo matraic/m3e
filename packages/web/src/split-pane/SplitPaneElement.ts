@@ -240,7 +240,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
   readonly #pressedController = new PressedController(this, {
     target: null,
     isPressedKey: (key) => key === " ",
-    minPressedDuration: 150,
+    minPressedDuration: 225,
     callback: (pressed) => setCustomState(this, "--pressed", pressed && !this.disabled),
   });
 
