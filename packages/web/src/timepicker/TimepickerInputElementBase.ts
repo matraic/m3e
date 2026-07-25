@@ -114,7 +114,7 @@ export class TimepickerInputElementBase extends LitElement {
       this.#format =
         this.format !== "auto"
           ? this.format
-          : new Intl.DateTimeFormat(undefined, { hour: "numeric" }).resolvedOptions().hour12
+          : new Intl.DateTimeFormat(navigator.language, { hour: "numeric" }).resolvedOptions().hour12
             ? "12"
             : "24";
     }
