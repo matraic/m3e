@@ -75,6 +75,10 @@
       "types": "./dist/src/datepicker/index.d.ts",
       "default": "./dist/datepicker.js"
     },
+    "./date-input": {
+      "types": "./dist/src/date-input/index.d.ts",
+      "default": "./dist/date-input.js"
+    },
     "./dialog": {
       "types": "./dist/src/dialog/index.d.ts",
       "default": "./dist/dialog.js"

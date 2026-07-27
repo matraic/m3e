@@ -1,4 +1,5 @@
 import { LitElement, PropertyDeclaration, PropertyValues, isServer } from "lit";
+import { property } from "lit/decorators.js";
 
 import { internals, setCustomState } from "./AttachInternals";
 import { Constructor } from "./Constructor";
@@ -7,8 +8,14 @@ import { hasKeys } from "./hasKeys";
 import { isTouchedMixin } from "./Touched";
 import { isLabelledMixin, updateLabels } from "./Labelled";
 
+/** Maps validity state flags to validation messages. */
+export type ValidationMessages = Record<keyof ValidityStateFlags, string | ((element: HTMLElement) => string)>;
+
 /** A symbol through which a "Form Associated" custom element validates its current state. */
 export const validate = Symbol("validate");
+
+/** A symbol through which a "Form Associated" custom element provides default validation messages. */
+export const defaultValidationMessages = Symbol("defaultValidationMessages");
 
 /** Defines functionality for a "Form Associated" custom element that supports constraint validation. */
 export interface ConstraintValidationMixin extends FormAssociatedMixin {
@@ -20,6 +27,12 @@ export interface ConstraintValidationMixin extends FormAssociatedMixin {
 
   /** The error message that would be displayed if the user submits the form, or an empty string if no error message. */
   readonly validationMessage: string;
+
+  /** Validation messages mapped to individual error types. */
+  validationMessages: ValidationMessages;
+
+  /** Default validation messages mapped to individual error types. */
+  readonly [defaultValidationMessages]: Readonly<ValidationMessages>;
 
   /**
    * Validates the current state of the control.
@@ -67,6 +80,7 @@ export function isConstraintValidationMixin(value: unknown): value is Constraint
 
 const _updateValidity = Symbol("_updateValidity");
 const _validityMessage = Symbol("_validityMessage");
+const _validationMessages = Symbol("_validationMessages");
 
 /**
  * Mixin to augment an element with "Form Associated" behavior that supports constraint validation.
@@ -79,6 +93,7 @@ export function ConstraintValidation<T extends Constructor<LitElement & FormAsso
 ): Constructor<ConstraintValidationMixin> & T {
   abstract class _ConstraintValidation extends base implements ConstraintValidationMixin {
     private [_validityMessage]?: string;
+    private [_validationMessages]: Partial<ValidationMessages> = {};
 
     /** Whether the element is a submittable element that is a candidate for constraint validation. */
     get willValidate(): boolean {
@@ -95,6 +110,31 @@ export function ConstraintValidation<T extends Constructor<LitElement & FormAsso
     get validationMessage(): string {
       this[_updateValidity]();
       return this[internals].validationMessage;
+    }
+
+    /** Default validation messages mapped to individual error types. */
+    get [defaultValidationMessages](): Readonly<ValidationMessages> {
+      return {
+        valueMissing: "This field is required.",
+        typeMismatch: "The value is not in the correct format.",
+        patternMismatch: "The value does not match the required pattern.",
+        tooLong: "The value is too long.",
+        tooShort: "The value is too short.",
+        rangeUnderflow: "The value is too small.",
+        rangeOverflow: "The value is too large.",
+        stepMismatch: "The value is not a valid step.",
+        badInput: "The value is invalid.",
+        customError: "The value is invalid.",
+      };
+    }
+
+    /** Validation messages mapped to individual error types. */
+    @property({ type: Object })
+    set validationMessages(value: Partial<ValidationMessages>) {
+      this[_validationMessages] = value;
+    }
+    get validationMessages(): ValidationMessages {
+      return { ...this[defaultValidationMessages], ...this[_validationMessages] };
     }
 
     /** @internal */
@@ -155,12 +195,11 @@ export function ConstraintValidation<T extends Constructor<LitElement & FormAsso
       if (isServer || !this.isConnected) return;
 
       const validity = this[validate]();
-      const invalid = validity && Object.keys(validity).some((x) => validity[<keyof ValidityStateFlags>x] === true);
+      const validityMessage = validity?.customError
+        ? this[_validityMessage] || this._getValidityMessage(validity)
+        : this._getValidityMessage(validity);
 
-      let validityMessage = validity?.customError ? this[_validityMessage] : "";
-      if (validity && !validityMessage) {
-        validityMessage = this.#getNativeMessage(validity);
-      }
+      const invalid = !!validityMessage;
 
       this[internals].setValidity(validity, validityMessage);
       this.ariaInvalid = invalid ? "true" : null;
@@ -172,65 +211,19 @@ export function ConstraintValidation<T extends Constructor<LitElement & FormAsso
     }
 
     /** @private */
-    #getNativeMessage(flags: ValidityStateFlags): string {
-      const input = document.createElement("input");
-
-      // Default to text input unless overridden
-      input.type = "text";
-
-      // Simulate constraints and values based on flags
-      if (flags.valueMissing) {
-        input.required = true;
-        input.value = ""; // triggers valueMissing
+    private _getValidityMessage(flags?: ValidityStateFlags): string {
+      if (flags) {
+        const msgs = this.validationMessages;
+        for (const key in flags) {
+          if (flags[key as keyof ValidityStateFlags]) {
+            const msg = msgs[key as keyof ValidationMessages];
+            if (typeof msg === "string") return msg;
+            if (typeof msg === "function") return msg(this);
+          }
+        }
       }
 
-      if (flags.typeMismatch) {
-        input.type = "email";
-        input.value = "not-an-email"; // triggers typeMismatch
-      }
-
-      if (flags.patternMismatch) {
-        input.pattern = "[0-9]{4}";
-        input.value = "abcd"; // triggers patternMismatch
-      }
-
-      if (flags.tooShort) {
-        input.minLength = 5;
-        input.value = "abc"; // triggers tooShort
-      }
-
-      if (flags.tooLong) {
-        input.maxLength = 2;
-        input.value = "abcdef"; // triggers tooLong
-      }
-
-      if (flags.rangeUnderflow) {
-        input.type = "number";
-        input.min = "10";
-        input.value = "5"; // triggers rangeUnderflow
-      }
-
-      if (flags.rangeOverflow) {
-        input.type = "number";
-        input.max = "5";
-        input.value = "10"; // triggers rangeOverflow
-      }
-
-      if (flags.stepMismatch) {
-        input.type = "number";
-        input.step = "2";
-        input.value = "3"; // triggers stepMismatch
-      }
-
-      if (flags.badInput) {
-        input.type = "number";
-        input.value = "abc"; // triggers badInput
-      }
-
-      input.setCustomValidity("");
-      input.checkValidity();
-
-      return input.validationMessage;
+      return "";
     }
   }
 

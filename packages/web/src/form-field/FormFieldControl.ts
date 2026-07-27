@@ -43,7 +43,7 @@ export interface FormFieldControl extends HTMLElement {
   checkValidity?: () => boolean;
 }
 
-const KNOWN_FORM_FIELD_TAGS = ["m3e-input-chip-set", "m3e-select"];
+const KNOWN_FORM_FIELD_TAGS = ["m3e-input-chip-set", "m3e-select", "m3e-date-input"];
 
 /**
  * Determines whether a value is a `FormFieldControl`.

@@ -21,6 +21,7 @@ const inputs = [
   "chips",
   "content-pane",
   "datepicker",
+  "date-input",
   "dialog",
   "divider",
   "drawer-container",

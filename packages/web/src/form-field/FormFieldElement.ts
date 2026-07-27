@@ -156,7 +156,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       font-weight: var(--m3e-form-field-font-weight, ${DesignToken.typescale.standard.body.large.fontWeight});
       line-height: var(--m3e-form-field-line-height, ${DesignToken.typescale.standard.body.large.lineHeight});
       letter-spacing: var(--m3e-form-field-tracking, ${DesignToken.typescale.standard.body.large.tracking});
-      width: var(--m3e-form-field-width, 14.5rem);
+      width: var(--m3e-form-field-width, 16.875rem);
       color: var(--_form-field-color);
     }
     :host(:not(:is(:state(--disabled), :--disabled))) .base {
@@ -294,7 +294,8 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       scrollbar-color: ${DesignToken.scrollbar.color};
     }
     ::slotted(m3e-select),
-    ::slotted(m3e-input-chip-set) {
+    ::slotted(m3e-input-chip-set),
+    ::slotted(m3e-date-input) {
       flex: 1 1 auto;
       min-width: 0;
     }

@@ -19,11 +19,13 @@ import {
   prefersReducedMotion,
   timeConverter,
   TimeParts,
+  HtmlFor,
 } from "@m3e/web/core";
 
 import { positionAnchor } from "@m3e/web/core/anchoring";
 import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
+import type { M3eDateInputElement } from "@m3e/web/date-input";
 
 import "@m3e/web/core/a11y";
 import "@m3e/web/button";
@@ -148,8 +150,8 @@ import "./TimepickerInputElement";
  * @cssprop --m3e-timepicker-dial-handle-center-size - Size of the handle center indicator.
  */
 @customElement("m3e-timepicker")
-export class M3eTimepickerElement extends SuppressInitialAnimation(
-  ReconnectedCallback(AttachInternals(Role(LitElement, "dialog"))),
+export class M3eTimepickerElement extends HtmlFor(
+  SuppressInitialAnimation(ReconnectedCallback(AttachInternals(Role(LitElement, "dialog")))),
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -457,6 +459,13 @@ export class M3eTimepickerElement extends SuppressInitialAnimation(
   }
 
   /** @inheritdoc */
+  override attach(control: HTMLElement): void {
+    if (control.tagName === "M3E-DATE-INPUT") {
+      super.attach(control);
+    }
+  }
+
+  /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
 
@@ -519,13 +528,20 @@ export class M3eTimepickerElement extends SuppressInitialAnimation(
       await this.updateComplete;
     }
 
+    // When bound to a control, use the control's value.
+    if (this.control) {
+      this.date = (<M3eDateInputElement>this.control).value;
+    }
+
     const input = this._input;
     input.hour = this.date?.getHours() ?? null;
     input.minute = this.date?.getMinutes() ?? null;
     input.second = this.date?.getSeconds() ?? null;
-    input.minTime = this.minTime;
-    input.maxTime = this.maxTime;
-    input.blackoutTimes = this.blackoutTimes;
+    input.minTime = (<M3eDateInputElement>this.control)?.minTime ?? this.minTime;
+    input.maxTime = (<M3eDateInputElement>this.control)?.maxTime ?? this.maxTime;
+    input.showSeconds = (<M3eDateInputElement>this.control)?.showSeconds ?? this.showSeconds;
+    input.format = (<M3eDateInputElement>this.control)?.timeFormat ?? this.format;
+    input.blackoutTimes = (<M3eDateInputElement>this.control)?.blackoutTimes ?? this.blackoutTimes;
 
     if (input.isUpdatePending) {
       await input.updateComplete;
@@ -608,9 +624,7 @@ export class M3eTimepickerElement extends SuppressInitialAnimation(
             hour-label="${this.hourLabel}"
             minute-label="${this.minuteLabel}"
             second-label="${this.secondLabel}"
-            ?show-seconds="${this.showSeconds}"
             orientation="${this.currentOrientation === "vertical" ? "horizontal" : "vertical"}"
-            format="${this.format}"
             @change="${this.#handleInputChange}"
           ></m3e-timepicker-input>
 
@@ -720,13 +734,24 @@ export class M3eTimepickerElement extends SuppressInitialAnimation(
   }
 
   /** @private */
-  #handleConfirmClick(): void {
+  async #handleConfirmClick(): Promise<void> {
     if (this.#date !== undefined) {
       this.date = this.#date;
     }
 
     this.hide(true);
     this.dispatchEvent(new Event("change", { bubbles: true }));
+
+    if (this.control) {
+      const dateInput = <M3eDateInputElement>this.control;
+      if (dateInput.value?.getTime() !== this.date?.getTime()) {
+        dateInput.value = this.date;
+        if (dateInput.isUpdatePending) {
+          await dateInput.updateComplete;
+        }
+        dateInput.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    }
   }
 
   /** @private */

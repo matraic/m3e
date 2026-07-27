@@ -12,6 +12,7 @@ export * from "./checkbox";
 export * from "./chips";
 export * from "./content-pane";
 export * from "./core";
+export * from "./date-input";
 export * from "./datepicker";
 export * from "./dialog";
 export * from "./divider";

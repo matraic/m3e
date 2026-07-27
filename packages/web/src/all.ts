@@ -13,6 +13,7 @@ export * from "./chips";
 export * from "./content-pane";
 export * from "./core";
 export * from "./datepicker";
+export * from "./date-input";
 export * from "./dialog";
 export * from "./divider";
 export * from "./drawer-container";

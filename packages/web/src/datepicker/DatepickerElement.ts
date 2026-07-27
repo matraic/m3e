@@ -16,12 +16,14 @@ import {
   InertController,
   ReconnectedCallback,
   prefersReducedMotion,
+  HtmlFor,
 } from "@m3e/web/core";
 
 import { positionAnchor } from "@m3e/web/core/anchoring";
 import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
 import { M3eCalendarElement, CalendarView } from "@m3e/web/calendar";
+import type { M3eDateInputElement } from "@m3e/web/date-input";
 
 import "@m3e/web/core/a11y";
 import "@m3e/web/button";
@@ -68,6 +70,7 @@ import { DatepickerVariant } from "./DatepickerVariant";
  * @attr confirm-label - The label given to the button used apply the selected date and close the picker.
  * @attr dismiss-label - The label given to the button used discard the selected date and close the picker.
  * @attr label - The label given to the the picker.
+ * @attr for - The identifier of the interactive control to which this element is attached.
  *
  * @fires change - Dispatched when the selected date changes.
  * @fires beforetoggle - Dispatched before the toggle state changes.
@@ -98,8 +101,8 @@ import { DatepickerVariant } from "./DatepickerVariant";
  * @cssprop --m3e-dialog-scrim-opacity - Opacity applied to the scrim color in modal mode.
  */
 @customElement("m3e-datepicker")
-export class M3eDatepickerElement extends SuppressInitialAnimation(
-  ReconnectedCallback(AttachInternals(Role(LitElement, "dialog"))),
+export class M3eDatepickerElement extends HtmlFor(
+  SuppressInitialAnimation(ReconnectedCallback(AttachInternals(Role(LitElement, "dialog")))),
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -450,6 +453,13 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
   }
 
   /** @inheritdoc */
+  override attach(control: HTMLElement): void {
+    if (control.tagName === "M3E-DATE-INPUT") {
+      super.attach(control);
+    }
+  }
+
+  /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
 
@@ -511,15 +521,20 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
 
     const calendar = this._calendar;
 
+    // When bound to a control, use the control's value.
+    if (this.control) {
+      this.date = (<M3eDateInputElement>this.control).value;
+    }
+
     calendar.startView = this.startView;
     calendar.startAt = this.startAt;
-    calendar.minDate = this.minDate;
-    calendar.maxDate = this.maxDate;
+    calendar.minDate = (<M3eDateInputElement>this.control)?.minDate ?? this.minDate;
+    calendar.maxDate = (<M3eDateInputElement>this.control)?.maxDate ?? this.maxDate;
     calendar.date = this.date;
     calendar.rangeStart = this.rangeStart;
     calendar.rangeEnd = this.rangeEnd;
     calendar.specialDates = this.specialDates;
-    calendar.blackoutDates = this.blackoutDates;
+    calendar.blackoutDates = (<M3eDateInputElement>this.control)?.blackoutDates ?? this.blackoutDates;
 
     if (calendar.isUpdatePending) {
       await calendar.updateComplete;
@@ -694,6 +709,7 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
 
     this.hide(true);
     this.dispatchEvent(new Event("change", { bubbles: true }));
+    this.#updateInput();
   }
 
   /** @private */
@@ -708,6 +724,21 @@ export class M3eDatepickerElement extends SuppressInitialAnimation(
     this.rangeEnd = this._rangeEnd === undefined ? this.rangeEnd : this._rangeEnd;
     this.hide(true);
     this.dispatchEvent(new Event("change", { bubbles: true }));
+    this.#updateInput();
+  }
+
+  /** @private */
+  async #updateInput(): Promise<void> {
+    if (this.control) {
+      const dateInput = <M3eDateInputElement>this.control;
+      if (dateInput.value?.getTime() !== this.date?.getTime()) {
+        dateInput.value = this.date;
+        if (dateInput.isUpdatePending) {
+          await dateInput.updateComplete;
+        }
+        dateInput.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    }
   }
 
   /** @private */
