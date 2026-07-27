@@ -1,6 +1,6 @@
 ﻿# @m3e/web/date-input
 
-The `m3e-date-input` component provides a segmented input for editing date and/or time values. It supports date-only, time-only, and combined date/time entry, and integrates with `m3e-form-field` and `m3e-datepicker`. Each segment is independently editable for precise, accessible, form-friendly interaction.
+The `m3e-date-input` component provides a segmented input for editing date and/or time values. It supports date-only, time-only, and combined date/time entry, and integrates with `m3e-form-field`, `m3e-datepicker`, and `m3e-timepicker`. Each segment is independently editable for precise, accessible, form-friendly interaction.
 
 ```ts
 import "@m3e/web/date-input";
