@@ -198,6 +198,30 @@ picker.addEventListener(&quot;change&quot;, () =&gt; {
           >
         </m3e-card>
 
+        <m3e-heading variant="headline" size="small" level="3">Date string handling</m3e-heading>
+        <p>
+          Different browsers interpret date strings in inconsistent ways, especially when the string resembles an ISO
+          date but does not include a time or timezone. To ensure predictable behavior across environments,
+          <code>m3e-timepicker</code> uses a consistent, standards-aligned parsing model instead of relying on the
+          browser's built-in <code>Date.parse()</code> rules.
+        </p>
+        <p>
+          When <code>m3e-timepicker</code> receives a date string, it automatically detects whether the value matches
+          one of the ISO-8601 formats that can be parsed safely and unambiguously:
+        </p>
+        <ul>
+          <li><code>yyyy-MM-dd</code> — local date (no time, no timezone)</li>
+          <li><code>yyyy-MM-ddTHH:mm:ss</code> — local date and time</li>
+          <li><code>yyyy-MM-ddTHH:mm:ssZ</code> — UTC date and time</li>
+          <li><code>yyyy-MM-ddTHH:mm:ss±HH:mm</code> — date and time with an explicit timezone offset</li>
+        </ul>
+        <p>
+          Strings in these formats are converted into local <code>Date</code> objects without unexpected timezone
+          shifts. This prevents issues such as date-only values drifting into the previous or next day when interpreted
+          as UTC. If a string does not follow one of these ISO-compatible patterns, parsing may be ambiguous or
+          unsupported. For the most reliable results, use one of the formats above.
+        </p>
+
         <m3e-heading variant="headline" size="small" level="3">Hour format</m3e-heading>
         <p>
           The <code>format</code> attribute controls the hour cycle used by the timepicker. It accepts
@@ -342,30 +366,6 @@ document.querySelector(&quot;#input&quot;).addEventListener(&quot;change&quot;, 
 </pre
           >
         </m3e-card>
-
-        <m3e-heading variant="headline" size="small" level="3">Date string handling</m3e-heading>
-        <p>
-          Different browsers interpret date strings in inconsistent ways, especially when the string resembles an ISO
-          date but does not include a time or timezone. To ensure predictable behavior across environments,
-          <code>m3e-timepicker</code> uses a consistent, standards-aligned parsing model instead of relying on the
-          browser's built-in <code>Date.parse()</code> rules.
-        </p>
-        <p>
-          When <code>m3e-timepicker</code> receives a date string, it automatically detects whether the value matches
-          one of the ISO-8601 formats that can be parsed safely and unambiguously:
-        </p>
-        <ul>
-          <li><code>yyyy-MM-dd</code> — local date (no time, no timezone)</li>
-          <li><code>yyyy-MM-ddTHH:mm:ss</code> — local date and time</li>
-          <li><code>yyyy-MM-ddTHH:mm:ssZ</code> — UTC date and time</li>
-          <li><code>yyyy-MM-ddTHH:mm:ss±HH:mm</code> — date and time with an explicit timezone offset</li>
-        </ul>
-        <p>
-          Strings in these formats are converted into local <code>Date</code> objects without unexpected timezone
-          shifts. This prevents issues such as date-only values drifting into the previous or next day when interpreted
-          as UTC. If a string does not follow one of these ISO-compatible patterns, parsing may be ambiguous or
-          unsupported. For the most reliable results, use one of the formats above.
-        </p>
 
         <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
 
