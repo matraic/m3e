@@ -313,7 +313,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
   @property() label: string = "Resize panes";
 
   /** A function used to generates human readable text for the accessible value (`aria-valuetext`) of the drag handle. */
-  @property() valueFormatter?: (
+  @property({ attribute: false }) valueFormatter?: (
     value: number,
     orientation: Omit<SplitPaneOrientation, "auto">,
     dir: Direction,

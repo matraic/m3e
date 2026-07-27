@@ -84,7 +84,7 @@ export class TimepickerInputElementBase extends LitElement {
   @property({ attribute: "max-time", converter: timeConverter }) maxTime: TimeParts | null = null;
 
   /** A function used to determine whether a time cannot be selected. */
-  @property() blackoutTimes?: (time: TimeParts) => boolean;
+  @property({ attribute: false }) blackoutTimes?: (time: TimeParts) => boolean;
 
   /** The hour in 12‑hour time from 1..12. */
   get hourOfPeriod(): number | null {

@@ -376,7 +376,7 @@ export class M3eTimepickerElement extends HtmlFor(
   @property({ attribute: "max-time", converter: timeConverter }) maxTime: TimeParts | null = null;
 
   /** A function used to determine whether a time cannot be selected. */
-  @property() blackoutTimes?: (time: TimeParts) => boolean;
+  @property({ attribute: false }) blackoutTimes?: (time: TimeParts) => boolean;
 
   /**
    * Whether to hide the mode toggle button.

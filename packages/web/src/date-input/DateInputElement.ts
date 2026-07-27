@@ -228,7 +228,7 @@ export class M3eDateInputElement
   @property({ attribute: "max-time", converter: timeConverter }) maxTime: TimeParts | null = null;
 
   /** A function used to determine whether a time cannot be selected. */
-  @property() blackoutTimes?: (time: TimeParts) => boolean;
+  @property({ attribute: false }) blackoutTimes?: (time: TimeParts) => boolean;
 
   /**
    * The accessible label given to the month segment.
