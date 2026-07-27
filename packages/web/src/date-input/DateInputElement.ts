@@ -374,7 +374,7 @@ export class M3eDateInputElement
           typeMismatch: "Enter a valid date.",
           rangeUnderflow: "Date is too early.",
           rangeOverflow: "Date is too late.",
-          customError: "Date is within the disabled range.",
+          customError: "Date is within a disabled range.",
         };
 
       case "time":
@@ -383,7 +383,7 @@ export class M3eDateInputElement
           typeMismatch: "Enter a valid time.",
           rangeUnderflow: "Time is too early.",
           rangeOverflow: "Time is too late.",
-          customError: "Time is within the disabled range.",
+          customError: "Time is within a disabled range.",
         };
 
       case "datetime":
@@ -392,7 +392,7 @@ export class M3eDateInputElement
           typeMismatch: "Enter a valid date and time.",
           rangeUnderflow: "Date and time are too early.",
           rangeOverflow: "Date and time are too late.",
-          customError: "Date and time are within the disabled range.",
+          customError: "Date and time are within a disabled range.",
         };
     }
   }
