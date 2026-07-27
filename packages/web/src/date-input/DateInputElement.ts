@@ -1217,7 +1217,7 @@ export class M3eDateInputElement
     this.#ignoreValueUpdate = true;
 
     const oldValue = this.value;
-    const base = oldValue ?? new Date();
+    let base = oldValue ?? new Date();
 
     switch (this.type) {
       case "date":
@@ -1230,6 +1230,11 @@ export class M3eDateInputElement
               this._value = { ...this._value, hour: 0, minute: 0, second: 0, period: 0 };
             }
           } else {
+            if (!oldValue) {
+              // Use midnight when creating a new date.
+              base = new Date(base.getFullYear(), base.getMonth(), base.getDate());
+            }
+
             const clampedDay = this.#clampDay(day, month, year);
             this._value = { ...this._value, day: clampedDay };
             this.value = new Date(year, month - 1, clampedDay, base.getHours(), base.getMinutes(), base.getSeconds());
