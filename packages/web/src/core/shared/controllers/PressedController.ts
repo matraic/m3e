@@ -41,6 +41,7 @@ export class PressedController extends MonitorControllerBase {
   /** @private */ readonly #filter?: PressedControllerFilterCallback;
   /** @private */ readonly #isPressedKey?: (key: string) => boolean;
   /** @private */ readonly #pressedTargets = new Map<HTMLElement, number>();
+  /** @private */ readonly #releaseTimeouts = new Map<HTMLElement, ReturnType<typeof setTimeout>>();
   /** @private */ readonly #minPressedDuration: number;
 
   /** @private */ readonly #pointerDownHandler = (e: PointerEvent) => this.#handlePointerDown(e);
@@ -80,6 +81,10 @@ export class PressedController extends MonitorControllerBase {
     document.removeEventListener("touchcancel", this.#touchEndHandler, { capture: this.#capture });
 
     super.hostDisconnected();
+    for (const id of this.#releaseTimeouts.values()) {
+      clearTimeout(id);
+    }
+    this.#releaseTimeouts.clear();
     this.#pressedTargets.clear();
   }
 
@@ -101,6 +106,9 @@ export class PressedController extends MonitorControllerBase {
       target.removeEventListener("keydown", this.#keyDownHandler, { capture: this.#capture });
       target.removeEventListener("keyup", this.#keyUpHandler, { capture: this.#capture });
     }
+
+    this.#clearReleaseTimeout(target);
+    this.#pressedTargets.delete(target);
   }
 
   /** @private */
@@ -110,10 +118,9 @@ export class PressedController extends MonitorControllerBase {
 
     for (const target of e.composedPath()) {
       if (target instanceof HTMLElement && this.isObserving(target)) {
-        if (!this.#pressedTargets.has(target)) {
-          this.#pressedTargets.set(target, performance.now());
-          this.#callback(true, { x: e.x, y: e.y }, target);
-        }
+        this.#clearReleaseTimeout(target);
+        this.#pressedTargets.set(target, performance.now());
+        this.#callback(true, { x: e.x, y: e.y }, target);
         break;
       }
     }
@@ -141,26 +148,31 @@ export class PressedController extends MonitorControllerBase {
         e.preventDefault();
       }
 
-      if (!this.#pressedTargets.has(target)) {
-        this.#pressedTargets.set(target, performance.now());
-        const bounds = target.getBoundingClientRect();
-        this.#callback(true, { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 }, target);
-      }
+      this.#clearReleaseTimeout(target);
+      this.#pressedTargets.set(target, performance.now());
+      const bounds = target.getBoundingClientRect();
+      this.#callback(true, { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 }, target);
     }
   }
 
   /** @private */
   #handleKeyUp(e: KeyboardEvent): void {
-    const target = e.target as HTMLElement;
+    if (e.target !== e.currentTarget) return;
+    const target = e.currentTarget as HTMLElement;
 
     if (this.#pressedTargets.has(target) && this.#isPressedKey?.(e.key)) {
+      this.#clearReleaseTimeout(target);
       const remainingTime = this.#minPressedDuration - (performance.now() - this.#pressedTargets.get(target)!);
       const bounds = target.getBoundingClientRect();
       if (remainingTime > 0) {
-        setTimeout(() => {
-          this.#pressedTargets.delete(target);
-          this.#callback(false, { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 }, target);
-        }, remainingTime);
+        this.#releaseTimeouts.set(
+          target,
+          setTimeout(() => {
+            this.#pressedTargets.delete(target);
+            this.#releaseTimeouts.delete(target);
+            this.#callback(false, { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 }, target);
+          }, remainingTime),
+        );
       } else {
         this.#pressedTargets.delete(target);
         this.#callback(false, { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 }, target);
@@ -171,16 +183,30 @@ export class PressedController extends MonitorControllerBase {
   /** @private */
   #clearPressedTargets(x: number, y: number): void {
     for (const target of this.#pressedTargets) {
+      this.#clearReleaseTimeout(target[0]);
       const remainingTime = this.#minPressedDuration - (performance.now() - target[1]);
       if (remainingTime > 0) {
-        setTimeout(() => {
-          this.#pressedTargets.delete(target[0]);
-          this.#callback(false, { x, y }, target[0]);
-        }, remainingTime);
+        this.#releaseTimeouts.set(
+          target[0],
+          setTimeout(() => {
+            this.#pressedTargets.delete(target[0]);
+            this.#releaseTimeouts.delete(target[0]);
+            this.#callback(false, { x, y }, target[0]);
+          }, remainingTime),
+        );
       } else {
         this.#pressedTargets.delete(target[0]);
         this.#callback(false, { x, y }, target[0]);
       }
+    }
+  }
+
+  /** @private */
+  #clearReleaseTimeout(target: HTMLElement): void {
+    const id = this.#releaseTimeouts.get(target);
+    if (id !== undefined) {
+      clearTimeout(id);
+      this.#releaseTimeouts.delete(target);
     }
   }
 }

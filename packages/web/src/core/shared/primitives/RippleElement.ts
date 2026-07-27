@@ -113,10 +113,10 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
     }
   `;
 
-  /** @private */ #ripple: HTMLElement | null = null;
+  /** @private */ readonly #ripples: Set<HTMLElement> = new Set();
   /** @private */ readonly #pressedController = new PressedController(this, {
     target: null,
-    minPressedDuration: 225,
+    minPressedDuration: 0,
     isPressedKey: (key) => key === " ",
     callback: (pressed, { x, y }) => this.#handlePressedChange(pressed, x, y),
   });
@@ -149,7 +149,7 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
 
   /** Whether the ripple is currently visible to the user. */
   get visible() {
-    return this.#ripple !== null;
+    return this.#ripples.size > 0;
   }
 
   /**
@@ -159,8 +159,6 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
    * @param {boolean} [persistent=false] Whether the ripple will persist until hidden.
    */
   show(x: number, y: number, persistent: boolean = false): void {
-    this.#destroyRipple();
-
     const bounds = this.getBoundingClientRect();
     if (this.centered) {
       x = bounds.left + bounds.width / 2;
@@ -178,26 +176,37 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
     const offsetX = x - bounds.left;
     const offsetY = y - bounds.top;
 
-    this.#ripple = document.createElement("div");
-    this.#ripple.classList.add("ripple");
+    const ripple = document.createElement("div");
+    ripple.classList.add("ripple");
     if (persistent) {
-      this.#ripple.classList.add("persistent");
+      ripple.classList.add("persistent");
     }
 
-    this.#ripple.style.left = `${offsetX - radius}px`;
-    this.#ripple.style.top = `${offsetY - radius}px`;
-    this.#ripple.style.width = `${radius * 2}px`;
-    this.#ripple.style.height = `${radius * 2}px`;
+    ripple.style.left = `${offsetX - radius}px`;
+    ripple.style.top = `${offsetY - radius}px`;
+    ripple.style.width = `${radius * 2}px`;
+    ripple.style.height = `${radius * 2}px`;
 
-    this.#ripple.addEventListener("animationend", () => this.#handleAnimationEnd(persistent), { once: true });
-    this.#ripple.addEventListener("transitionend", () => this.#destroyRipple(), { once: true });
+    ripple.addEventListener("animationend", () => this.#handleAnimationEnd(ripple, persistent), { once: true });
+    ripple.addEventListener("transitionend", (e) => {
+      if (e.propertyName === "opacity") {
+        this.#destroyRipple(ripple);
+      }
+    }, { once: true });
 
-    this.shadowRoot?.appendChild(this.#ripple);
+    if (!this.shadowRoot) {
+      this.#ripples.delete(ripple);
+      return;
+    }
+    this.#ripples.add(ripple);
+    this.shadowRoot.appendChild(ripple);
   }
 
   /** Manually hides the ripple. */
   hide(): void {
-    this.#ripple?.classList.add("exit");
+    for (const ripple of this.#ripples) {
+      ripple.classList.add("exit");
+    }
   }
 
   /** @inheritdoc */
@@ -236,17 +245,24 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
   }
 
   /** @private */
-  #destroyRipple(): void {
-    this.#ripple?.remove();
-    this.#ripple = null;
+  #destroyRipple(ripple?: HTMLElement): void {
+    if (ripple) {
+      ripple.remove();
+      this.#ripples.delete(ripple);
+    } else {
+      for (const r of this.#ripples) {
+        r.remove();
+      }
+      this.#ripples.clear();
+    }
   }
 
   /** @private */
-  #handleAnimationEnd(persistent: boolean): void {
+  #handleAnimationEnd(ripple: HTMLElement, persistent: boolean): void {
     if (persistent) {
-      this.#ripple?.classList.add("pressed");
+      ripple.classList.add("pressed");
     } else {
-      this.hide();
+      ripple.classList.add("exit");
     }
   }
 

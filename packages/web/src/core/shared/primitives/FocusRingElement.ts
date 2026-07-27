@@ -4,6 +4,7 @@ import { property, query } from "lit/decorators.js";
 import { FocusController } from "../controllers";
 import { HtmlFor, Role } from "../mixins";
 import { customElement } from "../decorators";
+import { DesignToken } from "../tokens";
 
 import { FocusRingToken } from "./FocusRingToken";
 
@@ -70,11 +71,14 @@ export class M3eFocusRingElement extends HtmlFor(Role(LitElement, "none")) {
       border-radius: inherit;
       z-index: 1;
       outline-color: ${FocusRingToken.color};
-      outline-width: ${FocusRingToken.thickness};
+      outline-style: none;
+      outline-width: 0;
       visibility: ${FocusRingToken.visibility};
+      transition: outline-width ${DesignToken.motion.spring.fastSpatial}, outline-offset ${DesignToken.motion.spring.fastSpatial};
     }
     .outline.visible {
       outline-style: solid;
+      outline-width: ${FocusRingToken.thickness};
     }
     :host(:not([inward])) .outline {
       outline-offset: ${FocusRingToken.outwardOffset};
@@ -82,29 +86,12 @@ export class M3eFocusRingElement extends HtmlFor(Role(LitElement, "none")) {
     :host([inward]) .outline {
       outline-offset: calc(${FocusRingToken.inwardOffset} - ${FocusRingToken.thickness});
     }
-    :host(:not([inward])) .outline.visible {
-      animation: grow-shrink ${FocusRingToken.duration};
-    }
     :host([inward]) .outline.visible {
-      animation: shrink-grow ${FocusRingToken.duration};
-    }
-    @keyframes grow-shrink {
-      50% {
-        outline-width: calc(${FocusRingToken.thickness} * ${FocusRingToken.growthFactor});
-      }
-    }
-    @keyframes shrink-grow {
-      50% {
-        outline-offset: calc(
-          ${FocusRingToken.inwardOffset} - calc(${FocusRingToken.thickness} * ${FocusRingToken.growthFactor})
-        );
-        outline-width: calc(${FocusRingToken.thickness} * ${FocusRingToken.growthFactor});
-      }
+      outline-offset: ${FocusRingToken.inwardOffset};
     }
     @media (prefers-reduced-motion) {
-      :host(:not([inward])) .outline.visible,
-      :host([inward]) .outline.visible {
-        animation: none;
+      .outline {
+        transition: none;
       }
     }
     @media (forced-colors: active) {
@@ -137,12 +124,12 @@ export class M3eFocusRingElement extends HtmlFor(Role(LitElement, "none")) {
 
   /** Launches a manual focus ring. */
   show(): void {
-    this._outline?.classList.toggle("visible", true);
+    this._outline?.classList.add("visible");
   }
 
   /** Hides the focus ring. */
   hide(): void {
-    this._outline?.classList.toggle("visible", false);
+    this._outline?.classList.remove("visible");
   }
 
   /** @inheritdoc */
