@@ -167,6 +167,8 @@ export class M3eDateInputElement
     }
   `;
 
+  /** @private */ _val: Date | null = null;
+
   /** @private */ #format: Intl.DateTimeFormatPart[] = [];
   /** @private */ #timeFormat: Exclude<DateInputTimeFormat, "auto"> = "12";
   /** @private */ #changed = false;
@@ -180,7 +182,16 @@ export class M3eDateInputElement
    * The value of the input.
    * @default null
    */
-  @property({ converter: dateConverter }) value: Date | null = null;
+  @property({ converter: dateConverter }) get value(): Date | null {
+    return this._val;
+  }
+  set value(value: Date | null) {
+    if (value && Number.isNaN(value.getTime())) {
+      console.error("[m3e-date-input] Invalid date assigned to value");
+      return;
+    }
+    this._val = value;
+  }
 
   /** The interaction mode for editing date and/or time values. */
   @property() type: DateInputType = "date";
@@ -743,9 +754,9 @@ export class M3eDateInputElement
             year,
             month - 1,
             this.#clampDay(day, month, year),
-            this.#adjustHourForPeriod(hour, period),
-            minute,
-            second,
+            this.#adjustHourForPeriod(hour, period) ?? 0,
+            minute ?? 0,
+            second ?? 0,
           );
         }
         break;
@@ -769,7 +780,7 @@ export class M3eDateInputElement
             current.day,
             this.#adjustHourForPeriod(hour, period),
             minute,
-            second,
+            second ?? 0,
           );
         }
         break;
@@ -791,7 +802,7 @@ export class M3eDateInputElement
             this.#clampDay(day, month, year),
             this.#adjustHourForPeriod(hour, period),
             minute,
-            second,
+            second ?? 0,
           );
         }
         break;
