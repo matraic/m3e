@@ -740,7 +740,13 @@ export class M3eDateInputElement
         if (year !== undefined && month !== undefined && day !== undefined) {
           const maxDay = new Date(year, month, 0).getDate();
           const clampedDay = Math.min(day, maxDay);
-          newDate = new Date(year, month - 1, clampedDay);
+          // Use existing time if set; otherwise, these default to 0 (midnight).
+          let h = hour;
+          if (h !== undefined) {
+            if (period === 1 && h < 12) h += 12;
+            if (period === 0 && h === 12) h = 0;
+          }
+          newDate = new Date(year, month - 1, clampedDay, h, minute, second);
         }
         break;
       }
@@ -757,8 +763,10 @@ export class M3eDateInputElement
           if (period === 1 && h < 12) h += 12;
           if (period === 0 && h === 12) h = 0;
 
-          const current = this.#getCurrent();
-          newDate = new Date(current.year, current.month - 1, current.day, h, minute, this.showSeconds ? second : 0);
+          // Use existing date if set; otherwise, use current date.
+          const current =
+            year !== undefined && month !== undefined && day !== undefined ? { month, day, year } : this.#getCurrent();
+          newDate = new Date(current.year, current.month - 1, current.day, h, minute, second);
         }
         break;
       }
@@ -780,7 +788,7 @@ export class M3eDateInputElement
           if (period === 1 && h < 12) h += 12;
           if (period === 0 && h === 12) h = 0;
 
-          newDate = new Date(year, month - 1, clampedDay, h, minute, this.showSeconds ? second : 0);
+          newDate = new Date(year, month - 1, clampedDay, h, minute, second);
         }
         break;
       }
@@ -1213,6 +1221,10 @@ export class M3eDateInputElement
           const { year, month, day } = this._value;
           if (year === undefined || month === undefined || day === undefined) {
             this.value = null;
+            if (year === undefined && month === undefined && day === undefined) {
+              // Reset time to midnight when clearing date.
+              this._value = { ...this._value, hour: 0, minute: 0, second: 0, period: 0 };
+            }
           } else {
             const maxDay = new Date(year, month, 0).getDate();
             const clampedDay = Math.min(day, maxDay);
@@ -1233,6 +1245,11 @@ export class M3eDateInputElement
             (this.#timeFormat === "12" && period === undefined)
           ) {
             this.value = null;
+            if (hour === undefined && minute === undefined && (!this.showSeconds || second === undefined)) {
+              // Reset date to current date when clearing time.
+              const { month, day, year } = this.#getCurrent();
+              this._value = { ...this._value, month, day, year };
+            }
           } else {
             let h = hour;
             if (period === 1 && h < 12) h += 12;
