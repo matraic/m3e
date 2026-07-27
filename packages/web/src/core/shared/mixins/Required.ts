@@ -29,9 +29,13 @@ export function isRequiredMixin(value: unknown): value is RequiredMixin {
  * Mixin to augment an element with behavior that supports a required state.
  * @template T The type of the base class.
  * @param {T} base The base class.
+ * @param {boolean} [supportsAria=true] Whether ARIA is supported.
  * @returns {Constructor<RequiredMixin> & T} A constructor that implements `RequiredMixin`.
  */
-export function Required<T extends Constructor<LitElement>>(base: T): Constructor<RequiredMixin> & T {
+export function Required<T extends Constructor<LitElement>>(
+  base: T,
+  supportsAria: boolean = true,
+): Constructor<RequiredMixin> & T {
   abstract class _RequiredMixin extends base implements RequiredMixin {
     /**
      * Whether a value is required for the element.
@@ -47,7 +51,7 @@ export function Required<T extends Constructor<LitElement>>(base: T): Constructo
     /** @inheritdoc */
     protected override update(changedProperties: PropertyValues<this>): void {
       super.update(changedProperties);
-      if (changedProperties.has("required")) {
+      if (changedProperties.has("required") && supportsAria) {
         this.ariaRequired = `${this.required}`;
       }
     }

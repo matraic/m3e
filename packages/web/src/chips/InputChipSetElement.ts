@@ -66,6 +66,7 @@ export class M3eInputChipSetElement
   extends RequiredConstraintValidation(
     Required(
       ConstraintValidation(Dirty(Touched(FormAssociated(Disabled(AttachInternals(Role(M3eChipSetElement, "grid"))))))),
+      false,
     ),
   )
   implements FormFieldControl
