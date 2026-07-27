@@ -738,15 +738,15 @@ export class M3eDateInputElement
     switch (this.type) {
       case "date": {
         if (year !== undefined && month !== undefined && day !== undefined) {
-          const maxDay = new Date(year, month, 0).getDate();
-          const clampedDay = Math.min(day, maxDay);
           // Use existing time if set; otherwise, these default to 0 (midnight).
-          let h = hour;
-          if (h !== undefined) {
-            if (period === 1 && h < 12) h += 12;
-            if (period === 0 && h === 12) h = 0;
-          }
-          newDate = new Date(year, month - 1, clampedDay, h, minute, second);
+          newDate = new Date(
+            year,
+            month - 1,
+            this.#clampDay(day, month, year),
+            this.#adjustHourForPeriod(hour, period),
+            minute,
+            second,
+          );
         }
         break;
       }
@@ -759,14 +759,18 @@ export class M3eDateInputElement
           (!this.showSeconds || second !== undefined) &&
           (this.#timeFormat === "24" || this._value.period !== undefined)
         ) {
-          let h = hour;
-          if (period === 1 && h < 12) h += 12;
-          if (period === 0 && h === 12) h = 0;
-
           // Use existing date if set; otherwise, use current date.
           const current =
             year !== undefined && month !== undefined && day !== undefined ? { month, day, year } : this.#getCurrent();
-          newDate = new Date(current.year, current.month - 1, current.day, h, minute, second);
+
+          newDate = new Date(
+            current.year,
+            current.month - 1,
+            current.day,
+            this.#adjustHourForPeriod(hour, period),
+            minute,
+            second,
+          );
         }
         break;
       }
@@ -781,14 +785,14 @@ export class M3eDateInputElement
           (!this.showSeconds || second !== undefined) &&
           (this.#timeFormat === "24" || this._value.period !== undefined)
         ) {
-          const maxDay = new Date(year, month, 0).getDate();
-          const clampedDay = Math.min(day, maxDay);
-
-          let h = hour;
-          if (period === 1 && h < 12) h += 12;
-          if (period === 0 && h === 12) h = 0;
-
-          newDate = new Date(year, month - 1, clampedDay, h, minute, second);
+          newDate = new Date(
+            year,
+            month - 1,
+            this.#clampDay(day, month, year),
+            this.#adjustHourForPeriod(hour, period),
+            minute,
+            second,
+          );
         }
         break;
       }
@@ -1226,9 +1230,7 @@ export class M3eDateInputElement
               this._value = { ...this._value, hour: 0, minute: 0, second: 0, period: 0 };
             }
           } else {
-            const maxDay = new Date(year, month, 0).getDate();
-            const clampedDay = Math.min(day, maxDay);
-
+            const clampedDay = this.#clampDay(day, month, year);
             this._value = { ...this._value, day: clampedDay };
             this.value = new Date(year, month - 1, clampedDay, base.getHours(), base.getMinutes(), base.getSeconds());
           }
@@ -1251,11 +1253,14 @@ export class M3eDateInputElement
               this._value = { ...this._value, month, day, year };
             }
           } else {
-            let h = hour;
-            if (period === 1 && h < 12) h += 12;
-            if (period === 0 && h === 12) h = 0;
-
-            this.value = new Date(base.getFullYear(), base.getMonth(), base.getDate(), h, minute, second);
+            this.value = new Date(
+              base.getFullYear(),
+              base.getMonth(),
+              base.getDate(),
+              this.#adjustHourForPeriod(hour, period),
+              minute,
+              second,
+            );
           }
         }
         break;
@@ -1275,16 +1280,9 @@ export class M3eDateInputElement
           ) {
             this.value = null;
           } else {
-            const maxDay = new Date(year, month, 0).getDate();
-            const clampedDay = Math.min(day, maxDay);
-
-            let h = hour;
-
-            if (period === 1 && h < 12) h += 12;
-            if (period === 0 && h === 12) h = 0;
-
+            const clampedDay = this.#clampDay(day, month, year);
             this._value = { ...this._value, day: clampedDay };
-            this.value = new Date(year, month - 1, clampedDay, h, minute, second);
+            this.value = new Date(year, month - 1, clampedDay, this.#adjustHourForPeriod(hour, period), minute, second);
           }
         }
         break;
@@ -1314,6 +1312,20 @@ export class M3eDateInputElement
           period: this.value.getHours() >= 12 ? 1 : 0,
         }
       : {};
+  }
+
+  /** @private */
+  #adjustHourForPeriod(hour: number | undefined, period: number | undefined): number | undefined {
+    if (hour !== undefined) {
+      if (period === 1 && hour < 12) hour += 12;
+      if (period === 0 && hour === 12) hour = 0;
+    }
+    return hour;
+  }
+
+  /** @private */
+  #clampDay(day: number, month: number, year: number): number {
+    return Math.min(day, new Date(year, month, 0).getDate());
   }
 
   /** @private */
