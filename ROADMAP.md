@@ -12,7 +12,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 The following components are planned for future release:
 
-- Inputs (Numeric, Masked, Date, Datetime)
+- Inputs (Numeric, Masked)
 - Carousel
 
 ### 📜 Building with AI
