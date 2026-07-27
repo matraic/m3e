@@ -516,7 +516,12 @@ export class M3eDateInputElement
   /** @inheritdoc */
   protected override render(): unknown {
     // Intl is used to determine the order to present segments.
-    return html` <div class="base" @click="${this.#handleClick}" @focusout="${this.#handleFocusOut}">
+    return html` <div
+      class="base"
+      tabindex="-1"
+      @pointerdown="${this.#handlePointerDown}"
+      @focusout="${this.#handleFocusOut}"
+    >
       ${this.#format.map((part) => {
         switch (part.type) {
           case "month": {
@@ -675,7 +680,8 @@ export class M3eDateInputElement
   }
 
   /** @private */
-  #handleClick(): void {
+  #handlePointerDown(e: PointerEvent): void {
+    e.preventDefault();
     this.focus();
   }
 
