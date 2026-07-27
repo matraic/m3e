@@ -516,7 +516,6 @@ export class M3eDateInputElement
       if (!this.#ignoreValueUpdate) {
         this.#updateValueBuffer();
       }
-      this.#ignoreValueUpdate = false;
     }
 
     if (_changedProperties.has("value") || _changedProperties.has(<keyof M3eDateInputElement>"_value")) {
@@ -1224,94 +1223,107 @@ export class M3eDateInputElement
   }
 
   /** @private */
-  #updateValue(): void {
+  async #updateValue(): Promise<void> {
     this.#ignoreValueUpdate = true;
+    try {
+      const oldValue = this.value;
+      let base = oldValue ?? new Date();
 
-    const oldValue = this.value;
-    let base = oldValue ?? new Date();
+      switch (this.type) {
+        case "date":
+          {
+            const { year, month, day } = this._value;
+            if (year === undefined || month === undefined || day === undefined) {
+              this.value = null;
+              if (year === undefined && month === undefined && day === undefined) {
+                // Reset time to midnight when clearing date.
+                this._value = { ...this._value, hour: 0, minute: 0, second: 0, period: 0 };
+              }
+            } else {
+              if (!oldValue) {
+                // Use midnight when creating a new date.
+                base = new Date(base.getFullYear(), base.getMonth(), base.getDate());
+              }
 
-    switch (this.type) {
-      case "date":
-        {
-          const { year, month, day } = this._value;
-          if (year === undefined || month === undefined || day === undefined) {
-            this.value = null;
-            if (year === undefined && month === undefined && day === undefined) {
-              // Reset time to midnight when clearing date.
-              this._value = { ...this._value, hour: 0, minute: 0, second: 0, period: 0 };
+              const clampedDay = this.#clampDay(day, month, year);
+              this._value = { ...this._value, day: clampedDay };
+              this.value = new Date(year, month - 1, clampedDay, base.getHours(), base.getMinutes(), base.getSeconds());
             }
-          } else {
-            if (!oldValue) {
-              // Use midnight when creating a new date.
-              base = new Date(base.getFullYear(), base.getMonth(), base.getDate());
+          }
+          break;
+
+        case "time":
+          {
+            const { hour, minute, second, period } = this._value;
+            if (
+              hour === undefined ||
+              minute === undefined ||
+              second === undefined ||
+              (this.#timeFormat === "12" && period === undefined)
+            ) {
+              this.value = null;
+              if (hour === undefined && minute === undefined && (!this.showSeconds || second === undefined)) {
+                // Reset date to current date when clearing time.
+                const { month, day, year } = this.#getCurrent();
+                this._value = { ...this._value, month, day, year };
+              }
+            } else {
+              this.value = new Date(
+                base.getFullYear(),
+                base.getMonth(),
+                base.getDate(),
+                this.#adjustHourForPeriod(hour, period),
+                minute,
+                second,
+              );
             }
-
-            const clampedDay = this.#clampDay(day, month, year);
-            this._value = { ...this._value, day: clampedDay };
-            this.value = new Date(year, month - 1, clampedDay, base.getHours(), base.getMinutes(), base.getSeconds());
           }
-        }
-        break;
+          break;
 
-      case "time":
-        {
-          const { hour, minute, second, period } = this._value;
-          if (
-            hour === undefined ||
-            minute === undefined ||
-            second === undefined ||
-            (this.#timeFormat === "12" && period === undefined)
-          ) {
-            this.value = null;
-            if (hour === undefined && minute === undefined && (!this.showSeconds || second === undefined)) {
-              // Reset date to current date when clearing time.
-              const { month, day, year } = this.#getCurrent();
-              this._value = { ...this._value, month, day, year };
+        case "datetime":
+          {
+            const { year, month, day, hour, minute, second, period } = this._value;
+
+            if (
+              year === undefined ||
+              month === undefined ||
+              day === undefined ||
+              hour === undefined ||
+              minute === undefined ||
+              second === undefined ||
+              (this.#timeFormat === "12" && period === undefined)
+            ) {
+              this.value = null;
+            } else {
+              const clampedDay = this.#clampDay(day, month, year);
+              this._value = { ...this._value, day: clampedDay };
+              this.value = new Date(
+                year,
+                month - 1,
+                clampedDay,
+                this.#adjustHourForPeriod(hour, period),
+                minute,
+                second,
+              );
             }
-          } else {
-            this.value = new Date(
-              base.getFullYear(),
-              base.getMonth(),
-              base.getDate(),
-              this.#adjustHourForPeriod(hour, period),
-              minute,
-              second,
-            );
           }
-        }
-        break;
-
-      case "datetime":
-        {
-          const { year, month, day, hour, minute, second, period } = this._value;
-
-          if (
-            year === undefined ||
-            month === undefined ||
-            day === undefined ||
-            hour === undefined ||
-            minute === undefined ||
-            second === undefined ||
-            (this.#timeFormat === "12" && period === undefined)
-          ) {
-            this.value = null;
-          } else {
-            const clampedDay = this.#clampDay(day, month, year);
-            this._value = { ...this._value, day: clampedDay };
-            this.value = new Date(year, month - 1, clampedDay, this.#adjustHourForPeriod(hour, period), minute, second);
-          }
-        }
-        break;
-    }
-
-    if (oldValue?.getTime() !== this.value?.getTime()) {
-      if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
-        this.#changed = true;
-        this.dispatchEvent(new Event("input", { bubbles: true }));
-      } else {
-        this.value = oldValue;
-        this.#updateValueBuffer();
+          break;
       }
+
+      if (oldValue?.getTime() !== this.value?.getTime()) {
+        if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
+          this.#changed = true;
+          this.dispatchEvent(new Event("input", { bubbles: true }));
+        } else {
+          this.value = oldValue;
+          this.#updateValueBuffer();
+        }
+      }
+      if (this.isUpdatePending) {
+        await this.updateComplete;
+      }
+    } finally {
+      this.#ignoreValueUpdate = false;
     }
   }
 
