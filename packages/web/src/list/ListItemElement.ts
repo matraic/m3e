@@ -45,9 +45,12 @@ import { ListItemContentType } from "./ListItemContentType";
  *
  * @slot - Renders the content of the list item.
  * @slot leading - Renders the leading content of the list item.
+ * @slot leading-icon - Renders a leading icon of the list item (fallback within the leading slot).
  * @slot overline - Renders the overline of the list item.
  * @slot supporting-text - Renders the supporting text of the list item.
  * @slot trailing - Renders the trailing content of the list item.
+ * @slot trailing-supporting-text - Renders trailing supporting text of the list item (fallback within the trailing slot).
+ * @slot trailing-icon - Renders a trailing icon of the list item (fallback within the trailing slot).
  *
  * @cssprop --m3e-list-item-between-space - Horizontal gap between elements.
  * @cssprop --m3e-list-item-leading-space - Horizontal padding for the leading side.

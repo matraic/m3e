@@ -67,6 +67,7 @@ import { FloatLabelType } from "./FloatLabelType";
  * @tag m3e-form-field
  *
  * @slot - Renders the control of the field.
+ * @slot label - Renders the label of the field.
  * @slot prefix - Renders content before the fields's control.
  * @slot prefix-text - Renders text before the fields's control.
  * @slot suffix - Renders content after the fields's control.

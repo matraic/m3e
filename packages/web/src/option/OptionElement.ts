@@ -32,6 +32,8 @@ import { typeaheadLabel } from "@m3e/web/core/a11y";
  *
  * @slot - Renders the label of the option.
  *
+ * @fires state-change - Emitted when the option's selected or disabled state changes.
+ *
  * @attr disabled - Whether the element is disabled.
  * @attr disable-highlight - Whether text highlighting is disabled.
  * @attr highlight-mode - The mode in which to highlight a term.
