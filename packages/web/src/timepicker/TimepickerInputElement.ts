@@ -87,7 +87,8 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
       position: relative;
     }
     .field,
-    .focus-ring {
+    .focus-ring,
+    .ripple {
       width: var(--m3e-timepicker-input-field-container-width, 6rem);
       height: var(--m3e-timepicker-input-field-height, 5rem);
       border-radius: var(--m3e-timepicker-input-field-container-shape, ${DesignToken.shape.corner.small});
@@ -376,7 +377,7 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
         <span class="label">${label}</span>
       </m3e-collapsible>
       <m3e-focus-ring class="focus-ring" for="${view}"></m3e-focus-ring>
-      <m3e-ripple for="${view}"></m3e-ripple>
+      <m3e-ripple class="ripple" for="${view}"></m3e-ripple>
     </div>`;
   }
 
