@@ -4,7 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 2.6.0 Release
+- 2.7.0 Release
 
 ## 🔮 Future
 
@@ -21,6 +21,9 @@ The following components are planned for future release:
 - MCP Server enabling IDEs and AI tools to query local knowledge about components and documentation
 
 ## 🏛️ Past Milestones
+
+- **2.7.0 — Feature release**
+  Added `@m3e/web/date-input`, bug fixes.
 
 - **2.6.0 – 2.6.3 — Feature release + patch releases**
   Added `@m3e/web/timepicker`, bug fixes.

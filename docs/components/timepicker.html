@@ -19,7 +19,7 @@
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://jspm.dev/api-viewer-element"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.6.3/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.0/dist/all.min.js"></script>
     <script src="../main.js"></script>
     <script src="./timepicker.js"></script>
   </head>
@@ -73,6 +73,49 @@
 &lt;/m3e-form-field&gt;
 &lt;m3e-timepicker id=&quot;timepicker&quot; variant=&quot;auto&quot;&gt;&lt;/m3e-timepicker&gt;
 </pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Time input</m3e-heading>
+        <p>
+          The <code>m3e-date-input</code> can also provide a segmented time field when configured with
+          <code>type="time"</code>. It integrates directly with <code>m3e-timepicker</code> and can be used in place of
+          a standard <code>input</code> when you want built-in parsing, formatting, and precise segment editing.
+        </p>
+        <p>
+          The examples on this page use a standard <code>input</code> to demonstrate the full
+          <code>m3e-timepicker</code> API. When using <code>m3e-date-input</code> with <code>type="time"</code>, many of
+          these props are not required because the input manages the value and the picker simply writes the selected
+          time back to the field.
+        </p>
+        <p>See <a href="../components/date-input.html">Date Input</a> for details.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld9">Time Picker</label>
+              <m3e-date-input id="fld9" type="time"></m3e-date-input>
+              <m3e-icon-button aria-label="Open time picker" slot="suffix">
+                <m3e-icon name="schedule"></m3e-icon>
+                <m3e-timepicker-toggle for="picker7"></m3e-timepicker-toggle>
+              </m3e-icon-button>
+              <span slot="hint">HH:MM</span>
+            </m3e-form-field>
+            <m3e-timepicker id="picker7" for="fld9"></m3e-timepicker>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field&quot;&gt;Time Picker&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field&quot; type=&quot;time&quot;&gt;&lt;/m3e-date-input&gt;
+  &lt;m3e-icon-button aria-label=&quot;Open time picker&quot; slot=&quot;suffix&quot;&gt;
+    &lt;m3e-icon name=&quot;schedule&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;m3e-timepicker-toggle for=&quot;timepicker&quot;&gt;&lt;/m3e-timepicker-toggle&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;span slot=&quot;hint&quot;&gt;HH:MM&lt;/span&gt;
+&lt;/m3e-form-field&gt;
+&lt;m3e-timepicker id=&quot;timepicker&quot; for=&quot;field&quot;&gt;&lt;/m3e-timepicker&gt;</pre
           >
         </m3e-card>
 
@@ -283,8 +326,7 @@ picker.addEventListener(&quot;change&quot;, () =&gt; {
           In addition to <code>min-time</code> and <code>max-time</code> constraints, the
           <code>blackoutTimes</code> property lets you provide a function that determines whether a given time is
           disabled and cannot be selected. The function receives a <code>TimeParts</code> object containing the
-          <code>hour</code> and <code>minute</code>
-          values for the time being evaluated.
+          <code>hour</code>, <code>minute</code>, and <code>second</code>values for the time being evaluated.
         </p>
 
         <m3e-card variant="outlined" class="showcase">

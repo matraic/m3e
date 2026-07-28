@@ -20,7 +20,7 @@
     <link href="./datepicker.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.6.3/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.0/dist/all.min.js"></script>
     <script src="../main.js"></script>
     <script src="./datepicker.js"></script>
   </head>
@@ -73,6 +73,47 @@
   &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY&lt;/span&gt;
 &lt;/m3e-form-field&gt;
 &lt;m3e-datepicker id=&quot;datepicker&quot;&gt;&lt;/m3e-datepicker&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Date input</m3e-heading>
+        <p>
+          The <code>m3e-date-input</code> provides a segmented date field that integrates directly with
+          <code>m3e-datepicker</code>. It can be used in place of a standard <code>input</code> when you want built-in
+          parsing, formatting, and precise segment editing.
+        </p>
+        <p>
+          The examples on this page use a standard <code>input</code> to demonstrate the full
+          <code>m3e-datepicker</code> API. When using <code>m3e-date-input</code>, many of these props are not required
+          because the input manages the value and the picker simply writes the selected date back to the field.
+        </p>
+        <p>See <a href="../components/date-input.html">Date Input</a> for details.</p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld9">Date Picker</label>
+              <m3e-date-input id="fld9"></m3e-date-input>
+              <m3e-icon-button aria-label="Open calendar" slot="suffix">
+                <m3e-icon name="calendar_today"></m3e-icon>
+                <m3e-datepicker-toggle for="picker6"></m3e-datepicker-toggle>
+              </m3e-icon-button>
+              <span slot="hint">MM/DD/YYYY</span>
+            </m3e-form-field>
+            <m3e-datepicker id="picker6" for="fld9"></m3e-datepicker>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field&quot;&gt;Date Picker&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field&quot;&gt;&lt;/m3e-date-input&gt;
+  &lt;m3e-icon-button aria-label=&quot;Open calendar&quot; slot=&quot;suffix&quot;&gt;
+    &lt;m3e-icon name=&quot;calendar_today&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;m3e-datepicker-toggle for=&quot;datepicker&quot;&gt;&lt;/m3e-datepicker-toggle&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY&lt;/span&gt;
+&lt;/m3e-form-field&gt;
+&lt;m3e-datepicker id=&quot;datepicker&quot; for=&quot;field&quot;&gt;&lt;/m3e-datepicker&gt;</pre
           >
         </m3e-card>
 
@@ -304,8 +345,9 @@ picker.addEventListener(&quot;change&quot;, () =&gt; {
 
         <m3e-heading variant="headline" size="small" level="3">Blackout dates</m3e-heading>
         <p>
-          Use the <code>blackoutDates</code> property to specify a function used to determine whether a date is disabled
-          and cannot be selected by the user.
+          In addition to <code>min-date</code> and <code>max-date</code> constraints, you can use the
+          <code>blackoutDates</code> property to specify a function used to determine whether a date is disabled and
+          cannot be selected by the user.
         </p>
         <m3e-card variant="outlined" class="showcase">
           <div slot="content">

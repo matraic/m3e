@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Date Input for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Date Input for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <link href="app-bar.css" rel="stylesheet" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.0/dist/all.min.js"></script>
+    <script src="../main.js"></script>
+    <script src="./date-input.js"></script>
+  </head>
+  <body>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Date Input</m3e-heading>
+        <p>
+          The <code>m3e-date-input</code> component provides a segmented input for editing date and/or time values. It
+          supports date-only, time-only, and combined date/time entry, and integrates with <code>m3e-form-field</code>,
+          <code>m3e-datepicker</code> and <code>m3e-timepicker</code>. Each segment is independently editable for
+          precise, accessible, form-friendly interaction. See <a href="../components/form-field.html">Form Field</a>,
+          <a href="../components/datepicker.html">Datepicker</a>, and
+          <a href="../components/timepicker.html">Timepicker</a> for details.
+        </p>
+
+        <m3e-card variant="outlined" class="install"><pre slot="content">import "@m3e/web/date-input";</pre></m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+        <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+        <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+        <p>
+          The <code>m3e-date-input</code> is intended to be used inside <code>m3e-form-field</code>. The example below
+          shows that usage. See <a href="../components/form-field.html">Form Field</a> for details.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld1">Date Field</label>
+              <m3e-date-input id="fld1"></m3e-date-input>
+              <span slot="hint">MM/DD/YYYY</span>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field&quot;&gt;Date Field&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field&quot;&gt;&lt;/m3e-date-input&gt;
+  &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY&lt;/span&gt;
+&lt;/m3e-form-field&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Value binding</m3e-heading>
+        <p>
+          Use the <code>value</code> attribute to set or read the date. The <code>beforeinput</code> and
+          <code>input</code> fire only when all segments are fully populated. A <code>change</code>
+          fires when focus leaves the control.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld2">Date Field</label>
+              <m3e-date-input id="fld2" value="2026-01-01T23:30:00Z"></m3e-date-input>
+              <span slot="hint">MM/DD/YYYY</span>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field&quot;&gt;Date Field&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field&quot; value=&quot;2026-01-01&quot;&gt;&lt;/m3e-date-input&gt;
+  &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY&lt;/span&gt;
+&lt;/m3e-form-field&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Date string handling</m3e-heading>
+        <p>
+          Different browsers interpret date strings in inconsistent ways, especially when the string resembles an ISO
+          date but does not include a time or timezone. To ensure predictable behavior across environments,
+          <code>m3e-date-input</code> uses a consistent, standards-aligned parsing model instead of relying on the
+          browser's built-in <code>Date.parse()</code> rules.
+        </p>
+        <p>
+          When <code>m3e-date-input</code> receives a date string, it automatically detects whether the value matches
+          one of the ISO-8601 formats that can be parsed safely and unambiguously:
+        </p>
+        <ul>
+          <li><code>yyyy-MM-dd</code> — local date (no time, no timezone)</li>
+          <li><code>yyyy-MM-ddTHH:mm:ss</code> — local date and time</li>
+          <li><code>yyyy-MM-ddTHH:mm:ssZ</code> — UTC date and time</li>
+          <li><code>yyyy-MM-ddTHH:mm:ss±HH:mm</code> — date and time with an explicit timezone offset</li>
+        </ul>
+        <p>
+          Strings in these formats are converted into local <code>Date</code> objects without unexpected timezone
+          shifts. This prevents issues such as date-only values drifting into the previous or next day when interpreted
+          as UTC. If a string does not follow one of these ISO-compatible patterns, parsing may be ambiguous or
+          unsupported. For the most reliable results, use one of the formats above.
+        </p>
+
+        <m3e-heading variant="headline" size="small" level="3">Form Associated</m3e-heading>
+        <p>
+          This component participates in form submission as a
+          <a
+            href="https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-face"
+            target="_blank"
+            rel="noopener noreferrer"
+            >form-associated custom element</a
+          >
+          (FACE), contributing its state to the form data. The <code>name</code> attribute defines the key under which
+          the component's value is submitted in a form. When not disabled, <code>value</code> is submitted as a string
+          value in ISO format.
+        </p>
+        <p>
+          The component honors the <code>disabled</code> state as a <strong>property-only</strong> control. When
+          disabled at runtime, it does <em>not</em> sprout a <code>disabled</code> attribute into the DOM.
+        </p>
+
+        <m3e-heading variant="headline" size="small" level="3">Editing modes</m3e-heading>
+        <p>
+          Use the <code>type</code> attribute to control whether <code>m3e-date-input</code> edits
+          <code>date</code> (default), <code>time</code>, or <code>datetime</code> values.
+        </p>
+        <p>
+          When editing <code>time</code>-only, the existing date portion of the value is preserved. When editing
+          <code>date</code>-only, the existing time portion is preserved.
+        </p>
+        <p>
+          When creating a new <code>Date</code> in <code>date</code> mode, the time defaults to midnight. When creating
+          a new <code>Date</code> in <code>time</code> mode, the date defaults to the current day.
+        </p>
+
+        <p>The following examples illustrate editing time and date/time values.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld3">Time Field</label>
+              <m3e-date-input id="fld3" type="time" value="2026-01-01T23:30:00Z"></m3e-date-input>
+              <span slot="hint">HH:MM</span>
+            </m3e-form-field>
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld4">Date-time Field</label>
+              <m3e-date-input id="fld4" type="datetime" value="2026-01-01T23:30:00Z"></m3e-date-input>
+              <span slot="hint">MM/DD/YYYY HH:MM</span>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field1&quot;&gt;Time Field&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field1&quot; type=&quot;time&quot; value=&quot;2026-01-01T23:30:00Z&quot;&gt;&lt;/m3e-date-input&gt;
+  &lt;span slot=&quot;hint&quot;&gt;HH:MM&lt;/span&gt;
+&lt;/m3e-form-field&gt;
+
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field2&quot;&gt;Date-time Field&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field2&quot; type=&quot;datetime&quot; value=&quot;2026-01-01T23:30:00Z&quot;&gt;&lt;/m3e-date-input&gt;
+  &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY HH:MM&lt;/span&gt;
+&lt;/m3e-form-field&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Date and time pickers</m3e-heading>
+        <p>
+          The <code>m3e-datepicker</code> and <code>m3e-timepicker</code> integrate with
+          <code>m3e-date-input</code> using the <code>for</code> attribute, which binds the picker to the input by
+          referencing the input's ID. See <a href="../components/datepicker.html">Datepicker</a>, and
+          <a href="../components/timepicker.html">Timepicker</a> for details.
+        </p>
+        <p>
+          When a picker is bound to <code>m3e-date-input</code>, the input's own configuration takes precedence.
+          Properties such as <code>min-date</code>, <code>max-date</code>, <code>blackoutDates</code>,
+          <code>min-time</code>, <code>max-time</code>, <code>blackoutTimes</code>, <code>time-format</code>, and
+          <code>show-seconds</code> override the corresponding settings on the picker. This ensures the input and picker
+          remain consistent and enforce the same constraints.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld11">Date Picker</label>
+              <m3e-date-input id="fld11"></m3e-date-input>
+              <m3e-icon-button aria-label="Open calendar" slot="suffix">
+                <m3e-icon name="calendar_today"></m3e-icon>
+                <m3e-datepicker-toggle for="datepicker"></m3e-datepicker-toggle>
+              </m3e-icon-button>
+              <span slot="hint">MM/DD/YYYY</span>
+            </m3e-form-field>
+            <m3e-datepicker id="datepicker" for="fld11"></m3e-datepicker>
+
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld12">Time Picker</label>
+              <m3e-date-input id="fld12" type="time"></m3e-date-input>
+              <m3e-icon-button aria-label="Open time picker" slot="suffix">
+                <m3e-icon name="schedule"></m3e-icon>
+                <m3e-timepicker-toggle for="timepicker"></m3e-timepicker-toggle>
+              </m3e-icon-button>
+              <span slot="hint">HH:MM</span>
+            </m3e-form-field>
+            <m3e-timepicker id="timepicker" for="fld12"></m3e-timepicker>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field1&quot;&gt;Date Picker&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field1&quot;&gt;&lt;/m3e-date-input&gt;
+  &lt;m3e-icon-button aria-label=&quot;Open calendar&quot; slot=&quot;suffix&quot;&gt;
+    &lt;m3e-icon name=&quot;calendar_today&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;m3e-datepicker-toggle for=&quot;datepicker&quot;&gt;&lt;/m3e-datepicker-toggle&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY&lt;/span&gt;
+&lt;/m3e-form-field&gt;
+&lt;m3e-datepicker id=&quot;datepicker&quot; for=&quot;field1&quot;&gt;&lt;/m3e-datepicker&gt;
+
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field2&quot;&gt;Time Picker&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field2&quot; type=&quot;time&quot;&gt;&lt;/m3e-date-input&gt;
+  &lt;m3e-icon-button aria-label=&quot;Open time picker&quot; slot=&quot;suffix&quot;&gt;
+    &lt;m3e-icon name=&quot;schedule&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;m3e-timepicker-toggle for=&quot;timepicker&quot;&gt;&lt;/m3e-timepicker-toggle&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;span slot=&quot;hint&quot;&gt;HH:MM&lt;/span&gt;
+&lt;/m3e-form-field&gt;
+&lt;m3e-timepicker id=&quot;timepicker&quot; for=&quot;field2&quot;&gt;&lt;/m3e-timepicker&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Hour format</m3e-heading>
+        <p>
+          The <code>time-format</code> attribute controls the hour cycle used by the input. It accepts
+          <code>"12"</code> (default), <code>"24"</code>, or <code>"auto"</code>.
+        </p>
+
+        <ul>
+          <li><code>"12"</code> — forces a 12-hour clock with an AM/PM meridiem.</li>
+          <li><code>"24"</code> — forces a 24-hour clock without a meridiem.</li>
+          <li><code>"auto"</code> — selects 12-hour or 24-hour based on the user's locale.</li>
+        </ul>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld7">Time Field</label>
+              <m3e-date-input id="fld7" type="time" time-format="24" value="2026-01-01T23:30:00Z"></m3e-date-input>
+              <span slot="hint">HH:MM</span>
+            </m3e-form-field>
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld8">Date-time Field</label>
+              <m3e-date-input id="fld8" type="datetime" time-format="24" value="2026-01-01T23:30:00Z"></m3e-date-input>
+              <span slot="hint">MM/DD/YYYY HH:MM</span>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field1&quot;&gt;Time Field&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field1&quot; type=&quot;time&quot; time-format=&quot;24&quot; value=&quot;2026-01-01T23:30:00Z&quot;&gt;
+  &lt;/m3e-date-input&gt;
+  &lt;span slot=&quot;hint&quot;&gt;HH:MM&lt;/span&gt;
+&lt;/m3e-form-field&gt;
+
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field2&quot;&gt;Date-time Field&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field2&quot; type=&quot;datetime&quot; time-format=&quot;24&quot; value=&quot;2026-01-01T23:30:00Z&quot;&gt;
+  &lt;/m3e-date-input&gt;
+  &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY HH:MM&lt;/span&gt;
+&lt;/m3e-form-field&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Seconds</m3e-heading>
+        <p>Use the <code>show-seconds</code> attribute to display the seconds segment when editing time.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld5">Time Field</label>
+              <m3e-date-input id="fld5" type="time" show-seconds value="2026-01-01T23:30:00Z"></m3e-date-input>
+              <span slot="hint">HH:MM:SS</span>
+            </m3e-form-field>
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld6">Date-time Field</label>
+              <m3e-date-input id="fld6" type="datetime" show-seconds value="2026-01-01T23:30:00Z"></m3e-date-input>
+              <span slot="hint">MM/DD/YYYY HH:MM:SS</span>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field1&quot;&gt;Time Field&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field1&quot; type=&quot;time&quot; show-seconds value=&quot;2026-01-01T23:30:00Z&quot;&gt;
+  &lt;/m3e-date-input&gt;
+  &lt;span slot=&quot;hint&quot;&gt;HH:MM:SS&lt;/span&gt;
+&lt;/m3e-form-field&gt;
+
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field2&quot;&gt;Date-time Field&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field2&quot; type=&quot;datetime&quot; show-seconds value=&quot;2026-01-01T23:30:00Z&quot;&gt;
+  &lt;/m3e-date-input&gt;
+  &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY HH:MM:SS&lt;/span&gt;
+&lt;/m3e-form-field&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Disabling</m3e-heading>
+        <p>
+          Use the <code>disabled</code> attribute to disable the input. When associated with a picker, the picker's
+          toggle button will automatically be disabled when the input is disabled to ensure the user cannot open a
+          picker for a value that cannot be edited.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld13">Date Field</label>
+              <m3e-date-input id="fld13" value="2026-01-01T23:30:00Z" disabled></m3e-date-input>
+              <span slot="hint">MM/DD/YYYY</span>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field&quot;&gt;Date Field&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field&quot; value=&quot;2026-01-01&quot; disabled&gt;&lt;/m3e-date-input&gt;
+  &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY&lt;/span&gt;
+&lt;/m3e-form-field&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Readonly</m3e-heading>
+        <p>
+          Use the <code>readonly</code> attribute to prevent editing while still allowing focus and segment navigation.
+        </p>
+        <p>
+          Similar to disabled, when associated with a picker, the picker's toggle button will automatically be disabled
+          when the input is read-only.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld14">Date Field</label>
+              <m3e-date-input id="fld14" value="2026-01-01T23:30:00Z" readonly></m3e-date-input>
+              <span slot="hint">MM/DD/YYYY</span>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field&quot;&gt;Date Field&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field&quot; value=&quot;2026-01-01&quot; readonly&gt;&lt;/m3e-date-input&gt;
+  &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY&lt;/span&gt;
+&lt;/m3e-form-field&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Required</m3e-heading>
+        <p>Apply the <code>required</code> attribute to mark the input as a mandatory field.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld15">Date Field</label>
+              <m3e-date-input id="fld15" required></m3e-date-input>
+              <span slot="hint">MM/DD/YYYY</span>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field&quot;&gt;Date Field&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field&quot; required&gt;&lt;/m3e-date-input&gt;
+  &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY&lt;/span&gt;
+&lt;/m3e-form-field&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Min and max dates</m3e-heading>
+        <p>
+          Use the <code>min-date</code> and <code>max-date</code> attributes to mark dates before or after the
+          respective values as invalid.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld9">Date Field</label>
+              <m3e-date-input id="fld9" value="2026-01-01" min-date="2026-01-01" max-date="2026-04-30"></m3e-date-input>
+              <span slot="hint">MM/DD/YYYY</span>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field&quot;&gt;Date Field&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field&quot; value=&quot;2026-01-01&quot; min-date=&quot;2026-01-01&quot; max-date=&quot;2026-04-30&quot;&gt;
+  &lt;/m3e-date-input&gt;
+  &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY&lt;/span&gt;
+&lt;/m3e-form-field&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Blackout dates</m3e-heading>
+        <p>
+          In addition to <code>min-date</code> and <code>max-date</code> constraints, you can use the
+          <code>blackoutDates</code> property to specify a function used to determine whether a date invalid.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="blackout-dates">Date Field</label>
+              <m3e-date-input id="blackout-dates"></m3e-date-input>
+              <span slot="hint">MM/DD/YYYY</span>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+document.querySelector(&quot;#blackout-dates&quot;).blackoutDates = (date) =&gt; isWeekend(date);</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Min and max times</m3e-heading>
+        <p>
+          Use the <code>min-time</code> and <code>max-time</code> attributes to mark times before or after the
+          respective values as invalid.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld10">Time Field</label>
+              <m3e-date-input
+                id="fld10"
+                type="time"
+                value="2026-01-01T13:15:00Z"
+                min-time="8:15 AM"
+                max-time="5:30 PM"
+              ></m3e-date-input>
+              <span slot="hint">HH:MM</span>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field&quot;&gt;Time Field&lt;/label&gt;
+  &lt;m3e-date-input
+    id=&quot;field&quot;
+    type=&quot;time&quot;
+    value=&quot;2026-01-01T13:15:00Z&quot;
+    min-time=&quot;8:15 AM&quot;
+    max-time=&quot;5:30 PM&quot;
+  &gt;&lt;/m3e-date-input&gt;
+  &lt;span slot=&quot;hint&quot;&gt;HH:MM&lt;/span&gt;
+&lt;/m3e-form-field&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Blackout times</m3e-heading>
+        <p>
+          In addition to <code>min-time</code> and <code>max-time</code> constraints, the
+          <code>blackoutTimes</code> property lets you provide a function that determines whether a given time is
+          invalid. The function receives a <code>TimeParts</code> object containing the <code>hour</code>,
+          <code>minute</code>, and <code>second</code>values for the time being evaluated.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="blackout-times">Time Field</label>
+              <m3e-date-input id="blackout-times" type="time" value="2026-01-01T13:15:00Z"></m3e-date-input>
+              <span slot="hint">HH:MM</span>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+document.querySelector(&quot;#blackout-times&quot;).blackoutTimes = (t) =&gt; t.hour &lt; 8 || t.hour &gt; 18;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Validation messages</m3e-heading>
+        <p>
+          Use the <code>validationMessages</code> property to override specific validation messages. Unspecified
+          messages continue to use the component's defaults.
+        </p>
+
+        <p>
+          The component uses a set of validation flags to indicate which specific rule failed. Each flag corresponds to
+          a particular validation condition, and the component sets one or more of these flags when the current value is
+          invalid. These flags drive both the built-in validation messages and any custom messages you provide through
+          <code>validationMessages</code>. Only the flags that evaluate to <code>true</code> are considered active.
+        </p>
+
+        <p>Supported flags include:</p>
+
+        <ul>
+          <li><code>valueMissing</code> — No value is provided when one is required.</li>
+          <li><code>typeMismatch</code> — The segments of the input are partially populated.</li>
+          <li>
+            <code>rangeUnderflow</code> — The value is earlier than <code>min-date</code> and/or <code>min-time</code>.
+          </li>
+          <li>
+            <code>rangeOverflow</code> — The value is later than <code>max-date</code> and/or <code>max-time</code>.
+          </li>
+          <li><code>customError</code> — The value falls within a disabled (blackout) range.</li>
+        </ul>
+
+        <p>These flags are combined to determine the final validation state and the message shown to the user.</p>
+
+        <m3e-heading variant="headline" size="medium" level="2">Internationalization</m3e-heading>
+        <p>The date and time format is automatically determined by the user's locale and cannot be customized.</p>
+        <p>
+          Segment order follows <code>Intl.DateTimeFormat().formatToParts()</code>, ensuring the correct reading order
+          for all locales. Segment labels (<code>mm</code>, <code>dd</code>, <code>yyyy</code>) are provided by the
+          component and remain consistent across locales.
+        </p>
+
+        <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+        <p>
+          The <code>m3e-date-input</code> component exposes each date and time segment as an individual
+          <code>spinbutton</code> for assistive technologies. Screen readers announce the segment label (month, day,
+          year, hour, minute, second), the current value, and the allowed range, ensuring clear feedback as the user
+          edits each part of the value.
+        </p>
+
+        <p>
+          Keyboard interaction follows native segmented input patterns. Arrow keys increment or decrement the focused
+          segment, digit keys replace the segment value, and left/right arrows move between segments. Focus remains
+          within the component. Clearing a segment does not move focus, and additional delete/backspace presses navigate
+          to the previous segment.
+        </p>
+
+        <p>
+          Validation states map to standard HTML constraint validation. Empty required fields report
+          <code>valueMissing</code>, and partially entered values report <code>typeMismatch</code>. Range constraints
+          use <code>rangeUnderflow</code> and <code>rangeOverflow</code> for values outside the configured
+          <code>min-date</code>, <code>max-date</code>, <code>min-time</code>, and <code>max-time</code>. Blackout dates
+          and times are reported as <code>customError</code>. All validity states integrate with
+          <code>m3e-form-field</code> error messaging.
+        </p>
+
+        <p>
+          The component supports accessible naming by linking to an external label through
+          <code>aria-labelledby</code> or a <code>label</code> element using <code>for</code>, ensuring the field is
+          correctly announced by assistive technologies.
+        </p>
+
+        <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package uses
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+            target="_blank"
+            >JavaScript Modules</a
+          >. To use it directly in a browser without a bundler, use a module script similar to the following.
+        </p>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/date-input.js&quot;&gt;&lt;/script&gt;</pre
+          >
+        </m3e-card>
+        <p>
+          In addition, you must use an
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+            target="_blank"
+            >import map</a
+          >
+          to include additional dependencies.
+        </p>
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;tslib&quot;: &quot;https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm&quot;,
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;lit/&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/&quot;,
+      &quot;lit-html&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/+esm&quot;,
+      &quot;lit-html/directive.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directive.js&quot;,
+      &quot;lit-html/directives/if-defined.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/if-defined.js&quot;,
+      &quot;@lit/reactive-element&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm&quot;,
+      &quot;@lit/reactive-element/&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/&quot;,
+      &quot;@m3e/web/core&quot;: &quot;/node_modules/@m3e/web/dist/core.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+          >
+        </m3e-card>
+        <p>For production builds, use the minified files to ensure optimal load performance.</p>
+
+        <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package includes a
+          <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank"
+            >Custom Elements Manifest</a
+          >
+          (<code>custom-elements.json</code>), which documents the properties, attributes, slots, events and CSS custom
+          properties of each component.
+        </p>
+        <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+        <m3e-heading variant="headline" size="small" level="3">m3e-date-input</m3e-heading>
+        <api-viewer only="m3e-date-input"> </api-viewer>
+      </m3e-content-pane>
+      <m3e-toc class="toc" for="body" max-depth="4">
+        <span slot="overline">On this page</span>
+        <span slot="title">Date Input</span>
+      </m3e-toc>
+    </div>
+  </body>
+</html>
