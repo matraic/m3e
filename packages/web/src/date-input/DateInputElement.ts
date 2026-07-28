@@ -101,6 +101,8 @@ type DateInputBuffer<T> = {
  * @cssprop --m3e-date-input-color - Color of the date input text when enabled.
  * @cssprop --m3e-date-input-disabled-color - Color of the date input text when disabled.
  * @cssprop --m3e-date-input-disabled-opacity - Opacity applied to the disabled date input text.
+ * @cssprop --m3e-date-input-focused-container-color - Background color of the selected date input segment when focused.
+ * @cssprop --m3e-date-input-focused-color - Text color of the selected date input segment when focused.
  */
 @customElement("m3e-date-input")
 export class M3eDateInputElement
@@ -165,6 +167,11 @@ export class M3eDateInputElement
     }
     :host([aria-disabled="true"]) .segment {
       user-select: text;
+    }
+    :host(:not([aria-disabled="true"])) .segment:focus,
+    :host(:not([aria-disabled="true"])) .segment::selection {
+      background-color: var(--m3e-date-input-focused-container-color, Highlight);
+      color: var(--m3e-date-input-focused-color, HighlightText);
     }
   `;
 
@@ -716,8 +723,11 @@ export class M3eDateInputElement
 
   /** @private */
   #handlePointerDown(e: PointerEvent): void {
-    e.preventDefault();
-    this.focus();
+    if (this.disabled) return;
+    if (!e.defaultPrevented) {
+      e.preventDefault();
+      queueMicrotask(() => this.focus());
+    }
   }
 
   /** @private */
@@ -1165,7 +1175,8 @@ export class M3eDateInputElement
   #handleFieldPointerDown(e: PointerEvent): void {
     if (this.disabled) return;
     e.preventDefault();
-    this.#selectAll(<HTMLSpanElement>e.target);
+    const field = <HTMLSpanElement>e.target;
+    queueMicrotask(() => field.focus());
   }
 
   /** @private */

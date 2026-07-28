@@ -66,8 +66,10 @@ This section details the attributes, events, and CSS custom properties available
 
 ### 🎛️ CSS Custom Properties
 
-| Property                            | Description                                      |
-| ----------------------------------- | ------------------------------------------------ |
-| `--m3e-date-input-color`            | Color of the date input text when enabled.       |
-| `--m3e-date-input-disabled-color`   | Color of the date input text when disabled.      |
-| `--m3e-date-input-disabled-opacity` | Opacity applied to the disabled date input text. |
+| Property                                   | Description                                                       |
+| ------------------------------------------ | ----------------------------------------------------------------- |
+| `--m3e-date-input-color`                   | Color of the date input text when enabled.                        |
+| `--m3e-date-input-disabled-color`          | Color of the date input text when disabled.                       |
+| `--m3e-date-input-disabled-opacity`        | Opacity applied to the disabled date input text.                  |
+| `--m3e-date-input-focused-container-color` | Background color of the selected date input segment when focused. |
+| `--m3e-date-input-focused-color`           | Text color of the selected date input segment when focused.       |
