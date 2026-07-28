@@ -399,6 +399,7 @@ export class M3eCalendarElement extends LitElement {
     }
 
     await this.#transitionComplete;
+    if (!this.canMovePreviousPeriod) return;
 
     const views = [...(this.shadowRoot?.querySelectorAll<HTMLElement>(`.row.${this._activeView} .view`) ?? [])];
     if (views.length != 3) return;
@@ -407,7 +408,10 @@ export class M3eCalendarElement extends LitElement {
       views[0].addEventListener(
         "transitionend",
         () => {
-          this._activeDate = this.#getPreviousPeriod(this._activeView);
+          if (this.canMovePreviousPeriod) {
+            this._activeDate = this.#getPreviousPeriod(this._activeView);
+          }
+
           views.forEach((x) => x.classList.add("no-animate"));
           views[1].classList.remove("after");
           views[0].classList.add("before");
@@ -440,6 +444,7 @@ export class M3eCalendarElement extends LitElement {
     }
 
     await this.#transitionComplete;
+    if (!this.canMoveNextPeriod) return;
 
     const views = [...(this.shadowRoot?.querySelectorAll<HTMLElement>(`.row.${this._activeView} .view`) ?? [])];
     if (views.length != 3) return;
@@ -448,7 +453,10 @@ export class M3eCalendarElement extends LitElement {
       views[2].addEventListener(
         "transitionend",
         () => {
-          this._activeDate = this.#getNextPeriod(this._activeView);
+          if (this.canMoveNextPeriod) {
+            this._activeDate = this.#getNextPeriod(this._activeView);
+          }
+
           views.forEach((x) => x.classList.add("no-animate"));
           views[1].classList.remove("before");
           views[2].classList.add("after");
