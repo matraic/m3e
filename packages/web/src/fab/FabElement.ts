@@ -459,7 +459,6 @@ export class M3eFabElement extends KeyboardClick(
       <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
       <m3e-ripple
         class="ripple"
-        ?centered="${!this.extended}"
         ?disabled="${this.disabled || this.disabledInteractive}"
       ></m3e-ripple>
       <div class="touch" aria-hidden="true"></div>

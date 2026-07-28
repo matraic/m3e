@@ -435,7 +435,7 @@ export class M3eIconButtonElement extends KeyboardClick(
       <m3e-state-layer class="state-layer" ?disabled="${this.disabled || this.disabledInteractive}"></m3e-state-layer>
       <m3e-elevation class="elevation" ?disabled="${this.disabled || this.disabledInteractive}"></m3e-elevation>
       <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
-      <m3e-ripple class="ripple" centered ?disabled="${this.disabled || this.disabledInteractive}"></m3e-ripple>
+      <m3e-ripple class="ripple" ?disabled="${this.disabled || this.disabledInteractive}"></m3e-ripple>
       <div class="touch" aria-hidden="true"></div>
       ${this[renderPseudoLink]()}
       <div class="wrapper">

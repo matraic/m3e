@@ -162,7 +162,7 @@ export class M3eTimepickerInputPeriodToggleElement extends Role(LitElement, "rad
       >
         <m3e-focus-ring class="focus-ring" for="am"></m3e-focus-ring>
         <m3e-state-layer class="state-layer" for="am"></m3e-state-layer>
-        <m3e-ripple class="ripple" centered for="am"></m3e-ripple>
+        <m3e-ripple class="ripple" for="am"></m3e-ripple>
         ${format.formatToParts(new Date(2020, 0, 1, 9)).find((p) => p.type === "dayPeriod")?.value ?? "AM"}
       </div>
       <div class="divider" aria-hidden="true"></div>
@@ -176,7 +176,7 @@ export class M3eTimepickerInputPeriodToggleElement extends Role(LitElement, "rad
       >
         <m3e-focus-ring class="focus-ring" for="pm"></m3e-focus-ring>
         <m3e-state-layer class="state-layer" for="pm"></m3e-state-layer>
-        <m3e-ripple class="ripple" centered for="pm"></m3e-ripple>
+        <m3e-ripple class="ripple" for="pm"></m3e-ripple>
         ${format.formatToParts(new Date(2020, 0, 1, 21)).find((p) => p.type === "dayPeriod")?.value ?? "PM"}
       </div>
     </div>`;
