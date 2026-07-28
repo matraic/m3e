@@ -81,6 +81,6 @@ export function clampDate(date: Date, minDate: Date | null, maxDate: Date | null
   return date;
 }
 
-/** @internal */ export const YEARS_PER_PAGE = 15;
+/** @internal */ export const YEARS_PER_PAGE = 18;
 /** @internal */ export const YEARS_PER_ROW = 3;
 /** @internal */ export const MONTHS_PER_ROW = 4;

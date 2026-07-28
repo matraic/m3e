@@ -46,9 +46,9 @@ export class M3eMonthViewElement extends CalendarViewElementBase {
         color: var(--m3e-calendar-weekday-color, ${DesignToken.color.onSurface});
       }
       th {
-        height: 1.5rem;
-        padding-block-start: 1.875rem;
-        padding-block-end: 1rem;
+        box-sizing: border-box;
+        height: 3rem;
+        padding: 0.25rem;
       }
       tbody {
         font-size: var(--m3e-calendar-date-font-size, ${DesignToken.typescale.standard.body.medium.fontSize});

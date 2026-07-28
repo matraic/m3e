@@ -34,10 +34,11 @@ export class M3eMultiYearViewElement extends CalendarViewElementBase {
         width: 100%;
       }
       th {
-        height: 1rem;
+        height: 0px;
       }
       td {
         padding-inline: 1rem;
+        padding-block: 0.5rem;
       }
       tbody {
         font-size: var(--m3e-calendar-item-font-size, ${DesignToken.typescale.standard.body.medium.fontSize});
