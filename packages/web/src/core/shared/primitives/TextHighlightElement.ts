@@ -2,7 +2,6 @@
 import { css, CSSResultGroup, html, isServer, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
-import { DesignToken } from "../tokens";
 import { customElement } from "../decorators";
 import { TextHighlightMode } from "./TextHighlightMode";
 
@@ -62,8 +61,8 @@ export class M3eTextHighlightElement extends LitElement {
       this.#styles.replaceSync(
         css`
           ::highlight(${unsafeCSS(this.#id)}) {
-            background-color: var(--m3e-text-highlight-container-color, ${DesignToken.color.secondaryContainer});
-            color: var(--m3e-text-highlight-color, ${DesignToken.color.onSecondaryContainer});
+            background-color: var(--m3e-text-highlight-container-color, Highlight);
+            color: var(--m3e-text-highlight-color, HighlightText);
             text-decoration: var(--m3e-text-highlight-decoration);
             text-shadow: var(--m3e-text-highlight-shadow);
           }

@@ -88,14 +88,6 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
       }
       .base {
         row-gap: var(--m3e-option-panel-gap, 0.125rem);
-        --m3e-text-highlight-container-color: var(
-          --m3e-option-panel-text-highlight-container-color,
-          ${DesignToken.color.tertiaryContainer}
-        );
-        --m3e-text-highlight-color: var(
-          --m3e-option-panel-text-highlight-color,
-          ${DesignToken.color.onTertiaryContainer}
-        );
         --m3e-focus-ring-outward-offset: 0px;
         --m3e-focus-ring-growth-factor: 1.5;
       }
