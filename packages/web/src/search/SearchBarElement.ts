@@ -35,6 +35,7 @@ import { SearchBarLightDomStyle, SearchBarStyle } from "./styles";
  * @slot leading - Renders content before the input of the bar.
  * @slot input - Renders the input of the bar.
  * @slot trailing - Renders content after the input of the bar.
+ * @slot clear-icon - Overrides the default clear icon of the bar.
  *
  * @fires clear - Dispatched when the search term is cleared.
  *

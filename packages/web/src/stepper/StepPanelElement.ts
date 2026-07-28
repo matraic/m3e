@@ -54,7 +54,7 @@ import { customElement, Role } from "@m3e/web/core";
  * @tag m3e-step-panel
  *
  * @slot - Renders the content of the panel.
- * @slot actions- Renders the actions bar of the panel.
+ * @slot actions - Renders the actions bar of the panel.
  *
  * @cssprop --m3e-step-panel-padding - Padding inside the step panel container, defining internal spacing around content.
  * @cssprop --m3e-step-panel-spacing - Vertical gap between stacked elements within the step panel.

@@ -39,6 +39,7 @@ This section details the attributes, slots and CSS custom properties available f
 | Slot          | Description                                                                 |
 | ------------- | --------------------------------------------------------------------------- |
 | _(default)_   | Renders the form control (e.g. `<input>`, `<select>`, or custom control).   |
+| `label`       | Renders the label of the field.                                             |
 | `prefix`      | Renders visual content before the control (e.g. icons, avatars, tokens).    |
 | `prefix-text` | Renders plain text before the control, aligned with the input baseline.     |
 | `suffix`      | Renders visual content after the control (e.g. icons, buttons, indicators). |

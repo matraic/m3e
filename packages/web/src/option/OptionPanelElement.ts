@@ -30,6 +30,8 @@ import { OptionPanelState } from "./OptionPanelState";
  * @tag m3e-option-panel
  *
  * @slot - Renders the contents of the list.
+ * @slot no-data - Renders content shown when there is no data.
+ * @slot loading - Renders content shown while the panel is loading.
  *
  * @fires beforetoggle - Dispatched before the toggle state changes.
  * @fires toggle - Dispatched after the toggle state has changed.

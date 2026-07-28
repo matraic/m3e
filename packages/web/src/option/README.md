@@ -92,9 +92,11 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🧩 Slots
 
-| Slot        | Description                       |
-| ----------- | --------------------------------- |
-| _(default)_ | Renders the contents of the list. |
+| Slot        | Description                                       |
+| ----------- | ------------------------------------------------- |
+| _(default)_ | Renders the contents of the list.                 |
+| `no-date`   | Renders content shown when there is no data.      |
+| `loading`   | Renders content shown while the panel is loading. |
 
 #### 🎛️ CSS Custom Properties
 

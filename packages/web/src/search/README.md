@@ -57,11 +57,12 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🧩 Slots
 
-| Slot       | Description                                  |
-| ---------- | -------------------------------------------- |
-| `leading`  | Renders content before the input of the bar. |
-| `input`    | Renders the input of the bar.                |
-| `trailing` | Renders content after the input of the bar.  |
+| Slot         | Description                                  |
+| ------------ | -------------------------------------------- |
+| `leading`    | Renders content before the input of the bar. |
+| `input`      | Renders the input of the bar.                |
+| `trailing`   | Renders content after the input of the bar.  |
+| `clear-icon` | Overrides the default clear icon of the bar. |
 
 #### 🎛️ CSS Custom Properties
 
@@ -116,14 +117,17 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🧩 Slots
 
-| Slot              | Description                                         |
-| ----------------- | --------------------------------------------------- |
-| `closed-leading`  | When closed, renders content before the input.      |
-| `closed-trailing` | When closed, renders content after the input.       |
-| `open-leading`    | When open, renders content before the input.        |
-| `open-trailing`   | When open, renders content after the input.         |
-| `input`           | Renders the input element of the view.              |
-| _(default)_       | When open, renders the results content of the view. |
+| Slot              | Description                                                    |
+| ----------------- | -------------------------------------------------------------- |
+| _(default)_       | When open, renders the results content of the view.            |
+| `closed-leading`  | When closed, renders content before the input.                 |
+| `closed-trailing` | When closed, renders content after the input.                  |
+| `open-leading`    | When open, renders content before the input.                   |
+| `open-trailing`   | When open, renders content after the input.                    |
+| `input`           | Renders the input element of the view.                         |
+| `search-icon`     | Overrides the default search icon of the view.                 |
+| `close-icon`      | Overrides the default close icon shown while the view is open. |
+| `clear-icon`      | Overrides the default clear icon of the view.                  |
 
 #### 🎛️ CSS Custom Properties
 

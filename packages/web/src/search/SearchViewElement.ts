@@ -67,6 +67,9 @@ import "./SearchBarElement";
  * @slot open-trailing - When open, renders content after the input of the view.
  * @slot closed-leading - When closed, renders content before the input of the view.
  * @slot closed-trailing - When closed, renders content after the input of the view.
+ * @slot search-icon - Overrides the default search icon of the view.
+ * @slot close-icon - Overrides the default close icon shown while the view is open.
+ * @slot clear-icon - Overrides the default clear icon of the view.
  *
  * @fires clear - Dispatched when the search term is cleared.
  * @fires query - Dispatched when the view is opened or when the user modifies the search term.

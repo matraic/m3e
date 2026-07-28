@@ -39,7 +39,7 @@ import type { M3eFabMenuElement } from "./FabMenuElement";
  * </m3e-fab-menu>
  * ```
  *
- * @tag m3e-menu-item
+ * @tag m3e-fab-menu-item
  *
  * @slot - Renders the label of the item.
  * @slot icon - Renders an icon before the items's label.
