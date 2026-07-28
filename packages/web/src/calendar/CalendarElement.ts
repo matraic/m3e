@@ -344,7 +344,7 @@ export class M3eCalendarElement extends LitElement {
         return new Date(this._activeDate.getFullYear(), this._activeDate.getMonth(), 0) >= this.minDate;
 
       case "year":
-        return new Date(this._activeDate.getFullYear() - 1, 12, 1) >= this.minDate;
+        return new Date(this._activeDate.getFullYear() - 1, 11, 31) >= this.minDate;
 
       case "multi-year":
         return new Date(minYearOfPage(this._activeDate, this.minDate, this.maxDate) - 1, 12, 1) >= this.minDate;
@@ -359,7 +359,7 @@ export class M3eCalendarElement extends LitElement {
         return new Date(this._activeDate.getFullYear(), this._activeDate.getMonth() + 1, 1) <= this.maxDate;
 
       case "year":
-        return new Date(this._activeDate.getFullYear() + 1, 1, 1) <= this.maxDate;
+        return new Date(this._activeDate.getFullYear() + 1, 0, 1) <= this.maxDate;
 
       case "multi-year":
         return new Date(maxYearOfPage(this._activeDate, this.minDate, this.maxDate) + 1, 12, 1) <= this.maxDate;
