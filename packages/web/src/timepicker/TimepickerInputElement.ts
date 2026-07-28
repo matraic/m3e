@@ -376,6 +376,7 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
         <span class="label">${label}</span>
       </m3e-collapsible>
       <m3e-focus-ring class="focus-ring" for="${view}"></m3e-focus-ring>
+      <m3e-ripple for="${view}"></m3e-ripple>
     </div>`;
   }
 
