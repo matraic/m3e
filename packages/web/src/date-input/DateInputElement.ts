@@ -16,6 +16,7 @@ import {
   FormAssociated,
   formValue,
   hasCustomState,
+  isDisabledMixin,
   ReadOnly,
   Required,
   Role,
@@ -520,6 +521,30 @@ export class M3eDateInputElement
 
     if (_changedProperties.has("value") || _changedProperties.has(<keyof M3eDateInputElement>"_value")) {
       setCustomState(this, "--empty", this._isEmpty);
+    }
+
+    if (this.id && (_changedProperties.has("disabled") || _changedProperties.has("readOnly"))) {
+      // When disabled or readonly and attached to a picker, automatically disable the picker's toggle button.
+      const root = this.getRootNode() as ParentNode;
+      if (root) {
+        const picker = root.querySelector(`m3e-datepicker[for="${this.id}"], m3e-timepicker[for="${this.id}"]`);
+        if (picker?.id) {
+          let toggle: HTMLElement | null = null;
+          switch (picker.tagName.toLowerCase()) {
+            case "m3e-datepicker":
+              toggle = root.querySelector(`m3e-datepicker-toggle[for="${picker.id}"]`);
+              break;
+
+            case "m3e-timepicker":
+              toggle = root.querySelector(`m3e-timepicker-toggle[for="${picker.id}"]`);
+              break;
+          }
+
+          if (toggle && isDisabledMixin(toggle.parentElement)) {
+            toggle.parentElement.disabled = this.disabled || this.readOnly;
+          }
+        }
+      }
     }
   }
 
