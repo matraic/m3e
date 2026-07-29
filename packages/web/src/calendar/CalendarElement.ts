@@ -673,7 +673,15 @@ export class M3eCalendarElement extends LitElement {
     this._activeDate = new Date(monthView.activeDate);
     this.rangeStart = monthView.rangeStart;
     this.rangeEnd = monthView.rangeEnd;
+
+    const prev = this.date;
     this.date = new Date(this._activeDate);
+
+    // Preserve previous date's time when selecting a new date
+    if (prev) {
+      this.date.setHours(prev.getHours(), prev.getMinutes(), prev.getSeconds(), prev.getMilliseconds());
+    }
+
     this.dispatchEvent(new Event("change", { bubbles: true }));
   }
 
