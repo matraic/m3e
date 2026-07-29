@@ -534,19 +534,18 @@ export class M3eDateInputElement
       // When disabled or readonly and attached to a picker, automatically disable the picker's toggle button.
       const root = this.getRootNode() as ParentNode;
       if (root) {
-        const picker = root.querySelector(`m3e-datepicker[for="${this.id}"], m3e-timepicker[for="${this.id}"]`);
-        if (picker?.id) {
-          let toggle: HTMLElement | null = null;
-          switch (picker.tagName.toLowerCase()) {
-            case "m3e-datepicker":
-              toggle = root.querySelector(`m3e-datepicker-toggle[for="${picker.id}"]`);
-              break;
-
-            case "m3e-timepicker":
-              toggle = root.querySelector(`m3e-timepicker-toggle[for="${picker.id}"]`);
-              break;
+        // There could be a datepicker and timepicker associated with the input.
+        const datepicker = root.querySelector(`m3e-datepicker[for="${this.id}"]`);
+        if (datepicker?.id) {
+          const toggle = root.querySelector(`m3e-datepicker-toggle[for="${datepicker.id}"]`);
+          if (toggle && isDisabledMixin(toggle.parentElement)) {
+            toggle.parentElement.disabled = this.disabled || this.readOnly;
           }
+        }
 
+        const timepicker = root.querySelector(`m3e-timepicker[for="${this.id}"]`);
+        if (timepicker?.id) {
+          const toggle = root.querySelector(`m3e-timepicker-toggle[for="${timepicker.id}"]`);
           if (toggle && isDisabledMixin(toggle.parentElement)) {
             toggle.parentElement.disabled = this.disabled || this.readOnly;
           }
