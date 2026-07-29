@@ -107,10 +107,19 @@ import "./TimepickerInputElement";
  * @cssprop --m3e-timepicker-input-field-tracking - Letter spacing of the input field text.
  * @cssprop --m3e-timepicker-input-field-label-unselected-color - Text color of unselected input field labels.
  * @cssprop --m3e-timepicker-input-field-unselected-container-color - Background color of unselected input fields.
+ * @cssprop --m3e-timepicker-input-field-unselected-hover-state-layer-color - State layer color on hover for unselected input fields.
+ * @cssprop --m3e-timepicker-input-field-unselected-focus-state-layer-color - State layer color on focus for unselected input fields.
+ * @cssprop --m3e-timepicker-input-field-unselected-pressed-state-layer-color - State layer color on pressed for unselected input fields.
  * @cssprop --m3e-timepicker-input-field-label-selected-color - Text color of selected input field labels.
  * @cssprop --m3e-timepicker-input-field-selected-container-color - Background color of selected input fields.
+ * @cssprop --m3e-timepicker-input-field-selected-hover-state-layer-color - State layer color on hover for selected input fields.
+ * @cssprop --m3e-timepicker-input-field-selected-focus-state-layer-color - State layer color on focus for selected input fields.
+ * @cssprop --m3e-timepicker-input-field-selected-pressed-state-layer-color - State layer color on pressed for selected input fields.
  * @cssprop --m3e-timepicker-input-field-label-invalid-color - Text color of invalid input field labels.
  * @cssprop --m3e-timepicker-input-field-invalid-container-color - Background color of invalid input fields.
+ * @cssprop --m3e-timepicker-input-field-invalid-hover-state-layer-color - State layer color on hover for invalid input fields.
+ * @cssprop --m3e-timepicker-input-field-invalid-focus-state-layer-color - State layer color on focus for invalid input fields.
+ * @cssprop --m3e-timepicker-input-field-invalid-pressed-state-layer-color - State layer color on pressed for invalid input fields.
  * @cssprop --m3e-timepicker-input-field-supporting-text-color - Text color of supporting labels.
  * @cssprop --m3e-timepicker-input-field-supporting-text-font-size - Font size of supporting labels.
  * @cssprop --m3e-timepicker-input-field-supporting-text-font-weight - Font weight of supporting labels.
