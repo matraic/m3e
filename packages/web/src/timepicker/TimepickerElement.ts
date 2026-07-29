@@ -728,10 +728,7 @@ export class M3eTimepickerElement extends HtmlFor(
       this.#date = null;
     } else {
       this.#date = new Date(this.date ?? Date.now());
-      this.#date.setHours(input.hour);
-      this.#date.setMinutes(input.minute);
-      this.#date.setSeconds(input.second ?? 0);
-      this.#date.setMilliseconds(0);
+      this.#date.setHours(input.hour, input.minute, input.second ?? 0, 0);
     }
 
     this.#validate();
