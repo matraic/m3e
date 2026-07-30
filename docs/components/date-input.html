@@ -17,10 +17,11 @@
       rel="stylesheet"
     />
     <link href="../main.css" rel="stylesheet" />
+    <link href="./date-time.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <link href="app-bar.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.0/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.1/dist/all.min.js"></script>
     <script src="../main.js"></script>
     <script src="./date-input.js"></script>
   </head>
@@ -196,6 +197,10 @@
           <code>show-seconds</code> override the corresponding settings on the picker. This ensures the input and picker
           remain consistent and enforce the same constraints.
         </p>
+        <p>
+          When <code>type="datetime"</code> is used, a single <code>m3e-date-input</code> may link to both a
+          <code>m3e-datepicker</code> and a <code>m3e-timepicker</code> for independent date and time selection.
+        </p>
 
         <m3e-card variant="outlined" class="showcase">
           <div slot="content">
@@ -204,22 +209,38 @@
               <m3e-date-input id="fld11"></m3e-date-input>
               <m3e-icon-button aria-label="Open calendar" slot="suffix">
                 <m3e-icon name="calendar_today"></m3e-icon>
-                <m3e-datepicker-toggle for="datepicker"></m3e-datepicker-toggle>
+                <m3e-datepicker-toggle for="datepicker1"></m3e-datepicker-toggle>
               </m3e-icon-button>
               <span slot="hint">MM/DD/YYYY</span>
             </m3e-form-field>
-            <m3e-datepicker id="datepicker" for="fld11"></m3e-datepicker>
+            <m3e-datepicker id="datepicker1" for="fld11"></m3e-datepicker>
 
             <m3e-form-field variant="outlined">
               <label slot="label" for="fld12">Time Picker</label>
               <m3e-date-input id="fld12" type="time"></m3e-date-input>
               <m3e-icon-button aria-label="Open time picker" slot="suffix">
                 <m3e-icon name="schedule"></m3e-icon>
-                <m3e-timepicker-toggle for="timepicker"></m3e-timepicker-toggle>
+                <m3e-timepicker-toggle for="timepicker1"></m3e-timepicker-toggle>
               </m3e-icon-button>
               <span slot="hint">HH:MM</span>
             </m3e-form-field>
-            <m3e-timepicker id="timepicker" for="fld12"></m3e-timepicker>
+            <m3e-timepicker id="timepicker1" for="fld12"></m3e-timepicker>
+
+            <m3e-form-field variant="outlined">
+              <label slot="label" for="fld16">Datetime Picker</label>
+              <m3e-date-input id="fld16" type="datetime"></m3e-date-input>
+              <m3e-icon-button aria-label="Open calendar" slot="suffix">
+                <m3e-icon name="calendar_today"></m3e-icon>
+                <m3e-datepicker-toggle for="datepicker2"></m3e-datepicker-toggle>
+              </m3e-icon-button>
+              <m3e-icon-button aria-label="Open time picker" slot="suffix">
+                <m3e-icon name="schedule"></m3e-icon>
+                <m3e-timepicker-toggle for="timepicker2"></m3e-timepicker-toggle>
+              </m3e-icon-button>
+              <span slot="hint">MM/DD/YYYY HH:MM</span>
+            </m3e-form-field>
+            <m3e-datepicker id="datepicker2" for="fld16"></m3e-datepicker>
+            <m3e-timepicker id="timepicker2" for="fld16"></m3e-timepicker>
           </div>
         </m3e-card>
         <m3e-card variant="outlined" class="example">
@@ -229,22 +250,38 @@
   &lt;m3e-date-input id=&quot;field1&quot;&gt;&lt;/m3e-date-input&gt;
   &lt;m3e-icon-button aria-label=&quot;Open calendar&quot; slot=&quot;suffix&quot;&gt;
     &lt;m3e-icon name=&quot;calendar_today&quot;&gt;&lt;/m3e-icon&gt;
-    &lt;m3e-datepicker-toggle for=&quot;datepicker&quot;&gt;&lt;/m3e-datepicker-toggle&gt;
+    &lt;m3e-datepicker-toggle for=&quot;datepicker1&quot;&gt;&lt;/m3e-datepicker-toggle&gt;
   &lt;/m3e-icon-button&gt;
   &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY&lt;/span&gt;
 &lt;/m3e-form-field&gt;
-&lt;m3e-datepicker id=&quot;datepicker&quot; for=&quot;field1&quot;&gt;&lt;/m3e-datepicker&gt;
+&lt;m3e-datepicker id=&quot;datepicker1&quot; for=&quot;field1&quot;&gt;&lt;/m3e-datepicker&gt;
 
 &lt;m3e-form-field variant=&quot;outlined&quot;&gt;
   &lt;label slot=&quot;label&quot; for=&quot;field2&quot;&gt;Time Picker&lt;/label&gt;
   &lt;m3e-date-input id=&quot;field2&quot; type=&quot;time&quot;&gt;&lt;/m3e-date-input&gt;
   &lt;m3e-icon-button aria-label=&quot;Open time picker&quot; slot=&quot;suffix&quot;&gt;
     &lt;m3e-icon name=&quot;schedule&quot;&gt;&lt;/m3e-icon&gt;
-    &lt;m3e-timepicker-toggle for=&quot;timepicker&quot;&gt;&lt;/m3e-timepicker-toggle&gt;
+    &lt;m3e-timepicker-toggle for=&quot;timepicker1&quot;&gt;&lt;/m3e-timepicker-toggle&gt;
   &lt;/m3e-icon-button&gt;
   &lt;span slot=&quot;hint&quot;&gt;HH:MM&lt;/span&gt;
 &lt;/m3e-form-field&gt;
-&lt;m3e-timepicker id=&quot;timepicker&quot; for=&quot;field2&quot;&gt;&lt;/m3e-timepicker&gt;</pre
+&lt;m3e-timepicker id=&quot;timepicker1&quot; for=&quot;field2&quot;&gt;&lt;/m3e-timepicker&gt;
+
+&lt;m3e-form-field variant=&quot;outlined&quot;&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;field3&quot;&gt;Datetime Picker&lt;/label&gt;
+  &lt;m3e-date-input id=&quot;field3&quot; type=&quot;datetime&quot;&gt;&lt;/m3e-date-input&gt;
+  &lt;m3e-icon-button aria-label=&quot;Open calendar&quot; slot=&quot;suffix&quot;&gt;
+    &lt;m3e-icon name=&quot;calendar_today&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;m3e-datepicker-toggle for=&quot;datepicker2&quot;&gt;&lt;/m3e-datepicker-toggle&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;m3e-icon-button aria-label=&quot;Open time picker&quot; slot=&quot;suffix&quot;&gt;
+    &lt;m3e-icon name=&quot;schedule&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;m3e-timepicker-toggle for=&quot;timepicker2&quot;&gt;&lt;/m3e-timepicker-toggle&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;span slot=&quot;hint&quot;&gt;MM/DD/YYYY HH:MM&lt;/span&gt;
+&lt;/m3e-form-field&gt;
+&lt;m3e-datepicker id=&quot;datepicker2&quot; for=&quot;field3&quot;&gt;&lt;/m3e-datepicker&gt;
+&lt;m3e-timepicker id=&quot;timepicker2&quot; for=&quot;field3&quot;&gt;&lt;/m3e-timepicker&gt;</pre
           >
         </m3e-card>
 
