@@ -12,12 +12,10 @@ import {
   KeyboardClick,
   LinkButton,
   M3eFocusRingElement,
-  M3eRippleElement,
   M3eStateLayerElement,
   ReconnectedCallback,
   renderPseudoLink,
   ResizeController,
-  resumeAnimation,
   Role,
   Selected,
   setCustomState,
@@ -185,6 +183,44 @@ export class M3eNavItemElement extends ReconnectedCallback(
     .label {
       vertical-align: middle;
     }
+    .indicator {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+    .indicator::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      transform-origin: center;
+    }
+    :host([selected]) .indicator::after {
+      opacity: 1;
+    }
+    :host(:not([selected])) .indicator::after {
+      opacity: 0;
+      transition: opacity ${DesignToken.motion.spring.fastEffects};
+    }
+    :host(:not(:is(:state(--no-animate), :--no-animate))[selected]) .indicator::after,
+    :host(:not(:is(:state(--no-animate), :--no-animate))[selected]) .state-layer {
+      animation: ${unsafeCSS(
+        `indicator-grow-bounce ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standardDecelerate}`,
+      )};
+    }
+    @keyframes indicator-grow-bounce {
+      0% {
+        transform: scaleX(0);
+      }
+      60% {
+        transform: scaleX(1.05);
+      }
+      100% {
+        transform: scaleX(1);
+      }
+    }
     :host([orientation="horizontal"]) .label {
       white-space: nowrap;
     }
@@ -194,7 +230,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
       font-size: var(--m3e-nav-item-icon-size, 1.5rem) !important;
     }
     :host(:not(:is(:state(--no-animate), :--no-animate))) .state-layer,
-    :host(:not(:is(:state(--no-animate), :--no-animate))) .ripple {
+    :host(:not(:is(:state(--no-animate), :--no-animate))) .indicator {
       transition: ${unsafeCSS(`height ${DesignToken.motion.duration.short1} ${DesignToken.motion.easing.standard}`)};
     }
     :host(:not([selected])) slot[name="selected-icon"],
@@ -211,7 +247,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
         --m3e-nav-item-inactive-focus-state-layer-color,
         ${DesignToken.color.onSecondaryContainer}
       );
-      --m3e-ripple-color: var(
+      --m3e-state-layer-pressed-color: var(
         --m3e-nav-item-inactive-pressed-state-layer-color,
         ${DesignToken.color.onSecondaryContainer}
       );
@@ -231,7 +267,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
         --m3e-nav-item-active-focus-state-layer-color,
         ${DesignToken.color.onSecondaryContainer}
       );
-      --m3e-ripple-color: var(
+      --m3e-state-layer-pressed-color: var(
         --m3e-nav-item-active-pressed-state-layer-color,
         ${DesignToken.color.onSecondaryContainer}
       );
@@ -239,7 +275,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
     :host([selected]:not(:disabled):not([disabled-interactive]):not([orientation="horizontal"])) .label {
       color: var(--m3e-nav-item-active-label-text-color, ${DesignToken.color.secondary});
     }
-    :host([selected]:not(:disabled):not([disabled-interactive])) .state-layer {
+    :host(:not(:disabled):not([disabled-interactive])) .indicator::after {
       background-color: var(--m3e-nav-item-active-container-color, ${DesignToken.color.secondaryContainer});
     }
     :host([selected]:not(:disabled):not([disabled-interactive])[orientation="horizontal"]) .label,
@@ -270,27 +306,31 @@ export class M3eNavItemElement extends ReconnectedCallback(
       margin-bottom: var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem);
     }
     :host([orientation="vertical"]) .state-layer,
-    :host([orientation="vertical"]) .ripple {
+    :host([orientation="vertical"]) .indicator {
       top: var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem);
       bottom: unset;
     }
     :host([orientation="vertical"]:dir(rtl)) .state-layer,
-    :host([orientation="vertical"]:dir(rtl)) .ripple {
+    :host([orientation="vertical"]:dir(rtl)) .indicator {
       right: var(--_vertical-nav-item-inset-start);
       left: unset;
     }
     :host([orientation="vertical"]:not(:dir(rtl))) .state-layer,
-    :host([orientation="vertical"]:not(:dir(rtl))) .ripple {
+    :host([orientation="vertical"]:not(:dir(rtl))) .indicator {
       left: var(--_vertical-nav-item-inset-start);
       right: unset;
     }
     :host([orientation="vertical"]) .state-layer,
-    :host([orientation="vertical"]) .ripple,
+    :host([orientation="vertical"]) .indicator,
     :host([orientation="vertical"]) .icon-wrapper {
       min-width: var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem);
     }
-    :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .state-layer,
-    :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .ripple {
+    :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .state-layer {
+      ${unsafeCSS(
+        `collapse ${DesignToken.motion.duration.medium1}, indicator-grow-bounce ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standardAccelerate}`,
+      )};
+    }
+    :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .indicator {
       animation: collapse ${DesignToken.motion.duration.medium1};
     }
     @keyframes collapse {
@@ -303,7 +343,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
     }
 
     :host([orientation="vertical"]) .state-layer,
-    :host([orientation="vertical"]) .ripple,
+    :host([orientation="vertical"]) .indicator,
     :host([orientation="vertical"]) .icon-wrapper {
       height: var(--m3e-vertical-nav-item-active-indicator-height, 2rem);
     }
@@ -336,7 +376,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
       column-gap: var(--m3e-nav-item-spacing, 0.25rem);
     }
     :host([orientation="horizontal"]) .state-layer,
-    :host([orientation="horizontal"]) .ripple,
+    :host([orientation="horizontal"]) .indicator,
     :host([orientation="horizontal"]) .inner {
       height: var(--m3e-horizontal-nav-item-active-indicator-height, 2.5rem);
     }
@@ -344,7 +384,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
       width: fit-content;
     }
     .state-layer,
-    .ripple {
+    .indicator {
       margin-inline: auto;
     }
     :host(:is(:state(--first), :--first):not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"])
@@ -437,13 +477,15 @@ export class M3eNavItemElement extends ReconnectedCallback(
       :host(:is(:state(--first), :--first):not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"])
         .icon-wrapper,
       :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .state-layer,
-      :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .ripple,
+      :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .indicator,
+      :host(:not(:is(:state(--no-animate), :--no-animate))[selected]) .indicator::after,
       :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"]) .label,
       :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .label {
         animation: none;
       }
       :host(:not(:is(:state(--no-animate), :--no-animate))) .state-layer,
-      :host(:not(:is(:state(--no-animate), :--no-animate))) .ripple,
+      :host(:not(:is(:state(--no-animate), :--no-animate))) .indicator,
+      :host(:not([selected])) .indicator::after,
       :host(:not(:is(:state(--no-animate), :--no-animate))) .base {
         transition: none;
       }
@@ -459,7 +501,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
       :host(:not([selected]):not(:disabled):not([disabled-interactive])) .icon {
         color: ButtonText;
       }
-      :host([selected]:not(:disabled):not([disabled-interactive])) .state-layer {
+      :host([selected]:not(:disabled):not([disabled-interactive])) .indicator::after {
         background-color: ButtonText;
       }
       :host([orientation="vertical"][selected]:not(:disabled):not([disabled-interactive])) .label {
@@ -477,7 +519,6 @@ export class M3eNavItemElement extends ReconnectedCallback(
   /** @private */ readonly #clickHandler = (e: Event) => this.#handleClick(e);
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;
   /** @private */ @query(".state-layer") private readonly _stateLayer?: M3eStateLayerElement;
-  /** @private */ @query(".ripple") private readonly _ripple?: M3eRippleElement;
   /** @private */ @query(".inner") private readonly _inner?: HTMLElement;
 
   /** @private */ readonly #resizeController = new ResizeController(this, {
@@ -494,13 +535,6 @@ export class M3eNavItemElement extends ReconnectedCallback(
   /** The navigation bar to which this item belongs. */
   get navBar(): M3eNavBarElement | null {
     return this.closest("m3e-nav-bar") ?? this.closest("m3e-nav-rail") ?? null;
-  }
-
-  /** @internal */
-  override [resumeAnimation](): void {
-    if (this.#inRail) {
-      super[resumeAnimation]();
-    }
   }
 
   /** @inheritdoc */
@@ -550,7 +584,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
     super.firstUpdated(_changedProperties);
-    [this._focusRing, this._stateLayer, this._ripple].forEach((x) => x?.attach(this));
+    [this._focusRing, this._stateLayer].forEach((x) => x?.attach(this));
     this.#initResizeObserver();
   }
 
@@ -565,8 +599,8 @@ export class M3eNavItemElement extends ReconnectedCallback(
         ${this[renderPseudoLink]()}
         <div class="inner">
           ${this.orientation === "horizontal" ? html`<m3e-focus-ring class="focus-ring"></m3e-focus-ring>` : nothing}
-          <m3e-state-layer class="state-layer" ?disabled="${disabled}"></m3e-state-layer>
-          <m3e-ripple class="ripple" centered ?disabled="${disabled}"></m3e-ripple>
+          <div class="indicator"></div>
+          <m3e-state-layer class="state-layer" enable-pressed ?disabled="${disabled}"></m3e-state-layer>
           <div class="touch" aria-hidden="true"></div>
           <div class="base">
             <div class="icon-wrapper" aria-hidden="true">

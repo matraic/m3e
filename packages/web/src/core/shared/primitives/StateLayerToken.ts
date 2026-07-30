@@ -11,6 +11,8 @@ export const StateLayerToken = {
   hoverOpacity: unsafeCSS(`var(--m3e-state-layer-hover-opacity, ${DesignToken.state.hoverStateLayerOpacity})`),
   focusColor: unsafeCSS(`var(--m3e-state-layer-focus-color, ${DesignToken.color.onSurface})`),
   focusOpacity: unsafeCSS(`var(--m3e-state-layer-focus-opacity, ${DesignToken.state.focusStateLayerOpacity})`),
+  pressedColor: unsafeCSS(`var(--m3e-state-layer-pressed-color, ${DesignToken.color.onSurface})`),
+  pressedOpacity: unsafeCSS(`var(--m3e-state-layer-pressed-opacity, ${DesignToken.state.pressedStateLayerOpacity})`),
   duration: unsafeCSS(`var(--m3e-state-layer-duration, ${DesignToken.motion.duration.medium1})`),
   easing: unsafeCSS(`var(--m3e-state-layer-easing, ${DesignToken.motion.easing.standard})`),
 } as const;

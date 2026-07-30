@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { FocusController, HoverController } from "../controllers";
+import { FocusController, HoverController, PressedController } from "../controllers";
 import { HtmlFor, Role } from "../mixins";
 import { customElement } from "../decorators";
 
@@ -33,13 +33,16 @@ import { StateLayerToken } from "./StateLayerToken";
  *
  * @attr disabled - Whether hover and focus events will not trigger the state layer. State layers can still be controlled manually using the `show` and `hide` methods.
  * @attr disable-hover - Whether hover events will not trigger the state layer. State layers can still be controlled manually using the `show` and `hide` methods.
+ * @attr enable-pressed - Whether pressed events will trigger the state layer. State layers can still be controlled manually using the `show` and `hide` methods.
  *
  * @cssprop --m3e-state-layer-duration - Duration of state layer changes.
  * @cssprop --m3e-state-layer-easing - Easing curve of state layer changes.
- * @cssprop --m3e-state-layer-focus-color - Color on hover.
+ * @cssprop --m3e-state-layer-focus-color - Color on focus.
  * @cssprop --m3e-state-layer-focus-opacity - Opacity on focus.
  * @cssprop --m3e-state-layer-hover-color - Color on hover.
  * @cssprop --m3e-state-layer-hover-opacity - Opacity on hover.
+ * @cssprop --m3e-state-layer-pressed-color - Color on pressed.
+ * @cssprop --m3e-state-layer-pressed-opacity - Opacity on pressed.
  */
 @customElement("m3e-state-layer")
 export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
@@ -69,6 +72,13 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
     .layer.hover {
       background-color: color-mix(in srgb, ${StateLayerToken.hoverColor} ${StateLayerToken.hoverOpacity}, transparent);
     }
+    .layer.pressed {
+      background-color: color-mix(
+        in srgb,
+        ${StateLayerToken.pressedColor} ${StateLayerToken.pressedOpacity},
+        transparent
+      );
+    }
     @media (prefers-reduced-motion) {
       .layer {
         transition: none;
@@ -93,6 +103,14 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
     callback: (_, focusVisible) => this.#handleFocusChange(focusVisible),
   });
 
+  /** @private */ readonly #pressedController = new PressedController(this, {
+    target: null,
+    capture: true,
+    minPressedDuration: 225,
+    isPressedKey: (key) => key === " ",
+    callback: (pressed) => this.#handlePressedChange(pressed),
+  });
+
   /** @private */ @query(".layer") private readonly _layer?: HTMLElement;
 
   /**
@@ -110,26 +128,34 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
   @property({ attribute: "disable-hover", type: Boolean, reflect: true }) disableHover = false;
 
   /**
-   * Launches a manual state layer.
-   * @param {"hover" | "focused"} state The state of the layer to show.
+   * Whether pressed events will trigger the state layer. State layers can still
+   * be controlled manually using the `show` and `hide` methods.
+   * @default false
    */
-  show(state: "hover" | "focused"): void {
+  @property({ attribute: "enable-pressed", type: Boolean, reflect: true }) enablePressed = false;
+
+  /**
+   * Launches a manual state layer.
+   * @param {"hover" | "focused" | "pressed"} state The state of the layer to show.
+   */
+  show(state: "hover" | "focused" | "pressed"): void {
     this._layer?.classList.toggle(state, true);
   }
 
   /**
    * Hides the state layer.
-   * @param {"hover" | "focused"} state The state of the layer to hide.
+   * @param {"hover" | "focused" | "pressed"} state The state of the layer to hide.
    */
-  hide(state: "hover" | "focused"): void {
+  hide(state: "hover" | "focused" | "pressed"): void {
     this._layer?.classList.toggle(state, false);
   }
 
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
     super.attach(control);
-    this.#hoverController.observe(control);
     this.#focusController.observe(control);
+    this.#updateHoverController();
+    this.#updatePressedController();
   }
 
   /** @inheritdoc */
@@ -137,6 +163,7 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
     if (this.control) {
       this.#hoverController.unobserve(this.control);
       this.#focusController.unobserve(this.control);
+      this.#pressedController.unobserve(this.control);
     }
     super.detach();
   }
@@ -164,7 +191,12 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
       this.hide("focused");
     }
     if (_changedProperties.has("disableHover") && this.disableHover) {
+      this.#updateHoverController();
       this.hide("hover");
+    }
+    if (_changedProperties.has("enablePressed") && !this.enablePressed) {
+      this.#updatePressedController();
+      this.hide("pressed");
     }
   }
 
@@ -192,6 +224,37 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
       } else {
         this.hide("focused");
       }
+    }
+  }
+
+  /** @private */
+  #handlePressedChange(pressed: boolean): void {
+    if (!this.disabled && this.enablePressed) {
+      if (pressed) {
+        this.show("pressed");
+      } else {
+        this.hide("pressed");
+      }
+    }
+  }
+
+  /** @private */
+  #updateHoverController(): void {
+    if (!this.control) return;
+    if (this.disableHover) {
+      this.#hoverController.unobserve(this.control);
+    } else {
+      this.#hoverController.observe(this.control);
+    }
+  }
+
+  /** @private */
+  #updatePressedController(): void {
+    if (!this.control) return;
+    if (this.enablePressed) {
+      this.#pressedController.observe(this.control);
+    } else {
+      this.#pressedController.unobserve(this.control);
     }
   }
 }
