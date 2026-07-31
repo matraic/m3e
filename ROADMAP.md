@@ -17,7 +17,6 @@ The following components are planned for future release:
 
 ### 📜 Building with AI
 
-- Global and component-specific `llms.txt` files to support AI discoverability
 - MCP Server enabling IDEs and AI tools to query local knowledge about components and documentation
 
 ## 🏛️ Past Milestones
