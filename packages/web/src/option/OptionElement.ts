@@ -290,7 +290,11 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
           </svg>
         </div>
         <m3e-text-overflow class="label">
-          <m3e-text-highlight term="${this.term}" mode="${this.highlightMode}" ?disabled="${this.disableHighlight}">
+          <m3e-text-highlight
+            term="${this.term}"
+            mode="${this.highlightMode}"
+            ?disabled="${this.disableHighlight || this.selected}"
+          >
             <slot @slotchange="${this.#handleSlotChange}"></slot>
           </m3e-text-highlight>
         </m3e-text-overflow>
