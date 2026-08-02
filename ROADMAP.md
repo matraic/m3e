@@ -21,7 +21,7 @@ The following components are planned for future release:
 
 ## 🏛️ Past Milestones
 
-- **2.7.0 – 2.7.2 — Feature release + patch releases**
+- **2.7.0 – 2.7.3 — Feature release + patch releases**
   Added `@m3e/web/date-input`, bug fixes.
 
 - **2.6.0 – 2.6.3 — Feature release + patch releases**
