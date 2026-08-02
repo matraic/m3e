@@ -187,6 +187,21 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
       pointer-events: none;
       transform-origin: var(--_indicator-origin-x, center) center;
     }
+    .indicator::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+    }
+    :host(:not(:is(:state(--no-animate), :--no-animate)):not(:disabled)) .indicator::before {
+      transition: ${unsafeCSS(`opacity ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`)};
+    }
+    :host([selected]:not(:disabled)) .indicator::before {
+      opacity: 1;
+      transition: none;
+    }
     :host([selected]:not(:is(:state(--no-animate), :--no-animate)):not(:disabled)) .indicator {
       animation: ${unsafeCSS(
         `indicator-grow ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standardDecelerate}`,
@@ -278,8 +293,10 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
     :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .base {
       color: var(--m3e-nav-menu-item-selected-label-color, ${DesignToken.color.onSecondaryContainer});
     }
-    :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .indicator {
+    :host(:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .indicator::before {
       background-color: var(--m3e-nav-menu-item-selected-container-color, ${DesignToken.color.secondaryContainer});
+    }
+    :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .indicator {
       --m3e-state-layer-focus-color: var(
         --m3e-nav-menu-item-selected-container-focus-color,
         ${DesignToken.color.onSecondaryContainer}
@@ -307,8 +324,10 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
         ${DesignToken.color.onSurface}
       );
     }
-    :host([selected]:is(:state(--with-items), :--with-items):not(:disabled)) .indicator {
+    :host(:is(:state(--with-items), :--with-items):not(:disabled)) .indicator::before {
       background-color: var(--m3e-nav-menu-item-open-container-color, ${DesignToken.color.surfaceContainerHighest});
+    }
+    :host([selected]:is(:state(--with-items), :--with-items):not(:disabled)) .indicator {
       --m3e-state-layer-focus-color: var(
         --m3e-nav-menu-item-open-container-focus-color,
         ${DesignToken.color.onSurface}
@@ -328,7 +347,8 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
     @media (prefers-reduced-motion) {
       .base,
       .toggle,
-      .state-layer {
+      .state-layer,
+      :host(:not(:is(:state(--no-animate), :--no-animate)):not(:disabled)) .indicator::before {
         transition: none !important;
       }
       :host([selected]:not(:is(:state(--no-animate), :--no-animate)):not(:disabled)) .indicator {
@@ -337,7 +357,8 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
     }
     @media (forced-colors: active) {
       .base,
-      .state-layer {
+      .state-layer,
+      :host([selected]:not(:disabled)) .indicator {
         transition: none !important;
       }
       :host(:disabled) .base {
@@ -346,8 +367,8 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
       :host(:not(:disabled)) .base {
         color: LinkText;
       }
-      :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .indicator,
-      :host([selected]:is(:state(--with-items), :--with-items):not(:disabled)) .indicator {
+      :host(:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .indicator::before,
+      :host(:is(:state(--with-items), :--with-items):not(:disabled)) .indicator::before {
         background-color: unset;
       }
       :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .base,
