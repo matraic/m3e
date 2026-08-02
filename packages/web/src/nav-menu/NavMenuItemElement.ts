@@ -177,6 +177,10 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
       letter-spacing: var(--m3e-nav-menu-item-tracking, ${DesignToken.typescale.standard.label.large.tracking});
       transition: ${unsafeCSS(`color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`)};
     }
+    * {
+      user-select: none;
+      -webkit-user-select: none;
+    }
     .base,
     .focus-ring {
       border-radius: var(--m3e-nav-menu-item-shape, ${DesignToken.shape.corner.full});

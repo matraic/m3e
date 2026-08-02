@@ -183,6 +183,10 @@ export class M3eNavItemElement extends ReconnectedCallback(
     .label {
       vertical-align: middle;
     }
+    * {
+      user-select: none;
+      -webkit-user-select: none;
+    }
     :host([orientation="horizontal"]) .label {
       white-space: nowrap;
     }
