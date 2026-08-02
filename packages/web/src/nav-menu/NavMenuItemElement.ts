@@ -11,10 +11,7 @@ import {
   hasAssignedNodes,
   hasCustomState,
   M3eFocusRingElement,
-  M3eStateLayerElement,
-  prefersReducedMotion,
-  PressedController,
-  ReconnectedCallback,
+  M3eSelectionIndicatorElement,
   registerStyleSheet,
   Role,
   Selected,
@@ -139,8 +136,8 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  * @cssprop --m3e-nav-menu-item-vertical-inset - Vertical margin for first/last child items.
  */
 @customElement("m3e-nav-menu-item")
-export class M3eNavMenuItemElement extends ReconnectedCallback(
-  SuppressInitialAnimation(Selected(Disabled(AttachInternals(Role(LitElement, "treeitem"), true)))),
+export class M3eNavMenuItemElement extends SuppressInitialAnimation(
+  Selected(Disabled(AttachInternals(Role(LitElement, "treeitem"), true))),
 ) {
   static {
     registerStyleSheet(css`
@@ -179,41 +176,6 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
       line-height: var(--m3e-nav-menu-item-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
       letter-spacing: var(--m3e-nav-menu-item-tracking, ${DesignToken.typescale.standard.label.large.tracking});
       transition: ${unsafeCSS(`color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`)};
-    }
-    .indicator {
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      pointer-events: none;
-      transform-origin: var(--_indicator-origin-x, center) center;
-    }
-    .indicator::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      pointer-events: none;
-      opacity: 0;
-    }
-    :host(:not(:is(:state(--no-animate), :--no-animate)):not(:disabled)) .indicator::before {
-      transition: ${unsafeCSS(`opacity ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`)};
-    }
-    :host([selected]:not(:disabled)) .indicator::before {
-      opacity: 1;
-      transition: none;
-    }
-    :host([selected]:not(:is(:state(--no-animate), :--no-animate)):not(:disabled)) .indicator {
-      animation: ${unsafeCSS(
-        `indicator-grow ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standardDecelerate}`,
-      )};
-    }
-    @keyframes indicator-grow {
-      0% {
-        transform: scaleX(0);
-      }
-      100% {
-        transform: scaleX(1);
-      }
     }
     .base,
     .focus-ring {
@@ -293,50 +255,52 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
     :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .base {
       color: var(--m3e-nav-menu-item-selected-label-color, ${DesignToken.color.onSecondaryContainer});
     }
-    :host(:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .indicator::before {
-      background-color: var(--m3e-nav-menu-item-selected-container-color, ${DesignToken.color.secondaryContainer});
-    }
     :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .indicator {
-      --m3e-state-layer-focus-color: var(
+      --m3e-selection-indicator-color: var(
+        --m3e-nav-menu-item-selected-container-color,
+        ${DesignToken.color.secondaryContainer}
+      );
+      --m3e-selection-indicator-state-layer-focus-color: var(
         --m3e-nav-menu-item-selected-container-focus-color,
         ${DesignToken.color.onSecondaryContainer}
       );
-      --m3e-state-layer-hover-color: var(
+      --m3e-selection-indicator-state-layer-hover-color: var(
         --m3e-nav-menu-item-selected-container-hover-color,
         ${DesignToken.color.onSecondaryContainer}
       );
-      --m3e-state-layer-pressed-color: var(
+      --m3e-selection-indicator-state-layer-pressed-color: var(
         --m3e-nav-menu-item-selected-container-pressed-color,
         ${DesignToken.color.onSecondaryContainer}
       );
     }
     :host(:not([selected]):not(:is(:state(--with-items), :--with-items)):not(:disabled)) .indicator {
-      --m3e-state-layer-focus-color: var(
+      --m3e-selection-indicator-state-layer-focus-color: var(
         --m3e-nav-menu-item-unselected-container-focus-color,
         ${DesignToken.color.onSurface}
       );
-      --m3e-state-layer-hover-color: var(
+      --m3e-selection-indicator-state-layer-hover-color: var(
         --m3e-nav-menu-item-unselected-container-hover-color,
         ${DesignToken.color.onSurface}
       );
-      --m3e-state-layer-pressed-color: var(
+      --m3e-selection-indicator-state-layer-pressed-color: var(
         --m3e-nav-menu-item-unselected-container-pressed-color,
         ${DesignToken.color.onSurface}
       );
     }
-    :host(:is(:state(--with-items), :--with-items):not(:disabled)) .indicator::before {
-      background-color: var(--m3e-nav-menu-item-open-container-color, ${DesignToken.color.surfaceContainerHighest});
-    }
     :host([selected]:is(:state(--with-items), :--with-items):not(:disabled)) .indicator {
-      --m3e-state-layer-focus-color: var(
+      --m3e-selection-indicator-color: var(
+        --m3e-nav-menu-item-open-container-color,
+        ${DesignToken.color.surfaceContainerHighest}
+      );
+      --m3e-selection-indicator-state-layer-focus-color: var(
         --m3e-nav-menu-item-open-container-focus-color,
         ${DesignToken.color.onSurface}
       );
-      --m3e-state-layer-hover-color: var(
+      --m3e-selection-indicator-state-layer-hover-color: var(
         --m3e-nav-menu-item-open-container-hover-color,
         ${DesignToken.color.onSurface}
       );
-      --m3e-state-layer-pressed-color: var(
+      --m3e-selection-indicator-state-layer-pressed-color: var(
         --m3e-nav-menu-item-open-container-pressed-color,
         ${DesignToken.color.onSurface}
       );
@@ -346,20 +310,13 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
     }
     @media (prefers-reduced-motion) {
       .base,
-      .toggle,
-      .state-layer,
-      :host(:not(:is(:state(--no-animate), :--no-animate)):not(:disabled)) .indicator::before {
-        transition: none !important;
-      }
-      :host([selected]:not(:is(:state(--no-animate), :--no-animate)):not(:disabled)) .indicator {
-        animation: none;
+      .toggle {
+        transition: none;
       }
     }
     @media (forced-colors: active) {
-      .base,
-      .state-layer,
-      :host([selected]:not(:disabled)) .indicator {
-        transition: none !important;
+      .base {
+        transition: none;
       }
       :host(:disabled) .base {
         color: GrayText;
@@ -367,9 +324,9 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
       :host(:not(:disabled)) .base {
         color: LinkText;
       }
-      :host(:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .indicator::before,
-      :host(:is(:state(--with-items), :--with-items):not(:disabled)) .indicator::before {
-        background-color: unset;
+      :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .indicator,
+      :host([selected]:is(:state(--with-items), :--with-items):not(:disabled)) .indicator {
+        --m3e-selection-indicator-color: transparent;
       }
       :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .base,
       :host([selected]:is(:state(--with-items), :--with-items):not(:disabled)) .base {
@@ -390,7 +347,7 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
     }
   `;
 
-  /** @internal */ @query(".state-layer") readonly stateLayer?: M3eStateLayerElement;
+  /** @internal */ @query(".indicator") readonly indicator?: M3eSelectionIndicatorElement;
   /** @internal */ @query(".focus-ring") readonly focusRing?: M3eFocusRingElement;
   /** @private */ @query(".base") private readonly _base?: HTMLElement;
 
@@ -400,25 +357,6 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
   /** @private */ #menu: M3eNavMenuElement | null = null;
   /** @private */ #path = new Array<M3eNavMenuItemElement>();
   /** @private */ #link: HTMLAnchorElement | null = null;
-
-  /** @private */ readonly #indicatorAnimationEndHandler = (e: Event) =>
-    (<HTMLElement>e.target).style.removeProperty("--_indicator-origin-x");
-
-  constructor() {
-    super();
-
-    new PressedController(this, {
-      callback: (pressed, point) => {
-        if (this.disabled || this.selected || prefersReducedMotion()) return;
-        const indicator = this.shadowRoot?.querySelector<HTMLElement>(".indicator");
-        if (pressed && indicator) {
-          const bounds = indicator.getBoundingClientRect();
-          const x = Math.max(bounds.height, point.x - indicator.getBoundingClientRect().left);
-          indicator?.style.setProperty("--_indicator-origin-x", `${x}px`);
-        }
-      },
-    });
-  }
 
   /**
    * Whether the item is expanded.
@@ -521,17 +459,6 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.#path.length = 0;
-
-    const indicator = this.shadowRoot?.querySelector<HTMLElement>(".indicator");
-    if (indicator) {
-      indicator.removeEventListener("animationend", this.#indicatorAnimationEndHandler);
-    }
-  }
-
-  /** @inheritdoc */
-  override reconnectedCallback(): void {
-    super.reconnectedCallback();
-    this.#initIndicator();
   }
 
   /** @inheritdoc */
@@ -567,23 +494,19 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
 
     const base = this._base;
     if (base) {
-      [this.focusRing, this.stateLayer].forEach((x) => x?.attach(base));
+      [this.focusRing, this.indicator].forEach((x) => x?.attach(base));
     }
-
-    this.#initIndicator();
   }
 
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base" @click="${this.#handleClick}">
         <m3e-focus-ring class="focus-ring" inward ?disabled="${this.disabled}"></m3e-focus-ring>
-        <div class="indicator">
-          <m3e-state-layer
-            class="state-layer"
-            ?enable-pressed="${!this.disabled}"
-            ?disabled="${this.disabled}"
-          ></m3e-state-layer>
-        </div>
+        <m3e-selection-indicator
+          class="indicator"
+          ?selected="${this.selected}"
+          ?disabled="${this.disabled}"
+        ></m3e-selection-indicator>
         <div class="icon" aria-hidden="true">${this.#renderIcon()}</div>
         <div class="label">
           <slot name="label" @slotchange="${this.#handleSlotChange}"></slot>
@@ -617,14 +540,6 @@ export class M3eNavMenuItemElement extends ReconnectedCallback(
     return this.selected && !this.hasChildItems
       ? html`<slot name="selected-icon" @slotchange="${this.#handleIconSlotChange}">${icon}</slot>`
       : icon;
-  }
-
-  /** @private */
-  #initIndicator(): void {
-    const indicator = this.shadowRoot?.querySelector<HTMLElement>(".indicator");
-    if (indicator) {
-      indicator.addEventListener("animationend", this.#indicatorAnimationEndHandler);
-    }
   }
 
   /** @private */

@@ -290,7 +290,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
         e.preventDefault();
 
         if (e.key === " ") {
-          item.stateLayer?.show("pressed");
+          item.indicator?.show("pressed");
         }
 
         if (item.hasChildItems) {
@@ -351,7 +351,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
   #handleKeyUp(e: KeyboardEvent): void {
     const item = this[selectionManager].activeItem;
     if (!e.defaultPrevented && item && !item.disabled && e.key === " ") {
-      item.stateLayer?.hide("pressed");
+      item.indicator?.hide("pressed");
     }
   }
 
@@ -400,9 +400,9 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
   /** @private */
   #updateItemFocusVisible(item: M3eNavMenuItemElement, focused: boolean, focusVisible: boolean): void {
     if (focused && focusVisible) {
-      item.stateLayer?.show("focused");
+      item.indicator?.show("focused");
     } else {
-      item.stateLayer?.hide("focused");
+      item.indicator?.hide("focused");
     }
     if (focusVisible) {
       item.focusRing?.show();

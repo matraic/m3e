@@ -5,6 +5,7 @@ export * from "./PseudoCheckbox";
 export * from "./PseudoRadio";
 export * from "./Ripple";
 export * from "./ScrollContainer";
+export * from "./SelectionIndicator";
 export * from "./Slide";
 export * from "./StateLayer";
 export * from "./TextHighlight";
