@@ -600,7 +600,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
         <div class="inner">
           ${this.orientation === "horizontal" ? html`<m3e-focus-ring class="focus-ring"></m3e-focus-ring>` : nothing}
           <div class="indicator"></div>
-          <m3e-state-layer class="state-layer" enable-pressed ?disabled="${disabled}"></m3e-state-layer>
+          <m3e-state-layer class="state-layer" ?enable-pressed="${!disabled}" ?disabled="${disabled}"></m3e-state-layer>
           <div class="touch" aria-hidden="true"></div>
           <div class="base">
             <div class="icon-wrapper" aria-hidden="true">
