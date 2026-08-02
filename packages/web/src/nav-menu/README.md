@@ -128,39 +128,39 @@ This section details the attributes, slots, events, and CSS custom properties av
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                               | Description                                   |
-| ------------------------------------------------------ | --------------------------------------------- |
-| `--m3e-nav-menu-item-font-size`                        | Font size for the item label.                 |
-| `--m3e-nav-menu-item-font-weight`                      | Font weight for the item label.               |
-| `--m3e-nav-menu-item-line-height`                      | Line height for the item label.               |
-| `--m3e-nav-menu-item-tracking`                         | Letter spacing for the item label.            |
-| `--m3e-nav-menu-item-padding`                          | Inline padding for the item.                  |
-| `--m3e-nav-menu-item-height`                           | Height of the item.                           |
-| `--m3e-nav-menu-item-spacing`                          | Spacing between icon and label.               |
-| `--m3e-nav-menu-item-shape`                            | Border radius of the item and focus ring.     |
-| `--m3e-nav-menu-item-icon-size`                        | Size of the icon.                             |
-| `--m3e-nav-menu-item-inset`                            | Indentation for nested items.                 |
-| `--m3e-nav-menu-item-label-color`                      | Text color for the item label.                |
-| `--m3e-nav-menu-item-selected-label-color`             | Text color for selected item label.           |
-| `--m3e-nav-menu-item-selected-container-color`         | Background color for selected item.           |
-| `--m3e-nav-menu-item-selected-container-focus-color`   | Focus color for selected item container.      |
-| `--m3e-nav-menu-item-selected-container-hover-color`   | Hover color for selected item container.      |
-| `--m3e-nav-menu-item-selected-ripple-color`            | Ripple color for selected item.               |
-| `--m3e-nav-menu-item-unselected-container-focus-color` | Focus color for unselected item container.    |
-| `--m3e-nav-menu-item-unselected-container-hover-color` | Hover color for unselected item container.    |
-| `--m3e-nav-menu-item-unselected-ripple-color`          | Ripple color for unselected item.             |
-| `--m3e-nav-menu-item-open-container-color`             | Background color for open item with children. |
-| `--m3e-nav-menu-item-open-container-focus-color`       | Focus color for open item container.          |
-| `--m3e-nav-menu-item-open-container-hover-color`       | Hover color for open item container.          |
-| `--m3e-nav-menu-item-open-ripple-color`                | Ripple color for open item.                   |
-| `--m3e-nav-menu-item-disabled-color`                   | Text color for disabled item.                 |
-| `--m3e-nav-menu-item-disabled-color-opacity`           | Opacity for disabled item text color.         |
-| `--m3e-nav-menu-item-badge-font-size`                  | Font size for badge slot.                     |
-| `--m3e-nav-menu-item-badge-font-weight`                | Font weight for badge slot.                   |
-| `--m3e-nav-menu-item-badge-line-height`                | Line height for badge slot.                   |
-| `--m3e-nav-menu-item-badge-tracking`                   | Letter spacing for badge slot.                |
-| `--m3e-nav-menu-divider-margin`                        | Margin for divider elements.                  |
-| `--m3e-nav-menu-item-vertical-inset`                   | Vertical margin for first/last child items.   |
+| Property                                                 | Description                                   |
+| -------------------------------------------------------- | --------------------------------------------- |
+| `--m3e-nav-menu-item-font-size`                          | Font size for the item label.                 |
+| `--m3e-nav-menu-item-font-weight`                        | Font weight for the item label.               |
+| `--m3e-nav-menu-item-line-height`                        | Line height for the item label.               |
+| `--m3e-nav-menu-item-tracking`                           | Letter spacing for the item label.            |
+| `--m3e-nav-menu-item-padding`                            | Inline padding for the item.                  |
+| `--m3e-nav-menu-item-height`                             | Height of the item.                           |
+| `--m3e-nav-menu-item-spacing`                            | Spacing between icon and label.               |
+| `--m3e-nav-menu-item-shape`                              | Border radius of the item and focus ring.     |
+| `--m3e-nav-menu-item-icon-size`                          | Size of the icon.                             |
+| `--m3e-nav-menu-item-inset`                              | Indentation for nested items.                 |
+| `--m3e-nav-menu-item-label-color`                        | Text color for the item label.                |
+| `--m3e-nav-menu-item-selected-label-color`               | Text color for selected item label.           |
+| `--m3e-nav-menu-item-selected-container-color`           | Background color for selected item.           |
+| `--m3e-nav-menu-item-selected-container-focus-color`     | Focus color for selected item container.      |
+| `--m3e-nav-menu-item-selected-container-hover-color`     | Hover color for selected item container.      |
+| `--m3e-nav-menu-item-selected-container-pressed-color`   | Pressed color for selected item.              |
+| `--m3e-nav-menu-item-unselected-container-focus-color`   | Focus color for unselected item container.    |
+| `--m3e-nav-menu-item-unselected-container-hover-color`   | Hover color for unselected item container.    |
+| `--m3e-nav-menu-item-unselected-container-pressed-color` | Pressed color for unselected item.            |
+| `--m3e-nav-menu-item-open-container-color`               | Background color for open item with children. |
+| `--m3e-nav-menu-item-open-container-focus-color`         | Focus color for open item container.          |
+| `--m3e-nav-menu-item-open-container-hover-color`         | Hover color for open item container.          |
+| `--m3e-nav-menu-item-open-container-pressed-color`       | Pressed color for open item.                  |
+| `--m3e-nav-menu-item-disabled-color`                     | Text color for disabled item.                 |
+| `--m3e-nav-menu-item-disabled-color-opacity`             | Opacity for disabled item text color.         |
+| `--m3e-nav-menu-item-badge-font-size`                    | Font size for badge slot.                     |
+| `--m3e-nav-menu-item-badge-font-weight`                  | Font weight for badge slot.                   |
+| `--m3e-nav-menu-item-badge-line-height`                  | Line height for badge slot.                   |
+| `--m3e-nav-menu-item-badge-tracking`                     | Letter spacing for badge slot.                |
+| `--m3e-nav-menu-divider-margin`                          | Margin for divider elements.                  |
+| `--m3e-nav-menu-item-vertical-inset`                     | Vertical margin for first/last child items.   |
 
 ### 🗂️ m3e-nav-menu-item-group
 

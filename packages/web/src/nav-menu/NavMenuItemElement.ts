@@ -11,12 +11,15 @@ import {
   hasAssignedNodes,
   hasCustomState,
   M3eFocusRingElement,
-  M3eRippleElement,
   M3eStateLayerElement,
+  prefersReducedMotion,
+  PressedController,
+  ReconnectedCallback,
   registerStyleSheet,
   Role,
   Selected,
   setCustomState,
+  SuppressInitialAnimation,
 } from "@m3e/web/core";
 
 import { selectionManager } from "@m3e/web/core/a11y";
@@ -118,14 +121,14 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  * @cssprop --m3e-nav-menu-item-selected-container-color - Background color for selected item.
  * @cssprop --m3e-nav-menu-item-selected-container-focus-color - Focus color for selected item container.
  * @cssprop --m3e-nav-menu-item-selected-container-hover-color - Hover color for selected item container.
- * @cssprop --m3e-nav-menu-item-selected-ripple-color - Ripple color for selected item.
+ * @cssprop --m3e-nav-menu-item-selected-container-pressed-color - Pressed color for selected item.
  * @cssprop --m3e-nav-menu-item-unselected-container-focus-color - Focus color for unselected item container.
  * @cssprop --m3e-nav-menu-item-unselected-container-hover-color - Hover color for unselected item container.
- * @cssprop --m3e-nav-menu-item-unselected-ripple-color - Ripple color for unselected item.
+ * @cssprop --m3e-nav-menu-item-unselected-container-pressed-color - Pressed color for unselected item.
  * @cssprop --m3e-nav-menu-item-open-container-color - Background color for open item with children.
  * @cssprop --m3e-nav-menu-item-open-container-focus-color - Focus color for open item container.
  * @cssprop --m3e-nav-menu-item-open-container-hover-color - Hover color for open item container.
- * @cssprop --m3e-nav-menu-item-open-ripple-color - Ripple color for open item.
+ * @cssprop --m3e-nav-menu-item-open-container-pressed-color - Pressed color for open item.
  * @cssprop --m3e-nav-menu-item-disabled-color - Text color for disabled item.
  * @cssprop --m3e-nav-menu-item-disabled-color-opacity - Opacity for disabled item text color.
  * @cssprop --m3e-nav-menu-item-badge-font-size - Font size for badge slot.
@@ -136,7 +139,9 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  * @cssprop --m3e-nav-menu-item-vertical-inset - Vertical margin for first/last child items.
  */
 @customElement("m3e-nav-menu-item")
-export class M3eNavMenuItemElement extends Selected(Disabled(AttachInternals(Role(LitElement, "treeitem"), true))) {
+export class M3eNavMenuItemElement extends ReconnectedCallback(
+  SuppressInitialAnimation(Selected(Disabled(AttachInternals(Role(LitElement, "treeitem"), true)))),
+) {
   static {
     registerStyleSheet(css`
       m3e-nav-menu-item > m3e-divider {
@@ -173,10 +178,27 @@ export class M3eNavMenuItemElement extends Selected(Disabled(AttachInternals(Rol
       font-weight: var(--m3e-nav-menu-item-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-nav-menu-item-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
       letter-spacing: var(--m3e-nav-menu-item-tracking, ${DesignToken.typescale.standard.label.large.tracking});
-      transition: ${unsafeCSS(
-        `color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard},
-        background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
+      transition: ${unsafeCSS(`color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`)};
+    }
+    .indicator {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      transform-origin: var(--_indicator-origin-x, center) center;
+    }
+    :host([selected]:not(:is(:state(--no-animate), :--no-animate)):not(:disabled)) .indicator {
+      animation: ${unsafeCSS(
+        `indicator-grow ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standardDecelerate}`,
       )};
+    }
+    @keyframes indicator-grow {
+      0% {
+        transform: scaleX(0);
+      }
+      100% {
+        transform: scaleX(1);
+      }
     }
     .base,
     .focus-ring {
@@ -255,6 +277,8 @@ export class M3eNavMenuItemElement extends Selected(Disabled(AttachInternals(Rol
     }
     :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .base {
       color: var(--m3e-nav-menu-item-selected-label-color, ${DesignToken.color.onSecondaryContainer});
+    }
+    :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .indicator {
       background-color: var(--m3e-nav-menu-item-selected-container-color, ${DesignToken.color.secondaryContainer});
       --m3e-state-layer-focus-color: var(
         --m3e-nav-menu-item-selected-container-focus-color,
@@ -264,9 +288,12 @@ export class M3eNavMenuItemElement extends Selected(Disabled(AttachInternals(Rol
         --m3e-nav-menu-item-selected-container-hover-color,
         ${DesignToken.color.onSecondaryContainer}
       );
-      --m3e-ripple-color: var(--m3e-nav-menu-item-selected-ripple-color, ${DesignToken.color.onSecondaryContainer});
+      --m3e-state-layer-pressed-color: var(
+        --m3e-nav-menu-item-selected-container-pressed-color,
+        ${DesignToken.color.onSecondaryContainer}
+      );
     }
-    :host(:not([selected]):not(:is(:state(--with-items), :--with-items)):not(:disabled)) .base {
+    :host(:not([selected]):not(:is(:state(--with-items), :--with-items)):not(:disabled)) .indicator {
       --m3e-state-layer-focus-color: var(
         --m3e-nav-menu-item-unselected-container-focus-color,
         ${DesignToken.color.onSurface}
@@ -275,12 +302,12 @@ export class M3eNavMenuItemElement extends Selected(Disabled(AttachInternals(Rol
         --m3e-nav-menu-item-unselected-container-hover-color,
         ${DesignToken.color.onSurface}
       );
-      --m3e-ripple-color: var(--m3e-nav-menu-item-unselected-ripple-color, ${DesignToken.color.onSurface});
+      --m3e-state-layer-pressed-color: var(
+        --m3e-nav-menu-item-unselected-container-pressed-color,
+        ${DesignToken.color.onSurface}
+      );
     }
-    .state-layer {
-      margin-inline: auto;
-    }
-    :host([selected]:is(:state(--with-items), :--with-items):not(:disabled)) .base {
+    :host([selected]:is(:state(--with-items), :--with-items):not(:disabled)) .indicator {
       background-color: var(--m3e-nav-menu-item-open-container-color, ${DesignToken.color.surfaceContainerHighest});
       --m3e-state-layer-focus-color: var(
         --m3e-nav-menu-item-open-container-focus-color,
@@ -290,7 +317,10 @@ export class M3eNavMenuItemElement extends Selected(Disabled(AttachInternals(Rol
         --m3e-nav-menu-item-open-container-hover-color,
         ${DesignToken.color.onSurface}
       );
-      --m3e-ripple-color: var(--m3e-nav-menu-item-open-ripple-color, ${DesignToken.color.onSurface});
+      --m3e-state-layer-pressed-color: var(
+        --m3e-nav-menu-item-open-container-pressed-color,
+        ${DesignToken.color.onSurface}
+      );
     }
     ::slotted(a[slot="label"]) {
       all: unset;
@@ -301,23 +331,28 @@ export class M3eNavMenuItemElement extends Selected(Disabled(AttachInternals(Rol
       .state-layer {
         transition: none !important;
       }
+      :host([selected]:not(:is(:state(--no-animate), :--no-animate)):not(:disabled)) .indicator {
+        animation: none;
+      }
     }
     @media (forced-colors: active) {
       .base,
       .state-layer {
         transition: none !important;
       }
-
       :host(:disabled) .base {
         color: GrayText;
       }
       :host(:not(:disabled)) .base {
         color: LinkText;
       }
+      :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .indicator,
+      :host([selected]:is(:state(--with-items), :--with-items):not(:disabled)) .indicator {
+        background-color: unset;
+      }
       :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .base,
       :host([selected]:is(:state(--with-items), :--with-items):not(:disabled)) .base {
         forced-color-adjust: none;
-        background-color: unset;
         color: Highlight;
       }
       :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .base::after {
@@ -336,7 +371,6 @@ export class M3eNavMenuItemElement extends Selected(Disabled(AttachInternals(Rol
 
   /** @internal */ @query(".state-layer") readonly stateLayer?: M3eStateLayerElement;
   /** @internal */ @query(".focus-ring") readonly focusRing?: M3eFocusRingElement;
-  /** @internal */ @query(".ripple") readonly ripple?: M3eRippleElement;
   /** @private */ @query(".base") private readonly _base?: HTMLElement;
 
   /** @private */ @state() private _hasChildItems = false;
@@ -345,6 +379,25 @@ export class M3eNavMenuItemElement extends Selected(Disabled(AttachInternals(Rol
   /** @private */ #menu: M3eNavMenuElement | null = null;
   /** @private */ #path = new Array<M3eNavMenuItemElement>();
   /** @private */ #link: HTMLAnchorElement | null = null;
+
+  /** @private */ readonly #indicatorAnimationEndHandler = (e: Event) =>
+    (<HTMLElement>e.target).style.removeProperty("--_indicator-origin-x");
+
+  constructor() {
+    super();
+
+    new PressedController(this, {
+      callback: (pressed, point) => {
+        if (this.disabled || this.selected || prefersReducedMotion()) return;
+        const indicator = this.shadowRoot?.querySelector<HTMLElement>(".indicator");
+        if (pressed && indicator) {
+          const bounds = indicator.getBoundingClientRect();
+          const x = Math.max(bounds.height, point.x - indicator.getBoundingClientRect().left);
+          indicator?.style.setProperty("--_indicator-origin-x", `${x}px`);
+        }
+      },
+    });
+  }
 
   /**
    * Whether the item is expanded.
@@ -447,6 +500,17 @@ export class M3eNavMenuItemElement extends Selected(Disabled(AttachInternals(Rol
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.#path.length = 0;
+
+    const indicator = this.shadowRoot?.querySelector<HTMLElement>(".indicator");
+    if (indicator) {
+      indicator.removeEventListener("animationend", this.#indicatorAnimationEndHandler);
+    }
+  }
+
+  /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.#initIndicator();
   }
 
   /** @inheritdoc */
@@ -482,16 +546,23 @@ export class M3eNavMenuItemElement extends Selected(Disabled(AttachInternals(Rol
 
     const base = this._base;
     if (base) {
-      [this.focusRing, this.stateLayer, this.ripple].forEach((x) => x?.attach(base));
+      [this.focusRing, this.stateLayer].forEach((x) => x?.attach(base));
     }
+
+    this.#initIndicator();
   }
 
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base" @click="${this.#handleClick}">
-        <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"></m3e-state-layer>
         <m3e-focus-ring class="focus-ring" inward ?disabled="${this.disabled}"></m3e-focus-ring>
-        <m3e-ripple class="ripple" ?disabled="${this.disabled}"></m3e-ripple>
+        <div class="indicator">
+          <m3e-state-layer
+            class="state-layer"
+            ?enable-pressed="${!this.disabled}"
+            ?disabled="${this.disabled}"
+          ></m3e-state-layer>
+        </div>
         <div class="icon" aria-hidden="true">${this.#renderIcon()}</div>
         <div class="label">
           <slot name="label" @slotchange="${this.#handleSlotChange}"></slot>
@@ -525,6 +596,14 @@ export class M3eNavMenuItemElement extends Selected(Disabled(AttachInternals(Rol
     return this.selected && !this.hasChildItems
       ? html`<slot name="selected-icon" @slotchange="${this.#handleIconSlotChange}">${icon}</slot>`
       : icon;
+  }
+
+  /** @private */
+  #initIndicator(): void {
+    const indicator = this.shadowRoot?.querySelector<HTMLElement>(".indicator");
+    if (indicator) {
+      indicator.addEventListener("animationend", this.#indicatorAnimationEndHandler);
+    }
   }
 
   /** @private */

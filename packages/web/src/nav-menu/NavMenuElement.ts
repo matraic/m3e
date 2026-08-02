@@ -289,10 +289,8 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
       case " ":
         e.preventDefault();
 
-        if (e.key === " " && item.ripple && !item.ripple.visible) {
-          item.ripple.centered = true;
-          item.ripple.show(0, 0, true);
-          item.ripple.centered = false;
+        if (e.key === " ") {
+          item.stateLayer?.show("pressed");
         }
 
         if (item.hasChildItems) {
@@ -353,7 +351,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
   #handleKeyUp(e: KeyboardEvent): void {
     const item = this[selectionManager].activeItem;
     if (!e.defaultPrevented && item && !item.disabled && e.key === " ") {
-      item.ripple?.hide();
+      item.stateLayer?.hide("pressed");
     }
   }
 
