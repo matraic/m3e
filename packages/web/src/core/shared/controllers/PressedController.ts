@@ -148,10 +148,12 @@ export class PressedController extends MonitorControllerBase {
         e.preventDefault();
       }
 
-      this.#clearReleaseTimeout(target);
-      this.#pressedTargets.set(target, performance.now());
-      const bounds = target.getBoundingClientRect();
-      this.#callback(true, { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 }, target);
+      if (!e.repeat) {
+        this.#clearReleaseTimeout(target);
+        this.#pressedTargets.set(target, performance.now());
+        const bounds = target.getBoundingClientRect();
+        this.#callback(true, { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 }, target);
+      }
     }
   }
 
