@@ -80,16 +80,19 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
       filter: blur(20px);
       background-color: ${RippleToken.color};
       transition: ${unsafeCSS(
-        `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
+        `background-color ${DesignToken.motion.duration.short1} ${DesignToken.motion.easing.standard}`,
       )};
-      will-change: transform;
+      will-change: transform, background-color, opacity;
       animation: ripple ${RippleToken.enterDuration} linear;
     }
     .ripple.persistent.pressed {
       transform: scale(4);
     }
     .ripple.exit {
-      transition: opacity ${RippleToken.exitDuration} cubic-bezier(0, 0, 0.2, 0.1);
+      transition: ${unsafeCSS(
+        `opacity ${RippleToken.exitDuration} cubic-bezier(0, 0, 0.2, 0.1),
+        background-color ${DesignToken.motion.duration.short1} ${DesignToken.motion.easing.standard}`,
+      )};
       opacity: 0;
     }
     @keyframes ripple {
@@ -102,6 +105,7 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
         transform: scale(4);
         animation-duration: 90ms;
       }
+      .ripple:not(.exit),
       .ripple.exit {
         transition-duration: 10ms;
       }
@@ -188,11 +192,15 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
     ripple.style.height = `${radius * 2}px`;
 
     ripple.addEventListener("animationend", () => this.#handleAnimationEnd(ripple, persistent), { once: true });
-    ripple.addEventListener("transitionend", (e) => {
-      if (e.propertyName === "opacity") {
-        this.#destroyRipple(ripple);
-      }
-    }, { once: true });
+    ripple.addEventListener(
+      "transitionend",
+      (e) => {
+        if (e.propertyName === "opacity") {
+          this.#destroyRipple(ripple);
+        }
+      },
+      { once: true },
+    );
 
     if (!this.shadowRoot) {
       this.#ripples.delete(ripple);
