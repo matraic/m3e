@@ -71,15 +71,19 @@
           for the last item in a breadcrumb because the current level is not interactive.
         </p>
 
-        <m3e-breadcrumb>
-          <m3e-breadcrumb-item href="https://developer.mozilla.org/en-US/docs/Web" target="_blank">
-            Web
-          </m3e-breadcrumb-item>
-          <m3e-breadcrumb-item href="https://developer.mozilla.org/en-US/docs/Web/API" target="_blank">
-            API
-          </m3e-breadcrumb-item>
-          <m3e-breadcrumb-item> Web Components </m3e-breadcrumb-item>
-        </m3e-breadcrumb>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-breadcrumb>
+              <m3e-breadcrumb-item href="https://developer.mozilla.org/en-US/docs/Web" target="_blank">
+                Web
+              </m3e-breadcrumb-item>
+              <m3e-breadcrumb-item href="https://developer.mozilla.org/en-US/docs/Web/API" target="_blank">
+                API
+              </m3e-breadcrumb-item>
+              <m3e-breadcrumb-item> Web Components </m3e-breadcrumb-item>
+            </m3e-breadcrumb>
+          </div>
+        </m3e-card>
         <m3e-card variant="outlined" class="example">
           <pre slot="content">
 &lt;m3e-breadcrumb&gt;
