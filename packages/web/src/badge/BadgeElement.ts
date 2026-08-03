@@ -53,6 +53,7 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
     :host {
       display: inline-block;
       vertical-align: baseline;
+      pointer-events: none;
     }
     .base {
       contain: layout style paint;
