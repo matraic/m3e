@@ -48,23 +48,65 @@ export const MeasurementToken = {
   /** 28dp spacing. */
   space350: space(350),
 
+  /** 30dp spacing. */
+  space375: space(375),
+
   /** 32dp spacing. */
   space400: space(400),
+
+  /** 34dp spacing. */
+  space425: space(425),
 
   /** 36dp spacing. */
   space450: space(450),
 
+  /** 38dp spacing. */
+  space475: space(475),
+
   /** 40dp spacing. */
   space500: space(500),
+
+  /** 42dp spacing. */
+  space525: space(525),
+
+  /** 46dp spacing. */
+  space550: space(550),
 
   /** 48dp spacing. */
   space600: space(600),
 
+  /** 50dp spacing. */
+  space625: space(625),
+
+  /** 52dp spacing. */
+  space650: space(650),
+
+  /** 54dp spacing. */
+  space675: space(675),
+
   /** 56dp spacing. */
   space700: space(700),
 
+  /** 58dp spacing. */
+  space725: space(725),
+
+  /** 60dp spacing. */
+  space750: space(750),
+
+  /** 62dp spacing. */
+  space775: space(775),
+
   /** 64dp spacing. */
   space800: space(800),
+
+  /** 66dp spacing. */
+  space825: space(825),
+
+  /** 68dp spacing. */
+  space850: space(850),
+
+  /** 70dp spacing. */
+  space875: space(875),
 
   /** 72dp spacing. */
   space900: space(900),
