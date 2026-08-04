@@ -131,9 +131,9 @@ export class M3eFabMenuItemElement extends KeyboardClick(
       overflow: hidden;
       display: inline-flex;
       align-items: center;
-      padding-inline-start: var(--m3e-fab-menu-item-leading-space, 1.5rem);
-      padding-inline-end: var(--m3e-fab-menu-item-trailing-space, 1.5rem);
-      column-gap: var(--m3e-fab-menu-item-spacing, 0.5rem);
+      padding-inline-start: var(--m3e-fab-menu-item-leading-space, ${DesignToken.measurement.space300});
+      padding-inline-end: var(--m3e-fab-menu-item-trailing-space, ${DesignToken.measurement.space300});
+      column-gap: var(--m3e-fab-menu-item-spacing, ${DesignToken.measurement.space100});
     }
     .label {
       justify-self: center;

@@ -83,7 +83,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       contain: layout style;
       position: absolute;
       flex-direction: column;
-      row-gap: var(--m3e-fab-menu-spacing, 0.25rem);
+      row-gap: var(--m3e-fab-menu-spacing, ${DesignToken.measurement.space50});
       padding: unset;
       margin: unset;
       border: unset;
