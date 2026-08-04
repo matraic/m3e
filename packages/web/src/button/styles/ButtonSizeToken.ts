@@ -7,6 +7,8 @@ import { ButtonSize } from "../ButtonSize";
 /** @private */
 type _ButtonSizeToken = {
   containerHeight: CSSResult;
+  topSpace: CSSResult;
+  bottomSpace: CSSResult;
   outlineThickness: CSSResult;
   labelTextFontSize: CSSResult;
   labelTextFontWeight: CSSResult;
@@ -31,6 +33,12 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
   "extra-small": {
     containerHeight: unsafeCSS(
       `calc(var(--m3e-button-extra-small-container-height, var(--m3e-button-container-height, 2rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
+    topSpace: unsafeCSS(
+      `calc(var(--m3e-button-extra-small-top-space, var(--m3e-button-top-space, ${DesignToken.measurement.space75})) + ${DesignToken.density.calcHalf(-3)})`,
+    ),
+    bottomSpace: unsafeCSS(
+      `calc(var(--m3e-button-extra-small-bottom-space, var(--m3e-button-bottom-space, ${DesignToken.measurement.space75})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     outlineThickness: unsafeCSS(
       "var(--m3e-button-extra-small-outline-thickness, var(--m3e-button-outline-thickness, 1px))",
@@ -63,15 +71,25 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
     shapePressedMorph: unsafeCSS(
       `var(--m3e-button-extra-small-shape-pressed-morph, var(--m3e-button-shape-pressed-morph, ${DesignToken.shape.corner.small}))`,
     ),
-    leadingSpace: unsafeCSS("var(--m3e-button-extra-small-leading-space, var(--m3e-button-leading-space, 0.75rem))"),
-    trailingSpace: unsafeCSS("var(--m3e-button-extra-small-trailing-space, var(--m3e-button-trailing-space, 0.75rem))"),
+    leadingSpace: unsafeCSS(
+      `var(--m3e-button-extra-small-leading-space, var(--m3e-button-leading-space, ${DesignToken.measurement.space150}))`,
+    ),
+    trailingSpace: unsafeCSS(
+      `var(--m3e-button-extra-small-trailing-space, var(--m3e-button-trailing-space, ${DesignToken.measurement.space150}))`,
+    ),
     iconLabelSpace: unsafeCSS(
-      "var(--m3e-button-extra-small-icon-label-space, var(--m3e-button-icon-label-space, 0.5rem))",
+      `var(--m3e-button-extra-small-icon-label-space, var(--m3e-button-icon-label-space, ${DesignToken.measurement.space100}))`,
     ),
   },
   small: {
     containerHeight: unsafeCSS(
       `calc(var(--m3e-button-small-container-height, var(--m3e-button-container-height, 2.5rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
+    topSpace: unsafeCSS(
+      `calc(var(--m3e-button-small-top-space, var(--m3e-button-top-space, ${DesignToken.measurement.space125})) + ${DesignToken.density.calcHalf(-3)})`,
+    ),
+    bottomSpace: unsafeCSS(
+      `calc(var(--m3e-button-small-bottom-space, var(--m3e-button-bottom-space, ${DesignToken.measurement.space125})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     outlineThickness: unsafeCSS("var(--m3e-button-small-outline-thickness, var(--m3e-button-outline-thickness, 1px))"),
     labelTextFontSize: unsafeCSS(
@@ -102,13 +120,25 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
     shapePressedMorph: unsafeCSS(
       `var(--m3e-button-small-shape-pressed-morph, var(--m3e-button-shape-pressed-morph, ${DesignToken.shape.corner.small}))`,
     ),
-    leadingSpace: unsafeCSS("var(--m3e-button-small-leading-space, var(--m3e-button-leading-space, 1rem))"),
-    trailingSpace: unsafeCSS("var(--m3e-button-small-trailing-space, var(--m3e-button-trailing-space, 1rem))"),
-    iconLabelSpace: unsafeCSS("var(--m3e-button-small-icon-label-space, var(--m3e-button-icon-label-space, 0.5rem))"),
+    leadingSpace: unsafeCSS(
+      `var(--m3e-button-small-leading-space, var(--m3e-button-leading-space, ${DesignToken.measurement.space250}))`,
+    ),
+    trailingSpace: unsafeCSS(
+      `var(--m3e-button-small-trailing-space, var(--m3e-button-trailing-space, ${DesignToken.measurement.space250}))`,
+    ),
+    iconLabelSpace: unsafeCSS(
+      `var(--m3e-button-small-icon-label-space, var(--m3e-button-icon-label-space, ${DesignToken.measurement.space100}))`,
+    ),
   },
   medium: {
     containerHeight: unsafeCSS(
       `calc(var(--m3e-button-medium-container-height, var(--m3e-button-container-height, 3.5rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
+    topSpace: unsafeCSS(
+      `calc(var(--m3e-button-medium-top-space, var(--m3e-button-top-space, ${DesignToken.measurement.space200})) + ${DesignToken.density.calcHalf(-3)})`,
+    ),
+    bottomSpace: unsafeCSS(
+      `calc(var(--m3e-button-medium-bottom-space, var(--m3e-button-bottom-space, ${DesignToken.measurement.space200})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     outlineThickness: unsafeCSS("var(--m3e-button-medium-outline-thickness, var(--m3e-button-outline-thickness, 1px))"),
     labelTextFontSize: unsafeCSS(
@@ -139,13 +169,25 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
     shapePressedMorph: unsafeCSS(
       `var(--m3e-button-medium-shape-pressed-morph, var(--m3e-button-shape-pressed-morph, ${DesignToken.shape.corner.medium}))`,
     ),
-    leadingSpace: unsafeCSS("var(--m3e-button-medium-leading-space, var(--m3e-button-leading-space, 1.5rem))"),
-    trailingSpace: unsafeCSS("var(--m3e-button-medium-trailing-space, var(--m3e-button-trailing-space, 1.5rem))"),
-    iconLabelSpace: unsafeCSS("var(--m3e-button-medium-icon-label-space, var(--m3e-button-icon-label-space, 0.5rem))"),
+    leadingSpace: unsafeCSS(
+      `var(--m3e-button-medium-leading-space, var(--m3e-button-leading-space, ${DesignToken.measurement.space300}))`,
+    ),
+    trailingSpace: unsafeCSS(
+      `var(--m3e-button-medium-trailing-space, var(--m3e-button-trailing-space, ${DesignToken.measurement.space300}))`,
+    ),
+    iconLabelSpace: unsafeCSS(
+      `var(--m3e-button-medium-icon-label-space, var(--m3e-button-icon-label-space, ${DesignToken.measurement.space100}))`,
+    ),
   },
   large: {
     containerHeight: unsafeCSS(
       `calc(var(--m3e-button-large-container-height, var(--m3e-button-container-height, 6rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
+    topSpace: unsafeCSS(
+      `calc(var(--m3e-button-large-top-space, var(--m3e-button-top-space, ${DesignToken.measurement.space400})) + ${DesignToken.density.calcHalf(-3)})`,
+    ),
+    bottomSpace: unsafeCSS(
+      `calc(var(--m3e-button-large-bottom-space, var(--m3e-button-bottom-space, ${DesignToken.measurement.space400})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     outlineThickness: unsafeCSS("var(--m3e-button-large-outline-thickness, var(--m3e-button-outline-thickness, 2px))"),
     labelTextFontSize: unsafeCSS(
@@ -176,13 +218,25 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
     shapePressedMorph: unsafeCSS(
       `var(--m3e-button-large-shape-pressed-morph, var(--m3e-button-shape-pressed-morph, ${DesignToken.shape.corner.large}))`,
     ),
-    leadingSpace: unsafeCSS("var(--m3e-button-large-leading-space, var(--m3e-button-leading-space, 3rem))"),
-    trailingSpace: unsafeCSS("var(--m3e-button-large-trailing-space, var(--m3e-button-trailing-space, 3rem))"),
-    iconLabelSpace: unsafeCSS("var(--m3e-button-large-icon-label-space, var(--m3e-button-icon-label-space, 0.75rem))"),
+    leadingSpace: unsafeCSS(
+      `var(--m3e-button-large-leading-space, var(--m3e-button-leading-space, ${DesignToken.measurement.space600}))`,
+    ),
+    trailingSpace: unsafeCSS(
+      `var(--m3e-button-large-trailing-space, var(--m3e-button-trailing-space, ${DesignToken.measurement.space600}))`,
+    ),
+    iconLabelSpace: unsafeCSS(
+      `var(--m3e-button-large-icon-label-space, var(--m3e-button-icon-label-space, ${DesignToken.measurement.space150}))`,
+    ),
   },
   "extra-large": {
     containerHeight: unsafeCSS(
       `calc(var(--m3e-button-extra-large-container-height, var(--m3e-button-container-height, 8.5rem)) + ${DesignToken.density.calc(-3)})`,
+    ),
+    topSpace: unsafeCSS(
+      `calc(var(--m3e-button-extra-large-top-space, var(--m3e-button-top-space, ${DesignToken.measurement.space600})) + ${DesignToken.density.calcHalf(-3)})`,
+    ),
+    bottomSpace: unsafeCSS(
+      `calc(var(--m3e-button-extra-large-bottom-space, var(--m3e-button-bottom-space, ${DesignToken.measurement.space600})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     outlineThickness: unsafeCSS(
       "var(--m3e-button-extra-large-outline-thickness, var(--m3e-button-outline-thickness, 3px))",
@@ -215,10 +269,14 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
     shapePressedMorph: unsafeCSS(
       `var(--m3e-button-extra-large-shape-pressed-morph, var(--m3e-button-shape-pressed-morph, ${DesignToken.shape.corner.large}))`,
     ),
-    leadingSpace: unsafeCSS("var(--m3e-button-extra-large-leading-space, var(--m3e-button-leading-space, 4rem))"),
-    trailingSpace: unsafeCSS("var(--m3e-button-extra-large-trailing-space, var(--m3e-button-trailing-space, 4rem))"),
+    leadingSpace: unsafeCSS(
+      `var(--m3e-button-extra-large-leading-space, var(--m3e-button-leading-space, ${DesignToken.measurement.space800}))`,
+    ),
+    trailingSpace: unsafeCSS(
+      `var(--m3e-button-extra-large-trailing-space, var(--m3e-button-trailing-space, ${DesignToken.measurement.space800}))`,
+    ),
     iconLabelSpace: unsafeCSS(
-      "var(--m3e-button-extra-large-icon-label-space, var(--m3e-button-icon-label-space, 1rem))",
+      `var(--m3e-button-extra-large-icon-label-space, var(--m3e-button-icon-label-space, ${DesignToken.measurement.space200}))`,
     ),
   },
 } as const;

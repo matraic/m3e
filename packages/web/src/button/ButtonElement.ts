@@ -88,6 +88,8 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-button-container-height - Height of the button container, for all size variants.
+ * @cssprop --m3e-button-top-space - Top space of the button container, for all size variants.
+ * @cssprop --m3e-button-bottom-space - Bottom space of the button container, for all size variants.
  * @cssprop --m3e-button-outline-thickness - Thickness of the button outline, for all size variants.
  * @cssprop --m3e-button-label-text-font-size - Font size for the label text, for all size variants.
  * @cssprop --m3e-button-label-text-font-weight - Font weight for the label text, for all size variants.
@@ -103,6 +105,8 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * @cssprop --m3e-button-trailing-space - Space after icon or label, for all size variants.
  * @cssprop --m3e-button-icon-label-space - Space between icon and label, for all size variants.
  * @cssprop --m3e-button-extra-small-container-height - Height of the button container, for the extra-small size variant.
+ * @cssprop --m3e-button-extra-small-top-space - Top space of the button container, for the extra-small size variant.
+ * @cssprop --m3e-button-extra-small-bottom-space - Bottom space of the button container, for the extra-small size variant.
  * @cssprop --m3e-button-extra-small-outline-thickness - Thickness of the button outline, for the extra-small size variant.
  * @cssprop --m3e-button-extra-small-label-text-font-size - Font size for the label text, for the extra-small size variant.
  * @cssprop --m3e-button-extra-small-label-text-font-weight - Font weight for the label text, for the extra-small size variant.
@@ -118,6 +122,8 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * @cssprop --m3e-button-extra-small-trailing-space - Space after icon or label, for the extra-small size variant.
  * @cssprop --m3e-button-extra-small-icon-label-space - Space between icon and label, for the extra-small size variant.
  * @cssprop --m3e-button-small-container-height - Height of the button container, for the small size variant.
+ * @cssprop --m3e-button-small-top-space - Top space of the button container, for the small size variant.
+ * @cssprop --m3e-button-small-bottom-space - Bottom space of the button container, for the small size variant.
  * @cssprop --m3e-button-small-outline-thickness - Thickness of the button outline, for the small size variant.
  * @cssprop --m3e-button-small-label-text-font-size - Font size for the label text, for the small size variant.
  * @cssprop --m3e-button-small-label-text-font-weight - Font weight for the label text, for the small size variant.
@@ -133,6 +139,8 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * @cssprop --m3e-button-small-trailing-space - Space after icon or label, for the small size variant.
  * @cssprop --m3e-button-small-icon-label-space - Space between icon and label, for the small size variant.
  * @cssprop --m3e-button-medium-container-height - Height of the button container, for the medium size variant.
+ * @cssprop --m3e-button-medium-top-space - Top space of the button container, for the medium size variant.
+ * @cssprop --m3e-button-medium-bottom-space - Bottom space of the button container, for the medium size variant.
  * @cssprop --m3e-button-medium-outline-thickness - Thickness of the button outline, for the medium size variant.
  * @cssprop --m3e-button-medium-label-text-font-size - Font size for the label text, for the medium size variant.
  * @cssprop --m3e-button-medium-label-text-font-weight - Font weight for the label text, for the medium size variant.
@@ -148,6 +156,8 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * @cssprop --m3e-button-medium-trailing-space - Space after icon or label, for the medium size variant.
  * @cssprop --m3e-button-medium-icon-label-space - Space between icon and label, for the medium size variant.
  * @cssprop --m3e-button-large-container-height - Height of the button container, for the large size variant.
+ * @cssprop --m3e-button-large-top-space - Top space of the button container, for the large size variant.
+ * @cssprop --m3e-button-large-bottom-space - Bottom space of the button container, for the large size variant.
  * @cssprop --m3e-button-large-outline-thickness - Thickness of the button outline, for the large size variant.
  * @cssprop --m3e-button-large-label-text-font-size - Font size for the label text, for the large size variant.
  * @cssprop --m3e-button-large-label-text-font-weight - Font weight for the label text, for the large size variant.
@@ -163,6 +173,8 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * @cssprop --m3e-button-large-trailing-space - Space after icon or label, for the large size variant.
  * @cssprop --m3e-button-large-icon-label-space - Space between icon and label, for the large size variant.
  * @cssprop --m3e-button-extra-large-container-height - Height of the button container, for the extra-large size variant.
+ * @cssprop --m3e-button-extra-large-top-space - Top space of the button container, for the extra-large size variant.
+ * @cssprop --m3e-button-extra-large-bottom-space - Bottom space of the button container, for the extra-large size variant.
  * @cssprop --m3e-button-extra-large-outline-thickness - Thickness of the button outline, for the extra-large size variant.
  * @cssprop --m3e-button-extra-large-label-text-font-size - Font size for the label text, for the extra-large size variant.
  * @cssprop --m3e-button-extra-large-label-text-font-weight - Font weight for the label text, for the extra-large size variant.

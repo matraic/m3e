@@ -37,6 +37,7 @@ export const ButtonStyle: CSSResultGroup = css`
           border-radius ${DesignToken.motion.spring.fastEffects}`)};
   }
   .wrapper {
+    box-sizing: border-box;
     width: 100%;
     overflow: hidden;
     display: inline-flex;

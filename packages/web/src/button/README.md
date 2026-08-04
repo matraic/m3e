@@ -72,6 +72,8 @@ All size variants (`extra-small`, `small`, `medium`, `large`, `extra-large`) sup
 | Property                                     | Description                          |
 | -------------------------------------------- | ------------------------------------ |
 | `--m3e-button-[size]-container-height`       | Height of the button container       |
+| `--m3e-button-[size]-top-space`              | Top space of the button container    |
+| `--m3e-button-[size]-bottom-space`           | Bottom space of the button container |
 | `--m3e-button-[size]-outline-thickness`      | Outline thickness                    |
 | `--m3e-button-[size]-label-text-font-size`   | Font size for label                  |
 | `--m3e-button-[size]-label-text-font-weight` | Font weight for label                |
