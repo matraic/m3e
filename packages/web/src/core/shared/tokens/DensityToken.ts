@@ -20,4 +20,13 @@ export const DensityToken = {
   calc(minScale: number): CSSResult {
     return unsafeCSS(`calc(max(${minScale}, ${_DensityToken.scale}) * ${_DensityToken.size})`);
   },
+
+  /**
+   * Creates a CSS `calc` that calculates a dimension based on half density.
+   * @param {number} minScale The minimum supported scale.
+   * @returns {CSSResult} A CSS `calc` used to calculate a dimension based on half density.
+   */
+  calcHalf(minScale: number): CSSResult {
+    return unsafeCSS(`calc(max(${minScale}, ${_DensityToken.scale}) * (${_DensityToken.size} / 2))`);
+  },
 } as const;

@@ -52,22 +52,22 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
       `var(--m3e-icon-button-extra-small-shape-pressed-morph, var(--m3e-icon-button-shape-pressed-morph, ${DesignToken.shape.corner.small}))`,
     ),
     narrowLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-small-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 0.25rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-extra-small-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, ${DesignToken.measurement.space50})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     narrowTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-small-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 0.25rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-extra-small-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, ${DesignToken.measurement.space50})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     defaultLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-small-default-leading-space, var(--m3e-icon-button-default-leading-space, 0.375rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-extra-small-default-leading-space, var(--m3e-icon-button-default-leading-space, ${DesignToken.measurement.space75})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     defaultTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-small-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 0.375rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-extra-small-default-trailing-space, var(--m3e-icon-button-default-trailing-space, ${DesignToken.measurement.space75})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     wideLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-small-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 0.625rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-extra-small-wide-leading-space, var(--m3e-icon-button-wide-leading-space, ${DesignToken.measurement.space125})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     wideTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-small-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 0.625rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-extra-small-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, ${DesignToken.measurement.space125})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
   },
 
@@ -96,22 +96,22 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
       `var(--m3e-icon-button-small-shape-pressed-morph, var(--m3e-icon-button-shape-pressed-morph, ${DesignToken.shape.corner.small}))`,
     ),
     narrowLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-small-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 0.25rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-small-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, ${DesignToken.measurement.space50})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     narrowTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-small-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 0.25rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-small-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, ${DesignToken.measurement.space50})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     defaultLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-small-default-leading-space, var(--m3e-icon-button-default-leading-space, 0.5rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-small-default-leading-space, var(--m3e-icon-button-default-leading-space, ${DesignToken.measurement.space100})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     defaultTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-small-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 0.5rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-small-default-trailing-space, var(--m3e-icon-button-default-trailing-space, ${DesignToken.measurement.space100})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     wideLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-small-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 0.875rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-small-wide-leading-space, var(--m3e-icon-button-wide-leading-space, ${DesignToken.measurement.space175})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     wideTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-small-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 0.875rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-small-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, ${DesignToken.measurement.space175})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
   },
 
@@ -140,22 +140,22 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
       `var(--m3e-icon-button-medium-shape-pressed-morph, var(--m3e-icon-button-shape-pressed-morph, ${DesignToken.shape.corner.medium}))`,
     ),
     narrowLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-medium-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 0.75rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-medium-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, ${DesignToken.measurement.space150})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     narrowTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-medium-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 0.75rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-medium-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, ${DesignToken.measurement.space150})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     defaultLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-medium-default-leading-space, var(--m3e-icon-button-default-leading-space, 1rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-medium-default-leading-space, var(--m3e-icon-button-default-leading-space, ${DesignToken.measurement.space200})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     defaultTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-medium-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 1rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-medium-default-trailing-space, var(--m3e-icon-button-default-trailing-space, ${DesignToken.measurement.space200})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     wideLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-medium-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 1.5rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-medium-wide-leading-space, var(--m3e-icon-button-wide-leading-space, ${DesignToken.measurement.space300})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     wideTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-medium-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 1.5rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-medium-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, ${DesignToken.measurement.space300})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
   },
 
@@ -184,22 +184,22 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
       `var(--m3e-icon-button-large-shape-pressed-morph, var(--m3e-icon-button-shape-pressed-morph, ${DesignToken.shape.corner.large}))`,
     ),
     narrowLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-large-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 1rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-large-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, ${DesignToken.measurement.space200})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     narrowTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-large-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 1rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-large-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, ${DesignToken.measurement.space200})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     defaultLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-large-default-leading-space, var(--m3e-icon-button-default-leading-space, 2rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-large-default-leading-space, var(--m3e-icon-button-default-leading-space, ${DesignToken.measurement.space400})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     defaultTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-large-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 2rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-large-default-trailing-space, var(--m3e-icon-button-default-trailing-space, ${DesignToken.measurement.space400})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     wideLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-large-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 3rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-large-wide-leading-space, var(--m3e-icon-button-wide-leading-space, ${DesignToken.measurement.space600})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     wideTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-large-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 3rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-large-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, ${DesignToken.measurement.space600})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
   },
 
@@ -228,22 +228,22 @@ export const IconButtonSizeToken: Record<IconButtonSize, _IconButtonSizeToken> =
       `var(--m3e-icon-button-extra-large-shape-pressed-morph, var(--m3e-icon-button-shape-pressed-morph, ${DesignToken.shape.corner.large}))`,
     ),
     narrowLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-large-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, 2rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-extra-large-narrow-leading-space, var(--m3e-icon-button-narrow-leading-space, ${DesignToken.measurement.space400})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     narrowTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-large-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, 2rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-extra-large-narrow-trailing-space, var(--m3e-icon-button-narrow-trailing-space, ${DesignToken.measurement.space400})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     defaultLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-large-default-leading-space, var(--m3e-icon-button-default-leading-space, 3rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-extra-large-default-leading-space, var(--m3e-icon-button-default-leading-space, ${DesignToken.measurement.space600})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     defaultTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-large-default-trailing-space, var(--m3e-icon-button-default-trailing-space, 3rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-extra-large-default-trailing-space, var(--m3e-icon-button-default-trailing-space, ${DesignToken.measurement.space600})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     wideLeadingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-large-wide-leading-space, var(--m3e-icon-button-wide-leading-space, 4.5rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-extra-large-wide-leading-space, var(--m3e-icon-button-wide-leading-space, ${DesignToken.measurement.space900})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
     wideTrailingSpace: unsafeCSS(
-      `calc(var(--m3e-icon-button-extra-large-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, 4.5rem)) + calc(${DesignToken.density.calc(-3)} / 2))`,
+      `calc(var(--m3e-icon-button-extra-large-wide-trailing-space, var(--m3e-icon-button-wide-trailing-space, ${DesignToken.measurement.space900})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
   },
 } as const;

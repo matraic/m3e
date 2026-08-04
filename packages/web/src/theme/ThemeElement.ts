@@ -122,7 +122,7 @@ export class M3eThemeElement extends LitElement {
       css += composeCss(DesignToken.motion.duration);
       css += composeCss(DesignToken.motion.easing);
       css += composeCss(DesignToken.motion.spring);
-      css += composeCss(omitKeys(DesignToken.density, "calc"));
+      css += composeCss(omitKeys(DesignToken.density, "calc", "calcHalf"));
       css += composeCss(DesignToken.measurement);
       css += composeCss(DesignToken.state);
 
