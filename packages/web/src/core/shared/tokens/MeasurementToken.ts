@@ -42,6 +42,12 @@ export const MeasurementToken = {
   /** 24dp spacing. */
   space300: space(300),
 
+  /** 26dp spacing. */
+  space325: space(325),
+
+  /** 28dp spacing. */
+  space350: space(350),
+
   /** 32dp spacing. */
   space400: space(400),
 
