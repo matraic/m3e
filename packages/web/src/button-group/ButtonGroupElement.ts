@@ -105,22 +105,22 @@ export class M3eButtonGroupElement extends Role(LitElement, "group") {
       width: var(--_button-group-width);
     }
     :host([variant="standard"][size="extra-small"]) .base {
-      column-gap: var(--m3e-standard-button-group-extra-small-spacing, 1.125rem);
+      column-gap: var(--m3e-standard-button-group-extra-small-spacing, ${DesignToken.measurement.space225});
     }
     :host([variant="standard"][size="small"]) .base {
-      column-gap: var(--m3e-standard-button-group-small-spacing, 0.75rem);
+      column-gap: var(--m3e-standard-button-group-small-spacing, ${DesignToken.measurement.space150});
     }
     :host([variant="standard"][size="medium"]).base {
-      column-gap: var(--m3e-standard-button-group-medium-spacing, 0.5rem);
+      column-gap: var(--m3e-standard-button-group-medium-spacing, ${DesignToken.measurement.space100});
     }
     :host([variant="standard"][size="large"]) .base {
-      column-gap: var(--m3e-standard-button-group-large-spacing, 0.5rem);
+      column-gap: var(--m3e-standard-button-group-large-spacing, ${DesignToken.measurement.space100});
     }
     :host([variant="standard"][size="extra-large"]) .base {
-      column-gap: var(--m3e-standard-button-group-extra-large-spacing, 0.5rem);
+      column-gap: var(--m3e-standard-button-group-extra-large-spacing, ${DesignToken.measurement.space100});
     }
     :host([variant="connected"]) .base {
-      column-gap: var(--m3e-connected-button-group-spacing, 0.125rem);
+      column-gap: var(--m3e-connected-button-group-spacing, ${DesignToken.measurement.space25});
     }
     :host([variant="connected"][size="extra-small"]) ::slotted(:is(:state(--first), :--first)[size="extra-small"]),
     :host([variant="connected"][size="extra-small"])
