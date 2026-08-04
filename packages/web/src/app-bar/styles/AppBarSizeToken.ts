@@ -55,8 +55,10 @@ export const AppBarSizeToken: Record<AppBarSize, _AppBarSizeToken> = {
     subtitleTextTracking: unsafeCSS(
       `var(--m3e-app-bar-small-subtitle-text-tracking, ${DesignToken.typescale.standard.label.medium.tracking})`,
     ),
-    headingPaddingLeft: unsafeCSS(`var(--m3e-app-bar-small-heading-padding-left, 0.25rem)`),
-    headingPaddingRight: unsafeCSS(`var(--m3e-app-bar-small-heading-padding-right, 0.25rem)`),
+    headingPaddingLeft: unsafeCSS(`var(--m3e-app-bar-small-heading-padding-left, ${DesignToken.measurement.space50})`),
+    headingPaddingRight: unsafeCSS(
+      `var(--m3e-app-bar-small-heading-padding-right, ${DesignToken.measurement.space50})`,
+    ),
   },
   medium: {
     containerHeight: unsafeCSS(`var(--m3e-app-bar-medium-container-height, 7rem)`),
@@ -85,10 +87,14 @@ export const AppBarSizeToken: Record<AppBarSize, _AppBarSizeToken> = {
     subtitleTextTracking: unsafeCSS(
       `var(--m3e-app-bar-medium-subtitle-text-tracking, ${DesignToken.typescale.standard.title.small.tracking})`,
     ),
-    headingPaddingLeft: unsafeCSS(`var(--m3e-app-bar-medium-heading-padding-left, 1rem)`),
-    headingPaddingRight: unsafeCSS(`var(--m3e-app-bar-medium-heading-padding-right, 0.25rem)`),
-    paddingTop: unsafeCSS(`var(--m3e-app-bar-medium-padding-top, 0.5rem)`),
-    paddingBottom: unsafeCSS(`var(--m3e-app-bar-medium-padding-bottom, 0.75rem)`),
+    headingPaddingLeft: unsafeCSS(
+      `var(--m3e-app-bar-medium-heading-padding-left, ${DesignToken.measurement.space200})`,
+    ),
+    headingPaddingRight: unsafeCSS(
+      `var(--m3e-app-bar-medium-heading-padding-right, ${DesignToken.measurement.space50})`,
+    ),
+    paddingTop: unsafeCSS(`var(--m3e-app-bar-medium-padding-top, ${DesignToken.measurement.space100})`),
+    paddingBottom: unsafeCSS(`var(--m3e-app-bar-medium-padding-bottom, ${DesignToken.measurement.space150})`),
     titleMaxLines: unsafeCSS(`var(--m3e-app-bar-medium-title-max-lines, 2)`),
     subtitleMaxLines: unsafeCSS(`var(--m3e-app-bar-medium-subtitle-max-lines, 1)`),
   },
@@ -119,10 +125,12 @@ export const AppBarSizeToken: Record<AppBarSize, _AppBarSizeToken> = {
     subtitleTextTracking: unsafeCSS(
       `var(--m3e-app-bar-large-subtitle-text-tracking, ${DesignToken.typescale.standard.title.medium.tracking})`,
     ),
-    headingPaddingLeft: unsafeCSS(`var(--m3e-app-bar-large-heading-padding-left, 1rem)`),
-    headingPaddingRight: unsafeCSS(`var(--m3e-app-bar-large-heading-padding-right, 0.25rem)`),
-    paddingTop: unsafeCSS(`var(--m3e-app-bar-large-padding-top, 0.5rem)`),
-    paddingBottom: unsafeCSS(`var(--m3e-app-bar-large-padding-bottom, 0.75rem)`),
+    headingPaddingLeft: unsafeCSS(`var(--m3e-app-bar-large-heading-padding-left, ${DesignToken.measurement.space200})`),
+    headingPaddingRight: unsafeCSS(
+      `var(--m3e-app-bar-large-heading-padding-right, ${DesignToken.measurement.space50})`,
+    ),
+    paddingTop: unsafeCSS(`var(--m3e-app-bar-large-padding-top, ${DesignToken.measurement.space100})`),
+    paddingBottom: unsafeCSS(`var(--m3e-app-bar-large-padding-bottom, ${DesignToken.measurement.space150})`),
     titleMaxLines: unsafeCSS(`var(--m3e-app-bar-large-title-max-lines, 2)`),
     subtitleMaxLines: unsafeCSS(`var(--m3e-app-bar-large-subtitle-max-lines, 1)`),
   },

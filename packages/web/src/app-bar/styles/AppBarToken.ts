@@ -17,6 +17,6 @@ export const AppBarToken = {
   ),
   titleTextColor: unsafeCSS(`var(--m3e-app-bar-title-text-color, ${DesignToken.color.onSurface})`),
   subtitleTextColor: unsafeCSS(`var(--m3e-app-bar-subtitle-text-color, ${DesignToken.color.onSurfaceVariant})`),
-  paddingLeft: unsafeCSS(`var(--m3e-app-bar-padding-left, 0.25rem)`),
-  paddingRight: unsafeCSS(`var(--m3e-app-bar-padding-right, 0.25rem)`),
+  paddingLeft: unsafeCSS(`var(--m3e-app-bar-padding-left, ${DesignToken.measurement.space50})`),
+  paddingRight: unsafeCSS(`var(--m3e-app-bar-padding-right, ${DesignToken.measurement.space50})`),
 } as const;
