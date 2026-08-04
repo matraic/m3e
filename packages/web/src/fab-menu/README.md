@@ -96,15 +96,17 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### 🎛️ CSS Custom Properties
 
-| Property                             | Description                            |
-| ------------------------------------ | -------------------------------------- |
-| `--m3e-fab-menu-item-height`         | Height of the menu item.               |
-| `--m3e-fab-menu-item-font-size`      | Font size of the menu item label.      |
-| `--m3e-fab-menu-item-font-weight`    | Font weight of the menu item label.    |
-| `--m3e-fab-menu-item-line-height`    | Line height of the menu item label.    |
-| `--m3e-fab-menu-item-tracking`       | Letter spacing of the menu item label. |
-| `--m3e-fab-menu-item-shape`          | Border radius of the menu item.        |
-| `--m3e-fab-menu-item-leading-space`  | Padding at the start of the menu item. |
-| `--m3e-fab-menu-item-trailing-space` | Padding at the end of the menu item.   |
-| `--m3e-fab-menu-item-spacing`        | Gap between icon and label.            |
-| `--m3e-fab-menu-item-icon-size`      | Size of the icon in the menu item.     |
+| Property                             | Description                             |
+| ------------------------------------ | --------------------------------------- |
+| `--m3e-fab-menu-item-height`         | Height of the menu item.                |
+| `--m3e-fab-menu-item-font-size`      | Font size of the menu item label.       |
+| `--m3e-fab-menu-item-font-weight`    | Font weight of the menu item label.     |
+| `--m3e-fab-menu-item-line-height`    | Line height of the menu item label.     |
+| `--m3e-fab-menu-item-tracking`       | Letter spacing of the menu item label.  |
+| `--m3e-fab-menu-item-shape`          | Border radius of the menu item.         |
+| `--m3e-fab-menu-item-leading-space`  | Padding at the start of the menu item.  |
+| `--m3e-fab-menu-item-trailing-space` | Padding at the end of the menu item.    |
+| `--m3e-fab-menu-item-top-space`      | Padding at the top of the menu item.    |
+| `--m3e-fab-menu-item-bottom-space`   | Padding at the bottom of the menu item. |
+| `--m3e-fab-menu-item-spacing`        | Gap between icon and label.             |
+| `--m3e-fab-menu-item-icon-size`      | Size of the icon in the menu item.      |

@@ -60,6 +60,8 @@ import type { M3eFabMenuElement } from "./FabMenuElement";
  * @cssprop --m3e-fab-menu-item-shape - Border radius of the menu item.
  * @cssprop --m3e-fab-menu-item-leading-space - Padding at the start of the menu item.
  * @cssprop --m3e-fab-menu-item-trailing-space - Padding at the end of the menu item.
+ * @cssprop --m3e-fab-menu-item-top-space - Padding at the top of the menu item.
+ * @cssprop --m3e-fab-menu-item-bottom-space - Padding at the bottom of the menu item.
  * @cssprop --m3e-fab-menu-item-spacing - Gap between icon and label.
  * @cssprop --m3e-fab-menu-item-icon-size - Size of the icon in the menu item.
  */
@@ -86,7 +88,7 @@ export class M3eFabMenuItemElement extends KeyboardClick(
       transition: ${unsafeCSS(
         `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
       )};
-      height: var(--m3e-fab-menu-item-height, 3.5rem);
+      min-height: var(--m3e-fab-menu-item-height, 3.5rem);
       font-size: var(--m3e-fab-menu-item-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(--m3e-fab-menu-item-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-fab-menu-item-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
@@ -131,6 +133,8 @@ export class M3eFabMenuItemElement extends KeyboardClick(
       overflow: hidden;
       display: inline-flex;
       align-items: center;
+      padding-block-start: var(--m3e-fab-menu-item-top-space, ${DesignToken.measurement.space200});
+      padding-block-end: var(--m3e-fab-menu-item-bottom-space, ${DesignToken.measurement.space200});
       padding-inline-start: var(--m3e-fab-menu-item-leading-space, ${DesignToken.measurement.space300});
       padding-inline-end: var(--m3e-fab-menu-item-trailing-space, ${DesignToken.measurement.space300});
       column-gap: var(--m3e-fab-menu-item-spacing, ${DesignToken.measurement.space100});

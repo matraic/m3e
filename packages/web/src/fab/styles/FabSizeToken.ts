@@ -13,6 +13,8 @@ type _FabSizeToken = {
   iconSize: CSSResult;
   extendedIconSize: CSSResult;
   shape: CSSResult;
+  topSpace: CSSResult;
+  bottomSpace: CSSResult;
   leadingSpace: CSSResult;
   trailingSpace: CSSResult;
   extendedLeadingSpace: CSSResult;
@@ -45,6 +47,12 @@ export const FabSizeToken: Record<FabSize, _FabSizeToken> = {
     iconSize: unsafeCSS("var(--m3e-fab-small-icon-size, var(--m3e-fab-icon-size, 1.5rem))"),
     extendedIconSize: unsafeCSS("var(--m3e-fab-small-icon-size, var(--m3e-fab-icon-size, 1.5rem))"),
     shape: unsafeCSS(`var(--m3e-fab-small-shape, var(--m3e-fab-shape, ${DesignToken.shape.corner.large}))`),
+    topSpace: unsafeCSS(
+      `calc(var(--m3e-fab-small-top-space, var(--m3e-fab-top-space, ${DesignToken.measurement.space200})) + ${DesignToken.density.calcHalf(-3)})`,
+    ),
+    bottomSpace: unsafeCSS(
+      `calc(var(--m3e-fab-small-bottom-space, var(--m3e-fab-bottom-space, ${DesignToken.measurement.space200})) + ${DesignToken.density.calcHalf(-3)})`,
+    ),
     leadingSpace: unsafeCSS(
       `calc(var(--m3e-fab-small-leading-space, var(--m3e-fab-leading-space, ${DesignToken.measurement.space200})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
@@ -86,6 +94,12 @@ export const FabSizeToken: Record<FabSize, _FabSizeToken> = {
       `var(--m3e-fab-medium-icon-size, var(--m3e-fab-icon-size, ${DesignToken.measurement.space350}))`,
     ),
     shape: unsafeCSS(`var(--m3e-fab-medium-shape, var(--m3e-fab-shape, ${DesignToken.shape.corner.largeIncreased}))`),
+    topSpace: unsafeCSS(
+      `calc(var(--m3e-fab-medium-top-space, var(--m3e-fab-top-space, ${DesignToken.measurement.space325})) + ${DesignToken.density.calcHalf(-3)})`,
+    ),
+    bottomSpace: unsafeCSS(
+      `calc(var(--m3e-fab-medium-bottom-space, var(--m3e-fab-bottom-space, ${DesignToken.measurement.space325})) + ${DesignToken.density.calcHalf(-3)})`,
+    ),
     leadingSpace: unsafeCSS(
       `calc(var(--m3e-fab-medium-leading-space, var(--m3e-fab-leading-space, ${DesignToken.measurement.space325})) + ${DesignToken.density.calcHalf(-3)})`,
     ),
@@ -123,6 +137,12 @@ export const FabSizeToken: Record<FabSize, _FabSizeToken> = {
     iconSize: unsafeCSS("var(--m3e-fab-large-icon-size, var(--m3e-fab-icon-size, 2.25rem))"),
     extendedIconSize: unsafeCSS("var(--m3e-fab-large-icon-size, var(--m3e-fab-icon-size, 2.25rem))"),
     shape: unsafeCSS(`var(--m3e-fab-large-shape, var(--m3e-fab-shape, ${DesignToken.shape.corner.extraLarge}))`),
+    topSpace: unsafeCSS(
+      `calc(var(--m3e-fab-large-top-space, var(--m3e-fab-top-space, ${DesignToken.measurement.space350})) + ${DesignToken.density.calcHalf(-3)})`,
+    ),
+    bottomSpace: unsafeCSS(
+      `calc(var(--m3e-fab-large-bottom-space, var(--m3e-fab-bottom-space, ${DesignToken.measurement.space350})) + ${DesignToken.density.calcHalf(-3)})`,
+    ),
     leadingSpace: unsafeCSS(
       `calc(var(--m3e-fab-large-leading-space, var(--m3e-fab-leading-space, ${DesignToken.measurement.space350})) + ${DesignToken.density.calcHalf(-3)})`,
     ),

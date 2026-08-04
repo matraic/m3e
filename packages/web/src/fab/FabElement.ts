@@ -88,6 +88,8 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * @cssprop --m3e-fab-label-text-tracking - Letter spacing (tracking) for the FAB label text for all size variants.
  * @cssprop --m3e-fab-icon-size - Icon size for the FAB for all size variants.
  * @cssprop --m3e-fab-shape - Border radius for the FAB for all size variants.
+ * @cssprop --m3e-fab-top-space - Top space for the FAB for all size variants.
+ * @cssprop --m3e-fab-bottom-space - Bottom space for the FAB for all size variants.
  * @cssprop --m3e-fab-leading-space - Leading space for the FAB for all size variants.
  * @cssprop --m3e-fab-trailing-space - Trailing space for the FAB for all size variants.
  * @cssprop --m3e-fab-icon-label-space - Space between icon and label for the FAB for all size variants.
@@ -98,6 +100,8 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * @cssprop --m3e-fab-small-label-text-tracking - Letter spacing (tracking) for the small FAB label text.
  * @cssprop --m3e-fab-small-icon-size - Icon size for the small FAB.
  * @cssprop --m3e-fab-small-shape - Border radius for the small FAB.
+ * @cssprop --m3e-fab-small-top-space - Top space for the small FAB.
+ * @cssprop --m3e-fab-small-bottom-space - Bottom space for the small FAB.
  * @cssprop --m3e-fab-small-leading-space - Leading space for the small FAB.
  * @cssprop --m3e-fab-small-trailing-space - Trailing space for the small FAB.
  * @cssprop --m3e-fab-small-icon-label-space - Space between icon and label for the small FAB.
@@ -108,6 +112,8 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * @cssprop --m3e-fab-medium-label-text-tracking - Letter spacing (tracking) for the medium FAB label text.
  * @cssprop --m3e-fab-medium-icon-size - Icon size for the medium FAB.
  * @cssprop --m3e-fab-medium-shape - Border radius for the medium FAB.
+ * @cssprop --m3e-fab-medium-top-space - Top space for the medium FAB.
+ * @cssprop --m3e-fab-medium-bottom-space - Bottom space for the medium FAB.
  * @cssprop --m3e-fab-medium-leading-space - Leading space for the medium FAB.
  * @cssprop --m3e-fab-medium-trailing-space - Trailing space for the medium FAB.
  * @cssprop --m3e-fab-medium-icon-label-space - Space between icon and label for the medium FAB.
@@ -118,6 +124,8 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * @cssprop --m3e-fab-large-label-text-tracking - Letter spacing (tracking) for the large FAB label text.
  * @cssprop --m3e-fab-large-icon-size - Icon size for the large FAB.
  * @cssprop --m3e-fab-large-shape - Border radius for the large FAB.
+ * @cssprop --m3e-fab-large-top-space - Top space for the large FAB.
+ * @cssprop --m3e-fab-large-bottom-space - Bottom space for the large FAB.
  * @cssprop --m3e-fab-large-leading-space - Leading space for the large FAB.
  * @cssprop --m3e-fab-large-trailing-space - Trailing space for the large FAB.
  * @cssprop --m3e-fab-large-icon-label-space - Space between icon and label for the large FAB.
@@ -457,10 +465,7 @@ export class M3eFabElement extends KeyboardClick(
       <m3e-elevation class="elevation" ?disabled="${this.disabled || this.disabledInteractive}"></m3e-elevation>
       <m3e-state-layer class="state-layer" ?disabled="${this.disabled || this.disabledInteractive}"></m3e-state-layer>
       <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
-      <m3e-ripple
-        class="ripple"
-        ?disabled="${this.disabled || this.disabledInteractive}"
-      ></m3e-ripple>
+      <m3e-ripple class="ripple" ?disabled="${this.disabled || this.disabledInteractive}"></m3e-ripple>
       <div class="touch" aria-hidden="true"></div>
       ${this[renderPseudoLink]()}
       <div class="wrapper">

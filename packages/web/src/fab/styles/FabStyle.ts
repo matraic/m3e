@@ -36,6 +36,7 @@ export const FabStyle: CSSResultGroup = css`
     overflow: hidden;
     display: inline-flex;
     align-items: center;
+    box-sizing: border-box;
   }
   .label {
     white-space: nowrap;
@@ -72,18 +73,32 @@ export const FabStyle: CSSResultGroup = css`
   }
   :host([aria-expanded="true"]) .base.with-menu {
     border-radius: var(--m3e-fab-menu-close-button-container-shape, ${DesignToken.shape.corner.full});
-    height: calc(var(--m3e-fab-menu-close-button-container-height, 3.5rem) + ${DesignToken.density.calc(-3)});
+    min-height: calc(var(--m3e-fab-menu-close-button-container-height, 3.5rem) + ${DesignToken.density.calc(-3)});
   }
   :host([aria-expanded="true"]) .base.with-menu .wrapper {
-    padding-inline-start: calc(var(--m3e-fab-menu-close-button-leading-space, 1rem) + ${DesignToken.density.calc(-3)});
-    padding-inline-end: calc(var(--m3e-fab-menu-close-button-trailing-space, 1rem) + ${DesignToken.density.calc(-3)});
+    padding-block-start: calc(
+      var(--m3e-fab-menu-close-button-top-space, ${DesignToken.measurement.space200}) +
+        ${DesignToken.density.calcHalf(-3)}
+    );
+    padding-block-end: calc(
+      var(--m3e-fab-menu-close-button-bottom-space, ${DesignToken.measurement.space200}) +
+        ${DesignToken.density.calcHalf(-3)}
+    );
+    padding-inline-start: calc(
+      var(--m3e-fab-menu-close-button-leading-space, ${DesignToken.measurement.space200}) +
+        ${DesignToken.density.calcHalf(-3)}
+    );
+    padding-inline-end: calc(
+      var(--m3e-fab-menu-close-button-trailing-space, ${DesignToken.measurement.space200}) +
+        ${DesignToken.density.calcHalf(-3)}
+    );
   }
   :host([aria-expanded="true"]) .base.with-menu .icon {
     font-size: calc(var(--m3e-fab-menu-close-button-icon-size, 1.5rem) + ${DesignToken.density.calc(-3)});
     --m3e-icon-size: calc(var(--m3e-fab-menu-close-button-icon-size, 1.5rem) + ${DesignToken.density.calc(-3)});
   }
   .base.with-menu {
-    transition: height ${DesignToken.motion.spring.fastSpatial};
+    transition: min-height ${DesignToken.motion.spring.fastSpatial};
   }
   .base.with-menu .wrapper {
     transition: padding ${DesignToken.motion.spring.fastSpatial};

@@ -69,18 +69,22 @@ This section details the attributes, slots and CSS custom properties available f
 
 All size variants (`small`, `medium`, `large`) support the following tokens. Omitting the `[size]-` prefix overrides the value for all sizes.
 
-| Property                                  | Description                  |
-| ----------------------------------------- | ---------------------------- |
-| `--m3e-fab-[size]-container-height`       | Height of the FAB container  |
-| `--m3e-fab-[size]-label-text-font-size`   | Font size for label          |
-| `--m3e-fab-[size]-label-text-font-weight` | Font weight for label        |
-| `--m3e-fab-[size]-label-text-line-height` | Line height for label        |
-| `--m3e-fab-[size]-label-text-tracking`    | Letter tracking for label    |
-| `--m3e-fab-[size]-icon-size`              | Icon size                    |
-| `--m3e-fab-[size]-shape`                  | Corner radius                |
-| `--m3e-fab-[size]-leading-space`          | Space before icon/label      |
-| `--m3e-fab-[size]-trailing-space`         | Space after icon/label       |
-| `--m3e-fab-[size]-icon-label-space`       | Space between icon and label |
+| Property                                   | Description                               |
+| ------------------------------------------ | ----------------------------------------- |
+| `--m3e-fab-[size]-container-height`        | Height of the FAB container               |
+| `--m3e-fab-[size]-label-text-font-size`    | Font size for label                       |
+| `--m3e-fab-[size]-label-text-font-weight`  | Font weight for label                     |
+| `--m3e-fab-[size]-label-text-line-height`  | Line height for label                     |
+| `--m3e-fab-[size]-label-text-tracking`     | Letter tracking for label                 |
+| `--m3e-fab-[size]-icon-size`               | Icon size                                 |
+| `--m3e-fab-[size]-shape`                   | Corner radius                             |
+| `--m3e-fab-[size]-top-space`               | Top space above icon/label                |
+| `--m3e-fab-[size]-bottom-space`            | Bottom space under icon/label             |
+| `--m3e-fab-[size]-leading-space`           | Space before icon/label                   |
+| `--m3e-fab-[size]-trailing-space`          | Space after icon/label                    |
+| `--m3e-fab-[size]-extended-leading-space`  | Space before icon/label for extended FABs |
+| `--m3e-fab-[size]-extended-trailing-space` | Space after icon/label for extended FABs  |
+| `--m3e-fab-[size]-icon-label-space`        | Space between icon and label              |
 
 #### 🎨 Appearance Variant Properties
 

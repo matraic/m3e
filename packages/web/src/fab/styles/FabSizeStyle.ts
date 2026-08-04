@@ -7,7 +7,7 @@ import { FabSizeToken } from "./FabSizeToken";
 function fabStyle(size: FabSize): CSSResult {
   return css`
     :host([size="${unsafeCSS(size)}"]) .base {
-      height: ${FabSizeToken[size].containerHeight};
+      min-height: ${FabSizeToken[size].containerHeight};
     }
     :host([size="${unsafeCSS(size)}"]) .base {
       border-radius: ${FabSizeToken[size].shape};
@@ -17,6 +17,10 @@ function fabStyle(size: FabSize): CSSResult {
       font-weight: ${FabSizeToken[size].labelTextFontWeight};
       line-height: ${FabSizeToken[size].labelTextLineHeight};
       letter-spacing: ${FabSizeToken[size].labelTextTracking};
+    }
+    :host([size="${unsafeCSS(size)}"]) .wrapper {
+      padding-block-start: ${FabSizeToken[size].topSpace};
+      padding-block-end: ${FabSizeToken[size].bottomSpace};
     }
     :host([size="${unsafeCSS(size)}"]:not([extended])) .wrapper {
       padding-inline-start: ${FabSizeToken[size].leadingSpace};
