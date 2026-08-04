@@ -132,8 +132,8 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
         initial-value: 50vh;
       }
       m3e-bottom-sheet > [slot="header"] {
-        margin-block-end: var(--m3e-bottom-sheet-padding-block, 0.5rem);
-        margin-inline: var(--m3e-bottom-sheet-padding-inline, 1rem);
+        margin-block-end: var(--m3e-bottom-sheet-padding-block, ${DesignToken.measurement.space100});
+        margin-inline: var(--m3e-bottom-sheet-padding-inline, ${DesignToken.measurement.space200});
       }
     `);
   }
@@ -229,11 +229,11 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       flex-direction: column;
       height: 100%;
       --_bottom-sheet-peek-height: var(--m3e-bottom-sheet-peek-height, 0);
-      --_bottom-sheet-top-space: var(--m3e-bottom-sheet-compact-top-space, 4.5rem);
+      --_bottom-sheet-top-space: var(--m3e-bottom-sheet-compact-top-space, ${DesignToken.measurement.space900});
     }
     @media (max-height: 640px) {
       .base {
-        --_bottom-sheet-top-space: var(--m3e-bottom-sheet-top-space, 3.5rem);
+        --_bottom-sheet-top-space: var(--m3e-bottom-sheet-top-space, ${DesignToken.measurement.space700});
       }
     }
     .body {
@@ -241,8 +241,8 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       overflow-y: auto;
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
-      padding-block-end: var(--m3e-bottom-sheet-padding-block, 0.5rem);
-      padding-inline: var(--m3e-bottom-sheet-padding-inline, 1rem);
+      padding-block-end: var(--m3e-bottom-sheet-padding-block, ${DesignToken.measurement.space100});
+      padding-inline: var(--m3e-bottom-sheet-padding-inline, ${DesignToken.measurement.space200});
       font-size: var(--m3e-bottom-sheet-content-font-size, ${DesignToken.typescale.standard.body.medium.fontSize});
       font-weight: var(
         --m3e-bottom-sheet-content-font-weight,
@@ -264,7 +264,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
     .header {
       border-top-left-radius: inherit;
       border-top-right-radius: inherit;
-      padding-block-start: var(--m3e-bottom-sheet-padding-block, 0.5rem);
+      padding-block-start: var(--m3e-bottom-sheet-padding-block, ${DesignToken.measurement.space100});
       font-size: var(--m3e-bottom-sheet-header-font-size, ${DesignToken.typescale.standard.title.large.fontSize});
       font-weight: var(--m3e-bottom-sheet-header-font-weight, ${DesignToken.typescale.standard.title.large.fontWeight});
       line-height: var(--m3e-bottom-sheet-header-line-height, ${DesignToken.typescale.standard.title.large.lineHeight});
