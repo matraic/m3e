@@ -51,8 +51,14 @@ import { ToolbarShape } from "./ToolbarShape";
  * @cssprop --m3e-toolbar-size - The size (height or width) of the toolbar.
  * @cssprop --m3e-toolbar-spacing - The gap between toolbar items.
  * @cssprop --m3e-toolbar-rounded-shape - Border radius for rounded shape.
- * @cssprop --m3e-toolbar-rounded-padding - Padding for rounded shape.
- * @cssprop --m3e-toolbar-square-padding - Padding for square shape.
+ * @cssprop --m3e-toolbar-rounded-leading-space - Leading space for rounded shape.
+ * @cssprop --m3e-toolbar-rounded-trailing-space - Trailing space for rounded shape.
+ * @cssprop --m3e-toolbar-rounded-top-space - Top space for rounded shape.
+ * @cssprop --m3e-toolbar-rounded-bottom-space - Bottom space for rounded shape.
+ * @cssprop --m3e-toolbar-square-leading-space - Leading space for square shape.
+ * @cssprop --m3e-toolbar-square-trailing-space - Trailing space for square shape.
+ * @cssprop --m3e-toolbar-square-top-space - Top space for square shape.
+ * @cssprop --m3e-toolbar-square-bottom-space - Bottom space for square shape.
  * @cssprop --m3e-toolbar-standard-container-color - Container color for the standard variant.
  * @cssprop --m3e-toolbar-standard-color - Foreground color for the standard variant.
  * @cssprop --m3e-toolbar-vibrant-container-color - Container color for the vibrant variant.
@@ -76,31 +82,85 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
       height: fit-content;
     }
     :host(:not([vertical])) .base {
-      height: calc(var(--m3e-toolbar-size, 4rem) + ${DesignToken.density.calc(-3)});
-      column-gap: var(--m3e-toolbar-spacing, 0.25rem);
+      min-height: calc(var(--m3e-toolbar-size, 4rem) + ${DesignToken.density.calc(-3)});
+      column-gap: var(--m3e-toolbar-spacing, ${DesignToken.measurement.space50});
     }
     :host([vertical]) {
       width: fit-content;
     }
     :host([vertical]) .base {
-      width: calc(var(--m3e-toolbar-size, 4rem) + ${DesignToken.density.calc(-3)});
+      min-width: calc(var(--m3e-toolbar-size, 4rem) + ${DesignToken.density.calc(-3)});
     }
     :host([vertical]) .base {
       flex-direction: column;
       justify-content: center;
-      row-gap: var(--m3e-toolbar-spacing, 0.25rem);
+      row-gap: var(--m3e-toolbar-spacing, ${DesignToken.measurement.space50});
     }
     :host([shape="rounded"]) {
       border-radius: var(--m3e-toolbar-rounded-shape, ${DesignToken.shape.corner.full});
     }
     :host([shape="rounded"]) .base {
-      padding: var(--m3e-toolbar-rounded-padding, 0.5rem);
+      padding: var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100});
+    }
+    :host(:not([vertical])[shape="rounded"]) .base {
+      padding-inline-start: var(
+        --m3e-toolbar-rounded-leading-space,
+        var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+      );
+      padding-inline-end: var(
+        --m3e-toolbar-rounded-trailing-space,
+        var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+      );
+      padding-block-start: var(
+        --m3e-toolbar-rounded-top-space,
+        var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+      );
+      padding-block-end: var(
+        --m3e-toolbar-rounded-bottom-space,
+        var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+      );
+    }
+    :host([vertical][shape="rounded"]) .base {
+      padding-block-start: var(
+        --m3e-toolbar-rounded-leading-space,
+        var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+      );
+      padding-block-end: var(
+        --m3e-toolbar-rounded-trailing-space,
+        var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+      );
+      padding-inline-start: var(
+        --m3e-toolbar-rounded-top-space,
+        var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+      );
+      padding-inline-end: var(
+        --m3e-toolbar-rounded-bottom-space,
+        var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+      );
     }
     :host(:not([vertical])[shape="square"]) .base {
-      padding-inline: var(--m3e-toolbar-square-padding, 1rem);
+      padding-inline-start: var(
+        --m3e-toolbar-square-leading-space,
+        var(--m3e-toolbar-square-padding, ${DesignToken.measurement.space200})
+      );
+      padding-inline-end: var(
+        --m3e-toolbar-square-trailing-space,
+        var(--m3e-toolbar-square-padding, ${DesignToken.measurement.space200})
+      );
+      padding-block-start: var(--m3e-toolbar-square-top-space, ${DesignToken.measurement.space100});
+      padding-block-end: var(--m3e-toolbar-square-bottom-space, ${DesignToken.measurement.space100});
     }
     :host([vertical][shape="square"]) .base {
-      padding-block: var(--m3e-toolbar-square-padding, 1rem);
+      padding-block-start: var(
+        --m3e-toolbar-square-leading-space,
+        var(--m3e-toolbar-square-padding, ${DesignToken.measurement.space200})
+      );
+      padding-block-end: var(
+        --m3e-toolbar-square-trailing-space,
+        var(--m3e-toolbar-square-padding, ${DesignToken.measurement.space200})
+      );
+      padding-inline-start: var(--m3e-toolbar-square-top-space, ${DesignToken.measurement.space100});
+      padding-inline-end: var(--m3e-toolbar-square-bottom-space, ${DesignToken.measurement.space100});
     }
     :host([variant="standard"]) .state-layer {
       background-color: var(--m3e-toolbar-standard-container-color, ${DesignToken.color.surfaceContainer});
