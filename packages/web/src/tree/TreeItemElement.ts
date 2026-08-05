@@ -55,10 +55,16 @@ import type { M3eTreeElement } from "./TreeElement";
  * @cssprop --m3e-tree-item-font-weight - Font weight for the item label.
  * @cssprop --m3e-tree-item-line-height - Line height for the item label.
  * @cssprop --m3e-tree-item-tracking - Letter spacing for the item label.
- * @cssprop --m3e-tree-item-padding - Inline padding for the item.
+ * @cssprop --m3e-tree-item-leading-space - Leading space for the item.
+ * @cssprop --m3e-tree-item-trailing-space - Trailing space for the item.
+ * @cssprop --m3e-tree-item-top-space - Top space for the item.
+ * @cssprop --m3e-tree-item-bottom-space - Bottom space for the item.
  * @cssprop --m3e-tree-item-height - Height of the item.
  * @cssprop --m3e-tree-item-shape - Border radius of the item and focus ring.
  * @cssprop --m3e-tree-item-icon-size - Size of the icon.
+ * @cssprop --m3e-tree-item-checkbox-label-space - Space between checkbox and label.
+ * @cssprop --m3e-tree-item-icon-label-space - Space between icon and label.
+ * @cssprop --m3e-tree-item-toggle-label-space - Space between toggle and label.
  * @cssprop --m3e-tree-item-inset - Indentation for nested items.
  * @cssprop --m3e-tree-item-label-color - Text color for the item label.
  * @cssprop --m3e-tree-item-selected-label-color - Text color for selected item label.
@@ -88,8 +94,18 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
       display: flex;
       align-items: center;
       position: relative;
+      box-sizing: border-box;
       height: calc(var(--m3e-tree-item-height, 3rem) + ${DesignToken.density.calc(-3)});
-      padding-inline: var(--m3e-tree-item-padding, 1rem);
+      padding-inline-start: var(
+        --m3e-tree-item-leading-space,
+        var(--m3e-tree-item-padding, ${DesignToken.measurement.space200})
+      );
+      padding-inline-end: var(
+        --m3e-tree-item-trailing-space,
+        var(--m3e-tree-item-padding, ${DesignToken.measurement.space200})
+      );
+      padding-block-start: var(--m3e-tree-item-top-space, ${DesignToken.measurement.space100});
+      padding-block-end: var(--m3e-tree-item-bottom-space, ${DesignToken.measurement.space100});
       font-size: var(--m3e-tree-item-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(--m3e-tree-item-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-tree-item-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
@@ -113,7 +129,7 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
     }
     .checkbox {
       flex: none;
-      margin-inline-end: 0.5rem;
+      margin-inline-end: var(--m3e-tree-item-checkbox-label-space, ${DesignToken.measurement.space100});
     }
     .icon,
     .toggle {
@@ -122,16 +138,21 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
       justify-content: center;
       position: relative;
       vertical-align: middle;
-      margin-inline-end: 0.5rem;
+    }
+    .icon {
+      margin-inline-end: var(--m3e-tree-item-icon-label-space, ${DesignToken.measurement.space100});
     }
     .toggle {
       display: var(--_tree-item-toggle-display, none);
+      margin-inline-end: var(--m3e-tree-item-toggle-label-space, ${DesignToken.measurement.space100});
     }
     :host(:not(:is(:state(--with-icon), :--with-icon))) .icon {
       display: none;
     }
     .inset {
-      margin-inline-start: calc(var(--m3e-tree-item-inset, 2rem) * var(--_tree-item-level, 0));
+      margin-inline-start: calc(
+        var(--m3e-tree-item-inset, ${DesignToken.measurement.space400}) * var(--_tree-item-level, 0)
+      );
     }
     :host([open]) .toggle-icon {
       transform: rotate(90deg);

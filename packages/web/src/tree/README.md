@@ -139,10 +139,16 @@ The next example demonstrates multi-selection with cascading selection state.
 | `--m3e-tree-item-font-weight`                      | Font weight for the item label.            |
 | `--m3e-tree-item-line-height`                      | Line height for the item label.            |
 | `--m3e-tree-item-tracking`                         | Letter spacing for the item label.         |
-| `--m3e-tree-item-padding`                          | Inline padding for the item.               |
+| `--m3e-tree-item-leading-space`                    | Leading space for the item.                |
+| `--m3e-tree-item-trailing-space`                   | Trailing space for the item.               |
+| `--m3e-tree-item-top-space`                        | Top space for the item.                    |
+| `--m3e-tree-item-bottom-space`                     | Bottom space for the item.                 |
 | `--m3e-tree-item-height`                           | Height of the item.                        |
 | `--m3e-tree-item-shape`                            | Border radius of the item and focus ring.  |
 | `--m3e-tree-item-icon-size`                        | Size of the icon.                          |
+| `--m3e-tree-item-checkbox-label-space`             | Space between checkbox and label.          |
+| `--m3e-tree-item-icon-label-space`                 | Space between icon and label.              |
+| `--m3e-tree-item-toggle-label-space`               | Space between toggle and label.            |
 | `--m3e-tree-item-inset`                            | Indentation for nested items.              |
 | `--m3e-tree-item-label-color`                      | Text color for the item label.             |
 | `--m3e-tree-item-selected-label-color`             | Text color for selected item label.        |
