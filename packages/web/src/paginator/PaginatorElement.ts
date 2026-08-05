@@ -8,7 +8,7 @@
  */
 
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
 import { customElement, DesignToken, Role } from "@m3e/web/core";
@@ -85,7 +85,7 @@ export class M3ePaginatorElement extends Role(LitElement, "group") {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      padding-inline: 0.5rem;
+      padding-inline: ${DesignToken.measurement.space100};
       width: 100%;
       --_density-scale: ${DesignToken.density.scale};
     }
@@ -105,15 +105,15 @@ export class M3ePaginatorElement extends Role(LitElement, "group") {
     .items-per-page-label {
       display: flex;
       align-items: center;
-      margin-inline-end: 0.5rem;
+      margin-inline-end: ${DesignToken.measurement.space100};
     }
     .form-field {
       min-width: auto;
       width: 6rem;
-      margin-inline: 0.25rem;
+      margin-inline: ${DesignToken.measurement.space50};
     }
     .range-label {
-      margin-inline: 1.5rem 2rem;
+      margin-inline: ${unsafeCSS(`${DesignToken.measurement.space300} ${DesignToken.measurement.space400}`)};
     }
     :host([hide-page-size]) .range-label {
       margin-inline-start: unset;
