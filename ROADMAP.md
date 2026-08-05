@@ -5,6 +5,8 @@ This roadmap presents the ongoing development, future direction, and past accomp
 ## 🟡 Current
 
 - 2.7.x Release
+- Spacing token support
+- Text-only scaling support
 
 ## 🔮 Future
 
