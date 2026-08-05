@@ -44,7 +44,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
     :host {
       contain: layout style paint;
       position: fixed;
-      top: calc(100vh - var(--_snackbar-height, 0px) - var(--m3e-snackbar-margin, 1rem));
+      top: calc(100vh - var(--_snackbar-height, 0px) - var(--m3e-snackbar-margin, ${DesignToken.measurement.space200}));
       display: inline-flex;
       align-items: center;
       min-width: var(--m3e-snackbar-min-width, 21.5rem);
@@ -82,7 +82,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
       align-items: center;
       flex: 1 1 auto;
       box-sizing: border-box;
-      padding: var(--m3e-snackbar-padding, 0 1rem 0 1rem);
+      padding: var(--m3e-snackbar-padding, 0 ${DesignToken.measurement.space200} 0 ${DesignToken.measurement.space200});
       border-radius: var(--m3e-snackbar-container-shape, ${DesignToken.shape.corner.extraSmall});
       background-color: var(--m3e-snackbar-container-color, ${DesignToken.color.inverseSurface});
       font-size: var(--m3e-snackbar-supporting-text-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
@@ -155,7 +155,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
       );
     }
     :host([dismissible]) .base {
-      padding-inline-end: 0.5rem;
+      padding-inline-end: ${DesignToken.measurement.space100};
     }
     .supporting-text {
       flex: 1 1 auto;
@@ -164,7 +164,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
       -webkit-box-orient: vertical;
       overflow: hidden;
       line-clamp: 2;
-      margin-block: var(--m3e-snackbar-supporting-text-margin-block, 0.875rem);
+      margin-block: var(--m3e-snackbar-supporting-text-margin-block, ${DesignToken.measurement.space175});
     }
     ::slotted([slot="close-icon"]),
     .close-icon {
