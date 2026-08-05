@@ -50,7 +50,7 @@ export class M3eTocItemElement extends Selected(Disabled(AttachInternals(Role(Li
       user-select: none;
       outline: none;
       border-radius: var(--m3e-toc-item-shape, ${DesignToken.shape.corner.largeIncreased});
-      padding-block: var(--m3e-toc-item-padding-block, 0.5rem);
+      padding-block: var(--m3e-toc-item-padding-block, ${DesignToken.measurement.space100});
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:not(:disabled)) {
@@ -58,9 +58,10 @@ export class M3eTocItemElement extends Selected(Disabled(AttachInternals(Role(Li
     }
     .base {
       padding-inline-start: calc(
-        var(--m3e-toc-item-padding, 1rem) + calc(var(--m3e-toc-item-inset, 0.75rem) * var(--_level, 0))
+        var(--m3e-toc-item-padding, ${DesignToken.measurement.space200}) +
+          calc(var(--m3e-toc-item-inset, ${DesignToken.measurement.space150}) * var(--_level, 0))
       );
-      padding-inline-end: var(--m3e-toc-item-padding, 1rem);
+      padding-inline-end: var(--m3e-toc-item-padding, ${DesignToken.measurement.space200});
       transition: ${unsafeCSS(
         `color var(--m3e-toc-active-indicator-animation-duration, ${DesignToken.motion.duration.long1}) ${DesignToken.motion.easing.standard}`,
       )};

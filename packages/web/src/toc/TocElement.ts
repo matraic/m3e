@@ -145,9 +145,9 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      padding-inline-start: var(--m3e-toc-item-padding, 1rem);
-      padding-block-end: var(--m3e-toc-header-space, 0.5rem);
-      row-gap: var(--m3e-toc-header-space, 0.5rem);
+      padding-inline-start: var(--m3e-toc-item-padding, ${DesignToken.measurement.space200});
+      padding-block-end: var(--m3e-toc-header-space, ${DesignToken.measurement.space100});
+      row-gap: var(--m3e-toc-header-space, ${DesignToken.measurement.space100});
     }
     .overline {
       white-space: nowrap;
