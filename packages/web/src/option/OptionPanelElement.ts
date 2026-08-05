@@ -54,7 +54,7 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
   static {
     registerStyleSheet(css`
       m3e-option-panel > m3e-divider {
-        margin-block: var(--m3e-option-panel-divider-spacing, 0.5rem);
+        margin-block: var(--m3e-option-panel-divider-spacing, ${DesignToken.measurement.space100});
       }
       m3e-option-panel m3e-option[hidden],
       m3e-option-panel m3e-optgroup[hidden] {
@@ -83,11 +83,17 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
           --m3e-option-panel-container-elevation,
           ${DesignToken.elevation.level3}
         );
-        --m3e-floating-panel-container-padding-inline: var(--m3e-option-panel-container-padding-inline, 0.25rem);
-        --m3e-floating-panel-container-padding-block: var(--m3e-option-panel-container-padding-block, 0.25rem);
+        --m3e-floating-panel-container-padding-inline: var(
+          --m3e-option-panel-container-padding-inline,
+          ${DesignToken.measurement.space50}
+        );
+        --m3e-floating-panel-container-padding-block: var(
+          --m3e-option-panel-container-padding-block,
+          ${DesignToken.measurement.space50}
+        );
       }
       .base {
-        row-gap: var(--m3e-option-panel-gap, 0.125rem);
+        row-gap: var(--m3e-option-panel-gap, ${DesignToken.measurement.space25});
         --m3e-focus-ring-outward-offset: 0px;
         --m3e-focus-ring-growth-factor: 1.5;
       }
@@ -96,7 +102,7 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
         align-items: center;
         box-sizing: border-box;
         min-height: var(--m3e-option-panel-no-data-container-height, 2.75rem);
-        padding: var(--m3e-option-panel-no-data-container-padding, 0.75rem);
+        padding: var(--m3e-option-panel-no-data-container-padding, ${DesignToken.measurement.space150});
         color: var(--m3e-option-panel-no-data-color, ${DesignToken.color.onSurfaceVariant});
         font-size: var(--m3e-option-panel-no-data-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
         font-weight: var(
@@ -117,7 +123,7 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
         align-items: center;
         box-sizing: border-box;
         min-height: var(--m3e-option-panel-loading-container-height, 2.75rem);
-        padding: var(--m3e-option-panel-loading-container-padding, 0.75rem);
+        padding: var(--m3e-option-panel-loading-container-padding, ${DesignToken.measurement.space150});
         color: var(--m3e-option-panel-loading-color, ${DesignToken.color.onSurfaceVariant});
         font-size: var(--m3e-option-panel-loading-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
         font-weight: var(

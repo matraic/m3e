@@ -136,8 +136,8 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
     .touch {
       position: absolute;
       height: calc(
-        var(--m3e-option-container-height, 2.75rem) + calc(var(--m3e-option-panel-gap, 0.125rem) * 2) +
-          ${DesignToken.density.calc(-3)}
+        var(--m3e-option-container-height, 2.75rem) +
+          calc(var(--m3e-option-panel-gap, ${DesignToken.measurement.space25}) * 2) + ${DesignToken.density.calc(-3)}
       );
       left: 0;
       right: 0;
@@ -148,9 +148,12 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
       align-items: center;
       width: 100%;
       overflow: hidden;
-      column-gap: var(--m3e-option-icon-label-space, 0.5rem);
-      padding-inline-start: var(--_option-padding-start, var(--m3e-option-padding-start, 0.75rem));
-      padding-inline-end: var(--m3e-option-padding-end, 0.75rem);
+      column-gap: var(--m3e-option-icon-label-space, ${DesignToken.measurement.space100});
+      padding-inline-start: var(
+        --_option-padding-start,
+        var(--m3e-option-padding-start, ${DesignToken.measurement.space150})
+      );
+      padding-inline-end: var(--m3e-option-padding-end, ${DesignToken.measurement.space150});
       font-size: var(--m3e-option-label-text-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(--m3e-option-label-text-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-option-label-text-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
@@ -160,7 +163,7 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
       border-radius: var(--m3e-option-focus-ring-shape, inherit);
     }
     .icon {
-      margin-inline-start: calc(0px - var(--m3e-option-icon-label-space, 0.5rem));
+      margin-inline-start: calc(0px - var(--m3e-option-icon-label-space, ${DesignToken.measurement.space100}));
       transition: ${unsafeCSS(
         `margin-inline-start ${DesignToken.motion.spring.fastEffects}, width ${DesignToken.motion.spring.fastEffects}`,
       )};

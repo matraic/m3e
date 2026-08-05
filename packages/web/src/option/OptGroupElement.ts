@@ -34,7 +34,7 @@ export class M3eOptGroupElement extends Role(LitElement, "group") {
   static override styles: CSSResultGroup = css`
     :host {
       display: block;
-      --_option-padding-start: calc(var(--m3e-option-padding-start, 0.75rem) * 2);
+      --_option-padding-start: calc(var(--m3e-option-padding-start, ${DesignToken.measurement.space150}) * 2);
     }
     .label {
       height: var(--m3e-option-height, 3rem);
@@ -42,8 +42,8 @@ export class M3eOptGroupElement extends Role(LitElement, "group") {
       font-weight: var(--m3e-option-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-option-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
       letter-spacing: var(--m3e-option-tracking, ${DesignToken.typescale.standard.label.large.tracking});
-      padding-inline-end: var(--m3e-option-padding-end, 0.75rem);
-      padding-inline-start: var(--m3e-option-padding-start, 0.75rem);
+      padding-inline-end: var(--m3e-option-padding-end, ${DesignToken.measurement.space150});
+      padding-inline-start: var(--m3e-option-padding-start, ${DesignToken.measurement.space150});
       color: var(--m3e-option-color, ${DesignToken.color.onSurface});
       flex: none;
     }
