@@ -189,7 +189,7 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
     }
     .label {
       user-select: none;
-      margin-top: 0.25rem;
+      margin-top: ${DesignToken.measurement.space50};
       color: var(--m3e-timepicker-input-field-supporting-text-color, ${DesignToken.color.onSurfaceVariant});
       font-size: var(
         --m3e-timepicker-input-field-supporting-text-font-size,
@@ -230,10 +230,13 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
       );
     }
     :host([orientation="horizontal"]) .period-toggle {
-      margin-inline-start: var(--m3e-timepicker-input-horizontal-period-toggle-space, 0.75rem);
+      margin-inline-start: var(
+        --m3e-timepicker-input-horizontal-period-toggle-space,
+        ${DesignToken.measurement.space150}
+      );
     }
     :host([orientation="vertical"]) .period-toggle {
-      margin-block-start: var(--m3e-timepicker-input-vertical-period-toggle-space, 1rem);
+      margin-block-start: var(--m3e-timepicker-input-vertical-period-toggle-space, ${DesignToken.measurement.space200});
     }
   `;
 

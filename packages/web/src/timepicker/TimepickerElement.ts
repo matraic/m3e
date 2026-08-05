@@ -168,8 +168,8 @@ export class M3eTimepickerElement extends HtmlFor(
       flex-direction: column;
       margin: unset;
       border: unset;
-      padding-block: var(--m3e-timepicker-container-padding-block, 0.75rem);
-      padding-inline: var(--m3e-timepicker-container-padding-inline, 1.75rem);
+      padding-block: var(--m3e-timepicker-container-padding-block, ${DesignToken.measurement.space150});
+      padding-inline: var(--m3e-timepicker-container-padding-inline, ${DesignToken.measurement.space350});
       background-color: var(--m3e-timepicker-container-color, ${DesignToken.color.surfaceContainer});
       box-shadow: var(--m3e-timepicker-container-elevation, ${DesignToken.elevation.level3});
       opacity: 0;
@@ -181,13 +181,13 @@ export class M3eTimepickerElement extends HtmlFor(
       font-weight: var(--m3e-timepicker-headline-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-timepicker-headline-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
       letter-spacing: var(--m3e-timepicker-headline-tracking, ${DesignToken.typescale.standard.label.large.tracking});
-      margin-block-start: var(--m3e-timepicker-headline-top-space, 1rem);
+      margin-block-start: var(--m3e-timepicker-headline-top-space, ${DesignToken.measurement.space200});
     }
     .actions {
-      margin-block-start: var(--m3e-timepicker-actions-space, 1.5rem);
+      margin-block-start: var(--m3e-timepicker-actions-space, ${DesignToken.measurement.space300});
       display: flex;
       align-items: center;
-      column-gap: 0.5rem;
+      column-gap: ${DesignToken.measurement.space100};
     }
     .spacer {
       flex: 1 1 auto;
@@ -271,7 +271,7 @@ export class M3eTimepickerElement extends HtmlFor(
       flex-direction: column;
     }
     .input {
-      margin-top: var(--m3e-timepicker-label-input-space, 1.25rem);
+      margin-top: var(--m3e-timepicker-label-input-space, ${DesignToken.measurement.space250});
     }
     .dial-wrapper {
       display: flex;
@@ -293,10 +293,10 @@ export class M3eTimepickerElement extends HtmlFor(
       flex-direction: column;
     }
     :host(:not(:is(:state(--horizontal), :--horizontal))) .dial-spacer {
-      height: var(--m3e-timepicker-vertical-input-dial-space, 2.25rem);
+      height: var(--m3e-timepicker-vertical-input-dial-space, ${DesignToken.measurement.space450});
     }
     :host(:is(:state(--horizontal), :--horizontal)) .dial-spacer {
-      width: var(--m3e-timepicker-horizontal-input-dial-space, 3.25rem);
+      width: var(--m3e-timepicker-horizontal-input-dial-space, ${DesignToken.measurement.space650});
     }
     @media (prefers-reduced-motion) {
       :host(:not(:is(:state(--no-animate), :--no-animate))) {
