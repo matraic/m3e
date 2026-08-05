@@ -36,11 +36,19 @@ export const SearchBarToken = {
   inputTextTracking: unsafeCSS(
     `var(--m3e-search-bar-input-text-tracking, ${DesignToken.typescale.standard.body.large.tracking})`,
   ),
-  leadingSpace: unsafeCSS("var(--m3e-search-bar-leading-space, 0.25rem)"),
-  trailingSpace: unsafeCSS("var(--m3e-search-bar-trailing-space, 0.25rem)"),
-  noActionsLeadingSpace: unsafeCSS("var(--m3e-search-bar-no-actions-leading-space, 1rem)"),
-  noActionsTrailingSpace: unsafeCSS("var(--m3e-search-bar-no-actions-trailing-space, 1rem)"),
-  leadingActionsTrailingSpace: unsafeCSS("var(--m3e-search-bar-leading-actions-trailing-space, 0.25rem)"),
-  trailingActionsLeadingSpace: unsafeCSS("var(--m3e-search-bar-trailing-actions-leading-space, 0.25rem)"),
+  leadingSpace: unsafeCSS(`var(--m3e-search-bar-leading-space, ${DesignToken.measurement.space50})`),
+  trailingSpace: unsafeCSS(`var(--m3e-search-bar-trailing-space, ${DesignToken.measurement.space50})`),
+  noActionsLeadingSpace: unsafeCSS(
+    `var(--m3e-search-bar-no-actions-leading-space, ${DesignToken.measurement.space200})`,
+  ),
+  noActionsTrailingSpace: unsafeCSS(
+    `var(--m3e-search-bar-no-actions-trailing-space, ${DesignToken.measurement.space200})`,
+  ),
+  leadingActionsTrailingSpace: unsafeCSS(
+    `var(--m3e-search-bar-leading-actions-trailing-space, ${DesignToken.measurement.space50})`,
+  ),
+  trailingActionsLeadingSpace: unsafeCSS(
+    `var(--m3e-search-bar-trailing-actions-leading-space, ${DesignToken.measurement.space50})`,
+  ),
   actionsGap: unsafeCSS("var(--m3e-search-bar-actions-gap, 0px)"),
 } as const;

@@ -18,11 +18,21 @@ export const SearchViewToken = {
     `var(--m3e-search-view-docked-container-shape, ${DesignToken.shape.corner.extraLarge})`,
   ),
   dockedHeaderContainerHeight: unsafeCSS("var(--m3e-search-view-docked-header-container-height, 3.5rem)"),
-  containedLeadingMargin: unsafeCSS("var(--m3e-search-view-contained-leading-margin, 1.5rem)"),
-  containedTrailingMargin: unsafeCSS("var(--m3e-search-view-contained-trailing-margin, 1.55rem)"),
-  containedFocusedLeadingMargin: unsafeCSS("var(--m3e-search-view-contained-focused-leading-margin, 0.75rem)"),
-  containedFocusedTrailingMargin: unsafeCSS("var(--m3e-search-view-contained-focused-trailing-margin, 0.75rem)"),
-  containedDockedBarResultsGap: unsafeCSS("var(--m3e-search-view-contained-docked-bar-results-gap, 2px)"),
+  containedLeadingMargin: unsafeCSS(
+    `var(--m3e-search-view-contained-leading-margin, ${DesignToken.measurement.space300})`,
+  ),
+  containedTrailingMargin: unsafeCSS(
+    `var(--m3e-search-view-contained-trailing-margin, ${DesignToken.measurement.space300})`,
+  ),
+  containedFocusedLeadingMargin: unsafeCSS(
+    `var(--m3e-search-view-contained-focused-leading-margin, ${DesignToken.measurement.space300})`,
+  ),
+  containedFocusedTrailingMargin: unsafeCSS(
+    `var(--m3e-search-view-contained-focused-trailing-margin, ${DesignToken.measurement.space150})`,
+  ),
+  containedDockedBarResultsGap: unsafeCSS(
+    `var(--m3e-search-view-contained-docked-bar-results-gap, ${DesignToken.measurement.space25})`,
+  ),
   containedDockedResultsShape: unsafeCSS(
     `var(--m3e-search-view-contained-docked-results-shape, ${DesignToken.shape.corner.medium})`,
   ),
@@ -34,8 +44,12 @@ export const SearchViewToken = {
   ),
   dockedContainerMinHeight: unsafeCSS("var(--m3e-search-view-docked-container-min-height, 240px)"),
   dockedContainerMaxHeight: unsafeCSS("var(--m3e-search-view-docked-container-max-height, calc(100vh * 0.6667))"),
-  containedDockedResultsSpace: unsafeCSS("var(--m3e-search-view-contained-docked-results-space, 0.25rem)"),
-  dockedResultsBottomSpace: unsafeCSS("var(--m3e-search-view-docked-results-bottom-space, 1rem)"),
+  containedDockedResultsSpace: unsafeCSS(
+    `var(--m3e-search-view-contained-docked-results-space, ${DesignToken.measurement.space50})`,
+  ),
+  dockedResultsBottomSpace: unsafeCSS(
+    `var(--m3e-search-view-docked-results-bottom-space,  ${DesignToken.measurement.space200})`,
+  ),
   dockedScrimColor: unsafeCSS(`var(--m3e-search-view-docked-scrim-color, ${DesignToken.color.scrim})`),
   dockedScrimOpacity: unsafeCSS("var(--m3e-search-view-docked-scrim-opacity, 32%)"),
 } as const;

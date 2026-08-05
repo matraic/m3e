@@ -1,5 +1,7 @@
 import { css, CSSResultGroup } from "lit";
 
+import { DesignToken } from "@m3e/web/core";
+
 import { SearchBarToken } from "./SearchBarToken";
 
 /**
@@ -54,8 +56,8 @@ export const SearchBarStyle: CSSResultGroup = css`
     justify-content: center;
     box-sizing: border-box;
     min-width: 3rem;
-    padding-inline: 0.25rem;
-    column-gap: calc(0.5rem + ${SearchBarToken.actionsGap});
+    padding-inline: ${DesignToken.measurement.space50};
+    column-gap: calc(${DesignToken.measurement.space100} + ${SearchBarToken.actionsGap});
   }
   ::slotted([slot="input"]) {
     flex: 1 1 auto;
