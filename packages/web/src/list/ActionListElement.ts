@@ -53,7 +53,7 @@ export class M3eActionListElement extends M3eListElement {
             return true;
           }
 
-          const ancestor = expandable.closest<M3eExpandableListItemElement | M3eActionListElement>(
+          const ancestor = expandable.parentElement?.closest<M3eExpandableListItemElement | M3eActionListElement>(
             "m3e-expandable-list-item,m3e-action-list",
           );
           if (ancestor instanceof M3eExpandableListItemElement) {
