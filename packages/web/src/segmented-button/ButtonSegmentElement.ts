@@ -136,9 +136,9 @@ export class M3eButtonSegmentElement extends Dirty(
       overflow: hidden;
       display: inline-flex;
       align-items: center;
-      padding-inline-start: var(--m3e-segmented-button-padding-start, 1rem);
-      padding-inline-end: var(--m3e-segmented-button-padding-end, 1rem);
-      column-gap: var(--m3e-segmented-button-spacing, 0.5rem);
+      padding-inline-start: var(--m3e-segmented-button-padding-start, ${DesignToken.measurement.space200});
+      padding-inline-end: var(--m3e-segmented-button-padding-end, ${DesignToken.measurement.space200});
+      column-gap: var(--m3e-segmented-button-spacing, ${DesignToken.measurement.space100});
     }
     .label {
       font-size: var(--m3e-segmented-button-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
@@ -163,7 +163,7 @@ export class M3eButtonSegmentElement extends Dirty(
     }
     :host([checked]:not(:is(:state(--hide-selection), :--hide-selection))) .wrapper,
     :host(:is(:state(--with-icon), :--with-icon)) .wrapper {
-      padding-inline-start: var(--m3e-segmented-button-with-icon-padding-start, 0.75rem);
+      padding-inline-start: var(--m3e-segmented-button-with-icon-padding-start, ${DesignToken.measurement.space150});
     }
     :host(:not(:disabled)[checked]) .base {
       background-color: var(--m3e-segmented-button-selected-container-color, ${DesignToken.color.secondaryContainer});
@@ -201,7 +201,7 @@ export class M3eButtonSegmentElement extends Dirty(
       color: var(--m3e-segmented-button-unselected-icon-color, ${DesignToken.color.onSurface});
     }
     :host(:not(:is(:state(--with-icon), :--with-icon))) .icon {
-      margin-inline-start: calc(0px - var(--m3e-segmented-button-spacing, 0.5rem));
+      margin-inline-start: calc(0px - var(--m3e-segmented-button-spacing, ${DesignToken.measurement.space100}));
       transition: margin-inline-start ${DesignToken.motion.spring.fastEffects};
     }
     .check,
