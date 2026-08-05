@@ -142,7 +142,7 @@ export class M3eStepElement extends Selected(
       min-width: inherit;
       position: relative;
       border-radius: var(--m3e-step-shape, ${DesignToken.shape.corner.medium});
-      padding: var(--m3e-step-padding, 1.5rem);
+      padding: var(--m3e-step-padding, ${DesignToken.measurement.space300});
     }
     :host(:not([aria-disabled="true"])) {
       cursor: pointer;
@@ -207,7 +207,7 @@ export class M3eStepElement extends Selected(
       line-height: var(--m3e-step-line-height, ${DesignToken.typescale.standard.title.small.lineHeight});
       letter-spacing: var(--m3e-step-tracking, ${DesignToken.typescale.standard.title.small.tracking});
       flex-direction: var(--_step-direction, row);
-      gap: var(--m3e-step-icon-label-space, 0.5rem);
+      gap: var(--m3e-step-icon-label-space, ${DesignToken.measurement.space100});
       justify-content: flex-start;
     }
     .label {
