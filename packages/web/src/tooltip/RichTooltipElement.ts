@@ -88,8 +88,8 @@ export class M3eRichTooltipElement extends TooltipElementBase {
       padding: unset;
       margin: unset;
       border: unset;
-      padding-block-start: var(--m3e-rich-tooltip-padding-top, 0.75rem);
-      padding-inline: var(--m3e-rich-tooltip-padding-inline, 1rem);
+      padding-block-start: var(--m3e-rich-tooltip-padding-top, ${DesignToken.measurement.space150});
+      padding-inline: var(--m3e-rich-tooltip-padding-inline, ${DesignToken.measurement.space200});
       max-width: var(--m3e-rich-tooltip-max-width, 20rem);
       box-sizing: border-box;
       overflow: visible;
@@ -106,7 +106,7 @@ export class M3eRichTooltipElement extends TooltipElementBase {
       )};
     }
     .base:not(.has-actions) {
-      padding-block-end: var(--m3e-rich-tooltip-padding-bottom, 0.75rem);
+      padding-block-end: var(--m3e-rich-tooltip-padding-bottom, ${DesignToken.measurement.space150});
     }
     .base::backdrop {
       background-color: transparent;
@@ -132,7 +132,7 @@ export class M3eRichTooltipElement extends TooltipElementBase {
         ${DesignToken.typescale.standard.title.small.lineHeight}
       );
       letter-spacing: var(--m3e-rich-tooltip-subhead-tracking, ${DesignToken.typescale.standard.title.small.tracking});
-      padding-block-end: var(--m3e-rich-tooltip-subhead-bottom-space, 0.25rem);
+      padding-block-end: var(--m3e-rich-tooltip-subhead-bottom-space, ${DesignToken.measurement.space50});
     }
     .content {
       color: var(--m3e-rich-tooltip-supporting-text-color, ${DesignToken.color.onSurfaceVariant});
@@ -156,18 +156,21 @@ export class M3eRichTooltipElement extends TooltipElementBase {
     .actions {
       margin-inline: calc(
         0px - calc(
-            var(--m3e-rich-tooltip-padding-inline, 1rem) - var(--m3e-rich-tooltip-actions-padding-inline, 0.25rem)
+            var(--m3e-rich-tooltip-padding-inline, ${DesignToken.measurement.space200}) - var(
+                --m3e-rich-tooltip-actions-padding-inline,
+                ${DesignToken.measurement.space50}
+              )
           )
       );
-      padding-block-start: var(--m3e-rich-tooltip-actions-top-space, 0.75rem);
-      padding-block-end: var(--m3e-rich-tooltip-actions-bottom-space, 0.5rem);
+      padding-block-start: var(--m3e-rich-tooltip-actions-top-space, ${DesignToken.measurement.space150});
+      padding-block-end: var(--m3e-rich-tooltip-actions-bottom-space, ${DesignToken.measurement.space100});
     }
     ::slotted([slot="actions"]) {
       flex: none;
       display: flex;
       align-items: center;
       min-height: 1.5rem;
-      column-gap: 0.5rem;
+      column-gap: ${DesignToken.measurement.space100};
     }
     ::slotted([slot="actions"][end]) {
       justify-content: flex-end;
