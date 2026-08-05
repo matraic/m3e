@@ -106,8 +106,8 @@ export class M3eTabElement extends Selected(
       position: relative;
       width: 100%;
       height: 100%;
-      padding-inline-start: var(--m3e-tab-padding-start, 1.5rem);
-      padding-inline-end: var(--m3e-tab-padding-end, 1.5rem);
+      padding-inline-start: var(--m3e-tab-padding-start, ${DesignToken.measurement.space300});
+      padding-inline-end: var(--m3e-tab-padding-end, ${DesignToken.measurement.space300});
     }
     .touch {
       position: absolute;
@@ -156,7 +156,7 @@ export class M3eTabElement extends Selected(
       white-space: nowrap;
       flex-direction: var(--_tab-direction);
       justify-content: center;
-      column-gap: var(--m3e-tab-spacing, 0.5rem);
+      column-gap: var(--m3e-tab-spacing, ${DesignToken.measurement.space100});
     }
     ::slotted([slot="icon"]) {
       width: 1em;
