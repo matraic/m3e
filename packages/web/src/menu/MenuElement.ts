@@ -107,7 +107,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
   static {
     registerStyleSheet(css`
       m3e-menu > m3e-divider {
-        margin-block: var(--m3e-menu-divider-spacing, 0.5rem);
+        margin-block: var(--m3e-menu-divider-spacing, ${DesignToken.measurement.space100});
       }
     `);
   }
@@ -124,7 +124,8 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
       scroll-padding-block: calc(
-        var(--m3e-focus-ring-thickness, 3px) + var(--m3e-menu-container-padding-block, 0.25rem)
+        var(--m3e-focus-ring-thickness, 3px) +
+          var(--m3e-menu-container-padding-block, ${DesignToken.measurement.space50})
       );
       min-width: var(--m3e-menu-container-min-width, 7rem);
       max-width: var(--m3e-menu-container-max-width, 17.5rem);
@@ -137,11 +138,11 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
       contain: layout style paint;
       display: flex;
       flex-direction: column;
-      row-gap: var(--m3e-menu-gap, 0.125rem);
+      row-gap: var(--m3e-menu-gap, ${DesignToken.measurement.space25});
       min-width: inherit;
       max-width: inherit;
-      padding-block: var(--m3e-menu-container-padding-block, 0.25rem);
-      padding-inline: var(--m3e-menu-container-padding-inline, 0.25rem);
+      padding-block: var(--m3e-menu-container-padding-block, ${DesignToken.measurement.space50});
+      padding-inline: var(--m3e-menu-container-padding-inline, ${DesignToken.measurement.space50});
       --m3e-focus-ring-outward-offset: 0px;
       --m3e-focus-ring-growth-factor: 1.5;
     }
@@ -198,10 +199,10 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
       transform-origin: bottom;
     }
     :host(:is(:state(--shift-down), :--shift-down)) {
-      margin-top: calc(0px - var(--m3e-menu-container-padding-block, 0.25rem));
+      margin-top: calc(0px - var(--m3e-menu-container-padding-block, ${DesignToken.measurement.space50}));
     }
     :host(:is(:state(--shift-up), :--shift-up)) {
-      margin-top: var(--m3e-menu-container-padding-block, 0.25rem);
+      margin-top: var(--m3e-menu-container-padding-block, ${DesignToken.measurement.space50});
     }
     :host([variant="vibrant"]) {
       background-color: var(--m3e-vibrant-menu-container-color, ${DesignToken.color.tertiaryContainer});

@@ -107,8 +107,8 @@ export abstract class MenuItemElementBase extends KeyboardClick(
     .touch {
       position: absolute;
       height: calc(
-        var(--m3e-menu-item-container-height, 2.75rem) + calc(var(--m3e-menu-gap, 0.125rem) * 2) +
-          ${DesignToken.density.calc(-3)}
+        var(--m3e-menu-item-container-height, 2.75rem) +
+          calc(var(--m3e-menu-gap, ${DesignToken.measurement.space25}) * 2) + ${DesignToken.density.calc(-3)}
       );
       left: 0;
       right: 0;
@@ -117,9 +117,9 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       flex: 1 1 auto;
       display: inline-flex;
       align-items: center;
-      column-gap: var(--m3e-menu-item-icon-label-space, 0.5rem);
-      padding-inline-start: var(--m3e-menu-item-padding-start, 0.75rem);
-      padding-inline-end: var(--m3e-menu-item-padding-end, 0.75rem);
+      column-gap: var(--m3e-menu-item-icon-label-space, ${DesignToken.measurement.space100});
+      padding-inline-start: var(--m3e-menu-item-padding-start, ${DesignToken.measurement.space150});
+      padding-inline-end: var(--m3e-menu-item-padding-end, ${DesignToken.measurement.space150});
       font-size: var(--m3e-menu-item-label-text-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(
         --m3e-menu-item-label-text-font-weight,

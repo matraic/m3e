@@ -99,7 +99,7 @@ export class M3eMenuItemCheckboxElement extends Checked(Role(MenuItemElementBase
         transition: margin-inline-start ${DesignToken.motion.spring.fastEffects};
       }
       :host(:not(:is(:state(--with-icon), :--with-icon))) .icon {
-        margin-inline-start: calc(0px - var(--m3e-menu-item-icon-label-space, 0.75rem));
+        margin-inline-start: calc(0px - var(--m3e-menu-item-icon-label-space, ${DesignToken.measurement.space150}));
       }
       .check {
         width: 1em;
