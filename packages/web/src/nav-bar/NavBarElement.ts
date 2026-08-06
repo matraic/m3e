@@ -68,8 +68,14 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
       width: 100%;
       background-color: var(--m3e-nav-bar-container-color, ${DesignToken.color.surfaceContainer});
       --_vertical-nav-item-min-width: var(--m3e-nav-bar-vertical-item-width, 7rem);
-      --_horizontal-nav-item-leading-space: var(--m3e-nav-bar-horizontal-nav-item-leading-space, 1rem);
-      --_horizontal-nav-item-trailing-space: var(--m3e-nav-bar-horizontal-nav-item-trailing-space, 1rem);
+      --_horizontal-nav-item-leading-space: var(
+        --m3e-nav-bar-horizontal-nav-item-leading-space,
+        ${DesignToken.measurement.space200}
+      );
+      --_horizontal-nav-item-trailing-space: var(
+        --m3e-nav-bar-horizontal-nav-item-trailing-space,
+        ${DesignToken.measurement.space200}
+      );
     }
   `;
 

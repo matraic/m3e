@@ -264,17 +264,17 @@ export class M3eNavItemElement extends ReconnectedCallback(
     }
     :host([orientation="vertical"]) .base {
       flex-direction: column;
-      row-gap: var(--m3e-nav-item-spacing, 0.25rem);
+      row-gap: var(--m3e-nav-item-spacing, ${DesignToken.measurement.space50});
     }
     :host([orientation="horizongal"]) .base {
       margin-top: 0;
     }
     :host([orientation="vertical"]) .base {
-      margin-top: var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem);
-      margin-bottom: var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem);
+      margin-top: var(--m3e-vertical-nav-item-active-indicator-margin, ${DesignToken.measurement.space75});
+      margin-bottom: var(--m3e-vertical-nav-item-active-indicator-margin, ${DesignToken.measurement.space75});
     }
     :host([orientation="vertical"]) .indicator {
-      top: var(--m3e-vertical-nav-item-active-indicator-margin, 0.375rem);
+      top: var(--m3e-vertical-nav-item-active-indicator-margin, ${DesignToken.measurement.space75});
       bottom: unset;
     }
     :host([orientation="vertical"]:dir(rtl)) .indicator {
@@ -329,13 +329,13 @@ export class M3eNavItemElement extends ReconnectedCallback(
       height: var(--m3e-nav-item-icon-size, 1.5rem);
     }
     :host([orientation="horizontal"]) .base {
-      padding: var(--m3e-horizontal-nav-item-padding, 1rem);
+      padding: var(--m3e-horizontal-nav-item-padding, ${DesignToken.measurement.space200});
     }
     :host([orientation="horizontal"]) .label {
       flex: 1 1 auto;
     }
     :host([orientation="horizontal"]) .base {
-      column-gap: var(--m3e-nav-item-spacing, 0.25rem);
+      column-gap: var(--m3e-nav-item-spacing, ${DesignToken.measurement.space50});
     }
     :host([orientation="horizontal"]) .indicator,
     :host([orientation="horizontal"]) .inner {

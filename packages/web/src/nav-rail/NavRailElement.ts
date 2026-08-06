@@ -69,10 +69,10 @@ export class M3eNavRailElement extends SuppressInitialAnimation(M3eNavBarElement
     registerStyleSheet(css`
       m3e-nav-rail > m3e-icon-button,
       m3e-nav-rail > m3e-fab {
-        margin-block-end: var(--m3e-nav-rail-button-item-space, 1rem);
+        margin-block-end: var(--m3e-nav-rail-button-item-space, ${DesignToken.measurement.space200});
       }
       m3e-nav-rail > m3e-icon-button {
-        margin-inline-start: var(--m3e-nav-rail-icon-button-inset, 0.5rem);
+        margin-inline-start: var(--m3e-nav-rail-icon-button-inset, ${DesignToken.measurement.space100});
       }
     `);
   }
@@ -96,16 +96,18 @@ export class M3eNavRailElement extends SuppressInitialAnimation(M3eNavBarElement
       flex-direction: column;
       align-items: flex-start;
       box-sizing: border-box;
-      padding-block-start: var(--m3e-nav-rail-top-space, 2.75rem);
-      padding-block-end: var(--m3e-nav-rail-bottom-space, 0.5rem);
-      padding-inline: var(--m3e-nav-rail-inline-padding, 1.25rem);
+      padding-block-start: var(--m3e-nav-rail-top-space, ${DesignToken.measurement.space550});
+      padding-block-end: var(--m3e-nav-rail-bottom-space, ${DesignToken.measurement.space100});
+      padding-inline: var(--m3e-nav-rail-inline-padding, ${DesignToken.measurement.space250});
     }
     :host(:is(:state(--compact), :--compact)) {
       width: var(--m3e-nav-rail-compact-width, 6rem);
     }
     :host(:is(:state(--compact), :--compact)) .base {
       --_vertical-nav-item-width: var(--m3e-nav-rail-compact-width, 6rem);
-      --_vertical-nav-item-margin-inline: calc(0px - var(--m3e-nav-rail-inline-padding, 1.25rem));
+      --_vertical-nav-item-margin-inline: calc(
+        0px - var(--m3e-nav-rail-inline-padding, ${DesignToken.measurement.space250})
+      );
       --_vertical-nav-item-inset-start: calc(
         50% - calc(var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem)) / 2
       );
