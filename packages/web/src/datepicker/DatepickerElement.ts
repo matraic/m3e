@@ -110,8 +110,8 @@ export class M3eDatepickerElement extends HtmlFor(
       flex-direction: column;
       margin: unset;
       border: unset;
-      padding-block: var(--m3e-datepicker-container-padding-block, 0.75rem);
-      padding-inline: var(--m3e-datepicker-container-padding-inline, 0.25rem);
+      padding-block: var(--m3e-datepicker-container-padding-block, ${DesignToken.measurement.space150});
+      padding-inline: var(--m3e-datepicker-container-padding-inline, ${DesignToken.measurement.space50});
       background-color: var(--m3e-datepicker-container-color, ${DesignToken.color.surfaceContainer});
       box-shadow: var(--m3e-datepicker-container-elevation, ${DesignToken.elevation.level3});
       opacity: 0;
@@ -140,9 +140,9 @@ export class M3eDatepickerElement extends HtmlFor(
         --m3e-datepicker-modal-headline-tracking,
         ${DesignToken.typescale.standard.headline.large.tracking}
       );
-      margin-block-start: 2.25rem;
-      margin-block-end: 0.75rem;
-      margin-inline: 1.5rem;
+      margin-block-start: ${DesignToken.measurement.space450};
+      margin-block-end: ${DesignToken.measurement.space150};
+      margin-inline: ${DesignToken.measurement.space300};
     }
     .supporting-text {
       color: var(--m3e-datepicker-modal-supporting-text-color, ${DesignToken.color.onSurfaceVariant});
@@ -162,8 +162,8 @@ export class M3eDatepickerElement extends HtmlFor(
         --m3e-datepicker-modal-supporting-text-tracking,
         ${DesignToken.typescale.standard.label.large.tracking}
       );
-      margin-block-start: 1rem;
-      margin-inline: 1.5rem;
+      margin-block-start: ${DesignToken.measurement.space200};
+      margin-inline: ${DesignToken.measurement.space300};
     }
     .divider {
       height: var(--m3e-divider-thickness, 1px);
@@ -177,14 +177,14 @@ export class M3eDatepickerElement extends HtmlFor(
       border-bottom: var(--m3e-divider-thickness, 1px) solid
         var(--m3e-divider-color, ${DesignToken.color.outlineVariant});
       height: inherit;
-      left: -0.25rem;
-      right: -0.25rem;
+      left: calc(0px - ${DesignToken.measurement.space50});
+      right: calc(0px - ${DesignToken.measurement.space50});
     }
     .actions {
       display: flex;
       align-items: center;
-      column-gap: 0.5rem;
-      padding-inline: var(--m3e-datepicker-actions-padding-inline, 0.5rem);
+      column-gap: ${DesignToken.measurement.space100};
+      padding-inline: var(--m3e-datepicker-actions-padding-inline, ${DesignToken.measurement.space100});
     }
     .spacer {
       flex: 1 1 auto;
