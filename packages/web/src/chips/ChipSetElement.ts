@@ -1,6 +1,6 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 
-import { customElement, Vertical } from "@m3e/web/core";
+import { customElement, DesignToken, Vertical } from "@m3e/web/core";
 
 /**
  * A container used to organize chips into a cohesive unit.
@@ -37,7 +37,7 @@ export class M3eChipSetElement extends Vertical(LitElement) {
       display: inline-flex;
       flex-wrap: wrap;
       vertical-align: middle;
-      gap: var(--m3e-chip-set-spacing, 0.5rem);
+      gap: var(--m3e-chip-set-spacing, ${DesignToken.measurement.space100});
       outline: none;
     }
     :host([vertical]) {

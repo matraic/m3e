@@ -110,7 +110,7 @@ export class M3eFilterChipElement extends Selected(
     M3eChipElement.styles,
     css`
       :host([selected]:not(:is(:state(--hide-selection), :--hide-selection))) .wrapper {
-        padding-inline-start: var(--m3e-chip-with-icon-padding-start, 0.5rem);
+        padding-inline-start: var(--m3e-chip-with-icon-padding-start, ${DesignToken.measurement.space100});
       }
       .icon {
         display: flex;
@@ -130,7 +130,7 @@ export class M3eFilterChipElement extends Selected(
         display: none;
       }
       :host(:not(:is(:state(--with-icon), :--with-icon))) .icon {
-        margin-inline-start: calc(0px - var(--m3e-chip-with-icon-padding-start, 0.5rem));
+        margin-inline-start: calc(0px - var(--m3e-chip-with-icon-padding-start, ${DesignToken.measurement.space100}));
         transition: margin-inline-start ${DesignToken.motion.spring.fastEffects};
       }
       :host([selected]) .icon {

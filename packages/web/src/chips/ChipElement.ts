@@ -116,7 +116,7 @@ export class M3eChipElement extends AttachInternals(LitElement) {
       overflow: hidden;
       display: inline-flex;
       align-items: center;
-      column-gap: var(--m3e-chip-spacing, 0.5rem);
+      column-gap: var(--m3e-chip-spacing, ${DesignToken.measurement.space100});
     }
     .label {
       flex: 1 1 auto;
@@ -161,16 +161,16 @@ export class M3eChipElement extends AttachInternals(LitElement) {
       );
     }
     :host(:is(:state(--with-icon), :--with-icon)) .wrapper {
-      padding-inline-start: var(--m3e-chip-with-icon-padding-start, 0.5rem);
+      padding-inline-start: var(--m3e-chip-with-icon-padding-start, ${DesignToken.measurement.space100});
     }
     :host(:not(:is(:state(--with-icon), :--with-icon))) .wrapper {
-      padding-inline-start: var(--m3e-chip-padding-start, 1rem);
+      padding-inline-start: var(--m3e-chip-padding-start, ${DesignToken.measurement.space200});
     }
     :host(:is(:state(--with-trailing-icon), :--with-trailing-icon)) .wrapper {
-      padding-inline-end: var(--m3e-chip-with-icon-padding-end, 0.5rem);
+      padding-inline-end: var(--m3e-chip-with-icon-padding-end, ${DesignToken.measurement.space100});
     }
     :host(:not(:is(:state(--with-trailing-icon), :--with-trailing-icon))) .wrapper {
-      padding-inline-end: var(--m3e-chip-padding-end, 1rem);
+      padding-inline-end: var(--m3e-chip-padding-end, ${DesignToken.measurement.space200});
     }
     ::slotted([slot="icon"]),
     ::slotted([slot="trailing-icon"]) {

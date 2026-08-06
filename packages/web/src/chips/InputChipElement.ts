@@ -105,7 +105,7 @@ export class M3eInputChipElement extends DisabledInteractive(Disabled(Role(M3eCh
         display: inline-flex;
         align-items: center;
         outline: none;
-        column-gap: var(--m3e-chip-spacing, 0.5rem);
+        column-gap: var(--m3e-chip-spacing, ${DesignToken.measurement.space100});
         min-width: 0;
       }
       .remove-button {
@@ -158,7 +158,7 @@ export class M3eInputChipElement extends DisabledInteractive(Disabled(Role(M3eCh
         display: none;
       }
       :host(:is(:state(--with-avatar), :--with-avatar)) .wrapper {
-        padding-inline-start: var(--m3e-chip-with-avatar-padding-start, 0.25rem);
+        padding-inline-start: var(--m3e-chip-with-avatar-padding-start, ${DesignToken.measurement.space50});
       }
       @media (forced-colors: active) {
         :host(:disabled) ::slotted([slot="avatar"]),
