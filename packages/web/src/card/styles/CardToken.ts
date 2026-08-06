@@ -7,6 +7,6 @@ import { DesignToken } from "@m3e/web/core";
  * @internal
  */
 export const CardToken = {
-  padding: unsafeCSS("var(--m3e-card-padding, 1rem)"),
+  padding: unsafeCSS(`var(--m3e-card-padding, ${DesignToken.measurement.space200})`),
   shape: unsafeCSS(`var(--m3e-card-shape, ${DesignToken.shape.corner.medium});`),
 } as const;
