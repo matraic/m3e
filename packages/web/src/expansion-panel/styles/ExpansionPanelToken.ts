@@ -16,9 +16,13 @@ export const ExpansionPanelToken = {
   expandedElevation: unsafeCSS("var(--m3e-expansion-panel-open-elevation, var(--m3e-expansion-panel-elevation))"),
   expandedShape: unsafeCSS("var(--m3e-expansion-panel-open-shape, var(--m3e-expansion-panel-shape))"),
   expandedSpace: unsafeCSS("var(--_expansion-panel-open-spacing)"),
-  contentPadding: unsafeCSS("var(--m3e-expansion-panel-content-padding, 0 1.5rem 1rem 1.5rem)"),
-  actionsSpacing: unsafeCSS("var(--m3e-expansion-panel-actions-spacing, 0.5rem)"),
-  actionsPadding: unsafeCSS("var(--m3e-expansion-panel-actions-padding, 1rem 1.5rem 1rem 1.5rem)"),
+  contentPadding: unsafeCSS(
+    `var(--m3e-expansion-panel-content-padding, 0 ${DesignToken.measurement.space300} ${DesignToken.measurement.space200} ${DesignToken.measurement.space300})`,
+  ),
+  actionsSpacing: unsafeCSS(`var(--m3e-expansion-panel-actions-spacing, ${DesignToken.measurement.space100})`),
+  actionsPadding: unsafeCSS(
+    `var(--m3e-expansion-panel-actions-padding, ${DesignToken.measurement.space200} ${DesignToken.measurement.space300} ${DesignToken.measurement.space200} ${DesignToken.measurement.space300})`,
+  ),
   actionsDividerThickness: unsafeCSS(
     "var(--m3e-expansion-panel-actions-divider-thickness, var(--m3e-divider-thickness, 1px))",
   ),

@@ -9,9 +9,9 @@ import { DesignToken } from "@m3e/web/core";
 export const ExpansionHeaderToken = {
   collapsedHeight: unsafeCSS("var(--m3e-expansion-header-collapsed-height, 3rem)"),
   expandedHeight: unsafeCSS("var(--m3e-expansion-header-expanded-height, 4rem)"),
-  paddingLeft: unsafeCSS("var(--m3e-expansion-header-padding-left, 1.5rem)"),
-  paddingRight: unsafeCSS("var(--m3e-expansion-header-padding-right, 1.5rem)"),
-  spacing: unsafeCSS("var(--m3e-expansion-header-spacing, 0.5rem)"),
+  paddingLeft: unsafeCSS(`var(--m3e-expansion-header-padding-left, ${DesignToken.measurement.space300})`),
+  paddingRight: unsafeCSS(`var(--m3e-expansion-header-padding-right, ${DesignToken.measurement.space300})`),
+  spacing: unsafeCSS(`var(--m3e-expansion-header-spacing, ${DesignToken.measurement.space100})`),
   toggleIconSize: unsafeCSS("var(--m3e-expansion-header-toggle-icon-size, 1.5rem)"),
   fontSize: unsafeCSS(`var(--m3e-expansion-header-font-size, ${DesignToken.typescale.standard.title.medium.fontSize})`),
   fontWeight: unsafeCSS(
