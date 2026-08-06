@@ -142,14 +142,14 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
   static {
     registerStyleSheet(css`
       m3e-nav-menu-item > m3e-divider {
-        margin-block: var(--m3e-nav-menu-divider-margin, 0.25rem);
+        margin-block: var(--m3e-nav-menu-divider-margin, ${DesignToken.measurement.space50});
         flex: none;
       }
       m3e-nav-menu-item > m3e-nav-menu-item:first-of-type {
-        margin-block-start: var(--m3e-nav-menu-item-vertical-inset, 0.25rem);
+        margin-block-start: var(--m3e-nav-menu-item-vertical-inset, ${DesignToken.measurement.space50});
       }
       m3e-nav-menu-item > m3e-nav-menu-item:last-of-type {
-        margin-block-end: var(--m3e-nav-menu-item-vertical-inset, 0.25rem);
+        margin-block-end: var(--m3e-nav-menu-item-vertical-inset, ${DesignToken.measurement.space50});
       }
     `);
   }
@@ -168,9 +168,9 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
       display: flex;
       align-items: center;
       position: relative;
-      padding-inline: var(--m3e-nav-menu-item-padding, 1.5rem);
+      padding-inline: var(--m3e-nav-menu-item-padding, ${DesignToken.measurement.space300});
       height: calc(var(--m3e-nav-menu-item-height, 3.5rem) + ${DesignToken.density.calc(-3)});
-      column-gap: var(--m3e-nav-menu-item-spacing, 0.75rem);
+      column-gap: var(--m3e-nav-menu-item-spacing, ${DesignToken.measurement.space150});
       font-size: var(--m3e-nav-menu-item-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(--m3e-nav-menu-item-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-nav-menu-item-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
@@ -218,13 +218,13 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
       display: none;
     }
     .icon {
-      margin-inline-start: -0.5rem;
+      margin-inline-start: calc(0px - ${DesignToken.measurement.space100});
     }
     .toggle {
-      margin-inline-end: -0.5rem;
+      margin-inline-end: calc(0px - ${DesignToken.measurement.space100});
     }
     .group {
-      padding-inline-start: var(--m3e-nav-menu-item-inset, 1rem);
+      padding-inline-start: var(--m3e-nav-menu-item-inset, ${DesignToken.measurement.space200});
     }
     :host([open]) .toggle {
       transform: rotate(180deg);
@@ -340,7 +340,9 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
       :host([selected]:not(:is(:state(--with-items), :--with-items)):not(:disabled)) .base::after {
         content: "";
         position: absolute;
-        inset-inline-start: calc(calc(var(--m3e-nav-menu-item-padding, 1.5rem) / 2) - calc(0.375rem / 2));
+        inset-inline-start: calc(
+          calc(var(--m3e-nav-menu-item-padding, ${DesignToken.measurement.space300}) / 2) - calc(0.375rem / 2)
+        );
         inset-block-start: 50%;
         width: 0.375rem;
         height: 0.375rem;

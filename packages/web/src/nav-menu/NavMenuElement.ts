@@ -94,7 +94,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
   static {
     registerStyleSheet(css`
       m3e-nav-menu > m3e-divider {
-        margin-block: var(--m3e-nav-menu-divider-margin, 0.25rem);
+        margin-block: var(--m3e-nav-menu-divider-margin, ${DesignToken.measurement.space50});
         flex: none;
       }
     `);
@@ -119,10 +119,10 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
       position: relative;
       min-height: inherit;
       box-sizing: border-box;
-      padding-block-start: var(--m3e-nav-menu-padding-top, 0.5rem);
-      padding-block-end: var(--m3e-nav-menu-padding-bottom, 0.5rem);
-      padding-inline-start: var(--m3e-nav-menu-padding-left, 0.75rem);
-      padding-inline-end: var(--m3e-nav-menu-padding-right, 0.75rem);
+      padding-block-start: var(--m3e-nav-menu-padding-top, ${DesignToken.measurement.space100});
+      padding-block-end: var(--m3e-nav-menu-padding-bottom, ${DesignToken.measurement.space100});
+      padding-inline-start: var(--m3e-nav-menu-padding-left, ${DesignToken.measurement.space150});
+      padding-inline-end: var(--m3e-nav-menu-padding-right, ${DesignToken.measurement.space150});
     }
   `;
 

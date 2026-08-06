@@ -1,6 +1,6 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 
-import { AttachInternals, customElement, deleteCustomState, Role, setCustomState } from "@m3e/web/core";
+import { AttachInternals, customElement, deleteCustomState, DesignToken, Role, setCustomState } from "@m3e/web/core";
 
 /**
  * A top-level semantic grouping of items in a navigation menu.
@@ -55,17 +55,20 @@ export class M3eNavMenuItemGroupElement extends AttachInternals(Role(LitElement,
       display: none;
     }
     .label {
-      margin-inline-start: var(--m3e-nav-menu-item-group-label-inset, 1rem);
-      margin-block-end: var(--m3e-nav-menu-item-group-label-space, 1rem);
+      margin-inline-start: var(--m3e-nav-menu-item-group-label-inset, ${DesignToken.measurement.space200});
+      margin-block-end: var(--m3e-nav-menu-item-group-label-space, ${DesignToken.measurement.space200});
       flex: none;
     }
     :host(:is(:state(--divided), :--divided)) .label {
       margin-block-start: calc(
-        var(--m3e-nav-menu-item-group-label-space, 1rem) - var(--m3e-nav-menu-divider-margin, 0.25rem)
+        var(--m3e-nav-menu-item-group-label-space, ${DesignToken.measurement.space200}) - var(
+            --m3e-nav-menu-divider-margin,
+            ${DesignToken.measurement.space50}
+          )
       );
     }
     :host(:not(:is(:state(--divided), :--divided))) .label {
-      margin-block-start: var(--m3e-nav-menu-item-group-label-space, 1rem);
+      margin-block-start: var(--m3e-nav-menu-item-group-label-space, ${DesignToken.measurement.space200});
     }
   `;
 
