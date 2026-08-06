@@ -64,19 +64,19 @@ export class M3eDividerElement extends Role(LitElement, "separator") {
     }
     :host([vertical][inset]) .line,
     :host([vertical][inset-start]) .line {
-      top: var(--m3e-divider-inset-start-size, var(--m3e-divider-inset-size, 1rem));
+      top: var(--m3e-divider-inset-start-size, var(--m3e-divider-inset-size, ${DesignToken.measurement.space200}));
     }
     :host(:not([vertical])[inset]) .line,
     :host(:not([vertical])[inset-start]) .line {
-      left: var(--m3e-divider-inset-start-size, var(--m3e-divider-inset-size, 1rem));
+      left: var(--m3e-divider-inset-start-size, var(--m3e-divider-inset-size, ${DesignToken.measurement.space200}));
     }
     :host([vertical][inset]) .line,
     :host([vertical][inset-end]) .line {
-      bottom: var(--m3e-divider-inset-end-size, var(--m3e-divider-inset-size, 1rem));
+      bottom: var(--m3e-divider-inset-end-size, var(--m3e-divider-inset-size, ${DesignToken.measurement.space200}));
     }
     :host(:not([vertical])[inset]) .line,
     :host(:not([vertical])[inset-end]) .line {
-      right: var(--m3e-divider-inset-end-size, var(--m3e-divider-inset-size, 1rem));
+      right: var(--m3e-divider-inset-end-size, var(--m3e-divider-inset-size, ${DesignToken.measurement.space200}));
     }
     :host([vertical]:not([inset]):not([inset-start])) .line {
       top: 0;
