@@ -148,7 +148,7 @@ export class M3eListOptionElement extends KeyboardClick(
       }
       :host(:is(:state(--three-line), :--three-line)) .indicator {
         align-self: flex-start;
-        margin-top: var(--m3e-list-item-three-line-top-offset, 0.25rem);
+        margin-top: var(--m3e-list-item-three-line-top-offset, ${DesignToken.measurement.space50});
       }
       :host([selected]) .base,
       :host([selected]) .state-layer,

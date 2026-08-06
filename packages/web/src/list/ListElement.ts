@@ -62,16 +62,16 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
       box-sizing: border-box;
       padding-block: var(--m3e-list-block-padding, 0px);
 
-      --m3e-divider-inset-start-size: var(--m3e-list-divider-inset-start-size, 1rem);
-      --m3e-divider-inset-end-size: var(--m3e-list-divider-inset-end-size, 1.5rem);
+      --m3e-divider-inset-start-size: var(--m3e-list-divider-inset-start-size, ${DesignToken.measurement.space200});
+      --m3e-divider-inset-end-size: var(--m3e-list-divider-inset-end-size, ${DesignToken.measurement.space300});
     }
     :host([variant="standard"]) {
-      --_list-item-leading-video-outset: var(--m3e-list-item-leading-space, 1rem);
-      --_list-item-trailing-video-outset: var(--m3e-list-item-trailing-space, 1rem);
+      --_list-item-leading-video-outset: var(--m3e-list-item-leading-space, ${DesignToken.measurement.space200});
+      --_list-item-trailing-video-outset: var(--m3e-list-item-trailing-space, ${DesignToken.measurement.space200});
       --_expandable-list-item-expanded-toggle-icon-container-color: transparent;
     }
     :host([variant="segmented"]) {
-      row-gap: var(--m3e-segmented-list-segment-gap, 0.125rem);
+      row-gap: var(--m3e-segmented-list-segment-gap, ${DesignToken.measurement.space25});
     }
     :host([variant="segmented"]) {
       --m3e-list-item-container-color: var(--m3e-segmented-list-item-container-color, ${DesignToken.color.surface});
@@ -97,8 +97,11 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
       );
       --m3e-list-item-video-shape: var(--m3e-segmented-list-item-video-shape, ${DesignToken.shape.corner.small});
       --m3e-list-item-image-shape: var(--m3e-segmented-list-item-image-shape, ${DesignToken.shape.corner.small});
-      --m3e-list-item-between-space: var(--m3e-segmented-list-item-spacing, 0.75rem);
-      --_expandable-list-item-items-segment-gap: var(--m3e-segmented-list-segment-gap, 0.125rem);
+      --m3e-list-item-between-space: var(--m3e-segmented-list-item-spacing, ${DesignToken.measurement.space150});
+      --_expandable-list-item-items-segment-gap: var(
+        --m3e-segmented-list-segment-gap,
+        ${DesignToken.measurement.space25}
+      );
       --_expandable-list-item-expanded-top-shape: var(
         --m3e-segmented-list-container-shape,
         ${DesignToken.shape.corner.large}
@@ -120,8 +123,8 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
       --_list-item-leading-reserved-space: var(--m3e-list-item-video-width, 6.25rem);
     }
     :host([variant="standard"]:is(:state(--has-leading-video), :--has-leading-video)) {
-      --_list-item-leading-reserved-outset: var(--m3e-list-item-leading-space, 1rem);
-      --_list-item-trailing-reserved-outset: var(--m3e-list-item-trailing-space, 1rem);
+      --_list-item-leading-reserved-outset: var(--m3e-list-item-leading-space, ${DesignToken.measurement.space200});
+      --_list-item-trailing-reserved-outset: var(--m3e-list-item-trailing-space, ${DesignToken.measurement.space200});
     }
     :host(:is(:state(--has-leading-image), :--has-leading-image)) {
       --_list-item-leading-reserved-display: block;

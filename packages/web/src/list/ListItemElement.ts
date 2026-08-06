@@ -109,9 +109,9 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       min-height: inherit;
       width: 100%;
       box-sizing: border-box;
-      column-gap: var(--m3e-list-item-between-space, 1rem);
-      padding-inline-start: var(--m3e-list-item-leading-space, 1rem);
-      padding-inline-end: var(--m3e-list-item-trailing-space, 1rem);
+      column-gap: var(--m3e-list-item-between-space, ${DesignToken.measurement.space200});
+      padding-inline-start: var(--m3e-list-item-leading-space, ${DesignToken.measurement.space200});
+      padding-inline-end: var(--m3e-list-item-trailing-space, ${DesignToken.measurement.space200});
       border-top-left-radius: var(
         --_list-item-top-container-shape,
         var(--m3e-list-item-container-shape, ${DesignToken.shape.corner.none})
@@ -136,22 +136,22 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       min-height: calc(var(--m3e-list-item-one-line-height, 3.5rem) + ${DesignToken.density.calc(-3)});
     }
     :host(:is(:state(--one-line), :--one-line)) .base {
-      padding-block-start: var(--m3e-list-item-one-line-top-space, 0.5rem);
-      padding-block-end: var(--m3e-list-item-one-line-bottom-space, 0.5rem);
+      padding-block-start: var(--m3e-list-item-one-line-top-space, ${DesignToken.measurement.space100});
+      padding-block-end: var(--m3e-list-item-one-line-bottom-space, ${DesignToken.measurement.space100});
     }
     :host(:is(:state(--two-line), :--two-line)) {
       min-height: calc(var(--m3e-list-item-two-line-height, 4.5rem) + ${DesignToken.density.calc(-3)});
     }
     :host(:is(:state(--two-line), :--two-line)) .base {
-      padding-block-start: var(--m3e-list-item-two-line-top-space, 0.5rem);
-      padding-block-end: var(--m3e-list-item-two-line-bottom-space, 0.5rem);
+      padding-block-start: var(--m3e-list-item-two-line-top-space, ${DesignToken.measurement.space100});
+      padding-block-end: var(--m3e-list-item-two-line-bottom-space, ${DesignToken.measurement.space100});
     }
     :host(:is(:state(--three-line), :--three-line)) {
       min-height: calc(var(--m3e-list-item-three-line-height, 5.5rem) + ${DesignToken.density.calc(-3)});
     }
     :host(:is(:state(--three-line), :--three-line)) .base {
-      padding-block-start: var(--m3e-list-item-three-line-top-space, 0.75rem);
-      padding-block-end: var(--m3e-list-item-three-line-bottom-space, 0.75rem);
+      padding-block-start: var(--m3e-list-item-three-line-top-space, ${DesignToken.measurement.space150});
+      padding-block-end: var(--m3e-list-item-three-line-bottom-space, ${DesignToken.measurement.space150});
     }
     :host(:not(:is(:state(--three-line), :--three-line))) .base {
       align-items: center;
