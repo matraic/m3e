@@ -161,7 +161,9 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       flex: none;
       display: flex;
       align-items: center;
-      padding: 1.5rem 1.5rem 1rem 1.5rem;
+      padding: ${unsafeCSS(
+        `${DesignToken.measurement.space300} ${DesignToken.measurement.space300} ${DesignToken.measurement.space200} ${DesignToken.measurement.space300}`,
+      )};
       background-color: var(--m3e-dialog-header-container-color, transparent);
     }
     ::slotted([slot="header"]) {
@@ -174,7 +176,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       letter-spacing: var(--m3e-dialog-header-tracking, ${DesignToken.typescale.standard.headline.small.tracking});
     }
     .content {
-      padding-inline: 1.5rem;
+      padding-inline: ${DesignToken.measurement.space300};
       color: var(--m3e-dialog-content-color, ${DesignToken.color.onSurfaceVariant});
       font-size: var(--m3e-dialog-content-font-size, ${DesignToken.typescale.standard.body.medium.fontSize});
       font-weight: var(--m3e-dialog-content-font-weight, ${DesignToken.typescale.standard.body.medium.fontWeight});
@@ -182,26 +184,26 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       letter-spacing: var(--m3e-dialog-content-tracking, ${DesignToken.typescale.standard.body.medium.tracking});
     }
     .actions {
-      padding: 1.5rem;
+      padding: ${DesignToken.measurement.space300};
     }
     ::slotted([slot="actions"]) {
       flex: none;
       display: flex;
       align-items: center;
       min-height: 1.5rem;
-      column-gap: 0.5rem;
+      column-gap: ${DesignToken.measurement.space100};
     }
     ::slotted([slot="actions"][end]) {
       justify-content: flex-end;
     }
     :host(:not(:is(:state(--with-actions), :--with-actions))) .content {
-      margin-bottom: 1.5rem;
+      margin-bottom: ${DesignToken.measurement.space300};
     }
     :host(:not(:is(:state(--with-actions), :--with-actions))) .actions {
       display: none;
     }
     .close {
-      margin-inline-start: 0.5rem;
+      margin-inline-start: ${DesignToken.measurement.space100};
     }
     ::slotted([slot="close-icon"]),
     .close-icon {
