@@ -10,13 +10,13 @@ function buttonStyle(size: ButtonSize): CSSResult {
       min-height: ${ButtonSizeToken[size].containerHeight};
     }
     :host([size="${unsafeCSS(size)}"]) .wrapper {
-      padding-block-start: ${ButtonSizeToken[size].topSpace};
-      padding-block-end: ${ButtonSizeToken[size].bottomSpace};
       padding-inline-start: calc(${ButtonSizeToken[size].leadingSpace} - calc(var(--_adjacent-shrink, 0px) / 2));
       padding-inline-end: calc(${ButtonSizeToken[size].trailingSpace} - calc(var(--_adjacent-shrink, 0px) / 2));
       column-gap: ${ButtonSizeToken[size].iconLabelSpace};
     }
     :host([size="${unsafeCSS(size)}"]) .label {
+      padding-block-start: ${ButtonSizeToken[size].topSpace};
+      padding-block-end: ${ButtonSizeToken[size].bottomSpace};
       font-size: ${ButtonSizeToken[size].labelTextFontSize};
       font-weight: ${ButtonSizeToken[size].labelTextFontWeight};
       line-height: ${ButtonSizeToken[size].labelTextLineHeight};
