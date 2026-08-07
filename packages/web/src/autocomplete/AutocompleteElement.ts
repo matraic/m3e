@@ -241,12 +241,12 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
   /** @private */
   get #hasNoDataSlot(): boolean {
-    return (this.#clone?.querySelector("[slot='no-data']") ?? null) !== null;
+    return (this.#clone?.querySelector(":scope > [slot='no-data']") ?? null) !== null;
   }
 
   /** @private */
   get #hasLoadingSlot(): boolean {
-    return (this.#clone?.querySelector("[slot='loading']") ?? null) !== null;
+    return (this.#clone?.querySelector(":scope > [slot='loading']") ?? null) !== null;
   }
 
   /** @private */
