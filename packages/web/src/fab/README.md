@@ -78,8 +78,6 @@ All size variants (`small`, `medium`, `large`) support the following tokens. Omi
 | `--m3e-fab-[size]-label-text-tracking`     | Letter tracking for label                 |
 | `--m3e-fab-[size]-icon-size`               | Icon size                                 |
 | `--m3e-fab-[size]-shape`                   | Corner radius                             |
-| `--m3e-fab-[size]-top-space`               | Top space above icon/label                |
-| `--m3e-fab-[size]-bottom-space`            | Bottom space under icon/label             |
 | `--m3e-fab-[size]-leading-space`           | Space before icon/label                   |
 | `--m3e-fab-[size]-trailing-space`          | Space after icon/label                    |
 | `--m3e-fab-[size]-extended-leading-space`  | Space before icon/label for extended FABs |

@@ -18,10 +18,6 @@ function fabStyle(size: FabSize): CSSResult {
       line-height: ${FabSizeToken[size].labelTextLineHeight};
       letter-spacing: ${FabSizeToken[size].labelTextTracking};
     }
-    :host([size="${unsafeCSS(size)}"]) .wrapper {
-      padding-block-start: ${FabSizeToken[size].topSpace};
-      padding-block-end: ${FabSizeToken[size].bottomSpace};
-    }
     :host([size="${unsafeCSS(size)}"]:not([extended])) .wrapper {
       padding-inline-start: ${FabSizeToken[size].leadingSpace};
       padding-inline-end: ${FabSizeToken[size].trailingSpace};
