@@ -314,14 +314,17 @@ export class M3eThemeElement extends LitElement {
     css += `--md-sys-density-scale: ${this.density};`;
     css += `--m3e-scrollbar-thumb-color: ${hexFromArgb(scheme.neutralPalette.tone(60))};`;
     css += `--m3e-focus-ring-visibility: ${this.strongFocus ? "visible" : "hidden"};`;
-    css += `font-size: ${DesignToken.typescale.standard.body.large.fontSize};`;
-    css += `font-weight: ${DesignToken.typescale.standard.body.large.fontWeight};`;
-    css += `line-height: ${DesignToken.typescale.standard.body.large.lineHeight};`;
-    css += `letter-spacing: ${DesignToken.typescale.standard.body.large.tracking};`;
+
+    let fontCss = "";
+    fontCss += `font-size: ${DesignToken.typescale.standard.body.large.fontSize};`;
+    fontCss += `font-weight: ${DesignToken.typescale.standard.body.large.fontWeight};`;
+    fontCss += `line-height: ${DesignToken.typescale.standard.body.large.lineHeight};`;
+    fontCss += `letter-spacing: ${DesignToken.typescale.standard.body.large.tracking};`;
 
     if (this.parentElement instanceof HTMLBodyElement) {
       this.#styleSheet.replaceSync(`
         html { ${css} }
+        body { ${fontCss} }
         @media not (forced-colors: active) {
           body { 
             background-color: var(--md-sys-color-background);
