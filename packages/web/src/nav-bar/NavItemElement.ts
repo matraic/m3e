@@ -160,6 +160,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
     .icon-wrapper {
       position: relative;
       flex: none;
+      line-height: 0;
     }
     .base {
       contain: layout style;

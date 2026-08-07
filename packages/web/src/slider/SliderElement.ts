@@ -104,6 +104,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
       min-inline-size: var(--m3e-slider-min-width, 200px);
       user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      line-height: 0;
     }
     :host(:not([disabled])) {
       cursor: pointer;

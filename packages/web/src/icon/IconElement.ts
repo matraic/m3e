@@ -50,6 +50,7 @@ export class M3eIconElement extends Role(LitElement, "img") {
       display: inline-block;
       user-select: none;
       font-size: var(--m3e-icon-size, 24px);
+      line-height: 1em;
       width: 1em;
       height: 1em;
       vertical-align: middle;

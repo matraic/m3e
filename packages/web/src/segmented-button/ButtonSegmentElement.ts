@@ -110,11 +110,13 @@ export class M3eButtonSegmentElement extends Dirty(
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     .base {
+      position: relative;
       display: inline-flex;
       vertical-align: middle;
       align-items: center;
       width: 100%;
       height: calc(var(--m3e-segmented-button-height, 40px) + ${DesignToken.density.calc(-3)});
+      line-height: 1;
       box-sizing: border-box;
       border-width: var(--m3e-segmented-button-outline-thickness, 1px);
       border-color: var(--m3e-segmented-button-outline-color, ${DesignToken.color.outline});

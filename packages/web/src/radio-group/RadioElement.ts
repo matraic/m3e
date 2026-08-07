@@ -96,6 +96,7 @@ export class M3eRadioElement extends Labelled(
       vertical-align: middle;
       user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      line-height: 0;
     }
     :host(:not([aria-disabled="true"])) {
       cursor: pointer;

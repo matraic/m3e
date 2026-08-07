@@ -106,7 +106,7 @@ export class M3eSliderThumbElement extends Dirty(
       justify-content: center;
       height: 100%;
       border-radius: inherit;
-      width: calc(var(--m3e-slider-thumb-width, 4px) + calc(var(--m3e-slider-thumb-padding, 0.375em) * 2));
+      width: calc(var(--m3e-slider-thumb-width, 4px) + calc(var(--m3e-slider-thumb-padding, 6px) * 2));
     }
     .focus-ring {
       top: calc(0px - var(--m3e-focus-ring-thickness, 3px));

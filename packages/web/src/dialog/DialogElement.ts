@@ -204,6 +204,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
     }
     .close {
       margin-inline-start: ${DesignToken.measurement.space100};
+      align-self: flex-start;
     }
     ::slotted([slot="close-icon"]),
     .close-icon {

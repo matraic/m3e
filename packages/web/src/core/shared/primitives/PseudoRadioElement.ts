@@ -39,6 +39,7 @@ export class M3ePseudoRadioElement extends Checked(Disabled(Role(LitElement, "no
       height: var(--m3e-radio-icon-size, 20px);
       flex: none;
       contain: layout style paint;
+      line-height: 0;
     }
     .circle {
       fill: currentColor;

@@ -119,6 +119,7 @@ export class M3eCheckboxElement extends Labelled(
       vertical-align: middle;
       user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      line-height: 0;
     }
     :host(:not([aria-disabled="true"])) {
       cursor: pointer;
@@ -132,6 +133,7 @@ export class M3eCheckboxElement extends Labelled(
       justify-content: center;
       position: relative;
       border-radius: 50%;
+      line-height: 0;
       width: calc(var(--m3e-checkbox-container-size, 40px) + ${DesignToken.density.calc(-3)});
       height: calc(var(--m3e-checkbox-container-size, 40px) + ${DesignToken.density.calc(-3)});
     }

@@ -141,6 +141,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
       row-gap: var(--m3e-menu-gap, ${DesignToken.measurement.space25});
       min-width: inherit;
       max-width: inherit;
+      line-height: 0;
       padding-block: var(--m3e-menu-container-padding-block, ${DesignToken.measurement.space50});
       padding-inline: var(--m3e-menu-container-padding-inline, ${DesignToken.measurement.space50});
       --m3e-focus-ring-outward-offset: 0px;

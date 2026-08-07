@@ -108,6 +108,9 @@ export class M3eInputChipElement extends DisabledInteractive(Disabled(Role(M3eCh
         column-gap: var(--m3e-chip-spacing, ${DesignToken.measurement.space100});
         min-width: 0;
       }
+      .remove {
+        line-height: 0;
+      }
       .remove-button {
         --m3e-icon-button-extra-small-container-height: 24px;
         --m3e-icon-button-extra-small-icon-size: var(--m3e-chip-icon-size, 18px);
