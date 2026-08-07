@@ -5,8 +5,6 @@ This roadmap presents the ongoing development, future direction, and past accomp
 ## 🟡 Current
 
 - 2.7.x Release
-- Spacing token support
-- Text-only scaling support
 
 ## 🔮 Future
 
@@ -24,7 +22,7 @@ The following components are planned for future release:
 ## 🏛️ Past Milestones
 
 - **2.7.0 – 2.7.4 — Feature release + patch releases**
-  Added `@m3e/web/date-input`, bug fixes.
+  Added `@m3e/web/date-input`, text scaling support, bug fixes.
 
 - **2.6.0 – 2.6.3 — Feature release + patch releases**
   Added `@m3e/web/timepicker`, bug fixes.
