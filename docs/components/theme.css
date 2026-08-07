@@ -1,18 +1,18 @@
 .dark-example {
   background-color: var(--md-sys-color-background);
-  padding: 1rem;
-  border-radius: 0.75rem;
+  padding: 16px;
+  border-radius: 12px;
 }
 .swatch-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
+  gap: 16px;
   font-family: sans-serif;
 }
 
 .swatch {
-  border-radius: 0.75rem;
-  padding: 1rem;
+  border-radius: 12px;
+  padding: 16px;
   color: var(--md-sys-color-on-surface);
   border: 1px solid var(--md-sys-color-outline-variant);
   display: flex;
@@ -24,12 +24,12 @@
 .swatch-label {
   font-size: 0.875rem;
   font-weight: 500;
-  margin-bottom: 0.5rem;
+  margin-bottom: 8px;
 }
 
 .swatch-box {
   flex-grow: 1;
-  border-radius: 0.5rem;
+  border-radius: 8px;
   border: 1px solid var(--md-sys-color-outline-variant);
 }
 

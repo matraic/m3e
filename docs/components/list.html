@@ -19,7 +19,7 @@
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.3/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.4/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -542,10 +542,11 @@
           <code>m3e-expandable-list-item</code> provides a disclosure-style header that toggles the visibility of a
           nested list, allowing related actions or items to be grouped without overwhelming the parent list.
         </p>
+        <p>Use the <code>open</code> attribute to control whether an expandable list item is open.</p>
         <m3e-card variant="outlined" class="showcase">
           <div slot="content">
             <m3e-action-list>
-              <m3e-expandable-list-item>
+              <m3e-expandable-list-item open>
                 <m3e-icon slot="leading" name="stars"></m3e-icon>
                 List item
                 <div slot="items">
@@ -605,7 +606,7 @@
         <m3e-card variant="outlined" class="example">
           <pre slot="content">
 &lt;m3e-action-list&gt;
-  &lt;m3e-expandable-list-item&gt;
+  &lt;m3e-expandable-list-item open&gt;
     &lt;m3e-icon slot=&quot;leading&quot; name=&quot;stars&quot;&gt;&lt;/m3e-icon&gt;
     List item
     &lt;div slot=&quot;items&quot;&gt;
@@ -625,7 +626,7 @@
         <m3e-card variant="outlined" class="showcase">
           <div slot="content">
             <m3e-action-list variant="segmented">
-              <m3e-expandable-list-item>
+              <m3e-expandable-list-item open>
                 <m3e-icon slot="leading" name="stars"></m3e-icon>
                 List item
                 <div slot="items">
@@ -685,7 +686,7 @@
         <m3e-card variant="outlined" class="example">
           <pre slot="content">
 &lt;m3e-action-list variant=&quot;segmented&quot;&gt;
-  &lt;m3e-expandable-list-item&gt;
+  &lt;m3e-expandable-list-item open&gt;
     &lt;m3e-icon slot=&quot;leading&quot; name=&quot;stars&quot;&gt;&lt;/m3e-icon&gt;
     List item
     &lt;div slot=&quot;items&quot;&gt;
@@ -893,8 +894,8 @@
         <p>
           Lists are density-aware and adjust their vertical spacing based on the
           <code>--md-sys-density-scale</code> and <code>--md-sys-density-size</code> custom CSS properties. The default
-          density size is 4dp (0.25rem). Lists support negative density scales down to -3, with each step reducing the
-          visual height by one density unit.
+          density size is 4dp. Lists support negative density scales down to -3, with each step reducing the visual
+          height by one density unit.
         </p>
 
         <p>The following illustrates -3 density applied to a segmented, multi-select list.</p>

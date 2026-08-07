@@ -5,6 +5,7 @@ window.addEventListener("beforeunload", () =>
 window.addEventListener("DOMContentLoaded", async () => {
   if (window.parent && window.parent.document && window.parent.document.documentElement) {
     document.documentElement.dir = window.parent.document.documentElement.dir;
+    document.documentElement.style.fontSize = window.parent.document.documentElement.style.fontSize;
 
     const theme = document.querySelector("m3e-theme");
     const parentTheme = window.parent.document.querySelector("m3e-theme");
@@ -27,7 +28,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   drawerContainer?.addEventListener("change", () => updateBodyMargin());
   updateBodyMargin();
 
-  const cem = await (await fetch("https://cdn.jsdelivr.net/npm/@m3e/web@2.7.3/dist/custom-elements.json")).json();
+  const cem = await (await fetch("https://cdn.jsdelivr.net/npm/@m3e/web@2.7.4/dist/custom-elements.json")).json();
   mergeParsedTypes(cem);
 
   const promises = [];
@@ -158,6 +159,10 @@ window.addEventListener("message", (e) => {
 
     case "direction-change":
       document.documentElement.dir = e.data.dir;
+      break;
+
+    case "text-size-change":
+      document.documentElement.style.fontSize = e.data.textSize;
       break;
   }
 });

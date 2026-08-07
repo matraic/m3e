@@ -43,7 +43,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const colorSchemeButton = document.querySelector("#color-scheme-button");
   if (colorSchemeButton) {
-    colorSchemeButton?.addEventListener("change", () => {
+    colorSchemeButton.addEventListener("change", () => {
       const theme = document.querySelector("m3e-theme");
 
       const frame = document.querySelector("#content-frame");
@@ -64,7 +64,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const contrastButton = document.querySelector("#contrast-button");
   if (contrastButton) {
-    contrastButton?.addEventListener("change", () => {
+    contrastButton.addEventListener("change", () => {
       const theme = document.querySelector("m3e-theme");
       theme.contrast = contrastButton.value;
       frame.contentWindow.postMessage({ type: "contrast-change", contrast: theme.contrast }, window.location.origin);
@@ -73,8 +73,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const directionalityButton = document.querySelector("#directionality-button");
   if (directionalityButton) {
-    directionalityButton?.addEventListener("change", () => {
+    directionalityButton.addEventListener("change", () => {
       document.documentElement.dir = directionalityButton.value;
+    });
+  }
+
+  const textSizeButton = document.querySelector("#text-size-button");
+  if (textSizeButton) {
+    textSizeButton.addEventListener("change", () => {
+      document.documentElement.style.fontSize = textSizeButton.value;
+      frame.contentWindow.postMessage(
+        { type: "text-size-change", textSize: textSizeButton.value },
+        window.location.origin,
+      );
     });
   }
 });

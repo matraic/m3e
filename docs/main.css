@@ -33,10 +33,10 @@ m3e-heading + .install,
 .showcase + m3e-heading,
 api-viewer + m3e-heading,
 m3e-card + m3e-card {
-  margin-block-start: 1rem;
+  margin-block-start: 16px;
 }
 m3e-card + .example {
-  margin-block: 1rem;
+  margin-block: 16px;
 }
 p + p,
 p + ul,
@@ -55,8 +55,8 @@ code {
   background-color: var(--md-sys-color-surface-container-low);
   text-shadow: 0 1px 1px var(--md-sys-color-surface-container-low);
   color: var(--md-sys-color-primary);
-  border-radius: 0.25rem;
-  padding: 0.25rem;
+  border-radius: 4px;
+  padding: 4px;
   font-weight: inherit;
   font-size: 0.875em;
 }
@@ -72,7 +72,7 @@ pre {
   height: 100vh;
   width: 100vw;
   box-sizing: border-box;
-  padding-block-end: 1rem;
+  padding-block-end: 16px;
   transition: padding var(--md-sys-motion-spring-slow-effects, 200ms cubic-bezier(0.34, 0.88, 0.34, 1));
 }
 .panes > * {
@@ -80,8 +80,8 @@ pre {
 }
 #body {
   flex: 1 1 auto;
-  margin-inline-start: calc(1rem * var(--_margin-inline-start-multiplier, 0));
-  margin-inline-end: 1rem;
+  margin-inline-start: calc(16px * var(--_margin-inline-start-multiplier, 0));
+  margin-inline-end: 16px;
   min-width: 0;
   --m3e-content-pane-container-color: var(--md-sys-color-surface-container-lowest);
   transition: margin var(--md-sys-motion-spring-slow-effects, 200ms cubic-bezier(0.34, 0.88, 0.34, 1));
@@ -91,12 +91,12 @@ pre {
   --m3e-content-pane-container-shape: initial;
 }
 .panes > m3e-toc {
-  --m3e-toc-width: 13rem;
+  --m3e-toc-width: 208px;
   --m3e-toc-container-color: var(--md-sys-color-surface-container-lowest);
-  --m3e-toc-container-shape: 1.75rem;
-  --m3e-toc-container-padding-inline: 0.5rem;
-  --m3e-toc-container-padding-block: 0.5rem;
-  margin-inline-end: 1rem;
+  --m3e-toc-container-shape: 28px;
+  --m3e-toc-container-padding-inline: 8px;
+  --m3e-toc-container-padding-block: 8px;
+  margin-inline-end: 16px;
   flex: none;
 }
 @media (max-width: 600px) {
@@ -116,7 +116,7 @@ pre {
   #body {
     margin-inline-start: 0;
     margin-inline-end: 0;
-    --m3e-content-pane-container-shape: 1.75rem 1.75rem 0 0;
+    --m3e-content-pane-container-shape: 28px 28px 0 0;
   }
 }
 
