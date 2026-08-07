@@ -256,7 +256,7 @@ export class M3eCardElement extends KeyboardClick(
   #handleContentSlotChange(): void {
     this.shadowRoot
       ?.querySelector(".base")
-      ?.classList.toggle("has-content", this.querySelector("[slot='content']") !== null);
+      ?.classList.toggle("has-content", this.querySelector(":scope > [slot='content']") !== null);
   }
 
   /** @private */
@@ -265,7 +265,7 @@ export class M3eCardElement extends KeyboardClick(
       ?.querySelector(".base")
       ?.classList.toggle(
         "has-default",
-        hasAssignedNodes(e.target as HTMLSlotElement) && this.querySelector("[slot='content']") === null,
+        hasAssignedNodes(e.target as HTMLSlotElement) && this.querySelector(":scope > [slot='content']") === null,
       );
   }
 
