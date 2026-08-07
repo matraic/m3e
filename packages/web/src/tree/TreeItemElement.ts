@@ -95,7 +95,7 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
       align-items: center;
       position: relative;
       box-sizing: border-box;
-      height: calc(var(--m3e-tree-item-height, 3rem) + ${DesignToken.density.calc(-3)});
+      height: calc(var(--m3e-tree-item-height, 48px) + ${DesignToken.density.calc(-3)});
       padding-inline-start: var(
         --m3e-tree-item-leading-space,
         var(--m3e-tree-item-padding, ${DesignToken.measurement.space200})
@@ -171,7 +171,7 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
       vertical-align: middle;
       width: 1em;
       height: 1em;
-      font-size: var(--m3e-tree-item-icon-size, 1.5rem);
+      font-size: var(--m3e-tree-item-icon-size, 24px);
     }
     .toggle-icon {
       transition: ${unsafeCSS(`transform var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})

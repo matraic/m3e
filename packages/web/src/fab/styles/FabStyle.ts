@@ -27,7 +27,7 @@ export const FabStyle: CSSResultGroup = css`
   }
   .touch {
     position: absolute;
-    height: 3rem;
+    height: 48px;
     left: 0;
     right: 0;
   }
@@ -73,7 +73,7 @@ export const FabStyle: CSSResultGroup = css`
   }
   :host([aria-expanded="true"]) .base.with-menu {
     border-radius: var(--m3e-fab-menu-close-button-container-shape, ${DesignToken.shape.corner.full});
-    min-height: calc(var(--m3e-fab-menu-close-button-container-height, 3.5rem) + ${DesignToken.density.calc(-3)});
+    min-height: calc(var(--m3e-fab-menu-close-button-container-height, 56px) + ${DesignToken.density.calc(-3)});
   }
   :host([aria-expanded="true"]) .base.with-menu .wrapper {
     padding-block-start: calc(
@@ -94,8 +94,8 @@ export const FabStyle: CSSResultGroup = css`
     );
   }
   :host([aria-expanded="true"]) .base.with-menu .icon {
-    font-size: calc(var(--m3e-fab-menu-close-button-icon-size, 1.5rem) + ${DesignToken.density.calc(-3)});
-    --m3e-icon-size: calc(var(--m3e-fab-menu-close-button-icon-size, 1.5rem) + ${DesignToken.density.calc(-3)});
+    font-size: calc(var(--m3e-fab-menu-close-button-icon-size, 24px) + ${DesignToken.density.calc(-3)});
+    --m3e-icon-size: calc(var(--m3e-fab-menu-close-button-icon-size, 24px) + ${DesignToken.density.calc(-3)});
   }
   .base.with-menu {
     transition: min-height ${DesignToken.motion.spring.fastSpatial};

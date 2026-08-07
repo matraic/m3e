@@ -143,7 +143,7 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
       align-items: center;
       justify-content: center;
       align-self: stretch;
-      width: var(--m3e-expandable-list-item-toggle-icon-container-width, 2rem);
+      width: var(--m3e-expandable-list-item-toggle-icon-container-width, 32px);
       border-radius: var(--m3e-expandable-list-item-toggle-icon-container-shape, ${DesignToken.shape.corner.full});
       transition: ${unsafeCSS(
         `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
@@ -154,7 +154,7 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
       align-items: center;
       justify-content: center;
       vertical-align: middle;
-      font-size: var(--m3e-expandable-list-item-toggle-icon-size, 1.5rem);
+      font-size: var(--m3e-expandable-list-item-toggle-icon-size, 24px);
       transition: ${unsafeCSS(`transform ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`)};
     }
     .toggle svg,

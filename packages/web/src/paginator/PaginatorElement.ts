@@ -109,7 +109,7 @@ export class M3ePaginatorElement extends Role(LitElement, "group") {
     }
     .form-field {
       min-width: auto;
-      width: 6rem;
+      width: 96px;
       margin-inline: ${DesignToken.measurement.space50};
     }
     .range-label {
@@ -128,7 +128,7 @@ export class M3ePaginatorElement extends Role(LitElement, "group") {
     ::slotted([slot="last-page-icon"]),
     svg {
       width: 1em;
-      font-size: var(--m3e-icon-button-medium-icon-size, 1.5rem) !important;
+      font-size: var(--m3e-icon-button-medium-icon-size, 24px) !important;
     }
 
     :host(:dir(rtl)) svg {

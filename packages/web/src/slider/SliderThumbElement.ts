@@ -96,7 +96,7 @@ export class M3eSliderThumbElement extends Dirty(
     }
     .touch {
       position: absolute;
-      height: 3rem;
+      height: 48px;
       left: 0;
       right: 0;
       touch-action: none;
@@ -106,7 +106,7 @@ export class M3eSliderThumbElement extends Dirty(
       justify-content: center;
       height: 100%;
       border-radius: inherit;
-      width: calc(var(--m3e-slider-thumb-width, 0.25rem) + calc(var(--m3e-slider-thumb-padding, 0.375em) * 2));
+      width: calc(var(--m3e-slider-thumb-width, 4px) + calc(var(--m3e-slider-thumb-padding, 0.375em) * 2));
     }
     .focus-ring {
       top: calc(0px - var(--m3e-focus-ring-thickness, 3px));
@@ -128,9 +128,9 @@ export class M3eSliderThumbElement extends Dirty(
           transform ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard},
           visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
-      width: var(--m3e-slider-label-width, 3rem);
-      height: var(--_m3e-slider-label-height, 2.75rem);
-      top: calc(0px - var(--_m3e-slider-label-height, 2.75rem) - var(--_m3e-slider-label-margin, 0.25rem));
+      width: var(--m3e-slider-label-width, 48px);
+      height: var(--_m3e-slider-label-height, 44px);
+      top: calc(0px - var(--_m3e-slider-label-height, 44px) - var(--_m3e-slider-label-margin, 4px));
       inset-inline-start: calc(0px - 100%);
       border-radius: var(--m3e-slider-label-shape, ${DesignToken.shape.corner.full});
       background-color: var(--m3e-slider-label-container-color, ${DesignToken.color.inverseSurface});
@@ -148,7 +148,7 @@ export class M3eSliderThumbElement extends Dirty(
     }
     .handle {
       height: 100%;
-      width: var(--m3e-slider-thumb-width, 0.25rem);
+      width: var(--m3e-slider-thumb-width, 4px);
       border-radius: inherit;
       transition: ${unsafeCSS(`width ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
     }

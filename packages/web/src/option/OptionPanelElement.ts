@@ -72,9 +72,9 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
           --m3e-option-panel-container-shape,
           ${DesignToken.shape.corner.large}
         );
-        --m3e-floating-panel-container-min-width: var(--m3e-option-panel-container-min-width, 7rem);
-        --m3e-floating-panel-container-max-width: var(--m3e-option-panel-container-max-width, 17.5rem);
-        --m3e-floating-panel-container-max-height: var(--m3e-option-panel-container-max-height, 17.5rem);
+        --m3e-floating-panel-container-min-width: var(--m3e-option-panel-container-min-width, 112px);
+        --m3e-floating-panel-container-max-width: var(--m3e-option-panel-container-max-width, 280px);
+        --m3e-floating-panel-container-max-height: var(--m3e-option-panel-container-max-height, 280px);
         --m3e-floating-panel-container-color: var(
           --m3e-option-panel-container-color,
           ${DesignToken.color.surfaceContainer}
@@ -101,7 +101,7 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
         display: flex;
         align-items: center;
         box-sizing: border-box;
-        min-height: var(--m3e-option-panel-no-data-container-height, 2.75rem);
+        min-height: var(--m3e-option-panel-no-data-container-height, 44px);
         padding: var(--m3e-option-panel-no-data-container-padding, ${DesignToken.measurement.space150});
         color: var(--m3e-option-panel-no-data-color, ${DesignToken.color.onSurfaceVariant});
         font-size: var(--m3e-option-panel-no-data-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
@@ -122,7 +122,7 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
         display: flex;
         align-items: center;
         box-sizing: border-box;
-        min-height: var(--m3e-option-panel-loading-container-height, 2.75rem);
+        min-height: var(--m3e-option-panel-loading-container-height, 44px);
         padding: var(--m3e-option-panel-loading-container-padding, ${DesignToken.measurement.space150});
         color: var(--m3e-option-panel-loading-color, ${DesignToken.color.onSurfaceVariant});
         font-size: var(--m3e-option-panel-loading-font-size, ${DesignToken.typescale.standard.label.large.fontSize});

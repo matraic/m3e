@@ -90,7 +90,7 @@ export class M3eChipElement extends AttachInternals(LitElement) {
         `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
       )};
       border-radius: var(--m3e-chip-container-shape, ${DesignToken.shape.corner.small});
-      height: calc(var(--m3e-chip-container-height, 2rem) + ${DesignToken.density.calc(-3)});
+      height: calc(var(--m3e-chip-container-height, 32px) + ${DesignToken.density.calc(-3)});
       font-size: var(--m3e-chip-label-text-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(--m3e-chip-label-text-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-chip-label-text-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
@@ -107,7 +107,7 @@ export class M3eChipElement extends AttachInternals(LitElement) {
     }
     .touch {
       position: absolute;
-      height: 3rem;
+      height: 48px;
       left: 0;
       right: 0;
     }
@@ -176,7 +176,7 @@ export class M3eChipElement extends AttachInternals(LitElement) {
     ::slotted([slot="trailing-icon"]) {
       flex: none;
       width: 1em;
-      font-size: var(--m3e-chip-icon-size, 1.125rem) !important;
+      font-size: var(--m3e-chip-icon-size, 18px) !important;
     }
     :host(:not(:disabled):not([disabled-interactive]):not([selected])) .base {
       color: var(--m3e-chip-label-text-color, ${DesignToken.color.onSurface});

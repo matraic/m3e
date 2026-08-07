@@ -115,19 +115,19 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
       transform: translateX(calc(0px - var(--_badge-offset, 0px)));
     }
     :host([size="small"]) {
-      height: var(--m3e-badge-small-size, 0.375rem);
-      max-height: var(--m3e-badge-small-size, 0.375rem);
-      width: var(--m3e-badge-small-size, 0.375rem);
-      min-width: var(--m3e-badge-small-size, 0.375rem);
-      --_badge-offset: var(--m3e-badge-small-offset, 0.375rem);
+      height: var(--m3e-badge-small-size, 6px);
+      max-height: var(--m3e-badge-small-size, 6px);
+      width: var(--m3e-badge-small-size, 6px);
+      min-width: var(--m3e-badge-small-size, 6px);
+      --_badge-offset: var(--m3e-badge-small-offset, 6px);
     }
     :host([size="small"]) .base {
       font-size: 0;
     }
     :host([size="medium"]) {
-      height: var(--m3e-badge-medium-size, 1.375rem);
-      min-width: var(--m3e-badge-medium-size, 1.375rem);
-      --_badge-offset: var(--m3e-badge-small-offset, 0.75rem);
+      height: var(--m3e-badge-medium-size, 22px);
+      min-width: var(--m3e-badge-medium-size, 22px);
+      --_badge-offset: var(--m3e-badge-small-offset, 12px);
     }
     :host([size="medium"]) .base {
       font-size: var(--m3e-badge-medium-font-size, ${DesignToken.typescale.standard.label.small.fontSize});
@@ -136,9 +136,9 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
       letter-spacing: var(--m3e-badge-medium-tracking, ${DesignToken.typescale.standard.label.small.tracking});
     }
     :host([size="large"]) {
-      height: var(--m3e-badge-large-size, 1.75rem);
-      min-width: var(--m3e-badge-large-size, 1.75rem);
-      --_badge-offset: var(--m3e-badge-small-offset, 1rem);
+      height: var(--m3e-badge-large-size, 28px);
+      min-width: var(--m3e-badge-large-size, 28px);
+      --_badge-offset: var(--m3e-badge-small-offset, 16px);
     }
     :host([size="large"]) .base {
       font-size: var(--m3e-badge-large-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
@@ -232,7 +232,7 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
     this.style.setProperty(
       "--_badge-padding",
       this.textContent && this.textContent.length > 2
-        ? `0 ${this.size === "medium" ? "0.25rem" : this.size === "large" ? "0.5rem" : "0"}`
+        ? `0 ${this.size === "medium" ? "4px" : this.size === "large" ? "8px" : "0"}`
         : "",
     );
   }

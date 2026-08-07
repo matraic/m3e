@@ -8,13 +8,13 @@ import { DesignToken } from "@m3e/web/core";
  */
 export const SwitchToken = {
   selectedIconColor: unsafeCSS(`var(--m3e-switch-selected-icon-color, ${DesignToken.color.onPrimaryContainer})`),
-  selectedIconSize: unsafeCSS("var(--m3e-switch-selected-icon-size, 1rem)"),
+  selectedIconSize: unsafeCSS("var(--m3e-switch-selected-icon-size, 16px)"),
   unselectedIconColor: unsafeCSS(
     `var(--m3e-switch-unselected-icon-color, ${DesignToken.color.surfaceContainerHighest})`,
   ),
-  unselectedIconSize: unsafeCSS("var(--m3e-switch-unselected-icon-size, 1rem)"),
-  trackHeight: unsafeCSS(`calc(var(--m3e-switch-track-height, 2rem) + ${DesignToken.density.calc(-3)})`),
-  trackWidth: unsafeCSS(`calc(var(--m3e-switch-track-width, 3.25rem) + ${DesignToken.density.calc(-3)})`),
+  unselectedIconSize: unsafeCSS("var(--m3e-switch-unselected-icon-size, 16px)"),
+  trackHeight: unsafeCSS(`calc(var(--m3e-switch-track-height, 32px) + ${DesignToken.density.calc(-3)})`),
+  trackWidth: unsafeCSS(`calc(var(--m3e-switch-track-width, 52px) + ${DesignToken.density.calc(-3)})`),
   trackOutlineColor: unsafeCSS(`var(--m3e-switch-track-outline-color, ${DesignToken.color.outline})`),
   trackOutlineWidth: unsafeCSS("var(--m3e-switch-track-outline-width, 2px)"),
   trackShape: unsafeCSS(`var(--m3e-switch-track-shape, ${DesignToken.shape.corner.full})`),
@@ -23,33 +23,31 @@ export const SwitchToken = {
     `var(--m3e-switch-unselected-track-color, ${DesignToken.color.surfaceContainerHighest})`,
   ),
   unselectedHandleHeight: unsafeCSS(
-    `calc(var(--m3e-switch-unselected-handle-height, 1rem) + ${DesignToken.density.calc(-3)})`,
+    `calc(var(--m3e-switch-unselected-handle-height, 16px) + ${DesignToken.density.calc(-3)})`,
   ),
   unselectedHandleWidth: unsafeCSS(
-    `calc(var(--m3e-switch-unselected-handle-width, 1rem) + ${DesignToken.density.calc(-3)})`,
+    `calc(var(--m3e-switch-unselected-handle-width, 16px) + ${DesignToken.density.calc(-3)})`,
   ),
   withIconHandleHeight: unsafeCSS(
-    `calc(var(--m3e-switch-with-icon-handle-height, 1.5rem) + ${DesignToken.density.calc(-3)})`,
+    `calc(var(--m3e-switch-with-icon-handle-height, 24px) + ${DesignToken.density.calc(-3)})`,
   ),
   withIconHandleWidth: unsafeCSS(
-    `calc(var(--m3e-switch-with-icon-handle-width, 1.5rem) + ${DesignToken.density.calc(-3)})`,
+    `calc(var(--m3e-switch-with-icon-handle-width, 24px) + ${DesignToken.density.calc(-3)})`,
   ),
   selectedHandleHeight: unsafeCSS(
-    `calc(var(--m3e-switch-selected-handle-height, 1.5rem) + ${DesignToken.density.calc(-3)})`,
+    `calc(var(--m3e-switch-selected-handle-height, 24px) + ${DesignToken.density.calc(-3)})`,
   ),
   selectedHandleWidth: unsafeCSS(
-    `calc(var(--m3e-switch-selected-handle-width, 1.5rem) + ${DesignToken.density.calc(-3)})`,
+    `calc(var(--m3e-switch-selected-handle-width, 24px) + ${DesignToken.density.calc(-3)})`,
   ),
   pressedHandleHeight: unsafeCSS(
-    `calc(var(--m3e-switch-pressed-handle-height, 1.75rem) + ${DesignToken.density.calc(-3)})`,
+    `calc(var(--m3e-switch-pressed-handle-height, 28px) + ${DesignToken.density.calc(-3)})`,
   ),
-  pressedHandleWidth: unsafeCSS(
-    `calc(var(--m3e-switch-pressed-handle-width, 1.75rem) + ${DesignToken.density.calc(-3)})`,
-  ),
+  pressedHandleWidth: unsafeCSS(`calc(var(--m3e-switch-pressed-handle-width, 28px) + ${DesignToken.density.calc(-3)})`),
   handleShape: unsafeCSS(`var(--m3e-switch-handle-shape, ${DesignToken.shape.corner.full})`),
   selectedHandleColor: unsafeCSS(`var(--m3e-switch-selected-handle-color, ${DesignToken.color.onPrimary})`),
   unselectedHandleColor: unsafeCSS(`var(--m3e-switch-unselected-handle-color, ${DesignToken.color.outline})`),
-  stateLayerSize: unsafeCSS(`calc(var(--m3e-switch-state-layer-size, 2.5rem) + ${DesignToken.density.calc(-3)})`),
+  stateLayerSize: unsafeCSS(`calc(var(--m3e-switch-state-layer-size, 40px) + ${DesignToken.density.calc(-3)})`),
   stateLayerShape: unsafeCSS(`var(--m3e-switch-state-layer-shape, ${DesignToken.shape.corner.full})`),
   disabledSelectedIconColor: unsafeCSS(
     `var(--m3e-switch-disabled-selected-icon-color, ${DesignToken.color.onSurface})`,

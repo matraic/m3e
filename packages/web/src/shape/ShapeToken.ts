@@ -8,7 +8,7 @@ import { DesignToken } from "@m3e/web/core";
  */
 export const ShapeToken = {
   /** Default size of the shape. */
-  size: unsafeCSS(`var(--m3e-shape-size, 3rem)`),
+  size: unsafeCSS(`var(--m3e-shape-size, 48px)`),
 
   /** Container (background) color of the shape. */
   containerColor: unsafeCSS(`var(--m3e-shape-container-color, ${DesignToken.color.primary})`),

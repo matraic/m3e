@@ -127,9 +127,9 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
         var(--m3e-focus-ring-thickness, 3px) +
           var(--m3e-menu-container-padding-block, ${DesignToken.measurement.space50})
       );
-      min-width: var(--m3e-menu-container-min-width, 7rem);
-      max-width: var(--m3e-menu-container-max-width, 17.5rem);
-      max-height: var(--m3e-menu-container-max-height, 17.5rem);
+      min-width: var(--m3e-menu-container-min-width, 112px);
+      max-width: var(--m3e-menu-container-max-width, 280px);
+      max-height: var(--m3e-menu-container-max-height, 280px);
       box-shadow: var(--m3e-menu-container-elevation, ${DesignToken.elevation.level3});
       opacity: 0;
       display: none;

@@ -124,7 +124,7 @@ export class M3eCalendarElement extends LitElement {
       border-radius: var(--m3e-calendar-container-shape);
     }
     .header {
-      height: 3.5rem;
+      height: 56px;
       display: flex;
       align-items: center;
       --m3e-text-button-label-text-color: var(
@@ -155,7 +155,7 @@ export class M3eCalendarElement extends LitElement {
     }
     .body {
       position: relative;
-      height: calc(3rem * 7);
+      height: calc(48px * 7);
     }
     .view:not(.no-animate) {
       transition: ${unsafeCSS(

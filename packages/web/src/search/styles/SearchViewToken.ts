@@ -13,11 +13,11 @@ export const SearchViewToken = {
   fullScreenContainerShape: unsafeCSS(
     `var(--m3e-search-view-full-screen-container-shape, ${DesignToken.shape.corner.none})`,
   ),
-  fullScreenHeaderContainerHeight: unsafeCSS("var(--m3e-search-view-full-screen-header-container-height, 4.5rem)"),
+  fullScreenHeaderContainerHeight: unsafeCSS("var(--m3e-search-view-full-screen-header-container-height, 72px)"),
   dockedContainerShape: unsafeCSS(
     `var(--m3e-search-view-docked-container-shape, ${DesignToken.shape.corner.extraLarge})`,
   ),
-  dockedHeaderContainerHeight: unsafeCSS("var(--m3e-search-view-docked-header-container-height, 3.5rem)"),
+  dockedHeaderContainerHeight: unsafeCSS("var(--m3e-search-view-docked-header-container-height, 56px)"),
   containedLeadingMargin: unsafeCSS(
     `var(--m3e-search-view-contained-leading-margin, ${DesignToken.measurement.space300})`,
   ),
@@ -40,7 +40,7 @@ export const SearchViewToken = {
     `var(--m3e-search-view-contained-docked-bar-shape, ${DesignToken.shape.corner.full})`,
   ),
   containedFullScreenBarContainerHeight: unsafeCSS(
-    "var(--m3e-search-view-contained-full-screen-bar-container-height, 3.5rem)",
+    "var(--m3e-search-view-contained-full-screen-bar-container-height, 56px)",
   ),
   dockedContainerMinHeight: unsafeCSS("var(--m3e-search-view-docked-container-min-height, 240px)"),
   dockedContainerMaxHeight: unsafeCSS("var(--m3e-search-view-docked-container-max-height, calc(100vh * 0.6667))"),

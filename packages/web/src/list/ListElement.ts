@@ -120,7 +120,7 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
     }
     :host(:is(:state(--has-leading-video), :--has-leading-video)) {
       --_list-item-leading-reserved-display: block;
-      --_list-item-leading-reserved-space: var(--m3e-list-item-video-width, 6.25rem);
+      --_list-item-leading-reserved-space: var(--m3e-list-item-video-width, 100px);
     }
     :host([variant="standard"]:is(:state(--has-leading-video), :--has-leading-video)) {
       --_list-item-leading-reserved-outset: var(--m3e-list-item-leading-space, ${DesignToken.measurement.space200});
@@ -128,15 +128,15 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
     }
     :host(:is(:state(--has-leading-image), :--has-leading-image)) {
       --_list-item-leading-reserved-display: block;
-      --_list-item-leading-reserved-space: var(--m3e-list-item-image-width, 3.5rem);
+      --_list-item-leading-reserved-space: var(--m3e-list-item-image-width, 56px);
     }
     :host(:is(:state(--has-leading-avatar), :--has-leading-avatar)) {
       --_list-item-leading-reserved-display: block;
-      --_list-item-leading-reserved-space: var(--m3e-avatar-size, 2.5rem);
+      --_list-item-leading-reserved-space: var(--m3e-avatar-size, 40px);
     }
     :host(:is(:state(--has-leading-icon), :--has-leading-icon)) {
       --_list-item-leading-reserved-display: block;
-      --_list-item-leading-reserved-space: var(--m3e-list-item-icon-size, 1.5rem);
+      --_list-item-leading-reserved-space: var(--m3e-list-item-icon-size, 24px);
     }
   `;
 

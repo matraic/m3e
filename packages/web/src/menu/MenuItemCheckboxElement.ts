@@ -103,7 +103,7 @@ export class M3eMenuItemCheckboxElement extends Checked(Role(MenuItemElementBase
       }
       .check {
         width: 1em;
-        font-size: var(--m3e-menu-item-icon-size, 1.25rem) !important;
+        font-size: var(--m3e-menu-item-icon-size, 20px) !important;
       }
       :host(:not([checked])) .check {
         display: none;

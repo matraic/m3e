@@ -85,7 +85,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   static override styles: CSSResultGroup = css`
     :host {
       display: inline-block;
-      width: calc(var(--m3e-toc-width, 9.75rem));
+      width: calc(var(--m3e-toc-width, 156px));
     }
     .base {
       contain: layout style paint;

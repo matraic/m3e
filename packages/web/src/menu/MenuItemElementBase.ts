@@ -28,7 +28,7 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       outline: none;
       user-select: none;
       flex: none;
-      height: calc(var(--m3e-menu-item-container-height, 2.75rem) + ${DesignToken.density.calc(-3)});
+      height: calc(var(--m3e-menu-item-container-height, 44px) + ${DesignToken.density.calc(-3)});
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:not(:disabled)) .base {
@@ -107,7 +107,7 @@ export abstract class MenuItemElementBase extends KeyboardClick(
     .touch {
       position: absolute;
       height: calc(
-        var(--m3e-menu-item-container-height, 2.75rem) +
+        var(--m3e-menu-item-container-height, 44px) +
           calc(var(--m3e-menu-gap, ${DesignToken.measurement.space25}) * 2) + ${DesignToken.density.calc(-3)}
       );
       left: 0;
@@ -145,7 +145,7 @@ export abstract class MenuItemElementBase extends KeyboardClick(
     .trailing-icon {
       flex: none;
       width: 1em;
-      font-size: var(--m3e-menu-item-icon-size, 1.25rem) !important;
+      font-size: var(--m3e-menu-item-icon-size, 20px) !important;
     }
     @media (prefers-reduced-motion) {
       .base {

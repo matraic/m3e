@@ -101,86 +101,86 @@ export class M3eSplitButtonElement extends Role(LitElement, "group") {
     ::slotted([slot="trailing-button"]:not([aria-expanded="true"])) {
       --m3e-icon-button-extra-small-default-leading-space: var(
         --m3e-split-button-extra-small-trailing-button-unselected-leading-space,
-        0.75rem
+        12px
       );
       --m3e-icon-button-extra-small-default-trailing-space: var(
         --m3e-split-button-extra-small-trailing-button-unselected-trailing-space,
-        0.875rem
+        14px
       );
       --m3e-icon-button-small-default-leading-space: var(
         --m3e-split-button-small-trailing-button-unselected-leading-space,
-        0.75rem
+        12px
       );
       --m3e-icon-button-small-default-trailing-space: var(
         --m3e-split-button-small-trailing-button-unselected-trailing-space,
-        0.875rem
+        14px
       );
       --m3e-icon-button-medium-default-leading-space: var(
         --m3e-split-button-medium-trailing-button-unselected-leading-space,
-        0.8125rem
+        13px
       );
       --m3e-icon-button-medium-default-trailing-space: var(
         --m3e-split-button-medium-trailing-button-unselected-trailing-space,
-        1.0625rem
+        17px
       );
       --m3e-icon-button-large-default-leading-space: var(
         --m3e-split-button-large-trailing-button-unselected-leading-space,
-        1.625rem
+        26px
       );
       --m3e-icon-button-large-default-trailing-space: var(
         --m3e-split-button-large-trailing-button-unselected-trailing-space,
-        2rem
+        32px
       );
       --m3e-icon-button-extra-large-default-leading-space: var(
         --m3e-split-button-extra-large-trailing-button-unselected-leading-space,
-        2.3125rem
+        37px
       );
       --m3e-icon-button-extra-large-default-trailing-space: var(
         --m3e-split-button-extra-large-trailing-button-unselected-trailing-space,
-        3.0625rem
+        49px
       );
     }
 
     ::slotted([slot="trailing-button"][aria-expanded="true"]) {
       --m3e-icon-button-extra-small-default-leading-space: var(
         --m3e-split-button-extra-small-trailing-button-selected-leading-space,
-        0.8125rem
+        13px
       );
       --m3e-icon-button-extra-small-default-trailing-space: var(
         --m3e-split-button-extra-small-trailing-button-selected-trailing-space,
-        0.8125rem
+        13px
       );
       --m3e-icon-button-small-default-leading-space: var(
         --m3e-split-button-small-trailing-button-selected-leading-space,
-        0.8125rem
+        13px
       );
       --m3e-icon-button-small-default-trailing-space: var(
         --m3e-split-button-small-trailing-button-selected-trailing-space,
-        0.8125rem
+        13px
       );
       --m3e-icon-button-medium-default-leading-space: var(
         --m3e-split-button-medium-trailing-button-selected-leading-space,
-        0.9375rem
+        15px
       );
       --m3e-icon-button-medium-default-trailing-space: var(
         --m3e-split-button-medium-trailing-button-selected-trailing-space,
-        0.9375rem
+        15px
       );
       --m3e-icon-button-large-default-leading-space: var(
         --m3e-split-button-large-trailing-button-selected-leading-space,
-        1.8125rem
+        29px
       );
       --m3e-icon-button-large-default-trailing-space: var(
         --m3e-split-button-large-trailing-button-selected-trailing-space,
-        1.8125rem
+        29px
       );
       --m3e-icon-button-extra-large-default-leading-space: var(
         --m3e-split-button-extra-large-trailing-button-selected-leading-space,
-        2.6875rem
+        43px
       );
       --m3e-icon-button-extra-large-default-trailing-space: var(
         --m3e-split-button-extra-large-trailing-button-selected-trailing-space,
-        2.6875rem
+        43px
       );
     }
 
@@ -290,31 +290,31 @@ export class M3eSplitButtonElement extends Role(LitElement, "group") {
       --_button-end-shape-pressed-morph: var(--_trailing-button-shape, ${DesignToken.shape.corner.full});
     }
     .base {
-      --m3e-icon-button-extra-small-icon-size: var(--m3e-spit-button-extra-small-trailing-button-icon-size, 1.375rem);
-      --m3e-button-extra-small-icon-size: var(--m3e-spit-button-extra-small-trailing-button-icon-size, 1.375rem);
-      --m3e-icon-button-small-icon-size: var(--m3e-spit-button-small-trailing-button-icon-size, 1.375rem);
-      --m3e-button-small-icon-size: var(--m3e-spit-button-small-trailing-button-icon-size, 1.375rem);
-      --m3e-icon-button-medium-icon-size: var(--m3e-spit-button-medium-trailing-button-icon-size, 1.625rem);
-      --m3e-button-medium-icon-size: var(--m3e-spit-button-medium-trailing-button-icon-size, 1.625rem);
-      --m3e-icon-button-large-icon-size: var(--m3e-spit-button-large-trailing-button-icon-size, 2.375rem);
-      --m3e-button-large-icon-size: var(--m3e-spit-button-large-trailing-button-icon-size, 2.375rem);
-      --m3e-icon-button-extra-large-icon-size: var(--m3e-spit-button-extra-large-trailing-button-icon-size, 3.125rem);
-      --m3e-button-extra-large-icon-size: var(--m3e-spit-button-extra-large-trailing-button-icon-size, 3.125rem);
+      --m3e-icon-button-extra-small-icon-size: var(--m3e-spit-button-extra-small-trailing-button-icon-size, 22px);
+      --m3e-button-extra-small-icon-size: var(--m3e-spit-button-extra-small-trailing-button-icon-size, 22px);
+      --m3e-icon-button-small-icon-size: var(--m3e-spit-button-small-trailing-button-icon-size, 22px);
+      --m3e-button-small-icon-size: var(--m3e-spit-button-small-trailing-button-icon-size, 22px);
+      --m3e-icon-button-medium-icon-size: var(--m3e-spit-button-medium-trailing-button-icon-size, 26px);
+      --m3e-button-medium-icon-size: var(--m3e-spit-button-medium-trailing-button-icon-size, 26px);
+      --m3e-icon-button-large-icon-size: var(--m3e-spit-button-large-trailing-button-icon-size, 38px);
+      --m3e-button-large-icon-size: var(--m3e-spit-button-large-trailing-button-icon-size, 38px);
+      --m3e-icon-button-extra-large-icon-size: var(--m3e-spit-button-extra-large-trailing-button-icon-size, 50px);
+      --m3e-button-extra-large-icon-size: var(--m3e-spit-button-extra-large-trailing-button-icon-size, 50px);
     }
     :host([size="extra-small"]) .base {
-      --m3e-connected-button-group-spacing: var(--m3e-split-button-extra-small-between-spacing, 0.125rem);
+      --m3e-connected-button-group-spacing: var(--m3e-split-button-extra-small-between-spacing, 2px);
     }
     :host([size="small"]) .base {
-      --m3e-connected-button-group-spacing: var(--m3e-split-button-small-between-spacing, 0.125rem);
+      --m3e-connected-button-group-spacing: var(--m3e-split-button-small-between-spacing, 2px);
     }
     :host([size="medium"]).base {
-      --m3e-connected-button-group-spacing: var(--m3e-split-button-medium-between-spacing, 0.125rem);
+      --m3e-connected-button-group-spacing: var(--m3e-split-button-medium-between-spacing, 2px);
     }
     :host([size="large"]) .base {
-      --m3e-connected-button-group-spacing: var(--m3e-split-button-large-between-spacing, 0.125rem);
+      --m3e-connected-button-group-spacing: var(--m3e-split-button-large-between-spacing, 2px);
     }
     :host([size="extra-large"]) .base {
-      --m3e-connected-button-group-spacing: var(--m3e-split-button-extra-large-between-spacing, 0.125rem);
+      --m3e-connected-button-group-spacing: var(--m3e-split-button-extra-large-between-spacing, 2px);
     }
   `;
 

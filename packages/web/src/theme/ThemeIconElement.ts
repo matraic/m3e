@@ -46,8 +46,8 @@ export class M3eThemeIconElement extends Role(LitElement, "img") {
   static override styles: CSSResultGroup = css`
     :host {
       display: inline-block;
-      width: var(--m3e-theme-icon-size, 1.5rem);
-      height: var(--m3e-theme-icon-size, 1.5rem);
+      width: var(--m3e-theme-icon-size, 24px);
+      height: var(--m3e-theme-icon-size, 24px);
     }
     .base {
       width: 100%;

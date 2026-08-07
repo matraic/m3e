@@ -68,17 +68,17 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
     ::slotted(next-icon),
     .icon {
       width: 1em;
-      font-size: var(--m3e-slide-group-button-icon-size, var(--m3e-icon-button-small-icon-size, 1.5rem)) !important;
+      font-size: var(--m3e-slide-group-button-icon-size, var(--m3e-icon-button-small-icon-size, 24px)) !important;
     }
     :host(:not([vertical])) .prev-button,
     :host(:not([vertical])) .next-button {
       --m3e-icon-button-small-container-height: 100%;
-      width: var(--m3e-slide-group-button-size, 2.5rem);
+      width: var(--m3e-slide-group-button-size, 40px);
     }
     :host([vertical]) .prev-button,
     :host([vertical]) .next-button {
       width: unset;
-      --m3e-icon-button-small-container-height: var(--m3e-slide-group-button-size, 2.5rem);
+      --m3e-icon-button-small-container-height: var(--m3e-slide-group-button-size, 40px);
     }
     :host([vertical]) .prev-button .icon,
     :host([vertical]) .next-button .icon {

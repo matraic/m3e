@@ -153,8 +153,8 @@ export class M3eStepElement extends Selected(
       align-items: center;
       justify-content: center;
       border-radius: var(--m3e-step-icon-shape, 50%);
-      width: var(--m3e-step-icon-size, 1.5rem);
-      height: var(--m3e-step-icon-size, 1.5rem);
+      width: var(--m3e-step-icon-size, 24px);
+      height: var(--m3e-step-icon-size, 24px);
     }
     .icon svg,
     ::slotted([slot="icon"]),
@@ -162,7 +162,7 @@ export class M3eStepElement extends Selected(
     ::slotted([slot="done-icon"]),
     ::slotted([slot="error-icon"]) {
       width: 1em;
-      font-size: var(--m3e-step-icon-size, 1.5rem) !important;
+      font-size: var(--m3e-step-icon-size, 24px) !important;
     }
     :host(:not([aria-disabled="true"])[selected]) .icon {
       background-color: var(--m3e-step-selected-icon-container-color, ${DesignToken.color.primary});

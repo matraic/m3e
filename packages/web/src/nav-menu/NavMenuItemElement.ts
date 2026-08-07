@@ -169,7 +169,7 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
       align-items: center;
       position: relative;
       padding-inline: var(--m3e-nav-menu-item-padding, ${DesignToken.measurement.space300});
-      height: calc(var(--m3e-nav-menu-item-height, 3.5rem) + ${DesignToken.density.calc(-3)});
+      height: calc(var(--m3e-nav-menu-item-height, 56px) + ${DesignToken.density.calc(-3)});
       column-gap: var(--m3e-nav-menu-item-spacing, ${DesignToken.measurement.space150});
       font-size: var(--m3e-nav-menu-item-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(--m3e-nav-menu-item-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
@@ -240,7 +240,7 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
       vertical-align: middle;
       width: 1em;
       height: 1em;
-      font-size: var(--m3e-nav-menu-item-icon-size, 1.5rem);
+      font-size: var(--m3e-nav-menu-item-icon-size, 24px);
     }
     :host(:not(:disabled)) .base {
       cursor: pointer;
@@ -341,11 +341,11 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
         content: "";
         position: absolute;
         inset-inline-start: calc(
-          calc(var(--m3e-nav-menu-item-padding, ${DesignToken.measurement.space300}) / 2) - calc(0.375rem / 2)
+          calc(var(--m3e-nav-menu-item-padding, ${DesignToken.measurement.space300}) / 2) - calc(6px / 2)
         );
         inset-block-start: 50%;
-        width: 0.375rem;
-        height: 0.375rem;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
         transform: translateY(-50%);
         background-color: currentColor;

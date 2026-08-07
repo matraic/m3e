@@ -98,8 +98,8 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
     .field,
     .focus-ring,
     .ripple {
-      width: var(--m3e-timepicker-input-field-container-width, 6rem);
-      height: var(--m3e-timepicker-input-field-height, 5rem);
+      width: var(--m3e-timepicker-input-field-container-width, 96px);
+      height: var(--m3e-timepicker-input-field-height, 80px);
       border-radius: var(--m3e-timepicker-input-field-container-shape, ${DesignToken.shape.corner.small});
     }
     .field {
@@ -213,8 +213,8 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
       display: flex;
       align-items: center;
       justify-content: center;
-      width: var(--m3e-timepicker-input-field-separator-width, 1.5rem);
-      height: var(--m3e-timepicker-input-field-height, 5rem);
+      width: var(--m3e-timepicker-input-field-separator-width, 24px);
+      height: var(--m3e-timepicker-input-field-height, 80px);
       color: var(--m3e-timepicker-input-field-separator-color, ${DesignToken.color.onSurface});
       font-size: var(
         --m3e-timepicker-input-field-separator-font-size,

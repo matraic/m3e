@@ -28,7 +28,7 @@ export class M3eYearViewElement extends CalendarViewElementBase {
     CalendarViewElementBase.styles,
     css`
       .item {
-        height: 2.25rem;
+        height: 36px;
       }
       .touch {
         width: 100%;
@@ -37,8 +37,8 @@ export class M3eYearViewElement extends CalendarViewElementBase {
         height: 0px;
       }
       td {
-        padding-inline: 0.375rem;
-        padding-block: 0.5rem;
+        padding-inline: 6px;
+        padding-block: 8px;
       }
       tbody {
         font-size: var(--m3e-calendar-item-font-size, ${DesignToken.typescale.standard.body.medium.fontSize});

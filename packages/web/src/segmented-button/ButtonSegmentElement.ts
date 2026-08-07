@@ -114,7 +114,7 @@ export class M3eButtonSegmentElement extends Dirty(
       vertical-align: middle;
       align-items: center;
       width: 100%;
-      height: calc(var(--m3e-segmented-button-height, 2.5rem) + ${DesignToken.density.calc(-3)});
+      height: calc(var(--m3e-segmented-button-height, 40px) + ${DesignToken.density.calc(-3)});
       box-sizing: border-box;
       border-width: var(--m3e-segmented-button-outline-thickness, 1px);
       border-color: var(--m3e-segmented-button-outline-color, ${DesignToken.color.outline});
@@ -127,7 +127,7 @@ export class M3eButtonSegmentElement extends Dirty(
     }
     .touch {
       position: absolute;
-      height: 3rem;
+      height: 48px;
       left: 0;
       right: 0;
     }
@@ -207,7 +207,7 @@ export class M3eButtonSegmentElement extends Dirty(
     .check,
     ::slotted([slot="icon"]) {
       width: 1em;
-      font-size: var(--m3e-segmented-button-icon-size, 1.125rem) !important;
+      font-size: var(--m3e-segmented-button-icon-size, 18px) !important;
     }
     :host(:not([checked])) .check,
     :host(:is(:state(--hide-selection), :--hide-selection)) .check,

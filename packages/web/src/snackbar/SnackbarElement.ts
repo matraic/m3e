@@ -47,8 +47,8 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
       top: calc(100vh - var(--_snackbar-height, 0px) - var(--m3e-snackbar-margin, ${DesignToken.measurement.space200}));
       display: inline-flex;
       align-items: center;
-      min-width: var(--m3e-snackbar-min-width, 21.5rem);
-      max-width: var(--m3e-snackbar-max-width, 42rem);
+      min-width: var(--m3e-snackbar-min-width, 344px);
+      max-width: var(--m3e-snackbar-max-width, 672px);
       visibility: hidden;
       border: none;
       margin: 0;
@@ -169,7 +169,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
     ::slotted([slot="close-icon"]),
     .close-icon {
       width: 1em;
-      font-size: var(--m3e-icon-button-icon-size, 1.5rem) !important;
+      font-size: var(--m3e-icon-button-icon-size, 24px) !important;
     }
     @media (forced-colors: active) {
       :host {
@@ -252,7 +252,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
 
     // After render, compute the (unscaled) height of the snackbar in order
     // to properly position it relative to the viewport.
-    // top: calc(100vh - var(--_snackbar-height, 0px) - var(--m3e-snackbar-margin, 1rem));
+    // top: calc(100vh - var(--_snackbar-height, 0px) - var(--m3e-snackbar-margin, 16px));
 
     this.style.setProperty("--_snackbar-height", `${this.getBoundingClientRect().height / 0.8}px`);
   }

@@ -137,8 +137,8 @@ export class M3eListOptionElement extends KeyboardClick(
         position: relative;
       }
       .indicator {
-        min-width: 1.5rem;
-        min-height: 1.5rem;
+        min-width: 24px;
+        min-height: 24px;
         display: flex;
         align-items: center;
         justify-content: center;

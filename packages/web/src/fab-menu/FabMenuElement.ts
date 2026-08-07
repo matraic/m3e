@@ -88,7 +88,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       margin: unset;
       border: unset;
       overflow: visible;
-      max-width: var(--m3e-fab-menu-max-width, 17.5rem);
+      max-width: var(--m3e-fab-menu-max-width, 280px);
       opacity: 0;
       background-color: transparent;
       display: none;

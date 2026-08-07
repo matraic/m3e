@@ -71,14 +71,14 @@ export class M3eStepPanelElement extends Role(LitElement, "tabpanel") {
       contain: layout style paint;
       display: flex;
       flex-direction: column;
-      padding: var(--m3e-step-panel-padding, 1rem 1.5rem 1.5rem 1.5rem);
-      row-gap: var(--m3e-step-panel-spacing, 0.5rem);
+      padding: var(--m3e-step-panel-padding, 16px 24px 24px 24px);
+      row-gap: var(--m3e-step-panel-spacing, 8px);
     }
     ::slotted([slot="actions"]) {
       flex: none;
       display: flex;
       align-items: center;
-      min-height: var(--m3e-step-panel-actions-height, 3rem);
+      min-height: var(--m3e-step-panel-actions-height, 48px);
     }
     ::slotted([slot="actions"][end]) {
       justify-content: flex-end;

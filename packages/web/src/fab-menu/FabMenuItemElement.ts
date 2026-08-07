@@ -88,7 +88,7 @@ export class M3eFabMenuItemElement extends KeyboardClick(
       transition: ${unsafeCSS(
         `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
       )};
-      min-height: var(--m3e-fab-menu-item-height, 3.5rem);
+      min-height: var(--m3e-fab-menu-item-height, 56px);
       font-size: var(--m3e-fab-menu-item-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(--m3e-fab-menu-item-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-fab-menu-item-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
@@ -124,7 +124,7 @@ export class M3eFabMenuItemElement extends KeyboardClick(
     }
     .touch {
       position: absolute;
-      height: 3rem;
+      height: 48px;
       left: 0;
       right: 0;
     }
@@ -149,7 +149,7 @@ export class M3eFabMenuItemElement extends KeyboardClick(
       transition: ${unsafeCSS(`color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`)};
     }
     .icon {
-      font-size: var(--m3e-fab-menu-item-icon-size, 1.5rem);
+      font-size: var(--m3e-fab-menu-item-icon-size, 24px);
       transition: ${unsafeCSS(`color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`)};
     }
     :host(:not(:disabled)) {

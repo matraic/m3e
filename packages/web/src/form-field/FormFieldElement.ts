@@ -132,11 +132,11 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         transition: opacity 0s;
       }
       m3e-form-field[variant="outlined"] m3e-input-chip-set {
-        margin-block: calc(calc(3.5rem + ${DesignToken.density.calc(-3)}) / 4);
+        margin-block: calc(calc(56px + ${DesignToken.density.calc(-3)}) / 4);
       }
       m3e-form-field[variant="outlined"] textarea {
         margin-block: calc(
-          var(--m3e-form-field-label-line-height, var(--md-sys-typescale-body-small-line-height, 1rem)) / 2
+          var(--m3e-form-field-label-line-height, var(--md-sys-typescale-body-small-line-height, 16px)) / 2
         );
       }
       @media (prefers-reduced-motion) {
@@ -157,7 +157,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       font-weight: var(--m3e-form-field-font-weight, ${DesignToken.typescale.standard.body.large.fontWeight});
       line-height: var(--m3e-form-field-line-height, ${DesignToken.typescale.standard.body.large.lineHeight});
       letter-spacing: var(--m3e-form-field-tracking, ${DesignToken.typescale.standard.body.large.tracking});
-      width: var(--m3e-form-field-width, 16.875rem);
+      width: var(--m3e-form-field-width, 270px);
       color: var(--_form-field-color);
     }
     :host(:not(:is(:state(--disabled), :--disabled))) .base {
@@ -167,7 +167,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       display: flex;
       align-items: center;
       position: relative;
-      min-height: calc(3.5rem + ${DesignToken.density.calc(-3)});
+      min-height: calc(56px + ${DesignToken.density.calc(-3)});
       --_form-field-label-font-size: var(
         --m3e-form-field-label-font-size,
         ${DesignToken.typescale.standard.body.small.fontSize}
@@ -183,7 +183,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       position: relative;
       flex: 1 1 auto;
       min-width: 0;
-      min-height: var(--m3e-form-field-icon-size, 1.5rem);
+      min-height: var(--m3e-form-field-icon-size, 24px);
     }
     .prefix,
     .suffix {
@@ -192,7 +192,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       position: relative;
       user-select: none;
       flex: none;
-      font-size: var(--m3e-form-field-icon-size, 1.5rem);
+      font-size: var(--m3e-form-field-icon-size, 24px);
     }
     .prefix-text,
     .suffix-text {
@@ -227,7 +227,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       )};
     }
     :host(:is(:state(--with-select), :--with-select)) .label {
-      margin-inline-end: 1.5rem;
+      margin-inline-end: 24px;
     }
     ::slotted([slot="label"]) {
       white-space: nowrap;
@@ -237,7 +237,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     .subscript {
       display: inline-flex;
       width: 100%;
-      margin-top: 0.25rem;
+      margin-top: 4px;
       font-size: var(--m3e-form-field-subscript-font-size, ${DesignToken.typescale.standard.body.small.fontSize});
       font-weight: var(--m3e-form-field-subscript-font-weight, ${DesignToken.typescale.standard.body.small.fontWeight});
       line-height: var(--m3e-form-field-subscript-line-height, ${DesignToken.typescale.standard.body.small.lineHeight});
@@ -254,8 +254,8 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     }
     :host([hide-subscript="auto"]:not(:is(:state(--invalid), :--invalid))) .subscript {
       opacity: 0;
-      margin-top: 0.25rem;
-      transform: translateY(-0.25rem);
+      margin-top: 4px;
+      transform: translateY(-4px);
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short4}, 
         transform ${DesignToken.motion.duration.short4}`,
@@ -312,18 +312,18 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       transition: opacity 0s;
     }
     .prefix {
-      margin-inline-start: 1rem;
+      margin-inline-start: 16px;
     }
     :host(:is(:state(--with-prefix), :--with-prefix)) .prefix {
-      margin-inline-end: 1rem;
-      margin-inline-start: 0.75rem;
+      margin-inline-end: 16px;
+      margin-inline-start: 12px;
     }
     .suffix {
-      margin-inline-end: 1rem;
+      margin-inline-end: 16px;
     }
     :host(:is(:state(--with-suffix), :--with-suffix)) .suffix {
-      margin-inline-start: 0.25rem;
-      margin-inline-end: 0.5rem;
+      margin-inline-start: 4px;
+      margin-inline-end: 8px;
     }
     :host(:is(:state(--with-suffix), :--with-suffix):is(:state(--with-select), :--with-select)) .suffix {
       margin-inline-start: unset;
@@ -345,7 +345,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     }
     :host([variant="outlined"]) .pseudo-label {
       visibility: hidden;
-      margin-inline-end: 0.5rem;
+      margin-inline-end: 8px;
       font-size: var(--_form-field-label-font-size);
       line-height: var(--_form-field-label-line-height);
       letter-spacing: var(--_form-field-label-tracking);
@@ -364,7 +364,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       display: none;
     }
     :host([variant="outlined"]:is(:state(--required), :--required):not([hide-required-marker])) .pseudo-label {
-      margin-inline-end: 0.25rem;
+      margin-inline-end: 4px;
     }
     :host([variant="outlined"][float-label="auto"]:not(:is(:state(--float-label), :--float-label))) .pseudo-label {
       max-width: 0;
@@ -383,7 +383,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       display: none;
     }
     :host([variant="outlined"]) .outline-start {
-      min-width: 0.75rem;
+      min-width: 12px;
       border-top-style: solid;
       border-inline-start-style: solid;
       border-bottom-style: solid;
@@ -395,7 +395,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     }
     :host([variant="outlined"]) .outline-end {
       flex-grow: 1;
-      min-width: 1rem;
+      min-width: 16px;
       border-top-style: solid;
       border-inline-end-style: solid;
       border-bottom-style: solid;
@@ -403,7 +403,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       border-end-end-radius: var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall});
     }
     :host([variant="outlined"]:is(:state(--with-prefix), :--with-prefix)) .outline-start {
-      min-width: calc(1.25rem + var(--_prefix-width, 0px) + 0.25rem);
+      min-width: calc(20px + var(--_prefix-width, 0px) + 4px);
     }
     :host([variant="outlined"]:not(:is(:state(--disabled), :--disabled))) .base:hover .outline,
     :host([variant="outlined"]:not(:is(:state(--disabled), :--disabled)):focus-within) .outline,
@@ -411,11 +411,11 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       --_form-field-outline-size: 2px;
     }
     :host([variant="outlined"]) .subscript {
-      margin-inline: 1rem;
-      width: calc(100% - 2rem);
+      margin-inline: 16px;
+      width: calc(100% - 32px);
     }
     :host([variant="outlined"]) .content {
-      min-height: calc(3.5rem + ${DesignToken.density.calc(-3)});
+      min-height: calc(56px + ${DesignToken.density.calc(-3)});
       --_form-field-label-font-size: var(
         --m3e-form-field-label-font-size,
         ${DesignToken.typescale.standard.body.small.fontSize}
@@ -423,7 +423,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     }
     :host([variant="outlined"][float-label="auto"]:not(:is(:state(--float-label), :--float-label))) .label {
       margin-top: unset;
-      line-height: calc(3.5rem + ${DesignToken.density.calc(-3)});
+      line-height: calc(56px + ${DesignToken.density.calc(-3)});
       --_form-field-label-font-size: var(
         --m3e-form-field-label-font-size,
         ${DesignToken.typescale.standard.body.small.fontSize}
@@ -431,7 +431,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     }
     :host([variant="filled"]) .base {
       --_select-arrow-margin-top: calc(
-        0px - calc(1rem / max(calc(0 - calc(var(--md-sys-density-scale, 0) + var(--md-sys-density-scale, 0))), 1))
+        0px - calc(16px / max(calc(0 - calc(var(--md-sys-density-scale, 0) + var(--md-sys-density-scale, 0))), 1))
       );
     }
     :host([variant="filled"]) .base::before {
@@ -468,19 +468,19 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       transition: background-color ${DesignToken.motion.duration.short4};
     }
     :host([variant="filled"]) .subscript {
-      margin-inline: 1rem;
-      width: calc(100% - 2rem);
+      margin-inline: 16px;
+      width: calc(100% - 32px);
     }
     :host([variant="filled"]) .content {
-      padding-top: calc(1.5rem + ${DesignToken.density.calc(-3)});
-      margin-bottom: 0.5rem;
+      padding-top: calc(24px + ${DesignToken.density.calc(-3)});
+      margin-bottom: 8px;
     }
     :host([variant="filled"]) .label {
-      top: max(0px, calc(0.5rem + ${DesignToken.density.calc(-3)}));
+      top: max(0px, calc(8px + ${DesignToken.density.calc(-3)}));
     }
     :host([variant="filled"][float-label="auto"]:not(:is(:state(--float-label), :--float-label))) .label {
       top: 0px;
-      line-height: calc(3.5rem + ${DesignToken.density.calc(-3)} - 0.0625rem);
+      line-height: calc(56px + ${DesignToken.density.calc(-3)} - 1px);
       --_form-field-label-font-size: var(
         --m3e-form-field-label-font-size,
         ${DesignToken.typescale.standard.body.small.fontSize}

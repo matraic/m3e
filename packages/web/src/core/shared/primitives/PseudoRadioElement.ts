@@ -35,8 +35,8 @@ export class M3ePseudoRadioElement extends Checked(Disabled(Role(LitElement, "no
       display: inline-block;
       vertical-align: middle;
       box-sizing: border-box;
-      width: var(--m3e-radio-icon-size, 1.25rem);
-      height: var(--m3e-radio-icon-size, 1.25rem);
+      width: var(--m3e-radio-icon-size, 20px);
+      height: var(--m3e-radio-icon-size, 20px);
       flex: none;
       contain: layout style paint;
     }

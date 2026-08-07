@@ -30,7 +30,7 @@ export const FabSizeToken: Record<FabSize, _FabSizeToken> = {
   /** Design tokens that control the `small` `size` variant. */
   small: {
     containerHeight: unsafeCSS(
-      `calc(var(--m3e-fab-small-container-height, var(--m3e-fab-container-height, 3.5rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-fab-small-container-height, var(--m3e-fab-container-height, 56px)) + ${DesignToken.density.calc(-3)})`,
     ),
     labelTextFontSize: unsafeCSS(
       `var(--m3e-fab-small-label-text-font-size, var(--m3e-fab-label-text-font-size, ${DesignToken.typescale.standard.title.medium.fontSize}))`,
@@ -44,8 +44,8 @@ export const FabSizeToken: Record<FabSize, _FabSizeToken> = {
     labelTextTracking: unsafeCSS(
       `var(--m3e-fab-small-label-text-tracking, var(--m3e-fab-label-text-tracking, ${DesignToken.typescale.standard.title.medium.tracking}))`,
     ),
-    iconSize: unsafeCSS("var(--m3e-fab-small-icon-size, var(--m3e-fab-icon-size, 1.5rem))"),
-    extendedIconSize: unsafeCSS("var(--m3e-fab-small-icon-size, var(--m3e-fab-icon-size, 1.5rem))"),
+    iconSize: unsafeCSS("var(--m3e-fab-small-icon-size, var(--m3e-fab-icon-size, 24px))"),
+    extendedIconSize: unsafeCSS("var(--m3e-fab-small-icon-size, var(--m3e-fab-icon-size, 24px))"),
     shape: unsafeCSS(`var(--m3e-fab-small-shape, var(--m3e-fab-shape, ${DesignToken.shape.corner.large}))`),
     topSpace: unsafeCSS(
       `calc(var(--m3e-fab-small-top-space, var(--m3e-fab-top-space, ${DesignToken.measurement.space200})) + ${DesignToken.density.calcHalf(-3)})`,
@@ -73,7 +73,7 @@ export const FabSizeToken: Record<FabSize, _FabSizeToken> = {
   /** Design tokens that control the `medium` `size` variant. */
   medium: {
     containerHeight: unsafeCSS(
-      `calc(var(--m3e-fab-medium-container-height, var(--m3e-fab-container-height, 5rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-fab-medium-container-height, var(--m3e-fab-container-height, 80px)) + ${DesignToken.density.calc(-3)})`,
     ),
     labelTextFontSize: unsafeCSS(
       `var(--m3e-fab-medium-label-text-font-size, var(--m3e-fab-label-text-font-size, ${DesignToken.typescale.standard.title.large.fontSize}))`,
@@ -120,7 +120,7 @@ export const FabSizeToken: Record<FabSize, _FabSizeToken> = {
   /** Design tokens that control the `large` `size` variant. */
   large: {
     containerHeight: unsafeCSS(
-      `calc(var(--m3e-fab-large-container-height, var(--m3e-fab-container-height, 6rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-fab-large-container-height, var(--m3e-fab-container-height, 96px)) + ${DesignToken.density.calc(-3)})`,
     ),
     labelTextFontSize: unsafeCSS(
       `var(--m3e-fab-large-label-text-font-size, var(--m3e-fab-label-text-font-size, ${DesignToken.typescale.standard.headline.small.fontSize}))`,
@@ -134,8 +134,8 @@ export const FabSizeToken: Record<FabSize, _FabSizeToken> = {
     labelTextTracking: unsafeCSS(
       `var(--m3e-fab-large-label-text-tracking, var(--m3e-fab-label-text-tracking, ${DesignToken.typescale.standard.headline.small.tracking}))`,
     ),
-    iconSize: unsafeCSS("var(--m3e-fab-large-icon-size, var(--m3e-fab-icon-size, 2.25rem))"),
-    extendedIconSize: unsafeCSS("var(--m3e-fab-large-icon-size, var(--m3e-fab-icon-size, 2.25rem))"),
+    iconSize: unsafeCSS("var(--m3e-fab-large-icon-size, var(--m3e-fab-icon-size, 36px))"),
+    extendedIconSize: unsafeCSS("var(--m3e-fab-large-icon-size, var(--m3e-fab-icon-size, 36px))"),
     shape: unsafeCSS(`var(--m3e-fab-large-shape, var(--m3e-fab-shape, ${DesignToken.shape.corner.extraLarge}))`),
     topSpace: unsafeCSS(
       `calc(var(--m3e-fab-large-top-space, var(--m3e-fab-top-space, ${DesignToken.measurement.space350})) + ${DesignToken.density.calcHalf(-3)})`,

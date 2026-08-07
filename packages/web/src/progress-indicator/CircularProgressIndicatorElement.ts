@@ -104,17 +104,17 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
       }
       .diameter-and-stroke {
         width: inherit;
-        height: var(--m3e-circular-progress-indicator-thickness, 0.25rem);
+        height: var(--m3e-circular-progress-indicator-thickness, 4px);
       }
       .amplitude-and-wavelength {
-        width: var(--m3e-circular-wavy-progress-indicator-amplitude, 0.1rem);
-        height: var(--m3e-circular-wavy-progress-indicator-wavelength, 0.9375rem);
+        width: var(--m3e-circular-wavy-progress-indicator-amplitude, 1.6px);
+        height: var(--m3e-circular-wavy-progress-indicator-wavelength, 15px);
       }
       :host([variant="flat"]) {
-        width: var(--m3e-circular-flat-progress-indicator-diameter, 2.5rem);
+        width: var(--m3e-circular-flat-progress-indicator-diameter, 40px);
       }
       :host([variant="wavy"]) {
-        width: var(--m3e-circular-wavy-progress-indicator-diameter, 3rem);
+        width: var(--m3e-circular-wavy-progress-indicator-diameter, 48px);
       }
       :host([variant="flat"][indeterminate]) .progress {
         animation: linear infinite linear-rotate;

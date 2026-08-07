@@ -74,7 +74,7 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
       outline: none;
       user-select: none;
       flex: none;
-      height: calc(var(--m3e-option-container-height, 2.75rem) + ${DesignToken.density.calc(-3)});
+      height: calc(var(--m3e-option-container-height, 44px) + ${DesignToken.density.calc(-3)});
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:not([aria-disabled="true"])) .base {
@@ -136,7 +136,7 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
     .touch {
       position: absolute;
       height: calc(
-        var(--m3e-option-container-height, 2.75rem) +
+        var(--m3e-option-container-height, 44px) +
           calc(var(--m3e-option-panel-gap, ${DesignToken.measurement.space25}) * 2) + ${DesignToken.density.calc(-3)}
       );
       left: 0;
@@ -170,12 +170,12 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
     }
     :host([selected]) .icon {
       margin-inline-start: 0;
-      width: var(--m3e-option-icon-size, 1.25rem);
+      width: var(--m3e-option-icon-size, 20px);
     }
     .icon {
       flex: none;
       width: 0px;
-      font-size: var(--m3e-option-icon-size, 1.25rem);
+      font-size: var(--m3e-option-icon-size, 20px);
     }
     :host(:is(:state(--empty), :--empty)) .icon,
     :host(:is(:state(--hide-selection-indicator), :--hide-selection-indicator)) .icon,

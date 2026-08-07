@@ -133,21 +133,21 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       )};
     }
     :host(:is(:state(--one-line), :--one-line)) {
-      min-height: calc(var(--m3e-list-item-one-line-height, 3.5rem) + ${DesignToken.density.calc(-3)});
+      min-height: calc(var(--m3e-list-item-one-line-height, 56px) + ${DesignToken.density.calc(-3)});
     }
     :host(:is(:state(--one-line), :--one-line)) .base {
       padding-block-start: var(--m3e-list-item-one-line-top-space, ${DesignToken.measurement.space100});
       padding-block-end: var(--m3e-list-item-one-line-bottom-space, ${DesignToken.measurement.space100});
     }
     :host(:is(:state(--two-line), :--two-line)) {
-      min-height: calc(var(--m3e-list-item-two-line-height, 4.5rem) + ${DesignToken.density.calc(-3)});
+      min-height: calc(var(--m3e-list-item-two-line-height, 72px) + ${DesignToken.density.calc(-3)});
     }
     :host(:is(:state(--two-line), :--two-line)) .base {
       padding-block-start: var(--m3e-list-item-two-line-top-space, ${DesignToken.measurement.space100});
       padding-block-end: var(--m3e-list-item-two-line-bottom-space, ${DesignToken.measurement.space100});
     }
     :host(:is(:state(--three-line), :--three-line)) {
-      min-height: calc(var(--m3e-list-item-three-line-height, 5.5rem) + ${DesignToken.density.calc(-3)});
+      min-height: calc(var(--m3e-list-item-three-line-height, 88px) + ${DesignToken.density.calc(-3)});
     }
     :host(:is(:state(--three-line), :--three-line)) .base {
       padding-block-start: var(--m3e-list-item-three-line-top-space, ${DesignToken.measurement.space150});
@@ -276,8 +276,8 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       object-fit: cover;
     }
     ::slotted(video) {
-      width: var(--m3e-list-item-video-width, 6.25rem);
-      height: var(--m3e-list-item-video-height, 3.5rem);
+      width: var(--m3e-list-item-video-width, 100px);
+      height: var(--m3e-list-item-video-height, 56px);
     }
     ::slotted(video[slot="leading"]),
     ::slotted(video[slot="trailing"]) {
@@ -293,8 +293,8 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       user-drag: none;
       user-select: none;
       pointer-events: none;
-      width: var(--m3e-list-item-image-width, 3.5rem);
-      height: var(--m3e-list-item-image-height, 3.5rem);
+      width: var(--m3e-list-item-image-width, 56px);
+      height: var(--m3e-list-item-image-height, 56px);
     }
     ::slotted(img[slot="leading"]),
     ::slotted(img[slot="trailing"]) {
@@ -304,7 +304,7 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
     ::slotted(m3e-icon[slot="leading-icon"]),
     ::slotted(m3e-icon[slot="trailing"]),
     ::slotted(m3e-icon[slot="trailing-icon"]) {
-      --m3e-icon-size: var(--m3e-list-item-icon-size, 1.5rem);
+      --m3e-icon-size: var(--m3e-list-item-icon-size, 24px);
     }
     :host(:not(:disabled)) ::slotted(m3e-icon[slot="leading"]),
     :host(:not(:disabled)) ::slotted(m3e-icon[slot="leading-icon"]) {

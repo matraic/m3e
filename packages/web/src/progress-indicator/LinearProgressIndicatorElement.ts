@@ -67,20 +67,20 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
       }
       .stroke {
         width: 100%;
-        height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+        height: var(--m3e-linear-progress-indicator-thickness, 4px);
       }
       .amplitude-and-wavelength {
-        height: var(--m3e-linear-wavy-progress-indicator-amplitude, 0.1875rem);
-        width: var(--m3e-linear-wavy-progress-indicator-wavelength, 2.5rem);
+        height: var(--m3e-linear-wavy-progress-indicator-amplitude, 3px);
+        width: var(--m3e-linear-wavy-progress-indicator-wavelength, 40px);
       }
       :host([mode="indeterminate"]) .amplitude-and-wavelength,
       :host([mode="query"]) .amplitude-and-wavelength {
-        width: var(--m3e-linear-wavy-indeterminate-progress-indicator-wavelength, 1.5rem);
+        width: var(--m3e-linear-wavy-indeterminate-progress-indicator-wavelength, 24px);
       }
       .primary,
       .secondary,
       .stop {
-        height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+        height: var(--m3e-linear-progress-indicator-thickness, 4px);
         border-radius: inherit;
       }
       .stop {
@@ -88,12 +88,12 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
         flex: none;
       }
       :host([variant="flat"]) {
-        height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+        height: var(--m3e-linear-progress-indicator-thickness, 4px);
       }
       :host([variant="wavy"]) {
         height: calc(
-          var(--m3e-linear-progress-indicator-thickness, 0.25rem) +
-            calc(var(--m3e-linear-wavy-progress-indicator-amplitude, 0.1875rem) * 2)
+          var(--m3e-linear-progress-indicator-thickness, 4px) +
+            calc(var(--m3e-linear-wavy-progress-indicator-amplitude, 3px) * 2)
         );
       }
       :host([variant="wavy"]) .primary,
@@ -105,14 +105,14 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
       :host([variant="wavy"]) .complete {
         position: absolute;
         margin: auto;
-        top: calc(50% - calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) / 2));
+        top: calc(50% - calc(var(--m3e-linear-progress-indicator-thickness, 4px) / 2));
         left: 0;
         right: 0;
-        height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+        height: var(--m3e-linear-progress-indicator-thickness, 4px);
         border-radius: inherit;
       }
       :host([variant="wavy"]) .secondary {
-        height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+        height: var(--m3e-linear-progress-indicator-thickness, 4px);
       }
       .wave {
         position: absolute;
@@ -120,7 +120,7 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
       }
       .primary .wave,
       .secondary .wave {
-        margin-inline-start: calc(0px - var(--m3e-linear-wavy-progress-indicator-wavelength, 2.5rem));
+        margin-inline-start: calc(0px - var(--m3e-linear-wavy-progress-indicator-wavelength, 40px));
       }
       :host([variant="wavy"][mode="determinate"]) .primary path,
       :host([variant="wavy"][mode="buffer"]) .primary path {
@@ -131,7 +131,7 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
           transform: translateX(0);
         }
         to {
-          transform: translateX(calc(0px - var(--m3e-linear-wavy-progress-indicator-wavelength, 2.5rem)));
+          transform: translateX(calc(0px - var(--m3e-linear-wavy-progress-indicator-wavelength, 40px)));
         }
       }
       :host([mode="determinate"]) .progress,
@@ -146,7 +146,7 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
       }
       :host([mode="determinate"]) .gap,
       :host([mode="buffer"]) .gap {
-        flex-basis: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+        flex-basis: var(--m3e-linear-progress-indicator-thickness, 4px);
         flex-shrink: 1;
       }
       :host([mode="determinate"]) .secondary,
@@ -161,10 +161,10 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
         mask-image: radial-gradient(
           circle,
           black 0,
-          black calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) / 2),
-          transparent calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) / 2)
+          black calc(var(--m3e-linear-progress-indicator-thickness, 4px) / 2),
+          transparent calc(var(--m3e-linear-progress-indicator-thickness, 4px) / 2)
         );
-        mask-size: calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) * 2) 100%;
+        mask-size: calc(var(--m3e-linear-progress-indicator-thickness, 4px) * 2) 100%;
         mask-repeat: repeat;
         animation: buffer 250ms linear infinite;
       }
@@ -176,7 +176,7 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
           mask-position: 0 0;
         }
         to {
-          mask-position: calc(-1 * calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) * 2)) 0;
+          mask-position: calc(-1 * calc(var(--m3e-linear-progress-indicator-thickness, 4px) * 2)) 0;
         }
       }
       :host([mode="buffer"]) .secondary {
@@ -240,17 +240,17 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
       }
       :host([variant="wavy"][mode="indeterminate"]) .track,
       :host([variant="wavy"][mode="query"]) .track {
-        y: calc(50% - calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) / 2));
+        y: calc(50% - calc(var(--m3e-linear-progress-indicator-thickness, 4px) / 2));
         border-radius: inherit;
       }
       :host([variant="flat"][mode="indeterminate"]) .track,
       :host([variant="flat"][mode="query"]) .track {
         position: absolute;
         margin: auto;
-        top: calc(50% - calc(var(--m3e-linear-progress-indicator-thickness, 0.25rem) / 2));
+        top: calc(50% - calc(var(--m3e-linear-progress-indicator-thickness, 4px) / 2));
         left: 0;
         right: 0;
-        height: var(--m3e-linear-progress-indicator-thickness, 0.25rem);
+        height: var(--m3e-linear-progress-indicator-thickness, 4px);
         border-radius: inherit;
       }
       @keyframes indeterminate-primary {

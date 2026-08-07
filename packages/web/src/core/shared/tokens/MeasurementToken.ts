@@ -1,7 +1,7 @@
 import { unsafeCSS } from "lit";
 
 function space(unit: number) {
-  return unsafeCSS(`var(--md-sys-measurement-space${unit}, ${0.5 * (unit / 100)}rem)`);
+  return unsafeCSS(`var(--md-sys-measurement-space${unit}, ${8 * (unit / 100)}px)`);
 }
 
 /** Design tokens that control measurements. */

@@ -145,7 +145,7 @@ export class M3eSelectElement
       vertical-align: middle;
       width: 1em;
       height: 1em;
-      font-size: var(--m3e-select-icon-size, 1.5rem);
+      font-size: var(--m3e-select-icon-size, 24px);
     }
     :host(:is(:state(--open), :--open)) .focus-ring {
       display: none;

@@ -43,8 +43,8 @@ export class M3ePseudoCheckboxElement extends CheckedIndeterminate(Disabled(Role
     :host {
       display: inline-block;
       vertical-align: middle;
-      width: var(--m3e-checkbox-icon-size, 1.125rem);
-      height: var(--m3e-checkbox-icon-size, 1.125rem);
+      width: var(--m3e-checkbox-icon-size, 18px);
+      height: var(--m3e-checkbox-icon-size, 18px);
       border-radius: var(--m3e-checkbox-container-shape, 2px);
       box-sizing: border-box;
       flex: none;

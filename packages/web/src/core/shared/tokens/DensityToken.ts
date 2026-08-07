@@ -5,7 +5,7 @@ const _DensityToken = {
   scale: unsafeCSS("var(--md-sys-density-scale, 0)"),
 
   /** Spatial unit used to scale component dimensions based on density. */
-  size: unsafeCSS("var(--md-sys-density-size, 0.25rem)"),
+  size: unsafeCSS("var(--md-sys-density-size, 4px)"),
 } as const;
 
 /** Design tokens that control density. */

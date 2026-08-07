@@ -90,7 +90,7 @@ export class M3eRichTooltipElement extends TooltipElementBase {
       border: unset;
       padding-block-start: var(--m3e-rich-tooltip-padding-top, ${DesignToken.measurement.space150});
       padding-inline: var(--m3e-rich-tooltip-padding-inline, ${DesignToken.measurement.space200});
-      max-width: var(--m3e-rich-tooltip-max-width, 20rem);
+      max-width: var(--m3e-rich-tooltip-max-width, 320px);
       box-sizing: border-box;
       overflow: visible;
       border-radius: var(--m3e-rich-tooltip-shape, ${DesignToken.shape.corner.medium});
@@ -169,7 +169,7 @@ export class M3eRichTooltipElement extends TooltipElementBase {
       flex: none;
       display: flex;
       align-items: center;
-      min-height: 1.5rem;
+      min-height: 24px;
       column-gap: ${DesignToken.measurement.space100};
     }
     ::slotted([slot="actions"][end]) {

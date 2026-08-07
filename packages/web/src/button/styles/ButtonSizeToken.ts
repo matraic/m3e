@@ -32,7 +32,7 @@ type _ButtonSizeToken = {
 export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
   "extra-small": {
     containerHeight: unsafeCSS(
-      `calc(var(--m3e-button-extra-small-container-height, var(--m3e-button-container-height, 2rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-button-extra-small-container-height, var(--m3e-button-container-height, 32px)) + ${DesignToken.density.calc(-3)})`,
     ),
     topSpace: unsafeCSS(
       `calc(var(--m3e-button-extra-small-top-space, var(--m3e-button-top-space, ${DesignToken.measurement.space75})) + ${DesignToken.density.calcHalf(-3)})`,
@@ -55,7 +55,7 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
     labelTextTracking: unsafeCSS(
       `var(--m3e-button-extra-small-label-text-tracking, var(--m3e-button-label-text-tracking, ${DesignToken.typescale.standard.label.large.tracking}))`,
     ),
-    iconSize: unsafeCSS("var(--m3e-button-extra-small-icon-size, var(--m3e-button-icon-size, 1.25rem))"),
+    iconSize: unsafeCSS("var(--m3e-button-extra-small-icon-size, var(--m3e-button-icon-size, 20px))"),
     shapeRound: unsafeCSS(
       `var(--m3e-button-extra-small-shape-round, var(--m3e-button-shape-round, ${DesignToken.shape.corner.full}))`,
     ),
@@ -83,7 +83,7 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
   },
   small: {
     containerHeight: unsafeCSS(
-      `calc(var(--m3e-button-small-container-height, var(--m3e-button-container-height, 2.5rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-button-small-container-height, var(--m3e-button-container-height, 40px)) + ${DesignToken.density.calc(-3)})`,
     ),
     topSpace: unsafeCSS(
       `calc(var(--m3e-button-small-top-space, var(--m3e-button-top-space, ${DesignToken.measurement.space125})) + ${DesignToken.density.calcHalf(-3)})`,
@@ -104,7 +104,7 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
     labelTextTracking: unsafeCSS(
       `var(--m3e-button-small-label-text-tracking, var(--m3e-button-label-text-tracking, ${DesignToken.typescale.standard.label.large.tracking}))`,
     ),
-    iconSize: unsafeCSS("var(--m3e-button-small-icon-size, var(--m3e-button-icon-size, 1.25rem))"),
+    iconSize: unsafeCSS("var(--m3e-button-small-icon-size, var(--m3e-button-icon-size, 20px))"),
     shapeRound: unsafeCSS(
       `var(--m3e-button-small-shape-round, var(--m3e-button-shape-round, ${DesignToken.shape.corner.full}))`,
     ),
@@ -132,7 +132,7 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
   },
   medium: {
     containerHeight: unsafeCSS(
-      `calc(var(--m3e-button-medium-container-height, var(--m3e-button-container-height, 3.5rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-button-medium-container-height, var(--m3e-button-container-height, 56px)) + ${DesignToken.density.calc(-3)})`,
     ),
     topSpace: unsafeCSS(
       `calc(var(--m3e-button-medium-top-space, var(--m3e-button-top-space, ${DesignToken.measurement.space200})) + ${DesignToken.density.calcHalf(-3)})`,
@@ -153,7 +153,7 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
     labelTextTracking: unsafeCSS(
       `var(--m3e-button-medium-label-text-tracking, var(--m3e-button-label-text-tracking, ${DesignToken.typescale.standard.body.large.tracking}))`,
     ),
-    iconSize: unsafeCSS("var(--m3e-button-medium-icon-size, var(--m3e-button-icon-size, 1.5rem))"),
+    iconSize: unsafeCSS("var(--m3e-button-medium-icon-size, var(--m3e-button-icon-size, 24px))"),
     shapeRound: unsafeCSS(
       `var(--m3e-button-medium-shape-round, var(--m3e-button-shape-round, ${DesignToken.shape.corner.full}))`,
     ),
@@ -181,7 +181,7 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
   },
   large: {
     containerHeight: unsafeCSS(
-      `calc(var(--m3e-button-large-container-height, var(--m3e-button-container-height, 6rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-button-large-container-height, var(--m3e-button-container-height, 96px)) + ${DesignToken.density.calc(-3)})`,
     ),
     topSpace: unsafeCSS(
       `calc(var(--m3e-button-large-top-space, var(--m3e-button-top-space, ${DesignToken.measurement.space400})) + ${DesignToken.density.calcHalf(-3)})`,
@@ -202,7 +202,7 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
     labelTextTracking: unsafeCSS(
       `var(--m3e-button-large-label-text-tracking, var(--m3e-button-label-text-tracking, ${DesignToken.typescale.standard.headline.small.tracking}))`,
     ),
-    iconSize: unsafeCSS("var(--m3e-button-large-icon-size, var(--m3e-button-icon-size, 2rem))"),
+    iconSize: unsafeCSS("var(--m3e-button-large-icon-size, var(--m3e-button-icon-size, 32px))"),
     shapeRound: unsafeCSS(
       `var(--m3e-button-large-shape-round, var(--m3e-button-shape-round, ${DesignToken.shape.corner.full}))`,
     ),
@@ -230,7 +230,7 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
   },
   "extra-large": {
     containerHeight: unsafeCSS(
-      `calc(var(--m3e-button-extra-large-container-height, var(--m3e-button-container-height, 8.5rem)) + ${DesignToken.density.calc(-3)})`,
+      `calc(var(--m3e-button-extra-large-container-height, var(--m3e-button-container-height, 136px)) + ${DesignToken.density.calc(-3)})`,
     ),
     topSpace: unsafeCSS(
       `calc(var(--m3e-button-extra-large-top-space, var(--m3e-button-top-space, ${DesignToken.measurement.space600})) + ${DesignToken.density.calcHalf(-3)})`,
@@ -253,7 +253,7 @@ export const ButtonSizeToken: Record<ButtonSize, _ButtonSizeToken> = {
     labelTextTracking: unsafeCSS(
       `var(--m3e-button-extra-large-label-text-tracking, var(--m3e-button-label-text-tracking, ${DesignToken.typescale.standard.headline.large.tracking}))`,
     ),
-    iconSize: unsafeCSS("var(--m3e-button-extra-large-icon-size, var(--m3e-button-icon-size, 2.5rem))"),
+    iconSize: unsafeCSS("var(--m3e-button-extra-large-icon-size, var(--m3e-button-icon-size, 40px))"),
     shapeRound: unsafeCSS(
       `var(--m3e-button-extra-large-shape-round, var(--m3e-button-shape-round, ${DesignToken.shape.corner.full}))`,
     ),

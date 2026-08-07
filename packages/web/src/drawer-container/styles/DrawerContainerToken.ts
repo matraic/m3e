@@ -9,7 +9,7 @@ import { DesignToken } from "@m3e/web/core";
 export const DrawerContainerToken = {
   containerColor: unsafeCSS(`var(--m3e-drawer-container-color, ${DesignToken.color.surface})`),
   containerElevation: unsafeCSS(`var(--m3e-drawer-container-elevation, ${DesignToken.elevation.level0})`),
-  containerWidth: unsafeCSS(`var(--m3e-drawer-container-width, 22.5rem)`),
+  containerWidth: unsafeCSS(`var(--m3e-drawer-container-width, 360px)`),
   scrimOpacity: unsafeCSS("var(--m3e-drawer-container-scrim-opacity, 32%)"),
   cornerShape: unsafeCSS(`var(--m3e-modal-drawer-corner-shape, ${DesignToken.shape.corner.large})`),
   modalContainerColor: unsafeCSS(`var(--m3e-modal-drawer-container-color, ${DesignToken.color.surfaceContainerLow})`),

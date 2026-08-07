@@ -71,7 +71,7 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
   static override styles: CSSResultGroup = css`
     :host {
       display: block;
-      width: var(--m3e-timepicker-dial-container-size, 16rem);
+      width: var(--m3e-timepicker-dial-container-size, 256px);
       aspect-ratio: 1 / 1;
     }
     .base {
@@ -99,8 +99,8 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
       border-radius: inherit;
 
       --_numeral-radius: calc(
-        calc(var(--m3e-timepicker-dial-container-size, 16rem) / 2) - calc(
-            var(--m3e-timepicker-dial-numeral-size, 2.5rem) / 2
+        calc(var(--m3e-timepicker-dial-container-size, 256px) / 2) - calc(
+            var(--m3e-timepicker-dial-numeral-size, 40px) / 2
           ) - var(--m3e-timepicker-dial-inset, 4px)
       );
     }
@@ -183,18 +183,18 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
       )};
     }
     .handle:not(.inner) {
-      top: calc(var(--m3e-timepicker-dial-dial-inset, 4px) + var(--m3e-timepicker-dial-numeral-size, 2.5rem));
-      height: calc(50% - var(--m3e-timepicker-dial-dial-inset, 4px) - var(--m3e-timepicker-dial-numeral-size, 2.5rem));
+      top: calc(var(--m3e-timepicker-dial-dial-inset, 4px) + var(--m3e-timepicker-dial-numeral-size, 40px));
+      height: calc(50% - var(--m3e-timepicker-dial-dial-inset, 4px) - var(--m3e-timepicker-dial-numeral-size, 40px));
     }
     .handle.inner {
       top: calc(
-        var(--m3e-timepicker-dial-numeral-size, 2.5rem) + var(--m3e-timepicker-dial-dial-inset, 4px) +
-          var(--m3e-timepicker-dial-numeral-size, 2.5rem)
+        var(--m3e-timepicker-dial-numeral-size, 40px) + var(--m3e-timepicker-dial-dial-inset, 4px) +
+          var(--m3e-timepicker-dial-numeral-size, 40px)
       );
       height: calc(
         50% - calc(
-            var(--m3e-timepicker-dial-numeral-size, 2.5rem) + var(--m3e-timepicker-dial-dial-inset, 4px) +
-              var(--m3e-timepicker-dial-numeral-size, 2.5rem)
+            var(--m3e-timepicker-dial-numeral-size, 40px) + var(--m3e-timepicker-dial-dial-inset, 4px) +
+              var(--m3e-timepicker-dial-numeral-size, 40px)
           )
       );
     }
@@ -202,11 +202,11 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
       content: "";
       position: absolute;
       touch-action: inherit;
-      width: var(--m3e-timepicker-dial-numeral-size, 2.5rem);
-      height: var(--m3e-timepicker-dial-numeral-size, 2.5rem);
-      top: calc(0px - var(--m3e-timepicker-dial-numeral-size, 2.5rem));
+      width: var(--m3e-timepicker-dial-numeral-size, 40px);
+      height: var(--m3e-timepicker-dial-numeral-size, 40px);
+      top: calc(0px - var(--m3e-timepicker-dial-numeral-size, 40px));
       left: calc(
-        0px - calc(var(--m3e-timepicker-dial-numeral-size, 2.5rem) / 2) +
+        0px - calc(var(--m3e-timepicker-dial-numeral-size, 40px) / 2) +
           calc(var(--m3e-timepicker-dial-handle-size, 2px) / 2)
       );
       border-radius: 50%;
@@ -230,7 +230,7 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
       width: var(--m3e-timepicker-dial-handle-center-size, 4px);
       height: var(--m3e-timepicker-dial-handle-center-size, 4px);
       top: calc(
-        0px - calc(var(--m3e-timepicker-dial-numeral-size, 2.5rem) / 2) - calc(
+        0px - calc(var(--m3e-timepicker-dial-numeral-size, 40px) / 2) - calc(
             var(--m3e-timepicker-dial-handle-center-size, 4px) / 2
           )
       );
@@ -256,7 +256,7 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
       position: absolute;
       inset: 50%;
       translate: -50% -50%;
-      width: var(--m3e-timepicker-dial-numeral-size, 2.5rem);
+      width: var(--m3e-timepicker-dial-numeral-size, 40px);
       aspect-ratio: 1 / 1;
       display: flex;
       align-items: center;
@@ -300,7 +300,7 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
     }
     .numeral.inner {
       transform: rotate(var(--_numeral-angle))
-        translateY(calc(calc(-1 * var(--_numeral-radius)) + var(--m3e-timepicker-dial-numeral-size, 2.5rem)))
+        translateY(calc(calc(-1 * var(--_numeral-radius)) + var(--m3e-timepicker-dial-numeral-size, 40px)))
         rotate(calc(-1 * var(--_numeral-angle)));
       font-size: var(
         --m3e-timepicker-dial-inner-numeral-font-size,
@@ -552,7 +552,7 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
         this.view === "hour" && this.currentFormat === "24"
           ? computeCssSize(
               e.currentTarget,
-              "calc(var(--m3e-timepicker-dial-numeral-size, 2.5rem) + var(--m3e-timepicker-dial-inset, 4px))",
+              "calc(var(--m3e-timepicker-dial-numeral-size, 40px) + var(--m3e-timepicker-dial-inset, 4px))",
             )
           : 0,
     };

@@ -47,8 +47,8 @@ export class M3eMonthViewElement extends CalendarViewElementBase {
       }
       th {
         box-sizing: border-box;
-        height: 3rem;
-        padding: 0.25rem;
+        height: 48px;
+        padding: 4px;
       }
       tbody {
         font-size: var(--m3e-calendar-date-font-size, ${DesignToken.typescale.standard.body.medium.fontSize});
@@ -87,8 +87,8 @@ export class M3eMonthViewElement extends CalendarViewElementBase {
         position: absolute;
         left: 0;
         right: 0;
-        top: 0.25rem;
-        bottom: 0.25rem;
+        top: 4px;
+        bottom: 4px;
         background-color: var(--m3e-calendar-range-container-color, ${DesignToken.color.primaryContainer});
       }
       td:not(:has(.item[aria-disabled])):not(.selected).range {
@@ -108,8 +108,8 @@ export class M3eMonthViewElement extends CalendarViewElementBase {
         content: "";
         position: absolute;
         top: 0;
-        left: calc(0px - 0.1875rem);
-        right: calc(0px - 0.1875rem);
+        left: calc(0px - 3px);
+        right: calc(0px - 3px);
         bottom: 0;
         border-style: dashed;
         border-color: ${DesignToken.color.primary};
@@ -119,7 +119,7 @@ export class M3eMonthViewElement extends CalendarViewElementBase {
         margin-inline-start: 50%;
       }
       td:not(:has(.item[aria-disabled])).range-highlight-end .item::after {
-        margin-inline-end: 0.1875rem;
+        margin-inline-end: 3px;
       }
       td:not(:has(.item[aria-disabled])).range-highlight-start .item::after,
       td:not(:has(.item[aria-disabled])).range-highlight .item::after {

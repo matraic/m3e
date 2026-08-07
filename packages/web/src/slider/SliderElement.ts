@@ -101,7 +101,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     :host {
       display: inline-block;
       vertical-align: middle;
-      min-inline-size: var(--m3e-slider-min-width, 12.5rem);
+      min-inline-size: var(--m3e-slider-min-width, 200px);
       user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
@@ -110,7 +110,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     }
     :host([size="extra-small"]),
     :host([size="small"]) {
-      height: var(--m3e-slider-small-height, 2.75rem);
+      height: var(--m3e-slider-small-height, 44px);
     }
     :host(:not(:dir(rtl))[size="extra-small"]) .base,
     :host(:not(:dir(rtl))[size="small"]) .base {
@@ -137,13 +137,13 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
       );
     }
     :host([size="extra-small"]) .track {
-      height: calc(var(--m3e-slider-extra-small-track-height, 1rem));
+      height: calc(var(--m3e-slider-extra-small-track-height, 16px));
     }
     :host([size="small"]) .track {
-      height: calc(var(--m3e-slider-small-track-height, 1.5rem));
+      height: calc(var(--m3e-slider-small-track-height, 24px));
     }
     :host([size="medium"]) {
-      height: var(--m3e-slider-medium-height, 3.25rem);
+      height: var(--m3e-slider-medium-height, 52px);
     }
     :host(:not(:dir(rtl))[size="medium"]) .base {
       --_slider-active-track-shape: var(
@@ -171,10 +171,10 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
       );
     }
     :host([size="medium"]) .track {
-      height: var(--m3e-slider-medium-track-height, 2.5rem);
+      height: var(--m3e-slider-medium-track-height, 40px);
     }
     :host([size="large"]) {
-      height: var(--m3e-slider-large-height, 4.25rem);
+      height: var(--m3e-slider-large-height, 68px);
     }
     :host(:not(:dir(rtl))[size="large"]) .base {
       --_slider-active-track-shape: var(--m3e-slider-large-active-track-shape, ${DesignToken.shape.corner.largeStart});
@@ -199,10 +199,10 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
       );
     }
     :host([size="large"]) .track {
-      height: var(--m3e-slider-large-track-height, 3.5rem);
+      height: var(--m3e-slider-large-track-height, 56px);
     }
     :host([size="extra-large"]) {
-      height: var(--m3e-slider-extra-large-height, 6.75rem);
+      height: var(--m3e-slider-extra-large-height, 108px);
     }
     :host(:not(:dir(rtl))[size="extra-large"]) .base {
       --_slider-active-track-shape: var(
@@ -233,7 +233,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
       );
     }
     :host([size="extra-large"]) .track {
-      height: var(--m3e-slider-extra-large-track-height, 6rem);
+      height: var(--m3e-slider-extra-large-track-height, 96px);
     }
     :host(:is(:state(--animating), :--animating)) .track-active,
     :host(:is(:state(--animating), :--animating)) .track-inactive.start,
@@ -282,7 +282,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     .ticks {
       position: absolute;
       width: 100%;
-      height: var(--m3e-slider-tick-size, 0.25rem);
+      height: var(--m3e-slider-tick-size, 4px);
       overflow: visible;
       touch-action: none;
     }
@@ -290,9 +290,9 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
       position: absolute;
       top: 0;
       touch-action: none;
-      inset-inline-start: calc(var(--m3e-slider-tick-size, 0.25rem) + calc(var(--m3e-slider-tick-size, 0.25rem) / 2));
-      width: var(--m3e-slider-tick-size, 0.25rem);
-      height: var(--m3e-slider-tick-size, 0.25rem);
+      inset-inline-start: calc(var(--m3e-slider-tick-size, 4px) + calc(var(--m3e-slider-tick-size, 4px) / 2));
+      width: var(--m3e-slider-tick-size, 4px);
+      height: var(--m3e-slider-tick-size, 4px);
       border-radius: var(--m3e-slider-tick-shape, ${DesignToken.shape.corner.full});
     }
     .tick.hidden {
@@ -563,18 +563,15 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
 
   /** @private */
   #valueFromPoint(e: PointerEvent): number {
-    
     const pos =
-      M3eDirectionality.current === "rtl"
-        ? this.#cachedClientRight - e.clientX
-        : e.clientX - this.#cachedClientLeft;
-        
+      M3eDirectionality.current === "rtl" ? this.#cachedClientRight - e.clientX : e.clientX - this.#cachedClientLeft;
+
     const step = this.step === 0 ? 1 : this.step;
     const numSteps = Math.floor((this.max - this.min) / step);
-    
+
     const thumbRatio = this.#cachedWidth ? this.#cachedThumbWidth / this.#cachedWidth : 0;
     const percentage = (pos / this.#cachedClientWidth - thumbRatio / 2) / (1 - thumbRatio || 1);
-    
+
     const fixedPercentage = Math.round(percentage * numSteps) / numSteps;
     const impreciseValue = fixedPercentage * (this.max - this.min) + this.min;
     return Math.round(impreciseValue / step) * step;
@@ -583,13 +580,11 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
   /** @private */
   #updateCachedDimensions(force = false): void {
     if (!this.lowerThumb) return;
-    
-    
+
     this.#cachedWidth = !force && this.#cachedWidth > 0 ? this.#cachedWidth : this.clientWidth;
     this.#cachedThumbWidth =
       !force && this.#cachedThumbWidth > 0 ? this.#cachedThumbWidth : this.lowerThumb.clientWidth;
-    
-    
+
     const rect = this.getBoundingClientRect();
     this.#cachedClientLeft = !force && this.#cachedClientLeft > 0 ? this.#cachedClientLeft : rect.left;
     this.#cachedClientRight = !force && this.#cachedClientRight > 0 ? this.#cachedClientRight : rect.right;
@@ -669,7 +664,6 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
 
   /** @private */
   #handlePointerDown(e: PointerEvent): void {
-
     this.#updateCachedDimensions(true);
 
     if (e.pointerType === "mouse" && e.button > 1) return;

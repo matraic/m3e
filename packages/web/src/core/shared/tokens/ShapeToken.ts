@@ -5,35 +5,35 @@ const CornerValue = {
   none: unsafeCSS("var(--md-sys-shape-corner-value-none, 0)"),
 
   /** Extra small rounded corner. */
-  extraSmall: unsafeCSS("var(--md-sys-shape-corner-value-extra-small, 0.25rem)"),
+  extraSmall: unsafeCSS("var(--md-sys-shape-corner-value-extra-small, 4px)"),
 
   /** Small rounded corner. */
-  small: unsafeCSS("var(--md-sys-shape-corner-value-small, 0.5rem)"),
+  small: unsafeCSS("var(--md-sys-shape-corner-value-small, 8px)"),
 
   /** Medium rounded corner. */
-  medium: unsafeCSS("var(--md-sys-shape-corner-value-medium, 0.75rem)"),
+  medium: unsafeCSS("var(--md-sys-shape-corner-value-medium, 12px)"),
 
   /** Large rounded corner. */
-  large: unsafeCSS("var(--md-sys-shape-corner-value-large, 1rem)"),
+  large: unsafeCSS("var(--md-sys-shape-corner-value-large, 16px)"),
 
   /** Increased large rounded corner. */
-  largeIncreased: unsafeCSS("var(--md-sys-shape-corner-value-large-increased, 1.25rem)"),
+  largeIncreased: unsafeCSS("var(--md-sys-shape-corner-value-large-increased, 20px)"),
 
   /** Extra large rounded corner. */
-  extraLarge: unsafeCSS("var(--md-sys-shape-corner-value-extra-large, 1.75rem)"),
+  extraLarge: unsafeCSS("var(--md-sys-shape-corner-value-extra-large, 28px)"),
 
   /** Increased extra large rounded corner. */
-  extraLargeIncreased: unsafeCSS("var(--md-sys-shape-corner-value-extra-large-increased, 2rem)"),
+  extraLargeIncreased: unsafeCSS("var(--md-sys-shape-corner-value-extra-large-increased, 32px)"),
 
   /** Extra extra large rounded corner. */
-  extraExtraLarge: unsafeCSS("var(--md-sys-shape-corner-value-extra-extra-large, 3rem)"),
+  extraExtraLarge: unsafeCSS("var(--md-sys-shape-corner-value-extra-extra-large, 48px)"),
 } as const;
 
 /** Design tokens that control shape. */
 export const ShapeToken = {
   corner: {
     /** Fully rounded symmetric shape. */
-    full: unsafeCSS("var(--md-sys-shape-corner-full, 624.9375rem)"),
+    full: unsafeCSS("var(--md-sys-shape-corner-full, 9999px)"),
 
     /** Extra large rounded asymmetric shape directed towards the top. */
     extraLargeTop: unsafeCSS(

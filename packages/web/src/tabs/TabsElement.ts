@@ -97,7 +97,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
     ::slotted(next-icon),
     .icon {
       width: 1em;
-      font-size: var(--m3e-tabs-paginator-button-icon-size, var(--m3e-icon-button-icon-size, 1.5rem)) !important;
+      font-size: var(--m3e-tabs-paginator-button-icon-size, var(--m3e-icon-button-icon-size, 24px)) !important;
     }
     .header {
       display: flex;
@@ -151,9 +151,9 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       flex: 1 1 auto;
     }
     :host([variant="primary"]) .tablist {
-      --_tabs-activate-indicator-inset: var(--m3e-tabs-primary-active-indicator-inset, 0.125rem);
+      --_tabs-activate-indicator-inset: var(--m3e-tabs-primary-active-indicator-inset, 2px);
       --_tabs-active-indicator-thickness: var(--m3e-tabs-primary-active-indicator-thickness, 3px);
-      --_tab-height: 4rem;
+      --_tab-height: 64px;
     }
     :host([header-position="before"]) .tablist {
       --_tab-focus-ring-bottom-offset: calc(var(--_tabs-active-indicator-thickness) + 1px);
@@ -169,7 +169,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
     }
     :host([variant="secondary"]) .tablist {
       --_tabs-active-indicator-thickness: var(--m3e-tabs-secondary-active-indicator-thickness, 2px);
-      --_tab-height: 3rem;
+      --_tab-height: 48px;
       --_tab-selected-color: ${DesignToken.color.onSurface};
       --_tab-selected-container-hover-color: ${DesignToken.color.onSurface};
       --_tab-selected-container-focus-color: ${DesignToken.color.onSurface};

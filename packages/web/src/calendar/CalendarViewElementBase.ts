@@ -34,7 +34,7 @@ export abstract class CalendarViewElementBase extends LitElement {
     table {
       border-collapse: collapse;
       border-spacing: 0;
-      width: calc(3rem * 7);
+      width: calc(48px * 7);
     }
     td,
     th {
@@ -44,8 +44,8 @@ export abstract class CalendarViewElementBase extends LitElement {
     }
     td {
       box-sizing: border-box;
-      height: 3rem;
-      padding: 0.25rem;
+      height: 48px;
+      padding: 4px;
       position: relative;
       color: var(--m3e-calendar-item-color, ${DesignToken.color.onSurface});
     }
@@ -69,8 +69,8 @@ export abstract class CalendarViewElementBase extends LitElement {
     }
     .touch {
       position: absolute;
-      height: 3rem;
-      width: 3rem;
+      height: 48px;
+      width: 48px;
       margin: auto;
     }
     td:not(:has(.item[aria-disabled])).selected {

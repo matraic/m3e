@@ -73,7 +73,7 @@ export const SearchViewStyle: CSSResultGroup = css`
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    min-width: 3rem;
+    min-width: 48px;
   }
   ::slotted([slot="search-icon"]),
   .search-icon,

@@ -114,10 +114,10 @@ export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitEl
         > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
       m3e-stepper:not(:is(:state(--vertical), :--vertical))[label-position="below"]
         > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
-        margin-block-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
+        margin-block-start: calc(var(--m3e-step-padding, 24px) + calc(var(--m3e-step-icon-size, 24px) / 2));
       }
       m3e-stepper:is(:state(--vertical), :--vertical) > [slot="panel"] {
-        margin-inline-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
+        margin-inline-start: calc(var(--m3e-step-padding, 24px) + calc(var(--m3e-step-icon-size, 24px) / 2));
       }
       m3e-stepper:is(:state(--vertical), :--vertical) > [slot="panel"]:not(:last-of-type) {
         border-inline-start-width: var(--m3e-step-divider-thickness, 1px);
@@ -128,7 +128,7 @@ export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitEl
         > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
       m3e-stepper:is(:state(--vertical), :--vertical)
         > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
-        margin-inline-start: calc(var(--m3e-step-padding, 1.5rem) + calc(var(--m3e-step-icon-size, 1.5rem) / 2));
+        margin-inline-start: calc(var(--m3e-step-padding, 24px) + calc(var(--m3e-step-icon-size, 24px) / 2));
         border-inline-start-width: var(--m3e-step-divider-thickness, 1px);
         border-inline-start-style: solid;
         border-inline-start-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
@@ -154,7 +154,7 @@ export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitEl
     :host(:not(:is(:state(--vertical), :--vertical))) ::slotted(.-m3e-step-divider) {
       flex: 1 1 auto;
       position: relative;
-      min-width: 2rem;
+      min-width: 32px;
     }
     :host(:not(:is(:state(--vertical), :--vertical))) ::slotted(.-m3e-step-divider)::before {
       content: "";
@@ -187,41 +187,41 @@ export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitEl
     :host(:not(:dir(rtl)):not(:is(:state(--vertical), :--vertical))[label-position="end"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
       left: 0;
-      right: calc(100% - var(--m3e-step-padding, 1.5rem) + var(--m3e-step-divider-inset, 0.5rem));
+      right: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
     }
     :host(:dir(rtl):not(:is(:state(--vertical), :--vertical))[label-position="end"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
       right: 0;
-      left: calc(100% - var(--m3e-step-padding, 1.5rem) + var(--m3e-step-divider-inset, 0.5rem));
+      left: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
     }
     :host(:not(:dir(rtl)):not(:is(:state(--vertical), :--vertical))[label-position="end"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
-      left: calc(100% - var(--m3e-step-padding, 1.5rem) + var(--m3e-step-divider-inset, 0.5rem));
+      left: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
       right: 0;
     }
     :host(:dir(rtl):not(:is(:state(--vertical), :--vertical))[label-position="end"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
-      right: calc(100% - var(--m3e-step-padding, 1.5rem) + var(--m3e-step-divider-inset, 0.5rem));
+      right: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
       left: 0;
     }
     :host(:not(:dir(rtl)):not(:is(:state(--vertical), :--vertical))[label-position="below"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
       left: 0;
-      right: calc(50% + calc(var(--m3e-step-icon-size, 1.5rem) / 2) + var(--m3e-step-divider-inset, 0.5rem));
+      right: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
     }
     :host(:dir(rtl):not(:is(:state(--vertical), :--vertical))[label-position="below"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
       right: 0;
-      left: calc(50% + calc(var(--m3e-step-icon-size, 1.5rem) / 2) + var(--m3e-step-divider-inset, 0.5rem));
+      left: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
     }
     :host(:not(:dir(rtl)):not(:is(:state(--vertical), :--vertical))[label-position="below"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
-      left: calc(50% + calc(var(--m3e-step-icon-size, 1.5rem) / 2) + var(--m3e-step-divider-inset, 0.5rem));
+      left: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
       right: 0;
     }
     :host(:dir(rtl):not(:is(:state(--vertical), :--vertical))[label-position="below"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
-      right: calc(50% + calc(var(--m3e-step-icon-size, 1.5rem) / 2) + var(--m3e-step-divider-inset, 0.5rem));
+      right: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
       left: 0;
     }
     :host(:not(:is(:state(--vertical), :--vertical))[label-position="below"]) {
@@ -246,11 +246,11 @@ export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitEl
     :host(:is(:state(--vertical), :--vertical))
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
       top: 0;
-      bottom: calc(100% - var(--m3e-step-padding, 1.5rem) + var(--m3e-step-divider-inset, 0.5rem));
+      bottom: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
     }
     :host(:is(:state(--vertical), :--vertical))
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
-      top: calc(100% - var(--m3e-step-padding, 1.5rem) + var(--m3e-step-divider-inset, 0.5rem));
+      top: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
       bottom: 0;
     }
     :host(:not(:is(:state(--vertical), :--vertical))) {

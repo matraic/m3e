@@ -28,7 +28,7 @@ export const IconButtonStyle: CSSResultGroup = css`
   .touch {
     position: absolute;
     aspect-ratio: 1 / 1;
-    height: 3rem;
+    height: 48px;
     left: auto;
     right: auto;
   }

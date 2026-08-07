@@ -66,9 +66,9 @@ export class M3eTooltipElement extends TooltipElementBase {
       word-break: normal;
       overflow-wrap: break-word;
       padding: var(--m3e-tooltip-padding, ${DesignToken.measurement.space50} ${DesignToken.measurement.space100});
-      min-width: var(--m3e-tooltip-min-width, 2.5rem);
-      max-width: var(--m3e-tooltip-max-width, 12.5rem);
-      min-height: var(--m3e-tooltip-min-height, 1.5rem);
+      min-width: var(--m3e-tooltip-min-width, 40px);
+      max-width: var(--m3e-tooltip-max-width, 200px);
+      min-height: var(--m3e-tooltip-min-height, 24px);
       max-height: var(--m3e-tooltip-max-height, 40vh);
       box-sizing: border-box;
       overflow: hidden;

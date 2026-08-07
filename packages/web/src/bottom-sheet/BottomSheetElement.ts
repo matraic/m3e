@@ -152,7 +152,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       border: none;
       box-sizing: border-box;
       width: var(--m3e-bottom-sheet-width, 100%);
-      max-width: var(--m3e-bottom-sheet-max-width, 40rem);
+      max-width: var(--m3e-bottom-sheet-max-width, 640px);
       height: var(--_bottom-sheet-height);
       color: var(--m3e-bottom-sheet-color, ${DesignToken.color.onSurface});
       background-color: var(--m3e-bottom-sheet-container-color, ${DesignToken.color.surfaceContainerLow});
@@ -280,7 +280,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       flex: none;
       display: flex;
       flex-direction: column;
-      min-height: 3rem;
+      min-height: 48px;
       --m3e-app-bar-container-color: var(--m3e-bottom-sheet-container-color, ${DesignToken.color.surfaceContainerLow});
     }
     .handle-row {
@@ -291,7 +291,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       justify-content: center;
       opacity: 1;
       visibility: visible;
-      height: var(--m3e-bottom-sheet-handle-container-height, 1.5rem);
+      height: var(--m3e-bottom-sheet-handle-container-height, 24px);
     }
     :host(:not(:is(:state(--no-animate), :--no-animate))) .handle-row {
       transition: ${unsafeCSS(
@@ -303,7 +303,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
     }
     .handle {
       position: relative;
-      width: var(--m3e-bottom-sheet-handle-width, 2rem);
+      width: var(--m3e-bottom-sheet-handle-width, 32px);
       height: var(--m3e-bottom-sheet-handle-height, 4px);
       border-radius: var(--m3e-bottom-sheet-handle-shape, ${DesignToken.shape.corner.full});
       background-color: var(--m3e-bottom-sheet-handle-color, ${DesignToken.color.onSurfaceVariant});
@@ -311,12 +311,12 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
     .handle-touch {
       position: absolute;
       aspect-ratio: 1 / 1;
-      height: 3rem;
-      left: calc(0px - calc(calc(3rem - var(--m3e-bottom-sheet-handle-width, 2rem)) / 2));
-      right: calc(0px - calc(calc(3rem - var(--m3e-bottom-sheet-handle-width, 2rem)) / 2));
+      height: 48px;
+      left: calc(0px - calc(calc(48px - var(--m3e-bottom-sheet-handle-width, 32px)) / 2));
+      right: calc(0px - calc(calc(48px - var(--m3e-bottom-sheet-handle-width, 32px)) / 2));
       top: calc(
         0px - calc(
-            calc(3rem - var(--m3e-bottom-sheet-handle-container-height, 1.5rem)) - calc(
+            calc(48px - var(--m3e-bottom-sheet-handle-container-height, 24px)) - calc(
                 var(--m3e-bottom-sheet-handle-height, 4px) / 2
               )
           )

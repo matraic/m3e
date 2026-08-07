@@ -109,20 +109,20 @@ export class M3eRadioElement extends Labelled(
       justify-content: center;
       position: relative;
       border-radius: 50%;
-      width: calc(var(--m3e-radio-container-size, 2.5rem) + ${DesignToken.density.calc(-3)});
-      height: calc(var(--m3e-radio-container-size, 2.5rem) + ${DesignToken.density.calc(-3)});
+      width: calc(var(--m3e-radio-container-size, 40px) + ${DesignToken.density.calc(-3)});
+      height: calc(var(--m3e-radio-container-size, 40px) + ${DesignToken.density.calc(-3)});
     }
     .touch {
       position: absolute;
-      height: 3rem;
-      width: 3rem;
+      height: 48px;
+      width: 48px;
       margin: auto;
     }
     .wrapper {
       box-sizing: border-box;
       pointer-events: none;
-      width: var(--m3e-radio-icon-size, 1.25rem);
-      height: var(--m3e-radio-icon-size, 1.25rem);
+      width: var(--m3e-radio-icon-size, 20px);
+      height: var(--m3e-radio-icon-size, 20px);
     }
     .circle {
       fill: currentColor;

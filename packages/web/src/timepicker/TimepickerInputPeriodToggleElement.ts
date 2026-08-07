@@ -28,15 +28,15 @@ export class M3eTimepickerInputPeriodToggleElement extends Role(LitElement, "rad
         var(--m3e-timepicker-input-period-toggle-outline-color, ${DesignToken.color.outline});
     }
     :host([orientation="vertical"]) {
-      height: var(--m3e-timepicker-input-period-toggle-vertical-height, 5rem);
-      width: var(--m3e-timepicker-input-period-toggle-vertical-width, 3.25rem);
+      height: var(--m3e-timepicker-input-period-toggle-vertical-height, 80px);
+      width: var(--m3e-timepicker-input-period-toggle-vertical-width, 52px);
     }
     :host([orientation="vertical"]) .base {
       flex-direction: column;
     }
     :host([orientation="horizontal"]) {
-      height: var(--m3e-timepicker-input-period-toggle-horizontal-height, 2.375rem);
-      width: var(--m3e-timepicker-input-period-toggle-horizontal-width, 13.5rem);
+      height: var(--m3e-timepicker-input-period-toggle-horizontal-height, 38px);
+      width: var(--m3e-timepicker-input-period-toggle-horizontal-width, 216px);
     }
     .period-button {
       display: flex;

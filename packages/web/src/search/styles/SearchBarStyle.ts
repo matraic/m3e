@@ -44,7 +44,7 @@ export const SearchBarStyle: CSSResultGroup = css`
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    min-width: 3rem;
+    min-width: 48px;
   }
   :host(:not(:is(:state(--clearable), :--clearable))) .clear {
     display: none;
@@ -55,7 +55,7 @@ export const SearchBarStyle: CSSResultGroup = css`
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    min-width: 3rem;
+    min-width: 48px;
     padding-inline: ${DesignToken.measurement.space50};
     column-gap: calc(${DesignToken.measurement.space100} + ${SearchBarToken.actionsGap});
   }

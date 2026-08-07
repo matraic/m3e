@@ -109,18 +109,18 @@ export class M3eInputChipElement extends DisabledInteractive(Disabled(Role(M3eCh
         min-width: 0;
       }
       .remove-button {
-        --m3e-icon-button-extra-small-container-height: 1.5rem;
-        --m3e-icon-button-extra-small-icon-size: var(--m3e-chip-icon-size, 1.125rem);
-        width: 1.5rem;
+        --m3e-icon-button-extra-small-container-height: 24px;
+        --m3e-icon-button-extra-small-icon-size: var(--m3e-chip-icon-size, 18px);
+        width: 24px;
       }
       .remove-icon {
         flex: none;
-        width: var(--m3e-chip-icon-size, 1.125rem);
-        height: var(--m3e-chip-icon-size, 1.125rem);
+        width: var(--m3e-chip-icon-size, 18px);
+        height: var(--m3e-chip-icon-size, 18px);
       }
       .touch {
         top: calc(
-          0px - calc(calc(3rem - calc(var(--m3e-chip-container-height, 2rem) + ${DesignToken.density.calc(-3)})) / 2)
+          0px - calc(calc(48px - calc(var(--m3e-chip-container-height, 32px) + ${DesignToken.density.calc(-3)})) / 2)
         );
       }
       .wrapper {
@@ -130,11 +130,11 @@ export class M3eInputChipElement extends DisabledInteractive(Disabled(Role(M3eCh
       }
       ::slotted([slot="avatar"]) {
         flex: none;
-        font-size: var(--m3e-chip-avatar-size, 1.5rem);
+        font-size: var(--m3e-chip-avatar-size, 24px);
       }
       ::slotted(m3e-avatar[slot="avatar"]) {
-        --m3e-icon-size: var(--m3e-chip-avatar-icon-size, 1.125rem);
-        --m3e-avatar-size: var(--m3e-chip-avatar-size, 1.5rem);
+        --m3e-icon-size: var(--m3e-chip-avatar-icon-size, 18px);
+        --m3e-avatar-size: var(--m3e-chip-avatar-size, 24px);
         --m3e-avatar-font-size: var(
           --m3e-chip-avatar-font-size,
           ${DesignToken.typescale.standard.title.small.fontSize}

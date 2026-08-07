@@ -132,21 +132,21 @@ export class M3eCheckboxElement extends Labelled(
       justify-content: center;
       position: relative;
       border-radius: 50%;
-      width: calc(var(--m3e-checkbox-container-size, 2.5rem) + ${DesignToken.density.calc(-3)});
-      height: calc(var(--m3e-checkbox-container-size, 2.5rem) + ${DesignToken.density.calc(-3)});
+      width: calc(var(--m3e-checkbox-container-size, 40px) + ${DesignToken.density.calc(-3)});
+      height: calc(var(--m3e-checkbox-container-size, 40px) + ${DesignToken.density.calc(-3)});
     }
     .touch {
       position: absolute;
-      height: 3rem;
-      width: 3rem;
+      height: 48px;
+      width: 48px;
       margin: auto;
     }
     .wrapper {
       box-sizing: border-box;
       pointer-events: none;
-      width: var(--m3e-checkbox-icon-size, 1.125rem);
-      height: var(--m3e-checkbox-icon-size, 1.125rem);
-      border-radius: var(--m3e-checkbox-container-shape, 0.125rem);
+      width: var(--m3e-checkbox-icon-size, 18px);
+      height: var(--m3e-checkbox-icon-size, 18px);
+      border-radius: var(--m3e-checkbox-container-shape, 2px);
     }
     :host(:not([checked]):not([indeterminate])) .wrapper {
       border-width: var(--m3e-checkbox-unselected-outline-thickness, 2px);

@@ -55,7 +55,7 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
       overflow-y: hidden;
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
-      min-height: var(--m3e-nav-bar-height, 4rem);
+      min-height: var(--m3e-nav-bar-height, 64px);
     }
     .base {
       contain: layout style;
@@ -67,7 +67,7 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
       height: inherit;
       width: 100%;
       background-color: var(--m3e-nav-bar-container-color, ${DesignToken.color.surfaceContainer});
-      --_vertical-nav-item-min-width: var(--m3e-nav-bar-vertical-item-width, 7rem);
+      --_vertical-nav-item-min-width: var(--m3e-nav-bar-vertical-item-width, 112px);
       --_horizontal-nav-item-leading-space: var(
         --m3e-nav-bar-horizontal-nav-item-leading-space,
         ${DesignToken.measurement.space200}

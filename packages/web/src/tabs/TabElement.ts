@@ -111,7 +111,7 @@ export class M3eTabElement extends Selected(
     }
     .touch {
       position: absolute;
-      height: 3rem;
+      height: 48px;
       left: 0;
       right: 0;
     }
@@ -160,7 +160,7 @@ export class M3eTabElement extends Selected(
     }
     ::slotted([slot="icon"]) {
       width: 1em;
-      font-size: var(--m3e-tab-icon-size, 1.5rem) !important;
+      font-size: var(--m3e-tab-icon-size, 24px) !important;
     }
     @media (forced-colors: active) {
       :host([selected]:not(:disabled)) .base {

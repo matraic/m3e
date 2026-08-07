@@ -30,7 +30,7 @@ type _AppBarSizeToken = {
  */
 export const AppBarSizeToken: Record<AppBarSize, _AppBarSizeToken> = {
   small: {
-    containerHeight: unsafeCSS(`var(--m3e-app-bar-small-container-height, 4rem)`),
+    containerHeight: unsafeCSS(`var(--m3e-app-bar-small-container-height, 64px)`),
     titleTextFontSize: unsafeCSS(
       `var(--m3e-app-bar-small-title-text-font-size, ${DesignToken.typescale.standard.title.large.fontSize})`,
     ),
@@ -61,8 +61,8 @@ export const AppBarSizeToken: Record<AppBarSize, _AppBarSizeToken> = {
     ),
   },
   medium: {
-    containerHeight: unsafeCSS(`var(--m3e-app-bar-medium-container-height, 7rem)`),
-    containerHeightWithSubtitle: unsafeCSS(`var(--m3e-app-bar-medium-container-height-with-subtitle, 8.5rem)`),
+    containerHeight: unsafeCSS(`var(--m3e-app-bar-medium-container-height, 112px)`),
+    containerHeightWithSubtitle: unsafeCSS(`var(--m3e-app-bar-medium-container-height-with-subtitle, 136px)`),
     titleTextFontSize: unsafeCSS(
       `var(--m3e-app-bar-medium-title-text-font-size, ${DesignToken.typescale.standard.headline.medium.fontSize})`,
     ),
@@ -99,8 +99,8 @@ export const AppBarSizeToken: Record<AppBarSize, _AppBarSizeToken> = {
     subtitleMaxLines: unsafeCSS(`var(--m3e-app-bar-medium-subtitle-max-lines, 1)`),
   },
   large: {
-    containerHeight: unsafeCSS(`var(--m3e-app-bar-large-container-height, 7.5rem)`),
-    containerHeightWithSubtitle: unsafeCSS(`var(--m3e-app-bar-large-container-height-with-subtitle, 9.5rem)`),
+    containerHeight: unsafeCSS(`var(--m3e-app-bar-large-container-height, 120px)`),
+    containerHeightWithSubtitle: unsafeCSS(`var(--m3e-app-bar-large-container-height-with-subtitle, 152px)`),
     titleTextFontSize: unsafeCSS(
       `var(--m3e-app-bar-large-title-text-font-size, ${DesignToken.typescale.standard.display.small.fontSize})`,
     ),

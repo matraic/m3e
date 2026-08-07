@@ -56,7 +56,7 @@ export class M3eAvatarElement extends LitElement {
       display: inline-block;
       vertical-align: middle;
       aspect-ratio: 1 / 1;
-      width: var(--m3e-avatar-size, 2.5rem);
+      width: var(--m3e-avatar-size, 40px);
     }
     .base {
       contain: layout style paint;

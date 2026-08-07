@@ -7,9 +7,9 @@ export const SearchBarToken = {
   containerColor: unsafeCSS(`var(--m3e-search-bar-container-color, ${DesignToken.color.surfaceContainerHigh})`),
   leadingIconColor: unsafeCSS(`var(--m3e-search-bar-leading-icon-color, ${DesignToken.color.onSurface})`),
   trailingIconColor: unsafeCSS(`var(--m3e-search-bar-trailing-icon-color, ${DesignToken.color.onSurfaceVariant})`),
-  containerHeight: unsafeCSS("var(--m3e-search-bar-container-height, 3.5rem)"),
+  containerHeight: unsafeCSS("var(--m3e-search-bar-container-height, 56px)"),
   containerShape: unsafeCSS(`var(--m3e-search-bar-container-shape, ${DesignToken.shape.corner.full})`),
-  iconSize: unsafeCSS("var(--m3e-search-bar-icon-size, 1.5rem)"),
+  iconSize: unsafeCSS("var(--m3e-search-bar-icon-size, 24px)"),
   supportingTextColor: unsafeCSS(`var(--m3e-search-bar-supporting-text-color, ${DesignToken.color.onSurfaceVariant})`),
   supportingTextFontSize: unsafeCSS(
     `var(--m3e-search-bar-supporting-text-font-size, ${DesignToken.typescale.standard.body.large.fontSize})`,

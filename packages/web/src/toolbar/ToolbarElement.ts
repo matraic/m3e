@@ -82,14 +82,14 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
       height: fit-content;
     }
     :host(:not([vertical])) .base {
-      min-height: calc(var(--m3e-toolbar-size, 4rem) + ${DesignToken.density.calc(-3)});
+      min-height: calc(var(--m3e-toolbar-size, 64px) + ${DesignToken.density.calc(-3)});
       column-gap: var(--m3e-toolbar-spacing, ${DesignToken.measurement.space50});
     }
     :host([vertical]) {
       width: fit-content;
     }
     :host([vertical]) .base {
-      min-width: calc(var(--m3e-toolbar-size, 4rem) + ${DesignToken.density.calc(-3)});
+      min-width: calc(var(--m3e-toolbar-size, 64px) + ${DesignToken.density.calc(-3)});
     }
     :host([vertical]) .base {
       flex-direction: column;

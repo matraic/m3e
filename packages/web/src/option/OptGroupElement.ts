@@ -37,7 +37,7 @@ export class M3eOptGroupElement extends Role(LitElement, "group") {
       --_option-padding-start: calc(var(--m3e-option-padding-start, ${DesignToken.measurement.space150}) * 2);
     }
     .label {
-      height: var(--m3e-option-height, 3rem);
+      height: var(--m3e-option-height, 48px);
       font-size: var(--m3e-option-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(--m3e-option-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
       line-height: var(--m3e-option-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});

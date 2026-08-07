@@ -94,14 +94,14 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       position: fixed;
       overflow: visible;
       border-radius: var(--m3e-dialog-shape, ${DesignToken.shape.corner.extraLarge});
-      min-width: var(--m3e-dialog-min-width, 17.5rem);
-      max-width: var(--m3e-dialog-max-width, 35rem);
+      min-width: var(--m3e-dialog-min-width, 280px);
+      max-width: var(--m3e-dialog-max-width, 560px);
       color: var(--m3e-dialog-color, ${DesignToken.color.onSurface});
       background-color: var(--m3e-dialog-container-color, ${DesignToken.color.surfaceContainerHigh});
       visibility: hidden;
       opacity: 0;
       transform-origin: top;
-      transform: translateY(-3.125rem) scaleY(0.8);
+      transform: translateY(-50px) scaleY(0.8);
     }
     .base::backdrop {
       background-color: color-mix(in srgb, var(--m3e-dialog-scrim-color, ${DesignToken.color.scrim}) 0%, transparent);
@@ -110,7 +110,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
     .base:not([open]) {
       visibility: hidden;
       opacity: 0;
-      transform: translateY(-3.125rem) scaleY(0.8);
+      transform: translateY(-50px) scaleY(0.8);
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasized}, 
         transform ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasized},
@@ -151,7 +151,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
     @starting-style {
       .base[open] {
         opacity: 0;
-        transform: translateY(-3.125rem) scaleY(0.8);
+        transform: translateY(-50px) scaleY(0.8);
       }
       .base[open]::backdrop {
         background-color: color-mix(in srgb, var(--m3e-dialog-scrim-color, ${DesignToken.color.scrim}) 0%, transparent);
@@ -190,7 +190,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       flex: none;
       display: flex;
       align-items: center;
-      min-height: 1.5rem;
+      min-height: 24px;
       column-gap: ${DesignToken.measurement.space100};
     }
     ::slotted([slot="actions"][end]) {
@@ -208,7 +208,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
     ::slotted([slot="close-icon"]),
     .close-icon {
       width: 1em;
-      font-size: var(--m3e-icon-button-icon-size, 1.5rem) !important;
+      font-size: var(--m3e-icon-button-icon-size, 24px) !important;
     }
     @media (forced-colors: active) {
       .base:not([open])::backdrop,

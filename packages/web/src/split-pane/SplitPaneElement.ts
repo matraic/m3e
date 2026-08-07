@@ -126,7 +126,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       flex-direction: column;
     }
     :host(:is(:state(--with-start), :--with-start):is(:state(--with-end), :--with-end)) .start {
-      flex: 0 1 calc(var(--_split-pane-value) - calc(var(--m3e-split-pane-drag-handle-container-width, 1.5rem) / 2));
+      flex: 0 1 calc(var(--_split-pane-value) - calc(var(--m3e-split-pane-drag-handle-container-width, 24px) / 2));
     }
     :host(:not(:is(:state(--with-end), :--with-end))) .start {
       flex: 1 1 auto;
@@ -175,8 +175,8 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
     .touch {
       z-index: 1;
       position: absolute;
-      height: 3rem;
-      width: 3rem;
+      height: 48px;
+      width: 48px;
       margin: auto;
       touch-action: none;
       user-select: none;
@@ -192,26 +192,26 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
     }
     :host(:not(:is(:state(--vertical), :--vertical))) .drag-handle {
       flex-direction: column;
-      width: var(--m3e-split-pane-drag-handle-container-width, 1.5rem);
+      width: var(--m3e-split-pane-drag-handle-container-width, 24px);
     }
     :host(:not(:is(:state(--vertical), :--vertical)):not(:is(:state(--pressed), :--pressed))) .handle {
-      width: var(--m3e-split-pane-drag-handle-width, 0.25rem);
-      height: var(--m3e-split-pane-drag-handle-height, 3rem);
+      width: var(--m3e-split-pane-drag-handle-width, 4px);
+      height: var(--m3e-split-pane-drag-handle-height, 48px);
     }
     :host(:not(:is(:state(--vertical), :--vertical)):is(:state(--pressed), :--pressed)) .handle {
-      width: var(--m3e-split-pane-drag-handle-pressed-width, 0.75rem);
-      height: var(--m3e-split-pane-drag-handle-pressed-height, 3.25rem);
+      width: var(--m3e-split-pane-drag-handle-pressed-width, 12px);
+      height: var(--m3e-split-pane-drag-handle-pressed-height, 52px);
     }
     :host(:is(:state(--vertical), :--vertical)) .drag-handle {
-      height: var(--m3e-split-pane-drag-handle-container-width, 1.5rem);
+      height: var(--m3e-split-pane-drag-handle-container-width, 24px);
     }
     :host(:is(:state(--vertical), :--vertical):not(:is(:state(--pressed), :--pressed))) .handle {
-      width: var(--m3e-split-pane-drag-handle-height, 3rem);
-      height: var(--m3e-split-pane-drag-handle-width, 0.25rem);
+      width: var(--m3e-split-pane-drag-handle-height, 48px);
+      height: var(--m3e-split-pane-drag-handle-width, 4px);
     }
     :host(:is(:state(--vertical), :--vertical):is(:state(--pressed), :--pressed)) .handle {
-      width: var(--m3e-split-pane-drag-handle-pressed-height, 3.25rem);
-      height: var(--m3e-split-pane-drag-handle-pressed-width, 0.75rem);
+      width: var(--m3e-split-pane-drag-handle-pressed-height, 52px);
+      height: var(--m3e-split-pane-drag-handle-pressed-width, 12px);
     }
     @media (prefers-reduced-motion) {
       .handle {

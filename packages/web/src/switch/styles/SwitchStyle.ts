@@ -23,7 +23,7 @@ export const SwitchStyle = css`
   }
   .touch {
     position: absolute;
-    height: 3rem;
+    height: 48px;
     left: 0;
     right: 0;
   }

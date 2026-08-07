@@ -101,22 +101,20 @@ export class M3eNavRailElement extends SuppressInitialAnimation(M3eNavBarElement
       padding-inline: var(--m3e-nav-rail-inline-padding, ${DesignToken.measurement.space250});
     }
     :host(:is(:state(--compact), :--compact)) {
-      width: var(--m3e-nav-rail-compact-width, 6rem);
+      width: var(--m3e-nav-rail-compact-width, 96px);
     }
     :host(:is(:state(--compact), :--compact)) .base {
-      --_vertical-nav-item-width: var(--m3e-nav-rail-compact-width, 6rem);
+      --_vertical-nav-item-width: var(--m3e-nav-rail-compact-width, 96px);
       --_vertical-nav-item-margin-inline: calc(
         0px - var(--m3e-nav-rail-inline-padding, ${DesignToken.measurement.space250})
       );
-      --_vertical-nav-item-inset-start: calc(
-        50% - calc(var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem)) / 2
-      );
+      --_vertical-nav-item-inset-start: calc(50% - calc(var(--m3e-vertical-nav-item-active-indicator-width, 56px)) / 2);
     }
     :host(:not(:is(:state(--compact), :--compact))) {
-      width: var(--m3e-nav-rail-expanded-width, 13.75rem);
+      width: var(--m3e-nav-rail-expanded-width, 220px);
     }
     :host(:not(:is(:state(--compact), :--compact))) {
-      --m3e-horizontal-nav-item-active-indicator-height: var(--m3e-nav-rail-expanded-item-height, 3.5rem);
+      --m3e-horizontal-nav-item-active-indicator-height: var(--m3e-nav-rail-expanded-item-height, 56px);
       --_nav-item-align-self: stretch;
       --_nav-item-justify-content: flex-start;
     }

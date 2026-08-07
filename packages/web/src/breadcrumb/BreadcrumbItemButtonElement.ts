@@ -42,12 +42,12 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
       justify-content: center;
       position: relative;
       border-radius: var(--m3e-breadcrumb-item-shape, ${DesignToken.shape.corner.full});
-      height: calc(var(--m3e-breadcrumb-item-container-height, 2.5rem) + ${DesignToken.density.calc(-3)});
+      height: calc(var(--m3e-breadcrumb-item-container-height, 40px) + ${DesignToken.density.calc(-3)});
       column-gap: var(--m3e-breadcrumb-item-icon-label-space, ${DesignToken.measurement.space100});
     }
     .icon {
-      font-size: var(--m3e-breadcrumb-item-icon-size, 1.25rem);
-      --m3e-icon-size: var(--m3e-breadcrumb-item-icon-size, 1.25rem);
+      font-size: var(--m3e-breadcrumb-item-icon-size, 20px);
+      --m3e-icon-size: var(--m3e-breadcrumb-item-icon-size, 20px);
     }
     ::slotted([slot="icon"]) {
       font-size: inherit !important;
@@ -68,7 +68,7 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
       color: var(--m3e-breadcrumb-item-icon-color, ${DesignToken.color.onSurfaceVariant});
     }
     :host(:is(:state(--icon-only), :--icon-only)) .base {
-      width: calc(var(--m3e-breadcrumb-item-container-height, 2.5rem) + ${DesignToken.density.calc(-3)});
+      width: calc(var(--m3e-breadcrumb-item-container-height, 40px) + ${DesignToken.density.calc(-3)});
       padding-inline: var(--m3e-breadcrumb-item-icon-padding-inline, 0px);
       --m3e-state-layer-hover-color: var(
         --m3e-breadcrumb-item-icon-hover-state-layer-color,
@@ -124,8 +124,8 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
     }
     .touch {
       position: absolute;
-      height: 3rem;
-      width: max(3rem, 100%);
+      height: 48px;
+      width: max(48px, 100%);
       margin: auto;
     }
     a {

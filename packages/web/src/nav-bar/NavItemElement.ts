@@ -193,7 +193,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
     ::slotted([slot="icon"]),
     ::slotted([slot="selected-icon"]) {
       width: 1em;
-      font-size: var(--m3e-nav-item-icon-size, 1.5rem) !important;
+      font-size: var(--m3e-nav-item-icon-size, 24px) !important;
     }
     :host(:not(:is(:state(--no-animate), :--no-animate))) .indicator {
       transition: ${unsafeCSS(`height ${DesignToken.motion.duration.short1} ${DesignToken.motion.easing.standard}`)};
@@ -287,7 +287,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
     }
     :host([orientation="vertical"]) .indicator,
     :host([orientation="vertical"]) .icon-wrapper {
-      min-width: var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem);
+      min-width: var(--m3e-vertical-nav-item-active-indicator-width, 56px);
     }
     :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .state-layer {
       ${unsafeCSS(
@@ -299,25 +299,25 @@ export class M3eNavItemElement extends ReconnectedCallback(
     }
     @keyframes collapse {
       from {
-        width: var(--_expanded-width, var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem));
+        width: var(--_expanded-width, var(--m3e-vertical-nav-item-active-indicator-width, 56px));
       }
       to {
-        width: var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem);
+        width: var(--m3e-vertical-nav-item-active-indicator-width, 56px);
       }
     }
     :host([orientation="vertical"]) .indicator,
     :host([orientation="vertical"]) .icon-wrapper {
-      height: var(--m3e-vertical-nav-item-active-indicator-height, 2rem);
+      height: var(--m3e-vertical-nav-item-active-indicator-height, 32px);
     }
     :host([orientation="vertical"]) .icon {
       top: calc(
-        calc(var(--m3e-vertical-nav-item-active-indicator-height, 2rem) / 2) - calc(
-            var(--m3e-nav-item-icon-size, 1.5rem) / 2
+        calc(var(--m3e-vertical-nav-item-active-indicator-height, 32px) / 2) - calc(
+            var(--m3e-nav-item-icon-size, 24px) / 2
           )
       );
       left: calc(
-        calc(var(--m3e-vertical-nav-item-active-indicator-width, 3.5rem) / 2) - calc(
-            var(--m3e-nav-item-icon-size, 1.5rem) / 2
+        calc(var(--m3e-vertical-nav-item-active-indicator-width, 56px) / 2) - calc(
+            var(--m3e-nav-item-icon-size, 24px) / 2
           )
       );
     }
@@ -325,8 +325,8 @@ export class M3eNavItemElement extends ReconnectedCallback(
       border-radius: var(--m3e-nav-item-focus-ring-shape, ${DesignToken.shape.corner.medium});
     }
     :host([orientation="horizontal"]) .icon-wrapper {
-      width: var(--m3e-nav-item-icon-size, 1.5rem);
-      height: var(--m3e-nav-item-icon-size, 1.5rem);
+      width: var(--m3e-nav-item-icon-size, 24px);
+      height: var(--m3e-nav-item-icon-size, 24px);
     }
     :host([orientation="horizontal"]) .base {
       padding: var(--m3e-horizontal-nav-item-padding, ${DesignToken.measurement.space200});
@@ -339,7 +339,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
     }
     :host([orientation="horizontal"]) .indicator,
     :host([orientation="horizontal"]) .inner {
-      height: var(--m3e-horizontal-nav-item-active-indicator-height, 2.5rem);
+      height: var(--m3e-horizontal-nav-item-active-indicator-height, 40px);
     }
     :host([orientation="horizontal"]) .inner {
       width: fit-content;

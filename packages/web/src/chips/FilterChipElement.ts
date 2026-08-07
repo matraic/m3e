@@ -119,7 +119,7 @@ export class M3eFilterChipElement extends Selected(
       }
       .check {
         width: 1em;
-        font-size: var(--m3e-chip-icon-size, 1.125rem);
+        font-size: var(--m3e-chip-icon-size, 18px);
       }
       :host(:not(:disabled):not([disabled-interactive])) .check {
         color: var(--m3e-chip-selected-leading-icon-color, ${DesignToken.color.onSecondaryContainer});

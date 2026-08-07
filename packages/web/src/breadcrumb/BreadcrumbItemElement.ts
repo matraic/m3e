@@ -79,8 +79,8 @@ export class M3eBreadcrumbItemElement extends LinkButton(AttachInternals(Role(Li
       display: flex;
       justify-content: center;
       align-items: center;
-      min-width: 0.5rem;
-      --m3e-icon-size: var(--m3e-breadcrumb-separator-icon-size, 1.5rem);
+      min-width: 8px;
+      --m3e-icon-size: var(--m3e-breadcrumb-separator-icon-size, 24px);
     }
     .separator-icon {
       width: 1em;

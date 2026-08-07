@@ -55,12 +55,12 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
       scrollbar-color: ${DesignToken.scrollbar.color};
       scroll-padding-block: calc(
-        var(--m3e-focus-ring-thickness, 3px) + var(--m3e-floating-panel-container-padding-block, 0.25rem)
+        var(--m3e-focus-ring-thickness, 3px) + var(--m3e-floating-panel-container-padding-block, 4px)
       );
       border-radius: var(--m3e-floating-panel-container-shape, ${DesignToken.shape.corner.large});
-      min-width: var(--m3e-floating-panel-container-min-width, 7rem);
-      max-width: var(--m3e-floating-panel-container-max-width, 17.5rem);
-      max-height: var(--m3e-floating-panel-container-max-height, 17.5rem);
+      min-width: var(--m3e-floating-panel-container-min-width, 112px);
+      max-width: var(--m3e-floating-panel-container-max-width, 280px);
+      max-height: var(--m3e-floating-panel-container-max-height, 280px);
       background-color: var(--m3e-floating-panel-container-color, ${DesignToken.color.surfaceContainer});
       box-shadow: var(--m3e-floating-panel-container-elevation, ${DesignToken.elevation.level3});
       opacity: 0;
@@ -71,8 +71,8 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      padding-block: var(--m3e-floating-panel-container-padding-block, 0.25rem);
-      padding-inline: var(--m3e-floating-panel-container-padding-inline, 0.25rem);
+      padding-block: var(--m3e-floating-panel-container-padding-block, 4px);
+      padding-inline: var(--m3e-floating-panel-container-padding-inline, 4px);
     }
     :host(:not(:is(:state(--no-animate), :--no-animate))) {
       transition: ${unsafeCSS(
