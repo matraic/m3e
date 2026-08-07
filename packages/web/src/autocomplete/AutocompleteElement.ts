@@ -209,6 +209,12 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
   /**
    * Class or list of classes to be applied to the autocomplete's overlay panel.
+   *
+   * Note: the panel is rendered inside this component's shadow root, so a page-level
+   * stylesheet's plain class selector cannot reach it due to Shadow DOM style encapsulation.
+   * Use the documented `@cssprop` custom properties on the panel/floating-panel classes
+   * for theming instead.
+   *
    * @default ""
    */
   @property({ attribute: "panel-class" }) panelClass = "";
@@ -705,7 +711,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
     this.#updateMenuState(this.#menu, count);
 
-    (this.#formField ?? this.#input).insertAdjacentElement("afterend", this.#menu);
+    this.shadowRoot?.appendChild(this.#menu);
 
     this.#input.setAttribute("aria-controls", this.#menuId);
     this.#input.setAttribute("aria-owns", this.#menuId);
