@@ -706,7 +706,7 @@ export class M3eDateInputElement
       spellcheck="false"
       autocapitalize="none"
       autocorrect="off"
-      inputmode="numeric"
+      inputmode="${ifDefined(id !== "period" ? "numeric" : undefined)}"
       tabindex="${ifDefined(this.disabled ? undefined : id === this._activeField ? 0 : -1)}"
       @focus="${this.#handleFieldFocus}"
       @keydown="${this.#handleFieldKeyDown}"
