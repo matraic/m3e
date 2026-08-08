@@ -836,7 +836,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   #handleLabelSlotChange(e: Event): void {
     const assignedElements = (<HTMLSlotElement>e.target).assignedElements({ flatten: true });
     setCustomState(this, "--with-label", assignedElements.length > 0);
-    this._pseudoLabel = assignedElements[0]?.textContent ?? "";
+    this._pseudoLabel = getTextContent(<HTMLSlotElement>e.target);
   }
 
   /** @private */
