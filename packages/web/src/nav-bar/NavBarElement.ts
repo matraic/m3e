@@ -41,7 +41,8 @@ import { isNavBarMode, NavBarMode } from "./NavBarMode";
  *
  * @cssprop --m3e-nav-bar-height - Height of the navigation bar.
  * @cssprop --m3e-nav-bar-container-color - Background color of the navigation bar container.
- * @cssprop --m3e-nav-bar-vertical-item-width - Minimum width of vertical nav items.
+ * @cssprop --m3e-nav-bar-vertical-item-width - Minimum width a vertical nav item may shrink to. Defaults to the active indicator width, and never less than the 48px minimum touch target.
+ * @cssprop --m3e-nav-bar-horizontal-item-width - Minimum width of horizontal nav items.
  * @cssprop --m3e-nav-bar-horizontal-nav-item-leading-space - Leading space for horizontal nav items.
  * @cssprop --m3e-nav-bar-horizontal-nav-item-trailing-space - Trailing space for horizontal nav items.
  */
@@ -68,9 +69,22 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
       box-sizing: border-box;
       min-height: inherit;
       height: inherit;
-      width: 100%;
+
+      /* Size to the items' intrinsic minimum, but never narrower than the bar. Items divide the
+         bar equally while they fit; once even their minimum width cannot fit, the bar grows and
+         scrolls instead of painting items outside itself. */
+      width: min-content;
+      min-width: 100%;
+
       background-color: var(--m3e-nav-bar-container-color, ${DesignToken.color.surfaceContainer});
-      --_vertical-nav-item-min-width: var(--m3e-nav-bar-vertical-item-width, 112px);
+
+      /* The floor a vertical item may shrink to: the active indicator width, but never below the
+         48px minimum touch target. */
+      --_vertical-nav-item-min-width: var(
+        --m3e-nav-bar-vertical-item-width,
+        max(48px, var(--m3e-vertical-nav-item-active-indicator-width, 56px))
+      );
+      --_horizontal-nav-item-min-width: var(--m3e-nav-bar-horizontal-item-width, 112px);
       --_horizontal-nav-item-leading-space: var(
         --m3e-nav-bar-horizontal-nav-item-leading-space,
         ${DesignToken.measurement.space200}

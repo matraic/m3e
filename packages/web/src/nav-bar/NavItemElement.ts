@@ -142,6 +142,7 @@ export class M3eNavItemElement extends SupportsDirectionality(
     }
     :host(:is(:state(--horizontal), :--horizontal)) {
       max-width: fit-content;
+      min-width: var(--_horizontal-nav-item-min-width);
     }
     :host(:is(:state(--horizontal), :--horizontal)) .outer {
       margin-inline-start: var(--_horizontal-nav-item-leading-space);
@@ -264,6 +265,8 @@ export class M3eNavItemElement extends SupportsDirectionality(
     }
     :host(:is(:state(--vertical), :--vertical)) .label {
       text-align: center;
+      /* Wrap a label too long for a narrow item rather than let it spill past the item. */
+      overflow-wrap: anywhere;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
