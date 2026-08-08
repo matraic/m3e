@@ -175,6 +175,17 @@ export class M3eSegmentedButtonElement extends Labelled(
       this.role = this.multi ? "group" : "radiogroup";
       this[selectionManager].multi = this.multi;
       this[selectionManager].disableRovingTabIndex(this.multi);
+      this[selectionManager].items.forEach((x) => {
+        if (this.multi) {
+          x.role = "button";
+          x.ariaPressed = `${x.checked}`;
+          x.ariaSelected = x.ariaChecked = null;
+        } else {
+          x.role = "radio";
+          x.ariaChecked = `${x.checked}`;
+          x.ariaPressed = x.ariaSelected = null;
+        }
+      });
     }
 
     if (changedProperties.has("multi") || changedProperties.has("disabled")) {
