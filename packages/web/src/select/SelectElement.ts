@@ -213,11 +213,6 @@ export class M3eSelectElement
   /**
    * Class or list of classes to be applied to the select's overlay panel.
    *
-   * Note: the panel is rendered inside this component's shadow root, so a page-level
-   * stylesheet's plain class selector cannot reach it due to Shadow DOM style encapsulation.
-   * Use the documented `@cssprop` custom properties on the panel/floating-panel classes
-   * for theming instead.
-   *
    * @default ""
    */
   @property({ attribute: "panel-class" }) panelClass = "";
@@ -647,7 +642,7 @@ export class M3eSelectElement
       this.#menu.replaceChildren(...this.#clone.childNodes);
     }
 
-    this.shadowRoot?.appendChild(this.#menu);
+    document.documentElement.appendChild(this.#menu);
 
     this.ariaExpanded = "true";
     this.setAttribute("aria-controls", this.#listId);
