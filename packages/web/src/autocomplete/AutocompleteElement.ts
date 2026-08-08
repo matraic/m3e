@@ -209,6 +209,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
   /**
    * Class or list of classes to be applied to the autocomplete's overlay panel.
+   *
    * @default ""
    */
   @property({ attribute: "panel-class" }) panelClass = "";
@@ -705,7 +706,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
     this.#updateMenuState(this.#menu, count);
 
-    (this.#formField ?? this.#input).insertAdjacentElement("afterend", this.#menu);
+    document.documentElement.appendChild(this.#menu);
 
     this.#input.setAttribute("aria-controls", this.#menuId);
     this.#input.setAttribute("aria-owns", this.#menuId);

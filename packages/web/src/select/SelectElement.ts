@@ -212,6 +212,7 @@ export class M3eSelectElement
 
   /**
    * Class or list of classes to be applied to the select's overlay panel.
+   *
    * @default ""
    */
   @property({ attribute: "panel-class" }) panelClass = "";
@@ -641,7 +642,7 @@ export class M3eSelectElement
       this.#menu.replaceChildren(...this.#clone.childNodes);
     }
 
-    (this.#formField ?? this).insertAdjacentElement("afterend", this.#menu);
+    document.documentElement.appendChild(this.#menu);
 
     this.ariaExpanded = "true";
     this.setAttribute("aria-controls", this.#listId);
