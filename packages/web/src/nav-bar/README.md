@@ -50,13 +50,35 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                           | Description                              |
-| -------------------------------------------------- | ---------------------------------------- |
-| `--m3e-nav-bar-height`                             | Height of the navigation bar.            |
-| `--m3e-nav-bar-container-color`                    | Background color of the navigation bar.  |
-| `--m3e-nav-bar-vertical-item-width`                | Minimum width of vertical nav items.     |
-| `--m3e-nav-bar-horizontal-nav-item-leading-space`  | Leading space for horizontal nav items.  |
-| `--m3e-nav-bar-horizontal-nav-item-trailing-space` | Trailing space for horizontal nav items. |
+| Property                                           | Description                                                                                                    |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `--m3e-nav-bar-height`                             | Height of the navigation bar.                                                                                  |
+| `--m3e-nav-bar-container-color`                    | Background color of the navigation bar.                                                                        |
+| `--m3e-nav-bar-vertical-item-width`                | Minimum width a vertical (compact) item may shrink to. Defaults to the active indicator width, at least 48px. |
+| `--m3e-nav-bar-horizontal-item-width`              | Minimum width of a horizontal (expanded) item. Defaults to `7rem`.                                            |
+| `--m3e-nav-bar-horizontal-nav-item-leading-space`  | Leading space for horizontal nav items.                                                                       |
+| `--m3e-nav-bar-horizontal-nav-item-trailing-space` | Trailing space for horizontal nav items.                                                                      |
+
+## 📐 Fitting destinations to the bar
+
+The bar sizes its destinations to the space it has, so a bar with the supported 3-5 destinations
+fits within its own width at phone widths without any configuration.
+
+**Compact mode** (vertical items, the default) — items divide the bar's width equally. They shrink
+as the bar narrows, down to a floor of `--m3e-nav-bar-vertical-item-width`, which defaults to the
+active indicator width (`3.5rem`) and is never less than the 48px minimum touch target. A label too
+long for a narrow item wraps, up to two lines; beyond that it is clipped. Five destinations
+therefore fit inside a 320px-wide bar (64px each) and remain fully tappable.
+
+**Expanded mode** (horizontal items) — items are sized to their content, with a minimum of
+`--m3e-nav-bar-horizontal-item-width` (`7rem`), and the set is centred in the bar. Because a
+horizontal label is not wrapped or truncated, a set of long labels can need more width than a phone
+provides. In that case the bar scrolls horizontally rather than painting destinations outside
+itself, so every destination stays reachable. Prefer `mode="auto"`, which selects compact
+presentation at compact widths and avoids the scroll.
+
+In both modes the bar never renders a destination outside its own box: it either fits the
+destinations or scrolls them.
 
 ### 🗂️ m3e-nav-item
 
