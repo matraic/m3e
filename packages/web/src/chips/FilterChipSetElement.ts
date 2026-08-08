@@ -192,7 +192,17 @@ export class M3eFilterChipSetElement extends Labelled(
 
   /** @private */
   #updateChipRole(): void {
-    this.chips.forEach((x) => (x.role = this.multi ? "button" : "radio"));
+    this.chips.forEach((x) => {
+      if (this.multi) {
+        x.role = "button";
+        x.ariaPressed = `${x.selected}`;
+        x.ariaSelected = x.ariaChecked = null;
+      } else {
+        x.role = "radio";
+        x.ariaChecked = `${x.selected}`;
+        x.ariaPressed = x.ariaSelected = null;
+      }
+    });
   }
 }
 
