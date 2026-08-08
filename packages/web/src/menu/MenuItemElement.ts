@@ -163,8 +163,8 @@ export class M3eMenuItemElement extends LinkButton(Role(MenuItemElementBase, "me
 
   /** @internal @inheritdoc */
   protected override _renderContent(): unknown {
-    return html`<slot name="icon" aria-hidden="true" @slotchange="${this.#iconSlotChangeHandler}"></slot>
-      <span class="content"><slot @slotchange="${this.#defaultSlotChangeHandler}"></slot></span>
+    return html`<slot name="icon" aria-hidden="true" @slotchange=${this.#iconSlotChangeHandler}></slot>
+      <span class="content"><slot @slotchange=${this.#defaultSlotChangeHandler}></slot></span>
       ${this._hasSubmenu
         ? M3eDirectionality.current === "ltr"
           ? html`<svg class="trailing-icon" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor">
@@ -173,7 +173,7 @@ export class M3eMenuItemElement extends LinkButton(Role(MenuItemElementBase, "me
           : html`<svg class="trailing-icon" aria-hidden="true" viewBox="0 -960 960 960" fill="currentColor">
               <path d="M560-280 360-480l200-200v400Z" />
             </svg>`
-        : html`<slot name="trailing-icon" aria-hidden="true" @slotchange="${this.#trailingIconSlotChangeHandler}">
+        : html`<slot name="trailing-icon" aria-hidden="true" @slotchange=${this.#trailingIconSlotChangeHandler}>
           </slot>`}`;
   }
 

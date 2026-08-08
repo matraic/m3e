@@ -151,14 +151,14 @@ export class M3eTimepickerInputPeriodToggleElement extends Role(LitElement, "rad
   protected override render(): unknown {
     const format = new Intl.DateTimeFormat(navigator.language, { hour: "numeric", hour12: true });
 
-    return html`<div class="base" tabindex="-1" @keydown="${this.#handleKeyDown}">
+    return html`<div class="base" tabindex="-1" @keydown=${this.#handleKeyDown}>
       <div
         id="am"
         class="period-button"
         role="radio"
         aria-checked="${this.period === "am" ? "true" : "false"}"
         tabindex="${this.period === "am" ? "0" : "-1"}"
-        @click="${this.#handleClick}"
+        @click=${this.#handleClick}
       >
         <m3e-focus-ring class="focus-ring" for="am"></m3e-focus-ring>
         <m3e-state-layer class="state-layer" for="am"></m3e-state-layer>
@@ -172,7 +172,7 @@ export class M3eTimepickerInputPeriodToggleElement extends Role(LitElement, "rad
         role="radio"
         aria-checked="${this.period === "pm" ? "true" : "false"}"
         tabindex="${this.period === "pm" ? "0" : "-1"}"
-        @click="${this.#handleClick}"
+        @click=${this.#handleClick}
       >
         <m3e-focus-ring class="focus-ring" for="pm"></m3e-focus-ring>
         <m3e-state-layer class="state-layer" for="pm"></m3e-state-layer>

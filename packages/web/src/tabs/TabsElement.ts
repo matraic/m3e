@@ -367,11 +367,11 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       <m3e-slide
         class="tabs"
         selected-index="${ifDefined(panelIndex)}"
-        @pointerdown="${this.#handleTabsPointerDown}"
-        @pointermove="${this.#handleTabsPointerMove}"
-        @pointerup="${this.#handleTabsPointerUp}"
-        @pointercancel="${this.#handleTabsPointerCancel}"
-        @lostpointercapture="${this.#handleTabsLostPointerCapture}"
+        @pointerdown=${this.#handleTabsPointerDown}
+        @pointermove=${this.#handleTabsPointerMove}
+        @pointerup=${this.#handleTabsPointerUp}
+        @pointercancel=${this.#handleTabsPointerCancel}
+        @lostpointercapture=${this.#handleTabsLostPointerCapture}
       >
         <slot name="panel"></slot>
       </m3e-slide>
@@ -388,7 +388,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       ?disabled="${this.disablePagination === "auto"
         ? matchMedia("(hover: none) and (pointer: coarse)").matches
         : this.disablePagination}"
-      @pagination-changed="${this.#handleTabsPaginationChange}"
+      @pagination-changed=${this.#handleTabsPaginationChange}
     >
       <slot name="prev-icon" slot="prev-icon">
         ${M3eDirectionality.current === "ltr"
@@ -411,9 +411,9 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       <div class="header" role="tablist">
         <div class="tabs">
           <slot
-            @slotchange="${this.#handleSlotChange}"
-            @keydown="${this.#handleKeyDown}"
-            @change="${this.#handleChange}"
+            @slotchange=${this.#handleSlotChange}
+            @keydown=${this.#handleKeyDown}
+            @change=${this.#handleChange}
           ></slot>
         </div>
         <div class="ink-bar" aria-hidden="true">

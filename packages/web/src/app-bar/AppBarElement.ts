@@ -176,23 +176,23 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
       case "small":
         return html`<div class="base">
           <div class="leading-icon">
-            <slot name="leading" @slotchange="${this.#handleLeadingIconSlotChange}">
-              <slot name="leading-icon" @slotchange="${this.#handleDeprecatedSlotChange}"></slot>
+            <slot name="leading" @slotchange=${this.#handleLeadingIconSlotChange}>
+              <slot name="leading-icon" @slotchange=${this.#handleDeprecatedSlotChange}></slot>
             </slot>
           </div>
           <div class="heading">
             <div class="label">
               <div class="title">
-                <slot name="title" @slotchange="${this.#handleTitleSlotChange}"></slot>
+                <slot name="title" @slotchange=${this.#handleTitleSlotChange}></slot>
               </div>
               <div class="subtitle">
-                <slot name="subtitle" @slotchange="${this.#handleSubtitleSlotChange}"></slot>
+                <slot name="subtitle" @slotchange=${this.#handleSubtitleSlotChange}></slot>
               </div>
             </div>
           </div>
           <div class="trailing-icon">
-            <slot name="trailing" @slotchange="${this.#handleTrailingIconsSlotChange}">
-              <slot name="trailing-icon" @slotchange="${this.#handleDeprecatedSlotChange}"></slot>
+            <slot name="trailing" @slotchange=${this.#handleTrailingIconsSlotChange}>
+              <slot name="trailing-icon" @slotchange=${this.#handleDeprecatedSlotChange}></slot>
             </slot>
           </div>
         </div>`;
@@ -201,24 +201,24 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
         return html`<div class="base">
           <div class="heading">
             <div class="leading-icon">
-              <slot name="leading" @slotchange="${this.#handleLeadingIconSlotChange}">
-                <slot name="leading-icon" @slotchange="${this.#handleDeprecatedSlotChange}"></slot>
+              <slot name="leading" @slotchange=${this.#handleLeadingIconSlotChange}>
+                <slot name="leading-icon" @slotchange=${this.#handleDeprecatedSlotChange}></slot>
               </slot>
             </div>
             <div class="spacer"></div>
             <div class="trailing-icon">
-              <slot name="trailing" @slotchange="${this.#handleTrailingIconsSlotChange}">
-                <slot name="trailing-icon" @slotchange="${this.#handleDeprecatedSlotChange}"></slot>
+              <slot name="trailing" @slotchange=${this.#handleTrailingIconsSlotChange}>
+                <slot name="trailing-icon" @slotchange=${this.#handleDeprecatedSlotChange}></slot>
               </slot>
             </div>
           </div>
           <div class="spacer"></div>
           <div class="label">
             <div class="title">
-              <slot name="title" @slotchange="${this.#handleTitleSlotChange}"></slot>
+              <slot name="title" @slotchange=${this.#handleTitleSlotChange}></slot>
             </div>
             <div class="subtitle">
-              <slot name="subtitle" @slotchange="${this.#handleSubtitleSlotChange}"></slot>
+              <slot name="subtitle" @slotchange=${this.#handleSubtitleSlotChange}></slot>
             </div>
           </div>
         </div>`;

@@ -234,9 +234,9 @@ export class M3eInputChipSetElement
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot @keydown="${this.#handleKeyDown}" @slotchange="${this.#handleSlotChange}"></slot>
+    return html`<slot @keydown=${this.#handleKeyDown} @slotchange=${this.#handleSlotChange}></slot>
       <span role="row">
-        <span role="gridcell"><slot name="input" @slotchange="${this.#handleInputSlotChange}"></slot></span>
+        <span role="gridcell"><slot name="input" @slotchange=${this.#handleInputSlotChange}></slot></span>
       </span> `;
   }
 

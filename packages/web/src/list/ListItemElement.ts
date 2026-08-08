@@ -463,17 +463,17 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
 
   /** @internal */
   protected _renderBase(): unknown {
-    return html`<slot name="leading" @slotchange="${this._handleLeadingSlotChange}">
-        <slot name="leading-icon" @slotchange="${this._handleLeadingSlotChange}"></slot>
+    return html`<slot name="leading" @slotchange=${this._handleLeadingSlotChange}>
+        <slot name="leading-icon" @slotchange=${this._handleLeadingSlotChange}></slot>
       </slot>
       <div class="content">
         <slot name="overline"></slot>
         <slot></slot>
         <slot name="supporting-text"></slot>
       </div>
-      <slot name="trailing" @slotchange="${this._handleTrailingSlotChange}">
-        <slot name="trailing-supporting-text" @slotchange="${this._handleTrailingSlotChange}"></slot>
-        <slot name="trailing-icon" @slotchange="${this._handleTrailingSlotChange}"></slot>
+      <slot name="trailing" @slotchange=${this._handleTrailingSlotChange}>
+        <slot name="trailing-supporting-text" @slotchange=${this._handleTrailingSlotChange}></slot>
+        <slot name="trailing-icon" @slotchange=${this._handleTrailingSlotChange}></slot>
       </slot>`;
   }
 

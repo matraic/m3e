@@ -298,7 +298,7 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
             mode="${this.highlightMode}"
             ?disabled="${this.disableHighlight || this.selected}"
           >
-            <slot @slotchange="${this.#handleSlotChange}"></slot>
+            <slot @slotchange=${this.#handleSlotChange}></slot>
           </m3e-text-highlight>
         </m3e-text-overflow>
       </div>

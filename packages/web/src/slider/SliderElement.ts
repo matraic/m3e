@@ -500,12 +500,12 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     return html`<div
       class="base"
       tabindex="${ifDefined(!this.disabled ? "-1" : undefined)}"
-      @pointerdown="${this.#handlePointerDown}"
-      @pointermove="${this.#handlePointerMove}"
-      @pointerup="${this.#handlePointerUp}"
-      @keydown="${this.#handleKeyDown}"
-      @keyup="${this.#handleKeyUp}"
-      @value-change="${this.#handleThumbChange}"
+      @pointerdown=${this.#handlePointerDown}
+      @pointermove=${this.#handlePointerMove}
+      @pointerup=${this.#handlePointerUp}
+      @keydown=${this.#handleKeyDown}
+      @keyup=${this.#handleKeyUp}
+      @value-change=${this.#handleThumbChange}
     >
       <div class="track" aria-hidden="true">
         <div class="track-inactive start"></div>
@@ -513,7 +513,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
         <div class="track-inactive end"></div>
       </div>
       <div class="ticks" aria-hidden="true">${this._ticks.map((x) => this.#renderTick(x))}</div>
-      <slot @slotchange="${this.#handleSlotChange}"></slot>
+      <slot @slotchange=${this.#handleSlotChange}></slot>
     </div>`;
   }
 

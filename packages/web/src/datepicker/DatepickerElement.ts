@@ -639,17 +639,17 @@ export class M3eDatepickerElement extends HtmlFor(
   #renderCalendar(): unknown {
     // Calendar is rendered only when open
     return this._open
-      ? html`<m3e-calendar class="calendar" @change="${this.#handleCalendarChange}"></m3e-calendar>`
+      ? html`<m3e-calendar class="calendar" @change=${this.#handleCalendarChange}></m3e-calendar>`
       : nothing;
   }
 
   /** @private */
   #renderActions(): unknown {
     return html`<div class="actions">
-      ${this.clearable ? html`<m3e-button @click="${this.#handleClearClick}">${this.clearLabel}</m3e-button>` : nothing}
+      ${this.clearable ? html`<m3e-button @click=${this.#handleClearClick}>${this.clearLabel}</m3e-button>` : nothing}
       <div class="spacer" aria-hidden="true"></div>
-      <m3e-button @click="${this.#handleDismissClick}">${this.dismissLabel}</m3e-button>
-      <m3e-button @click="${this.#handleConfirmClick}">${this.confirmLabel}</m3e-button>
+      <m3e-button @click=${this.#handleDismissClick}>${this.dismissLabel}</m3e-button>
+      <m3e-button @click=${this.#handleConfirmClick}>${this.confirmLabel}</m3e-button>
     </div>`;
   }
 

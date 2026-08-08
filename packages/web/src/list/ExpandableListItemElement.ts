@@ -293,9 +293,9 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
         ?disabled="${this.disabled}"
         aria-expanded="${this.open}"
         aria-controls="${this.#contentId}"
-        @click="${this.#handleHeaderClick}"
+        @click=${this.#handleHeaderClick}
       >
-        <slot name="leading" slot="leading" @slotchange="${this._handleLeadingSlotChange}"></slot>
+        <slot name="leading" slot="leading" @slotchange=${this._handleLeadingSlotChange}></slot>
         <slot name="overline" slot="overline"></slot>
         <slot></slot>
         <slot name="supporting-text" slot="supporting-text"></slot>
@@ -315,12 +315,12 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
         role="list"
         aria-labelledby="${this.#headerId}"
         ?open="${this.open}"
-        @opening="${this.#handleCollapsibleEvent}"
-        @opened="${this.#handleCollapsibleEvent}"
-        @closing="${this.#handleCollapsibleEvent}"
-        @closed="${this.#handleCollapsibleEvent}"
+        @opening=${this.#handleCollapsibleEvent}
+        @opened=${this.#handleCollapsibleEvent}
+        @closing=${this.#handleCollapsibleEvent}
+        @closed=${this.#handleCollapsibleEvent}
       >
-        <slot name="items" @slotchange="${this.#handleSlotChange}"></slot>
+        <slot name="items" @slotchange=${this.#handleSlotChange}></slot>
       </m3e-collapsible>
     </div>`;
   }

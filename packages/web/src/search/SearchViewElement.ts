@@ -268,7 +268,7 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
         aria-labelledby="${ifDefined(this.open ? "header" : undefined)}"
         class="view"
         tabindex="-1"
-        @keydown="${this.#handleKeyDown}"
+        @keydown=${this.#handleKeyDown}
       >
         <m3e-focus-trap ?disabled="${!this.open}">
           <div class="header" id="header">
@@ -277,7 +277,7 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
               ${this.open
                 ? html`<slot name="open-leading" slot="leading"></slot>`
                 : html`<slot name="closed-leading" slot="leading"></slot>`}
-              <slot name="input" slot="input" @slotchange="${this.#handleInputSlotChange}"></slot>
+              <slot name="input" slot="input" @slotchange=${this.#handleInputSlotChange}></slot>
               ${this.#renderClearButton()}
               ${this.open
                 ? html`<slot name="open-trailing" slot="trailing"></slot>`
@@ -317,7 +317,7 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
       class="close"
       slot="leading"
       aria-label="${this.closeLabel}"
-      @click="${this.#handleCloseClick}"
+      @click=${this.#handleCloseClick}
     >
       <slot name="close-icon">
         <svg class="close-icon" viewBox="0 -960 960 960" fill="currentColor">
@@ -335,7 +335,7 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
       class="clear"
       slot="trailing"
       aria-label="${this.open && !this._clearable ? this.closeLabel : this.clearLabel}"
-      @click="${this.#handleClearClick}"
+      @click=${this.#handleClearClick}
     >
       <slot name="clear-icon">
         <svg class="clear-icon" viewBox="0 -960 960 960" fill="currentColor">

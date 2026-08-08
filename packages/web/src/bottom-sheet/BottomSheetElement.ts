@@ -592,9 +592,9 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
         <m3e-elevation class="elevation"></m3e-elevation>
         <div
           class="header"
-          @pointerdown="${this.#handleHeaderPointerDown}"
-          @pointermove="${this.#handleHeaderPointerMove}"
-          @pointerup="${this.#handleHeaderPointerUp}"
+          @pointerdown=${this.#handleHeaderPointerDown}
+          @pointermove=${this.#handleHeaderPointerMove}
+          @pointerup=${this.#handleHeaderPointerUp}
         >
           ${this.handle
             ? html`<div class="handle-row">
@@ -604,8 +604,8 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
                   role="button"
                   aria-label="${this.handleLabel}"
                   tabindex="0"
-                  @click="${this.#handleDragHandleClick}"
-                  @keydown="${this.#handleDragHandleKeyDown}"
+                  @click=${this.#handleDragHandleClick}
+                  @keydown=${this.#handleDragHandleKeyDown}
                 >
                   <m3e-focus-ring class="focus-ring" for="handle"></m3e-focus-ring>
                   <div class="handle-touch" aria-hidden="true"></div>

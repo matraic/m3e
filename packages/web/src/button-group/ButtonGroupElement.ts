@@ -347,7 +347,7 @@ export class M3eButtonGroupElement extends Role(LitElement, "group") {
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base">
-      <slot @slotchange="${this.#updateButtons}" @change="${this.#handleChange}"></slot>
+      <slot @slotchange=${this.#updateButtons} @change=${this.#handleChange}></slot>
     </div>`;
   }
 

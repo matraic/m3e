@@ -634,7 +634,7 @@ export class M3eTimepickerElement extends HtmlFor(
             minute-label="${this.minuteLabel}"
             second-label="${this.secondLabel}"
             orientation="${this.currentOrientation === "vertical" ? "horizontal" : "vertical"}"
-            @change="${this.#handleInputChange}"
+            @change=${this.#handleInputChange}
           ></m3e-timepicker-input>
 
           <m3e-collapsible
@@ -655,8 +655,8 @@ export class M3eTimepickerElement extends HtmlFor(
     return html`<div class="actions">
       ${this.#renderModeToggleButton()}
       <div class="spacer" aria-hidden="true"></div>
-      <m3e-button @click="${this.#handleDismissClick}">${this.dismissLabel}</m3e-button>
-      <m3e-button ?disabled="${this._invalid}" @click="${this.#handleConfirmClick}">${this.confirmLabel}</m3e-button>
+      <m3e-button @click=${this.#handleDismissClick}>${this.dismissLabel}</m3e-button>
+      <m3e-button ?disabled="${this._invalid}" @click=${this.#handleConfirmClick}>${this.confirmLabel}</m3e-button>
     </div>`;
   }
 
@@ -667,7 +667,7 @@ export class M3eTimepickerElement extends HtmlFor(
       aria-label="${this.modeToggleLabel}"
       aria-expanded="${this.currentMode === "dial"}"
       aria-controls="dial"
-      @click="${this.#handleModeClick}"
+      @click=${this.#handleModeClick}
     >
       ${this.currentMode === "dial"
         ? svg`<svg viewBox="0 -960 960 960" fill="currentColor">

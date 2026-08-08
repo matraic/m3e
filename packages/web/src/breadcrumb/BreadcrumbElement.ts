@@ -61,8 +61,8 @@ export class M3eBreadcrumbElement extends Role(LitElement, "navigation") {
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base" role="list">
-      <slot @slotchange="${this.#handleSlotChange}"></slot>
-      <slot name="separator" @slotchange="${this.#handleSeparatorSlotChange}"></slot>
+      <slot @slotchange=${this.#handleSlotChange}></slot>
+      <slot name="separator" @slotchange=${this.#handleSeparatorSlotChange}></slot>
     </div>`;
   }
 

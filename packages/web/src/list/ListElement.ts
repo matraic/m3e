@@ -187,7 +187,7 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot @slotchange="${this.#handleSlotChange}"></slot>`;
+    return html`<slot @slotchange=${this.#handleSlotChange}></slot>`;
   }
 
   /** @private */

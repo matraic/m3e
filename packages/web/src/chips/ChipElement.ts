@@ -313,7 +313,7 @@ export class M3eChipElement extends AttachInternals(LitElement) {
 
   /** @internal */
   protected _renderIcon(): unknown {
-    return html`<slot name="icon" aria-hidden="true" @slotchange="${this.#handleIconSlotChange}"></slot>`;
+    return html`<slot name="icon" aria-hidden="true" @slotchange=${this.#handleIconSlotChange}></slot>`;
   }
 
   /** @internal */
@@ -321,13 +321,13 @@ export class M3eChipElement extends AttachInternals(LitElement) {
     return html`<slot
       name="trailing-icon"
       aria-hidden="true"
-      @slotchange="${this.#handleTrailingIconSlotChange}"
+      @slotchange=${this.#handleTrailingIconSlotChange}
     ></slot>`;
   }
 
   /** @internal */
   protected _renderSlot(): unknown {
-    return html`<slot @slotchange="${this.#handleSlotChange}"></slot>`;
+    return html`<slot @slotchange=${this.#handleSlotChange}></slot>`;
   }
 
   /** @private */

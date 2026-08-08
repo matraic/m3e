@@ -259,14 +259,14 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
 
   /** @private */
   #renderActionButton(): unknown {
-    return !this.action ? nothing : html`<m3e-button @click="${this.#handleActionClick}">${this.action}</m3e-button>`;
+    return !this.action ? nothing : html`<m3e-button @click=${this.#handleActionClick}>${this.action}</m3e-button>`;
   }
 
   /** @private */
   #renderCloseButton(): unknown {
     return !this.dismissible
       ? nothing
-      : html`<m3e-icon-button aria-label="${this.closeLabel}" @click="${this.hidePopover}">
+      : html`<m3e-icon-button aria-label="${this.closeLabel}" @click=${this.hidePopover}>
           <slot name="close-icon">
             <svg class="close-icon" viewBox="0 -960 960 960" fill="currentColor">
               <path

@@ -185,13 +185,13 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="base" @state-change="${this.#handleOptionStateChange}">
+    return html`<div class="base" @state-change=${this.#handleOptionStateChange}>
       <slot></slot>
       <div class="no-data" aria-hidden="true">
-        <slot name="no-data" @slotchange="${this.#handleNoDataSlotChange}"></slot>
+        <slot name="no-data" @slotchange=${this.#handleNoDataSlotChange}></slot>
       </div>
       <div class="loading" aria-hidden="true">
-        <slot name="loading" @slotchange="${this.#handleLoadingSlotChange}"> </slot>
+        <slot name="loading" @slotchange=${this.#handleLoadingSlotChange}> </slot>
       </div>
     </div>`;
   }

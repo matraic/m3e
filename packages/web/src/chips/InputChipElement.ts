@@ -227,9 +227,9 @@ export class M3eInputChipElement extends DisabledInteractive(Disabled(Role(M3eCh
           class="cell"
           role="gridcell"
           tabindex="${ifDefined(this.disabled ? undefined : "-1")}"
-          @keydown="${this.#handleKeyDown}"
+          @keydown=${this.#handleKeyDown}
         >
-          <slot name="avatar" @slotchange="${this.#handleAvatarSlotChange}"></slot>
+          <slot name="avatar" @slotchange=${this.#handleAvatarSlotChange}></slot>
           ${this._renderIcon()}
           <div class="label">${this._renderSlot()}</div>
           <div class="touch" aria-hidden="true"></div>
@@ -250,7 +250,7 @@ export class M3eInputChipElement extends DisabledInteractive(Disabled(Role(M3eCh
             tabindex="-1"
             ?disabled="${this.disabled}"
             ?disabled-interactive="${this.disabledInteractive}"
-            @click="${this.#handleRemoveButtonClick}"
+            @click=${this.#handleRemoveButtonClick}
           >
             <slot name="remove-icon">
               <svg class="remove-icon" viewBox="0 -960 960 960" fill="currentColor">

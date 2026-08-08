@@ -437,7 +437,7 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="base" @click="${this.#handleClick}">
+    return html`<div class="base" @click=${this.#handleClick}>
         <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"></m3e-state-layer>
         <m3e-focus-ring class="focus-ring" inward ?disabled="${this.disabled}"></m3e-focus-ring>
         <m3e-ripple class="ripple" ?disabled="${this.disabled}"></m3e-ripple>
@@ -448,7 +448,7 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
               <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
             </svg>
           </slot>
-          <slot name="open-toggle-icon" @slotchange="${this.#handleOpenToggleIconSlotChange}"></slot>
+          <slot name="open-toggle-icon" @slotchange=${this.#handleOpenToggleIconSlotChange}></slot>
         </div>
         ${this._multi
           ? html`<m3e-pseudo-checkbox
@@ -456,13 +456,13 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
               ?checked="${this.selected}"
               ?indeterminate="${this.indeterminate}"
               ?disabled="${this.disabled}"
-              @click="${this.#handleCheckboxClick}"
+              @click=${this.#handleCheckboxClick}
             >
             </m3e-pseudo-checkbox>`
           : nothing}
         <div class="icon" aria-hidden="true">${this.#renderIcon()}</div>
         <div class="label">
-          <slot name="label" @slotchange="${this.#handleSlotChange}"></slot>
+          <slot name="label" @slotchange=${this.#handleSlotChange}></slot>
         </div>
       </div>
       <m3e-collapsible
@@ -470,20 +470,20 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
         role="group"
         aria-hidden="${ifDefined(this._hasChildItems ? undefined : "true")}"
         ?open="${this.open}"
-        @opening="${this.#handleCollapsibleEvent}"
-        @opened="${this.#handleCollapsibleEvent}"
-        @closing="${this.#handleCollapsibleEvent}"
-        @closed="${this.#handleCollapsibleEvent}"
+        @opening=${this.#handleCollapsibleEvent}
+        @opened=${this.#handleCollapsibleEvent}
+        @closing=${this.#handleCollapsibleEvent}
+        @closed=${this.#handleCollapsibleEvent}
       >
-        <slot @slotchange="${this.#handleItemSlotChange}"></slot>
+        <slot @slotchange=${this.#handleItemSlotChange}></slot>
       </m3e-collapsible>`;
   }
 
   /** @private */
   #renderIcon(): unknown {
-    const icon = html`<slot name="icon" @slotchange="${this.#handleIconSlotChange}"></slot>`;
+    const icon = html`<slot name="icon" @slotchange=${this.#handleIconSlotChange}></slot>`;
     return this.selected && !this.hasChildItems
-      ? html`<slot name="selected-icon" @slotchange="${this.#handleIconSlotChange}">${icon}</slot>`
+      ? html`<slot name="selected-icon" @slotchange=${this.#handleIconSlotChange}>${icon}</slot>`
       : icon;
   }
 

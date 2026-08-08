@@ -184,7 +184,7 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
       tabindex="-1"
       aria-label="${this.previousPageLabel}"
       ?disabled="${!this._canPageStart}"
-      @click="${this.#pageStart}"
+      @click=${this.#pageStart}
     >
       <slot name="prev-icon">
         ${M3eDirectionality.current === "ltr" || this.vertical
@@ -202,7 +202,7 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
       tabindex="-1"
       aria-label="${this.nextPageLabel}"
       ?disabled="${!this._canPageEnd}"
-      @click="${this.#pageEnd}"
+      @click=${this.#pageEnd}
     >
       <slot name="next-icon">
         ${M3eDirectionality.current === "ltr" || this.vertical
@@ -216,7 +216,7 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
     </m3e-icon-button>`;
 
     return html`${this._canPage ? prevButton : nothing}
-      <div class="content" @scroll="${this._updatePaging}"><slot></slot></div>
+      <div class="content" @scroll=${this._updatePaging}><slot></slot></div>
       ${this._canPage ? nextButton : nothing}`;
   }
 

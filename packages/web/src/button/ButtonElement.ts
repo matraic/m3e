@@ -570,7 +570,7 @@ export class M3eButtonElement extends KeyboardClick(
               class="icon"
               name="selected-icon"
               aria-hidden="true"
-              @slotchange="${this.#handleSelectedIconSlotChange}"
+              @slotchange=${this.#handleSelectedIconSlotChange}
             ></slot>`
           : nothing}
         <slot class="icon" name="icon" aria-hidden="true"></slot>

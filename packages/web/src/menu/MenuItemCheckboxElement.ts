@@ -154,10 +154,10 @@ export class M3eMenuItemCheckboxElement extends Checked(Role(MenuItemElementBase
         <svg class="check" viewBox="0 -960 960 960" aria-hidden="true">
           <path fill="currentColor" d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
         </svg>
-        <slot name="icon" @slotchange="${this.#handleIconSlotChange}"></slot>
+        <slot name="icon" @slotchange=${this.#handleIconSlotChange}></slot>
       </div>
       <slot></slot>
-      <slot name="trailing-icon" aria-hidden="true" @slotchange="${this.#handleTrailingIconSlotChange}"></slot>`;
+      <slot name="trailing-icon" aria-hidden="true" @slotchange=${this.#handleTrailingIconSlotChange}></slot>`;
   }
 
   /** @internal */

@@ -231,7 +231,7 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot ?inert="${!this.loaded}" @slotchange="${this.#handleSlotChange}"></slot>`;
+    return html`<slot ?inert="${!this.loaded}" @slotchange=${this.#handleSlotChange}></slot>`;
   }
 
   /** @private */

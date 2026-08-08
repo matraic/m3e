@@ -243,7 +243,7 @@ export class M3eSelectionIndicatorElement extends SuppressInitialAnimation(
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="base" @animationend="${this.#handleAnimationEnd}">
+    return html`<div class="base" @animationend=${this.#handleAnimationEnd}>
       <div class="indicator"></div>
       <m3e-state-layer class="state-layer" enable-pressed ?disabled="${this.disabled}"></m3e-state-layer>
     </div>`;

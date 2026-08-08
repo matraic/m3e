@@ -77,7 +77,7 @@ export class M3eAccordionElement extends LitElement {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot @slotchange="${this.#handleSlotChange}" @opening="${this.#handleOpening}"></slot>`;
+    return html`<slot @slotchange=${this.#handleSlotChange} @opening=${this.#handleOpening}></slot>`;
   }
 
   /** @private */

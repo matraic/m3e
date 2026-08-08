@@ -324,7 +324,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="base"><slot @slotchange="${this.#handleSlotChange}"></slot></div>`;
+    return html`<div class="base"><slot @slotchange=${this.#handleSlotChange}></slot></div>`;
   }
 
   /** @private */

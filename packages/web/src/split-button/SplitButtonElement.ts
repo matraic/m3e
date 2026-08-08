@@ -379,8 +379,8 @@ export class M3eSplitButtonElement extends Role(LitElement, "group") {
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<m3e-button-group class="base" disable-role variant="connected" size="${this.size}">
-      <slot name="leading-button" @slotchange="${this.#handleLeadingSlotChange}"></slot>
-      <slot name="trailing-button" @slotchange="${this.#handleTrailingSlotChange}"></slot>
+      <slot name="leading-button" @slotchange=${this.#handleLeadingSlotChange}></slot>
+      <slot name="trailing-button" @slotchange=${this.#handleTrailingSlotChange}></slot>
     </m3e-button-group>`;
   }
 

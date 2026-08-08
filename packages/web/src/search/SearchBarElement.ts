@@ -99,11 +99,11 @@ export class M3eSearchBarElement extends AttachInternals(LitElement) {
   /** @inheritdoc */
   protected override render(): unknown {
     return html`
-      <div class="base" @click="${this.#handleContainerClick}">
-        <slot name="leading" @slotchange="${this.#handleLeadingSlotChange}"></slot>
-        <slot name="input" @slotchange="${this.#handleInputSlotChange}"></slot>
+      <div class="base" @click=${this.#handleContainerClick}>
+        <slot name="leading" @slotchange=${this.#handleLeadingSlotChange}></slot>
+        <slot name="input" @slotchange=${this.#handleInputSlotChange}></slot>
         ${this.#renderClearButton()}
-        <slot name="trailing" @slotchange="${this.#handleTrailingSlotChange}"></slot>
+        <slot name="trailing" @slotchange=${this.#handleTrailingSlotChange}></slot>
       </div>
     `;
   }
@@ -112,7 +112,7 @@ export class M3eSearchBarElement extends AttachInternals(LitElement) {
   #renderClearButton(): unknown {
     return this.clearable
       ? html`<div class="clear">
-          <m3e-icon-button aria-label="${this.clearLabel}" @click="${this.#handleClearClick}">
+          <m3e-icon-button aria-label="${this.clearLabel}" @click=${this.#handleClearClick}>
             <slot name="clear-icon">
               <svg class="clear-icon" viewBox="0 -960 960 960" fill="currentColor">
                 <path

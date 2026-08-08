@@ -362,10 +362,10 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
       <div class="scroll-container">
         <div class="header">
           <div class="overline">
-            <slot name="overline" @slotchange="${this.#handleOverlineSlotChange}"></slot>
+            <slot name="overline" @slotchange=${this.#handleOverlineSlotChange}></slot>
           </div>
           <div class="title">
-            <slot name="title" @slotchange="${this.#handleTitleSlotChange}"></slot>
+            <slot name="title" @slotchange=${this.#handleTitleSlotChange}></slot>
           </div>
         </div>
         <slot></slot>
@@ -380,7 +380,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   /** @private */
   #renderNode(node: TocNode): unknown {
     return html`<li>
-      <m3e-toc-item tabindex="-1" .node="${node}" @click="${this.#handleClick}">${node.label}</m3e-toc-item>
+      <m3e-toc-item tabindex="-1" .node="${node}" @click=${this.#handleClick}>${node.label}</m3e-toc-item>
       ${node.nodes.length == 0
         ? nothing
         : html`<ul>

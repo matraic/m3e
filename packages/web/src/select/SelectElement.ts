@@ -366,7 +366,7 @@ export class M3eSelectElement
           </slot>
         </div>
       </div>
-      <div class="options" aria-hidden="true" @state-change="${this.#handleOptionStateChange}">
+      <div class="options" aria-hidden="true" @state-change=${this.#handleOptionStateChange}>
         <slot></slot>
       </div>`;
   }

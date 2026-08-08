@@ -253,17 +253,17 @@ export class M3eRichTooltipElement extends TooltipElementBase {
       popover="manual"
       role="${ifDefined(this._interactive ? "dialog" : undefined)}"
       aria-labelledby="${ifDefined(subheadId)}"
-      @keydown="${this.#handleKeyDown}"
-      @beforetoggle="${this.#handleBeforeToggle}"
-      @toggle="${this.#handleToggle}"
+      @keydown=${this.#handleKeyDown}
+      @beforetoggle=${this.#handleBeforeToggle}
+      @toggle=${this.#handleToggle}
     >
       <m3e-elevation level="3"></m3e-elevation>
       <div class="subhead" id="${ifDefined(subheadId)}">
-        <slot name="subhead" @slotchange="${this.#handleSubheadSlotChange}"></slot>
+        <slot name="subhead" @slotchange=${this.#handleSubheadSlotChange}></slot>
       </div>
-      <div class="content"><slot @slotchange="${this.#handleContentSlotChange}"></slot></div>
+      <div class="content"><slot @slotchange=${this.#handleContentSlotChange}></slot></div>
       <div class="actions">
-        <slot name="actions" @slotchange="${this.#handleActionsSlotChange}"></slot>
+        <slot name="actions" @slotchange=${this.#handleActionsSlotChange}></slot>
       </div>
     </div>`;
   }

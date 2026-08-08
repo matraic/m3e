@@ -359,7 +359,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="options" aria-hidden="true" @state-change="${this.#handleOptionStateChange}">
+    return html`<div class="options" aria-hidden="true" @state-change=${this.#handleOptionStateChange}>
       <slot></slot>
     </div>`;
   }

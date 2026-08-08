@@ -108,7 +108,7 @@ export class M3eSlideElement extends AttachInternals(LitElement) {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot @slotchange="${this.#handleSlotChange}"></slot>`;
+    return html`<slot @slotchange=${this.#handleSlotChange}></slot>`;
   }
 
   /** @private */

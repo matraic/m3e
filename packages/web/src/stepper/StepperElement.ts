@@ -462,9 +462,9 @@ export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitEl
       class="header"
       role="tablist"
       aria-orientation="${ifDefined(this[selectionManager].vertical ? "vertical" : undefined)}"
-      @change="${this.#handleChange}"
+      @change=${this.#handleChange}
     >
-      <slot name="step" @slotchange="${this.#handleSlotChange}" @keydown="${this.#handleKeyDown}"></slot>
+      <slot name="step" @slotchange=${this.#handleSlotChange} @keydown=${this.#handleKeyDown}></slot>
     </div>`;
   }
 

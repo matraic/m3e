@@ -192,8 +192,8 @@ export class M3eTooltipElement extends TooltipElementBase {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="base" popover="manual" @toggle="${this.#handleToggle}">
-      <slot @slotchange="${this.#handleSlotChange}"></slot>
+    return html`<div class="base" popover="manual" @toggle=${this.#handleToggle}>
+      <slot @slotchange=${this.#handleSlotChange}></slot>
     </div>`;
   }
 

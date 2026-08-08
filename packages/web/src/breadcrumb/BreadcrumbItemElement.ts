@@ -147,8 +147,8 @@ export class M3eBreadcrumbItemElement extends LinkButton(AttachInternals(Role(Li
         download="${ifDefined(this.download || undefined)}"
         rel="${ifDefined(this.rel || undefined)}"
       >
-        <slot name="icon" slot="icon" @slotchange="${this.#handleIconSlotChange}"></slot>
-        <slot @slotchange="${this.#handleSlotChange}"></slot>
+        <slot name="icon" slot="icon" @slotchange=${this.#handleIconSlotChange}></slot>
+        <slot @slotchange=${this.#handleSlotChange}></slot>
       </m3e-breadcrumb-item-button>
       ${this.#renderSeparator()}
     </div>`;

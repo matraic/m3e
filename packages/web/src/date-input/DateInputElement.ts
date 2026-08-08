@@ -560,8 +560,8 @@ export class M3eDateInputElement
     return html` <div
       class="base"
       tabindex="-1"
-      @pointerdown="${this.#handlePointerDown}"
-      @focusout="${this.#handleFocusOut}"
+      @pointerdown=${this.#handlePointerDown}
+      @focusout=${this.#handleFocusOut}
     >
       ${this.#format.map((part) => {
         switch (part.type) {
@@ -662,10 +662,7 @@ export class M3eDateInputElement
           }
 
           case "literal":
-            return html`<span
-              class="segment literal"
-              aria-hidden="true"
-              @pointerdown="${this.#handleLiteralPointerDown}"
+            return html`<span class="segment literal" aria-hidden="true" @pointerdown=${this.#handleLiteralPointerDown}
               >${part.value}</span
             >`;
 
@@ -708,14 +705,14 @@ export class M3eDateInputElement
       autocorrect="off"
       inputmode="${ifDefined(id !== "period" ? "numeric" : undefined)}"
       tabindex="${ifDefined(this.disabled ? undefined : id === this._activeField ? 0 : -1)}"
-      @focus="${this.#handleFieldFocus}"
-      @keydown="${this.#handleFieldKeyDown}"
-      @wheel="${this.#handleFieldWheel}"
-      @pointerdown="${this.#handleFieldPointerDown}"
-      @drop="${this.#handleFieldPreventDefault}"
-      @paste="${this.#handleFieldPreventDefault}"
-      @beforeinput="${this.#handleFieldPreventDefaultReadonly}"
-      @input="${this.#handleFieldPreventDefaultReadonly}"
+      @focus=${this.#handleFieldFocus}
+      @keydown=${this.#handleFieldKeyDown}
+      @wheel=${this.#handleFieldWheel}
+      @pointerdown=${this.#handleFieldPointerDown}
+      @drop=${this.#handleFieldPreventDefault}
+      @paste=${this.#handleFieldPreventDefault}
+      @beforeinput=${this.#handleFieldPreventDefaultReadonly}
+      @input=${this.#handleFieldPreventDefaultReadonly}
       >${displayValue ?? (value !== undefined ? String(value).padStart(maxLength, "0") : placeholder)}</span
     >`;
   }

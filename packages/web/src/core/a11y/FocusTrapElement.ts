@@ -34,7 +34,7 @@ export class M3eFocusTrapElement extends Disabled(LitElement) {
       .inert="${this.disabled}"
       tabindex="0"
       aria-hidden="true"
-      @focus="${this.#onFocus}"
+      @focus=${this.#onFocus}
     ></div>`;
     return html`${trap}<slot></slot>${trap}`;
   }

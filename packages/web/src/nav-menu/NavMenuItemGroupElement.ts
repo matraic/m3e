@@ -91,7 +91,7 @@ export class M3eNavMenuItemGroupElement extends AttachInternals(Role(LitElement,
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="label">
-        <slot name="label" @slotchange="${this.#handleLabelSlotChange}"></slot>
+        <slot name="label" @slotchange=${this.#handleLabelSlotChange}></slot>
       </div>
       <slot></slot>`;
   }

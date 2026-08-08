@@ -164,9 +164,9 @@ export class M3eFilterChipSetElement extends Labelled(
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<slot
-      @slotchange="${this.#handleSlotChange}"
-      @keydown="${this.#handleKeyDown}"
-      @change="${this.#handleChange}"
+      @slotchange=${this.#handleSlotChange}
+      @keydown=${this.#handleKeyDown}
+      @change=${this.#handleChange}
     ></slot>`;
   }
 

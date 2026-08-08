@@ -461,7 +461,7 @@ export class M3eFabElement extends KeyboardClick(
       <div class="touch" aria-hidden="true"></div>
       ${this[renderPseudoLink]()}
       <div class="wrapper">
-        <slot class="icon" aria-hidden="true" @slotchange="${this.#handleSlotChange}"></slot>
+        <slot class="icon" aria-hidden="true" @slotchange=${this.#handleSlotChange}></slot>
         <slot class="icon" aria-hidden="true" name="close-icon">
           <svg class="close-icon" viewBox="0 -960 960 960" fill="currentColor">
             <path
@@ -471,7 +471,7 @@ export class M3eFabElement extends KeyboardClick(
         </slot>
         <m3e-collapsible class="label-wrapper" orientation="horizontal" ?open="${this.extended}">
           <div class="label">
-            <slot name="label" @slotchange="${this.#handleSlotChange}"></slot>
+            <slot name="label" @slotchange=${this.#handleSlotChange}></slot>
           </div>
         </m3e-collapsible>
       </div>

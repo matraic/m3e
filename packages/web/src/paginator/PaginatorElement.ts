@@ -324,7 +324,7 @@ export class M3ePaginatorElement extends Role(LitElement, "group") {
               aria-labelledby="${this.#pageSizeLabelId}"
               hide-selection-indicator
               ?disabled="${this.disabled || sizes.length <= 1}"
-              @change="${this.#handleSelectChange}"
+              @change=${this.#handleSelectChange}
             >
               ${sizes.map(
                 (x) =>
@@ -363,7 +363,7 @@ export class M3ePaginatorElement extends Role(LitElement, "group") {
                   id="firstPageButton"
                   aria-label="${this.firstPageLabel}"
                   ?disabled="${this.disabled || !this.hasPreviousPage}"
-                  @click="${this.firstPage}"
+                  @click=${this.firstPage}
                 >
                   <slot name="first-page-icon">
                     <svg viewBox="0 -960 960 960" fill="currentColor">
@@ -376,7 +376,7 @@ export class M3ePaginatorElement extends Role(LitElement, "group") {
             id="previousPageButton"
             aria-label="${this.previousPageLabel}"
             ?disabled="${this.disabled || !this.hasPreviousPage}"
-            @click="${this.previousPage}"
+            @click=${this.previousPage}
           >
             <slot name="previous-page-icon">
               <svg viewBox="0 -960 960 960" fill="currentColor">
@@ -389,7 +389,7 @@ export class M3ePaginatorElement extends Role(LitElement, "group") {
             id="nextPageButton"
             aria-label="${this.nextPageLabel}"
             ?disabled="${this.disabled || !this.hasNextPage}"
-            @click="${this.nextPage}"
+            @click=${this.nextPage}
           >
             <slot name="next-page-icon">
               <svg viewBox="0 -960 960 960" fill="currentColor">
@@ -404,7 +404,7 @@ export class M3ePaginatorElement extends Role(LitElement, "group") {
                   id="lastPageButton"
                   aria-label="${this.lastPageLabel}"
                   ?disabled="${this.disabled || !this.hasNextPage}"
-                  @click="${this.lastPage}"
+                  @click=${this.lastPage}
                 >
                   <slot name="last-page-icon">
                     <svg viewBox="0 -960 960 960" fill="currentColor">

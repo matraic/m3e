@@ -506,7 +506,7 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="base" @click="${this.#handleClick}">
+    return html`<div class="base" @click=${this.#handleClick}>
         <m3e-focus-ring class="focus-ring" inward ?disabled="${this.disabled}"></m3e-focus-ring>
         <m3e-selection-indicator
           class="indicator"
@@ -515,7 +515,7 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
         ></m3e-selection-indicator>
         <div class="icon" aria-hidden="true">${this.#renderIcon()}</div>
         <div class="label">
-          <slot name="label" @slotchange="${this.#handleSlotChange}"></slot>
+          <slot name="label" @slotchange=${this.#handleSlotChange}></slot>
         </div>
         <slot name="badge"></slot>
         <div aria-hidden="true" class="toggle">
@@ -531,20 +531,20 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
         role="group"
         aria-hidden="${ifDefined(this._hasChildItems ? undefined : "true")}"
         ?open="${this._hasChildItems && this.open}"
-        @opening="${this.#handleCollapsibleEvent}"
-        @opened="${this.#handleCollapsibleEvent}"
-        @closing="${this.#handleCollapsibleEvent}"
-        @closed="${this.#handleCollapsibleEvent}"
+        @opening=${this.#handleCollapsibleEvent}
+        @opened=${this.#handleCollapsibleEvent}
+        @closing=${this.#handleCollapsibleEvent}
+        @closed=${this.#handleCollapsibleEvent}
       >
-        <slot @slotchange="${this.#handleItemSlotChange}"></slot>
+        <slot @slotchange=${this.#handleItemSlotChange}></slot>
       </m3e-collapsible>`;
   }
 
   /** @private */
   #renderIcon(): unknown {
-    const icon = html`<slot name="icon" @slotchange="${this.#handleIconSlotChange}"></slot>`;
+    const icon = html`<slot name="icon" @slotchange=${this.#handleIconSlotChange}></slot>`;
     return this.selected && !this.hasChildItems
-      ? html`<slot name="selected-icon" @slotchange="${this.#handleIconSlotChange}">${icon}</slot>`
+      ? html`<slot name="selected-icon" @slotchange=${this.#handleIconSlotChange}>${icon}</slot>`
       : icon;
   }
 

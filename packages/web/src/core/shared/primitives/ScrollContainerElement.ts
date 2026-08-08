@@ -128,7 +128,7 @@ export class M3eScrollContainerElement extends AttachInternals(LitElement) {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot @slotchange="${this._updateScroll}"></slot>`;
+    return html`<slot @slotchange=${this._updateScroll}></slot>`;
   }
 
   /** @private */

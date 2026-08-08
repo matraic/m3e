@@ -354,7 +354,7 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
               period="${this.period}"
               orientation="vertical"
               aria-label="${this.periodToggleLabel}"
-              @change="${this.#handlePeriodChange}"
+              @change=${this.#handlePeriodChange}
             ></m3e-timepicker-input-period-toggle>`
           : nothing}
       </div>
@@ -363,7 +363,7 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
             class="period-toggle"
             period="${this.period}"
             orientation="horizontal"
-            @change="${this.#handlePeriodChange}"
+            @change=${this.#handlePeriodChange}
           ></m3e-timepicker-input-period-toggle>`
         : nothing}`;
   }
@@ -407,10 +407,10 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
         aria-valuemax="${view === "hour" ? 23 : 59}"
         aria-valuenow="${ifDefined(valueText ? pad(this[view]) : undefined)}"
         aria-valuetext="${ifDefined(valueText)}"
-        @focus="${this.#handleFieldFocus}"
-        @keydown="${this.#handleFieldKeyDown}"
-        @input="${this.#handleFieldInput}"
-        @wheel="${this.#handleFieldWheel}"
+        @focus=${this.#handleFieldFocus}
+        @keydown=${this.#handleFieldKeyDown}
+        @input=${this.#handleFieldInput}
+        @wheel=${this.#handleFieldWheel}
         .value="${pad(
           view === "hour"
             ? this.currentFormat === "12"

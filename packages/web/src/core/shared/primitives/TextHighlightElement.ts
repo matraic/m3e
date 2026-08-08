@@ -129,7 +129,7 @@ export class M3eTextHighlightElement extends LitElement {
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot @slotchange="${this.#highlight}"></slot>`;
+    return html`<slot @slotchange=${this.#highlight}></slot>`;
   }
 
   /** @private */

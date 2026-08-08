@@ -183,7 +183,7 @@ export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInterna
   protected override render(): unknown {
     return html`<div class="start">
         <m3e-focus-trap ?disabled="${!this.start || this._startMode === "side" || this.#disableStartFocusTrap}">
-          <slot name="start" @slotchange="${this.#handleStartSlotChange}"></slot>
+          <slot name="start" @slotchange=${this.#handleStartSlotChange}></slot>
         </m3e-focus-trap>
       </div>
       <div
@@ -192,10 +192,10 @@ export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInterna
       >
         <slot></slot>
       </div>
-      <div class="scrim" @click="${this.#handleScrimClick}"></div>
+      <div class="scrim" @click=${this.#handleScrimClick}></div>
       <div class="end">
         <m3e-focus-trap ?disabled="${!this.end || this._endMode === "side" || this.#disableEndFocusTrap}">
-          <slot name="end" @slotchange="${this.#handleEndSlotChange}"></slot>
+          <slot name="end" @slotchange=${this.#handleEndSlotChange}></slot>
         </m3e-focus-trap>
       </div>`;
   }

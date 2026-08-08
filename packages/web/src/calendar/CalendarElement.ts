@@ -551,7 +551,7 @@ export class M3eCalendarElement extends LitElement {
   /** @private */
   #renderHeader(): unknown {
     return html`<div class="header">
-      <m3e-button @click="${this.togglePeriod}">
+      <m3e-button @click=${this.togglePeriod}>
         ${this.periodLabel}
         <svg
           class="${classMap({ rotate: this._activeView !== "month" })}"
@@ -565,7 +565,7 @@ export class M3eCalendarElement extends LitElement {
       <div class="spacer"></div>
       <m3e-icon-button
         ?disabled="${!this.canMovePreviousPeriod}"
-        @click="${this.movePreviousPeriod}"
+        @click=${this.movePreviousPeriod}
         aria-label="${this._activeView === "month"
           ? this.previousMonthLabel
           : this._activeView === "year"
@@ -582,7 +582,7 @@ export class M3eCalendarElement extends LitElement {
       </m3e-icon-button>
       <m3e-icon-button
         ?disabled="${!this.canMoveNextPeriod}"
-        @click="${this.moveNextPeriod}"
+        @click=${this.moveNextPeriod}
         aria-label="${this._activeView === "month"
           ? this.nextMonthLabel
           : this._activeView === "year"
@@ -623,8 +623,8 @@ export class M3eCalendarElement extends LitElement {
           max-date="${ifDefined(this.maxDate?.toISOString())}"
           range-start="${ifDefined(this.rangeStart?.toISOString())}"
           range-end="${ifDefined(this.rangeEnd?.toISOString())}"
-          @active-change="${offset === 0 ? this.#handleActiveChange : undefined}"
-          @change="${offset === 0 ? this.#handleDateChange : undefined}"
+          @active-change=${offset === 0 ? this.#handleActiveChange : undefined}
+          @change=${offset === 0 ? this.#handleDateChange : undefined}
         >
         </m3e-month-view>`;
 
@@ -642,8 +642,8 @@ export class M3eCalendarElement extends LitElement {
           active-date="${activeDate.toISOString()}"
           min-date="${ifDefined(this.minDate?.toISOString())}"
           max-date="${ifDefined(this.maxDate?.toISOString())}"
-          @active-change="${offset === 0 ? this.#handleActiveChange : undefined}"
-          @change="${offset === 0 ? this.#handleMonthChange : undefined}"
+          @active-change=${offset === 0 ? this.#handleActiveChange : undefined}
+          @change=${offset === 0 ? this.#handleMonthChange : undefined}
         ></m3e-year-view>`;
 
       case "multi-year":
@@ -660,8 +660,8 @@ export class M3eCalendarElement extends LitElement {
           active-date="${activeDate.toISOString()}"
           min-date="${ifDefined(this.minDate?.toISOString())}"
           max-date="${ifDefined(this.maxDate?.toISOString())}"
-          @active-change="${offset === 0 ? this.#handleActiveChange : undefined}"
-          @change="${offset === 0 ? this.#handleYearChange : undefined}"
+          @active-change=${offset === 0 ? this.#handleActiveChange : undefined}
+          @change=${offset === 0 ? this.#handleYearChange : undefined}
         >
         </m3e-multi-year-view>`;
     }

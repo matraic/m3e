@@ -56,7 +56,7 @@ export class M3eOptGroupElement extends Role(LitElement, "group") {
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<m3e-text-overflow class="label">
-        <slot name="label" @slotchange="${this.#handleLabelSlotChange}"></slot>
+        <slot name="label" @slotchange=${this.#handleLabelSlotChange}></slot>
       </m3e-text-overflow>
       <slot></slot>`;
   }

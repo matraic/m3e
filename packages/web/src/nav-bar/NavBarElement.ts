@@ -154,7 +154,7 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base">
-      <slot @change="${this.#handleChange}" @slotchange="${this.#handleSlotChange}"></slot>
+      <slot @change=${this.#handleChange} @slotchange=${this.#handleSlotChange}></slot>
     </div>`;
   }
 

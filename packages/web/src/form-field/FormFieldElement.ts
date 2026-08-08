@@ -782,7 +782,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="base" @click="${this.#handleContainerClick}">
+    return html`<div class="base" @click=${this.#handleContainerClick}>
         ${this.variant === "outlined"
           ? html`<div class="outline" aria-hidden="true">
               <div class="outline-start"></div>
@@ -795,23 +795,23 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
             </div>`
           : nothing}
         <div class="prefix">
-          <slot name="prefix" @slotchange="${this.#handlePrefixSlotChange}"></slot>
+          <slot name="prefix" @slotchange=${this.#handlePrefixSlotChange}></slot>
         </div>
         <div class="content">
           <span class="prefix-text"><slot name="prefix-text"></slot></span>
           <span class="input">
-            <slot @slotchange="${this.#handleSlotChange}" @change="${this.#handleControlChange}"></slot>
+            <slot @slotchange=${this.#handleSlotChange} @change=${this.#handleControlChange}></slot>
           </span>
           <span class="suffix-text"><slot name="suffix-text"></slot></span>
           <span class="label">
-            <slot name="label" @slotchange="${this.#handleLabelSlotChange}"></slot>
+            <slot name="label" @slotchange=${this.#handleLabelSlotChange}></slot>
             ${!this.hideRequiredMarker && this._required
               ? html`<span class="required-marker" aria-hidden="true">&nbsp;*</span>`
               : nothing}
           </span>
         </div>
         <div class="suffix">
-          <slot name="suffix" @slotchange="${this.#handleSuffixSlotChange}"></slot>
+          <slot name="suffix" @slotchange=${this.#handleSuffixSlotChange}></slot>
         </div>
       </div>
       <span class="subscript" aria-hidden="true">

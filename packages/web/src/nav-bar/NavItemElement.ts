@@ -570,7 +570,7 @@ export class M3eNavItemElement extends ReconnectedCallback(
             <div class="icon-wrapper" aria-hidden="true">
               <div class="icon">
                 <slot name="icon"></slot>
-                <slot name="selected-icon" @slotchange="${this.#handleSelectedIconSlotChange}"></slot>
+                <slot name="selected-icon" @slotchange=${this.#handleSelectedIconSlotChange}></slot>
               </div>
             </div>
 

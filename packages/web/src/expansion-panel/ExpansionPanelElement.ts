@@ -178,8 +178,8 @@ export class M3eExpansionPanelElement extends Disabled(ReconnectedCallback(Attac
         ?disabled="${this.disabled}"
         aria-expanded="${this.open}"
         aria-controls="${this.#contentId}"
-        @click="${this.#handleHeaderClick}"
-        @keydown="${this.#handleKeyDown}"
+        @click=${this.#handleHeaderClick}
+        @keydown=${this.#handleKeyDown}
       >
         <div slot="toggle-icon" class="toggle">
           <slot name="toggle-icon">${this.#renderToggleIcon()}</slot>
@@ -191,16 +191,16 @@ export class M3eExpansionPanelElement extends Disabled(ReconnectedCallback(Attac
         role="region"
         aria-labelledby="${this.#headerId}"
         ?open="${this.open}"
-        @opening="${this.#handleCollapsibleEvent}"
-        @opened="${this.#handleCollapsibleEvent}"
-        @closing="${this.#handleCollapsibleEvent}"
-        @closed="${this.#handleCollapsibleEvent}"
+        @opening=${this.#handleCollapsibleEvent}
+        @opened=${this.#handleCollapsibleEvent}
+        @closing=${this.#handleCollapsibleEvent}
+        @closed=${this.#handleCollapsibleEvent}
       >
         <div class="content">
           <slot></slot>
         </div>
         <div class="actions">
-          <slot name="actions" @slotchange="${this.#handleActionsSlotChange}"></slot>
+          <slot name="actions" @slotchange=${this.#handleActionsSlotChange}></slot>
         </div>
       </m3e-collapsible>
     </div>`;

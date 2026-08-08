@@ -439,11 +439,11 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
   protected override render(): unknown {
     return html`<div class="base">
       <div class="start" id="start" ?inert="${this.value <= 0}">
-        <slot name="start" @slotchange="${this.#handleStartSlotChange}"></slot>
+        <slot name="start" @slotchange=${this.#handleStartSlotChange}></slot>
       </div>
       ${this.#renderDragHandle()}
       <div class="end" ?inert="${this.value >= 100}">
-        <slot name="end" @slotchange="${this.#handleEndSlotChange}"></slot>
+        <slot name="end" @slotchange=${this.#handleEndSlotChange}></slot>
       </div>
     </div>`;
   }
@@ -465,11 +465,11 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       aria-valuetext="${ifDefined(
         this.valueFormatter?.(this.value, this.currentOrientation, M3eDirectionality.current),
       )}"
-      @pointerdown="${this.#handlePointerDown}"
-      @pointerup="${this.#handlePointerUp}"
-      @pointermove="${this.#handlePointerMove}"
-      @keydown="${this.#handleKeyDown}"
-      @dblclick="${this.#cycleDetent}"
+      @pointerdown=${this.#handlePointerDown}
+      @pointerup=${this.#handlePointerUp}
+      @pointermove=${this.#handlePointerMove}
+      @keydown=${this.#handleKeyDown}
+      @dblclick=${this.#cycleDetent}
     >
       ${this.disabled
         ? nothing

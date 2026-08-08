@@ -237,11 +237,7 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
     return html`<m3e-state-layer class="state-layer"></m3e-state-layer>
       <m3e-elevation class="elevation" level="${this.elevated ? 3 : 0}"></m3e-elevation>
       <div class="base">
-        <slot
-          @click="${this.#handleClick}"
-          @keydown="${this.#handleKeyDown}"
-          @slotchange="${this.#handleSlotChange}"
-        ></slot>
+        <slot @click=${this.#handleClick} @keydown=${this.#handleKeyDown} @slotchange=${this.#handleSlotChange}></slot>
       </div>`;
   }
 

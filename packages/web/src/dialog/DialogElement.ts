@@ -364,10 +364,10 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       role="${ifDefined(this.alert ? "alertdialog" : undefined)}"
       aria-labelledby="m3e-dialog-${this.#id}-header"
       .returnValue="${this.returnValue}"
-      @close="${this.#handleClose}"
-      @cancel="${this.#handleCancel}"
-      @click="${this.#handleClick}"
-      @keydown="${this.#handleKeyDown}"
+      @close=${this.#handleClose}
+      @cancel=${this.#handleCancel}
+      @click=${this.#handleClick}
+      @keydown=${this.#handleKeyDown}
     >
       <m3e-elevation level="3"></m3e-elevation>
       <m3e-focus-trap ?disabled="${this.noFocusTrap}">
@@ -379,7 +379,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
           <slot></slot>
         </m3e-scroll-container>
         <div class="actions">
-          <slot name="actions" @slotchange="${this.#handleActionsSlotChange}"></slot>
+          <slot name="actions" @slotchange=${this.#handleActionsSlotChange}></slot>
         </div>
       </m3e-focus-trap>
     </dialog>`;
@@ -389,7 +389,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
   #renderCloseButton(): unknown {
     return !this.dismissible
       ? nothing
-      : html`<m3e-icon-button aria-label="${this.closeLabel}" class="close" @click="${this.hide}">
+      : html`<m3e-icon-button aria-label="${this.closeLabel}" class="close" @click=${this.hide}>
           <slot name="close-icon">
             <svg class="close-icon" viewBox="0 -960 960 960" fill="currentColor">
               <path

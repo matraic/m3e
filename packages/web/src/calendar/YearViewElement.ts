@@ -135,8 +135,8 @@ export class M3eYearViewElement extends CalendarViewElementBase {
         aria-disabled="${ifDefined(disabled || undefined)}"
         aria-current="${ifDefined(current ? "date" : undefined)}"
         aria-pressed="${selected}"
-        @click="${this.#handleItemClick}"
-        @keydown="${this.#handleItemKeyDown}"
+        @click=${this.#handleItemClick}
+        @keydown=${this.#handleItemKeyDown}
       >
         <m3e-focus-ring class="focus-ring" for="${id}"></m3e-focus-ring>
         <m3e-state-layer class="state-layer" for="${id}" ?disable-hover="${disabled}"></m3e-state-layer>

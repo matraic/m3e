@@ -210,7 +210,7 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
             ${this[renderPseudoLink]()}`}
       <slot class="icon" name="icon" aria-hidden="true"></slot>
       <m3e-text-overflow class="overflow">
-        <slot @slotchange="${this.#handleSlotChange}"></slot>
+        <slot @slotchange=${this.#handleSlotChange}></slot>
       </m3e-text-overflow>
       ${this.current ? nothing : html`<div class="touch" aria-hidden="true"></div>`}
     </div>`;

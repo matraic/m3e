@@ -402,9 +402,9 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
   protected override render(): unknown {
     return html`<div
       class="base"
-      @pointerdown="${this.#handlePointerDown}"
-      @pointermove="${this.#handlePointerMove}"
-      @pointerup="${this.#handlePointerUp}"
+      @pointerdown=${this.#handlePointerDown}
+      @pointermove=${this.#handlePointerMove}
+      @pointerup=${this.#handlePointerUp}
     >
       ${this.#renderHandle()} ${this.#renderHourFace()} ${this.#renderMinuteFace()} ${this.#renderSecondFace()}
       <div class="center"></div>

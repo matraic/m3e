@@ -232,12 +232,12 @@ export class M3eCardElement extends KeyboardClick(
         ?disabled="${!this.actionable || this.disabled || this.disabledInteractive}"
       ></m3e-ripple>
       ${this[renderPseudoLink]()}
-      <slot name="header" @slotchange="${this.#handleHeaderSlotChange}"></slot>
-      <slot name="content" @slotchange="${this.#handleContentSlotChange}">
-        <slot @slotchange="${this.#handleDefaultSlotChange}"></slot>
+      <slot name="header" @slotchange=${this.#handleHeaderSlotChange}></slot>
+      <slot name="content" @slotchange=${this.#handleContentSlotChange}>
+        <slot @slotchange=${this.#handleDefaultSlotChange}></slot>
       </slot>
-      <slot name="actions" @slotchange="${this.#handleActionsSlotChange}"></slot>
-      <slot name="footer" @slotchange="${this.#handleFooterSlotChange}"></slot>
+      <slot name="actions" @slotchange=${this.#handleActionsSlotChange}></slot>
+      <slot name="footer" @slotchange=${this.#handleFooterSlotChange}></slot>
     </div>`;
   }
 

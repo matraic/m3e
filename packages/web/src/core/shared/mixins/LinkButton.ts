@@ -171,9 +171,9 @@ export function LinkButton<T extends Constructor<LitElement>>(
             download="${ifDefined(this.download || undefined)}"
             tabindex="-1"
             aria-hidden="true"
-            @pointerdown="${this.#handleLinkPointerDown}"
-            @focus="${this.#handleLinkFocus}"
-            @blur="${this.#handleLinkBlur}"
+            @pointerdown=${this.#handleLinkPointerDown}
+            @focus=${this.#handleLinkFocus}
+            @blur=${this.#handleLinkBlur}
           ></a>`
         : nothing;
     }
