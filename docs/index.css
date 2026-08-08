@@ -83,3 +83,9 @@ input[type="color"]::-webkit-color-swatch {
   flex: none;
   min-width: 0;
 }
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: #1c1b1e;
+    color: #e6e1e6;
+  }
+}
