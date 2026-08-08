@@ -61,7 +61,9 @@ export class M3eRadioGroupElement extends Labelled(
   RequiredConstraintValidation(
     Dirty(
       Touched(
-        Required(ConstraintValidation(FormAssociated(Disabled(AttachInternals(Role(LitElement, "radiogroup")))))),
+        Required(
+          ConstraintValidation(FormAssociated(Disabled(AttachInternals(Role(LitElement, "radiogroup")), true, false))),
+        ),
       ),
     ),
   ),
@@ -167,10 +169,6 @@ export class M3eRadioGroupElement extends Labelled(
   /** @inheritdoc */
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
-
-    if (changedProperties.has("disabled")) {
-      this.ariaDisabled = null;
-    }
 
     if (changedProperties.has("disabled") && (changedProperties.get("disabled") !== undefined || this.disabled)) {
       this[selectionManager].disabled = this.disabled;

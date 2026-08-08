@@ -27,11 +27,13 @@ export function isDisabledMixin(value: unknown): value is DisabledMixin {
  * @template T The type of the base class.
  * @param {T} base The base class.
  * @param {boolean} [reflect=true] Whether the disabled property is reflected as an attribute.
+ * @param {boolean} [supportsAria=true] Whether ARIA is supported.
  * @returns {Constructor<DisabledMixin> & T} A constructor that implements `DisabledMixin`.
  */
 export function Disabled<T extends Constructor<LitElement>>(
   base: T,
-  reflect: boolean = true
+  reflect: boolean = true,
+  supportsAria: boolean = true,
 ): Constructor<DisabledMixin> & T {
   abstract class _DisabledMixin extends base implements DisabledMixin {
     /**
@@ -44,7 +46,13 @@ export function Disabled<T extends Constructor<LitElement>>(
     protected override update(changedProperties: PropertyValues<this>): void {
       super.update(changedProperties);
 
-      if (changedProperties.has("disabled") && this.role && this.role !== "none" && this.role !== "presentation") {
+      if (
+        changedProperties.has("disabled") &&
+        supportsAria &&
+        this.role &&
+        this.role !== "none" &&
+        this.role !== "presentation"
+      ) {
         this.ariaDisabled = this.disabled ? "true" : null;
       }
     }
