@@ -26,6 +26,7 @@ import {
   Touched,
   validate,
   ValidationMessages,
+  waitForUpdate,
 } from "@m3e/web/core";
 
 import type { FormFieldControl } from "@m3e/web/form-field";
@@ -1351,9 +1352,7 @@ export class M3eDateInputElement
           this.#updateValueBuffer();
         }
       }
-      if (this.isUpdatePending) {
-        await this.updateComplete;
-      }
+      await waitForUpdate(this);
     } finally {
       this.#ignoreValueUpdate = false;
     }

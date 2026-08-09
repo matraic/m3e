@@ -17,6 +17,7 @@ import {
   ReconnectedCallback,
   prefersReducedMotion,
   HtmlFor,
+  waitForUpdate,
 } from "@m3e/web/core";
 
 import { positionAnchor } from "@m3e/web/core/anchoring";
@@ -515,9 +516,7 @@ export class M3eDatepickerElement extends HtmlFor(
     this._open = true;
 
     // Wait for the calendar to render
-    if (this.isUpdatePending) {
-      await this.updateComplete;
-    }
+    await waitForUpdate(this);
 
     const calendar = this._calendar;
 
@@ -536,9 +535,7 @@ export class M3eDatepickerElement extends HtmlFor(
     calendar.specialDates = this.specialDates;
     calendar.blackoutDates = (<M3eDateInputElement>this.control)?.blackoutDates ?? this.blackoutDates;
 
-    if (calendar.isUpdatePending) {
-      await calendar.updateComplete;
-    }
+    await waitForUpdate(calendar);
 
     this.#trigger = trigger;
     this.#trigger.ariaExpanded = "true";
@@ -733,9 +730,7 @@ export class M3eDatepickerElement extends HtmlFor(
       const dateInput = <M3eDateInputElement>this.control;
       if (dateInput.value?.getTime() !== this.date?.getTime()) {
         dateInput.value = this.date;
-        if (dateInput.isUpdatePending) {
-          await dateInput.updateComplete;
-        }
+        await waitForUpdate(dateInput);
         dateInput.dispatchEvent(new Event("change", { bubbles: true }));
       }
     }

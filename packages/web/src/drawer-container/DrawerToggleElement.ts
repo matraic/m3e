@@ -1,6 +1,6 @@
 import { LitElement } from "lit";
 
-import { ActionElementBase, customElement, HtmlFor } from "@m3e/web/core";
+import { ActionElementBase, customElement, HtmlFor, waitForUpdate } from "@m3e/web/core";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y";
 
 import { M3eDrawerContainerElement } from "./DrawerContainerElement";
@@ -97,9 +97,7 @@ export class M3eDrawerToggleElement extends HtmlFor(ActionElementBase) {
           container.end = !container.end;
           changed = true;
         }
-        if (container.isUpdatePending) {
-          await container.updateComplete;
-        }
+        await waitForUpdate(container);
         if (changed) {
           container.dispatchEvent(new Event("change", { bubbles: true }));
         }

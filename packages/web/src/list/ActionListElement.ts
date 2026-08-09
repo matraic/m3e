@@ -1,4 +1,4 @@
-import { customElement } from "@m3e/web/core";
+import { customElement, waitForUpdate } from "@m3e/web/core";
 import { RovingTabIndexManager, selectionManager } from "@m3e/web/core/a11y";
 
 import { M3eListElement } from "./ListElement";
@@ -87,14 +87,10 @@ export class M3eActionListElement extends M3eListElement {
     ];
 
     for (const item of items) {
-      if (item.isUpdatePending) {
-        await item.updateComplete;
-      }
+      await waitForUpdate(item);
     }
 
-    if (this.isUpdatePending) {
-      await this.updateComplete;
-    }
+    await waitForUpdate(this);
 
     const { added } = this[selectionManager].setItems(
       items.map((x) => (x instanceof M3eExpandableListItemElement ? x.button : x.button)),

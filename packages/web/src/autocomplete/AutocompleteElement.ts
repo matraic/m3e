@@ -13,6 +13,7 @@ import {
   customElement,
   MutationController,
   ReconnectedCallback,
+  waitForUpdate,
 } from "@m3e/web/core";
 
 import { ListKeyManager, M3eLiveAnnouncer } from "@m3e/web/core/a11y";
@@ -418,9 +419,7 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
       if (mutationAbortController.signal.aborted) {
         break;
       }
-      if (option.isUpdatePending) {
-        await option.updateComplete;
-      }
+      await waitForUpdate(option);
     }
 
     if (mutationAbortController.signal.aborted) {
@@ -824,9 +823,7 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
     const option = this._options[this._listKeyManager.items.indexOf(clone)];
     if (option) {
       option.selected = clone.selected;
-      if (option.isUpdatePending) {
-        await option.updateComplete;
-      }
+      await waitForUpdate(option);
     }
   }
 
@@ -836,14 +833,10 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
 
     option.selected = true;
     await this.#updateSelectionState(option);
-    if (option.isUpdatePending) {
-      await option.updateComplete;
-    }
+    await waitForUpdate(option);
 
     this.requestUpdate();
-    if (this.isUpdatePending) {
-      await this.updateComplete;
-    }
+    await waitForUpdate(this);
 
     if (this.#input) {
       this.#input.value = option.label;

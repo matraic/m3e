@@ -15,6 +15,7 @@ import {
   Role,
   Touched,
   registerStyleSheet,
+  waitForUpdate,
 } from "@m3e/web/core";
 
 import { ListKeyManager, ListManager } from "@m3e/web/core/a11y";
@@ -250,9 +251,7 @@ export class M3eInputChipSetElement
     const { added, removed } = this.#listManager.setItems([...this.querySelectorAll("m3e-input-chip")]);
 
     for (const chip of added) {
-      if (chip.isUpdatePending) {
-        await chip.updateComplete;
-      }
+      await waitForUpdate(chip);
       if (this.disabled) {
         chip.disabled = true;
       }
@@ -351,9 +350,7 @@ export class M3eInputChipSetElement
     chip.appendChild(document.createTextNode(value));
     this.appendChild(chip);
 
-    if (chip.isUpdatePending) {
-      await chip.updateComplete;
-    }
+    await waitForUpdate(chip);
 
     if (this.#input) {
       try {

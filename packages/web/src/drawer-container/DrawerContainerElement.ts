@@ -10,6 +10,7 @@ import {
   hasCustomState,
   ReconnectedCallback,
   ResizeController,
+  waitForUpdate,
 } from "@m3e/web/core";
 
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
@@ -316,9 +317,7 @@ export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInterna
         this.end = false;
       }
 
-      if (this.isUpdatePending) {
-        await this.updateComplete;
-      }
+      await waitForUpdate(this);
       this.dispatchEvent(new Event("change", { bubbles: true }));
     }
   }

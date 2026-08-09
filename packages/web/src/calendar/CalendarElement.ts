@@ -12,7 +12,7 @@ import { property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { customElement, dateConverter, DesignToken, prefersReducedMotion } from "@m3e/web/core";
+import { customElement, dateConverter, DesignToken, prefersReducedMotion, waitForUpdate } from "@m3e/web/core";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
 import "@m3e/web/button";
@@ -373,9 +373,7 @@ export class M3eCalendarElement extends LitElement {
    * @returns {Promise<void>} A promise that resolves after the active date has been focused.
    */
   async focusActiveCell(): Promise<void> {
-    if (this.isUpdatePending) {
-      await this.updateComplete;
-    }
+    await waitForUpdate(this);
     await this._view?.focusActiveCell();
   }
 

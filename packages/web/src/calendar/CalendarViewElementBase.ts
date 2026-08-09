@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, LitElement } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { dateConverter, DesignToken, focusWhenReady } from "@m3e/web/core";
+import { dateConverter, DesignToken, focusWhenReady, waitForUpdate } from "@m3e/web/core";
 
 import { clampDate, sameDate } from "./utils";
 
@@ -144,10 +144,7 @@ export abstract class CalendarViewElementBase extends LitElement {
    * @returns {Promise<void>} A promise that resolves after the active date has been focused.
    */
   async focusActiveCell(): Promise<void> {
-    if (this.isUpdatePending) {
-      await this.updateComplete;
-    }
-
+    await waitForUpdate(this);
     if (this._activeItem) {
       await focusWhenReady(this._activeItem);
     }

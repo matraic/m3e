@@ -20,6 +20,7 @@ import {
   timeConverter,
   TimeParts,
   HtmlFor,
+  waitForUpdate,
 } from "@m3e/web/core";
 
 import { positionAnchor } from "@m3e/web/core/anchoring";
@@ -533,9 +534,7 @@ export class M3eTimepickerElement extends HtmlFor(
     this._open = true;
 
     // Wait for the picker to render
-    if (this.isUpdatePending) {
-      await this.updateComplete;
-    }
+    await waitForUpdate(this);
 
     // When bound to a control, use the control's value.
     if (this.control) {
@@ -552,9 +551,7 @@ export class M3eTimepickerElement extends HtmlFor(
     input.format = (<M3eDateInputElement>this.control)?.timeFormat ?? this.format;
     input.blackoutTimes = (<M3eDateInputElement>this.control)?.blackoutTimes ?? this.blackoutTimes;
 
-    if (input.isUpdatePending) {
-      await input.updateComplete;
-    }
+    await waitForUpdate(input);
 
     this.#date = undefined;
     this.#trigger = trigger;
@@ -752,9 +749,7 @@ export class M3eTimepickerElement extends HtmlFor(
       const dateInput = <M3eDateInputElement>this.control;
       if (dateInput.value?.getTime() !== this.date?.getTime()) {
         dateInput.value = this.date;
-        if (dateInput.isUpdatePending) {
-          await dateInput.updateComplete;
-        }
+        await waitForUpdate(dateInput);
         dateInput.dispatchEvent(new Event("change", { bubbles: true }));
       }
     }
