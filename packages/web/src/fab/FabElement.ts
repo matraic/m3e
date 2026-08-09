@@ -67,7 +67,7 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  *
  * @attr disabled - Whether the element is disabled.
  * @attr disabled-interactive - Whether the element is disabled and interactive.
- * @attr download - A value indicating whether the `target` of the link button will be downloaded, optionally specifying the new name of the file.
+ * @attr download - Whether the `target` of the link button will be downloaded, optionally specifying the new name of the file.
  * @attr extended - Whether the button is extended to show the label.
  * @attr href - The URL to which the link button points.
  * @attr lowered - Whether to present a lowered elevation.

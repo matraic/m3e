@@ -13,7 +13,7 @@ export class RadioKeyManager<
 > extends RovingTabIndexManager<T> {
   /** @private */ #disabled = false;
 
-  /** A value indicating whether managed items are disabled. */
+  /** Whether managed items are disabled. */
   get disabled(): boolean {
     return this.#disabled;
   }

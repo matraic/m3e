@@ -23,7 +23,7 @@ export interface TypeaheadItem {
 /**
  * Determines whether a value is a `TypeaheadItem`.
  * @param {unknown} value The value to test.
- * @returns A value indicating whether `value` is an `TypeaheadItem`.
+ * @returns Whether `value` is an `TypeaheadItem`.
  */
 export function isTypeaheadItem(value: unknown): value is TypeaheadItem {
   return hasKeys<TypeaheadItem>(value, typeaheadLabel);
@@ -67,7 +67,7 @@ export class Typeahead<T extends TypeaheadItem = TypeaheadItem> {
     this.#skipPredicate = options.skipPredicate;
   }
 
-  /** A value indicating whether the user is currently typing. */
+  /** Whether the user is currently typing. */
   get isTyping(): boolean {
     return this.#pressedKeys.length > 0;
   }

@@ -166,7 +166,7 @@ This section details the attributes, slots, events, and CSS custom properties av
 | Attribute  | Type      | Default | Description                                                              |
 | ---------- | --------- | ------- | ------------------------------------------------------------------------ |
 | `disabled` | `boolean` | `false` | Whether the element is disabled.                                         |
-| `download` | `string`  | —       | A value indicating whether the link button will be downloaded.           |
+| `download` | `string`  | —       | Whether the link button will be downloaded.                              |
 | `href`     | `string`  | —       | The URL to which the link button points.                                 |
 | `rel`      | `string`  | —       | The relationship between the target of the link button and the document. |
 | `target`   | `string`  | —       | The target of the link button.                                           |

@@ -35,7 +35,7 @@ export interface FormAssociatedMixin extends LabelledMixin, DisabledMixin, Attac
 /**
  * Determines whether a value is a `FormAssociatedMixin`.
  * @param {unknown} value The value to test.
- * @returns A value indicating whether `value` is a `FormAssociatedMixin`.
+ * @returns Whether `value` is a `FormAssociatedMixin`.
  */
 export function isFormAssociatedMixin(value: unknown): value is FormAssociatedMixin {
   return (
@@ -56,7 +56,7 @@ const _formDisabled = Symbol("_formDisabled");
  * @returns {Constructor<FormAssociatedMixin> & T} A constructor that implements `FormAssociatedMixin`.
  */
 export function FormAssociated<T extends Constructor<LitElement & DisabledMixin & AttachInternalsMixin>>(
-  base: T
+  base: T,
 ): Constructor<FormAssociatedMixin> & T {
   abstract class _FormAssociatedMixin extends base implements FormAssociatedMixin {
     /** Indicates that this custom element participates in form submission, validation, and form state restoration. */

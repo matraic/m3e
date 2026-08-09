@@ -271,7 +271,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
 
   /**
    * Hides the menu.
-   * @param {boolean} [restoreFocus=false] A value indicating whether to restore focus to the menu's trigger.
+   * @param {boolean} [restoreFocus=false] Whether to restore focus to the menu's trigger.
    */
   hide(restoreFocus: boolean = false): void {
     this.#anchoringCleanup?.();

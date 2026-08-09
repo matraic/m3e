@@ -19,9 +19,9 @@ import { customElement } from "../decorators";
  *
  * @tag m3e-pseudo-checkbox
  *
- * @attr checked - A value indicating whether the element is checked.
- * @attr disabled - A value indicating whether the element is disabled.
- * @attr indeterminate - A value indicating whether the element's checked state is indeterminate.
+ * @attr checked - Whether the element is checked.
+ * @attr disabled - Whether the element is disabled.
+ * @attr indeterminate - Whether the element's checked state is indeterminate.
  *
  * @cssprop --m3e-checkbox-icon-size - Size of the checkbox icon.
  * @cssprop --m3e-checkbox-container-shape - Border radius of the checkbox container.

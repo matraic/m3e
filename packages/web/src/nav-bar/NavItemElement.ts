@@ -52,13 +52,13 @@ import { NavItemOrientation } from "./NavItemOrientation";
  * @slot icon - Renders the icon of the item.
  * @slot selected-icon - Renders the icon of the item when selected.
  *
- * @attr disabled - A value indicating whether the element is disabled.
- * @attr disabled-interactive - A value indicating whether the element is disabled and interactive.
- * @attr download - A value indicating whether the `target` of the link button will be downloaded, optionally specifying the new name of the file.
+ * @attr disabled - Whether the element is disabled.
+ * @attr disabled-interactive - Whether the element is disabled and interactive.
+ * @attr download - Whether the `target` of the link button will be downloaded, optionally specifying the new name of the file.
  * @attr href - The URL to which the link button points.
  * @attr orientation - The layout orientation of the item.
  * @attr rel - The relationship between the `target` of the link button and the document.
- * @attr selected - A value indicating whether the element is selected.
+ * @attr selected - Whether the element is selected.
  * @attr target - The target of the link button.
  *
  * @fires beforeinput - Dispatched before the selected state changes.

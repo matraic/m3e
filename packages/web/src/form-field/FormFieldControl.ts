@@ -9,19 +9,19 @@
 
 /** An interface which allows a control to work inside of a `M3eFormField`. */
 export interface FormFieldControl extends HTMLElement {
-  /** A value indicating whether the control is disabled. */
+  /** Whether the control is disabled. */
   disabled: boolean;
 
   /** The value of the control. */
   value?: unknown;
 
-  /** A value indicating whether the control is required. */
+  /** Whether the control is required. */
   required?: boolean;
 
   /** A value indicated whether the content of the control is read-only. */
   readonly?: boolean;
 
-  /** A value indicating whether the form field's label should try to float. */
+  /** Whether the form field's label should try to float. */
   readonly shouldLabelFloat?: boolean;
 
   /** The error message that would be displayed if the user submits the form, or an empty string if no error message. */
@@ -48,7 +48,7 @@ const KNOWN_FORM_FIELD_TAGS = ["m3e-input-chip-set", "m3e-select", "m3e-date-inp
 /**
  * Determines whether a value is a `FormFieldControl`.
  * @param {unknown} value The value to test.
- * @returns {value is FormFieldControl} A value indicating whether `value` is a `FormFieldControl`.
+ * @returns {value is FormFieldControl} Whether `value` is a `FormFieldControl`.
  */
 export function isFormFieldControl(value: unknown): value is FormFieldControl {
   return (

@@ -45,7 +45,7 @@ import type { M3eFabMenuElement } from "./FabMenuElement";
  * @slot icon - Renders an icon before the items's label.
  *
  * @attr disabled - Whether the element is disabled.
- * @attr download - A value indicating whether the `target` of the link button will be downloaded, optionally specifying the new name of the file.
+ * @attr download - Whether the `target` of the link button will be downloaded, optionally specifying the new name of the file.
  * @attr href - The URL to which the link button points.
  * @attr rel - The relationship between the `target` of the link button and the document.
  * @attr target - The target of the link button.

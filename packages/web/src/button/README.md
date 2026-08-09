@@ -43,7 +43,7 @@ This section details the attributes, slots and CSS custom properties available f
 | `href`                 | `string`                                                           |             | The URL to which the link button points.                                                                                               |
 | `target`               | `string`                                                           |             | The target of the link button.                                                                                                         |
 | `rel`                  | `string`                                                           |             | The relationship between the target of the link button and the document.                                                               |
-| `download`             | `string`                                                           |             | A value indicating whether the target of the link button will be downloaded, optionally specifying the new name of the file.           |
+| `download`             | `string`                                                           |             | Whether the target of the link button will be downloaded, optionally specifying the new name of the file.                              |
 
 ### 🧩 Slots
 

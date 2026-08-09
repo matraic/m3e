@@ -22,7 +22,7 @@ export interface DirtyMixin {
 /**
  * Determines whether a value is a `DirtyMixin`.
  * @param {unknown} value The value to test.
- * @returns A value indicating whether `value` is a `DirtyMixin`.
+ * @returns Whether `value` is a `DirtyMixin`.
  */
 export function isDirtyMixin(value: unknown): value is DirtyMixin {
   return hasKeys<DirtyMixin>(value, "dirty", "pristine", "markAsDirty", "markAsPristine");

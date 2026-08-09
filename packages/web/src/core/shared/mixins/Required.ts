@@ -19,7 +19,7 @@ export interface RequiredMixin {
 /**
  * Determines whether a value is a `RequiredMixin`.
  * @param {unknown} value The value to test.
- * @returns A value indicating whether `value` is a `RequiredMixin`.
+ * @returns Whether `value` is a `RequiredMixin`.
  */
 export function isRequiredMixin(value: unknown): value is RequiredMixin {
   return hasKeys<RequiredMixin>(value, "required", "optional");

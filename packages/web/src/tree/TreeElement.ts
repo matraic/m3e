@@ -235,7 +235,7 @@ export class M3eTreeElement extends Role(LitElement, "tree") {
   /**
    * Selects the specified item.
    * @param {M3eTreeItemElement} item The item to select.
-   * @param {boolean} [activate=false] A value indicating whether to activate the item.
+   * @param {boolean} [activate=false] Whether to activate the item.
    */
   select(item: M3eTreeItemElement, activate: boolean = false): void {
     this[selectionManager].select(item, activate);

@@ -281,7 +281,7 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
   @property({ type: Boolean, reflect: true }) open = false;
 
   /**
-   * A value indicating whether the element's selected / checked state is indeterminate.
+   * Whether the element's selected / checked state is indeterminate.
    * @default false
    */
   @property({ type: Boolean, reflect: true }) indeterminate = false;

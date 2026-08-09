@@ -43,9 +43,9 @@ import { M3eChipElement } from "./ChipElement";
  * @slot icon - Renders an icon before the chip's label.
  * @slot trailing-icon - Renders an icon after the chip's label.
  *
- * @attr disabled - A value indicating whether the element is disabled.
- * @attr disabled-interactive - A value indicating whether the element is disabled and interactive.
- * @attr selected - A value indicating whether the element is selected.
+ * @attr disabled - Whether the element is disabled.
+ * @attr disabled-interactive - Whether the element is disabled and interactive.
+ * @attr selected - Whether the element is selected.
  * @attr value - A string representing the value of the chip.
  * @attr variant - The appearance variant of the chip.
  *

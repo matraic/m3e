@@ -20,16 +20,16 @@ try {
 
 /** Utility used to detect the current platform. */
 export class M3ePlatform {
-  /** A value indicating whether the platform is a browser. */
+  /** Whether the platform is a browser. */
   static readonly isBrowser = !isServer && typeof document === "object" && !!document;
 
-  /** A value indicating whether the current browser is Microsoft Edge. */
+  /** Whether the current browser is Microsoft Edge. */
   static readonly Edge = M3ePlatform.isBrowser && /(edge)/i.test(navigator.userAgent);
 
-  /** A value indicating whether the current rendering engine is Microsoft Trident. */
+  /** Whether the current rendering engine is Microsoft Trident. */
   static readonly Trident = M3ePlatform.isBrowser && /(msie|trident)/i.test(navigator.userAgent);
 
-  /** A value indicating whether the current rendering engine is Blink. */
+  /** Whether the current rendering engine is Blink. */
   static readonly Blink =
     M3ePlatform.isBrowser &&
     !!((window as any).chrome || hasV8BreakIterator) &&
@@ -37,7 +37,7 @@ export class M3ePlatform {
     !M3ePlatform.Edge &&
     !M3ePlatform.Trident;
 
-  /** A value indicating whether the current rendering engine is WebKit. */
+  /** Whether the current rendering engine is WebKit. */
   static readonly WebKit =
     M3ePlatform.isBrowser &&
     /AppleWebKit/i.test(navigator.userAgent) &&
@@ -45,17 +45,17 @@ export class M3ePlatform {
     !M3ePlatform.Edge &&
     !M3ePlatform.Trident;
 
-  /** A value indicating whether the current platform is Apply iOS. */
+  /** Whether the current platform is Apply iOS. */
   static readonly iOS =
     M3ePlatform.isBrowser && /iPad|iPhone|iPod/.test(navigator.userAgent) && !("MSStream" in window);
 
-  /** A value indicating whether the current browser is Firefox. */
+  /** Whether the current browser is Firefox. */
   static readonly Firefox = M3ePlatform.isBrowser && /(firefox|minefield)/i.test(navigator.userAgent);
 
-  /** A value indicating whether the current platform is Android. */
+  /** Whether the current platform is Android. */
   static readonly Android = M3ePlatform.isBrowser && /android/i.test(navigator.userAgent) && !M3ePlatform.Trident;
 
-  /** A value indicating whether the current browser is Safari. */
+  /** Whether the current browser is Safari. */
   static readonly Safari = M3ePlatform.isBrowser && /safari/i.test(navigator.userAgent) && M3ePlatform.WebKit;
 }
 

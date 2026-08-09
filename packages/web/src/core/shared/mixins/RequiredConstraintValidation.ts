@@ -11,7 +11,7 @@ export interface RequiredConstraintValidationMixin extends RequiredMixin, Constr
 /**
  * Determines whether a value is a `RequiredConstraintValidationMixin`.
  * @param {unknown} value The value to test.
- * @returns A value indicating whether `value` is a `RequiredConstraintValidationMixin`.
+ * @returns Whether `value` is a `RequiredConstraintValidationMixin`.
  */
 export function isRequiredConstraintValidationMixin(value: unknown): value is RequiredConstraintValidationMixin {
   return isRequiredMixin(value) && isConstraintValidationMixin(value);

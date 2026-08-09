@@ -340,12 +340,12 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
     return this.#listManager.items;
   }
 
-  /** A value indicating whether the menu is open. */
+  /** Whether the menu is open. */
   get isOpen() {
     return this.#trigger !== undefined;
   }
 
-  /** A value indicating whether the menu is a submenu. */
+  /** Whether the menu is a submenu. */
   @property({ type: Boolean, reflect: true }) submenu = false;
 
   /** @inheritdoc */
@@ -448,7 +448,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
 
   /**
    * Hides the menu.
-   * @param {boolean} [restoreFocus=false] A value indicating whether to restore focus to the menu's trigger.
+   * @param {boolean} [restoreFocus=false] Whether to restore focus to the menu's trigger.
    */
   hide(restoreFocus: boolean = false): void {
     for (const item of this.#listManager.items) {
@@ -473,7 +473,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
 
   /**
    * Closes this menu and any parenting menus.
-   * @param {boolean} [restoreFocus=false] A value indicating whether to restore focus to the menu's trigger.
+   * @param {boolean} [restoreFocus=false] Whether to restore focus to the menu's trigger.
    */
   hideAll(restoreFocus: boolean = false): void {
     // eslint-disable-next-line @typescript-eslint/no-this-alias

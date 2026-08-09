@@ -22,7 +22,7 @@ export interface TouchedMixin {
 /**
  * Determines whether a value is a `TouchedMixin`.
  * @param {unknown} value The value to test.
- * @returns A value indicating whether `value` is a `TouchedMixin`.
+ * @returns Whether `value` is a `TouchedMixin`.
  */
 export function isTouchedMixin(value: unknown): value is TouchedMixin {
   return hasKeys<TouchedMixin>(value, "touched", "untouched", "markAsTouched", "markAsUntouched");

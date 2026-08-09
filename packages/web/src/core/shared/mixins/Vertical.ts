@@ -16,7 +16,7 @@ export interface VerticalMixin {
 /**
  * Determines whether a value is a `VerticalMixin`.
  * @param {unknown} value The value to test.
- * @returns A value indicating whether `value` is a `VerticalMixin`.
+ * @returns Whether `value` is a `VerticalMixin`.
  */
 export function isVerticalMixin(value: unknown): value is VerticalMixin {
   return hasKeys<VerticalMixin>(value, "vertical");

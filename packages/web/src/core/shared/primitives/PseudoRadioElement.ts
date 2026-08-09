@@ -19,8 +19,8 @@ import { customElement } from "../decorators";
  *
  * @tag m3e-pseudo-radio
  *
- * @attr checked - A value indicating whether the element is checked.
- * @attr disabled - A value indicating whether the element is disabled.
+ * @attr checked - Whether the element is checked.
+ * @attr disabled - Whether the element is disabled.
  *
  * @cssprop --m3e-radio-icon-size - Size of the radio icon.
  * @cssprop --m3e-radio-unselected-icon-color - Color of the unselected radio icon.

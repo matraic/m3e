@@ -28,7 +28,7 @@ import "./BreadcrumbItemButtonElement";
  * @attr current - Marks the breadcrumb item as the current location in the trail.
  * @attr href - The URL to which the internal breadcrumb link button points.
  * @attr target - The target of the internal breadcrumb link button.
- * @attr download - A value indicating whether the internal link target will be downloaded, optionally specifying a file name.
+ * @attr download - Whether the internal link target will be downloaded, optionally specifying a file name.
  * @attr rel - The relationship between the internal link target and the document.
  *
  * @fires click - Dispatched when the element is clicked.

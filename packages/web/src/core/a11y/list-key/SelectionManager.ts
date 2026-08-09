@@ -18,7 +18,7 @@ export class SelectionManager<
   /** @private */ #selectedItems = new Array<T>();
   /** @private */ #multi = false;
 
-  /** A value indicating whether multiple items can be selected. */
+  /** Whether multiple items can be selected. */
   get multi(): boolean {
     return this.#multi;
   }
@@ -67,7 +67,7 @@ export class SelectionManager<
   /**
    * Updates the selected item.
    * @param {T | null | undefined} item The selected item.
-   * @param {boolean} [activate=true] A value indicating whether to activate the item.
+   * @param {boolean} [activate=true] Whether to activate the item.
    */
   select(item: T | null | undefined, activate: boolean = true): void {
     if (!item || this.items.includes(item)) {

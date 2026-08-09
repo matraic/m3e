@@ -24,7 +24,7 @@ export interface LabelledMixin extends AttachInternalsMixin {
 /**
  * Determines whether a value is a `LabelledMixin`.
  * @param {unknown} value The value to test.
- * @returns A value indicating whether `value` is a `LabelledMixin`.
+ * @returns Whether `value` is a `LabelledMixin`.
  */
 export function isLabelledMixin(value: unknown): value is LabelledMixin {
   return hasKeys<LabelledMixin>(value, "labels") && isAttachInternalsMixin(value);

@@ -41,9 +41,9 @@ import { M3eChipElement } from "./ChipElement";
  * @slot - Renders the label of the chip.
  * @slot icon - Renders an icon before the chip's label.
  *
- * @attr disabled - A value indicating whether the element is disabled.
- * @attr disabled-interactive - A value indicating whether the element is disabled and interactive.
- * @attr download - A value indicating whether the `target` of the link button will be downloaded, optionally specifying the new name of the file.
+ * @attr disabled - Whether the element is disabled.
+ * @attr disabled-interactive - Whether the element is disabled and interactive.
+ * @attr download - Whether the `target` of the link button will be downloaded, optionally specifying the new name of the file.
  * @attr href - The URL to which the link button points.
  * @attr name - The name of the element, submitted as a pair with the element's `value` as part of form data, when the element is used to submit a form.
  * @attr rel - The relationship between the `target` of the link button and the document.

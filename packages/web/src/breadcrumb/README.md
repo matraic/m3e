@@ -53,15 +53,15 @@ This section describes the attributes and slots available for the breadcrumb com
 
 ### ⚙️ `m3e-breadcrumb-item` Attributes
 
-| Attribute    | Type                                                           | Default     | Description                                                                                                |
-| ------------ | -------------------------------------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------- |
-| `item-label` | `string`                                                       | `""`        | The accessible label used by the internal breadcrumb button.                                               |
-| `disabled`   | `boolean`                                                      | `false`     | Whether the breadcrumb item is disabled.                                                                   |
-| `current`    | `"page" \| "step" \| "location" \| "date" \| "time" \| "true"` | `undefined` | Marks the breadcrumb item as the current location in the trail.                                            |
-| `href`       | `string`                                                       | `""`        | The URL to which the internal breadcrumb link button points.                                               |
-| `target`     | `string`                                                       | `""`        | The target of the internal breadcrumb link button.                                                         |
-| `download`   | `string`                                                       | `null`      | A value indicating whether the internal link target will be downloaded, optionally specifying a file name. |
-| `rel`        | `string`                                                       | `""`        | The relationship between the internal link target and the document.                                        |
+| Attribute    | Type                                                           | Default     | Description                                                                             |
+| ------------ | -------------------------------------------------------------- | ----------- | --------------------------------------------------------------------------------------- |
+| `item-label` | `string`                                                       | `""`        | The accessible label used by the internal breadcrumb button.                            |
+| `disabled`   | `boolean`                                                      | `false`     | Whether the breadcrumb item is disabled.                                                |
+| `current`    | `"page" \| "step" \| "location" \| "date" \| "time" \| "true"` | `undefined` | Marks the breadcrumb item as the current location in the trail.                         |
+| `href`       | `string`                                                       | `""`        | The URL to which the internal breadcrumb link button points.                            |
+| `target`     | `string`                                                       | `""`        | The target of the internal breadcrumb link button.                                      |
+| `download`   | `string`                                                       | `null`      | Whether the internal link target will be downloaded, optionally specifying a file name. |
+| `rel`        | `string`                                                       | `""`        | The relationship between the internal link target and the document.                     |
 
 ### 🧩 `m3e-breadcrumb-item` Slots
 

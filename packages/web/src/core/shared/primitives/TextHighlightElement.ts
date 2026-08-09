@@ -27,7 +27,7 @@ import { TextHighlightMode } from "./TextHighlightMode";
  * @slot - Renders the content to highlight.
  *
  * @attr case-sensitive - Whether matching is case sensitive.
- * @attr disabled - A value indicating whether text highlighting is disabled.
+ * @attr disabled - Whether text highlighting is disabled.
  * @attr mode - The mode in which to highlight text.
  * @attr term - The term to highlight.
  *
@@ -72,7 +72,7 @@ export class M3eTextHighlightElement extends LitElement {
   }
 
   /**
-   * A value indicating whether text highlighting is disabled.
+   * Whether text highlighting is disabled.
    * @default false
    */
   @property({ type: Boolean, reflect: true }) disabled = false;
@@ -95,7 +95,7 @@ export class M3eTextHighlightElement extends LitElement {
    */
   @property() mode: TextHighlightMode = "contains";
 
-  /** A value indicating whether text highlighting is supported by the browser. */
+  /** Whether text highlighting is supported by the browser. */
   get isSupported(): boolean {
     return !isServer && CSS.highlights ? true : false;
   }

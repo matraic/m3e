@@ -89,7 +89,7 @@ type DateInputBuffer<T> = {
  * @attr second-label - The accessible label given to the second segment.
  * @attr period-label - The accessible label given to the period segment (AM/PM).
  * @attr disabled - Whether the element is disabled.
- * @attr readonly - A value indicating whether the element is read-only.
+ * @attr readonly - Whether the element is read-only.
  * @attr required - Whether a value is required for the element.
  * @attr name - The name that identifies the element when submitting the associated form.
  *

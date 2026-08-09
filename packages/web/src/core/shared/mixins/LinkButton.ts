@@ -34,7 +34,7 @@ export interface LinkButtonMixin {
   rel: string;
 
   /**
-   * A value indicating whether the `target` of the link button will be downloaded,
+   * Whether the `target` of the link button will be downloaded,
    * optionally specifying the new name of the file.
    * @default null
    */
@@ -119,7 +119,7 @@ export function LinkButton<T extends Constructor<LitElement>>(
     @property() rel = "";
 
     /**
-     * A value indicating whether the `target` of the link button will be downloaded,
+     * Whether the `target` of the link button will be downloaded,
      * optionally specifying the new name of the file.
      * @default null
      */

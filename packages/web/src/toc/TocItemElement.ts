@@ -19,7 +19,7 @@ import { TocNode } from "./TocGenerator";
  *
  * @slot - Renders the label of the item.
  *
- * @attr disabled - A value indicating whether the element is disabled.
+ * @attr disabled - Whether the element is disabled.
  *
  * @fires click - Dispatched when the element is clicked.
  *

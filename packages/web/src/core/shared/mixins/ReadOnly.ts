@@ -7,7 +7,7 @@ import { hasKeys } from "./hasKeys";
 /** Defines functionality for an element which supports a read-only state. */
 export interface ReadOnlyMixin {
   /**
-   * A value indicating whether the element is read-only.
+   * Whether the element is read-only.
    * @default false
    */
   readOnly: boolean;
@@ -16,7 +16,7 @@ export interface ReadOnlyMixin {
 /**
  * Determines whether a value is a `ReadOnlyMixin`.
  * @param {unknown} value The value to test.
- * @returns A value indicating whether `value` is a `ReadOnlyMixin`.
+ * @returns Whether `value` is a `ReadOnlyMixin`.
  */
 export function isReadOnlyMixin(value: unknown): value is ReadOnlyMixin {
   return hasKeys<ReadOnlyMixin>(value, "readOnly");
@@ -26,16 +26,16 @@ export function isReadOnlyMixin(value: unknown): value is ReadOnlyMixin {
  * Mixin to augment an element with behavior that supports a read-only state.
  * @template T The type of the base class.
  * @param {T} base The base class.
- * @param {boolean} reflect A value indicating whether the read-only state is reflected as an attribute. The default value is `true`.
+ * @param {boolean} reflect Whether the read-only state is reflected as an attribute. The default value is `true`.
  * @returns {Constructor<ReadOnlyMixin> & T} A constructor that implements `ReadOnlyMixin`.
  */
 export function ReadOnly<T extends Constructor<LitElement>>(
   base: T,
-  reflect: boolean = true
+  reflect: boolean = true,
 ): Constructor<ReadOnlyMixin> & T {
   abstract class _ReadOnlyMixin extends base implements ReadOnlyMixin {
     /**
-     * A value indicating whether the element is read-only.
+     * Whether the element is read-only.
      * @default false
      */
     @property({ attribute: "readonly", type: Boolean, reflect: reflect }) readOnly = false;
