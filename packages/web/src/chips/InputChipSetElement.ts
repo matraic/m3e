@@ -21,6 +21,7 @@ import {
 import { ListKeyManager, ListManager } from "@m3e/web/core/a11y";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 import { FormFieldControl } from "@m3e/web/form-field";
+import type { M3eOptionElement } from "@m3e/web/option";
 
 import { M3eChipSetElement } from "./ChipSetElement";
 import { M3eInputChipElement } from "./InputChipElement";
@@ -346,12 +347,10 @@ export class M3eInputChipSetElement
     const value = this.#input.value;
     if (!value) return;
 
-    const chip = document.createElement("m3e-input-chip");
-    chip.removable = true;
-    chip.appendChild(document.createTextNode(value));
-
     // Determine the value that corresponds to the new chip based on options provided
     // by a corresponding autocomplete.
+
+    let matchedOption: M3eOptionElement | null = null;
 
     const options = (this.getRootNode() as ParentNode)
       .querySelector(`m3e-autocomplete[for="${this.#input.id}"]`)
@@ -361,15 +360,26 @@ export class M3eInputChipSetElement
       for (const option of options) {
         // Label is used as the input's value when supplied by an autocomplete.
         if (option.label === value) {
-          chip.value = option.value;
+          matchedOption = option;
           break;
         }
       }
     }
 
-    this.appendChild(chip);
+    // Prevent duplicate chips from being added.
 
-    await waitForUpdate(chip);
+    let newChip: M3eInputChipElement | null = null;
+    if (!this.chips.some((x) => x.value === (matchedOption?.value ?? value))) {
+      newChip = document.createElement("m3e-input-chip");
+      newChip.removable = true;
+      newChip.appendChild(document.createTextNode(value));
+      if (matchedOption) {
+        newChip.value = matchedOption.value;
+      }
+
+      this.appendChild(newChip);
+      await waitForUpdate(newChip);
+    }
 
     if (this.#input) {
       try {
@@ -380,12 +390,14 @@ export class M3eInputChipSetElement
       }
     }
 
-    this.dispatchEvent(
-      new CustomEvent<InputChipSetChangeEventDetail>("change", {
-        bubbles: true,
-        detail: { type: "add", value: value, chip: chip },
-      }),
-    );
+    if (newChip) {
+      this.dispatchEvent(
+        new CustomEvent<InputChipSetChangeEventDetail>("change", {
+          bubbles: true,
+          detail: { type: "add", value: value, chip: newChip },
+        }),
+      );
+    }
   }
 
   /** @private */
