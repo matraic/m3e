@@ -10,10 +10,11 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ### ✨ Components
 
-The following components are planned for future release:
+The following components are planned for future release (in no particular order):
 
 - Inputs (Numeric, Masked)
 - Carousel
+- Gestures (long press, swipe to reveal, etc.)
 
 ### 📜 Building with AI
 
