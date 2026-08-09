@@ -25,6 +25,7 @@ import {
   setCustomState,
   customElement,
   MutationController,
+  ReconnectedCallback,
 } from "@m3e/web/core";
 
 import { ListKeyManager } from "@m3e/web/core/a11y";
@@ -88,12 +89,14 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  */
 @customElement("m3e-select")
 export class M3eSelectElement
-  extends Focusable(
-    Labelled(
-      RequiredConstraintValidation(
-        Dirty(
-          Touched(
-            Required(ConstraintValidation(FormAssociated(Disabled(AttachInternals(Role(LitElement, "combobox")))))),
+  extends ReconnectedCallback(
+    Focusable(
+      Labelled(
+        RequiredConstraintValidation(
+          Dirty(
+            Touched(
+              Required(ConstraintValidation(FormAssociated(Disabled(AttachInternals(Role(LitElement, "combobox")))))),
+            ),
           ),
         ),
       ),
@@ -156,6 +159,7 @@ export class M3eSelectElement
 
   /** @private */ private _options = new Array<M3eOptionElement>();
   /** @private */ #clone?: HTMLElement;
+  /** @private */ #slot?: HTMLSlotElement | null;
 
   /** @private */ #menu?: M3eOptionPanelElement;
   /** @private */ #ignoreKeyUp = false;
@@ -170,6 +174,7 @@ export class M3eSelectElement
   /** @private */ readonly #menuToggleHandler = (e: ToggleEvent) => this.#handleMenuToggle(e);
   /** @private */ readonly #menuPointerDownHandler = (e: PointerEvent) => this.#handleMenuPointerDown(e);
   /** @private */ readonly #menuPointerUpHandler = (e: PointerEvent) => this.#handleMenuPointerUp(e);
+  /** @private */ readonly #slotChangeHandler = () => this.#handleMutation();
   /** @private */ #menuPressedOption?: M3eOptionElement;
 
   /** @private */ private readonly _listKeyManager = new ListKeyManager<M3eOptionElement>()
@@ -186,17 +191,14 @@ export class M3eSelectElement
 
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;
 
-  constructor() {
-    super();
-
-    new MutationController(this, {
-      config: {
-        childList: true,
-        subtree: true,
-      },
-      callback: () => this.#handleMutation(),
-    });
-  }
+  /** @private */ readonly #mutationController = new MutationController(this, {
+    target: null,
+    config: {
+      childList: true,
+      subtree: true,
+    },
+    callback: () => this.#handleMutation(),
+  });
 
   /**
    * Whether to hide the selection indicator for single select options.
@@ -314,8 +316,12 @@ export class M3eSelectElement
     this.addEventListener("click", this.#clickHandler);
     this.addEventListener("keydown", this.#keyDownHandler);
     this.addEventListener("keyup", this.#keyUpHandler);
+  }
 
-    this.#handleMutation();
+  /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.#initMutation();
   }
 
   /** @inheritdoc */
@@ -345,6 +351,8 @@ export class M3eSelectElement
     if (this.#formField && this._focusRing) {
       this._focusRing.style.display = "none";
     }
+
+    this.#initMutation();
   }
 
   /** @inheritdoc */
@@ -369,6 +377,20 @@ export class M3eSelectElement
       <div class="options" aria-hidden="true" @state-change=${this.#handleOptionStateChange}>
         <slot></slot>
       </div>`;
+  }
+
+  /** @private */
+  #initMutation(): void {
+    this.#slot?.removeEventListener("slotchange", this.#slotChangeHandler);
+    this.#mutationController.hostDisconnected();
+    this.#slot = this.querySelector<HTMLSlotElement>("slot:not([name])");
+    if (this.#slot) {
+      this.#slot.addEventListener("slotchange", this.#slotChangeHandler);
+      this.#mutationController.observe(this.#slot);
+    } else {
+      this.#mutationController.observe(this);
+    }
+    this.#handleMutation();
   }
 
   /** @private */
@@ -397,7 +419,17 @@ export class M3eSelectElement
 
   /** @private */
   #handleMutation(): void {
+    const slot = this.querySelector<HTMLSlotElement>("slot:not([name])");
+    const slotted = slot?.assignedElements({ flatten: true });
+
     this.#clone = <HTMLElement>this.cloneNode(true);
+
+    if (slotted) {
+      const clonedSlot = this.#clone.querySelector<HTMLSlotElement>("slot:not([name])");
+      if (clonedSlot) {
+        clonedSlot.replaceWith(...slotted.map((x) => x.cloneNode(true)));
+      }
+    }
 
     const { added } = this._listKeyManager.setItems([...this.#clone.querySelectorAll("m3e-option")]);
     added.forEach((x) => {
@@ -405,7 +437,9 @@ export class M3eSelectElement
       setCustomState(x, "--hide-selection-indicator", this.hideSelectionIndicator);
     });
 
-    this._options = [...this.querySelectorAll("m3e-option")];
+    this._options = slotted
+      ? slotted.filter((x) => x instanceof M3eOptionElement)
+      : [...this.querySelectorAll("m3e-option")];
 
     this.#formField?.notifyControlStateChange();
     if (this.#menu) {

@@ -28,6 +28,8 @@ export class MutationController extends MonitorControllerBase {
   /** @private */ #config?: MutationObserverInit;
   /** @private */ #observer?: MutationObserver;
   /** @private */ #unobservedUpdate = true;
+  /** @private */ #slotListeners = new Map<HTMLSlotElement, () => void>();
+  /** @private */ #observedSlotted = new Map<HTMLSlotElement, Element[]>();
 
   /**
    * Initializes a new instance of the `MutationController` class.
@@ -64,20 +66,83 @@ export class MutationController extends MonitorControllerBase {
   /** @inheritdoc */
   override hostDisconnected(): void {
     super.hostDisconnected();
-    this.#observer?.disconnect();
+    this.#disconnect();
   }
 
   /** @inheritdoc */
   protected override _observe(target: HTMLElement): void {
-    this.#observer?.observe(target, this.#config);
-    this.#unobservedUpdate = true;
+    if (target instanceof HTMLSlotElement) {
+      this.#attachSlotListener(target);
+    } else {
+      this.#observer?.observe(target, this.#config);
+      this.#unobservedUpdate = true;
+    }
   }
 
   /** @inheritdoc */
   protected override _unobserve(): void {
-    this.#observer?.disconnect();
+    this.#disconnect();
+
     for (const target of this.targets) {
-      this.#observer?.observe(target, this.#config);
+      if (target instanceof HTMLSlotElement) {
+        this.#attachSlotListener(target);
+      } else {
+        this.#observer?.observe(target, this.#config);
+      }
     }
+  }
+
+  /** @private */
+  #disconnect(): void {
+    this.#observer?.disconnect();
+
+    for (const [slot] of this.#slotListeners) {
+      this.#detachSlotListener(slot);
+    }
+
+    this.#slotListeners.clear();
+    this.#observedSlotted.clear();
+  }
+
+  /** @private */
+  #attachSlotListener(slot: HTMLSlotElement) {
+    if (this.#slotListeners.has(slot)) return;
+
+    const handler = () => this.#onSlotChange(slot);
+    slot.addEventListener("slotchange", handler);
+    this.#slotListeners.set(slot, () => slot.removeEventListener("slotchange", handler));
+
+    this.#onSlotChange(slot);
+  }
+
+  /** @private */
+  #detachSlotListener(slot: HTMLSlotElement) {
+    const remover = this.#slotListeners.get(slot);
+    if (remover) {
+      remover();
+      this.#slotListeners.delete(slot);
+    }
+
+    this.#observedSlotted.delete(slot);
+  }
+
+  /** @private */
+  #onSlotChange(slot: HTMLSlotElement) {
+    this.#observer?.disconnect();
+
+    const slotted = slot.assignedElements({ flatten: true });
+    this.#observedSlotted.set(slot, slotted);
+
+    for (const el of slotted) {
+      this.#observer?.observe(el, this.#config);
+    }
+
+    for (const target of this.targets) {
+      if (!(target instanceof HTMLSlotElement)) {
+        this.#observer?.observe(target, this.#config);
+      }
+    }
+
+    this.#unobservedUpdate = true;
   }
 }

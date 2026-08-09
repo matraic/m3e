@@ -12,6 +12,7 @@ import {
   addCustomState,
   customElement,
   MutationController,
+  ReconnectedCallback,
 } from "@m3e/web/core";
 
 import { ListKeyManager, M3eLiveAnnouncer } from "@m3e/web/core/a11y";
@@ -69,7 +70,7 @@ import { AutocompleteQueryEventDetail } from "./AutocompleteQueryEventDetail";
  * @fires change - Dispatched when the committed value changes due to selecting an option or clearing the input.
  */
 @customElement("m3e-autocomplete")
-export class M3eAutocompleteElement extends HtmlFor(LitElement) {
+export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitElement)) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -86,6 +87,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   /** @private */ readonly #menuId = `${this.#id}-menu`;
   /** @private */ private _options = new Array<M3eOptionElement>();
   /** @private */ #clone?: HTMLElement;
+  /** @private */ #slot?: HTMLSlotElement | null;
   /** @private */ #ignoreFocusVisible = false;
   /** @private */ #menu?: M3eOptionPanelElement;
   /** @private */ #ignoreHideMenuOnBlur = false;
@@ -103,6 +105,7 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   /** @private */ readonly #menuToggleHandler = (e: ToggleEvent) => this.#handleMenuToggle(e);
   /** @private */ readonly #menuPointerDownHandler = (e: PointerEvent) => this.#handleMenuPointerDown(e);
   /** @private */ readonly #menuPointerUpHandler = (e: PointerEvent) => this.#handleMenuPointerUp(e);
+  /** @private */ readonly #slotChangeHandler = () => this.#handleMutation();
   /** @private */ #menuPressedOption?: M3eOptionElement;
 
   /** @private */ private readonly _listKeyManager = new ListKeyManager<M3eOptionElement>()
@@ -117,17 +120,14 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
       }
     });
 
-  constructor() {
-    super();
-
-    new MutationController(this, {
-      config: {
-        childList: true,
-        subtree: true,
-      },
-      callback: () => this.#handleMutation(),
-    });
-  }
+  /** @private */ readonly #mutationController = new MutationController(this, {
+    target: null,
+    config: {
+      childList: true,
+      subtree: true,
+    },
+    callback: () => this.#handleMutation(),
+  });
 
   /**
    * Whether to hide the selection indicator.
@@ -324,9 +324,15 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   }
 
   /** @inheritdoc */
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.#handleMutation();
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.#initMutation();
+  }
+
+  /** @inheritdoc */
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
+    super.firstUpdated(_changedProperties);
+    this.#initMutation();
   }
 
   /** @inheritdoc */
@@ -380,6 +386,20 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
   }
 
   /** @private */
+  #initMutation(): void {
+    this.#slot?.removeEventListener("slotchange", this.#slotChangeHandler);
+    this.#mutationController.hostDisconnected();
+    this.#slot = this.querySelector<HTMLSlotElement>("slot:not([name])");
+    if (this.#slot) {
+      this.#slot.addEventListener("slotchange", this.#slotChangeHandler);
+      this.#mutationController.observe(this.#slot);
+    } else {
+      this.#mutationController.observe(this);
+    }
+    this.#handleMutation();
+  }
+
+  /** @private */
   async #handleMutation(): Promise<void> {
     if (this.#mutationAbortController) {
       this.#mutationAbortController.abort();
@@ -387,7 +407,12 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     const mutationAbortController = new AbortController();
     this.#mutationAbortController = mutationAbortController;
 
-    const options = [...this.querySelectorAll("m3e-option")];
+    const slot = this.querySelector<HTMLSlotElement>("slot:not([name])");
+    const slotted = slot?.assignedElements({ flatten: true });
+
+    const options = slotted
+      ? slotted.filter((x) => x instanceof M3eOptionElement)
+      : [...this.querySelectorAll("m3e-option")];
 
     for (const option of options) {
       if (mutationAbortController.signal.aborted) {
@@ -405,6 +430,12 @@ export class M3eAutocompleteElement extends HtmlFor(LitElement) {
     this._options = options;
 
     this.#clone = <HTMLElement>this.cloneNode(true);
+    if (slotted) {
+      const clonedSlot = this.#clone.querySelector<HTMLSlotElement>("slot:not([name])");
+      if (clonedSlot) {
+        clonedSlot.replaceWith(...slotted.map((x) => x.cloneNode(true)));
+      }
+    }
 
     const { added } = this._listKeyManager.setItems([...this.#clone.querySelectorAll("m3e-option")]);
     added.forEach((x) => {
