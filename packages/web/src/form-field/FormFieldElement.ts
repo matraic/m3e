@@ -921,7 +921,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     }
     this.#control = control;
 
-    if (["INPUT", "TEXTAREA"].includes(this.#control?.tagName ?? "")) {
+    if (["INPUT", "TEXTAREA", "M3E-DATE-INPUT"].includes(this.#control?.tagName ?? "")) {
       this._base.style.setProperty("--_form-field-cursor", "text");
     } else {
       this._base.style.removeProperty("--_form-field-cursor");
