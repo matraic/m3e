@@ -342,12 +342,31 @@ export class M3eInputChipSetElement
 
   /** @private */
   async #handleInputChange(): Promise<void> {
-    const value = this.#input?.value;
+    if (!this.#input) return;
+    const value = this.#input.value;
     if (!value) return;
 
     const chip = document.createElement("m3e-input-chip");
     chip.removable = true;
     chip.appendChild(document.createTextNode(value));
+
+    // Determine the value that corresponds to the new chip based on options provided
+    // by a corresponding autocomplete.
+
+    const options = (this.getRootNode() as ParentNode)
+      .querySelector(`m3e-autocomplete[for="${this.#input.id}"]`)
+      ?.querySelectorAll("m3e-option");
+
+    if (options) {
+      for (const option of options) {
+        // Label is used as the input's value when supplied by an autocomplete.
+        if (option.label === value) {
+          chip.value = option.value;
+          break;
+        }
+      }
+    }
+
     this.appendChild(chip);
 
     await waitForUpdate(chip);
