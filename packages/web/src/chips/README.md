@@ -287,12 +287,13 @@ This section details the attributes, events, slots, and CSS custom properties av
 
 #### ⚙️ Attributes
 
-| Attribute  | Type      | Default | Description                                                               |
-| ---------- | --------- | ------- | ------------------------------------------------------------------------- |
-| `disabled` | `boolean` | `false` | Whether the element is disabled.                                          |
-| `name`     | `string`  |         | The name that identifies the element when submitting the associated form. |
-| `required` | `boolean` | `false` | Whether a value is required for the element.                              |
-| `vertical` | `boolean` | `false` | Whether chips are stacked vertically.                                     |
+| Attribute   | Type             | Default | Description                                                                                 |
+| ----------- | ---------------- | ------- | ------------------------------------------------------------------------------------------- |
+| `disabled`  | `boolean`        | `false` | Whether the element is disabled.                                                            |
+| `name`      | `string`         |         | The name that identifies the element when submitting the associated form.                   |
+| `required`  | `boolean`        | `false` | Whether a value is required for the element.                                                |
+| `vertical`  | `boolean`        | `false` | Whether chips are stacked vertically.                                                       |
+| `max-chips` | `number \| null` | `null`  | Maximum number of chips to display when not focused. When focused, all chips are displayed. |
 
 #### 🔔 Events
 

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { css, CSSResultGroup, html, PropertyValues } from "lit";
+import { css, CSSResultGroup, html, nothing, PropertyValues } from "lit";
+import { property, state } from "lit/decorators.js";
 
 import {
   AttachInternals,
@@ -58,6 +59,7 @@ import { InputChipSetChangeEventDetail } from "./InputChipSetChangeEventDetail";
  * @attr name - The name that identifies the element when submitting the associated form.
  * @attr required - Whether a value is required for the element.
  * @attr vertical - Whether the element is oriented vertically.
+ * @attr max-chips - Maximum number of chips to display when not focused. When focused, all chips are displayed.
  *
  * @fires change - Dispatched when a chip is added to, or removed from, the set.
  *
@@ -120,6 +122,27 @@ export class M3eInputChipSetElement
       span[role="gridcell"] {
         display: contents;
       }
+      .overflow {
+        display: flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--m3e-chip-label-text-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
+        font-weight: var(--m3e-chip-label-text-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
+        line-height: var(--m3e-chip-label-text-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
+        letter-spacing: var(--m3e-chip-label-text-tracking, ${DesignToken.typescale.standard.label.large.tracking});
+      }
+      :host(:not(:disabled)) .overflow {
+        color: var(--m3e-chip-label-text-color, ${DesignToken.color.onSurface});
+      }
+      :host(:disabled) .overflow {
+        color: color-mix(
+          in srgb,
+          var(--m3e-chip-disabled-label-text-color, ${DesignToken.color.onSurface})
+            var(--m3e-chip-disabled-label-text-opacity, 38%),
+          transparent
+        );
+      }
     `,
   ];
 
@@ -142,6 +165,14 @@ export class M3eInputChipSetElement
   /** @private */ #ignoreInputChange = false;
   /** @private */ #input: HTMLInputElement | null = null;
   /** @private */ #tabindex = 0;
+
+  /** @private */ @state() private _focused = false;
+
+  /**
+   * Maximum number of chips to display when not focused. When focused, all chips are displayed.
+   * @default null
+   */
+  @property({ attribute: "max-chips", type: Number }) maxChips: number | null = null;
 
   /** The chips of the set. */
   get chips(): readonly M3eInputChipElement[] {
@@ -234,9 +265,21 @@ export class M3eInputChipSetElement
     }
   }
 
+  /** @inherit */
+  protected override updated(_changedProperties: PropertyValues): void {
+    super.updated(_changedProperties);
+
+    if (_changedProperties.has("maxChips") || _changedProperties.has("_focused")) {
+      this.#updateChipVisibility();
+    }
+  }
+
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<slot @keydown=${this.#handleKeyDown} @slotchange=${this.#handleSlotChange}></slot>
+      ${!this._focused && this.maxChips && this.chips.length > this.maxChips
+        ? html`<div class="overflow">+${this.chips.length - this.maxChips}</div>`
+        : nothing}
       <span role="row">
         <span role="gridcell"><slot name="input" @slotchange=${this.#handleInputSlotChange}></slot></span>
       </span> `;
@@ -271,6 +314,8 @@ export class M3eInputChipSetElement
     if (!this.#listKeyManager.activeItem) {
       this.#listKeyManager.updateActiveItem(this.#listKeyManager.items.find((x) => x.hasAttribute("tabindex")));
     }
+
+    this.#updateChipVisibility();
   }
 
   /** @private */
@@ -308,11 +353,13 @@ export class M3eInputChipSetElement
   /** @private */
   #handleFocusIn(): void {
     this.setAttribute("tabindex", "-1");
+    this._focused = true;
   }
 
   /** @private */
   #handleFocusOut(): void {
     this.setAttribute("tabindex", `${this.#tabindex}`);
+    this._focused = false;
   }
 
   /** @private */
@@ -410,6 +457,11 @@ export class M3eInputChipSetElement
         item.dispatchEvent(new Event("remove"));
       }
     }
+  }
+
+  /** @private */
+  #updateChipVisibility(): void {
+    this.chips.forEach((chip, i) => (chip.hidden = !this._focused && this.maxChips != null && i >= this.maxChips));
   }
 }
 
