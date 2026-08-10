@@ -13,7 +13,7 @@ import {
   safeStyleMap,
 } from "@m3e/web/core";
 
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { M3eDirectionality, SupportsDirectionality } from "@m3e/web/core/bidi";
 
 import { M3eSliderThumbElement } from "./SliderThumbElement";
 import { SliderSize } from "./SliderSize";
@@ -95,7 +95,7 @@ import { SliderSize } from "./SliderSize";
  * @cssprop --m3e-slider-disabled-tick-inactive-color - Color of inactive ticks when disabled.
  */
 @customElement("m3e-slider")
-export class M3eSliderElement extends AttachInternals(LitElement) {
+export class M3eSliderElement extends SupportsDirectionality(AttachInternals(LitElement)) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -113,8 +113,8 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     :host([size="small"]) {
       height: var(--m3e-slider-small-height, 44px);
     }
-    :host(:not(:dir(rtl))[size="extra-small"]) .base,
-    :host(:not(:dir(rtl))[size="small"]) .base {
+    :host(:not(:is(:state(--rtl), :--rtl))[size="extra-small"]) .base,
+    :host(:not(:is(:state(--rtl), :--rtl))[size="small"]) .base {
       --_slider-active-track-shape: var(--m3e-slider-small-active-track-shape, ${DesignToken.shape.corner.smallStart});
       --_slider-inactive-track-start-shape: var(
         --m3e-slider-small-inactive-active-track-start-shape,
@@ -125,8 +125,8 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
         ${DesignToken.shape.corner.smallEnd}
       );
     }
-    :host(:dir(rtl)[size="extra-small"]) .base,
-    :host(:dir(rtl)[size="small"]) .base {
+    :host(:is(:state(--rtl), :--rtl)[size="extra-small"]) .base,
+    :host(:is(:state(--rtl), :--rtl)[size="small"]) .base {
       --_slider-active-track-shape: var(--m3e-slider-small-active-track-shape, ${DesignToken.shape.corner.smallEnd});
       --_slider-inactive-track-start-shape: var(
         --m3e-slider-small-inactive-active-track-start-shape,
@@ -146,7 +146,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     :host([size="medium"]) {
       height: var(--m3e-slider-medium-height, 52px);
     }
-    :host(:not(:dir(rtl))[size="medium"]) .base {
+    :host(:not(:is(:state(--rtl), :--rtl))[size="medium"]) .base {
       --_slider-active-track-shape: var(
         --m3e-slider-medium-active-track-shape,
         ${DesignToken.shape.corner.mediumStart}
@@ -160,7 +160,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
         ${DesignToken.shape.corner.mediumEnd}
       );
     }
-    :host(:dir(rtl)[size="medium"]) .base {
+    :host(:is(:state(--rtl), :--rtl)[size="medium"]) .base {
       --_slider-active-track-shape: var(--m3e-slider-medium-active-track-shape, ${DesignToken.shape.corner.mediumEnd});
       --_slider-inactive-track-start-shape: var(
         --m3e-slider-medium-inactive-active-track-start-shape,
@@ -177,7 +177,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     :host([size="large"]) {
       height: var(--m3e-slider-large-height, 68px);
     }
-    :host(:not(:dir(rtl))[size="large"]) .base {
+    :host(:not(:is(:state(--rtl), :--rtl))[size="large"]) .base {
       --_slider-active-track-shape: var(--m3e-slider-large-active-track-shape, ${DesignToken.shape.corner.largeStart});
       --_slider-inactive-track-start-shape: var(
         --m3e-slider-large-inactive-active-track-start-shape,
@@ -188,7 +188,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
         ${DesignToken.shape.corner.largeEnd}
       );
     }
-    :host(:dir(rtl)[size="large"]) .base {
+    :host(:is(:state(--rtl), :--rtl)[size="large"]) .base {
       --_slider-active-track-shape: var(--m3e-slider-large-active-track-shape, ${DesignToken.shape.corner.largeEnd});
       --_slider-inactive-track-start-shape: var(
         --m3e-slider-large-inactive-active-track-start-shape,
@@ -205,7 +205,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
     :host([size="extra-large"]) {
       height: var(--m3e-slider-extra-large-height, 108px);
     }
-    :host(:not(:dir(rtl))[size="extra-large"]) .base {
+    :host(:not(:is(:state(--rtl), :--rtl))[size="extra-large"]) .base {
       --_slider-active-track-shape: var(
         --m3e-slider-extra-large-active-track-shape,
         ${DesignToken.shape.corner.extraLargeStart}
@@ -219,7 +219,7 @@ export class M3eSliderElement extends AttachInternals(LitElement) {
         ${DesignToken.shape.corner.extraLargeEnd}
       );
     }
-    :host(:dir(rtl)[size="extra-large"]) .base {
+    :host(:is(:state(--rtl), :--rtl)[size="extra-large"]) .base {
       --_slider-active-track-shape: var(
         --m3e-slider-extra-large-active-track-shape,
         ${DesignToken.shape.corner.extraLargeEnd}

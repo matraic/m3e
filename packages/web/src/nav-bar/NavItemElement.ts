@@ -23,6 +23,7 @@ import {
 } from "@m3e/web/core";
 
 import { selectionManager } from "@m3e/web/core/a11y";
+import { SupportsDirectionality } from "@m3e/web/core/bidi";
 
 import type { M3eNavBarElement } from "./NavBarElement";
 import { NavItemOrientation } from "./NavItemOrientation";
@@ -96,11 +97,13 @@ import { NavItemOrientation } from "./NavItemOrientation";
  * @cssprop --m3e-vertical-nav-item-active-indicator-margin - Margin for the active indicator in vertical orientation.
  */
 @customElement("m3e-nav-item")
-export class M3eNavItemElement extends ReconnectedCallback(
-  SuppressInitialAnimation(
-    LinkButton(
-      Selected(
-        KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))),
+export class M3eNavItemElement extends SupportsDirectionality(
+  ReconnectedCallback(
+    SuppressInitialAnimation(
+      LinkButton(
+        Selected(
+          KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))),
+        ),
       ),
     ),
   ),
@@ -278,11 +281,11 @@ export class M3eNavItemElement extends ReconnectedCallback(
       top: var(--m3e-vertical-nav-item-active-indicator-margin, ${DesignToken.measurement.space75});
       bottom: unset;
     }
-    :host([orientation="vertical"]:dir(rtl)) .indicator {
+    :host([orientation="vertical"]:is(:state(--rtl), :--rtl)) .indicator {
       right: var(--_vertical-nav-item-inset-start);
       left: unset;
     }
-    :host([orientation="vertical"]:not(:dir(rtl))) .indicator {
+    :host([orientation="vertical"]:not(:is(:state(--rtl), :--rtl))) .indicator {
       left: var(--_vertical-nav-item-inset-start);
       right: unset;
     }

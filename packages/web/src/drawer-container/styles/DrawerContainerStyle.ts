@@ -46,31 +46,31 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   :host(:not([start])) .start {
     visibility: hidden;
   }
-  :host(:not([start]):not(:dir(rtl))) .start {
+  :host(:not([start]):not(:is(:state(--rtl), :--rtl))) .start {
     margin-left: calc(0px - var(--_start-drawer-size, ${DrawerContainerToken.containerWidth}));
   }
-  :host(:not([start]):dir(rtl)) .start {
+  :host(:not([start]):is(:state(--rtl), :--rtl)) .start {
     margin-right: calc(0px - var(--_start-drawer-size, ${DrawerContainerToken.containerWidth}));
   }
-  :host([start]:not(:dir(rtl))) .start {
+  :host([start]:not(:is(:state(--rtl), :--rtl))) .start {
     margin-left: 0;
   }
-  :host([start]:dir(rtl)) .start {
+  :host([start]:is(:state(--rtl), :--rtl)) .start {
     margin-right: 0;
   }
   :host(:not([end])) .end {
     visibility: hidden;
   }
-  :host(:not([end]):not(:dir(rtl))) .end {
+  :host(:not([end]):not(:is(:state(--rtl), :--rtl))) .end {
     margin-right: calc(0px - var(--_end-drawer-size, ${DrawerContainerToken.containerWidth}));
   }
-  :host(:not([end]):dir(rtl)) .end {
+  :host(:not([end]):is(:state(--rtl), :--rtl)) .end {
     margin-left: calc(0px - var(--_end-drawer-size, ${DrawerContainerToken.containerWidth}));
   }
-  :host([end]:not(:dir(rtl))) .end {
+  :host([end]:not(:is(:state(--rtl), :--rtl))) .end {
     margin-right: 0;
   }
-  :host([end]:dir(rtl)) .end {
+  :host([end]:is(:state(--rtl), :--rtl)) .end {
     margin-left: 0;
   }
   ::slotted([slot="start"]),
@@ -88,20 +88,20 @@ export const DrawerContainerStyle: CSSResultGroup = css`
     margin-right: 0;
     transition: ${unsafeCSS(`margin ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standard}`)};
   }
-  :host(:is(:state(--start-push), :--start-push)[start]:not(:dir(rtl))) .content,
-  :host(:is(:state(--start-side), :--start-side)[start]:not(:dir(rtl))) .content {
+  :host(:is(:state(--start-push), :--start-push)[start]:not(:is(:state(--rtl), :--rtl))) .content,
+  :host(:is(:state(--start-side), :--start-side)[start]:not(:is(:state(--rtl), :--rtl))) .content {
     margin-left: var(--_start-drawer-size, ${DrawerContainerToken.containerWidth});
   }
-  :host(:is(:state(--start-push), :--start-push)[start]:dir(rtl)) .content,
-  :host(:is(:state(--start-side), :--start-side)[start]:dir(rtl)) .content {
+  :host(:is(:state(--start-push), :--start-push)[start]:is(:state(--rtl), :--rtl)) .content,
+  :host(:is(:state(--start-side), :--start-side)[start]:is(:state(--rtl), :--rtl)) .content {
     margin-right: var(--_start-drawer-size, ${DrawerContainerToken.containerWidth});
   }
-  :host(:is(:state(--end-push), :--end-push)[end]:not(:dir(rtl))) .content,
-  :host(:is(:state(--end-side), :--end-side)[end]:not(:dir(rtl))) .content {
+  :host(:is(:state(--end-push), :--end-push)[end]:not(:is(:state(--rtl), :--rtl))) .content,
+  :host(:is(:state(--end-side), :--end-side)[end]:not(:is(:state(--rtl), :--rtl))) .content {
     margin-right: var(--_end-drawer-size, ${DrawerContainerToken.containerWidth});
   }
-  :host(:is(:state(--end-push), :--end-push)[end]:dir(rtl)) .content,
-  :host(:is(:state(--end-side), :--end-side)[end]:dir(rtl)) .content {
+  :host(:is(:state(--end-push), :--end-push)[end]:is(:state(--rtl), :--rtl)) .content,
+  :host(:is(:state(--end-side), :--end-side)[end]:is(:state(--rtl), :--rtl)) .content {
     margin-left: var(--_end-drawer-size, ${DrawerContainerToken.containerWidth});
   }
   .scrim {

@@ -1,8 +1,8 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, DesignToken, HtmlFor, MutationController } from "@m3e/web/core";
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { AttachInternals, customElement, DesignToken, HtmlFor, MutationController } from "@m3e/web/core";
+import { M3eDirectionality, SupportsDirectionality } from "@m3e/web/core/bidi";
 import { AnchorPosition, positionAnchor } from "@m3e/web/core/anchoring";
 
 import { BadgeSize } from "./BadgeSize";
@@ -47,7 +47,7 @@ import { BadgePosition } from "./BadgePosition";
  * @cssprop --m3e-badge-large-tracking - Letter spacing for large badge label.
  */
 @customElement("m3e-badge")
-export class M3eBadgeElement extends HtmlFor(LitElement) {
+export class M3eBadgeElement extends HtmlFor(SupportsDirectionality(AttachInternals(LitElement))) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -79,39 +79,39 @@ export class M3eBadgeElement extends HtmlFor(LitElement) {
     :host([for][position="above"]) {
       transform: translateY(var(--_badge-offset, 0px));
     }
-    :host([for][position="above-after"]:not(:dir(rtl))) {
+    :host([for][position="above-after"]:not(:is(:state(--rtl), :--rtl))) {
       transform: translate3d(calc(0px - var(--_badge-offset, 0px)), var(--_badge-offset, 0px), 0);
     }
-    :host([for][position="above-after"]:dir(rtl)) {
+    :host([for][position="above-after"]:is(:state(--rtl), :--rtl)) {
       transform: translate3d(var(--_badge-offset, 0px), var(--_badge-offset, 0px), 0);
     }
-    :host([for][position="above-before"]:not(:dir(rtl))) {
+    :host([for][position="above-before"]:not(:is(:state(--rtl), :--rtl))) {
       transform: translate3d(var(--_badge-offset, 0px), var(--_badge-offset, 0px), 0);
     }
-    :host([for][position="above-before"]:dir(rtl)) {
+    :host([for][position="above-before"]:is(:state(--rtl), :--rtl)) {
       transform: translate3d(calc(0px - var(--_badge-offset, 0px)), var(--_badge-offset, 0px), 0);
     }
     :host([for][position="below"]) {
       transform: translateY(calc(0px - var(--_badge-offset, 0px)));
     }
-    :host([for][position="below-after"]:not(:dir(rtl))) {
+    :host([for][position="below-after"]:not(:is(:state(--rtl), :--rtl))) {
       transform: translate3d(calc(0px - var(--_badge-offset, 0px)), calc(0px - var(--_badge-offset, 0px)), 0);
     }
-    :host([for][position="below-after"]:dir(rtl)) {
+    :host([for][position="below-after"]:is(:state(--rtl), :--rtl)) {
       transform: translate3d(var(--_badge-offset, 0px), calc(0px - var(--_badge-offset, 0px)), 0);
     }
-    :host([for][position="below-before"]:not(:dir(rtl))) {
+    :host([for][position="below-before"]:not(:is(:state(--rtl), :--rtl))) {
       transform: translate3d(var(--_badge-offset, 0px), calc(0px - var(--_badge-offset, 0px)), 0);
     }
-    :host([for][position="below-before"]:dir(rtl)) {
+    :host([for][position="below-before"]:is(:state(--rtl), :--rtl)) {
       transform: translate3d(calc(0px - var(--_badge-offset, 0px)), calc(0px - var(--_badge-offset, 0px)), 0);
     }
-    :host([for][position="before"]:not(:dir(rtl))),
-    :host([for][position="after"]:dir(rtl)) {
+    :host([for][position="before"]:not(:is(:state(--rtl), :--rtl))),
+    :host([for][position="before"]:is(:state(--rtl), :--rtl)) {
       transform: translateX(var(--_badge-offset, 0px));
     }
-    :host([for][position="before"]:dir(rtl)),
-    :host([for][position="after"]:not(:dir(rtl))) {
+    :host([for][position="after"]:not(:is(:state(--rtl), :--rtl))),
+    :host([for][position="after"]:is(:state(--rtl), :--rtl)) {
       transform: translateX(calc(0px - var(--_badge-offset, 0px)));
     }
     :host([size="small"]) {

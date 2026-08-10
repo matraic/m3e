@@ -2,6 +2,7 @@ import { css, CSSResultGroup, html, nothing, PropertyValues, svg } from "lit";
 import { property } from "lit/decorators.js";
 
 import { customElement, DesignToken, ResizeController, resolveFragmentUrl, safeStyleMap } from "@m3e/web/core";
+import { SupportsDirectionality } from "@m3e/web/core/bidi";
 
 import { LinearProgressMode } from "./LinearProgressMode";
 import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
@@ -44,7 +45,7 @@ import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
  * @cssprop --m3e-linear-wavy-indeterminate-progress-indicator-wavelength - Wavelength of the indeterminate/query `wavy` variant.
  */
 @customElement("m3e-linear-progress-indicator")
-export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorBase {
+export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(ProgressElementIndicatorBase) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = [
     ProgressElementIndicatorBase.styles,
@@ -168,7 +169,7 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
         mask-repeat: repeat;
         animation: buffer 250ms linear infinite;
       }
-      :host(:dir(rtl)[mode="buffer"]) .buffer {
+      :host(:is(:state(--rtl), :--rtl)[mode="buffer"]) .buffer {
         transform: scaleX(-1);
       }
       @keyframes buffer {
@@ -214,8 +215,8 @@ export class M3eLinearProgressIndicatorElement extends ProgressElementIndicatorB
         overflow: hidden;
         position: relative;
       }
-      :host(:not(:dir(rtl))[mode="query"]) .progress,
-      :host(:dir(rtl)[mode="indeterminate"]) .progress {
+      :host(:not(:is(:state(--rtl), :--rtl))[mode="query"]) .progress,
+      :host(:is(:state(--rtl), :--rtl)[mode="indeterminate"]) .progress {
         transform: scaleX(-1);
       }
       :host([variant="flat"]) .primary,

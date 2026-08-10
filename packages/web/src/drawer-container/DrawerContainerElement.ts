@@ -14,6 +14,7 @@ import {
 } from "@m3e/web/core";
 
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
+import { SupportsDirectionality } from "@m3e/web/core/bidi";
 import "@m3e/web/core/a11y";
 
 import { DrawerMode } from "./DrawerMode";
@@ -72,7 +73,9 @@ import { DrawerContainerStyle } from "./styles";
  * @cssprop --m3e-drawer-divider-thickness - The thickness of the divider line.
  */
 @customElement("m3e-drawer-container")
-export class M3eDrawerContainerElement extends ReconnectedCallback(AttachInternals(LitElement)) {
+export class M3eDrawerContainerElement extends SupportsDirectionality(
+  ReconnectedCallback(AttachInternals(LitElement)),
+) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = DrawerContainerStyle;
 

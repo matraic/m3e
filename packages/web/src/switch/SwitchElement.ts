@@ -21,6 +21,8 @@ import {
   customElement,
 } from "@m3e/web/core";
 
+import { SupportsDirectionality } from "@m3e/web/core/bidi";
+
 import { SwitchHandleStyle, SwitchIconStyle, SwitchStateLayerStyle, SwitchStyle, SwitchTrackStyle } from "./styles";
 
 import { SwitchIcons } from "./SwitchIcons";
@@ -134,11 +136,13 @@ import { SwitchIcons } from "./SwitchIcons";
  * @cssprop --m3e-switch-unselected-pressed-handle-color - Handle color when unselected and pressed.
  */
 @customElement("m3e-switch")
-export class M3eSwitchElement extends Labelled(
-  Dirty(
-    Touched(
-      ConstraintValidation(
-        Checked(FormAssociated(KeyboardClick(Focusable(Disabled(AttachInternals(Role(LitElement, "switch"))))))),
+export class M3eSwitchElement extends SupportsDirectionality(
+  Labelled(
+    Dirty(
+      Touched(
+        ConstraintValidation(
+          Checked(FormAssociated(KeyboardClick(Focusable(Disabled(AttachInternals(Role(LitElement, "switch"))))))),
+        ),
       ),
     ),
   ),

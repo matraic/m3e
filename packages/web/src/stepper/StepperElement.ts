@@ -16,6 +16,7 @@ import {
 
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
+import { M3eDirectionality, SupportsDirectionality } from "@m3e/web/core/bidi";
 
 import { M3eStepElement } from "./StepElement";
 import { StepLabelPosition } from "./StepLabelPosition";
@@ -90,7 +91,7 @@ import { StepperOrientation } from "./StepperOrientation";
  * @cssprop --m3e-step-divider-inset - Inset offset for divider alignment within step layout.
  */
 @customElement("m3e-stepper")
-export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitElement)) {
+export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallback(AttachInternals(LitElement))) {
   static {
     registerStyleSheet(css`
       m3e-stepper:not(:is(:state(--vertical), :--vertical)) > .-m3e-step-divider::before {
@@ -132,6 +133,12 @@ export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitEl
         border-inline-start-width: var(--m3e-step-divider-thickness, 1px);
         border-inline-start-style: solid;
         border-inline-start-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
+      }
+      m3e-stepper:is(:state(--rtl), :--rtl):is(:state(--vertical), :--vertical)
+        > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
+      m3e-stepper:is(:state(--rtl), :--rtl):is(:state(--vertical), :--vertical)
+        > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
+        right: 0;
       }
     `);
   }
@@ -184,42 +191,42 @@ export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitEl
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
       top: 50%;
     }
-    :host(:not(:dir(rtl)):not(:is(:state(--vertical), :--vertical))[label-position="end"])
+    :host(:not(:is(:state(--rtl), :--rtl)):not(:is(:state(--vertical), :--vertical))[label-position="end"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
       left: 0;
       right: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
     }
-    :host(:dir(rtl):not(:is(:state(--vertical), :--vertical))[label-position="end"])
+    :host(:is(:state(--rtl), :--rtl):not(:is(:state(--vertical), :--vertical))[label-position="end"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
       right: 0;
       left: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
     }
-    :host(:not(:dir(rtl)):not(:is(:state(--vertical), :--vertical))[label-position="end"])
+    :host(:not(:is(:state(--rtl), :--rtl)):not(:is(:state(--vertical), :--vertical))[label-position="end"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
       left: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
       right: 0;
     }
-    :host(:dir(rtl):not(:is(:state(--vertical), :--vertical))[label-position="end"])
+    :host(:is(:state(--rtl), :--rtl):not(:is(:state(--vertical), :--vertical))[label-position="end"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
       right: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
       left: 0;
     }
-    :host(:not(:dir(rtl)):not(:is(:state(--vertical), :--vertical))[label-position="below"])
+    :host(:not(:is(:state(--rtl), :--rtl)):not(:is(:state(--vertical), :--vertical))[label-position="below"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
       left: 0;
       right: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
     }
-    :host(:dir(rtl):not(:is(:state(--vertical), :--vertical))[label-position="below"])
+    :host(:is(:state(--rtl), :--rtl):not(:is(:state(--vertical), :--vertical))[label-position="below"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
       right: 0;
       left: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
     }
-    :host(:not(:dir(rtl)):not(:is(:state(--vertical), :--vertical))[label-position="below"])
+    :host(:not(:is(:state(--rtl), :--rtl)):not(:is(:state(--vertical), :--vertical))[label-position="below"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
       left: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
       right: 0;
     }
-    :host(:dir(rtl):not(:is(:state(--vertical), :--vertical))[label-position="below"])
+    :host(:is(:state(--rtl), :--rtl):not(:is(:state(--vertical), :--vertical))[label-position="below"])
       ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
       right: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
       left: 0;
@@ -262,12 +269,14 @@ export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitEl
   `;
 
   /** @private */ #breakpointUnobserve?: () => void;
+  /** @private */ #directionalitySubscription?: () => void;
   /** @private */ @state() private _orientation?: Exclude<StepperOrientation, "auto">;
   /** @private */ @state() private _selectedIndex: number | null = null;
   /** @internal */ readonly [selectionManager] = new SelectionManager<M3eStepElement>()
     .withHomeAndEnd()
     .withWrap()
-    .onSelectedItemsChange(() => this.#handleSelectedChange());
+    .onSelectedItemsChange(() => this.#handleSelectedChange())
+    .withDirectionality(M3eDirectionality.current);
 
   /**
    * The position of the step header, when oriented horizontally.
@@ -397,14 +406,17 @@ export class M3eStepperElement extends ReconnectedCallback(AttachInternals(LitEl
   override connectedCallback(): void {
     super.connectedCallback();
     addCustomState(this, "--no-animate");
+    this.#directionalitySubscription = M3eDirectionality.observe(
+      () => (this[selectionManager].directionality = M3eDirectionality.current),
+    );
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-
     this._orientation = undefined;
     this.#breakpointUnobserve?.();
+    this.#directionalitySubscription?.();
   }
 
   /** @inheritdoc */

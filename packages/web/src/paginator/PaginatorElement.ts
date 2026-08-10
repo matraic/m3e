@@ -11,7 +11,8 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, DesignToken, Role } from "@m3e/web/core";
+import { AttachInternals, customElement, DesignToken, Role } from "@m3e/web/core";
+import { SupportsDirectionality } from "@m3e/web/core/bidi";
 import type { M3eSelectElement } from "@m3e/web/select";
 import type { FormFieldVariant } from "@m3e/web/form-field";
 
@@ -68,7 +69,7 @@ import { PaginatorPageEventDetail } from "./PaginatorPageEventDetail";
  * @cssprop --m3e-paginator-tracking - The letter-spacing used for paginator text.
  */
 @customElement("m3e-paginator")
-export class M3ePaginatorElement extends Role(LitElement, "group") {
+export class M3ePaginatorElement extends SupportsDirectionality(AttachInternals(Role(LitElement, "group"))) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -131,7 +132,7 @@ export class M3ePaginatorElement extends Role(LitElement, "group") {
       font-size: var(--m3e-icon-button-medium-icon-size, 24px) !important;
     }
 
-    :host(:dir(rtl)) svg {
+    :host(:is(:state(--rtl), :--rtl)) svg {
       transform: rotate(180deg);
     }
   `;

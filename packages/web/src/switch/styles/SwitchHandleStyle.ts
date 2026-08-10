@@ -84,12 +84,12 @@ export const SwitchHandleStyle = css`
       transparent
     );
   }
-  :host(:not(:dir(rtl))[checked]) .track:not(.pressed) .handle {
+  :host(:not(:is(:state(--rtl), :--rtl))[checked]) .track:not(.pressed) .handle {
     transform: translateX(
       calc(${SwitchToken.trackWidth} - ${SwitchToken.selectedHandleWidth} - calc(${SwitchToken.trackOutlineWidth} * 2))
     );
   }
-  :host(:dir(rtl)[checked]) .track:not(.pressed) .handle {
+  :host(:is(:state(--rtl), :--rtl)[checked]) .track:not(.pressed) .handle {
     transform: translateX(
       calc(
         0px - calc(
@@ -98,26 +98,26 @@ export const SwitchHandleStyle = css`
       )
     );
   }
-  :host(:not(:dir(rtl))[checked]) .track.pressed .handle {
+  :host(:not(:is(:state(--rtl), :--rtl))[checked]) .track.pressed .handle {
     transform: translateX(
       calc(${SwitchToken.trackWidth} - ${SwitchToken.pressedHandleWidth} - ${SwitchToken.trackOutlineWidth})
     );
   }
-  :host(:dir(rtl)[checked]) .track.pressed .handle {
+  :host(:is(:state(--rtl), :--rtl)[checked]) .track.pressed .handle {
     transform: translateX(
       calc(0px - calc(${SwitchToken.trackWidth} - ${SwitchToken.pressedHandleWidth} - ${SwitchToken.trackOutlineWidth}))
     );
   }
-  :host(:not(:dir(rtl)):not([checked]):not([icons="both"])) .track:not(.pressed) .handle,
-  :host(:not(:dir(rtl))[aria-disabled="true"]:not([checked])) .handle {
+  :host(:not(:is(:state(--rtl), :--rtl)):not([checked]):not([icons="both"])) .track:not(.pressed) .handle,
+  :host(:not(:is(:state(--rtl), :--rtl))[aria-disabled="true"]:not([checked])) .handle {
     transform: translateX(
       calc(
         ${SwitchToken.trackOutlineWidth} + calc(${SwitchToken.pressedHandleWidth} - ${SwitchToken.withIconHandleWidth})
       )
     );
   }
-  :host(:dir(rtl):not([checked]):not([icons="both"])) .track:not(.pressed) .handle,
-  :host(:dir(rtl)[aria-disabled="true"]:not([checked])) .handle {
+  :host(:is(:state(--rtl), :--rtl):not([checked]):not([icons="both"])) .track:not(.pressed) .handle,
+  :host(:is(:state(--rtl), :--rtl)[aria-disabled="true"]:not([checked])) .handle {
     transform: translateX(
       calc(
         0px - calc(
@@ -127,10 +127,14 @@ export const SwitchHandleStyle = css`
       )
     );
   }
-  :host(:not(:dir(rtl)):not([aria-disabled="true"]):not([checked])[icons="both"]) .track:not(.pressed) .handle {
+  :host(:not(:is(:state(--rtl), :--rtl)):not([aria-disabled="true"]):not([checked])[icons="both"])
+    .track:not(.pressed)
+    .handle {
     transform: translateX(${SwitchToken.trackOutlineWidth});
   }
-  :host(:dir(rtl):not([aria-disabled="true"]):not([checked])[icons="both"]) .track:not(.pressed) .handle {
+  :host(:is(:state(--rtl), :--rtl):not([aria-disabled="true"]):not([checked])[icons="both"])
+    .track:not(.pressed)
+    .handle {
     transform: translateX(calc(0px - ${SwitchToken.trackOutlineWidth}));
   }
   @media (forced-colors: active) {
