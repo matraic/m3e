@@ -1,6 +1,6 @@
 import { CustomElementDecorator } from "lit/decorators.js";
 
-export type Constructor<T> = { new (...args: unknown[]): T };
+type Constructor<T> = { new (...args: unknown[]): T };
 
 /**
  * Class decorator factory that defines the decorated class as a custom element.
