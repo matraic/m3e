@@ -19,6 +19,7 @@ import "@m3e/web/icon-button";
  * @attr close-label - The accessible label given to the button used to dismiss the snackbar.
  * @attr dismissible - Whether a button is presented that can be used to close the snackbar.
  * @attr duration - The length of time, in milliseconds, to wait before automatically dismissing the snackbar.
+ * @attr open - Whether the snackbar is open.
  *
  * @fires beforetoggle - Dispatched before the toggle state changes.
  * @fires toggle - Dispatched after the toggle state has changed.
@@ -187,6 +188,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
   /** @private */ #timeoutId = -1;
   /** @private */ #actionTaken = false;
   /** @private */ readonly #beforeToggleHandler = (e: ToggleEvent) => this.#handleBeforeToggle(e);
+  /** @private */ readonly #toggleHandler = (e: ToggleEvent) => { this.open = e.newState === "open"; };
 
   /** The currently open snackbar. */
   static get current(): M3eSnackbarElement | null {
@@ -212,6 +214,12 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
   @property({ type: Boolean, reflect: true }) dismissible = false;
 
   /**
+   * Whether the snackbar is open.
+   * @default false
+   */
+  @property({ type: Boolean, reflect: true }) open = false;
+
+  /**
    * The accessible label given to the button used to dismiss the snackbar.
    * @default "Close"
    */
@@ -227,6 +235,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
     super.connectedCallback();
 
     this.addEventListener("beforetoggle", this.#beforeToggleHandler);
+    this.addEventListener("toggle", this.#toggleHandler);
     this.setAttribute("popover", "manual");
     this.ariaLive = "polite";
   }
@@ -236,6 +245,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
     super.disconnectedCallback();
 
     this.removeEventListener("beforetoggle", this.#beforeToggleHandler);
+    this.removeEventListener("toggle", this.#toggleHandler);
   }
 
   /** @inheritdoc */
@@ -247,8 +257,13 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
   }
 
   /** @inheritdoc */
-  protected override updated(_changedProperties: PropertyValues): void {
-    super.updated(_changedProperties);
+  protected override updated(changed: PropertyValues): void {
+    super.updated(changed);
+
+    if (changed.has("open")) {
+      if (this.open && !this.matches(":popover-open")) this.showPopover();
+      else if (!this.open && this.matches(":popover-open")) this.hidePopover();
+    }
 
     // After render, compute the (unscaled) height of the snackbar in order
     // to properly position it relative to the viewport.
