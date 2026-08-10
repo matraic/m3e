@@ -24,6 +24,25 @@ M3eSnackbar.open("File deleted", "Undo", {
 });
 ```
 
+The following example illustrates declarative usage via the `open` attribute, suitable for attribute-driven renderers such as Elm or hypermedia frameworks. Setting the attribute shows the snackbar; removing it hides it. The attribute is automatically cleared when the snackbar is dismissed (by auto-dismiss timeout, action click, or close button), so the DOM stays truthful.
+
+```html
+<!-- Show the snackbar declaratively -->
+<m3e-snackbar open dismissible>File deleted</m3e-snackbar>
+
+<!-- Toggle visibility in JavaScript -->
+<script>
+  const snackbar = document.querySelector("m3e-snackbar");
+  // Show
+  snackbar.open = true;
+  // Or equivalently: snackbar.setAttribute("open", "");
+
+  // Hide
+  snackbar.open = false;
+  // Or equivalently: snackbar.removeAttribute("open");
+</script>
+```
+
 ## 📖 API Reference
 
 ### 🛠️ Snackbar Service
@@ -52,6 +71,7 @@ This section details the attributes, slots and CSS custom properties available f
 | `close-label` | `string`  | `"Close"` | The accessible label given to the button used to dismiss the snackbar.                     |
 | `dismissible` | `boolean` | `false`   | Whether a button is presented that can be used to close the snackbar.                      |
 | `duration`    | `number`  | `3000`    | The length of time, in milliseconds, to wait before automatically dismissing the snackbar. |
+| `open`        | `boolean` | `false`   | Whether the snackbar is open.                                                              |
 
 #### 🧩 Slots
 
