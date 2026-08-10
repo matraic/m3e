@@ -13,6 +13,7 @@ import { property, query, state } from "lit/decorators.js";
 import {
   AttachInternals,
   customElement,
+  deleteCustomState,
   DesignToken,
   FocusController,
   getTextContent,
@@ -655,7 +656,12 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   readonly #pressedController = new PressedController(this, {
     target: null,
     filter: (e) => this.#ignoreEvent(e),
-    callback: (pressed) => setCustomState(this, "--pressed", pressed && !(this.#control?.disabled ?? true)),
+    callback: (pressed) => {
+      setCustomState(this, "--pressed", pressed && !(this.#control?.disabled ?? true));
+      if (!pressed && !this.#shouldFloatLabel) {
+        deleteCustomState(this, "--float-label");
+      }
+    },
   });
 
   /** @private */ #focused = false;
@@ -674,9 +680,13 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
 
   /** @private */
   get #shouldFloatLabel(): boolean {
-    return this.#control?.shouldLabelFloat !== undefined
-      ? this.#control.shouldLabelFloat === true
-      : typeof this.#control?.value == "string" && this.#control.value.length > 0;
+    return (
+      this.#focused ||
+      hasCustomState(this, "--pressed") ||
+      (this.#control?.shouldLabelFloat !== undefined
+        ? this.#control.shouldLabelFloat === true
+        : typeof this.#control?.value == "string" && this.#control.value.length > 0)
+    );
   }
 
   /** A reference to the element used to anchor dropdown menus. */
@@ -723,7 +733,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     setCustomState(this, "--disabled", this.#control?.disabled === true);
     setCustomState(this, "--readonly", isReadOnlyMixin(this.#control) && this.#control.readOnly === true);
     if (this.floatLabel === "auto") {
-      setCustomState(this, "--float-label", this.#shouldFloatLabel || this.#focused);
+      setCustomState(this, "--float-label", this.#shouldFloatLabel);
     }
 
     if (checkValidity) {
