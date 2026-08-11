@@ -331,6 +331,12 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
   }
 
   /** @inheritdoc */
+  override disconnectedCallback(): void {
+    this.#removeMenu();
+    super.disconnectedCallback();
+  }
+
+  /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
     this.#initMutation();
@@ -670,10 +676,9 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
     }
   }
 
-  /** @private*/
-  #destroyMenu(e: ToggleEvent): void {
+  /** @private */
+  #removeMenu(): void {
     if (!this.#menu) return;
-
     this.#clone?.replaceChildren(...this.#menu.childNodes);
 
     this.#menu.remove();
@@ -682,12 +687,18 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
     this.#menu.removeEventListener("pointerup", this.#menuPointerUpHandler);
     this.#menu = undefined;
 
-    if (this.#input) {
-      this.#input.ariaExpanded = "false";
-      this.#input.removeAttribute("aria-controls");
-      this.#input.removeAttribute("aria-owns");
-      this.#input.removeAttribute("aria-activedescendant");
-    }
+    if (!this.#input) return;
+
+    this.#input.ariaExpanded = "false";
+    this.#input.removeAttribute("aria-controls");
+    this.#input.removeAttribute("aria-activedescendant");
+  }
+
+  /** @private*/
+  #destroyMenu(e: ToggleEvent): void {
+    if (!this.#menu) return;
+
+    this.#removeMenu();
     this.requestUpdate();
 
     this.#formField?.notifyControlStateChange();
@@ -735,11 +746,10 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
 
     this.#updateMenuState(this.#menu, count);
 
-    (this.#formField ?? this.#input).insertAdjacentElement("afterend", this.#menu);
+    // Append the panel to body to keep it out of framework‑owned DOM and prevent unintended removal.
+    document.body.appendChild(this.#menu);
 
     this.#input.setAttribute("aria-controls", this.#menuId);
-    this.#input.setAttribute("aria-owns", this.#menuId);
-
     this.#formField?.notifyControlStateChange();
 
     if (this._listKeyManager.activeItem && this.autoActivate) {

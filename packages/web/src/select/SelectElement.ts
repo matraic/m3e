@@ -326,6 +326,8 @@ export class M3eSelectElement
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
+    this.#removeMenu();
+
     super.disconnectedCallback();
 
     this.removeEventListener("click", this.#clickHandler);
@@ -608,9 +610,8 @@ export class M3eSelectElement
   }
 
   /** @private */
-  #destroyMenu(e: ToggleEvent): void {
+  #removeMenu(): void {
     if (!this.#menu) return;
-
     this.#clone?.replaceChildren(...this.#menu.childNodes);
     this.#menu.remove();
     this.#menu.removeEventListener("toggle", this.#menuToggleHandler);
@@ -620,11 +621,18 @@ export class M3eSelectElement
 
     this.ariaExpanded = "false";
     this.removeAttribute("aria-controls");
-    this.removeAttribute("aria-owns");
     this.removeAttribute("aria-activedescendant");
-    this.requestUpdate();
 
     deleteCustomState(this, "--open");
+  }
+
+  /** @private */
+  #destroyMenu(e: ToggleEvent): void {
+    if (!this.#menu) return;
+
+    this.#removeMenu();
+    this.requestUpdate();
+
     this.#formField?.notifyControlStateChange();
 
     this.dispatchEvent(
@@ -675,11 +683,11 @@ export class M3eSelectElement
       this.#menu.replaceChildren(...this.#clone.childNodes);
     }
 
-    (this.#formField ?? this).insertAdjacentElement("afterend", this.#menu);
+    // Append the panel to body to keep it out of framework‑owned DOM and prevent unintended removal.
+    document.body.appendChild(this.#menu);
 
     this.ariaExpanded = "true";
     this.setAttribute("aria-controls", this.#listId);
-    this.setAttribute("aria-owns", this.#listId);
     this.#formField?.notifyControlStateChange();
 
     setTimeout(() => {
