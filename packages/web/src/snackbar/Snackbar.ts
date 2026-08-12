@@ -117,7 +117,7 @@ export class M3eSnackbar {
       }
     });
 
-    (document.querySelector("m3e-theme") ?? document.body).append(snackbar);
+    document.body.append(snackbar);
     snackbar.showPopover();
   }
 
