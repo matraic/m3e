@@ -13,6 +13,9 @@ export const ShapeStyle: CSSResultGroup = css`
     aspect-ratio: 1 / 1;
     width: ${ShapeToken.size};
   }
+  :host([hidden]) {
+    display: none;
+  }
   :host([name]) .wrapper {
     background-color: ${ShapeToken.containerColor};
     transition: ${ShapeToken.transition};

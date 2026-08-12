@@ -125,6 +125,9 @@ export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallbac
       flex-direction: column;
       position: relative;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .header {
       contain: layout style;
     }

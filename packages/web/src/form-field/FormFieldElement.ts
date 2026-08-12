@@ -161,6 +161,9 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       width: var(--m3e-form-field-width, 270px);
       color: var(--_form-field-color);
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host(:not(:is(:state(--disabled), :--disabled))) .base {
       cursor: var(--_form-field-cursor);
     }

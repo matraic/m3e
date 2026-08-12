@@ -64,6 +64,9 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
         visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host::backdrop {
       background-color: transparent;
     }
@@ -188,7 +191,9 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
   /** @private */ #timeoutId = -1;
   /** @private */ #actionTaken = false;
   /** @private */ readonly #beforeToggleHandler = (e: ToggleEvent) => this.#handleBeforeToggle(e);
-  /** @private */ readonly #toggleHandler = (e: ToggleEvent) => { this.open = e.newState === "open"; };
+  /** @private */ readonly #toggleHandler = (e: ToggleEvent) => {
+    this.open = e.newState === "open";
+  };
 
   /** The currently open snackbar. */
   static get current(): M3eSnackbarElement | null {

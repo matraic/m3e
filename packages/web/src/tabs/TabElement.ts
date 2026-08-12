@@ -93,6 +93,9 @@ export class M3eTabElement extends Selected(
       flex-grow: var(--_tab-grow);
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host(:not(:disabled)) {
       cursor: pointer;
     }

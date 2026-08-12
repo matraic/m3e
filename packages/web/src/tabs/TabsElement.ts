@@ -87,6 +87,9 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       flex-direction: column;
       position: relative;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .tablist {
       contain: layout style;
       position: relative;

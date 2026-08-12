@@ -75,6 +75,9 @@ export class M3ePaginatorElement extends SupportsDirectionality(AttachInternals(
     :host {
       display: block;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .outer {
       display: flex;
       font-size: var(--m3e-paginator-font-size, ${DesignToken.typescale.standard.body.small.fontSize});

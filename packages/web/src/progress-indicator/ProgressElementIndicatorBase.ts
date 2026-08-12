@@ -11,6 +11,9 @@ export abstract class ProgressElementIndicatorBase extends ReconnectedCallback(
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
+    :host([hidden]) {
+      display: none;
+    }
     @media (forced-colors: active) {
       :host {
         --m3e-progress-indicator-color: CanvasText;

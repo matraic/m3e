@@ -152,6 +152,9 @@ export class M3eHeadingElement extends LitElement {
     :host {
       display: block;
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host([variant="display"][size="large"]:not([emphasized])) {
       font-size: ${DesignToken.typescale.standard.display.large.fontSize};
       font-weight: ${DesignToken.typescale.standard.display.large.fontWeight};

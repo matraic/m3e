@@ -38,6 +38,9 @@ export class M3eSlideElement extends AttachInternals(LitElement) {
       position: relative;
       overflow: hidden;
     }
+    :host([hidden]) {
+      display: none;
+    }
     ::slotted(*) {
       width: 100%;
       top: 0;

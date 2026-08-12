@@ -17,6 +17,9 @@ export abstract class CalendarViewElementBase extends LitElement {
       user-select: none;
       vertical-align: top;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .visually-hidden {
       position: absolute;
       appearance: none;

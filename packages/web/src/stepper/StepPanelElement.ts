@@ -67,6 +67,9 @@ export class M3eStepPanelElement extends Role(LitElement, "tabpanel") {
     :host {
       display: block;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .content {
       contain: layout style paint;
       display: flex;

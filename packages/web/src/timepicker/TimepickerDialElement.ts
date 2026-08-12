@@ -74,6 +74,9 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
       width: var(--m3e-timepicker-dial-container-size, 256px);
       aspect-ratio: 1 / 1;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       contain: layout style paint;
       position: relative;

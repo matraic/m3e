@@ -43,6 +43,9 @@ export class M3eAccordionElement extends LitElement {
     :host {
       display: block;
     }
+    :host([hidden]) {
+      display: none;
+    }
     ::slotted(m3e-expansion-panel) {
       --m3e-expansion-panel-container-color: ${DesignToken.color.surface};
       --m3e-expansion-panel-elevation: ${DesignToken.elevation.level2};

@@ -77,6 +77,9 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
       height: calc(var(--m3e-option-container-height, 44px) + ${DesignToken.density.calc(-3)});
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host(:not([aria-disabled="true"])) .base {
       color: var(--m3e-option-color, ${DesignToken.color.onSurface});
       --m3e-state-layer-hover-color: var(--m3e-option-container-hover-color, ${DesignToken.color.onSurface});

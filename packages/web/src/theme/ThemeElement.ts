@@ -135,6 +135,9 @@ export class M3eThemeElement extends LitElement {
     :host {
       display: contents;
     }
+    :host([hidden]) {
+      display: none;
+    }
   `;
 
   /** @private */ #styleSheet = new CSSStyleSheet();

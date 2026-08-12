@@ -15,6 +15,9 @@ export class M3eTimepickerInputPeriodToggleElement extends Role(LitElement, "rad
     :host {
       display: block;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       contain: layout style;
       display: flex;

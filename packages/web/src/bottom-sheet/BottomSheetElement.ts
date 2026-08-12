@@ -157,6 +157,9 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       color: var(--m3e-bottom-sheet-color, ${DesignToken.color.onSurface});
       background-color: var(--m3e-bottom-sheet-container-color, ${DesignToken.color.surfaceContainerLow});
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host(:not(:is(:state(--no-animate), :--no-animate))) {
       transition: ${unsafeCSS(
         `transform ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standardDecelerate},

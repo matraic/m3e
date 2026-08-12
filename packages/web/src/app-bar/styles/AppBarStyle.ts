@@ -13,6 +13,9 @@ export const AppBarStyle: CSSResult = css`
     display: block;
     flex: none;
   }
+  :host([hidden]) {
+    display: none;
+  }
   :host([size="small"]) .base,
   :host(:not([size="small"]):not([centered])) .heading {
     padding-inline-start: ${AppBarToken.paddingLeft};

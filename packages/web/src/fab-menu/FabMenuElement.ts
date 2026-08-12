@@ -93,6 +93,9 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       background-color: transparent;
       display: none;
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host(:not(:is(:state(--no-animate), :--no-animate))) {
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.spring.fastEffects}, 

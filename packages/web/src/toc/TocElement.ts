@@ -87,6 +87,9 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
       display: inline-block;
       width: calc(var(--m3e-toc-width, 156px));
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       contain: layout style paint;
       border-radius: var(--m3e-toc-container-shape, ${DesignToken.shape.corner.none});

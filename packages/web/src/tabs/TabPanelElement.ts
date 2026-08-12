@@ -41,6 +41,9 @@ export class M3eTabPanelElement extends Role(LitElement, "tabpanel") {
       scrollbar-width: ${DesignToken.scrollbar.width};
       scrollbar-color: ${DesignToken.scrollbar.color};
     }
+    :host([hidden]) {
+      display: none;
+    }
   `;
 
   /** @inheritdoc */

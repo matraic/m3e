@@ -58,6 +58,9 @@ export class M3eAvatarElement extends LitElement {
       aspect-ratio: 1 / 1;
       width: var(--m3e-avatar-size, 40px);
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       contain: layout style paint;
       user-select: none;

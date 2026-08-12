@@ -106,6 +106,9 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       line-height: 0;
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host(:not([disabled])) {
       cursor: pointer;
     }

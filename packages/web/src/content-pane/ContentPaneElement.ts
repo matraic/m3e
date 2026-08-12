@@ -33,6 +33,9 @@ export class M3eContentPaneElement extends ReconnectedCallback(LitElement) {
     :host {
       display: block;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       width: 100%;
       height: 100%;

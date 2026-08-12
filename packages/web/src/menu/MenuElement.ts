@@ -134,6 +134,9 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
       opacity: 0;
       display: none;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       contain: layout style paint;
       display: flex;

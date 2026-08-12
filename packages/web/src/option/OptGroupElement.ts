@@ -36,6 +36,9 @@ export class M3eOptGroupElement extends Role(LitElement, "group") {
       display: block;
       --_option-padding-start: calc(var(--m3e-option-padding-start, ${DesignToken.measurement.space150}) * 2);
     }
+    :host([hidden]) {
+      display: none;
+    }
     .label {
       height: var(--m3e-option-height, 48px);
       font-size: var(--m3e-option-font-size, ${DesignToken.typescale.standard.label.large.fontSize});

@@ -45,6 +45,9 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(LitElem
       vertical-align: middle;
       content-visibility: auto;
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host([variant="uncontained"]) {
       width: ${LoadingIndicatorToken.activeIndicatorSize};
     }

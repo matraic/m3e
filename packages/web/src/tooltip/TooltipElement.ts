@@ -57,6 +57,9 @@ export class M3eTooltipElement extends TooltipElementBase {
     :host {
       display: contents;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       contain: layout style paint;
       position: absolute;

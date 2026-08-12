@@ -109,6 +109,9 @@ export class M3eButtonSegmentElement extends Dirty(
       min-width: 0;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       position: relative;
       display: inline-flex;

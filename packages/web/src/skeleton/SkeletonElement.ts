@@ -85,6 +85,9 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
     :host {
       display: contents;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .shape {
       position: absolute;
       overflow: hidden;

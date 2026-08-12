@@ -121,6 +121,9 @@ export class M3eCheckboxElement extends Labelled(
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       line-height: 0;
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host(:not([aria-disabled="true"])) {
       cursor: pointer;
     }

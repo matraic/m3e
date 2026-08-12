@@ -45,6 +45,9 @@ export class M3eTextHighlightElement extends LitElement {
     :host {
       display: contents;
     }
+    :host([hidden]) {
+      display: none;
+    }
   `;
 
   /** @private */ private static __nextId = 0;

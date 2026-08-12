@@ -81,6 +81,9 @@ export class M3eRichTooltipElement extends TooltipElementBase {
     :host {
       display: contents;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       contain: layout style;
       flex-direction: column;

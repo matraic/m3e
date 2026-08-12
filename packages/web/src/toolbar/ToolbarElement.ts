@@ -72,6 +72,9 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
       display: inline-block;
       position: relative;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       display: flex;
       align-items: center;

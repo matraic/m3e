@@ -46,6 +46,9 @@ export class M3eTextareaAutosizeElement extends HtmlFor(Role(LitElement, "none")
     :host {
       display: none;
     }
+    :host([hidden]) {
+      display: none;
+    }
   `;
 
   /** @private */ #initialHeight?: string;

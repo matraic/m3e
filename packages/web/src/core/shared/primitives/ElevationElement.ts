@@ -65,6 +65,9 @@ export class M3eElevationElement extends HtmlFor(Role(LitElement, "none")) {
     :host {
       display: block;
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host,
     .shadow {
       position: absolute;

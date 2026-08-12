@@ -84,6 +84,9 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
     :host {
       display: block;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       display: flex;
       align-items: flex-start;

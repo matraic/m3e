@@ -131,6 +131,9 @@ export class M3eNavItemElement extends SupportsDirectionality(
       align-self: var(--_nav-item-align-self);
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host([orientation="vertical"]) {
       min-width: var(--_vertical-nav-item-min-width);
       width: var(--_vertical-nav-item-width);

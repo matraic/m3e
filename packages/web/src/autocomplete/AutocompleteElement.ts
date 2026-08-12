@@ -77,6 +77,9 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
     :host {
       display: contents;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .options {
       display: none;
     }

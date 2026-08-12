@@ -112,6 +112,9 @@ export class M3eCalendarElement extends LitElement {
       width: fit-content;
       height: fit-content;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       contain: layout style paint;
       display: flex;

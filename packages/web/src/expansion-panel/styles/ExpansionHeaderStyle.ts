@@ -18,6 +18,9 @@ export const ExpansionHeaderStyle = css`
     transition: ${unsafeCSS(`height var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
         ${DesignToken.motion.easing.standard}`)};
   }
+  :host([hidden]) {
+    display: none;
+  }
   .base {
     contain: layout style;
     box-sizing: border-box;

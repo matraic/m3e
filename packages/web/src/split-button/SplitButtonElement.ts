@@ -92,6 +92,9 @@ export class M3eSplitButtonElement extends Role(LitElement, "group") {
       display: inline-flex;
       vertical-align: middle;
     }
+    :host([hidden]) {
+      display: none;
+    }
     ::slotted([slot="leading-button"]) {
       flex: 1 1 auto;
       min-width: 0;

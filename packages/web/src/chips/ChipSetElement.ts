@@ -40,6 +40,9 @@ export class M3eChipSetElement extends Vertical(LitElement) {
       gap: var(--m3e-chip-set-spacing, ${DesignToken.measurement.space100});
       outline: none;
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host([vertical]) {
       flex-direction: column;
     }

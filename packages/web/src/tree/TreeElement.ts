@@ -114,6 +114,9 @@ export class M3eTreeElement extends Role(LitElement, "tree") {
       scrollbar-width: ${DesignToken.scrollbar.width};
       scrollbar-color: ${DesignToken.scrollbar.color};
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       contain: layout style;
       width: 100%;

@@ -36,6 +36,9 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
       outline: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       display: flex;
       align-items: center;

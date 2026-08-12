@@ -28,6 +28,9 @@ export const SearchBarStyle: CSSResultGroup = css`
     display: block;
     height: ${SearchBarToken.containerHeight};
   }
+  :host([hidden]) {
+    display: none;
+  }
   .base {
     contain: layout style paint;
     cursor: text;

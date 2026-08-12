@@ -13,6 +13,9 @@ export const CardStyle: CSSResult = css`
   :host {
     outline: none;
   }
+  :host([hidden]) {
+    display: none;
+  }
   :host(:not([inline])) {
     display: block;
   }

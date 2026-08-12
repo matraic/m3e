@@ -39,6 +39,9 @@ export class M3eDividerElement extends Role(LitElement, "separator") {
       display: block;
       position: relative;
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host(:not([vertical])) {
       height: var(--m3e-divider-thickness, 1px);
       width: 100%;

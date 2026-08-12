@@ -51,6 +51,9 @@ export class M3eNavMenuItemGroupElement extends AttachInternals(Role(LitElement,
     :host {
       display: contents;
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host(:not(:is(:state(--with-label), :--with-label))) .label {
       display: none;
     }

@@ -15,6 +15,9 @@ export const SwitchStyle = css`
     user-select: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
+  :host([hidden]) {
+    display: none;
+  }
   :host(:not([aria-disabled="true"])) {
     cursor: pointer;
   }

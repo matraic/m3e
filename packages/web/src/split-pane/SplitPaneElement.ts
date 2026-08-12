@@ -112,6 +112,9 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
     :host {
       display: block;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       contain: layout style;
       display: flex;

@@ -78,6 +78,9 @@ export class M3eRadioGroupElement extends Labelled(
     :host {
       display: inline-flex;
     }
+    :host([hidden]) {
+      display: none;
+    }
   `;
 
   /** @private */ #directionalitySubscription?: () => void;

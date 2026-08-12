@@ -38,6 +38,9 @@ export class M3eBreadcrumbElement extends Role(LitElement, "navigation") {
     :host {
       display: block;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       display: flex;
       align-items: center;

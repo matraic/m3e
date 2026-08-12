@@ -13,6 +13,9 @@ export const ExpansionPanelStyle = css`
   :host {
     display: block;
   }
+  :host([hidden]) {
+    display: none;
+  }
   .base {
     background-color: ${ExpansionPanelToken.containerColor};
     transition: ${unsafeCSS(`box-shadow var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})

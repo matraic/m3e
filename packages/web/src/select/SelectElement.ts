@@ -118,6 +118,9 @@ export class M3eSelectElement
       min-height: var(--m3e-form-field-line-height, ${DesignToken.typescale.standard.body.large.lineHeight});
       border-radius: var(--m3e-select-container-shape, ${DesignToken.shape.corner.extraSmall});
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host(:not(:disabled)) {
       cursor: pointer;
     }

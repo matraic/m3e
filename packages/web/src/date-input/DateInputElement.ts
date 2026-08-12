@@ -123,6 +123,9 @@ export class M3eDateInputElement
       display: inline-block;
       text-align: start;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       display: inline-flex;
       width: 100%;

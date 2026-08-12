@@ -83,6 +83,9 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
     :host {
       display: contents;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       contain: layout style;
       font: inherit;

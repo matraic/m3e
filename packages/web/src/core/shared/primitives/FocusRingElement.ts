@@ -59,6 +59,9 @@ export class M3eFocusRingElement extends HtmlFor(Role(LitElement, "none")) {
       border-radius: inherit;
       outline: none;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .outline {
       contain: layout style;
       position: absolute;

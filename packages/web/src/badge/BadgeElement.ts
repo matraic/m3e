@@ -55,6 +55,9 @@ export class M3eBadgeElement extends HtmlFor(SupportsDirectionality(AttachIntern
       vertical-align: baseline;
       pointer-events: none;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       contain: layout style paint;
       width: 100%;

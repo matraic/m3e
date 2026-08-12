@@ -60,6 +60,9 @@ export class M3eRippleElement extends HtmlFor(Role(LitElement, "none")) {
       pointer-events: none;
       border-radius: inherit;
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host(:not([unbounded])) {
       overflow: hidden;
     }

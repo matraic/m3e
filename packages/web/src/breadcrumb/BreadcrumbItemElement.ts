@@ -62,6 +62,9 @@ export class M3eBreadcrumbItemElement extends LinkButton(AttachInternals(Role(Li
     :host {
       display: block;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       display: flex;
       align-items: center;

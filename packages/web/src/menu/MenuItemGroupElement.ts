@@ -21,6 +21,9 @@ export class M3eMenuItemGroupElement extends Role(LitElement, "group") {
     :host {
       display: contents;
     }
+    :host([hidden]) {
+      display: none;
+    }
   `;
 
   /** @inheritdoc */

@@ -77,6 +77,9 @@ export class M3eSegmentedButtonElement extends Labelled(
       vertical-align: middle;
       align-items: center;
     }
+    :host([hidden]) {
+      display: none;
+    }
     ::slotted(:is(:state(--first), :--first)) {
       border-start-start-radius: var(--m3e-segmented-button-start-shape, ${DesignToken.shape.corner.full});
       border-end-start-radius: var(--m3e-segmented-button-start-shape, ${DesignToken.shape.corner.full});

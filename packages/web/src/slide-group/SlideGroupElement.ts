@@ -53,6 +53,9 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
       display: flex;
       flex-wrap: nowrap;
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host([vertical]) {
       flex-direction: column;
     }

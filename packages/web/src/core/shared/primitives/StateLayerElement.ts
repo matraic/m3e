@@ -51,6 +51,9 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
     :host {
       display: block;
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host,
     .layer {
       position: absolute;

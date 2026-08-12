@@ -31,6 +31,9 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       height: calc(var(--m3e-menu-item-container-height, 44px) + ${DesignToken.density.calc(-3)});
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host(:not(:disabled)) .base {
       color: var(--m3e-menu-item-color, ${DesignToken.color.onSurface});
     }

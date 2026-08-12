@@ -67,6 +67,9 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
         align-items: center;
         justify-content: center;
       }
+      :host([hidden]) {
+        display: none;
+      }
       .progress {
         --_arc-duration: 1333ms;
         --_cycle-duration: calc(4 * var(--_arc-duration));

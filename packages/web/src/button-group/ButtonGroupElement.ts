@@ -85,6 +85,9 @@ export class M3eButtonGroupElement extends Role(LitElement, "group") {
       flex-wrap: nowrap;
       align-items: center;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       display: flex;
       vertical-align: middle;

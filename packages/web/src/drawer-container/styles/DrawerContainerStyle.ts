@@ -15,6 +15,9 @@ export const DrawerContainerStyle: CSSResultGroup = css`
     overflow: hidden;
     flex: 1 1 auto;
   }
+  :host([hidden]) {
+    display: none;
+  }
   .start,
   .end {
     contain: layout style;

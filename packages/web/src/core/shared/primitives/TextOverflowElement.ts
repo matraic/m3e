@@ -38,6 +38,9 @@ export class M3eTextOverflowElement extends LitElement {
       flex-wrap: nowrap;
       min-width: 0;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       flex: 1 1 auto;
       display: inline;

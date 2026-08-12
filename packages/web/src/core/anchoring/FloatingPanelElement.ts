@@ -66,6 +66,9 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
       opacity: 0;
       display: none;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       contain: layout style paint;
       box-sizing: border-box;

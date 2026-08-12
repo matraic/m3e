@@ -41,6 +41,9 @@ export class M3ePseudoRadioElement extends Checked(Disabled(Role(LitElement, "no
       contain: layout style paint;
       line-height: 0;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .circle {
       fill: currentColor;
     }

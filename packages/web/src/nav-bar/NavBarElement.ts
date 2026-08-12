@@ -57,6 +57,9 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
       scrollbar-color: ${DesignToken.scrollbar.color};
       min-height: var(--m3e-nav-bar-height, 64px);
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       contain: layout style;
       display: flex;

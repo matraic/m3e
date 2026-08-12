@@ -42,6 +42,9 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
       display: block;
       overflow: hidden;
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host([orientation="vertical"]) {
       height: 0px;
       transition: ${unsafeCSS(`visibility var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})

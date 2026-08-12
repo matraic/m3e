@@ -54,6 +54,9 @@ export class M3eScrollContainerElement extends AttachInternals(LitElement) {
       outline-width: ${FocusRingToken.thickness};
       outline-offset: ${FocusRingToken.outwardOffset};
     }
+    :host([hidden]) {
+      display: none;
+    }
     :host([thin]) {
       scrollbar-width: ${DesignToken.scrollbar.thinWidth};
     }

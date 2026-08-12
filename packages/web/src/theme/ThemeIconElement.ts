@@ -49,6 +49,9 @@ export class M3eThemeIconElement extends Role(LitElement, "img") {
       width: var(--m3e-theme-icon-size, 24px);
       height: var(--m3e-theme-icon-size, 24px);
     }
+    :host([hidden]) {
+      display: none;
+    }
     .base {
       width: 100%;
       height: 100%;

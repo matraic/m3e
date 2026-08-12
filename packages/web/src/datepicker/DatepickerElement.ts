@@ -118,6 +118,9 @@ export class M3eDatepickerElement extends HtmlFor(
       opacity: 0;
       display: none;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .calendar {
       --m3e-calendar-container-color: transparent;
       --m3e-calendar-container-elevation: ${DesignToken.elevation.level0};

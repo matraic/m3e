@@ -28,6 +28,9 @@ export const SearchViewStyle: CSSResultGroup = css`
   :host {
     display: block;
   }
+  :host([hidden]) {
+    display: none;
+  }
   .base {
     position: relative;
     width: 100%;

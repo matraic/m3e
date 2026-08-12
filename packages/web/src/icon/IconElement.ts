@@ -56,6 +56,9 @@ export class M3eIconElement extends Role(LitElement, "img") {
       vertical-align: middle;
       overflow: hidden;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .icon {
       font-weight: normal;
       font-style: normal;

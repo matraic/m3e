@@ -176,6 +176,9 @@ export class M3eTimepickerElement extends HtmlFor(
       opacity: 0;
       display: none;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .headline {
       color: var(--m3e-timepicker-headline-color, ${DesignToken.color.onSurfaceVariant});
       font-size: var(--m3e-timepicker-headline-font-size, ${DesignToken.typescale.standard.label.large.fontSize});

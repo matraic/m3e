@@ -46,6 +46,9 @@ export class M3eSelectionIndicatorElement extends SuppressInitialAnimation(
     :host {
       display: block;
     }
+    :host([hidden]) {
+      display: none;
+    }
     .state-layer {
       --m3e-state-layer-hover-color: var(
         --m3e-selection-indicator-state-layer-hover-color,
