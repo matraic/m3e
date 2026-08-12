@@ -4,6 +4,7 @@ import { property, query, state } from "lit/decorators.js";
 import {
   AttachInternals,
   customElement,
+  deleteCustomState,
   DesignToken,
   Disabled,
   Focusable,
@@ -17,6 +18,7 @@ import {
 } from "@m3e/web/core";
 
 import { addAriaReferencedId, removeAriaReferencedId, selectionManager } from "@m3e/web/core/a11y";
+import { SupportsDirectionality } from "@m3e/web/core/bidi";
 
 import type { M3eStepperElement } from "./StepperElement";
 import { M3eStepPanelElement } from "./StepPanelElement";
@@ -122,8 +124,8 @@ import { M3eStepPanelElement } from "./StepPanelElement";
  * @cssprop --m3e-step-disabled-hint-color - Base color used to mix the disabled hint foreground.
  */
 @customElement("m3e-step")
-export class M3eStepElement extends Selected(
-  KeyboardClick(Focusable(HtmlFor(Disabled(AttachInternals(Role(LitElement, "tab")))))),
+export class M3eStepElement extends SupportsDirectionality(
+  Selected(KeyboardClick(Focusable(HtmlFor(Disabled(AttachInternals(Role(LitElement, "tab"))))))),
 ) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -138,11 +140,171 @@ export class M3eStepElement extends Selected(
     }
     .base {
       contain: layout style;
-      flex: 1 1 auto;
       min-width: inherit;
       position: relative;
       border-radius: var(--m3e-step-shape, ${DesignToken.shape.corner.medium});
       padding: var(--m3e-step-padding, ${DesignToken.measurement.space300});
+    }
+    :host(:is(:state(--vertical), :--vertical)) {
+      flex-direction: column;
+    }
+    :host(:not(:is(:state(--vertical), :--vertical))) {
+      pointer-events: none;
+      flex-direction: row;
+      flex: 1 1 auto;
+      align-self: stretch;
+    }
+    :host(:not(:is(:state(--vertical), :--vertical))) .base {
+      pointer-events: auto;
+    }
+    :host(:is(:state(--vertical), :--vertical)) .divider,
+    :host(:is(:state(--first), :--first)) .divider.start,
+    :host(:is(:state(--last), :--last)) .divider.end {
+      display: none;
+    }
+    :host(:not(:is(:state(--vertical), :--vertical))) .divider {
+      flex: 1 1 auto;
+      min-width: 32px;
+      position: relative;
+    }
+    :host(:not(:is(:state(--vertical), :--vertical))) .divider,
+    :host(:not(:is(:state(--vertical), :--vertical))) .base {
+      align-self: stretch;
+    }
+    :host(:not(:is(:state(--vertical), :--vertical))) .divider::before {
+      content: "";
+      position: absolute;
+      left: 0px;
+      right: 0px;
+      border-bottom-width: var(--m3e-step-divider-thickness, 1px);
+      border-bottom-style: solid;
+      border-bottom-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
+    }
+    :host(:not(:is(:state(--vertical), :--vertical)):not(:is(:state(--label-below), :--label-below))) .divider::before {
+      top: 50%;
+    }
+    :host(:not(:is(:state(--vertical), :--vertical)):is(:state(--label-below), :--label-below)) .divider::before {
+      top: calc(var(--m3e-step-padding, ${DesignToken.measurement.space300}) + (var(--m3e-step-icon-size, 24px) / 2));
+    }
+    :host(:not(:is(:state(--vertical), :--vertical)):not(:is(:state(--first), :--first))) .base::before,
+    :host(:not(:is(:state(--vertical), :--vertical)):not(:is(:state(--last), :--last))) .base::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      border-bottom-width: var(--m3e-step-divider-thickness, 1px);
+      border-bottom-style: solid;
+      border-bottom-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
+    }
+    :host(
+        :not(:is(:state(--vertical), :--vertical)):not(:is(:state(--first), :--first)):is(
+            :state(--label-below),
+            :--label-below
+          )
+      )
+      .base::before,
+    :host(
+        :not(:is(:state(--vertical), :--vertical)):not(:is(:state(--last), :--last)):is(
+            :state(--label-below),
+            :--label-below
+          )
+      )
+      .base::after {
+      top: 0;
+    }
+    :host(
+        :not(:is(:state(--vertical), :--vertical)):not(:is(:state(--first), :--first)):is(
+            :state(--label-below),
+            :--label-below
+          )
+      )
+      .base::before,
+    :host(
+        :not(:is(:state(--vertical), :--vertical)):not(:is(:state(--last), :--last)):is(
+            :state(--label-below),
+            :--label-below
+          )
+      )
+      .base::after {
+      margin-block-start: calc(var(--m3e-step-padding, 24px) + calc(var(--m3e-step-icon-size, 24px) / 2));
+    }
+    :host(
+        :not(:is(:state(--rtl), :--rtl)):not(:is(:state(--vertical), :--vertical)):not(
+            :is(:state(--label-below), :--label-below)
+          ):not(:is(:state(--first), :--first))
+      )
+      .base::before {
+      left: 0;
+      right: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
+    }
+    :host(
+        :is(:state(--rtl), :--rtl):not(:is(:state(--vertical), :--vertical)):not(
+            :is(:state(--label-below), :--label-below)
+          ):not(:is(:state(--first), :--first))
+      )
+      .base::before {
+      right: 0;
+      left: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
+    }
+    :host(
+        :not(:is(:state(--rtl), :--rtl)):not(:is(:state(--vertical), :--vertical)):not(
+            :is(:state(--label-below), :--label-below)
+          ):not(:is(:state(--last), :--last))
+      )
+      .base::after {
+      left: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
+      right: 0;
+    }
+    :host(
+        :is(:state(--rtl), :--rtl):not(:is(:state(--vertical), :--vertical)):not(
+            :is(:state(--label-below), :--label-below)
+          ):not(:is(:state(--last), :--last))
+      )
+      .base::after {
+      right: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
+      left: 0;
+    }
+    :host(
+        :not(:is(:state(--rtl), :--rtl)):not(:is(:state(--vertical), :--vertical)):is(
+            :state(--label-below),
+            :--label-below
+          ):not(:is(:state(--first), :--first))
+      )
+      .base::before {
+      left: 0;
+      right: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
+    }
+    :host(
+        :is(:state(--rtl), :--rtl):not(:is(:state(--vertical), :--vertical)):is(
+            :state(--label-below),
+            :--label-below
+          ):not(:is(:state(--first), :--first))
+      )
+      .base::before {
+      right: 0;
+      left: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
+    }
+    :host(
+        :not(:is(:state(--rtl), :--rtl)):not(:is(:state(--vertical), :--vertical)):is(
+            :state(--label-below),
+            :--label-below
+          ):not(:is(:state(--last), :--last))
+      )
+      .base::after {
+      left: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
+      right: 0;
+    }
+    :host(
+        :is(:state(--rtl), :--rtl):not(:is(:state(--vertical), :--vertical)):is(
+            :state(--label-below),
+            :--label-below
+          ):not(:is(:state(--last), :--last))
+      )
+      .base::after {
+      right: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
+      left: 0;
+    }
+    :host(:is(:state(--vertical), :--vertical)) {
+      flex: none;
     }
     :host(:not([aria-disabled="true"])) {
       cursor: pointer;
@@ -206,14 +368,21 @@ export class M3eStepElement extends Selected(
       font-weight: var(--m3e-step-font-weight, ${DesignToken.typescale.standard.title.small.fontWeight});
       line-height: var(--m3e-step-line-height, ${DesignToken.typescale.standard.title.small.lineHeight});
       letter-spacing: var(--m3e-step-tracking, ${DesignToken.typescale.standard.title.small.tracking});
-      flex-direction: var(--_step-direction, row);
       gap: var(--m3e-step-icon-label-space, ${DesignToken.measurement.space100});
       justify-content: flex-start;
+    }
+    :host(:not(:is(:state(--vertical), :--vertical)):is(:state(--label-below), :--label-below)) .wrapper {
+      flex-direction: column;
     }
     .label {
       display: flex;
       flex-direction: column;
-      align-items: var(--_step-label-align-items, flex-start);
+      align-items: flex-start;
+    }
+    :host(:not(:is(:state(--vertical), :--vertical)):is(:state(--label-below), :--label-below)) .label {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
     ::slotted([slot="hint"]),
     .hint,
@@ -317,6 +486,11 @@ export class M3eStepElement extends Selected(
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.removeEventListener("click", this.#clickHandler);
+
+    deleteCustomState(this, "--vertical");
+    deleteCustomState(this, "--first");
+    deleteCustomState(this, "--last");
+    deleteCustomState(this, "--label-below");
   }
 
   /** @inheritdoc */
@@ -339,18 +513,20 @@ export class M3eStepElement extends Selected(
     const hint = html`<slot name="hint">${this.optional ? html`<span class="hint">(Optional)</span>` : nothing}</slot>`;
     const error = html`<slot name="error">${hint}</slot>`;
 
-    return html`<div class="base">
-      <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"></m3e-state-layer>
-      <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
-      <m3e-ripple class="ripple" ?disabled="${this.disabled}"></m3e-ripple>
-      <div class="wrapper">
-        <div class="icon" aria-hidden="true">${this.#renderIcon()}</div>
-        <div class="label">
-          <slot></slot>
-          ${this.invalid ? error : hint}
+    return html`<div aria-hidden="true" class="divider start"></div>
+      <div class="base">
+        <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"></m3e-state-layer>
+        <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
+        <m3e-ripple class="ripple" ?disabled="${this.disabled}"></m3e-ripple>
+        <div class="wrapper">
+          <div class="icon" aria-hidden="true">${this.#renderIcon()}</div>
+          <div class="label">
+            <slot></slot>
+            ${this.invalid ? error : hint}
+          </div>
         </div>
       </div>
-    </div>`;
+      <div aria-hidden="true" class="divider end"></div>`;
   }
 
   /** @private */

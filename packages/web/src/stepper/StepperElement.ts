@@ -94,50 +94,25 @@ import { StepperOrientation } from "./StepperOrientation";
 export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallback(AttachInternals(LitElement))) {
   static {
     registerStyleSheet(css`
-      m3e-stepper:not(:is(:state(--vertical), :--vertical)) > .-m3e-step-divider::before {
-        border-bottom-width: var(--m3e-step-divider-thickness, 1px);
-        border-bottom-style: solid;
-        border-bottom-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
-      }
-      m3e-stepper:not(:is(:state(--vertical), :--vertical))
-        > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
-      m3e-stepper:not(:is(:state(--vertical), :--vertical))
-        > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
-        border-bottom-width: var(--m3e-step-divider-thickness, 1px);
-        border-bottom-style: solid;
-        border-bottom-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
-      }
-      m3e-stepper:not(:is(:state(--vertical), :--vertical))[label-position="end"] > .-m3e-step-divider {
-        margin-block: auto;
-      }
-      m3e-stepper:not(:is(:state(--vertical), :--vertical))[label-position="below"] > .-m3e-step-divider::before,
-      m3e-stepper:not(:is(:state(--vertical), :--vertical))[label-position="below"]
-        > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
-      m3e-stepper:not(:is(:state(--vertical), :--vertical))[label-position="below"]
-        > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
-        margin-block-start: calc(var(--m3e-step-padding, 24px) + calc(var(--m3e-step-icon-size, 24px) / 2));
-      }
       m3e-stepper:is(:state(--vertical), :--vertical) > [slot="panel"] {
         margin-inline-start: calc(var(--m3e-step-padding, 24px) + calc(var(--m3e-step-icon-size, 24px) / 2));
       }
-      m3e-stepper:is(:state(--vertical), :--vertical) > [slot="panel"]:not(:last-of-type) {
+      m3e-stepper:is(:state(--vertical), :--vertical) > [slot="panel"]:not(:is(:state(--last), :--last)) {
         border-inline-start-width: var(--m3e-step-divider-thickness, 1px);
         border-inline-start-style: solid;
         border-inline-start-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
       }
-      m3e-stepper:is(:state(--vertical), :--vertical)
-        > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
-      m3e-stepper:is(:state(--vertical), :--vertical)
-        > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
+      m3e-stepper:is(:state(--vertical), :--vertical) > [slot="step"]:not(:is(:state(--first), :--first))::before,
+      m3e-stepper:is(:state(--vertical), :--vertical) > [slot="step"]:not(:is(:state(--last), :--last))::after {
         margin-inline-start: calc(var(--m3e-step-padding, 24px) + calc(var(--m3e-step-icon-size, 24px) / 2));
         border-inline-start-width: var(--m3e-step-divider-thickness, 1px);
         border-inline-start-style: solid;
         border-inline-start-color: var(--m3e-step-divider-color, ${DesignToken.color.outline});
       }
       m3e-stepper:is(:state(--rtl), :--rtl):is(:state(--vertical), :--vertical)
-        > [slot="step"]:not(.-m3e-step-divider):not(:first-of-type)::before,
+        > [slot="step"]:not(:is(:state(--first), :--first))::before,
       m3e-stepper:is(:state(--rtl), :--rtl):is(:state(--vertical), :--vertical)
-        > [slot="step"]:not(.-m3e-step-divider):not(:last-of-type)::after {
+        > [slot="step"]:not(:is(:state(--last), :--last))::after {
         right: 0;
       }
     `);
@@ -158,105 +133,24 @@ export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallbac
       align-items: flex-start;
       flex-wrap: nowrap;
     }
-    :host(:not(:is(:state(--vertical), :--vertical))) ::slotted(.-m3e-step-divider) {
-      flex: 1 1 auto;
-      position: relative;
-      min-width: 32px;
-    }
-    :host(:not(:is(:state(--vertical), :--vertical))) ::slotted(.-m3e-step-divider)::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-    }
-    :host(:not(:is(:state(--vertical), :--vertical)):not([label-position="below"]))
-      ::slotted(.-m3e-step-divider)::before {
-      top: 50%;
-    }
-    :host(:not(:is(:state(--vertical), :--vertical))) ::slotted([slot="step"]) {
-      align-self: stretch;
-    }
-    :host(:not(:is(:state(--vertical), :--vertical)))
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before,
-    :host(:not(:is(:state(--vertical), :--vertical)))
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-    }
-    :host(:not(:is(:state(--vertical), :--vertical))[label-position="end"])
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before,
-    :host(:not(:is(:state(--vertical), :--vertical))[label-position="end"])
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
-      top: 50%;
-    }
-    :host(:not(:is(:state(--rtl), :--rtl)):not(:is(:state(--vertical), :--vertical))[label-position="end"])
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
-      left: 0;
-      right: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
-    }
-    :host(:is(:state(--rtl), :--rtl):not(:is(:state(--vertical), :--vertical))[label-position="end"])
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
-      right: 0;
-      left: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
-    }
-    :host(:not(:is(:state(--rtl), :--rtl)):not(:is(:state(--vertical), :--vertical))[label-position="end"])
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
-      left: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
-      right: 0;
-    }
-    :host(:is(:state(--rtl), :--rtl):not(:is(:state(--vertical), :--vertical))[label-position="end"])
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
-      right: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
-      left: 0;
-    }
-    :host(:not(:is(:state(--rtl), :--rtl)):not(:is(:state(--vertical), :--vertical))[label-position="below"])
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
-      left: 0;
-      right: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
-    }
-    :host(:is(:state(--rtl), :--rtl):not(:is(:state(--vertical), :--vertical))[label-position="below"])
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
-      right: 0;
-      left: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
-    }
-    :host(:not(:is(:state(--rtl), :--rtl)):not(:is(:state(--vertical), :--vertical))[label-position="below"])
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
-      left: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
-      right: 0;
-    }
-    :host(:is(:state(--rtl), :--rtl):not(:is(:state(--vertical), :--vertical))[label-position="below"])
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
-      right: calc(50% + calc(var(--m3e-step-icon-size, 24px) / 2) + var(--m3e-step-divider-inset, 8px));
-      left: 0;
-    }
-    :host(:not(:is(:state(--vertical), :--vertical))[label-position="below"]) {
-      --_step-direction: column;
-      --_step-label-align-items: center;
-    }
     :host(:is(:state(--vertical), :--vertical)) .header {
       display: contents;
     }
-    :host(:is(:state(--vertical), :--vertical)) ::slotted([slot="step"]:not(.-m3e-step-divider)) {
+    :host(:is(:state(--vertical), :--vertical)) ::slotted([slot="step"]) {
       flex: none;
     }
-    :host(:is(:state(--vertical), :--vertical))
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before,
-    :host(:is(:state(--vertical), :--vertical))
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
+    :host(:is(:state(--vertical), :--vertical)) ::slotted([slot="step"]:not(:is(:state(--first), :--first)))::before,
+    :host(:is(:state(--vertical), :--vertical)) ::slotted([slot="step"]:not(:is(:state(--last), :--last)))::after {
       content: "";
       display: block;
       position: absolute;
       left: 0;
     }
-    :host(:is(:state(--vertical), :--vertical))
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:first-of-type))::before {
+    :host(:is(:state(--vertical), :--vertical)) ::slotted([slot="step"]:not(:is(:state(--first), :--first)))::before {
       top: 0;
       bottom: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
     }
-    :host(:is(:state(--vertical), :--vertical))
-      ::slotted([slot="step"]:not(.-m3e-step-divider):not(:last-of-type))::after {
+    :host(:is(:state(--vertical), :--vertical)) ::slotted([slot="step"]:not(:is(:state(--last), :--last)))::after {
       top: calc(100% - var(--m3e-step-padding, 24px) + var(--m3e-step-divider-inset, 8px));
       bottom: 0;
     }
@@ -445,6 +339,10 @@ export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallbac
     if (changedProperties.has("_orientation")) {
       this.#updateDisplayOrder();
     }
+
+    if (changedProperties.has("label-position")) {
+      this.#updateLabelPosition();
+    }
   }
 
   /** @inheritdoc */
@@ -490,20 +388,12 @@ export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallbac
   #handleSlotChange(): void {
     const { added, removed } = this[selectionManager].setItems([...this.querySelectorAll("m3e-step")]);
     if (added.length > 0 || removed.length > 0) {
-      this.querySelectorAll(".-m3e-step-divider").forEach((x) => x.remove());
       for (let i = 0; i < this[selectionManager].items.length; i++) {
-        const step = this[selectionManager].items[i];
-        step.index = i;
-        if (i > 0) {
-          const divider = document.createElement("div");
-          divider.ariaHidden = "true";
-          divider.classList.add("-m3e-step-divider");
-          divider.slot = "step";
-          step.insertAdjacentElement("beforebegin", divider);
-        }
+        this[selectionManager].items[i].index = i;
       }
 
       this.#updateDisplayOrder();
+      this.#updateLabelPosition();
 
       if (this[selectionManager].selectedItems.length == 0) {
         this[selectionManager].select(this[selectionManager].items.find((x) => !x.disabled));
@@ -567,20 +457,31 @@ export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallbac
     setCustomState(this, "--vertical", this[selectionManager].vertical);
 
     if (!this[selectionManager].vertical) {
-      this.steps.forEach((x) => {
+      this.steps.forEach((x, i, arr) => {
         x.style.order = "";
+        deleteCustomState(x, "--vertical");
+        setCustomState(x, "--first", i === 0);
+        setCustomState(x, "--last", i === arr.length - 1);
         if (x.panel) {
           x.panel.style.order = "";
         }
       });
     } else {
-      this.steps.forEach((x, i) => {
+      this.steps.forEach((x, i, arr) => {
         x.style.order = `${i}`;
+        addCustomState(x, "--vertical");
+        setCustomState(x, "--first", i === 0);
+        setCustomState(x, "--last", i === arr.length - 1);
         if (x.panel) {
           x.panel.style.order = `${i}`;
         }
       });
     }
+  }
+
+  /** @private */
+  #updateLabelPosition(): void {
+    this.steps.forEach((x) => setCustomState(x, "--label-below", this.labelPosition === "below"));
   }
 }
 
