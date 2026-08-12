@@ -2,10 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
   for (const toggle of document.querySelectorAll("m3e-timepicker-toggle")) {
     const picker = document.querySelector("#" + toggle.getAttribute("for"));
     const input = toggle.closest("m3e-form-field").querySelector("input");
-    input.value = toLocaleTimeString(picker.date, picker.showSeconds);
-    picker.addEventListener("change", () => {
+    if (input) {
       input.value = toLocaleTimeString(picker.date, picker.showSeconds);
-    });
+      picker.addEventListener("change", () => {
+        input.value = toLocaleTimeString(picker.date, picker.showSeconds);
+      });
+    }
   }
 
   document.querySelector("#blackout-times").blackoutTimes = (t) => t.hour < 8 || t.hour > 18;

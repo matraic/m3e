@@ -3,17 +3,21 @@ window.addEventListener("DOMContentLoaded", () => {
     if (toggle.getAttribute("for") !== "date-range") {
       const picker = document.querySelector("#" + toggle.getAttribute("for"));
       const input = toggle.closest("m3e-form-field").querySelector("input");
-      input.value = toLocaleDateString(picker.date);
-      picker.addEventListener("change", () => {
+      if (input) {
         input.value = toLocaleDateString(picker.date);
-      });
+        picker.addEventListener("change", () => {
+          input.value = toLocaleDateString(picker.date);
+        });
+      }
     } else {
       const picker = document.querySelector("#" + toggle.getAttribute("for"));
       const input = toggle.closest("m3e-form-field").querySelector("input");
-      input.value = toLocaleDateString(picker.rangeStart) + " - " + toLocaleDateString(picker.rangeEnd);
-      picker.addEventListener("change", () => {
+      if (input) {
         input.value = toLocaleDateString(picker.rangeStart) + " - " + toLocaleDateString(picker.rangeEnd);
-      });
+        picker.addEventListener("change", () => {
+          input.value = toLocaleDateString(picker.rangeStart) + " - " + toLocaleDateString(picker.rangeEnd);
+        });
+      }
     }
   }
 
