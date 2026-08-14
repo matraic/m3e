@@ -225,19 +225,8 @@ export class M3eBadgeElement extends ReconnectedCallback(HtmlFor(SupportsDirecti
     super.connectedCallback();
     this.#directionalitySubscription = M3eDirectionality.observe(() => this.#attach());
 
-    setCustomEnumState(this, this.size, "small", "medium", "large");
-    setCustomEnumState(
-      this,
-      this.position,
-      "above",
-      "above-after",
-      "above-before",
-      "after",
-      "before",
-      "below",
-      "below-after",
-      "below-before",
-    );
+    this.#applySize();
+    this.#applyPosition();
   }
 
   /** @inheritdoc */
@@ -257,27 +246,10 @@ export class M3eBadgeElement extends ReconnectedCallback(HtmlFor(SupportsDirecti
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("size")) {
-      if (!isBadgeSize(this.size)) {
-        this.size = "medium";
-      }
-      setCustomEnumState(this, this.size, "small", "medium", "large");
+      this.#applySize();
     }
     if (_changedProperties.has("position")) {
-      if (!isBadgePosition(this.position)) {
-        this.position = "above-after";
-      }
-      setCustomEnumState(
-        this,
-        this.position,
-        "above",
-        "above-after",
-        "above-before",
-        "after",
-        "before",
-        "below",
-        "below-after",
-        "below-before",
-      );
+      this.#applyPosition();
     }
   }
 
@@ -303,6 +275,33 @@ export class M3eBadgeElement extends ReconnectedCallback(HtmlFor(SupportsDirecti
         <slot @slotchange=${this.#updatePadding}><span aria-hidden="true">&nbsp;</span></slot>
       </div>
     </div>`;
+  }
+
+  /** @private */
+  #applySize(): void {
+    if (!isBadgeSize(this.size)) {
+      this.size = "medium";
+    }
+    setCustomEnumState(this, this.size, "small", "medium", "large");
+  }
+
+  /** @private */
+  #applyPosition(): void {
+    if (!isBadgePosition(this.position)) {
+      this.position = "above-after";
+    }
+    setCustomEnumState(
+      this,
+      this.position,
+      "above",
+      "above-after",
+      "above-before",
+      "after",
+      "before",
+      "below",
+      "below-after",
+      "below-before",
+    );
   }
 
   /** @private */
