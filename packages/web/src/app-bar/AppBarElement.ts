@@ -168,7 +168,7 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-    setCustomEnumState(this, this.size, "small", "medium", "large");
+    this.#applySize();
   }
 
   /** @inheritdoc */
@@ -176,11 +176,7 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("size")) {
-      if (!isAppBarSize(this.size)) {
-        this.size = "small";
-      }
-
-      setCustomEnumState(this, this.size, "small", "medium", "large");
+      this.#applySize();
     }
   }
 
@@ -250,6 +246,15 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
           </div>
         </div>`;
     }
+  }
+
+  /** @private */
+  #applySize(): void {
+    if (!isAppBarSize(this.size)) {
+      this.size = "small";
+    }
+
+    setCustomEnumState(this, this.size, "small", "medium", "large");
   }
 
   /** @private */
