@@ -27,11 +27,12 @@ import {
   AttachInternalsMixin,
   customElement,
   addCustomState,
+  setCustomEnumState,
 } from "@m3e/web/core";
 
-import { ButtonShape } from "./ButtonShape";
-import { ButtonSize } from "./ButtonSize";
-import { ButtonVariant } from "./ButtonVariant";
+import { ButtonShape, isButtonShape } from "./ButtonShape";
+import { ButtonSize, isButtonSize } from "./ButtonSize";
+import { ButtonVariant, isButtonVariant } from "./ButtonVariant";
 
 import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
 
@@ -524,19 +525,19 @@ export class M3eButtonElement extends KeyboardClick(
    * The appearance variant of the button.
    * @default "text"
    */
-  @property({ reflect: true }) variant: ButtonVariant = "text";
+  @property({ reflect: true, useDefault: true }) variant: ButtonVariant = "text";
 
   /**
    * The shape of the button.
    * @default "rounded"
    */
-  @property({ reflect: true }) shape: ButtonShape = "rounded";
+  @property({ reflect: true, useDefault: true }) shape: ButtonShape = "rounded";
 
   /**
    * The size of the button.
    * @default "small"
    */
-  @property({ reflect: true }) size: ButtonSize = "small";
+  @property({ reflect: true, useDefault: true }) size: ButtonSize = "small";
 
   /**
    * Whether the button will toggle between selected and unselected states.
@@ -586,6 +587,10 @@ export class M3eButtonElement extends KeyboardClick(
   override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener("click", this.#clickHandler);
+
+    setCustomEnumState(this, this.variant, "elevated", "filled", "outlined", "text", "tonal");
+    setCustomEnumState(this, this.shape, "rounded", "square");
+    setCustomEnumState(this, this.size, "extra-large", "extra-small", "large", "medium", "small");
   }
 
   /** @inheritdoc */
@@ -599,6 +604,33 @@ export class M3eButtonElement extends KeyboardClick(
     deleteCustomState(this, "--adjacent-pressed");
 
     this.removeEventListener("click", this.#clickHandler);
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("variant")) {
+      if (!isButtonVariant(this.variant)) {
+        this.variant = "text";
+      }
+      setCustomEnumState(this, this.variant, "elevated", "filled", "outlined", "text", "tonal");
+    }
+
+    if (_changedProperties.has("shape")) {
+      if (!isButtonShape(this.shape)) {
+        this.shape = "rounded";
+      }
+      setCustomEnumState(this, this.shape, "rounded", "square");
+    }
+
+    if (_changedProperties.has("size")) {
+      if (!isButtonSize(this.size)) {
+        this.size = "small";
+      }
+
+      setCustomEnumState(this, this.size, "extra-large", "extra-small", "large", "medium", "small");
+    }
   }
 
   /** @inheritdoc */
