@@ -1,9 +1,17 @@
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { customElement, debounce, hasAssignedNodes, HtmlFor, Role } from "@m3e/web/core";
+import {
+  customElement,
+  debounce,
+  hasAssignedNodes,
+  HtmlFor,
+  Role,
+  AttachInternals,
+  setCustomEnumState,
+} from "@m3e/web/core";
 
-import { AppBarSize } from "./AppBarSize";
+import { AppBarSize, isAppBarSize } from "./AppBarSize";
 
 import { AppBarSizeStyle, AppBarStyle } from "./styles";
 
@@ -111,7 +119,7 @@ import { AppBarSizeStyle, AppBarStyle } from "./styles";
  * @cssprop --m3e-app-bar-large-subtitle-max-lines - Maximum number of lines for the large app bar subtitle.
  */
 @customElement("m3e-app-bar")
-export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
+export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), "banner")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = [AppBarStyle, AppBarSizeStyle];
 
@@ -131,7 +139,7 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
    * The size of the bar.
    * @default "small"
    */
-  @property({ reflect: true }) size: AppBarSize = "small";
+  @property({ reflect: true, useDefault: true }) size: AppBarSize = "small";
 
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
@@ -155,6 +163,25 @@ export class M3eAppBarElement extends HtmlFor(Role(LitElement, "banner")) {
       this.control.removeEventListener("scroll", this.#scrollHandler);
     }
     super.detach();
+  }
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    setCustomEnumState(this, this.size, "small", "medium", "large");
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("size")) {
+      if (!isAppBarSize(this.size)) {
+        this.size = "small";
+      }
+
+      setCustomEnumState(this, this.size, "small", "medium", "large");
+    }
   }
 
   /** @inheritdoc */

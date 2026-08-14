@@ -5,39 +5,40 @@ import { AppBarSizeToken } from "./AppBarSizeToken";
 
 /** @private */
 function appBarStyle(size: AppBarSize): CSSResult {
+  const selector = `:is(:state(--${size}), :--${size})`;
   return css`
-    :host([size="${unsafeCSS(size)}"]) .base:not(.with-subtitle) {
+    :host(${unsafeCSS(selector)}) .base:not(.with-subtitle) {
       min-height: ${AppBarSizeToken[size].containerHeight};
     }
-    :host([size="${unsafeCSS(size)}"]) .base.with-subtitle {
+    :host(${unsafeCSS(selector)}) .base.with-subtitle {
       min-height: ${AppBarSizeToken[size].containerHeightWithSubtitle ?? AppBarSizeToken[size].containerHeight};
     }
-    :host([size="${unsafeCSS(size)}"]) .title {
+    :host(${unsafeCSS(selector)}) .title {
       font-size: ${AppBarSizeToken[size].titleTextFontSize};
       font-weight: ${AppBarSizeToken[size].titleTextFontWeight};
       line-height: ${AppBarSizeToken[size].titleTextLineHeight};
       letter-spacing: ${AppBarSizeToken[size].titleTextTracking};
     }
-    :host([size="${unsafeCSS(size)}"]) .subtitle {
+    :host(${unsafeCSS(selector)}) .subtitle {
       font-size: ${AppBarSizeToken[size].subtitleTextFontSize};
       font-weight: ${AppBarSizeToken[size].subtitleTextFontWeight};
       line-height: ${AppBarSizeToken[size].subtitleTextLineHeight};
       letter-spacing: ${AppBarSizeToken[size].subtitleTextTracking};
     }
-    :host(:not([centered])[size="${unsafeCSS(size)}"]) .label {
+    :host(:not([centered])${unsafeCSS(selector)}) .label {
       padding-inline-start: ${AppBarSizeToken[size].headingPaddingLeft};
       padding-inline-end: ${AppBarSizeToken[size].headingPaddingRight};
     }
-    :host([centered][size="${unsafeCSS(size)}"]) .label {
+    :host([centered]${unsafeCSS(selector)}) .label {
       padding-inline: ${AppBarSizeToken[size].headingPaddingLeft};
     }
-    :host([size="${unsafeCSS(size)}"]) .base {
+    :host(${unsafeCSS(selector)}) .base {
       padding-block-start: ${AppBarSizeToken[size].paddingTop ?? unsafeCSS("unset")};
       padding-block-end: ${AppBarSizeToken[size].paddingBottom ?? unsafeCSS("unset")};
     }
     ${AppBarSizeToken[size].titleMaxLines
       ? css`
-          :host([size="${unsafeCSS(size)}"]) .title {
+          :host(${unsafeCSS(selector)}) .title {
             display: -webkit-box;
             -webkit-line-clamp: ${AppBarSizeToken[size].titleMaxLines};
             -webkit-box-orient: vertical;
@@ -48,7 +49,7 @@ function appBarStyle(size: AppBarSize): CSSResult {
       : css``}
     ${AppBarSizeToken[size].subtitleMaxLines
       ? css`
-          :host([size="${unsafeCSS(size)}"]) .subtitle {
+          :host(${unsafeCSS(selector)}) .subtitle {
             display: -webkit-box;
             -webkit-line-clamp: ${AppBarSizeToken[size].subtitleMaxLines};
             -webkit-box-orient: vertical;

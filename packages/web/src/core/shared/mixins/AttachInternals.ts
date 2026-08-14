@@ -39,7 +39,7 @@ export function AttachInternals<T extends Constructor<LitElement>>(
   formAssociated?: boolean,
 ): Constructor<AttachInternalsMixin> & T {
   abstract class _AttachInternals extends base implements AttachInternalsMixin {
-    /** Indicates that this custom element participates in form submission, validation, and form state restoration. */
+    /** @internal */
     static readonly formAssociated = formAssociated;
 
     /** @private */
@@ -128,4 +128,19 @@ export function setCustomState(element: AttachInternalsMixin, state: string, val
   } else {
     deleteCustomState(element, state);
   }
+}
+
+/**
+ * Convenience function used to add custom state for an element based on an enumerated value.
+ *
+ * For each value in `values`, a custom state named `--${value}` is updated.
+ * The state matching `value` is added; all others are removed.
+ *
+ * @template T extends string
+ * @param {AttachInternalsMixin} element The element for which to set custom state.
+ * @param {T} value The current value of the enumeration.
+ * @param {readonly T[]} values The possible values of the enumeration.
+ */
+export function setCustomEnumState<T extends string>(element: AttachInternalsMixin, value: T, ...values: readonly T[]) {
+  values.forEach((x) => setCustomState(element, `--${x}`, x === value));
 }

@@ -16,8 +16,8 @@ export const AppBarStyle: CSSResult = css`
   :host([hidden]) {
     display: none;
   }
-  :host([size="small"]) .base,
-  :host(:not([size="small"]):not([centered])) .heading {
+  :host(:is(:state(--small), :--small)) .base,
+  :host(:not(:is(:state(--small), :--small)):not([centered])) .heading {
     padding-inline-start: ${AppBarToken.paddingLeft};
     padding-inline-end: ${AppBarToken.paddingRight};
   }
@@ -53,7 +53,7 @@ export const AppBarStyle: CSSResult = css`
     display: flex;
     align-items: center;
   }
-  :host([size="small"]) .heading {
+  :host(:is(:state(--small), :--small)) .heading {
     flex: 1 1 auto;
   }
   .spacer {
@@ -76,24 +76,24 @@ export const AppBarStyle: CSSResult = css`
   .base:not(.with-trailing-icon) .trailing-icon {
     display: none;
   }
-  :host([size="small"]) .base {
+  :host(:is(:state(--small), :--small)) .base {
     align-items: center;
   }
-  :host([size="small"]) .heading {
+  :host(:is(:state(--small), :--small)) .heading {
     min-width: 0;
   }
-  :host([size="small"]) .label {
+  :host(:is(:state(--small), :--small)) .label {
     flex: 1 1 auto;
     min-width: 0;
   }
-  :host([size="small"]) .title,
-  :host([size="small"]) .subtitle {
+  :host(:is(:state(--small), :--small)) .title,
+  :host(:is(:state(--small), :--small)) .subtitle {
     display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  :host(:not([size="small"])) .base {
+  :host(:not(:is(:state(--small), :--small))) .base {
     flex-direction: column;
   }
   :host([centered]) .title,
