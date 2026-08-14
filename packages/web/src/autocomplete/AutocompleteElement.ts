@@ -880,8 +880,15 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
         clone.disableHighlight = true;
         return true;
       default:
-        clone.disableHighlight = true;
-        return this.filter(option, exactTerm);
+        if (this.filter instanceof Function) {
+          clone.disableHighlight = true;
+          return this.filter(option, exactTerm);
+        }
+
+        // Invalid filter, fallback to contains
+        clone.term = exactTerm;
+        clone.highlightMode = this.filter;
+        return value.includes(term);
     }
   }
 
