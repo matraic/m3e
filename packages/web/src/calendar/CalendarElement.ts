@@ -19,7 +19,7 @@ import "@m3e/web/button";
 import "@m3e/web/icon-button";
 import "@m3e/web/tooltip";
 
-import { CalendarView } from "./CalendarView";
+import { CalendarView, isCalendarView } from "./CalendarView";
 import { CalendarViewElementBase } from "./CalendarViewElementBase";
 import { M3eMonthViewElement } from "./MonthViewElement";
 import { maxYearOfPage, minYearOfPage } from "./utils";
@@ -234,7 +234,7 @@ export class M3eCalendarElement extends LitElement {
    * The initial view used to select a date.
    * @default "month"
    */
-  @property({ attribute: "start-view" }) startView: CalendarView = "month";
+  @property({ attribute: "start-view", reflect: true, useDefault: true }) startView: CalendarView = "month";
 
   /**
    * The selected date.
@@ -491,8 +491,23 @@ export class M3eCalendarElement extends LitElement {
   }
 
   /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    if (!isCalendarView(this.startView)) {
+      this.startView = "month";
+    }
+  }
+
+  /** @inheritdoc */
   protected override willUpdate(changedProperties: PropertyValues<this>): void {
     super.willUpdate(changedProperties);
+
+    if (changedProperties.has("startView")) {
+      if (!isCalendarView(this.startView)) {
+        this.startView = "month";
+      }
+    }
 
     if (changedProperties.has("date")) {
       this._activeDate = new Date(this.date ?? this._today);
