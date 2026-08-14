@@ -640,6 +640,19 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   /** @private */ @query(".suffix") private readonly _suffix!: HTMLElement;
   /** @private */ @query(".error") private readonly _error!: HTMLElement;
   /** @private */ @query(".hint") private readonly _hint!: HTMLElement;
+  /** @private */ @query('slot[name="label"]') private readonly _labelSlot!: HTMLSlotElement;
+
+  /**
+   * @private
+   * `slotchange` does not fire when text mutates inside an already-assigned
+   * element, which is how frameworks and runtime localisation set label text.
+   * `characterData` is needed to observe the text node itself changing.
+   */
+  readonly #labelMutationController = new MutationController(this, {
+    target: null,
+    config: { childList: true, subtree: true, characterData: true },
+    callback: () => this.#updateLabel(),
+  });
 
   /** @private */
   readonly #hintMutationController = new MutationController(this, {
@@ -838,6 +851,8 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     this.#focusController.observe(this._base);
     this.#pressedController.observe(this._base);
 
+    this.#labelMutationController.observe(this._labelSlot);
+
     this.#hintMutationController.observe(this._hint);
     this.#handleHintChange();
 
@@ -847,9 +862,14 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
 
   /** @private */
   #handleLabelSlotChange(e: Event): void {
-    const assignedElements = (<HTMLSlotElement>e.target).assignedElements({ flatten: true });
-    setCustomState(this, "--with-label", assignedElements.length > 0);
-    this._pseudoLabel = getTextContent(<HTMLSlotElement>e.target);
+    this.#updateLabel(<HTMLSlotElement>e.target);
+  }
+
+  /** @private */
+  #updateLabel(slot: HTMLSlotElement | null = this._labelSlot): void {
+    if (!slot) return;
+    setCustomState(this, "--with-label", slot.assignedElements({ flatten: true }).length > 0);
+    this._pseudoLabel = getTextContent(slot);
   }
 
   /** @private */
