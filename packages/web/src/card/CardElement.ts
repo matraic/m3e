@@ -17,12 +17,13 @@ import {
   KeyboardClick,
   hasAssignedNodes,
   customElement,
+  setCustomEnumState,
 } from "@m3e/web/core";
 
-import { CardVariant } from "./CardVariant";
+import { CardVariant, isCardVariant } from "./CardVariant";
 
 import { CardStyle, CardVariantStyle } from "./styles";
-import { CardOrientation } from "./CardOrientation";
+import { CardOrientation, isCardOrientation } from "./CardOrientation";
 
 /**
  * A content container for text, images (or other media), and actions in the context of a single subject.
@@ -188,13 +189,13 @@ export class M3eCardElement extends KeyboardClick(
    * The appearance variant of the card.
    * @default "filled"
    */
-  @property({ reflect: true }) variant: CardVariant = "filled";
+  @property({ reflect: true, useDefault: true }) variant: CardVariant = "filled";
 
   /**
    * The orientation of the card.
    * @default "vertical"
    */
-  @property({ reflect: true }) orientation: CardOrientation = "vertical";
+  @property({ reflect: true, useDefault: true }) orientation: CardOrientation = "vertical";
 
   /** @inheritdoc */
   override connectedCallback(): void {
@@ -205,6 +206,8 @@ export class M3eCardElement extends KeyboardClick(
 
     super.connectedCallback();
     this.addEventListener("click", this.#clickHandler);
+    this.#applyOrientation();
+    this.#applyVariant();
   }
 
   /** @inheritdoc */
@@ -213,6 +216,19 @@ export class M3eCardElement extends KeyboardClick(
 
     this._base?.classList.toggle("pressed", false);
     this.removeEventListener("click", this.#clickHandler);
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
+
+    if (_changedProperties.has("orientation")) {
+      this.#applyOrientation();
+    }
   }
 
   /** @inheritdoc */
@@ -239,6 +255,22 @@ export class M3eCardElement extends KeyboardClick(
       <slot name="actions" @slotchange=${this.#handleActionsSlotChange}></slot>
       <slot name="footer" @slotchange=${this.#handleFooterSlotChange}></slot>
     </div>`;
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isCardVariant(this.variant)) {
+      this.variant = "filled";
+    }
+    setCustomEnumState(this, this.variant, "elevated", "filled", "outlined");
+  }
+
+  /** @private */
+  #applyOrientation(): void {
+    if (!isCardOrientation(this.orientation)) {
+      this.orientation = "vertical";
+    }
+    setCustomEnumState(this, this.orientation, "horizontal", "vertical");
   }
 
   /** @private */

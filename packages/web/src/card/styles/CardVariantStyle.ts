@@ -6,13 +6,14 @@ import { CardVariantToken } from "./CardVariantToken";
 
 /** @private */
 function cardVariantStyle(variant: CardVariant): CSSResult {
+  const selector = unsafeCSS(`:is(:state(--${variant}), :--${variant})`);
   return css`
-    :host([variant="${unsafeCSS(variant)}"]) .base {
+    :host(${selector}) .base {
       background-color: ${CardVariantToken[variant].containerColor ?? unsafeCSS("unset")};
       box-shadow: ${CardVariantToken[variant].containerElevation ?? unsafeCSS("unset")};
       border-width: ${CardVariantToken[variant].outlineThickness ?? unsafeCSS("unset")};
     }
-    :host([actionable][variant="${unsafeCSS(variant)}"]) .base {
+    :host([actionable]${selector}) .base {
       --m3e-state-layer-hover-color: ${CardVariantToken[variant].hover.stateLayerColor};
       --m3e-state-layer-hover-opacity: ${CardVariantToken[variant].hover.stateLayerOpacity};
       --m3e-state-layer-focus-color: ${CardVariantToken[variant].focus.stateLayerColor};
@@ -24,32 +25,32 @@ function cardVariantStyle(variant: CardVariant): CSSResult {
       --m3e-elevation-focus-level: ${CardVariantToken[variant].focus.containerElevation ?? unsafeCSS("unset")};
       --m3e-elevation-pressed-level: ${CardVariantToken[variant].pressed.containerElevation ?? unsafeCSS("unset")};
     }
-    :host([variant="${unsafeCSS(variant)}"]) .base {
+    :host(${selector}) .base {
       border-color: ${CardVariantToken[variant].outlineColor ?? unsafeCSS("unset")};
     }
-    :host([actionable][variant="${unsafeCSS(variant)}"]:focus .base) {
+    :host([actionable]${selector}:focus .base) {
       border-color: ${CardVariantToken[variant].focus.outlineColor ?? unsafeCSS("unset")};
     }
-    :host([actionable][variant="${unsafeCSS(variant)}"]:hover .base) {
+    :host([actionable]${selector}:hover .base) {
       border-color: ${CardVariantToken[variant].hover.outlineColor ?? unsafeCSS("unset")};
     }
-    :host([actionable][variant="${unsafeCSS(variant)}"]) .base.pressed {
+    :host([actionable]${selector}) .base.pressed {
       border-color: ${CardVariantToken[variant].pressed.outlineColor ?? unsafeCSS("unset")};
     }
-    :host([variant="${unsafeCSS(variant)}"]) .base {
+    :host(${selector}) .base {
       color: ${CardVariantToken[variant].textColor ?? unsafeCSS("unset")};
     }
-    :host([actionable][variant="${unsafeCSS(variant)}"]:focus) .base {
+    :host([actionable]${selector}:focus) .base {
       color: ${CardVariantToken[variant].focus.textColor ?? unsafeCSS("unset")};
     }
-    :host([actionable][variant="${unsafeCSS(variant)}"]:hover) .base {
+    :host([actionable]${selector}:hover) .base {
       color: ${CardVariantToken[variant].hover.textColor ?? unsafeCSS("unset")};
     }
-    :host([actionable][variant="${unsafeCSS(variant)}"]) .base.pressed {
+    :host([actionable]${selector}) .base.pressed {
       color: ${CardVariantToken[variant].pressed.textColor ?? unsafeCSS("unset")};
     }
-    :host([actionable][variant="${unsafeCSS(variant)}"]:disabled) .base,
-    :host([actionable][variant="${unsafeCSS(variant)}"][disabled-interactive]) .base {
+    :host([actionable]${selector}:disabled) .base,
+    :host([actionable]${selector}[disabled-interactive]) .base {
       --m3e-elevation-level: ${CardVariantToken[variant].disabled.containerElevation ?? unsafeCSS("unset")};
       --m3e-elevation-color: color-mix(
         in srgb,
@@ -79,10 +80,10 @@ function cardVariantStyle(variant: CardVariant): CSSResult {
       )`)
         : unsafeCSS("unset")};
     }
-    :host([actionable][variant="${unsafeCSS(variant)}"]:disabled) ::slotted(img),
-    :host([actionable][variant="${unsafeCSS(variant)}"][disabled-interactive]) ::slotted(img),
-    :host([actionable][variant="${unsafeCSS(variant)}"]:disabled) ::slotted(video),
-    :host([actionable][variant="${unsafeCSS(variant)}"][disabled-interactive]) ::slotted(video) {
+    :host([actionable]${selector}:disabled) ::slotted(img),
+    :host([actionable]${selector}[disabled-interactive]) ::slotted(img),
+    :host([actionable]${selector}:disabled) ::slotted(video),
+    :host([actionable]${selector}[disabled-interactive]) ::slotted(video) {
       opacity: ${CardVariantToken[variant].disabled.imageOpacity};
     }
   `;

@@ -57,7 +57,7 @@ export const CardStyle: CSSResult = css`
   :host(:not([actionable])) .ripple {
     display: none;
   }
-  :host([variant="outlined"]) .base {
+  :host(:is(:state(--outlined), :--outlined)) .base {
     border-style: solid;
   }
   ::slotted([slot="content"]) {
@@ -82,20 +82,20 @@ export const CardStyle: CSSResult = css`
     display: flex;
     align-items: center;
   }
-  :host([orientation="vertical"]) .base,
-  :host([orientation="horizontal"]) ::slotted([slot="header"]),
-  :host([orientation="horizontal"]) ::slotted([slot="actions"]),
-  :host([orientation="horizontal"]) ::slotted([slot="footer"]) {
+  :host(:is(:state(--vertical), :--vertical)) .base,
+  :host(:is(:state(--horizontal), :--horizontal)) ::slotted([slot="header"]),
+  :host(:is(:state(--horizontal), :--horizontal)) ::slotted([slot="actions"]),
+  :host(:is(:state(--horizontal), :--horizontal)) ::slotted([slot="footer"]) {
     flex-direction: column;
   }
-  :host([orientation="horizontal"]) .base,
-  :host([orientation="vertical"]) ::slotted([slot="header"]),
-  :host([orientation="vertical"]) ::slotted([slot="actions"]),
-  :host([orientation="vertical"]) ::slotted([slot="footer"]) {
+  :host(:is(:state(--horizontal), :--horizontal)) .base,
+  :host(:is(:state(--vertical), :--vertical)) ::slotted([slot="header"]),
+  :host(:is(:state(--vertical), :--vertical)) ::slotted([slot="actions"]),
+  :host(:is(:state(--vertical), :--vertical)) ::slotted([slot="footer"]) {
     flex-direction: row;
   }
-  :host([orientation="horizontal"]) ::slotted(img),
-  :host([orientation="horizontal"]) ::slotted(video) {
+  :host(:is(:state(--horizontal), :--horizontal)) ::slotted(img),
+  :host(:is(:state(--horizontal), :--horizontal)) ::slotted(video) {
     aspect-ratio: 16 / 9;
   }
   .has-content:not(.has-default) slot[name="content"],
@@ -111,33 +111,33 @@ export const CardStyle: CSSResult = css`
     flex-direction: inherit;
     flex: none;
   }
-  :host([orientation="vertical"]) .has-content:not(.has-default) slot[name="content"] {
+  :host(:is(:state(--vertical), :--vertical)) .has-content:not(.has-default) slot[name="content"] {
     margin-inline: ${CardToken.padding};
   }
-  :host([orientation="vertical"]) .has-content:not(.has-default):not(.has-header) slot[name="content"] {
+  :host(:is(:state(--vertical), :--vertical)) .has-content:not(.has-default):not(.has-header) slot[name="content"] {
     margin-block-start: ${CardToken.padding};
   }
-  :host([orientation="vertical"])
+  :host(:is(:state(--vertical), :--vertical))
     .has-content:not(.has-default):not(.has-actions):not(.has-footer)
     slot[name="content"] {
     margin-block-end: ${CardToken.padding};
   }
-  :host([orientation="horizontal"]) .has-content:not(.has-default) slot[name="content"] {
+  :host(:is(:state(--horizontal), :--horizontal)) .has-content:not(.has-default) slot[name="content"] {
     margin-block: ${CardToken.padding};
   }
-  :host([orientation="horizontal"]) .has-content:not(.has-default):not(.has-header) slot[name="content"] {
+  :host(:is(:state(--horizontal), :--horizontal)) .has-content:not(.has-default):not(.has-header) slot[name="content"] {
     margin-inline-start: ${CardToken.padding};
   }
-  :host([orientation="horizontal"])
+  :host(:is(:state(--horizontal), :--horizontal))
     .has-content:not(.has-default):not(.has-actions):not(.has-footer)
     slot[name="content"] {
     margin-inline-end: ${CardToken.padding};
   }
-  :host([orientation="vertical"]) .has-header:not(.has-header-media) slot[name="header"] {
+  :host(:is(:state(--vertical), :--vertical)) .has-header:not(.has-header-media) slot[name="header"] {
     margin-inline: ${CardToken.padding};
     margin-block-start: ${CardToken.padding};
   }
-  :host([orientation="horizontal"]) .has-header:not(.has-header-media) slot[name="header"] {
+  :host(:is(:state(--horizontal), :--horizontal)) .has-header:not(.has-header-media) slot[name="header"] {
     margin-inline-start: ${CardToken.padding};
     margin-block: ${CardToken.padding};
   }
@@ -145,11 +145,11 @@ export const CardStyle: CSSResult = css`
     margin-inline: ${CardToken.padding};
     margin-block: ${CardToken.padding};
   }
-  :host([orientation="vertical"]) .has-footer slot[name="footer"] {
+  :host(:is(:state(--vertical), :--vertical)) .has-footer slot[name="footer"] {
     margin-inline: ${CardToken.padding};
     margin-block-end: ${CardToken.padding};
   }
-  :host([orientation="horizontal"]) .has-footer slot[name="footer"] {
+  :host(:is(:state(--horizontal), :--horizontal)) .has-footer slot[name="footer"] {
     margin-block: ${CardToken.padding};
     margin-inline-end: ${CardToken.padding};
   }
@@ -167,15 +167,15 @@ export const CardStyle: CSSResult = css`
     :host([actionable]) .base {
       transition: none;
     }
-    :host([variant]) .base {
-      border-style: solid;
-      border-color: CanvasText;
-      border-width: ${CardVariantToken.outlined.outlineThickness ?? unsafeCSS("unset")};
+    .base {
+      border-style: solid !important;
+      border-color: CanvasText !important;
+      border-width: ${CardVariantToken.outlined.outlineThickness ?? unsafeCSS("unset")} !important;
     }
-    :host([actionable][variant]:disabled) .base,
-    :host([actionable][variant][disabled-interactive]) .base {
-      color: GrayText;
-      border-color: GrayText;
+    :host([actionable]:disabled) .base,
+    :host([actionable][disabled-interactive]) .base {
+      color: GrayText !important;
+      border-color: GrayText !important;
     }
   }
   @media (prefers-reduced-motion) {
