@@ -16,14 +16,22 @@ export const IconButtonStyle: CSSResultGroup = css`
   :host([hidden]) {
     display: none;
   }
+  .layout,
   .base {
     box-sizing: border-box;
     vertical-align: middle;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+  .layout {
+    width: var(--_icon-button-inline-size, 100%);
+    min-width: var(--_icon-button-min-size);
+    min-height: var(--_icon-button-min-size);
+  }
+  .base {
     position: relative;
-    width: 100%;
+    width: var(--_icon-button-inline-size, 100%);
     transition: ${unsafeCSS(
       `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
     )};

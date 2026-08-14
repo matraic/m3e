@@ -249,6 +249,11 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       min-width: var(--_list-item-trailing-reserved-space, 0px);
       margin-inline-end: calc(0px - var(--_list-item-trailing-reserved-outset, 0px));
     }
+    slot[name="leading"],
+    slot[name="leading"] {
+      --_icon-button-inline-size: auto;
+      --_icon-button-min-size: 48px;
+    }
     ::slotted(span[slot="trailing"]),
     ::slotted([slot="trailing-supporting-text"]) {
       white-space: nowrap;

@@ -42,6 +42,8 @@ export const AppBarStyle: CSSResult = css`
     display: flex;
     flex: none;
     align-items: center;
+    --_icon-button-inline-size: auto;
+    --_icon-button-min-size: 48px;
   }
   .leading-icon {
     min-width: var(--_leading-icon-min-width);

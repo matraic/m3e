@@ -41,6 +41,8 @@ export const SearchBarStyle: CSSResultGroup = css`
     height: 100%;
     border-radius: ${SearchBarToken.containerShape};
     background-color: ${SearchBarToken.containerColor};
+    --_icon-button-inline-size: auto;
+    --_icon-button-min-size: 48px;
   }
   .clear {
     display: flex;
