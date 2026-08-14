@@ -31,8 +31,8 @@ import {
 
 import type { FormFieldControl } from "@m3e/web/form-field";
 
-import { DateInputType } from "./DateInputType";
-import { DateInputTimeFormat } from "./DateInputTimeFormat";
+import { DateInputType, isDateInputType } from "./DateInputType";
+import { DateInputTimeFormat, isDateInputTimeFormat } from "./DateInputTimeFormat";
 
 /** Identifies which segment of the date input is being edited. */
 type DateInputFieldSegment = "month" | "day" | "year" | "hour" | "minute" | "second" | "period";
@@ -479,6 +479,9 @@ export class M3eDateInputElement
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("timeFormat")) {
+      if (!isDateInputTimeFormat(this.timeFormat)) {
+        this.timeFormat = "12";
+      }
       this.#timeFormat =
         this.timeFormat !== "auto"
           ? this.timeFormat
@@ -488,6 +491,9 @@ export class M3eDateInputElement
     }
 
     if (_changedProperties.has("type")) {
+      if (!isDateInputType(this.type)) {
+        this.type = "date";
+      }
       switch (this.type) {
         case "date":
           this.#format = new Intl.DateTimeFormat(navigator.language, {
