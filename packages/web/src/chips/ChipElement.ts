@@ -15,10 +15,11 @@ import {
   M3eRippleElement,
   M3eStateLayerElement,
   renderPseudoLink,
+  setCustomEnumState,
   setCustomState,
 } from "@m3e/web/core";
 
-import { ChipVariant } from "./ChipVariant";
+import { ChipVariant, isChipVariant } from "./ChipVariant";
 
 /**
  * A non-interactive chip used to convey small pieces of information.
@@ -138,7 +139,7 @@ export class M3eChipElement extends AttachInternals(LitElement) {
       bottom: 0px;
       z-index: 1;
     }
-    :host([variant="elevated"]) .base {
+    :host(:is(:state(--elevated), :--elevated)) .base {
       background-color: var(--m3e-elevated-chip-container-color, ${DesignToken.color.surfaceContainerLow});
 
       --m3e-elevation-level: var(--m3e-elevated-chip-elevation, ${DesignToken.elevation.level1});
@@ -146,16 +147,16 @@ export class M3eChipElement extends AttachInternals(LitElement) {
       --m3e-elevation-focus-level: var(--m3e-elevated-chip-elevation, ${DesignToken.elevation.level1});
       --m3e-elevation-pressed-level: var(--m3e-elevated-chip-elevation, ${DesignToken.elevation.level1});
     }
-    :host([variant="outlined"]) .base {
+    :host(:is(:state(--outlined), :--outlined)) .base {
       outline-width: var(--m3e-outlined-chip-outline-thickness, 1px);
       outline-style: solid;
       outline-offset: calc(0px - var(--m3e-outlined-chip-outline-thickness, 1px));
     }
-    :host(:not(:disabled):not([disabled-interactive])[variant="outlined"]) .base {
+    :host(:not(:disabled):not([disabled-interactive]):is(:state(--outlined), :--outlined)) .base {
       outline-color: var(--m3e-outlined-chip-outline-color, ${DesignToken.color.outlineVariant});
     }
-    :host(:disabled[variant="outlined"]) .base,
-    :host([disabled-interactive][variant="outlined"]) .base {
+    :host(:disabled:is(:state(--outlined), :--outlined)) .base,
+    :host([disabled-interactive]:is(:state(--outlined), :--outlined)) .base {
       outline-color: color-mix(
         in srgb,
         var(--m3e-outlined-chip-disabled-outline-color, ${DesignToken.color.onSurface})
@@ -207,8 +208,8 @@ export class M3eChipElement extends AttachInternals(LitElement) {
         transparent
       );
     }
-    :host([variant="elevated"]:disabled) .base,
-    :host([variant="elevated"][disabled-interactive]) .base {
+    :host(:is(:state(--elevated), :--elevated):disabled) .base,
+    :host(:is(:state(--elevated), :--elevated)[disabled-interactive]) .base {
       background-color: color-mix(
         in srgb,
         var(--m3e-elevated-chip-disabled-container-color, ${DesignToken.color.onSurface})
@@ -231,7 +232,7 @@ export class M3eChipElement extends AttachInternals(LitElement) {
       :host(:not(:disabled):not([disabled-interactive]):not([selected])) ::slotted([slot="trailing-icon"]) {
         color: CanvasText;
       }
-      :host(:not(:disabled):not([disabled-interactive])[variant="outlined"]) .base {
+      :host(:not(:disabled):not([disabled-interactive]):is(:state(--outlined), :--outlined)) .base {
         outline-color: CanvasText;
       }
       :host(:disabled) .base,
@@ -242,8 +243,8 @@ export class M3eChipElement extends AttachInternals(LitElement) {
       :host([disabled-interactive]) ::slotted([slot="trailing-icon"]) {
         color: GrayText;
       }
-      :host(:disabled[variant="outlined"]) .base,
-      :host([disabled-interactive][variant="outlined"]) .base {
+      :host(:disabled:is(:state(--outlined), :--outlined)) .base,
+      :host([disabled-interactive]:is(:state(--outlined), :--outlined)) .base {
         outline-color: GrayText;
       }
     }
@@ -261,7 +262,7 @@ export class M3eChipElement extends AttachInternals(LitElement) {
    * The appearance variant of the chip.
    * @default "outlined"
    */
-  @property({ reflect: true }) variant: ChipVariant = "outlined";
+  @property({ reflect: true, useDefault: true }) variant: ChipVariant = "outlined";
 
   /** A string representing the value of the chip. */
   @property() get value() {
@@ -274,6 +275,12 @@ export class M3eChipElement extends AttachInternals(LitElement) {
   /** The textual label of the chip. */
   get label() {
     return this.#textContent;
+  }
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#applyVariant();
   }
 
   /** @inheritdoc */
@@ -292,6 +299,15 @@ export class M3eChipElement extends AttachInternals(LitElement) {
   }
 
   /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     const disabled = !isDisabledMixin(this) || this.disabled;
     const disabledInteractive = isDisabledInteractiveMixin(this) && this.disabledInteractive;
@@ -305,6 +321,14 @@ export class M3eChipElement extends AttachInternals(LitElement) {
       ${isLinkButtonMixin(this) ? this[renderPseudoLink]() : nothing}
       <div class="wrapper">${this.#renderContent()}</div>
     </div>`;
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isChipVariant(this.variant)) {
+      this.variant = "outlined";
+    }
+    setCustomEnumState(this, this.variant, "elevated", "outlined");
   }
 
   /** @private */
