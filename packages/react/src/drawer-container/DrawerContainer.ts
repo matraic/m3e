@@ -2,7 +2,7 @@ import React from "react";
 import { createComponent } from "@lit/react";
 
 import { M3eDrawerContainerElement } from "@m3e/web/drawer-container";
-export type { DrawerMode, DrawerPosition, M3eDrawerContainerElement } from "@m3e/web/drawer-container";
+export type { DrawerMode, M3eDrawerContainerElement } from "@m3e/web/drawer-container";
 
 /**
  * React binding for the `m3e-drawer-container` Web Component from `@m3e/web/drawer-container`.
