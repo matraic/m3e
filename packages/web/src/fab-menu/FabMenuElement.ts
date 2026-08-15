@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { css, CSSResultGroup, html, LitElement, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
 import {
@@ -10,6 +10,7 @@ import {
   DisabledMixin,
   Role,
   ScrollController,
+  setCustomEnumState,
   setCustomState,
   SuppressInitialAnimation,
 } from "@m3e/web/core";
@@ -20,7 +21,7 @@ import { positionAnchor } from "@m3e/web/core/anchoring";
 
 import { M3eFabElement } from "@m3e/web/fab";
 
-import { FabMenuVariant } from "./FabMenuVariant";
+import { FabMenuVariant, isFabMenuVariant } from "./FabMenuVariant";
 
 /**
  * A menu, opened from a floating action button (FAB), used to display multiple related actions.
@@ -107,14 +108,14 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     .base {
       display: contents;
     }
-    :host([variant="primary"]) .base {
+    :host(:is(:state(--primary), :--primary)) .base {
       --_fab-menu-item-color: var(--m3e-primary-fab-color, ${DesignToken.color.onPrimaryContainer});
       --_fab-menu-item-container-color: var(--m3e-primary-fab-container-color, ${DesignToken.color.primaryContainer});
       --_fab-menu-background-hover-color: var(--m3e-primary-fab-hover-color, ${DesignToken.color.onPrimaryContainer});
       --_fab-menu-background-focus-color: var(--m3e-primary-fab-focus-color, ${DesignToken.color.onPrimaryContainer});
       --_fab-menu-ripple-color: var(--m3e-primary-fab-ripple-color, ${DesignToken.color.onPrimaryContainer});
     }
-    :host([variant="secondary"]) .base {
+    :host(:is(:state(--secondary), :--secondary)) .base {
       --_fab-menu-item-color: var(--m3e-secondary-fab-color, ${DesignToken.color.onSecondaryContainer});
       --_fab-menu-item-container-color: var(
         --m3e-secondary-fab-container-color,
@@ -221,7 +222,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
    * The appearance variant of the menu.
    * @default "primary"
    */
-  @property({ reflect: true }) variant: FabMenuVariant = "primary";
+  @property({ reflect: true, useDefault: true }) variant: FabMenuVariant = "primary";
 
   /** Whether the menu is open. */
   get isOpen() {
@@ -311,6 +312,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   override connectedCallback(): void {
     super.connectedCallback();
 
+    this.#applyVariant();
     this.tabIndex = -1;
     this.setAttribute("popover", "manual");
     this.addEventListener("keydown", this.#keyDownHandler);
@@ -326,8 +328,24 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   }
 
   /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base"><slot @slotchange=${this.#handleSlotChange}></slot></div>`;
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isFabMenuVariant(this.variant)) {
+      this.variant = "primary";
+    }
+    setCustomEnumState(this, this.variant, "primary", "secondary", "tertiary");
   }
 
   /** @private */
