@@ -1,9 +1,9 @@
-import { css, CSSResultGroup, html, LitElement } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { AttachInternals, customElement, DesignToken, Role, setCustomState } from "@m3e/web/core";
+import { AttachInternals, customElement, DesignToken, Role, setCustomEnumState, setCustomState } from "@m3e/web/core";
 
-import { ListVariant } from "./ListVariant";
+import { isListVariant, ListVariant } from "./ListVariant";
 import { M3eListItemElement } from "./ListItemElement";
 import { ListItemContentType } from "./ListItemContentType";
 
@@ -68,15 +68,15 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
     :host([hidden]) {
       display: none;
     }
-    :host([variant="standard"]) {
+    :host(:is(:state(--standard), :--standard)) {
       --_list-item-leading-video-outset: var(--m3e-list-item-leading-space, ${DesignToken.measurement.space200});
       --_list-item-trailing-video-outset: var(--m3e-list-item-trailing-space, ${DesignToken.measurement.space200});
       --_expandable-list-item-expanded-toggle-icon-container-color: transparent;
     }
-    :host([variant="segmented"]) {
+    :host(:is(:state(--segmented), :--segmented)) {
       row-gap: var(--m3e-segmented-list-segment-gap, ${DesignToken.measurement.space25});
     }
-    :host([variant="segmented"]) {
+    :host(:is(:state(--segmented), :--segmented)) {
       --m3e-list-item-container-color: var(--m3e-segmented-list-item-container-color, ${DesignToken.color.surface});
       --m3e-list-item-disabled-container-color: var(
         --m3e-segmented-list-item-disabled-container-color,
@@ -110,22 +110,23 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
         ${DesignToken.shape.corner.large}
       );
     }
-    :host([variant="segmented"]) ::slotted(:is(:state(--first), :--first)),
-    :host([variant="segmented"]) ::slotted(:is(:state(--has-previous-open), :--has-previous-open):not([open])) {
+    :host(:is(:state(--segmented), :--segmented)) ::slotted(:is(:state(--first), :--first)),
+    :host(:is(:state(--segmented), :--segmented))
+      ::slotted(:is(:state(--has-previous-open), :--has-previous-open):not([open])) {
       --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
     }
-    :host([variant="segmented"]) ::slotted(:is(:state(--has-next-open), :--has-next-open):not([open])),
-    :host([variant="segmented"]) ::slotted(:is(:state(--last), :--last)) {
+    :host(:is(:state(--segmented), :--segmented)) ::slotted(:is(:state(--has-next-open), :--has-next-open):not([open])),
+    :host(:is(:state(--segmented), :--segmented)) ::slotted(:is(:state(--last), :--last)) {
       --_list-item-bottom-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
     }
-    :host([variant="segmented"]) ::slotted(m3e-divider) {
+    :host(:is(:state(--segmented), :--segmented)) ::slotted(m3e-divider) {
       display: none;
     }
     :host(:is(:state(--has-leading-video), :--has-leading-video)) {
       --_list-item-leading-reserved-display: block;
       --_list-item-leading-reserved-space: var(--m3e-list-item-video-width, 100px);
     }
-    :host([variant="standard"]:is(:state(--has-leading-video), :--has-leading-video)) {
+    :host(:is(:state(--standard), :--standard):is(:state(--has-leading-video), :--has-leading-video)) {
       --_list-item-leading-reserved-outset: var(--m3e-list-item-leading-space, ${DesignToken.measurement.space200});
       --_list-item-trailing-reserved-outset: var(--m3e-list-item-trailing-space, ${DesignToken.measurement.space200});
     }
@@ -151,7 +152,7 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
    * The appearance variant of the list.
    * @default "standard"
    */
-  @property({ reflect: true }) variant: ListVariant = "standard";
+  @property({ reflect: true, useDefault: true }) variant: ListVariant = "standard";
 
   /** The items of the list. */
   get items(): ReadonlyArray<M3eListItemElement> {
@@ -189,8 +190,30 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
   }
 
   /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#applyVariant();
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     return html`<slot @slotchange=${this.#handleSlotChange}></slot>`;
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isListVariant(this.variant)) {
+      this.variant = "standard";
+    }
+    setCustomEnumState(this, this.variant, "segmented", "standard");
   }
 
   /** @private */
