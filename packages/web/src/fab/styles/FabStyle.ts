@@ -124,34 +124,34 @@ export const FabStyle: CSSResultGroup = css`
     .base {
       outline-style: solid;
     }
-    :host([variant]:not(:disabled):not([disabled-interactive])) .base {
-      background-color: ButtonFace;
-      outline-color: ButtonText;
+    :host(:not(:disabled):not([disabled-interactive])) .base {
+      background-color: ButtonFace !important;
+      outline-color: ButtonText !important;
     }
-    :host([variant]:not(:disabled):not([disabled-interactive])) .label,
-    :host([variant]:not(:disabled):not([disabled-interactive])) .icon {
-      color: ButtonText;
+    :host(:not(:disabled):not([disabled-interactive])) .label,
+    :host(:not(:disabled):not([disabled-interactive])) .icon {
+      color: ButtonText !important;
     }
-    :host([variant]:disabled) .base,
-    :host([variant][disabled-interactive]) .base {
-      outline-color: GrayText;
-      background-color: unset;
+    :host(:disabled) .base,
+    :host([disabled-interactive]) .base {
+      outline-color: GrayText !important;
+      background-color: unset !important;
     }
-    :host([variant]:disabled) .label,
-    :host([variant][disabled-interactive]) .label,
-    :host([variant]:disabled) .icon,
-    :host([variant][disabled-interactive]) .icon {
-      color: GrayText;
+    :host(:disabled) .label,
+    :host([disabled-interactive]) .label,
+    :host(:disabled) .icon,
+    :host([disabled-interactive]) .icon {
+      color: GrayText !important;
     }
-    :host([size="small"]) .base {
+    :host(:is(:state(--small), :--small)) .base {
       outline-offset: calc(0px - var(--m3e-button-small-outline-thickness, 1px));
       outline-width: var(--m3e-button-small-outline-thickness, 1px);
     }
-    :host([size="medium"]) .base {
+    :host(:is(:state(--medium), :--medium)) .base {
       outline-offset: calc(0px - var(--m3e-button-medium-outline-thickness, 1px));
       outline-width: var(--m3e-button-medium-outline-thickness, 1px);
     }
-    :host([size="large"]) .base {
+    :host(:is(:state(--large), :--large)) .base {
       outline-offset: calc(0px - var(--m3e-button-large-outline-thickness, 2px));
       outline-width: var(--m3e-button-large-outline-thickness, 2px);
     }

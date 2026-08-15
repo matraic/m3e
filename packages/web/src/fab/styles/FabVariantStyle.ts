@@ -5,22 +5,23 @@ import { FabVariantToken } from "./FabVariantToken";
 
 /** @private */
 function fabVariantStyle(variant: FabVariant): CSSResult {
+  const selector = unsafeCSS(`:is(:state(--${variant}), :--${variant})`);
   return css`
-    :host([variant="${unsafeCSS(variant)}"]:not([lowered])) .base {
+    :host(${selector}:not([lowered])) .base {
       background-color: ${FabVariantToken[variant].containerColor};
       --m3e-elevation-level: ${FabVariantToken[variant].containerElevation};
       --m3e-elevation-hover-level: ${FabVariantToken[variant].hover.containerElevation};
       --m3e-elevation-focus-level: ${FabVariantToken[variant].focus.containerElevation};
       --m3e-elevation-pressed-level: ${FabVariantToken[variant].pressed.containerElevation};
     }
-    :host([variant="${unsafeCSS(variant)}"][lowered]) .base {
+    :host(${selector}[lowered]) .base {
       background-color: ${FabVariantToken[variant].loweredContainerColor ?? FabVariantToken[variant].containerColor};
       --m3e-elevation-level: ${FabVariantToken[variant].loweredContainerElevation};
       --m3e-elevation-hover-level: ${FabVariantToken[variant].hover.loweredContainerElevation};
       --m3e-elevation-focus-level: ${FabVariantToken[variant].focus.loweredContainerElevation};
       --m3e-elevation-pressed-level: ${FabVariantToken[variant].pressed.loweredContainerElevation};
     }
-    :host([variant="${unsafeCSS(variant)}"]) .base {
+    :host(${selector}) .base {
       --m3e-state-layer-hover-color: ${FabVariantToken[variant].hover.stateLayerColor};
       --m3e-state-layer-hover-opacity: ${FabVariantToken[variant].hover.stateLayerOpacity};
       --m3e-state-layer-focus-color: ${FabVariantToken[variant].focus.stateLayerColor};
@@ -28,32 +29,32 @@ function fabVariantStyle(variant: FabVariant): CSSResult {
       --m3e-ripple-color: ${FabVariantToken[variant].pressed.stateLayerColor};
       --m3e-ripple-opacity: ${FabVariantToken[variant].pressed.stateLayerOpacity};
     }
-    :host([variant="${unsafeCSS(variant)}"]) .label {
+    :host(${selector}) .label {
       color: ${FabVariantToken[variant].labelTextColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]:focus) .label {
+    :host(${selector}:focus) .label {
       color: ${FabVariantToken[variant].focus.labelTextColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]:hover) .label {
+    :host(${selector}:hover) .label {
       color: ${FabVariantToken[variant].hover.labelTextColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]) .base.pressed .label {
+    :host(${selector}) .base.pressed .label {
       color: ${FabVariantToken[variant].pressed.labelTextColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]) .icon {
+    :host(${selector}) .icon {
       color: ${FabVariantToken[variant].iconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]:focus) .icon {
+    :host(${selector}:focus) .icon {
       color: ${FabVariantToken[variant].focus.iconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]:hover) .icon {
+    :host(${selector}:hover) .icon {
       color: ${FabVariantToken[variant].hover.iconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]) .base.pressed .icon {
+    :host(${selector}) .base.pressed .icon {
       color: ${FabVariantToken[variant].pressed.iconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]:disabled) .base,
-    :host([variant="${unsafeCSS(variant)}"][disabled-interactive]) .base {
+    :host(${selector}:disabled) .base,
+    :host(${selector}[disabled-interactive]) .base {
       --m3e-elevation-level: ${FabVariantToken[variant].disabled.containerElevation};
       background-color: color-mix(
         in srgb,
@@ -61,16 +62,16 @@ function fabVariantStyle(variant: FabVariant): CSSResult {
         transparent
       );
     }
-    :host([variant="${unsafeCSS(variant)}"]:disabled) .label,
-    :host([variant="${unsafeCSS(variant)}"][disabled-interactive]) .label {
+    :host(${selector}:disabled) .label,
+    :host(${selector}[disabled-interactive]) .label {
       color: color-mix(
         in srgb,
         ${FabVariantToken[variant].disabled.labelTextColor} ${FabVariantToken[variant].disabled.labelTextOpacity},
         transparent
       );
     }
-    :host([variant="${unsafeCSS(variant)}"]:disabled) .icon,
-    :host([variant="${unsafeCSS(variant)}"][disabled-interactive]) .icon {
+    :host(${selector}:disabled) .icon,
+    :host(${selector}[disabled-interactive]) .icon {
       color: color-mix(
         in srgb,
         ${FabVariantToken[variant].disabled.iconColor} ${FabVariantToken[variant].disabled.iconOpacity},

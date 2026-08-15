@@ -7,3 +7,20 @@ export type FabVariant =
   | "tertiary"
   | "tertiary-container"
   | "surface";
+
+/**
+ * Determines whether a value is a `FabVariant`.
+ * @param {unknown} value The value to test.
+ * @returns Whether `value` is a `FabVariant`.
+ */
+export function isFabVariant(value: unknown): value is FabVariant {
+  return (
+    value === "primary" ||
+    value === "primary-container" ||
+    value === "secondary" ||
+    value === "secondary-container" ||
+    value === "tertiary" ||
+    value === "tertiary-container" ||
+    value === "surface"
+  );
+}

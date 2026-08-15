@@ -17,10 +17,11 @@ import {
   Role,
   KeyboardClick,
   customElement,
+  setCustomEnumState,
 } from "@m3e/web/core";
 
-import { FabSize } from "./FabSize";
-import { FabVariant } from "./FabVariant";
+import { FabSize, isFabSize } from "./FabSize";
+import { FabVariant, isFabVariant } from "./FabVariant";
 
 import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
 
@@ -404,7 +405,7 @@ export class M3eFabElement extends KeyboardClick(
    * The appearance variant of the button.
    * @default "primary-container"
    */
-  @property({ reflect: true }) variant: FabVariant = "primary-container";
+  @property({ reflect: true, useDefault: true }) variant: FabVariant = "primary-container";
 
   /**
    * Whether to present a lowered elevation.
@@ -416,7 +417,7 @@ export class M3eFabElement extends KeyboardClick(
    * The size of the button.
    * @default "medium"
    */
-  @property({ reflect: true }) size: FabSize = "medium";
+  @property({ reflect: true, useDefault: true }) size: FabSize = "medium";
 
   /**
    * Whether the button is extended to show the label.
@@ -425,11 +426,30 @@ export class M3eFabElement extends KeyboardClick(
   @property({ type: Boolean, reflect: true }) extended = false;
 
   /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#applyVariant();
+    this.#applySize();
+  }
+
+  /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     this._base?.classList.toggle("pressed", false);
     this._base?.classList.toggle("resting", false);
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
+    if (_changedProperties.has("size")) {
+      this.#applySize();
+    }
   }
 
   /** @inheritdoc */
@@ -476,6 +496,32 @@ export class M3eFabElement extends KeyboardClick(
         </m3e-collapsible>
       </div>
     </div>`;
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isFabVariant(this.variant)) {
+      this.variant = "primary-container";
+    }
+    setCustomEnumState(
+      this,
+      this.variant,
+      "primary",
+      "primary-container",
+      "secondary",
+      "secondary-container",
+      "surface",
+      "tertiary",
+      "tertiary-container",
+    );
+  }
+
+  /** @private */
+  #applySize(): void {
+    if (!isFabSize(this.size)) {
+      this.size = "medium";
+    }
+    setCustomEnumState(this, this.size, "large", "medium", "small");
   }
 
   /** @private */
