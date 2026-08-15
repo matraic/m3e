@@ -1,11 +1,19 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, DesignToken, ReconnectedCallback, registerStyleSheet, waitForUpgrade } from "@m3e/web/core";
+import {
+  AttachInternals,
+  customElement,
+  DesignToken,
+  ReconnectedCallback,
+  registerStyleSheet,
+  setCustomState,
+  waitForUpgrade,
+} from "@m3e/web/core";
 import { positionAnchor } from "@m3e/web/core/anchoring";
 
-import { SkeletonShape } from "./SkeletonShape";
-import { SkeletonAnimation } from "./SkeletonAnimation";
+import { isSkeletonShape, SkeletonShape } from "./SkeletonShape";
+import { isSkeletonAnimation, SkeletonAnimation } from "./SkeletonAnimation";
 
 /**
  * A visual placeholder that mimics the layout of content while it's still loading.
@@ -44,7 +52,7 @@ import { SkeletonAnimation } from "./SkeletonAnimation";
  * @cssprop --m3e-skeleton-shape - Corner radius for the skeleton shape.
  */
 @customElement("m3e-skeleton")
-export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
+export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitElement)) {
   /** Skeletons with a live per-instance animation, so preference changes re-sync them all. @private */
   private static __animating = new Set<M3eSkeletonElement>();
 
@@ -118,16 +126,16 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
       opacity: 0;
       transition: ${unsafeCSS(`opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}`)};
     }
-    :host([shape="rounded"]) .shape {
+    :host(:is(:state(--rounded), :--rounded)) .shape {
       border-radius: var(--m3e-skeleton-rounded-shape, var(--m3e-skeleton-shape, ${DesignToken.shape.corner.large}));
     }
-    :host([shape="circular"]) .shape {
+    :host(:is(:state(--circular), :--circular)) .shape {
       border-radius: var(--m3e-skeleton-circular-shape, var(--m3e-skeleton-shape, ${DesignToken.shape.corner.full}));
     }
-    :host([shape="square"]) .shape {
+    :host(:is(:state(--square), :--square)) .shape {
       border-radius: var(--m3e-skeleton-square-shape, var(--m3e-skeleton-shape, 0px));
     }
-    :host([animation="pulse"]:not([loaded])) .shape::after {
+    :host(:is(:state(--pulse), :--pulse):not([loaded])) .shape::after {
       content: "";
       position: absolute;
       top: 0;
@@ -140,7 +148,7 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
       );
       background-color: var(--m3e-skeleton-tint-color, ${DesignToken.color.surfaceDim});
     }
-    :host([animation="wave"]:not([loaded])) .shape::after {
+    :host(:is(:state(--wave), :--wave):not([loaded])) .shape::after {
       content: "";
       position: absolute;
       top: 0;
@@ -195,19 +203,26 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
    * The shape of the skeleton.
    * @default "auto"
    */
-  @property({ reflect: true }) shape: SkeletonShape = "auto";
+  @property({ reflect: true, useDefault: true }) shape: SkeletonShape = "auto";
 
   /**
    * The animation effect of the skeleton.
    * @default "wave"
    */
-  @property({ reflect: true }) animation: SkeletonAnimation = "wave";
+  @property({ reflect: true, useDefault: true }) animation: SkeletonAnimation = "wave";
 
   /**
    * Whether the content of the skeleton has been loaded.
    * @default false
    */
   @property({ type: Boolean, reflect: true }) loaded = false;
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#applyAnimation();
+    this.#applyShape();
+  }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
@@ -227,7 +242,22 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
 
+    if (_changedProperties.has("animation")) {
+      this.#applyAnimation();
+    }
+    if (_changedProperties.has("shape")) {
+      this.#applyShape();
+    }
     if (_changedProperties.has("loaded") || _changedProperties.has("animation")) {
+      this.#updateLoading();
+    }
+  }
+
+  /** @inheritdoc */
+  protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(_changedProperties);
+
+    if (!_changedProperties.has("animation") && !this.loaded) {
       this.#updateLoading();
     }
   }
@@ -235,6 +265,25 @@ export class M3eSkeletonElement extends ReconnectedCallback(LitElement) {
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<slot ?inert="${!this.loaded}" @slotchange=${this.#handleSlotChange}></slot>`;
+  }
+
+  /** @private */
+  #applyAnimation(): void {
+    if (!isSkeletonAnimation(this.animation)) {
+      this.animation = "wave";
+    }
+    setCustomState(this, "--pulse", this.animation === "pulse");
+    setCustomState(this, "--wave", this.animation === "wave");
+  }
+
+  /** @private */
+  #applyShape(): void {
+    if (!isSkeletonShape(this.shape)) {
+      this.shape = "auto";
+    }
+    setCustomState(this, "--circular", this.shape === "circular");
+    setCustomState(this, "--rounded", this.shape === "rounded");
+    setCustomState(this, "--square", this.shape === "square");
   }
 
   /** @private */
