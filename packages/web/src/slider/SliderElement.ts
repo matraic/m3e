@@ -11,12 +11,13 @@ import {
   prefersReducedMotion,
   ResizeController,
   safeStyleMap,
+  setCustomEnumState,
 } from "@m3e/web/core";
 
 import { M3eDirectionality, SupportsDirectionality } from "@m3e/web/core/bidi";
 
 import { M3eSliderThumbElement } from "./SliderThumbElement";
-import { SliderSize } from "./SliderSize";
+import { isSliderSize, SliderSize } from "./SliderSize";
 
 /**
  * Allows for the selection of numeric values from a range.
@@ -112,12 +113,12 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
     :host(:not([disabled])) {
       cursor: pointer;
     }
-    :host([size="extra-small"]),
-    :host([size="small"]) {
+    :host(:is(:state(--extra-small), :--extra-small)),
+    :host(:is(:state(--small), :--small)) {
       height: var(--m3e-slider-small-height, 44px);
     }
-    :host(:not(:is(:state(--rtl), :--rtl))[size="extra-small"]) .base,
-    :host(:not(:is(:state(--rtl), :--rtl))[size="small"]) .base {
+    :host(:not(:is(:state(--rtl), :--rtl)):is(:state(--extra-small), :--extra-small)) .base,
+    :host(:not(:is(:state(--rtl), :--rtl)):is(:state(--small), :--small)) .base {
       --_slider-active-track-shape: var(--m3e-slider-small-active-track-shape, ${DesignToken.shape.corner.smallStart});
       --_slider-inactive-track-start-shape: var(
         --m3e-slider-small-inactive-active-track-start-shape,
@@ -128,8 +129,8 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
         ${DesignToken.shape.corner.smallEnd}
       );
     }
-    :host(:is(:state(--rtl), :--rtl)[size="extra-small"]) .base,
-    :host(:is(:state(--rtl), :--rtl)[size="small"]) .base {
+    :host(:is(:state(--rtl), :--rtl):is(:state(--extra-small), :--extra-small)) .base,
+    :host(:is(:state(--rtl), :--rtl):is(:state(--small), :--small)) .base {
       --_slider-active-track-shape: var(--m3e-slider-small-active-track-shape, ${DesignToken.shape.corner.smallEnd});
       --_slider-inactive-track-start-shape: var(
         --m3e-slider-small-inactive-active-track-start-shape,
@@ -140,16 +141,16 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
         ${DesignToken.shape.corner.smallStart}
       );
     }
-    :host([size="extra-small"]) .track {
+    :host(:is(:state(--extra-small), :--extra-small)) .track {
       height: calc(var(--m3e-slider-extra-small-track-height, 16px));
     }
-    :host([size="small"]) .track {
+    :host(:is(:state(--small), :--small)) .track {
       height: calc(var(--m3e-slider-small-track-height, 24px));
     }
-    :host([size="medium"]) {
+    :host(:is(:state(--medium), :--medium)) {
       height: var(--m3e-slider-medium-height, 52px);
     }
-    :host(:not(:is(:state(--rtl), :--rtl))[size="medium"]) .base {
+    :host(:not(:is(:state(--rtl), :--rtl)):is(:state(--medium), :--medium)) .base {
       --_slider-active-track-shape: var(
         --m3e-slider-medium-active-track-shape,
         ${DesignToken.shape.corner.mediumStart}
@@ -163,7 +164,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
         ${DesignToken.shape.corner.mediumEnd}
       );
     }
-    :host(:is(:state(--rtl), :--rtl)[size="medium"]) .base {
+    :host(:is(:state(--rtl), :--rtl):is(:state(--medium), :--medium)) .base {
       --_slider-active-track-shape: var(--m3e-slider-medium-active-track-shape, ${DesignToken.shape.corner.mediumEnd});
       --_slider-inactive-track-start-shape: var(
         --m3e-slider-medium-inactive-active-track-start-shape,
@@ -174,13 +175,13 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
         ${DesignToken.shape.corner.mediumStart}
       );
     }
-    :host([size="medium"]) .track {
+    :host(:is(:state(--medium), :--medium)) .track {
       height: var(--m3e-slider-medium-track-height, 40px);
     }
-    :host([size="large"]) {
+    :host(:is(:state(--large), :--large)) {
       height: var(--m3e-slider-large-height, 68px);
     }
-    :host(:not(:is(:state(--rtl), :--rtl))[size="large"]) .base {
+    :host(:not(:is(:state(--rtl), :--rtl)):is(:state(--large), :--large)) .base {
       --_slider-active-track-shape: var(--m3e-slider-large-active-track-shape, ${DesignToken.shape.corner.largeStart});
       --_slider-inactive-track-start-shape: var(
         --m3e-slider-large-inactive-active-track-start-shape,
@@ -191,7 +192,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
         ${DesignToken.shape.corner.largeEnd}
       );
     }
-    :host(:is(:state(--rtl), :--rtl)[size="large"]) .base {
+    :host(:is(:state(--rtl), :--rtl):is(:state(--large), :--large)) .base {
       --_slider-active-track-shape: var(--m3e-slider-large-active-track-shape, ${DesignToken.shape.corner.largeEnd});
       --_slider-inactive-track-start-shape: var(
         --m3e-slider-large-inactive-active-track-start-shape,
@@ -202,13 +203,13 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
         ${DesignToken.shape.corner.largeStart}
       );
     }
-    :host([size="large"]) .track {
+    :host(:is(:state(--large), :--large)) .track {
       height: var(--m3e-slider-large-track-height, 56px);
     }
-    :host([size="extra-large"]) {
+    :host(:is(:state(--extra-large), :--extra-large)) {
       height: var(--m3e-slider-extra-large-height, 108px);
     }
-    :host(:not(:is(:state(--rtl), :--rtl))[size="extra-large"]) .base {
+    :host(:not(:is(:state(--rtl), :--rtl)):is(:state(--extra-large), :--extra-large)) .base {
       --_slider-active-track-shape: var(
         --m3e-slider-extra-large-active-track-shape,
         ${DesignToken.shape.corner.extraLargeStart}
@@ -222,7 +223,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
         ${DesignToken.shape.corner.extraLargeEnd}
       );
     }
-    :host(:is(:state(--rtl), :--rtl)[size="extra-large"]) .base {
+    :host(:is(:state(--rtl), :--rtl):is(:state(--extra-large), :--extra-large)) .base {
       --_slider-active-track-shape: var(
         --m3e-slider-extra-large-active-track-shape,
         ${DesignToken.shape.corner.extraLargeEnd}
@@ -236,7 +237,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
         ${DesignToken.shape.corner.extraLargeStart}
       );
     }
-    :host([size="extra-large"]) .track {
+    :host(:is(:state(--extra-large), :--extra-large)) .track {
       height: var(--m3e-slider-extra-large-track-height, 96px);
     }
     :host(:is(:state(--animating), :--animating)) .track-active,
@@ -406,7 +407,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
    * The size of the slider.
    * @default "extra-small"
    */
-  @property({ reflect: true }) size: SliderSize = "extra-small";
+  @property({ reflect: true, useDefault: true }) size: SliderSize = "extra-small";
 
   /**
    * Whether the element is disabled.
@@ -476,6 +477,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
   override connectedCallback(): void {
     super.connectedCallback();
 
+    this.#applySize();
     this.#directionalitySubscription = M3eDirectionality.observe(() => {
       this.#updateDimensions(true);
       this.requestUpdate();
@@ -487,6 +489,15 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
     super.disconnectedCallback();
     this.#changedThumbs.clear();
     this.#directionalitySubscription?.();
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("size")) {
+      this.#applySize();
+    }
   }
 
   /** @inheritdoc */
@@ -518,6 +529,14 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
       <div class="ticks" aria-hidden="true">${this._ticks.map((x) => this.#renderTick(x))}</div>
       <slot @slotchange=${this.#handleSlotChange}></slot>
     </div>`;
+  }
+
+  /** @private */
+  #applySize(): void {
+    if (!isSliderSize(this.size)) {
+      this.size = "extra-small";
+    }
+    setCustomEnumState(this, this.size, "extra-large", "extra-small", "large", "medium", "small");
   }
 
   /** @private */
