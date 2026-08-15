@@ -8,7 +8,7 @@ import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
 
 import { M3eNavItemElement } from "./NavItemElement";
 import { NavItemOrientation } from "./NavItemOrientation";
-import { NavBarMode } from "./NavBarMode";
+import { isNavBarMode, NavBarMode } from "./NavBarMode";
 
 /**
  * A horizontal bar, typically used on smaller devices, that allows a user to switch between 3-5 views.
@@ -90,7 +90,7 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
    * The mode in which items in the bar are presented.
    * @default "compact"
    */
-  @property({ reflect: true }) mode: NavBarMode = "compact";
+  @property({ reflect: true, useDefault: true }) mode: NavBarMode = "compact";
 
   /** The items of the bar. */
   get items(): readonly M3eNavItemElement[] {
@@ -108,6 +108,12 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
   }
   set currentMode(value: Exclude<NavBarMode, "auto">) {
     this._mode = value;
+  }
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#applyMode();
   }
 
   /** @inheritdoc */
@@ -132,6 +138,7 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
     super.willUpdate(changedProperties);
 
     if (changedProperties.has("mode")) {
+      this.#applyMode();
       this.#breakpointUnobserve?.();
 
       if (this.mode === "auto") {
@@ -143,6 +150,21 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
     }
     if (changedProperties.has("_mode")) {
       this._updateItems();
+    }
+  }
+
+  /** @inheritdoc */
+  protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(_changedProperties);
+    if (!_changedProperties.has("mode")) {
+      this._updateItems();
+    }
+  }
+
+  /** @private */
+  #applyMode(): void {
+    if (!isNavBarMode(this.mode)) {
+      this.mode = "compact";
     }
   }
 

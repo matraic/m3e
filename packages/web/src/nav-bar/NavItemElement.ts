@@ -18,6 +18,7 @@ import {
   ResizeController,
   Role,
   Selected,
+  setCustomEnumState,
   setCustomState,
   SuppressInitialAnimation,
 } from "@m3e/web/core";
@@ -26,7 +27,7 @@ import { selectionManager } from "@m3e/web/core/a11y";
 import { SupportsDirectionality } from "@m3e/web/core/bidi";
 
 import type { M3eNavBarElement } from "./NavBarElement";
-import { NavItemOrientation } from "./NavItemOrientation";
+import { isNavItemOrientation, NavItemOrientation } from "./NavItemOrientation";
 
 /**
  * An item, placed in a navigation bar or rail, used to navigate to destinations in an application.
@@ -134,15 +135,15 @@ export class M3eNavItemElement extends SupportsDirectionality(
     :host([hidden]) {
       display: none;
     }
-    :host([orientation="vertical"]) {
+    :host(:is(:state(--vertical), :--vertical)) {
       min-width: var(--_vertical-nav-item-min-width);
       width: var(--_vertical-nav-item-width);
       margin-inline: var(--_vertical-nav-item-margin-inline);
     }
-    :host([orientation="horizontal"]) {
+    :host(:is(:state(--horizontal), :--horizontal)) {
       max-width: fit-content;
     }
-    :host([orientation="horizontal"]) .outer {
+    :host(:is(:state(--horizontal), :--horizontal)) .outer {
       margin-inline-start: var(--_horizontal-nav-item-leading-space);
       margin-inline-end: var(--_horizontal-nav-item-trailing-space);
     }
@@ -194,7 +195,7 @@ export class M3eNavItemElement extends SupportsDirectionality(
       user-select: none;
       -webkit-user-select: none;
     }
-    :host([orientation="horizontal"]) .label {
+    :host(:is(:state(--horizontal), :--horizontal)) .label {
       white-space: nowrap;
     }
     ::slotted([slot="icon"]),
@@ -250,18 +251,18 @@ export class M3eNavItemElement extends SupportsDirectionality(
         ${DesignToken.color.onSecondaryContainer}
       );
     }
-    :host([selected]:not(:disabled):not([disabled-interactive]):not([orientation="horizontal"])) .label {
+    :host([selected]:not(:disabled):not([disabled-interactive]):not(:is(:state(--horizontal), :--horizontal))) .label {
       color: var(--m3e-nav-item-active-label-text-color, ${DesignToken.color.secondary});
     }
-    :host([selected]:not(:disabled):not([disabled-interactive])[orientation="horizontal"]) .label,
+    :host([selected]:not(:disabled):not([disabled-interactive]):is(:state(--horizontal), :--horizontal)) .label,
     :host([selected]:not(:disabled):not([disabled-interactive])) .icon {
       color: var(--m3e-nav-item-active-icon-color, ${DesignToken.color.onSecondaryContainer});
     }
-    :host([orientation="vertical"]) .outer {
+    :host(:is(:state(--vertical), :--vertical)) .outer {
       align-self: stretch;
       align-items: flex-start;
     }
-    :host([orientation="vertical"]) .label {
+    :host(:is(:state(--vertical), :--vertical)) .label {
       text-align: center;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -269,39 +270,39 @@ export class M3eNavItemElement extends SupportsDirectionality(
       overflow: hidden;
       line-clamp: 2;
     }
-    :host([orientation="vertical"]) .base {
+    :host(:is(:state(--vertical), :--vertical)) .base {
       flex-direction: column;
       row-gap: var(--m3e-nav-item-spacing, ${DesignToken.measurement.space50});
     }
-    :host([orientation="horizongal"]) .base {
+    :host(:is(:state(--horizontal), :--horizontal)) .base {
       margin-top: 0;
     }
-    :host([orientation="vertical"]) .base {
+    :host(:is(:state(--vertical), :--vertical)) .base {
       margin-top: var(--m3e-vertical-nav-item-active-indicator-margin, ${DesignToken.measurement.space75});
       margin-bottom: var(--m3e-vertical-nav-item-active-indicator-margin, ${DesignToken.measurement.space75});
     }
-    :host([orientation="vertical"]) .indicator {
+    :host(:is(:state(--vertical), :--vertical)) .indicator {
       top: var(--m3e-vertical-nav-item-active-indicator-margin, ${DesignToken.measurement.space75});
       bottom: unset;
     }
-    :host([orientation="vertical"]:is(:state(--rtl), :--rtl)) .indicator {
+    :host(:is(:state(--vertical), :--vertical):is(:state(--rtl), :--rtl)) .indicator {
       right: var(--_vertical-nav-item-inset-start);
       left: unset;
     }
-    :host([orientation="vertical"]:not(:is(:state(--rtl), :--rtl))) .indicator {
+    :host(:is(:state(--vertical), :--vertical):not(:is(:state(--rtl), :--rtl))) .indicator {
       left: var(--_vertical-nav-item-inset-start);
       right: unset;
     }
-    :host([orientation="vertical"]) .indicator,
-    :host([orientation="vertical"]) .icon-wrapper {
+    :host(:is(:state(--vertical), :--vertical)) .indicator,
+    :host(:is(:state(--vertical), :--vertical)) .icon-wrapper {
       min-width: var(--m3e-vertical-nav-item-active-indicator-width, 56px);
     }
-    :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .state-layer {
+    :host(:not(:is(:state(--no-animate), :--no-animate)):is(:state(--vertical), :--vertical)) .state-layer {
       ${unsafeCSS(
         `collapse ${DesignToken.motion.duration.medium1}, indicator-grow-bounce ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standardAccelerate}`,
       )};
     }
-    :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .indicator {
+    :host(:not(:is(:state(--no-animate), :--no-animate)):is(:state(--vertical), :--vertical)) .indicator {
       animation: collapse ${DesignToken.motion.duration.medium1};
     }
     @keyframes collapse {
@@ -312,11 +313,11 @@ export class M3eNavItemElement extends SupportsDirectionality(
         width: var(--m3e-vertical-nav-item-active-indicator-width, 56px);
       }
     }
-    :host([orientation="vertical"]) .indicator,
-    :host([orientation="vertical"]) .icon-wrapper {
+    :host(:is(:state(--vertical), :--vertical)) .indicator,
+    :host(:is(:state(--vertical), :--vertical)) .icon-wrapper {
       height: var(--m3e-vertical-nav-item-active-indicator-height, 32px);
     }
-    :host([orientation="vertical"]) .icon {
+    :host(:is(:state(--vertical), :--vertical)) .icon {
       top: calc(
         calc(var(--m3e-vertical-nav-item-active-indicator-height, 32px) / 2) - calc(
             var(--m3e-nav-item-icon-size, 24px) / 2
@@ -328,41 +329,58 @@ export class M3eNavItemElement extends SupportsDirectionality(
           )
       );
     }
-    :host([orientation="vertical"]) .focus-ring {
+    :host(:is(:state(--vertical), :--vertical)) .focus-ring {
       border-radius: var(--m3e-nav-item-focus-ring-shape, ${DesignToken.shape.corner.medium});
     }
-    :host([orientation="horizontal"]) .icon-wrapper {
+    :host(:is(:state(--horizontal), :--horizontal)) .icon-wrapper {
       width: var(--m3e-nav-item-icon-size, 24px);
       height: var(--m3e-nav-item-icon-size, 24px);
     }
-    :host([orientation="horizontal"]) .base {
+    :host(:is(:state(--horizontal), :--horizontal)) .base {
       padding: var(--m3e-horizontal-nav-item-padding, ${DesignToken.measurement.space200});
     }
-    :host([orientation="horizontal"]) .label {
+    :host(:is(:state(--horizontal), :--horizontal)) .label {
       flex: 1 1 auto;
     }
-    :host([orientation="horizontal"]) .base {
+    :host(:is(:state(--horizontal), :--horizontal)) .base {
       column-gap: var(--m3e-nav-item-spacing, ${DesignToken.measurement.space50});
     }
-    :host([orientation="horizontal"]) .indicator,
-    :host([orientation="horizontal"]) .inner {
+    :host(:is(:state(--horizontal), :--horizontal)) .indicator,
+    :host(:is(:state(--horizontal), :--horizontal)) .inner {
       height: var(--m3e-horizontal-nav-item-active-indicator-height, 40px);
     }
-    :host([orientation="horizontal"]) .inner {
+    :host(:is(:state(--horizontal), :--horizontal)) .inner {
       width: fit-content;
     }
     .indicator {
       margin-inline: auto;
     }
-    :host(:is(:state(--first), :--first):not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"])
+    :host(
+        :is(:state(--first), :--first):not(:is(:state(--no-animate), :--no-animate)):is(
+            :state(--horizontal),
+            :--horizontal
+          )
+      )
       .icon-wrapper,
-    :host(:not(:is(:state(--first), :--first)):not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"])
+    :host(
+        :not(:is(:state(--first), :--first)):not(:is(:state(--no-animate), :--no-animate)):is(
+            :state(--vertical),
+            :--vertical
+          )
+      )
       .icon-wrapper {
       animation: ${unsafeCSS(`slide-down ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
     }
-    :host(:not(:is(:state(--first), :--first)):not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"])
+    :host(
+        :not(:is(:state(--first), :--first)):not(:is(:state(--no-animate), :--no-animate)):is(
+            :state(--horizontal),
+            :--horizontal
+          )
+      )
       .icon-wrapper,
-    :host(:is(:state(--first), :--first):not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"])
+    :host(
+        :is(:state(--first), :--first):not(:is(:state(--no-animate), :--no-animate)):is(:state(--vertical), :--vertical)
+      )
       .icon-wrapper {
       animation: ${unsafeCSS(`slide-up ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
     }
@@ -382,10 +400,10 @@ export class M3eNavItemElement extends SupportsDirectionality(
         transform: translateY(0);
       }
     }
-    :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"]) .label {
+    :host(:not(:is(:state(--no-animate), :--no-animate)):is(:state(--horizontal), :--horizontal)) .label {
       animation: horizontal-fade-in ${DesignToken.motion.duration.medium1};
     }
-    :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .label {
+    :host(:not(:is(:state(--no-animate), :--no-animate)):is(:state(--vertical), :--vertical)) .label {
       animation: vertical-fade-in ${DesignToken.motion.duration.medium1};
     }
     @keyframes horizontal-fade-in {
@@ -433,20 +451,38 @@ export class M3eNavItemElement extends SupportsDirectionality(
       z-index: 1;
     }
     @media (prefers-reduced-motion) {
-      :host(:is(:state(--first), :--first):not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"])
-        .icon-wrapper,
-      :host(:not(:is(:state(--first), :--first)):not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"])
-        .icon-wrapper,
       :host(
-          :not(:is(:state(--first), :--first)):not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"]
+          :is(:state(--first), :--first):not(:is(:state(--no-animate), :--no-animate)):is(
+              :state(--horizontal),
+              :--horizontal
+            )
         )
         .icon-wrapper,
-      :host(:is(:state(--first), :--first):not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"])
+      :host(
+          :not(:is(:state(--first), :--first)):not(:is(:state(--no-animate), :--no-animate)):is(
+              :state(--vertical),
+              :--vertical
+            )
+        )
         .icon-wrapper,
-      :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .state-layer,
-      :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .indicator,
-      :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="horizontal"]) .label,
-      :host(:not(:is(:state(--no-animate), :--no-animate))[orientation="vertical"]) .label {
+      :host(
+          :not(:is(:state(--first), :--first)):not(:is(:state(--no-animate), :--no-animate)):is(
+              :state(--horizontal),
+              :--horizontal
+            )
+        )
+        .icon-wrapper,
+      :host(
+          :is(:state(--first), :--first):not(:is(:state(--no-animate), :--no-animate)):is(
+              :state(--vertical),
+              :--vertical
+            )
+        )
+        .icon-wrapper,
+      :host(:not(:is(:state(--no-animate), :--no-animate)):is(:state(--vertical), :--vertical)) .state-layer,
+      :host(:not(:is(:state(--no-animate), :--no-animate)):is(:state(--vertical), :--vertical)) .indicator,
+      :host(:not(:is(:state(--no-animate), :--no-animate)):is(:state(--horizontal), :--horizontal)) .label,
+      :host(:not(:is(:state(--no-animate), :--no-animate)):is(:state(--vertical), :--vertical)) .label {
         animation: none;
       }
       :host(:not(:is(:state(--no-animate), :--no-animate))) .state-layer,
@@ -469,10 +505,10 @@ export class M3eNavItemElement extends SupportsDirectionality(
       :host([selected]:not(:disabled):not([disabled-interactive])) .indicator {
         --m3e-selection-indicator-color: ButtonText;
       }
-      :host([orientation="vertical"][selected]:not(:disabled):not([disabled-interactive])) .label {
+      :host(:is(:state(--vertical), :--vertical)[selected]:not(:disabled):not([disabled-interactive])) .label {
         color: ButtonText;
       }
-      :host([orientation="horizontal"][selected]:not(:disabled):not([disabled-interactive])) .label,
+      :host(:is(:state(--horizontal), :--horizontal)[selected]:not(:disabled):not([disabled-interactive])) .label,
       :host([selected]:not(:disabled):not([disabled-interactive])) .icon {
         forced-color-adjust: none;
         color: ButtonFace;
@@ -495,7 +531,7 @@ export class M3eNavItemElement extends SupportsDirectionality(
    * The layout orientation of the item.
    * @default "vertical"
    */
-  @property({ reflect: true }) orientation: NavItemOrientation = "vertical";
+  @property({ reflect: true, useDefault: true }) orientation: NavItemOrientation = "vertical";
 
   /** The navigation bar to which this item belongs. */
   get navBar(): M3eNavBarElement | null {
@@ -506,6 +542,7 @@ export class M3eNavItemElement extends SupportsDirectionality(
   override connectedCallback(): void {
     this.#inRail = this.closest("m3e-nav-rail") !== null;
     super.connectedCallback();
+    this.#applyOrientation();
     this.addEventListener("click", this.#clickHandler, { capture: true });
   }
 
@@ -520,6 +557,15 @@ export class M3eNavItemElement extends SupportsDirectionality(
   override reconnectedCallback(): void {
     super.reconnectedCallback();
     this.#initResizeObserver();
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("orientation")) {
+      this.#applyOrientation();
+    }
   }
 
   /** @inheritdoc */
@@ -592,6 +638,14 @@ export class M3eNavItemElement extends SupportsDirectionality(
           </div>
         </div>
       </div>`;
+  }
+
+  /** @private */
+  #applyOrientation(): void {
+    if (!isNavItemOrientation(this.orientation)) {
+      this.orientation = "vertical";
+    }
+    setCustomEnumState(this, this.orientation, "horizontal", "vertical");
   }
 
   /** @private */
