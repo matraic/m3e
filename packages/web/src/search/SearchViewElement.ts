@@ -23,7 +23,7 @@ import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
 import "@m3e/web/core/a11y";
 
 import { SearchViewLightDomStyle, SearchViewStyle } from "./styles";
-import { SearchViewMode } from "./SearchViewMode";
+import { isSearchViewMode, SearchViewMode } from "./SearchViewMode";
 import { SearchViewQueryEventDetail } from "./SearchViewQueryEventDetail";
 
 import "./SearchBarElement";
@@ -146,7 +146,7 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
    * The behavior mode of the view.
    * @default "docked"
    */
-  @property({ reflect: true }) mode: SearchViewMode = "docked";
+  @property({ reflect: true, useDefault: true }) mode: SearchViewMode = "docked";
 
   /**
    * Whether the view is expanded to show results.
@@ -198,6 +198,12 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
   }
 
   /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#applyMode();
+  }
+
+  /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
@@ -219,6 +225,7 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
     super.willUpdate(changedProperties);
 
     if (changedProperties.has("mode")) {
+      this.#applyMode();
       this.#breakpointUnobserve?.();
 
       const previousMode = changedProperties.get("mode");
@@ -259,6 +266,15 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
   }
 
   /** @inheritdoc */
+  protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(_changedProperties);
+
+    if (!_changedProperties.has("mode")) {
+      this.#updateMode();
+    }
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     return html` <div class="base">
       <div class="anchor"></div>
@@ -292,6 +308,13 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
         </m3e-focus-trap>
       </div>
     </div>`;
+  }
+
+  /** @private */
+  #applyMode(): void {
+    if (!isSearchViewMode(this.mode)) {
+      this.mode = "docked";
+    }
   }
 
   /** @private */
