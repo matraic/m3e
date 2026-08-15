@@ -27,14 +27,15 @@ import {
   customElement,
   addCustomState,
   prefersReducedMotion,
+  setCustomEnumState,
 } from "@m3e/web/core";
 
-import { IconButtonSize } from "./IconButtonSize";
-import { IconButtonShape } from "./IconButtonShape";
-import { IconButtonVariant } from "./IconButtonVariant";
+import { IconButtonSize, isIconButtonSize } from "./IconButtonSize";
+import { IconButtonShape, isIconButtonShape } from "./IconButtonShape";
+import { IconButtonVariant, isIconButtonVariant } from "./IconButtonVariant";
+import { IconButtonWidth, isIconButtonWidth } from "./IconButtonWidth";
 
 import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./styles";
-import { IconButtonWidth } from "./IconButtonWidth";
 
 /**
  * An icon button users interact with to perform a supplementary action.
@@ -392,25 +393,25 @@ export class M3eIconButtonElement extends KeyboardClick(
    * The appearance variant of the button.
    * @default "standard"
    */
-  @property({ reflect: true }) variant: IconButtonVariant = "standard";
+  @property({ reflect: true, useDefault: true }) variant: IconButtonVariant = "standard";
 
   /**
    * The shape of the button.
    * @default "rounded"
    */
-  @property({ reflect: true }) shape: IconButtonShape = "rounded";
+  @property({ reflect: true, useDefault: true }) shape: IconButtonShape = "rounded";
 
   /**
    * The size of the button.
    * @default "small"
    */
-  @property({ reflect: true }) size: IconButtonSize = "small";
+  @property({ reflect: true, useDefault: true }) size: IconButtonSize = "small";
 
   /**
    * The width of the button.
    * @default "default"
    */
-  @property({ reflect: true }) width: IconButtonWidth = "default";
+  @property({ reflect: true, useDefault: true }) width: IconButtonWidth = "default";
 
   /**
    * Whether the button will toggle between selected and unselected states.
@@ -458,6 +459,11 @@ export class M3eIconButtonElement extends KeyboardClick(
   override connectedCallback(): void {
     super.connectedCallback();
 
+    this.#applyVariant();
+    this.#applyShape();
+    this.#applySize();
+    this.#applyWidth();
+
     this.addEventListener("click", this.#clickHandler);
   }
 
@@ -472,6 +478,24 @@ export class M3eIconButtonElement extends KeyboardClick(
     deleteCustomState(this, "--adjacent-pressed");
 
     this.removeEventListener("click", this.#clickHandler);
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
+    if (_changedProperties.has("shape")) {
+      this.#applyShape();
+    }
+    if (_changedProperties.has("size")) {
+      this.#applySize();
+    }
+    if (_changedProperties.has("width")) {
+      this.#applyWidth();
+    }
   }
 
   /** @inheritdoc */
@@ -500,6 +524,38 @@ export class M3eIconButtonElement extends KeyboardClick(
         }
       }
     }
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isIconButtonVariant(this.variant)) {
+      this.variant = "standard";
+    }
+    setCustomEnumState(this, this.variant, "filled", "outlined", "standard", "tonal");
+  }
+
+  /** @private */
+  #applyShape(): void {
+    if (!isIconButtonShape(this.shape)) {
+      this.shape = "rounded";
+    }
+    setCustomEnumState(this, this.shape, "rounded", "square");
+  }
+
+  /** @private */
+  #applySize(): void {
+    if (!isIconButtonSize(this.size)) {
+      this.size = "small";
+    }
+    setCustomEnumState(this, this.size, "extra-large", "extra-small", "large", "medium", "small");
+  }
+
+  /** @private */
+  #applyWidth(): void {
+    if (!isIconButtonWidth(this.width)) {
+      this.width = "default";
+    }
+    setCustomEnumState(this, this.width, "default", "narrow", "wide");
   }
 
   /** @private */

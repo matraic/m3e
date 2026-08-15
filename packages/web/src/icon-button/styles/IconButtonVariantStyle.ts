@@ -5,8 +5,9 @@ import { IconButtonVariantToken } from "./IconButtonVariantToken";
 
 /** @private */
 function iconButtonVariantStyle(variant: IconButtonVariant | "elevated"): CSSResult {
+  const selector = unsafeCSS(`:is(:state(--${variant}), :--${variant})`);
   return css`
-    :host([variant="${unsafeCSS(variant)}"]:not(:disabled):not([disabled-interactive])) .base {
+    :host(${selector}:not(:disabled):not([disabled-interactive])) .base {
       background-color: ${IconButtonVariantToken[variant].containerColor ?? unsafeCSS("unset")};
       --m3e-state-layer-hover-color: ${IconButtonVariantToken[variant].hover.stateLayerColor};
       --m3e-state-layer-hover-opacity: ${IconButtonVariantToken[variant].hover.stateLayerOpacity};
@@ -20,86 +21,72 @@ function iconButtonVariantStyle(variant: IconButtonVariant | "elevated"): CSSRes
       --m3e-elevation-pressed-level: ${IconButtonVariantToken[variant].pressed.containerElevation ??
       unsafeCSS("unset")};
     }
-    :host([variant="${unsafeCSS(variant)}"][toggle]:not([selected]):not(:disabled):not([disabled-interactive])) .base {
+    :host(${selector}[toggle]:not([selected]):not(:disabled):not([disabled-interactive])) .base {
       background-color: ${IconButtonVariantToken[variant].unselectedContainerColor ?? unsafeCSS("unset")};
       --m3e-state-layer-hover-color: ${IconButtonVariantToken[variant].hover.unselectedStateLayerColor};
       --m3e-state-layer-focus-color: ${IconButtonVariantToken[variant].focus.unselectedStateLayerColor};
       --m3e-ripple-color: ${IconButtonVariantToken[variant].pressed.unselectedStateLayerColor};
     }
-    :host([variant="${unsafeCSS(variant)}"][toggle][selected]:not(:disabled):not([disabled-interactive])) .base {
+    :host(${selector}[toggle][selected]:not(:disabled):not([disabled-interactive])) .base {
       background-color: ${IconButtonVariantToken[variant].selectedContainerColor ?? unsafeCSS("unset")};
       --m3e-state-layer-hover-color: ${IconButtonVariantToken[variant].hover.selectedStateLayerColor};
       --m3e-state-layer-focus-color: ${IconButtonVariantToken[variant].focus.selectedStateLayerColor};
       --m3e-ripple-color: ${IconButtonVariantToken[variant].pressed.selectedStateLayerColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]:not(:disabled):not([disabled-interactive])) .base {
+    :host(${selector}:not(:disabled):not([disabled-interactive])) .base {
       outline-color: ${IconButtonVariantToken[variant].outlineColor ?? unsafeCSS("unset")};
     }
-    :host([variant="${unsafeCSS(variant)}"]:focus:not(:disabled):not([disabled-interactive])) .base {
+    :host(${selector}:focus:not(:disabled):not([disabled-interactive])) .base {
       outline-color: ${IconButtonVariantToken[variant].focus.outlineColor ?? unsafeCSS("unset")};
     }
-    :host([variant="${unsafeCSS(variant)}"]:hover:not(:disabled):not([disabled-interactive])) .base {
+    :host(${selector}:hover:not(:disabled):not([disabled-interactive])) .base {
       outline-color: ${IconButtonVariantToken[variant].hover.outlineColor ?? unsafeCSS("unset")};
     }
-    :host(
-        [variant="${unsafeCSS(variant)}"]:is(:state(--pressed), :--pressed):not(:disabled):not([disabled-interactive])
-      )
-      .base {
+    :host(${selector}:is(:state(--pressed), :--pressed):not(:disabled):not([disabled-interactive])) .base {
       outline-color: ${IconButtonVariantToken[variant].pressed.outlineColor ?? unsafeCSS("unset")};
     }
-    :host([variant="${unsafeCSS(variant)}"]:not(:disabled):not([disabled-interactive])) .icon {
+    :host(${selector}:not(:disabled):not([disabled-interactive])) .icon {
       color: ${IconButtonVariantToken[variant].iconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"][toggle]:not([selected]):not(:disabled):not([disabled-interactive])) .icon {
+    :host(${selector}[toggle]:not([selected]):not(:disabled):not([disabled-interactive])) .icon {
       color: ${IconButtonVariantToken[variant].unselectedIconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"][toggle][selected]:not(:disabled):not([disabled-interactive])) .icon {
+    :host(${selector}[toggle][selected]:not(:disabled):not([disabled-interactive])) .icon {
       color: ${IconButtonVariantToken[variant].selectedIconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]:focus:not(:disabled):not([disabled-interactive])) .icon {
+    :host(${selector}:focus:not(:disabled):not([disabled-interactive])) .icon {
       color: ${IconButtonVariantToken[variant].focus.iconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"][toggle]:not([selected]):focus:not(:disabled):not([disabled-interactive]))
-      .icon {
+    :host(${selector}[toggle]:not([selected]):focus:not(:disabled):not([disabled-interactive])) .icon {
       color: ${IconButtonVariantToken[variant].focus.unselectedIconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"][toggle][selected]:focus:not(:disabled):not([disabled-interactive])) .icon {
+    :host(${selector}[toggle][selected]:focus:not(:disabled):not([disabled-interactive])) .icon {
       color: ${IconButtonVariantToken[variant].focus.selectedIconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]:hover:not(:disabled):not([disabled-interactive])) .icon {
+    :host(${selector}:hover:not(:disabled):not([disabled-interactive])) .icon {
       color: ${IconButtonVariantToken[variant].hover.iconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"][toggle]:not([selected]):hover:not(:disabled):not([disabled-interactive]))
-      .icon {
+    :host(${selector}[toggle]:not([selected]):hover:not(:disabled):not([disabled-interactive])) .icon {
       color: ${IconButtonVariantToken[variant].hover.unselectedIconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"][toggle][selected]:hover:not(:disabled):not([disabled-interactive])) .icon {
+    :host(${selector}[toggle][selected]:hover:not(:disabled):not([disabled-interactive])) .icon {
       color: ${IconButtonVariantToken[variant].hover.selectedIconColor};
     }
-    :host(
-        [variant="${unsafeCSS(variant)}"]:is(:state(--pressed), :--pressed):not(:disabled):not([disabled-interactive])
-      )
-      .icon {
+    :host(${selector}:is(:state(--pressed), :--pressed):not(:disabled):not([disabled-interactive])) .icon {
       color: ${IconButtonVariantToken[variant].pressed.iconColor};
     }
     :host(
-        [variant="${unsafeCSS(variant)}"][toggle]:not([selected]):is(:state(--pressed), :--pressed):not(:disabled):not(
-            [disabled-interactive]
-          )
+        ${selector}[toggle]:not([selected]):is(:state(--pressed), :--pressed):not(:disabled):not([disabled-interactive])
       )
       .icon {
       color: ${IconButtonVariantToken[variant].pressed.unselectedIconColor};
     }
-    :host(
-        [variant="${unsafeCSS(variant)}"][toggle][selected]:is(:state(--pressed), :--pressed):not(:disabled):not(
-            [disabled-interactive]
-          )
-      )
+    :host(${selector}[toggle][selected]:is(:state(--pressed), :--pressed):not(:disabled):not([disabled-interactive]))
       .icon {
       color: ${IconButtonVariantToken[variant].pressed.selectedIconColor};
     }
-    :host([variant="${unsafeCSS(variant)}"]:disabled) .base,
-    :host([variant="${unsafeCSS(variant)}"][disabled-interactive]) .base {
+    :host(${selector}:disabled) .base,
+    :host(${selector}[disabled-interactive]) .base {
       outline-color: ${IconButtonVariantToken[variant].disabled.outlineColor ?? unsafeCSS("unset")};
       background-color: color-mix(
         in srgb,
@@ -108,8 +95,8 @@ function iconButtonVariantStyle(variant: IconButtonVariant | "elevated"): CSSRes
         transparent
       );
     }
-    :host([variant="${unsafeCSS(variant)}"]:disabled) .icon,
-    :host([variant="${unsafeCSS(variant)}"][disabled-interactive]) .icon {
+    :host(${selector}:disabled) .icon,
+    :host(${selector}[disabled-interactive]) .icon {
       color: color-mix(
         in srgb,
         ${IconButtonVariantToken[variant].disabled.iconColor} ${IconButtonVariantToken[variant].disabled.iconOpacity},

@@ -140,62 +140,62 @@ export const IconButtonStyle: CSSResultGroup = css`
     :host(:is(:state(--resting), :--resting)) .base {
       transition: border-radius ${DesignToken.motion.spring.fastEffects};
     }
-    :host([variant]:not(:disabled):not([disabled-interactive]):not([toggle])) .base {
-      background-color: ButtonFace;
-      outline-color: ButtonText;
+    :host(:not(:disabled):not([disabled-interactive]):not([toggle])) .base {
+      background-color: ButtonFace !important;
+      outline-color: ButtonText !important;
     }
-    :host([variant]:not(:disabled):not([disabled-interactive]):not([toggle])) .icon {
-      color: ButtonText;
+    :host(:not(:disabled):not([disabled-interactive]):not([toggle])) .icon {
+      color: ButtonText !important;
     }
-    :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .base {
-      background-color: ButtonFace;
-      outline-color: ButtonText;
+    :host(:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .base {
+      background-color: ButtonFace !important;
+      outline-color: ButtonText !important;
     }
-    :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .icon,
-    :host([variant]:hover:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .icon,
-    :host([variant]:not(:disabled):not([disabled-interactive])[toggle]:not([selected]):focus) .icon {
-      color: ButtonText;
+    :host(:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .icon,
+    :host(:hover:not(:disabled):not([disabled-interactive])[toggle]:not([selected])) .icon,
+    :host(:not(:disabled):not([disabled-interactive])[toggle]:not([selected]):focus) .icon {
+      color: ButtonText !important;
     }
-    :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]) .base {
-      background-color: ButtonText;
-      outline: none;
+    :host(:not(:disabled):not([disabled-interactive])[toggle][selected]) .base {
+      background-color: ButtonText !important;
+      outline: none !important;
     }
-    :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]) .icon,
-    :host([variant]:hover:not(:disabled):not([disabled-interactive])[toggle][selected]) .icon,
-    :host([variant]:not(:disabled):not([disabled-interactive])[toggle][selected]:focus) .icon {
+    :host(:not(:disabled):not([disabled-interactive])[toggle][selected]) .icon,
+    :host(:hover:not(:disabled):not([disabled-interactive])[toggle][selected]) .icon,
+    :host(:not(:disabled):not([disabled-interactive])[toggle][selected]:focus) .icon {
       forced-color-adjust: none;
-      color: ButtonFace;
-      background-color: ButtonText;
+      color: ButtonFace !important;
+      background-color: ButtonText !important;
     }
-    :host([variant]:disabled) .base,
-    :host([variant][disabled-interactive]) .base {
-      outline-color: GrayText;
-      background-color: unset;
+    :host(:disabled) .base,
+    :host([disabled-interactive]) .base {
+      outline-color: GrayText !important;
+      background-color: unset !important;
     }
-    :host([variant]:disabled) .icon,
-    :host([variant][disabled-interactive]) .icon {
-      color: GrayText;
+    :host(:disabled) .icon,
+    :host([disabled-interactive]) .icon {
+      color: GrayText !important;
     }
     .base {
       outline-style: solid;
     }
-    :host([size="extra-small"]) .base {
+    :host(:is(:state(--extra-small), :--extra-small)) .base {
       outline-offset: calc(0px - var(--m3e-icon-button-extra-small-outline-thickness, 1px));
       outline-width: var(--m3e-icon-button-extra-small-outline-thickness, 1px);
     }
-    :host([size="small"]) .base {
+    :host(:is(:state(--small), :--small)) .base {
       outline-offset: calc(0px - var(--m3e-icon-button-small-outline-thickness, 1px));
       outline-width: var(--m3e-icon-button-small-outline-thickness, 1px);
     }
-    :host([size="medium"]) .base {
+    :host(:is(:state(--medium), :--medium)) .base {
       outline-offset: calc(0px - var(--m3e-icon-button-medium-outline-thickness, 1px));
       outline-width: var(--m3e-icon-button-medium-outline-thickness, 1px);
     }
-    :host([size="large"]) .base {
+    :host(:is(:state(--large), :--large)) .base {
       outline-offset: calc(0px - var(--m3e-icon-button-large-outline-thickness, 2px));
       outline-width: var(--m3e-icon-button-large-outline-thickness, 2px);
     }
-    :host([size="extra-large"]) .base {
+    :host(:is(:state(--extra-large), :--extra-large)) .base {
       outline-offset: calc(0px - var(--m3e-icon-button-extra-large-outline-thickness, 3px));
       outline-width: var(--m3e-icon-button-extra-large-outline-thickness, 3px);
     }
