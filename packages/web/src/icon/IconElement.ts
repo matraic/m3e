@@ -1,12 +1,12 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { customElement, Role } from "@m3e/web/core";
+import { AttachInternals, customElement, Role, setCustomEnumState } from "@m3e/web/core";
 
 import { IconRegistry } from "./IconRegistry";
-import { IconVariant } from "./IconVariant";
-import { IconGrade } from "./IconGrade";
-import { IconWeight } from "./IconWeight";
+import { IconVariant, isIconVariant } from "./IconVariant";
+import { IconGrade, isIconGrade } from "./IconGrade";
+import { IconWeight, isIconWeight } from "./IconWeight";
 
 /**
  * A small symbol used to easily identify an action or category.
@@ -43,7 +43,7 @@ import { IconWeight } from "./IconWeight";
  * @attr weight - A value from 100 to 700 indicating the weight of the icon.
  */
 @customElement("m3e-icon")
-export class M3eIconElement extends Role(LitElement, "img") {
+export class M3eIconElement extends Role(AttachInternals(LitElement), "img") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -79,13 +79,13 @@ export class M3eIconElement extends Role(LitElement, "img") {
         "GRAD" var(--_icon-grade, 0),
         "opsz" var(--_icon-optical-size, 24);
     }
-    :host([variant="outlined"]) .icon {
+    :host(:is(:state(--outlined), :--outlined)) .icon {
       font-family: "Material Symbols Outlined";
     }
-    :host([variant="rounded"]) .icon {
+    :host(:is(:state(--rounded), :--rounded)) .icon {
       font-family: "Material Symbols Rounded";
     }
-    :host([variant="sharp"]) .icon {
+    :host(:is(:state(--sharp), :--sharp)) .icon {
       font-family: "Material Symbols Sharp";
     }
     svg {
@@ -106,7 +106,7 @@ export class M3eIconElement extends Role(LitElement, "img") {
    * The appearance variant of the icon.
    * @default "outlined"
    */
-  @property({ reflect: true }) variant: IconVariant = "outlined";
+  @property({ reflect: true, useDefault: true }) variant: IconVariant = "outlined";
 
   /**
    * Whether the icon is filled.
@@ -143,6 +143,10 @@ export class M3eIconElement extends Role(LitElement, "img") {
     }
 
     super.connectedCallback();
+
+    this.#applyVariant();
+    this.#applyGrade();
+    this.#applyWeight();
   }
 
   /** @inheritdoc */
@@ -169,16 +173,21 @@ export class M3eIconElement extends Role(LitElement, "img") {
   protected override updated(_changedProperties: PropertyValues<this>): void {
     super.updated(_changedProperties);
 
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
     if (_changedProperties.has("filled")) {
       this._icon?.style.setProperty("--_icon-fill", this.filled ? "1" : "0");
     }
     if (_changedProperties.has("grade")) {
+      this.#applyGrade();
       this._icon?.style.setProperty(
         "--_icon-grade",
         this.grade === "low" ? "-25" : this.grade === "high" ? "200" : "0",
       );
     }
     if (_changedProperties.has("weight")) {
+      this.#applyWeight();
       this._icon?.style.setProperty("--_icon-weight", `${this.weight}`);
     }
     if (_changedProperties.has("opticalSize")) {
@@ -191,6 +200,28 @@ export class M3eIconElement extends Role(LitElement, "img") {
     return IconRegistry.isIconRegistered(this.name, this.variant)
       ? IconRegistry.renderIcon(this.name, this.variant, this.filled)
       : html`<div class="icon" aria-hidden="true" translate="no">${this.name}</div>`;
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isIconVariant(this.variant)) {
+      this.variant = "outlined";
+    }
+    setCustomEnumState(this, this.variant, "outlined", "rounded", "sharp");
+  }
+
+  /** @private */
+  #applyGrade(): void {
+    if (!isIconGrade(this.grade)) {
+      this.grade = "medium";
+    }
+  }
+
+  /** @private */
+  #applyWeight(): void {
+    if (!isIconWeight(this.weight)) {
+      this.weight = 400;
+    }
   }
 }
 
