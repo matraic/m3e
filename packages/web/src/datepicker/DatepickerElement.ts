@@ -30,7 +30,7 @@ import "@m3e/web/core/a11y";
 import "@m3e/web/button";
 import "@m3e/web/calendar";
 
-import { DatepickerVariant } from "./DatepickerVariant";
+import { DatepickerVariant, isDatepickerVariant } from "./DatepickerVariant";
 
 /**
  * Presents a date picker on a temporary surface.
@@ -670,6 +670,9 @@ export class M3eDatepickerElement extends HtmlFor(
       this.date = new Date(this.rangeEnd);
     }
     if (changedProperties.has("variant")) {
+      if (!isDatepickerVariant(this.variant)) {
+        this.variant = "docked";
+      }
       this.#breakpointUnobserve?.();
 
       if (this.variant === "auto") {
