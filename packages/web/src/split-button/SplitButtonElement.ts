@@ -1,13 +1,22 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { customElement, DesignToken, HoverController, PressedController, Role } from "@m3e/web/core";
-import { M3eButtonElement, ButtonSize } from "@m3e/web/button";
+import {
+  AttachInternals,
+  customElement,
+  DesignToken,
+  HoverController,
+  PressedController,
+  Role,
+  setCustomEnumState,
+} from "@m3e/web/core";
+
+import { M3eButtonElement, ButtonSize, isButtonSize } from "@m3e/web/button";
 import { M3eIconButtonElement } from "@m3e/web/icon-button";
 
 import "@m3e/web/button-group";
 
-import { SplitButtonVariant } from "./SplitButtonVariant";
+import { isSplitButtonVariant, SplitButtonVariant } from "./SplitButtonVariant";
 
 /**
  * A button used to show an action with a menu of related actions.
@@ -85,7 +94,7 @@ import { SplitButtonVariant } from "./SplitButtonVariant";
  * @cssprop --m3e-split-button-extra-large-between-spacing - Spacing between leading and trailing buttons (extra-large).
  */
 @customElement("m3e-split-button")
-export class M3eSplitButtonElement extends Role(LitElement, "group") {
+export class M3eSplitButtonElement extends Role(AttachInternals(LitElement), "group") {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -304,19 +313,19 @@ export class M3eSplitButtonElement extends Role(LitElement, "group") {
       --m3e-icon-button-extra-large-icon-size: var(--m3e-spit-button-extra-large-trailing-button-icon-size, 50px);
       --m3e-button-extra-large-icon-size: var(--m3e-spit-button-extra-large-trailing-button-icon-size, 50px);
     }
-    :host([size="extra-small"]) .base {
+    :host(:is(:state(--extra-small), :--extra-small)) .base {
       --m3e-connected-button-group-spacing: var(--m3e-split-button-extra-small-between-spacing, 2px);
     }
-    :host([size="small"]) .base {
+    :host(:is(:state(--small), :--small)) .base {
       --m3e-connected-button-group-spacing: var(--m3e-split-button-small-between-spacing, 2px);
     }
-    :host([size="medium"]).base {
+    :host(:is(:state(--medium), :--medium)).base {
       --m3e-connected-button-group-spacing: var(--m3e-split-button-medium-between-spacing, 2px);
     }
-    :host([size="large"]) .base {
+    :host(:is(:state(--large), :--large)) .base {
       --m3e-connected-button-group-spacing: var(--m3e-split-button-large-between-spacing, 2px);
     }
-    :host([size="extra-large"]) .base {
+    :host(:is(:state(--extra-large), :--extra-large)) .base {
       --m3e-connected-button-group-spacing: var(--m3e-split-button-extra-large-between-spacing, 2px);
     }
   `;
@@ -362,13 +371,32 @@ export class M3eSplitButtonElement extends Role(LitElement, "group") {
    * The appearance variant of the button.
    * @default "filled"
    */
-  @property({ reflect: true }) variant: SplitButtonVariant = "filled";
+  @property({ reflect: true, useDefault: true }) variant: SplitButtonVariant = "filled";
 
   /**
    * The size of the button.
    * @default "small"
    */
-  @property({ reflect: true }) size: ButtonSize = "small";
+  @property({ reflect: true, useDefault: true }) size: ButtonSize = "small";
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#applyVariant();
+    this.#applySize();
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
+    if (_changedProperties.has("size")) {
+      this.#applySize();
+    }
+  }
 
   /** @inheritdoc */
   protected override update(changedProperties: PropertyValues<this>): void {
@@ -380,11 +408,35 @@ export class M3eSplitButtonElement extends Role(LitElement, "group") {
   }
 
   /** @inheritdoc */
+  protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(_changedProperties);
+
+    if (!_changedProperties.has("variant")) {
+      this.#updateButtons();
+    }
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     return html`<m3e-button-group class="base" disable-role variant="connected" size="${this.size}">
       <slot name="leading-button" @slotchange=${this.#handleLeadingSlotChange}></slot>
       <slot name="trailing-button" @slotchange=${this.#handleTrailingSlotChange}></slot>
     </m3e-button-group>`;
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isSplitButtonVariant(this.variant)) {
+      this.variant = "filled";
+    }
+  }
+
+  /** @private */
+  #applySize(): void {
+    if (!isButtonSize(this.size)) {
+      this.size = "small";
+    }
+    setCustomEnumState(this, this.size, "extra-large", "extra-small", "large", "medium", "small");
   }
 
   /** @private */

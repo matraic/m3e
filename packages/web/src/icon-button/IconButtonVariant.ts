@@ -1,5 +1,5 @@
 /** Specifies the possible appearance variants of an icon button. */
-export type IconButtonVariant = "filled" | "tonal" | "outlined" | "standard";
+export type IconButtonVariant = "filled" | "tonal" | "outlined" | "elevated" | "standard";
 
 /**
  * Determines whether a value is an `IconButtonVariant`.
@@ -7,5 +7,7 @@ export type IconButtonVariant = "filled" | "tonal" | "outlined" | "standard";
  * @returns Whether `value` is an `IconButtonVariant`.
  */
 export function isIconButtonVariant(value: unknown): value is IconButtonVariant {
-  return value === "filled" || value === "tonal" || value === "outlined" || value === "standard";
+  return (
+    value === "filled" || value === "tonal" || value === "outlined" || value === "elevated" || value === "standard"
+  );
 }

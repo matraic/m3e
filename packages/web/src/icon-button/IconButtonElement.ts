@@ -531,7 +531,7 @@ export class M3eIconButtonElement extends KeyboardClick(
     if (!isIconButtonVariant(this.variant)) {
       this.variant = "standard";
     }
-    setCustomEnumState(this, this.variant, "filled", "outlined", "standard", "tonal");
+    setCustomEnumState(this, this.variant, "elevated", "filled", "outlined", "standard", "tonal");
   }
 
   /** @private */
