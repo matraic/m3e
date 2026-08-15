@@ -1,12 +1,12 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, DesignToken, Role, Vertical } from "@m3e/web/core";
+import { AttachInternals, customElement, DesignToken, Role, setCustomEnumState, Vertical } from "@m3e/web/core";
 import { RovingTabIndexManager, M3eInteractivityChecker } from "@m3e/web/core/a11y";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
-import { ToolbarVariant } from "./ToolbarVariant";
-import { ToolbarShape } from "./ToolbarShape";
+import { isToolbarVariant, ToolbarVariant } from "./ToolbarVariant";
+import { isToolbarShape, ToolbarShape } from "./ToolbarShape";
 
 /**
  * Presents frequently used actions relevant to the current page.
@@ -65,7 +65,7 @@ import { ToolbarShape } from "./ToolbarShape";
  * @cssprop --m3e-toolbar-vibrant-color - Foreground color for the vibrant variant.
  */
 @customElement("m3e-toolbar")
-export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
+export class M3eToolbarElement extends Vertical(Role(AttachInternals(LitElement), "toolbar")) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -101,13 +101,13 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
       justify-content: center;
       row-gap: var(--m3e-toolbar-spacing, ${DesignToken.measurement.space50});
     }
-    :host([shape="rounded"]) {
+    :host(:is(:state(--rounded), :--rounded)) {
       border-radius: var(--m3e-toolbar-rounded-shape, ${DesignToken.shape.corner.full});
     }
-    :host([shape="rounded"]) .base {
+    :host(:is(:state(--rounded), :--rounded)) .base {
       padding: var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100});
     }
-    :host(:not([vertical])[shape="rounded"]) .base {
+    :host(:not([vertical]):is(:state(--rounded), :--rounded)) .base {
       padding-inline-start: var(
         --m3e-toolbar-rounded-leading-space,
         var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
@@ -125,7 +125,7 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
         var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
       );
     }
-    :host([vertical][shape="rounded"]) .base {
+    :host([vertical]:is(:state(--rounded), :--rounded)) .base {
       padding-block-start: var(
         --m3e-toolbar-rounded-leading-space,
         var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
@@ -143,7 +143,7 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
         var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
       );
     }
-    :host(:not([vertical])[shape="square"]) .base {
+    :host(:not([vertical]):is(:state(--square), :--square)) .base {
       padding-inline-start: var(
         --m3e-toolbar-square-leading-space,
         var(--m3e-toolbar-square-padding, ${DesignToken.measurement.space200})
@@ -155,7 +155,7 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
       padding-block-start: var(--m3e-toolbar-square-top-space, ${DesignToken.measurement.space100});
       padding-block-end: var(--m3e-toolbar-square-bottom-space, ${DesignToken.measurement.space100});
     }
-    :host([vertical][shape="square"]) .base {
+    :host([vertical]:is(:state(--square), :--square)) .base {
       padding-block-start: var(
         --m3e-toolbar-square-leading-space,
         var(--m3e-toolbar-square-padding, ${DesignToken.measurement.space200})
@@ -167,16 +167,16 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
       padding-inline-start: var(--m3e-toolbar-square-top-space, ${DesignToken.measurement.space100});
       padding-inline-end: var(--m3e-toolbar-square-bottom-space, ${DesignToken.measurement.space100});
     }
-    :host([variant="standard"]) .state-layer {
+    :host(:is(:state(--standard), :--standard)) .state-layer {
       background-color: var(--m3e-toolbar-standard-container-color, ${DesignToken.color.surfaceContainer});
     }
-    :host([variant="standard"]) .base {
+    :host(:is(:state(--standard), :--standard)) .base {
       color: var(--m3e-toolbar-standard-color, ${DesignToken.color.onSurface});
     }
-    :host([variant="vibrant"]) .state-layer {
+    :host(:is(:state(--vibrant), :--vibrant)) .state-layer {
       background-color: var(--m3e-toolbar-vibrant-container-color, ${DesignToken.color.primaryContainer});
     }
-    :host([variant="vibrant"]) .base {
+    :host(:is(:state(--vibrant), :--vibrant)) .base {
       color: var(--m3e-toolbar-vibrant-color, ${DesignToken.color.onPrimaryContainer});
     }
     @media (forced-colors: active) {
@@ -199,13 +199,13 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
    * The appearance variant of the toolbar.
    * @default "standard"
    */
-  @property({ reflect: true }) variant: ToolbarVariant = "standard";
+  @property({ reflect: true, useDefault: true }) variant: ToolbarVariant = "standard";
 
   /**
    * The shape of the toolbar.
    * @default "square"
    */
-  @property({ reflect: true }) shape: ToolbarShape = "square";
+  @property({ reflect: true, useDefault: true }) shape: ToolbarShape = "square";
 
   /**
    * Whether the toolbar is elevated.
@@ -217,6 +217,9 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
   override connectedCallback(): void {
     super.connectedCallback();
 
+    this.#applyVariant();
+    this.#applyShape();
+
     this.#directionalitySubscription = M3eDirectionality.observe(
       () => (this.#focusKeyManager.directionality = M3eDirectionality.current),
     );
@@ -226,6 +229,18 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.#directionalitySubscription?.();
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("shape")) {
+      this.#applyShape();
+    }
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
   }
 
   /** @inheritdoc */
@@ -244,6 +259,22 @@ export class M3eToolbarElement extends Vertical(Role(LitElement, "toolbar")) {
       <div class="base">
         <slot @click=${this.#handleClick} @keydown=${this.#handleKeyDown} @slotchange=${this.#handleSlotChange}></slot>
       </div>`;
+  }
+
+  /** @private */
+  #applyShape(): void {
+    if (!isToolbarShape(this.shape)) {
+      this.shape = "square";
+    }
+    setCustomEnumState(this, this.shape, "rounded", "square");
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isToolbarVariant(this.variant)) {
+      this.variant = "standard";
+    }
+    setCustomEnumState(this, this.variant, "standard", "vibrant");
   }
 
   /** @private */
