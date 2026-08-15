@@ -70,16 +70,16 @@ export const ExpansionHeaderStyle = css`
     transition: ${unsafeCSS(`transform var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
         ${DesignToken.motion.easing.standard}`)};
   }
-  :host([toggle-direction="vertical"][aria-expanded="true"]) .toggle {
+  :host(:is(:state(--vertical), :--vertical)[aria-expanded="true"]) .toggle {
     transform: rotate(180deg);
   }
-  :host([toggle-direction="horizontal"][aria-expanded="true"]) .toggle {
+  :host(:is(:state(--horizontal), :--horizontal)[aria-expanded="true"]) .toggle {
     transform: rotate(var(--_expansion-header-horizontal-expanded-toggle-rotation, 90deg));
   }
-  :host([toggle-position="before"]) .toggle {
+  :host(:is(:state(--before), :--before)) .toggle {
     margin-inline-start: calc(0px - ${ExpansionHeaderToken.spacing});
   }
-  :host([toggle-position="after"]) .toggle {
+  :host(:is(:state(--after), :--after)) .toggle {
     margin-inline-end: calc(0px - ${ExpansionHeaderToken.spacing});
   }
   :host([hide-toggle]) .toggle {

@@ -10,10 +10,11 @@ import {
   M3eFocusRingElement,
   M3eStateLayerElement,
   Role,
+  setCustomEnumState,
 } from "@m3e/web/core";
 
-import { ExpansionTogglePosition } from "./ExpansionTogglePosition";
-import { ExpansionToggleDirection } from "./ExpansionToggleDirection";
+import { ExpansionTogglePosition, isExpansionTogglePosition } from "./ExpansionTogglePosition";
+import { ExpansionToggleDirection, isExpansionToggleDirection } from "./ExpansionToggleDirection";
 
 import { ExpansionHeaderStyle } from "./styles";
 
@@ -56,19 +57,41 @@ export class M3eExpansionHeaderElement extends KeyboardClick(
    * The direction of the expansion toggle.
    * @default "vertical"
    */
-  @property({ attribute: "toggle-direction", reflect: true }) toggleDirection: ExpansionToggleDirection = "vertical";
+  @property({ attribute: "toggle-direction", reflect: true, useDefault: true })
+  toggleDirection: ExpansionToggleDirection = "vertical";
 
   /**
    * The position of the expansion toggle.
    * @default "after"
    */
-  @property({ attribute: "toggle-position", reflect: true }) togglePosition: ExpansionTogglePosition = "after";
+  @property({ attribute: "toggle-position", reflect: true, useDefault: true }) togglePosition: ExpansionTogglePosition =
+    "after";
 
   /**
    * Whether to hide the expansion toggle.
    * @default false
    */
   @property({ attribute: "hide-toggle", type: Boolean, reflect: true }) hideToggle = false;
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    this.#applyToggleDirection();
+    this.#applyTogglePosition();
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("togglePosition")) {
+      this.#applyTogglePosition();
+    }
+    if (_changedProperties.has("toggleDirection")) {
+      this.#applyToggleDirection();
+    }
+  }
 
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
@@ -87,6 +110,22 @@ export class M3eExpansionHeaderElement extends KeyboardClick(
       </div>
       ${this.togglePosition === "after" ? this.#renderToggle() : nothing}
     </div>`;
+  }
+
+  /** @private */
+  #applyTogglePosition(): void {
+    if (!isExpansionTogglePosition(this.togglePosition)) {
+      this.togglePosition = "after";
+    }
+    setCustomEnumState(this, this.togglePosition, "after", "before");
+  }
+
+  /** @private */
+  #applyToggleDirection(): void {
+    if (!isExpansionToggleDirection(this.toggleDirection)) {
+      this.toggleDirection = "vertical";
+    }
+    setCustomEnumState(this, this.toggleDirection, "horizontal", "vertical");
   }
 
   /** @private */

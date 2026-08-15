@@ -14,8 +14,8 @@ import {
 
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
-import { ExpansionTogglePosition } from "./ExpansionTogglePosition";
-import { ExpansionToggleDirection } from "./ExpansionToggleDirection";
+import { ExpansionTogglePosition, isExpansionTogglePosition } from "./ExpansionTogglePosition";
+import { ExpansionToggleDirection, isExpansionToggleDirection } from "./ExpansionToggleDirection";
 
 import { ExpansionPanelStyle } from "./styles";
 import { M3eExpansionHeaderElement } from "./ExpansionHeaderElement";
@@ -111,13 +111,15 @@ export class M3eExpansionPanelElement extends Disabled(ReconnectedCallback(Attac
    * The direction of the expansion toggle.
    * @default "vertical"
    */
-  @property({ attribute: "toggle-direction", reflect: true }) toggleDirection: ExpansionToggleDirection = "vertical";
+  @property({ attribute: "toggle-direction", reflect: true, useDefault: true })
+  toggleDirection: ExpansionToggleDirection = "vertical";
 
   /**
    * The position of the expansion toggle.
    * @default "after"
    */
-  @property({ attribute: "toggle-position", reflect: true }) togglePosition: ExpansionTogglePosition = "after";
+  @property({ attribute: "toggle-position", reflect: true, useDefault: true }) togglePosition: ExpansionTogglePosition =
+    "after";
 
   /**
    * Whether to hide the expansion toggle.
@@ -143,6 +145,10 @@ export class M3eExpansionPanelElement extends Disabled(ReconnectedCallback(Attac
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
+
+    this.#applyToggleDirection();
+    this.#applyTogglePosition();
+
     this.#directionalitySubscription = M3eDirectionality.observe(() => {
       this.requestUpdate();
       this.#updateHeaderToggleRotation();
@@ -165,6 +171,18 @@ export class M3eExpansionPanelElement extends Disabled(ReconnectedCallback(Attac
   override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
     this.#updateHeaderToggleRotation();
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("togglePosition")) {
+      this.#applyTogglePosition();
+    }
+    if (_changedProperties.has("toggleDirection")) {
+      this.#applyToggleDirection();
+    }
   }
 
   /** @inheritdoc */
@@ -204,6 +222,20 @@ export class M3eExpansionPanelElement extends Disabled(ReconnectedCallback(Attac
         </div>
       </m3e-collapsible>
     </div>`;
+  }
+
+  /** @private */
+  #applyTogglePosition(): void {
+    if (!isExpansionTogglePosition(this.togglePosition)) {
+      this.togglePosition = "after";
+    }
+  }
+
+  /** @private */
+  #applyToggleDirection(): void {
+    if (!isExpansionToggleDirection(this.toggleDirection)) {
+      this.toggleDirection = "vertical";
+    }
   }
 
   /** @private */
