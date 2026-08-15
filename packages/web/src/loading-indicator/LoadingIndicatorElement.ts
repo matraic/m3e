@@ -1,9 +1,16 @@
 import { LitElement, html, css, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { customElement, DesignToken, ReconnectedCallback, Role } from "@m3e/web/core";
+import {
+  AttachInternals,
+  customElement,
+  DesignToken,
+  ReconnectedCallback,
+  Role,
+  setCustomEnumState,
+} from "@m3e/web/core";
 
-import { LoadingIndicatorVariant } from "./LoadingIndicatorVariant";
+import { isLoadingIndicatorVariant, LoadingIndicatorVariant } from "./LoadingIndicatorVariant";
 import { LoadingIndicatorToken } from "./LoadingIndicatorToken";
 import { ShapePolygon } from "./ShapePolygon";
 
@@ -35,7 +42,7 @@ import { ShapePolygon } from "./ShapePolygon";
  * @cssprop --m3e-loading-indicator-container-size - Container size.
  */
 @customElement("m3e-loading-indicator")
-export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(LitElement, "progressbar")) {
+export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(AttachInternals(LitElement), "progressbar")) {
   /** The styles of the element. */
   static override styles = css`
     :host {
@@ -48,19 +55,19 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(LitElem
     :host([hidden]) {
       display: none;
     }
-    :host([variant="uncontained"]) {
+    :host(:is(:state(--uncontained), :--uncontained)) {
       width: ${LoadingIndicatorToken.activeIndicatorSize};
     }
-    :host([variant="contained"]) {
+    :host(:is(:state(--contained), :--contained)) {
       width: ${LoadingIndicatorToken.containerSize};
     }
-    :host([variant="uncontained"]) .active-indicator {
+    :host(:is(:state(--uncontained), :--uncontained)) .active-indicator {
       background-color: ${LoadingIndicatorToken.activeIndicatorColor};
     }
-    :host([variant="contained"]) .active-indicator {
+    :host(:is(:state(--contained), :--contained)) .active-indicator {
       background-color: ${LoadingIndicatorToken.containedActiveIndicatorColor};
     }
-    :host([variant="contained"]) .container {
+    :host(:is(:state(--contained), :--contained)) .container {
       background-color: ${LoadingIndicatorToken.containedContainerColor};
     }
     .container {
@@ -154,12 +161,13 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(LitElem
    * The appearance variant of the indicator.
    * @default "uncontained"
    */
-  @property({ reflect: true }) variant: LoadingIndicatorVariant = "uncontained";
+  @property({ reflect: true, useDefault: true }) variant: LoadingIndicatorVariant = "uncontained";
 
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
 
+    this.#applyVariant();
     this.ariaValueMin = this.ariaValueMin || "0";
     this.ariaValueMax = this.ariaValueMax || "100";
   }
@@ -177,6 +185,15 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(LitElem
   }
 
   /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
+  }
+
+  /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
     this._container?.classList.toggle("animate", true);
@@ -189,6 +206,14 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(LitElem
         <div class="active-indicator"></div>
       </div>
     </div>`;
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isLoadingIndicatorVariant(this.variant)) {
+      this.variant = "uncontained";
+    }
+    setCustomEnumState(this, this.variant, "contained", "uncontained");
   }
 }
 
