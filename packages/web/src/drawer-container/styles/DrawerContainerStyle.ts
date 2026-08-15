@@ -18,6 +18,9 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   :host([hidden]) {
     display: none;
   }
+  .base {
+    display: contents;
+  }
   .start,
   .end {
     contain: layout style;

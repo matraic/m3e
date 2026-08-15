@@ -17,7 +17,7 @@ import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
 import { SupportsDirectionality } from "@m3e/web/core/bidi";
 import "@m3e/web/core/a11y";
 
-import { DrawerMode } from "./DrawerMode";
+import { DrawerMode, isDrawerMode } from "./DrawerMode";
 
 import { DrawerContainerStyle } from "./styles";
 
@@ -102,7 +102,7 @@ export class M3eDrawerContainerElement extends SupportsDirectionality(
    * The behavior mode of the start drawer.
    * @default "side"
    */
-  @property({ attribute: "start-mode", reflect: true }) startMode: DrawerMode = "side";
+  @property({ attribute: "start-mode", reflect: true, useDefault: true }) startMode: DrawerMode = "side";
 
   /**
    * Whether to show a divider between the start drawer and content for `side` mode.
@@ -120,7 +120,7 @@ export class M3eDrawerContainerElement extends SupportsDirectionality(
    * The behavior mode of the end drawer.
    * @default "side"
    */
-  @property({ attribute: "end-mode", reflect: true }) endMode: DrawerMode = "side";
+  @property({ attribute: "end-mode", reflect: true, useDefault: true }) endMode: DrawerMode = "side";
 
   /**
    * Whether to show a divider between the end drawer and content for `side` mode.
@@ -145,6 +145,14 @@ export class M3eDrawerContainerElement extends SupportsDirectionality(
   /** @inheritdoc */
   protected override willUpdate(changedProperties: PropertyValues<this>): void {
     super.willUpdate(changedProperties);
+
+    if (changedProperties.has("startMode") && !isDrawerMode(this.startMode)) {
+      this.startMode = "side";
+    }
+
+    if (changedProperties.has("endMode") && !isDrawerMode(this.endMode)) {
+      this.endMode = "side";
+    }
 
     if (changedProperties.has("startMode") || changedProperties.has("endMode")) {
       this.#breakpointUnobserve?.();
@@ -180,12 +188,16 @@ export class M3eDrawerContainerElement extends SupportsDirectionality(
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
+    if (this.startMode === "side" && this.endMode === "side") {
+      this.#updateMode();
+    }
     this.#initialize();
   }
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="start">
+    return html`<div class="base">
+      <div class="start">
         <m3e-focus-trap ?disabled="${!this.start || this._startMode === "side" || this.#disableStartFocusTrap}">
           <slot name="start" @slotchange=${this.#handleStartSlotChange}></slot>
         </m3e-focus-trap>
@@ -201,7 +213,8 @@ export class M3eDrawerContainerElement extends SupportsDirectionality(
         <m3e-focus-trap ?disabled="${!this.end || this._endMode === "side" || this.#disableEndFocusTrap}">
           <slot name="end" @slotchange=${this.#handleEndSlotChange}></slot>
         </m3e-focus-trap>
-      </div>`;
+      </div>
+    </div>`;
   }
 
   /** @private */
@@ -235,15 +248,18 @@ export class M3eDrawerContainerElement extends SupportsDirectionality(
 
   /** @private */
   #handleDrawerResize(entries: ResizeObserverEntry[]): void {
-    for (const entry of entries) {
-      const borderSize: ResizeObserverSize = Array.isArray(entry.borderBoxSize)
-        ? entry.borderBoxSize[0]
-        : entry.borderBoxSize;
+    const base = this.shadowRoot?.querySelector<HTMLElement>(".base");
+    if (base) {
+      for (const entry of entries) {
+        const borderSize: ResizeObserverSize = Array.isArray(entry.borderBoxSize)
+          ? entry.borderBoxSize[0]
+          : entry.borderBoxSize;
 
-      if (entry.target.classList.contains("start")) {
-        this.style.setProperty("--_start-drawer-size", `${borderSize.inlineSize}px`);
-      } else if (entry.target.classList.contains("end")) {
-        this.style.setProperty("--_end-drawer-size", `${borderSize.inlineSize}px`);
+        if (entry.target.classList.contains("start")) {
+          base.style.setProperty("--_start-drawer-size", `${borderSize.inlineSize}px`);
+        } else if (entry.target.classList.contains("end")) {
+          base.style.setProperty("--_end-drawer-size", `${borderSize.inlineSize}px`);
+        }
       }
     }
 
