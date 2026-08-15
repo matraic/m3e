@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { css, CSSResultGroup, html, LitElement, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
 import {
@@ -14,6 +14,7 @@ import {
   SuppressInitialAnimation,
   registerStyleSheet,
   ClickOutsideController,
+  setCustomEnumState,
 } from "@m3e/web/core";
 
 import { RovingTabIndexManager } from "@m3e/web/core/a11y";
@@ -21,9 +22,9 @@ import { positionAnchor } from "@m3e/web/core/anchoring";
 import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
 
 import { M3eMenuItemElement } from "./MenuItemElement";
-import { MenuPositionX, MenuPositionY } from "./MenuPosition";
+import { isMenuPositionX, MenuPositionX, MenuPositionY } from "./MenuPosition";
 import { MenuItemElementBase } from "./MenuItemElementBase";
-import { MenuVariant } from "./MenuVariant";
+import { isMenuVariant, MenuVariant } from "./MenuVariant";
 
 /**
  * Presents a list of choices on a temporary surface.
@@ -208,7 +209,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
     :host(:is(:state(--shift-up), :--shift-up)) {
       margin-top: var(--m3e-menu-container-padding-block, ${DesignToken.measurement.space50});
     }
-    :host([variant="vibrant"]) {
+    :host(:is(:state(--vibrant), :--vibrant)) {
       background-color: var(--m3e-vibrant-menu-container-color, ${DesignToken.color.tertiaryContainer});
       --m3e-menu-item-color: var(--m3e-vibrant-menu-item-color, ${DesignToken.color.onTertiaryContainer});
       --m3e-menu-item-container-hover-color: var(
@@ -229,7 +230,6 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
         --m3e-vibrant-menu-item-selected-container-color,
         ${DesignToken.color.tertiary}
       );
-
       --m3e-menu-item-selected-container-hover-color: var(
         --m3e-vibrant-menu-item-selected-container-hover-color,
         ${DesignToken.color.onTertiary}
@@ -247,7 +247,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
         ${DesignToken.color.onTertiaryContainer}
       );
     }
-    :host([variant="standard"]) {
+    :host(:is(:state(--standard), :--standard)) {
       background-color: var(--m3e-menu-container-color, ${DesignToken.color.surfaceContainer});
     }
     @starting-style {
@@ -336,7 +336,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
    * The appearance variant of the menu.
    * @default "standard"
    */
-  @property({ reflect: true }) variant: MenuVariant = "standard";
+  @property({ reflect: true, useDefault: true }) variant: MenuVariant = "standard";
 
   /** The items of the menu. */
   get items(): ReadonlyArray<MenuItemElementBase> {
@@ -354,6 +354,9 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
+
+    this.#applyVariant();
+    this.#applyPosition();
 
     this.tabIndex = -1;
     this.setAttribute("popover", "manual");
@@ -505,8 +508,38 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
   }
 
   /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
+    if (_changedProperties.has("positionX") || _changedProperties.has("positionY")) {
+      this.#applyPosition();
+    }
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base"><slot @slotchange=${this.#handleSlotChange}></slot></div>`;
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isMenuVariant(this.variant)) {
+      this.variant = "standard";
+    }
+    setCustomEnumState(this, this.variant, "standard", "vibrant");
+  }
+
+  /** @private */
+  #applyPosition(): void {
+    if (!isMenuPositionX(this.positionX)) {
+      this.positionX = "after";
+    }
+    if (!isMenuPositionX(this.positionY)) {
+      this.positionY = "below";
+    }
   }
 
   /** @private */
