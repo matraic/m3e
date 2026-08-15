@@ -1,11 +1,11 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, DesignToken } from "@m3e/web/core";
+import { AttachInternals, customElement, DesignToken, setCustomEnumState } from "@m3e/web/core";
 
 import { HeadingLevel } from "./HeadingLevel";
-import { HeadingSize } from "./HeadingSize";
-import { HeadingVariant } from "./HeadingVariant";
+import { HeadingSize, isHeadingSize } from "./HeadingSize";
+import { HeadingVariant, isHeadingVariant } from "./HeadingVariant";
 
 /**
  * A heading to a page or section.
@@ -146,7 +146,7 @@ import { HeadingVariant } from "./HeadingVariant";
  * @cssprop --md-sys-typescale-emphasized-label-small-line-height - Line height for emphasized Label Small text
  */
 @customElement("m3e-heading")
-export class M3eHeadingElement extends LitElement {
+export class M3eHeadingElement extends AttachInternals(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -155,145 +155,145 @@ export class M3eHeadingElement extends LitElement {
     :host([hidden]) {
       display: none;
     }
-    :host([variant="display"][size="large"]:not([emphasized])) {
+    :host(:is(:state(--display), :--display):is(:state(--large), :--large):not([emphasized])) {
       font-size: ${DesignToken.typescale.standard.display.large.fontSize};
       font-weight: ${DesignToken.typescale.standard.display.large.fontWeight};
       line-height: ${DesignToken.typescale.standard.display.large.lineHeight};
       letter-spacing: ${DesignToken.typescale.standard.display.large.tracking};
     }
-    :host([variant="display"][size="medium"]:not([emphasized])) {
+    :host(:is(:state(--display), :--display):is(:state(--medium), :--medium):not([emphasized])) {
       font-size: ${DesignToken.typescale.standard.display.medium.fontSize};
       font-weight: ${DesignToken.typescale.standard.display.medium.fontWeight};
       line-height: ${DesignToken.typescale.standard.display.medium.lineHeight};
       letter-spacing: ${DesignToken.typescale.standard.display.medium.tracking};
     }
-    :host([variant="display"][size="small"]:not([emphasized])) {
+    :host(:is(:state(--display), :--display):is(:state(--small), :--small):not([emphasized])) {
       font-size: ${DesignToken.typescale.standard.display.small.fontSize};
       font-weight: ${DesignToken.typescale.standard.display.small.fontWeight};
       line-height: ${DesignToken.typescale.standard.display.small.lineHeight};
       letter-spacing: ${DesignToken.typescale.standard.display.small.tracking};
     }
-    :host([variant="headline"][size="large"]:not([emphasized])) {
+    :host(:is(:state(--headline), :--headline):is(:state(--large), :--large):not([emphasized])) {
       font-size: ${DesignToken.typescale.standard.headline.large.fontSize};
       font-weight: ${DesignToken.typescale.standard.headline.large.fontWeight};
       line-height: ${DesignToken.typescale.standard.headline.large.lineHeight};
       letter-spacing: ${DesignToken.typescale.standard.headline.large.tracking};
     }
-    :host([variant="headline"][size="medium"]:not([emphasized])) {
+    :host(:is(:state(--headline), :--headline):is(:state(--medium), :--medium):not([emphasized])) {
       font-size: ${DesignToken.typescale.standard.headline.medium.fontSize};
       font-weight: ${DesignToken.typescale.standard.headline.medium.fontWeight};
       line-height: ${DesignToken.typescale.standard.headline.medium.lineHeight};
       letter-spacing: ${DesignToken.typescale.standard.headline.medium.tracking};
     }
-    :host([variant="headline"][size="small"]:not([emphasized])) {
+    :host(:is(:state(--headline), :--headline):is(:state(--small), :--small):not([emphasized])) {
       font-size: ${DesignToken.typescale.standard.headline.small.fontSize};
       font-weight: ${DesignToken.typescale.standard.headline.small.fontWeight};
       line-height: ${DesignToken.typescale.standard.headline.small.lineHeight};
       letter-spacing: ${DesignToken.typescale.standard.headline.small.tracking};
     }
-    :host([variant="title"][size="large"]:not([emphasized])) {
+    :host(:is(:state(--title), :--title):is(:state(--large), :--large):not([emphasized])) {
       font-size: ${DesignToken.typescale.standard.title.large.fontSize};
       font-weight: ${DesignToken.typescale.standard.title.large.fontWeight};
       line-height: ${DesignToken.typescale.standard.title.large.lineHeight};
       letter-spacing: ${DesignToken.typescale.standard.title.large.tracking};
     }
-    :host([variant="title"][size="medium"]:not([emphasized])) {
+    :host(:is(:state(--title), :--title):is(:state(--medium), :--medium):not([emphasized])) {
       font-size: ${DesignToken.typescale.standard.title.medium.fontSize};
       font-weight: ${DesignToken.typescale.standard.title.medium.fontWeight};
       line-height: ${DesignToken.typescale.standard.title.medium.lineHeight};
       letter-spacing: ${DesignToken.typescale.standard.title.medium.tracking};
     }
-    :host([variant="title"][size="small"]:not([emphasized])) {
+    :host(:is(:state(--title), :--title):is(:state(--small), :--small):not([emphasized])) {
       font-size: ${DesignToken.typescale.standard.title.small.fontSize};
       font-weight: ${DesignToken.typescale.standard.title.small.fontWeight};
       line-height: ${DesignToken.typescale.standard.title.small.lineHeight};
       letter-spacing: ${DesignToken.typescale.standard.title.small.tracking};
     }
-    :host([variant="label"][size="large"]:not([emphasized])) {
+    :host(:is(:state(--label), :--label):is(:state(--large), :--large):not([emphasized])) {
       font-size: ${DesignToken.typescale.standard.label.large.fontSize};
       font-weight: ${DesignToken.typescale.standard.label.large.fontWeight};
       line-height: ${DesignToken.typescale.standard.label.large.lineHeight};
       letter-spacing: ${DesignToken.typescale.standard.label.large.tracking};
     }
-    :host([variant="label"][size="medium"]:not([emphasized])) {
+    :host(:is(:state(--label), :--label):is(:state(--medium), :--medium):not([emphasized])) {
       font-size: ${DesignToken.typescale.standard.label.medium.fontSize};
       font-weight: ${DesignToken.typescale.standard.label.medium.fontWeight};
       line-height: ${DesignToken.typescale.standard.label.medium.lineHeight};
       letter-spacing: ${DesignToken.typescale.standard.label.medium.tracking};
     }
-    :host([variant="label"][size="small"]:not([emphasized])) {
+    :host(:is(:state(--label), :--label):is(:state(--small), :--small):not([emphasized])) {
       font-size: ${DesignToken.typescale.standard.label.small.fontSize};
       font-weight: ${DesignToken.typescale.standard.label.small.fontWeight};
       line-height: ${DesignToken.typescale.standard.label.small.lineHeight};
       letter-spacing: ${DesignToken.typescale.standard.label.small.tracking};
     }
-    :host([variant="display"][size="large"][emphasized]) {
+    :host(:is(:state(--display), :--display):is(:state(--large), :--large)[emphasized]) {
       font-size: ${DesignToken.typescale.emphasized.display.large.fontSize};
       font-weight: ${DesignToken.typescale.emphasized.display.large.fontWeight};
       line-height: ${DesignToken.typescale.emphasized.display.large.lineHeight};
       letter-spacing: ${DesignToken.typescale.emphasized.display.large.tracking};
     }
-    :host([variant="display"][size="medium"][emphasized]) {
+    :host(:is(:state(--display), :--display):is(:state(--medium), :--medium)[emphasized]) {
       font-size: ${DesignToken.typescale.emphasized.display.medium.fontSize};
       font-weight: ${DesignToken.typescale.emphasized.display.medium.fontWeight};
       line-height: ${DesignToken.typescale.emphasized.display.medium.lineHeight};
       letter-spacing: ${DesignToken.typescale.emphasized.display.medium.tracking};
     }
-    :host([variant="display"][size="small"][emphasized]) {
+    :host(:is(:state(--display), :--display):is(:state(--small), :--small)[emphasized]) {
       font-size: ${DesignToken.typescale.emphasized.display.small.fontSize};
       font-weight: ${DesignToken.typescale.emphasized.display.small.fontWeight};
       line-height: ${DesignToken.typescale.emphasized.display.small.lineHeight};
       letter-spacing: ${DesignToken.typescale.emphasized.display.small.tracking};
     }
-    :host([variant="headline"][size="large"][emphasized]) {
+    :host(:is(:state(--headline), :--headline):is(:state(--large), :--large)[emphasized]) {
       font-size: ${DesignToken.typescale.emphasized.headline.large.fontSize};
       font-weight: ${DesignToken.typescale.emphasized.headline.large.fontWeight};
       line-height: ${DesignToken.typescale.emphasized.headline.large.lineHeight};
       letter-spacing: ${DesignToken.typescale.emphasized.headline.large.tracking};
     }
-    :host([variant="headline"][size="medium"][emphasized]) {
+    :host(:is(:state(--headline), :--headline):is(:state(--medium), :--medium)[emphasized]) {
       font-size: ${DesignToken.typescale.emphasized.headline.medium.fontSize};
       font-weight: ${DesignToken.typescale.emphasized.headline.medium.fontWeight};
       line-height: ${DesignToken.typescale.emphasized.headline.medium.lineHeight};
       letter-spacing: ${DesignToken.typescale.emphasized.headline.medium.tracking};
     }
-    :host([variant="headline"][size="small"][emphasized]) {
+    :host(:is(:state(--headline), :--headline):is(:state(--small), :--small)[emphasized]) {
       font-size: ${DesignToken.typescale.emphasized.headline.small.fontSize};
       font-weight: ${DesignToken.typescale.emphasized.headline.small.fontWeight};
       line-height: ${DesignToken.typescale.emphasized.headline.small.lineHeight};
       letter-spacing: ${DesignToken.typescale.emphasized.headline.small.tracking};
     }
-    :host([variant="title"][size="large"][emphasized]) {
+    :host(:is(:state(--title), :--title):is(:state(--large), :--large)[emphasized]) {
       font-size: ${DesignToken.typescale.emphasized.title.large.fontSize};
       font-weight: ${DesignToken.typescale.emphasized.title.large.fontWeight};
       line-height: ${DesignToken.typescale.emphasized.title.large.lineHeight};
       letter-spacing: ${DesignToken.typescale.emphasized.title.large.tracking};
     }
-    :host([variant="title"][size="medium"][emphasized]) {
+    :host(:is(:state(--title), :--title):is(:state(--medium), :--medium)[emphasized]) {
       font-size: ${DesignToken.typescale.emphasized.title.medium.fontSize};
       font-weight: ${DesignToken.typescale.emphasized.title.medium.fontWeight};
       line-height: ${DesignToken.typescale.emphasized.title.medium.lineHeight};
       letter-spacing: ${DesignToken.typescale.emphasized.title.medium.tracking};
     }
-    :host([variant="title"][size="small"][emphasized]) {
+    :host(:is(:state(--title), :--title):is(:state(--small), :--small)[emphasized]) {
       font-size: ${DesignToken.typescale.emphasized.title.small.fontSize};
       font-weight: ${DesignToken.typescale.emphasized.title.small.fontWeight};
       line-height: ${DesignToken.typescale.emphasized.title.small.lineHeight};
       letter-spacing: ${DesignToken.typescale.emphasized.title.small.tracking};
     }
-    :host([variant="label"][size="large"][emphasized]) {
+    :host(:is(:state(--label), :--label):is(:state(--large), :--large)[emphasized]) {
       font-size: ${DesignToken.typescale.emphasized.label.large.fontSize};
       font-weight: ${DesignToken.typescale.emphasized.label.large.fontWeight};
       line-height: ${DesignToken.typescale.emphasized.label.large.lineHeight};
       letter-spacing: ${DesignToken.typescale.emphasized.label.large.tracking};
     }
-    :host([variant="label"][size="medium"][emphasized]) {
+    :host(:is(:state(--label), :--label):is(:state(--medium), :--medium)[emphasized]) {
       font-size: ${DesignToken.typescale.emphasized.label.medium.fontSize};
       font-weight: ${DesignToken.typescale.emphasized.label.medium.fontWeight};
       line-height: ${DesignToken.typescale.emphasized.label.medium.lineHeight};
       letter-spacing: ${DesignToken.typescale.emphasized.label.medium.tracking};
     }
-    :host([variant="label"][size="small"][emphasized]) {
+    :host(:is(:state(--label), :--label):is(:state(--small), :--small)[emphasized]) {
       font-size: ${DesignToken.typescale.emphasized.label.small.fontSize};
       font-weight: ${DesignToken.typescale.emphasized.label.small.fontWeight};
       line-height: ${DesignToken.typescale.emphasized.label.small.lineHeight};
@@ -311,19 +311,39 @@ export class M3eHeadingElement extends LitElement {
    * The appearance variant of the heading.
    * @default "display"
    */
-  @property({ reflect: true }) variant: HeadingVariant = "display";
+  @property({ reflect: true, useDefault: true }) variant: HeadingVariant = "display";
 
   /**
    * The size of the heading.
    * @default "medium"
    */
-  @property({ reflect: true }) size: HeadingSize = "medium";
+  @property({ reflect: true, useDefault: true }) size: HeadingSize = "medium";
 
   /**
    * The accessibility level of the heading.
    * @default undefined
    */
   @property({ type: Number }) level?: HeadingLevel;
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    this.#applyVariant();
+    this.#applySize();
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
+    if (_changedProperties.has("size")) {
+      this.#applySize();
+    }
+  }
 
   /** @inheritdoc */
   protected override update(changedProperties: PropertyValues<this>): void {
@@ -333,6 +353,22 @@ export class M3eHeadingElement extends LitElement {
       this.ariaLevel = this.level !== undefined ? `${this.level}` : null;
       this.role = this.ariaLevel ? "heading" : null;
     }
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isHeadingVariant(this.variant)) {
+      this.variant = "display";
+    }
+    setCustomEnumState(this, this.variant, "display", "headline", "label", "title");
+  }
+
+  /** @private */
+  #applySize(): void {
+    if (!isHeadingSize(this.size)) {
+      this.size = "medium";
+    }
+    setCustomEnumState(this, this.size, "large", "medium", "small");
   }
 
   /** @inheritdoc */
