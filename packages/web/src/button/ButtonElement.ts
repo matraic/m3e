@@ -588,9 +588,9 @@ export class M3eButtonElement extends KeyboardClick(
     super.connectedCallback();
     this.addEventListener("click", this.#clickHandler);
 
-    setCustomEnumState(this, this.variant, "elevated", "filled", "outlined", "text", "tonal");
-    setCustomEnumState(this, this.shape, "rounded", "square");
-    setCustomEnumState(this, this.size, "extra-large", "extra-small", "large", "medium", "small");
+    this.#applyVariant();
+    this.#applyShape();
+    this.#applySize();
   }
 
   /** @inheritdoc */
@@ -611,25 +611,15 @@ export class M3eButtonElement extends KeyboardClick(
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("variant")) {
-      if (!isButtonVariant(this.variant)) {
-        this.variant = "text";
-      }
-      setCustomEnumState(this, this.variant, "elevated", "filled", "outlined", "text", "tonal");
+      this.#applyVariant();
     }
 
     if (_changedProperties.has("shape")) {
-      if (!isButtonShape(this.shape)) {
-        this.shape = "rounded";
-      }
-      setCustomEnumState(this, this.shape, "rounded", "square");
+      this.#applyShape();
     }
 
     if (_changedProperties.has("size")) {
-      if (!isButtonSize(this.size)) {
-        this.size = "small";
-      }
-
-      setCustomEnumState(this, this.size, "extra-large", "extra-small", "large", "medium", "small");
+      this.#applySize();
     }
   }
 
@@ -659,6 +649,31 @@ export class M3eButtonElement extends KeyboardClick(
         }
       }
     }
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isButtonVariant(this.variant)) {
+      this.variant = "text";
+    }
+    setCustomEnumState(this, this.variant, "elevated", "filled", "outlined", "text", "tonal");
+  }
+
+  /** @private */
+  #applyShape(): void {
+    if (!isButtonShape(this.shape)) {
+      this.shape = "rounded";
+    }
+    setCustomEnumState(this, this.shape, "rounded", "square");
+  }
+
+  /** @private */
+  #applySize(): void {
+    if (!isButtonSize(this.size)) {
+      this.size = "small";
+    }
+
+    setCustomEnumState(this, this.size, "extra-large", "extra-small", "large", "medium", "small");
   }
 
   /** @private */
