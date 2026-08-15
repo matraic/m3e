@@ -116,23 +116,32 @@ export class M3eToolbarElement extends Vertical(Role(AttachInternals(LitElement)
         --m3e-toolbar-rounded-trailing-space,
         var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
       );
-      padding-block-start: var(
-        --m3e-toolbar-rounded-top-space,
-        var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+      padding-block-start: calc(
+        var(--m3e-toolbar-rounded-top-space, var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})) +
+          ${DesignToken.density.calc(-3)}
       );
-      padding-block-end: var(
-        --m3e-toolbar-rounded-bottom-space,
-        var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+      padding-block-end: calc(
+        var(
+            --m3e-toolbar-rounded-bottom-space,
+            var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+          ) +
+          ${DesignToken.density.calc(-3)}
       );
     }
     :host([vertical]:is(:state(--rounded), :--rounded)) .base {
-      padding-block-start: var(
-        --m3e-toolbar-rounded-leading-space,
-        var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+      padding-block-start: calc(
+        var(
+            --m3e-toolbar-rounded-leading-space,
+            var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+          ) +
+          ${DesignToken.density.calc(-3)}
       );
-      padding-block-end: var(
-        --m3e-toolbar-rounded-trailing-space,
-        var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+      padding-block-end: calc(
+        var(
+            --m3e-toolbar-rounded-trailing-space,
+            var(--m3e-toolbar-rounded-padding, ${DesignToken.measurement.space100})
+          ) +
+          ${DesignToken.density.calc(-3)}
       );
       padding-inline-start: var(
         --m3e-toolbar-rounded-top-space,
@@ -152,17 +161,27 @@ export class M3eToolbarElement extends Vertical(Role(AttachInternals(LitElement)
         --m3e-toolbar-square-trailing-space,
         var(--m3e-toolbar-square-padding, ${DesignToken.measurement.space200})
       );
-      padding-block-start: var(--m3e-toolbar-square-top-space, ${DesignToken.measurement.space100});
-      padding-block-end: var(--m3e-toolbar-square-bottom-space, ${DesignToken.measurement.space100});
+      padding-block-start: calc(
+        var(--m3e-toolbar-square-top-space, ${DesignToken.measurement.space100}) + ${DesignToken.density.calc(-3)}
+      );
+      padding-block-end: calc(
+        var(--m3e-toolbar-square-bottom-space, ${DesignToken.measurement.space100}) + ${DesignToken.density.calc(-3)}
+      );
     }
     :host([vertical]:is(:state(--square), :--square)) .base {
-      padding-block-start: var(
-        --m3e-toolbar-square-leading-space,
-        var(--m3e-toolbar-square-padding, ${DesignToken.measurement.space200})
+      padding-block-start: calc(
+        var(
+            --m3e-toolbar-square-leading-space,
+            var(--m3e-toolbar-square-padding, ${DesignToken.measurement.space200})
+          ) +
+          ${DesignToken.density.calc(-3)}
       );
-      padding-block-end: var(
-        --m3e-toolbar-square-trailing-space,
-        var(--m3e-toolbar-square-padding, ${DesignToken.measurement.space200})
+      padding-block-end: calc(
+        var(
+            --m3e-toolbar-square-trailing-space,
+            var(--m3e-toolbar-square-padding, ${DesignToken.measurement.space200})
+          ) +
+          ${DesignToken.density.calc(-3)}
       );
       padding-inline-start: var(--m3e-toolbar-square-top-space, ${DesignToken.measurement.space100});
       padding-inline-end: var(--m3e-toolbar-square-bottom-space, ${DesignToken.measurement.space100});
