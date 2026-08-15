@@ -27,15 +27,16 @@ import {
   ReconnectedCallback,
   registerStyleSheet,
   ResizeController,
+  setCustomEnumState,
   setCustomState,
 } from "@m3e/web/core";
 
 import { M3eAriaDescriber } from "@m3e/web/core/a11y";
 
 import { findFormFieldControl, FormFieldControl } from "./FormFieldControl";
-import { FormFieldVariant } from "./FormFieldVariant";
-import { HideSubscriptType } from "./HideSubscriptType";
-import { FloatLabelType } from "./FloatLabelType";
+import { FormFieldVariant, isFormFieldVariant } from "./FormFieldVariant";
+import { HideSubscriptType, isHideSubscriptType } from "./HideSubscriptType";
+import { FloatLabelType, isFloatLabelType } from "./FloatLabelType";
 
 /**
  * A container for form controls that applies Material Design styling and behavior.
@@ -119,23 +120,21 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         color: currentColor;
         transition: opacity ${DesignToken.motion.duration.extraLong1};
       }
-      m3e-form-field[float-label="auto"]:not(:is(:state(--float-label), :--float-label)):is(
-          :state(--with-label),
-          :--with-label
-        )
+      m3e-form-field:is(:state(--float-label-auto), :--float-label-auto):not(
+          :is(:state(--float-label), :--float-label)
+        ):is(:state(--with-label), :--with-label)
         input::placeholder,
-      m3e-form-field[float-label="auto"]:not(:is(:state(--float-label), :--float-label)):is(
-          :state(--with-label),
-          :--with-label
-        )
+      m3e-form-field:is(:state(--float-label-auto), :--float-label-auto):not(
+          :is(:state(--float-label), :--float-label)
+        ):is(:state(--with-label), :--with-label)
         textarea::placeholder {
         opacity: 0;
         transition: opacity 0s;
       }
-      m3e-form-field[variant="outlined"] m3e-input-chip-set {
+      m3e-form-field:is(:state(--outlined), :--outlined) m3e-input-chip-set {
         margin-block: calc(calc(56px + ${DesignToken.density.calc(-3)}) / 4);
       }
-      m3e-form-field[variant="outlined"] textarea {
+      m3e-form-field:is(:state(--outlined), :--outlined) textarea {
         margin-block: calc(
           var(--m3e-form-field-label-line-height, var(--md-sys-typescale-body-small-line-height, 16px)) / 2
         );
@@ -253,10 +252,11 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     .hint {
       flex: 1 1 auto;
     }
-    :host([hide-subscript="always"]) .subscript {
+    :host(:is(:state(--hide-subscript-always), :--hide-subscript-always)) .subscript {
       display: none;
     }
-    :host([hide-subscript="auto"]:not(:is(:state(--invalid), :--invalid))) .subscript {
+    :host(:is(:state(--hide-subscript-auto), :--hide-subscript-auto):not(:is(:state(--invalid), :--invalid)))
+      .subscript {
       opacity: 0;
       margin-top: 4px;
       transform: translateY(-4px);
@@ -265,8 +265,16 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         transform ${DesignToken.motion.duration.short4}`,
       )};
     }
-    :host([hide-subscript="auto"]:not(:is(:state(--invalid), :--invalid)):focus-within) .subscript,
-    :host([hide-subscript="auto"]:not(:is(:state(--invalid), :--invalid)):is(:state(--pressed), :--pressed))
+    :host(
+        :is(:state(--hide-subscript-auto), :--hide-subscript-auto):not(:is(:state(--invalid), :--invalid)):focus-within
+      )
+      .subscript,
+    :host(
+        :is(:state(--hide-subscript-auto), :--hide-subscript-auto):not(:is(:state(--invalid), :--invalid)):is(
+            :state(--pressed),
+            :--pressed
+          )
+      )
       .subscript {
       opacity: 1;
       transform: translateY(0);
@@ -304,13 +312,23 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       flex: 1 1 auto;
       min-width: 0;
     }
-    :host([float-label="auto"]:not(:is(:state(--float-label), :--float-label))) .label {
+    :host(:is(:state(--float-label-auto), :--float-label-auto):not(:is(:state(--float-label), :--float-label))) .label {
       font-size: inherit;
     }
 
-    :host([float-label="auto"]:not(:is(:state(--float-label), :--float-label)):is(:state(--with-label), :--with-label))
+    :host(
+        :is(:state(--float-label-auto), :--float-label-auto):not(:is(:state(--float-label), :--float-label)):is(
+            :state(--with-label),
+            :--with-label
+          )
+      )
       .prefix-text,
-    :host([float-label="auto"]:not(:is(:state(--float-label), :--float-label)):is(:state(--with-label), :--with-label))
+    :host(
+        :is(:state(--float-label-auto), :--float-label-auto):not(:is(:state(--float-label), :--float-label)):is(
+            :state(--with-label),
+            :--with-label
+          )
+      )
       .suffix-text {
       opacity: 0;
       transition: opacity 0s;
@@ -335,10 +353,10 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     :host(:is(:state(--with-select), :--with-select)) .suffix-text {
       display: none;
     }
-    :host([variant="outlined"]) .label {
+    :host(:is(:state(--outlined), :--outlined)) .label {
       margin-top: calc(0px - var(--_form-field-label-line-height) / 2);
     }
-    :host([variant="outlined"]) .outline {
+    :host(:is(:state(--outlined), :--outlined)) .outline {
       position: absolute;
       display: flex;
       pointer-events: none;
@@ -347,7 +365,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       bottom: 0;
       right: 0;
     }
-    :host([variant="outlined"]) .pseudo-label {
+    :host(:is(:state(--outlined), :--outlined)) .pseudo-label {
       visibility: hidden;
       margin-inline-end: 8px;
       font-size: var(--_form-field-label-font-size);
@@ -367,26 +385,32 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       .required-marker {
       display: none;
     }
-    :host([variant="outlined"]:is(:state(--required), :--required):not([hide-required-marker])) .pseudo-label {
+    :host(:is(:state(--outlined), :--outlined):is(:state(--required), :--required):not([hide-required-marker]))
+      .pseudo-label {
       margin-inline-end: 4px;
     }
-    :host([variant="outlined"][float-label="auto"]:not(:is(:state(--float-label), :--float-label))) .pseudo-label {
+    :host(
+        :is(:state(--outlined), :--outlined):is(:state(--float-label-auto), :--float-label-auto):not(
+            :is(:state(--float-label), :--float-label)
+          )
+      )
+      .pseudo-label {
       max-width: 0;
       margin-inline-end: 0px;
       transition-delay: ${DesignToken.motion.duration.short2};
     }
-    :host([variant="outlined"]) .outline-start,
-    :host([variant="outlined"]) .outline-notch,
-    :host([variant="outlined"]) .outline-end {
+    :host(:is(:state(--outlined), :--outlined)) .outline-start,
+    :host(:is(:state(--outlined), :--outlined)) .outline-notch,
+    :host(:is(:state(--outlined), :--outlined)) .outline-end {
       box-sizing: border-box;
       border-width: var(--_form-field-outline-size, 1px);
       border-color: var(--_form-field-outline-color);
       transition: border-color ${DesignToken.motion.duration.short4};
     }
-    :host([variant="outlined"]:not(:is(:state(--with-label), :--with-label))) .outline-notch {
+    :host(:is(:state(--outlined), :--outlined):not(:is(:state(--with-label), :--with-label))) .outline-notch {
       display: none;
     }
-    :host([variant="outlined"]) .outline-start {
+    :host(:is(:state(--outlined), :--outlined)) .outline-start {
       min-width: 12px;
       border-top-style: solid;
       border-inline-start-style: solid;
@@ -394,10 +418,10 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       border-start-start-radius: var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall});
       border-end-start-radius: var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall});
     }
-    :host([variant="outlined"]) .outline-notch {
+    :host(:is(:state(--outlined), :--outlined)) .outline-notch {
       border-bottom-style: solid;
     }
-    :host([variant="outlined"]) .outline-end {
+    :host(:is(:state(--outlined), :--outlined)) .outline-end {
       flex-grow: 1;
       min-width: 16px;
       border-top-style: solid;
@@ -406,26 +430,34 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       border-start-end-radius: var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall});
       border-end-end-radius: var(--m3e-outlined-form-field-container-shape, ${DesignToken.shape.corner.extraSmall});
     }
-    :host([variant="outlined"]:is(:state(--with-prefix), :--with-prefix)) .outline-start {
+    :host(:is(:state(--outlined), :--outlined):is(:state(--with-prefix), :--with-prefix)) .outline-start {
       min-width: calc(20px + var(--_prefix-width, 0px) + 4px);
     }
-    :host([variant="outlined"]:not(:is(:state(--disabled), :--disabled))) .base:hover .outline,
-    :host([variant="outlined"]:not(:is(:state(--disabled), :--disabled)):focus-within) .outline,
-    :host([variant="outlined"]:not(:is(:state(--disabled), :--disabled)):is(:state(--pressed), :--pressed)) .outline {
+    :host(:is(:state(--outlined), :--outlined):not(:is(:state(--disabled), :--disabled))) .base:hover .outline,
+    :host(:is(:state(--outlined), :--outlined):not(:is(:state(--disabled), :--disabled)):focus-within) .outline,
+    :host(
+        :is(:state(--outlined), :--outlined):not(:is(:state(--disabled), :--disabled)):is(:state(--pressed), :--pressed)
+      )
+      .outline {
       --_form-field-outline-size: 2px;
     }
-    :host([variant="outlined"]) .subscript {
+    :host(:is(:state(--outlined), :--outlined)) .subscript {
       margin-inline: 16px;
       width: calc(100% - 32px);
     }
-    :host([variant="outlined"]) .content {
+    :host(:is(:state(--outlined), :--outlined)) .content {
       min-height: calc(56px + ${DesignToken.density.calc(-3)});
       --_form-field-label-font-size: var(
         --m3e-form-field-label-font-size,
         ${DesignToken.typescale.standard.body.small.fontSize}
       );
     }
-    :host([variant="outlined"][float-label="auto"]:not(:is(:state(--float-label), :--float-label))) .label {
+    :host(
+        :is(:state(--outlined), :--outlined):is(:state(--float-label-auto), :--float-label-auto):not(
+            :is(:state(--float-label), :--float-label)
+          )
+      )
+      .label {
       margin-top: unset;
       line-height: calc(56px + ${DesignToken.density.calc(-3)});
       --_form-field-label-font-size: var(
@@ -433,12 +465,12 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         ${DesignToken.typescale.standard.body.small.fontSize}
       );
     }
-    :host([variant="filled"]) .base {
+    :host(:is(:state(--filled), :--filled)) .base {
       --_select-arrow-margin-top: calc(
         0px - calc(16px / max(calc(0 - calc(var(--md-sys-density-scale, 0) + var(--md-sys-density-scale, 0))), 1))
       );
     }
-    :host([variant="filled"]) .base::before {
+    :host(:is(:state(--filled), :--filled)) .base::before {
       content: "";
       box-sizing: border-box;
       position: absolute;
@@ -453,13 +485,13 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       border-color: var(--_form-field-outline-color);
       background-color: var(--_form-field-container-color);
     }
-    :host([variant="filled"]:not(:is(:state(--disabled), :--disabled))) .base:hover::before,
-    :host([variant="filled"]:not(:is(:state(--disabled), :--disabled)):focus-within) .base::before,
-    :host([variant="filled"]:not(:is(:state(--disabled), :--disabled)):is(:state(--pressed), :--pressed))
+    :host(:is(:state(--filled), :--filled):not(:is(:state(--disabled), :--disabled))) .base:hover::before,
+    :host(:is(:state(--filled), :--filled):not(:is(:state(--disabled), :--disabled)):focus-within) .base::before,
+    :host(:is(:state(--filled), :--filled):not(:is(:state(--disabled), :--disabled)):is(:state(--pressed), :--pressed))
       .base::before {
       border-width: 3px;
     }
-    :host([variant="filled"]) .base::after {
+    :host(:is(:state(--filled), :--filled)) .base::after {
       content: "";
       box-sizing: border-box;
       position: absolute;
@@ -471,18 +503,23 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       background-color: var(--_form-field-hover-container-color);
       transition: background-color ${DesignToken.motion.duration.short4};
     }
-    :host([variant="filled"]) .subscript {
+    :host(:is(:state(--filled), :--filled)) .subscript {
       margin-inline: 16px;
       width: calc(100% - 32px);
     }
-    :host([variant="filled"]) .content {
+    :host(:is(:state(--filled), :--filled)) .content {
       padding-top: calc(24px + ${DesignToken.density.calc(-3)});
       margin-bottom: 8px;
     }
-    :host([variant="filled"]) .label {
+    :host(:is(:state(--filled), :--filled)) .label {
       top: max(0px, calc(8px + ${DesignToken.density.calc(-3)}));
     }
-    :host([variant="filled"][float-label="auto"]:not(:is(:state(--float-label), :--float-label))) .label {
+    :host(
+        :is(:state(--filled), :--filled):is(:state(--float-label-auto), :--float-label-auto):not(
+            :is(:state(--float-label), :--float-label)
+          )
+      )
+      .label {
       top: 0px;
       line-height: calc(56px + ${DesignToken.density.calc(-3)} - 1px);
       --_form-field-label-font-size: var(
@@ -502,37 +539,44 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     :host(:not(:is(:state(--disabled), :--disabled)):not(:is(:state(--invalid), :--invalid))) {
       color: var(--m3e-form-field-color, ${DesignToken.color.onSurface});
     }
-    :host([variant="outlined"]:not(:is(:state(--disabled), :--disabled)):not(:is(:state(--invalid), :--invalid)))
+    :host(
+        :is(:state(--outlined), :--outlined):not(:is(:state(--disabled), :--disabled)):not(
+            :is(:state(--invalid), :--invalid)
+          )
+      )
       .base {
       --_form-field-outline-color: var(--m3e-form-field-outline-color, ${DesignToken.color.outline});
     }
-    :host([variant="filled"]:not(:is(:state(--disabled), :--disabled)):not(:is(:state(--invalid), :--invalid))) .base {
+    :host(
+        :is(:state(--filled), :--filled):not(:is(:state(--disabled), :--disabled)):not(
+            :is(:state(--invalid), :--invalid)
+          )
+      )
+      .base {
       --_form-field-outline-color: var(--m3e-form-field-outline-color, ${DesignToken.color.onSurfaceVariant});
     }
     :host(
-        [variant="outlined"]:not(:is(:state(--disabled), :--disabled)):not(
+        :is(:state(--outlined), :--outlined):not(:is(:state(--disabled), :--disabled)):not(
             :is(:state(--invalid), :--invalid)
           ):focus-within
       )
       .base,
     :host(
-        [variant="outlined"]:not(:is(:state(--disabled), :--disabled)):not(:is(:state(--invalid), :--invalid)):is(
-            :state(--pressed),
-            :--pressed
-          )
+        :is(:state(--outlined), :--outlined):not(:is(:state(--disabled), :--disabled)):not(
+            :is(:state(--invalid), :--invalid)
+          ):is(:state(--pressed), :--pressed)
       )
       .base,
     :host(
-        [variant="filled"]:not(:is(:state(--disabled), :--disabled)):not(
+        :is(:state(--filled), :--filled):not(:is(:state(--disabled), :--disabled)):not(
             :is(:state(--invalid), :--invalid)
           ):focus-within
       )
       .base,
     :host(
-        [variant="filled"]:not(:is(:state(--disabled), :--disabled)):not(:is(:state(--invalid), :--invalid)):is(
-            :state(--pressed),
-            :--pressed
-          )
+        :is(:state(--filled), :--filled):not(:is(:state(--disabled), :--disabled)):not(
+            :is(:state(--invalid), :--invalid)
+          ):is(:state(--pressed), :--pressed)
       )
       .base {
       --_form-field-outline-color: var(--m3e-form-field-focused-outline-color, ${DesignToken.color.primary});
@@ -572,7 +616,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       transition: none !important;
     }
     @media (forced-colors: active) {
-      :host([variant="filled"]) .base::after {
+      :host(:is(:state(--filled), :--filled)) .base::after {
         transition: none;
       }
       :host {
@@ -719,7 +763,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
    * The appearance variant of the field.
    * @default "outlined"
    */
-  @property({ reflect: true }) variant: FormFieldVariant = "outlined";
+  @property({ reflect: true, useDefault: true }) variant: FormFieldVariant = "outlined";
 
   /**
    * Whether the required marker should be hidden.
@@ -731,13 +775,13 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
    * Whether subscript content is hidden.
    * @default "auto"
    */
-  @property({ attribute: "hide-subscript", reflect: true }) hideSubscript: HideSubscriptType = "auto";
+  @property({ attribute: "hide-subscript", reflect: true, useDefault: true }) hideSubscript: HideSubscriptType = "auto";
 
   /**
    * Specifies whether the label should float always or only when necessary.
    * @default "auto"
    */
-  @property({ attribute: "float-label", reflect: true }) floatLabel: FloatLabelType = "auto";
+  @property({ attribute: "float-label", reflect: true, useDefault: true }) floatLabel: FloatLabelType = "auto";
 
   /**
    * Notifies the form field that the state of the hosted `control` has changed.
@@ -767,6 +811,11 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
+
+    this.#applyVariant();
+    this.#applyFloatLabel();
+    this.#applyHideSubscriptType();
+
     // Label animations are disabled on initial paint.
     setCustomState(this, "--no-animate", true);
   }
@@ -781,6 +830,21 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   override reconnectedCallback(): void {
     super.reconnectedCallback();
     this.#initialize();
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
+    if (_changedProperties.has("floatLabel")) {
+      this.#applyFloatLabel();
+    }
+    if (_changedProperties.has("hideSubscript")) {
+      this.#applyHideSubscriptType();
+    }
   }
 
   /** @inheritdoc */
@@ -844,6 +908,32 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         <span class="error"><slot name="error">${this._validationMessage}</slot></span>
         <span class="hint"><slot name="hint"></slot></span>
       </span>`;
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isFormFieldVariant(this.variant)) {
+      this.variant = "outlined";
+    }
+    setCustomEnumState(this, this.variant, "filled", "outlined");
+  }
+
+  /** @private */
+  #applyFloatLabel(): void {
+    if (!isFloatLabelType(this.floatLabel)) {
+      this.floatLabel = "auto";
+    }
+    setCustomState(this, "--float-label-auto", this.floatLabel === "auto");
+  }
+
+  /** @private */
+  #applyHideSubscriptType(): void {
+    if (!isHideSubscriptType(this.hideSubscript)) {
+      this.hideSubscript = "auto";
+    }
+    setCustomState(this, "--hide-subscript-always", this.hideSubscript === "always");
+    setCustomState(this, "--hide-subscript-auto", this.hideSubscript === "auto");
+    setCustomState(this, "--hide-subscript-never", this.hideSubscript === "never");
   }
 
   /** @private */
