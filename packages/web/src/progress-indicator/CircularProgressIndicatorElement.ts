@@ -79,7 +79,7 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
       .active-track {
         transition: stroke-dashoffset 500ms cubic-bezier(0, 0, 0.2, 1);
       }
-      :host([variant="flat"]) .progress {
+      :host(:is(:state(--flat), :--flat)) .progress {
         flex: 1;
         align-self: stretch;
         pointer-events: none;
@@ -113,22 +113,22 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
         width: var(--m3e-circular-wavy-progress-indicator-amplitude, 1.6px);
         height: var(--m3e-circular-wavy-progress-indicator-wavelength, 15px);
       }
-      :host([variant="flat"]) {
+      :host(:is(:state(--flat), :--flat)) {
         width: var(--m3e-circular-flat-progress-indicator-diameter, 40px);
       }
-      :host([variant="wavy"]) {
+      :host(:is(:state(--wavy), :--wavy)) {
         width: var(--m3e-circular-wavy-progress-indicator-diameter, 48px);
       }
-      :host([variant="flat"][indeterminate]) .progress {
+      :host(:is(:state(--flat), :--flat)[indeterminate]) .progress {
         animation: linear infinite linear-rotate;
         animation-duration: var(--_linear-rotate-duration);
       }
-      :host([variant="flat"][indeterminate]) .spinner {
+      :host(:is(:state(--flat), :--flat)[indeterminate]) .spinner {
         animation: infinite both rotate-arc;
         animation-duration: var(--_cycle-duration);
         animation-timing-function: var(--_indeterminate-easing);
       }
-      :host([variant="wavy"][indeterminate]) .spinner {
+      :host(:is(:state(--wavy), :--wavy)[indeterminate]) .spinner {
         transform-origin: 50% 50%;
         animation: wavy-spin ${WAVY_INDETERMINATE_DURATION}s linear infinite;
       }
@@ -236,10 +236,10 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
         }
       }
       @media (forced-colors: active) {
-        :host([variant="flat"]) circle {
+        :host(:is(:state(--flat), :--flat)) circle {
           fill: Canvas;
         }
-        :host([variant="flat"]) .circle {
+        :host(:is(:state(--flat), :--flat)) .circle {
           border-color: var(--m3e-progress-indicator-color, ${DesignToken.color.primary})
             var(--m3e-progress-indicator-color, ${DesignToken.color.primary}) Canvas Canvas;
         }

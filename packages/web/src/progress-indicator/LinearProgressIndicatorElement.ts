@@ -1,10 +1,17 @@
 import { css, CSSResultGroup, html, nothing, PropertyValues, svg } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, DesignToken, ResizeController, resolveFragmentUrl, safeStyleMap } from "@m3e/web/core";
+import {
+  customElement,
+  DesignToken,
+  ResizeController,
+  resolveFragmentUrl,
+  safeStyleMap,
+  setCustomEnumState,
+} from "@m3e/web/core";
 import { SupportsDirectionality } from "@m3e/web/core/bidi";
 
-import { LinearProgressMode } from "./LinearProgressMode";
+import { isLinearProgressMode, LinearProgressMode } from "./LinearProgressMode";
 import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
 
 /**
@@ -74,8 +81,8 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
         height: var(--m3e-linear-wavy-progress-indicator-amplitude, 3px);
         width: var(--m3e-linear-wavy-progress-indicator-wavelength, 40px);
       }
-      :host([mode="indeterminate"]) .amplitude-and-wavelength,
-      :host([mode="query"]) .amplitude-and-wavelength {
+      :host(:is(:state(--indeterminate), :--indeterminate)) .amplitude-and-wavelength,
+      :host(:is(:state(--query), :--query)) .amplitude-and-wavelength {
         width: var(--m3e-linear-wavy-indeterminate-progress-indicator-wavelength, 24px);
       }
       .primary,
@@ -88,22 +95,22 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
         aspect-ratio: 1;
         flex: none;
       }
-      :host([variant="flat"]) {
+      :host(:is(:state(--flat), :--flat)) {
         height: var(--m3e-linear-progress-indicator-thickness, 4px);
       }
-      :host([variant="wavy"]) {
+      :host(:is(:state(--wavy), :--wavy)) {
         height: calc(
           var(--m3e-linear-progress-indicator-thickness, 4px) +
             calc(var(--m3e-linear-wavy-progress-indicator-amplitude, 3px) * 2)
         );
       }
-      :host([variant="wavy"]) .primary,
-      :host([variant="wavy"]) .secondary {
+      :host(:is(:state(--wavy), :--wavy)) .primary,
+      :host(:is(:state(--wavy), :--wavy)) .secondary {
         position: relative;
         height: 100%;
         overflow: hidden;
       }
-      :host([variant="wavy"]) .complete {
+      :host(:is(:state(--wavy), :--wavy)) .complete {
         position: absolute;
         margin: auto;
         top: calc(50% - calc(var(--m3e-linear-progress-indicator-thickness, 4px) / 2));
@@ -112,7 +119,7 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
         height: var(--m3e-linear-progress-indicator-thickness, 4px);
         border-radius: inherit;
       }
-      :host([variant="wavy"]) .secondary {
+      :host(:is(:state(--wavy), :--wavy)) .secondary {
         height: var(--m3e-linear-progress-indicator-thickness, 4px);
       }
       .wave {
@@ -123,8 +130,8 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
       .secondary .wave {
         margin-inline-start: calc(0px - var(--m3e-linear-wavy-progress-indicator-wavelength, 40px));
       }
-      :host([variant="wavy"][mode="determinate"]) .primary path,
-      :host([variant="wavy"][mode="buffer"]) .primary path {
+      :host(:is(:state(--wavy), :--wavy):is(:state(--determinate), :--determinate)) .primary path,
+      :host(:is(:state(--wavy), :--wavy):is(:state(--buffer), :--buffer)) .primary path {
         animation: wave-slide 1.5s linear infinite;
       }
       @keyframes wave-slide {
@@ -135,26 +142,26 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
           transform: translateX(calc(0px - var(--m3e-linear-wavy-progress-indicator-wavelength, 40px)));
         }
       }
-      :host([mode="determinate"]) .progress,
-      :host([mode="buffer"]) .progress {
+      :host(:is(:state(--determinate), :--determinate)) .progress,
+      :host(:is(:state(--buffer), :--buffer)) .progress {
         display: flex;
         overflow: hidden;
       }
-      :host([mode="determinate"]) .primary,
-      :host([mode="buffer"]) .primary {
+      :host(:is(:state(--determinate), :--determinate)) .primary,
+      :host(:is(:state(--buffer), :--buffer)) .primary {
         width: var(--_value, 0px);
         flex: none;
       }
-      :host([mode="determinate"]) .gap,
-      :host([mode="buffer"]) .gap {
+      :host(:is(:state(--determinate), :--determinate)) .gap,
+      :host(:is(:state(--buffer), :--buffer)) .gap {
         flex-basis: var(--m3e-linear-progress-indicator-thickness, 4px);
         flex-shrink: 1;
       }
-      :host([mode="determinate"]) .secondary,
-      :host([mode="buffer"]) .buffer {
+      :host(:is(:state(--determinate), :--determinate)) .secondary,
+      :host(:is(:state(--buffer), :--buffer)) .buffer {
         flex: 1 1 auto;
       }
-      :host([mode="buffer"]) .buffer {
+      :host(:is(:state(--buffer), :--buffer)) .buffer {
         flex-shrink: 5;
         height: 100%;
         width: 100%;
@@ -169,7 +176,7 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
         mask-repeat: repeat;
         animation: buffer 250ms linear infinite;
       }
-      :host(:is(:state(--rtl), :--rtl)[mode="buffer"]) .buffer {
+      :host(:is(:state(--rtl), :--rtl):is(:state(--buffer), :--buffer)) .buffer {
         transform: scaleX(-1);
       }
       @keyframes buffer {
@@ -180,24 +187,24 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
           mask-position: calc(-1 * calc(var(--m3e-linear-progress-indicator-thickness, 4px) * 2)) 0;
         }
       }
-      :host([mode="buffer"]) .secondary {
+      :host(:is(:state(--buffer), :--buffer)) .secondary {
         width: var(--_buffer-value, 0px);
         flex: none;
       }
-      :host([mode="indeterminate"]) .primary,
-      :host([mode="query"]) .primary {
+      :host(:is(:state(--indeterminate), :--indeterminate)) .primary,
+      :host(:is(:state(--query), :--query)) .primary {
         position: absolute;
         top: 0;
         height: 100%;
         border-radius: inherit;
         animation: indeterminate-primary 2.1s infinite linear;
       }
-      :host([variant="wavy"][mode="indeterminate"]) .primary,
-      :host([variant="wavy"][mode="query"]) .primary {
+      :host(:is(:state(--wavy), :--wavy):is(:state(--indeterminate), :--indeterminate)) .primary,
+      :host(:is(:state(--wavy), :--wavy):is(:state(--query), :--query)) .primary {
         animation-name: wavy-indeterminate-primary;
       }
-      :host([mode="indeterminate"]) .secondary,
-      :host([mode="query"]) .secondary {
+      :host(:is(:state(--indeterminate), :--indeterminate)) .secondary,
+      :host(:is(:state(--query), :--query)) .secondary {
         position: absolute;
         top: 0;
         height: 100%;
@@ -206,46 +213,46 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
         animation-delay: 1.15s;
         animation-fill-mode: backwards;
       }
-      :host([variant="wavy"][mode="indeterminate"]) .secondary,
-      :host([variant="wavy"][mode="query"]) .secondary {
+      :host(:is(:state(--wavy), :--wavy):is(:state(--indeterminate), :--indeterminate)) .secondary,
+      :host(:is(:state(--wavy), :--wavy):is(:state(--query), :--query)) .secondary {
         animation-name: wavy-indeterminate-secondary;
       }
-      :host([mode="indeterminate"]) .progress,
-      :host([mode="query"]) .progress {
+      :host(:is(:state(--indeterminate), :--indeterminate)) .progress,
+      :host(:is(:state(--query), :--query)) .progress {
         overflow: hidden;
         position: relative;
       }
-      :host(:not(:is(:state(--rtl), :--rtl))[mode="query"]) .progress,
-      :host(:is(:state(--rtl), :--rtl)[mode="indeterminate"]) .progress {
+      :host(:not(:is(:state(--rtl), :--rtl)):is(:state(--query), :--query)) .progress,
+      :host(:is(:state(--rtl), :--rtl):is(:state(--indeterminate), :--indeterminate)) .progress {
         transform: scaleX(-1);
       }
-      :host([variant="flat"]) .primary,
-      :host([variant="flat"][mode="indeterminate"]) .secondary,
-      :host([variant="flat"][mode="query"]) .secondary,
-      :host([variant="wavy"]) .complete,
+      :host(:is(:state(--flat), :--flat)) .primary,
+      :host(:is(:state(--flat), :--flat):is(:state(--indeterminate), :--indeterminate)) .secondary,
+      :host(:is(:state(--flat), :--flat):is(:state(--query), :--query)) .secondary,
+      :host(:is(:state(--wavy), :--wavy)) .complete,
       .stop {
         background-color: var(--m3e-progress-indicator-color, ${DesignToken.color.primary});
       }
-      :host([variant="wavy"]) .progress {
+      :host(:is(:state(--wavy), :--wavy)) .progress {
         color: var(--m3e-progress-indicator-color, ${DesignToken.color.primary});
       }
-      :host([mode="determinate"]) .secondary,
-      :host([mode="buffer"]) .secondary,
-      :host([variant="flat"][mode="indeterminate"]) .track,
-      :host([variant="flat"][mode="query"]) .track {
+      :host(:is(:state(--determinate), :--determinate)) .secondary,
+      :host(:is(:state(--buffer), :--buffer)) .secondary,
+      :host(:is(:state(--flat), :--flat):is(:state(--indeterminate), :--indeterminate)) .track,
+      :host(:is(:state(--flat), :--flat):is(:state(--query), :--query)) .track {
         background-color: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
       }
-      :host([variant="wavy"][mode="indeterminate"]) .track,
-      :host([variant="wavy"][mode="query"]) .track {
+      :host(:is(:state(--wavy), :--wavy):is(:state(--indeterminate), :--indeterminate)) .track,
+      :host(:is(:state(--wavy), :--wavy):is(:state(--query), :--query)) .track {
         color: var(--m3e-progress-indicator-track-color, ${DesignToken.color.secondaryContainer});
       }
-      :host([variant="wavy"][mode="indeterminate"]) .track,
-      :host([variant="wavy"][mode="query"]) .track {
+      :host(:is(:state(--wavy), :--wavy):is(:state(--indeterminate), :--indeterminate)) .track,
+      :host(:is(:state(--wavy), :--wavy):is(:state(--query), :--query)) .track {
         y: calc(50% - calc(var(--m3e-linear-progress-indicator-thickness, 4px) / 2));
         border-radius: inherit;
       }
-      :host([variant="flat"][mode="indeterminate"]) .track,
-      :host([variant="flat"][mode="query"]) .track {
+      :host(:is(:state(--flat), :--flat):is(:state(--indeterminate), :--indeterminate)) .track,
+      :host(:is(:state(--flat), :--flat):is(:state(--query), :--query)) .track {
         position: absolute;
         margin: auto;
         top: calc(50% - calc(var(--m3e-linear-progress-indicator-thickness, 4px) / 2));
@@ -356,7 +363,7 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
    * The mode of the progress bar.
    * @default "determinate"
    */
-  @property({ reflect: true }) mode: LinearProgressMode = "determinate";
+  @property({ reflect: true, useDefault: true }) mode: LinearProgressMode = "determinate";
 
   /**
    * A fractional value, between 0 and `max`, indicating buffer progress.
@@ -365,15 +372,38 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
   @property({ attribute: "buffer-value", type: Number, reflect: true }) bufferValue = 0;
 
   /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#applyMode();
+  }
+
+  /** @inheritdoc */
   override reconnectedCallback(): void {
     super.reconnectedCallback();
     this.#initialize();
   }
 
   /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("mode")) {
+      this.#applyMode();
+    }
+  }
+
+  /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
     this.#initialize();
+  }
+
+  /** @private */
+  #applyMode(): void {
+    if (!isLinearProgressMode(this.mode)) {
+      this.mode = "determinate";
+    }
+    setCustomEnumState(this, this.mode, "buffer", "determinate", "indeterminate", "query");
   }
 
   /** @private */

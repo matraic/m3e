@@ -1,9 +1,9 @@
 import { css, CSSResultGroup, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { AttachInternals, ReconnectedCallback, Role } from "@m3e/web/core";
+import { AttachInternals, ReconnectedCallback, Role, setCustomEnumState } from "@m3e/web/core";
 
-import { ProgressIndicatorVariant } from "./ProgressIndicatorVariant";
+import { isProgressIndicatorVariant, ProgressIndicatorVariant } from "./ProgressIndicatorVariant";
 
 /** A base implementation for an element used to convey progress. This class must be inherited. */
 export abstract class ProgressElementIndicatorBase extends ReconnectedCallback(
@@ -38,12 +38,22 @@ export abstract class ProgressElementIndicatorBase extends ReconnectedCallback(
    * The appearance of the indicator.
    * @default "flat"
    */
-  @property({ reflect: true }) variant: ProgressIndicatorVariant = "flat";
+  @property({ reflect: true, useDefault: true }) variant: ProgressIndicatorVariant = "flat";
 
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
+    this.#applyVariant();
     this.ariaValueMin = "0";
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
   }
 
   /** @inheritdoc */
@@ -56,5 +66,13 @@ export abstract class ProgressElementIndicatorBase extends ReconnectedCallback(
     if (changedProperties.has("max")) {
       this.ariaValueMax = `${this.max}`;
     }
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isProgressIndicatorVariant(this.variant)) {
+      this.variant = "flat";
+    }
+    setCustomEnumState(this, this.variant, "flat", "wavy");
   }
 }
