@@ -19,9 +19,9 @@ import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
 import { M3eDirectionality, SupportsDirectionality } from "@m3e/web/core/bidi";
 
 import { M3eStepElement } from "./StepElement";
-import { StepLabelPosition } from "./StepLabelPosition";
-import { StepHeaderPosition } from "./StepHeaderPosition";
-import { StepperOrientation } from "./StepperOrientation";
+import { isStepLabelPosition, StepLabelPosition } from "./StepLabelPosition";
+import { isStepHeaderPosition, StepHeaderPosition } from "./StepHeaderPosition";
+import { isStepperOrientation, StepperOrientation } from "./StepperOrientation";
 
 /**
  * Provides a wizard-like workflow by dividing content into logical steps.
@@ -179,13 +179,14 @@ export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallbac
    * The position of the step header, when oriented horizontally.
    * @default "above"
    */
-  @property({ attribute: "header-position", reflect: true }) headerPosition: StepHeaderPosition = "above";
+  @property({ attribute: "header-position", reflect: true, useDefault: true }) headerPosition: StepHeaderPosition =
+    "above";
 
   /**
    * The position of the step labels, when oriented horizontally.
    * @default "end"
    */
-  @property({ attribute: "label-position", reflect: true }) labelPosition: StepLabelPosition = "end";
+  @property({ attribute: "label-position", reflect: true, useDefault: true }) labelPosition: StepLabelPosition = "end";
 
   /**
    * Whether the validity of previous steps should be checked or not.
@@ -197,7 +198,7 @@ export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallbac
    * The orientation of the stepper.
    * @default "horizontal"
    */
-  @property({ reflect: true }) orientation: StepperOrientation = "horizontal";
+  @property({ reflect: true, useDefault: true }) orientation: StepperOrientation = "horizontal";
 
   /** The steps. */
   get steps(): readonly M3eStepElement[] {
@@ -302,6 +303,11 @@ export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallbac
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
+
+    this.#applyOrientation();
+    this.#applyHeaderPosition();
+    this.#applyLabelPosition();
+
     addCustomState(this, "--no-animate");
     this.#directionalitySubscription = M3eDirectionality.observe(
       () => (this[selectionManager].directionality = M3eDirectionality.current),
@@ -311,6 +317,7 @@ export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallbac
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
+
     this._orientation = undefined;
     this.#breakpointUnobserve?.();
     this.#directionalitySubscription?.();
@@ -329,7 +336,12 @@ export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallbac
   protected override willUpdate(changedProperties: PropertyValues): void {
     super.willUpdate(changedProperties);
 
+    if (changedProperties.has("headerPosition")) {
+      this.#applyHeaderPosition();
+    }
+
     if (changedProperties.has("orientation")) {
+      this.#applyOrientation();
       this.#breakpointUnobserve?.();
 
       if (this.orientation === "auto") {
@@ -343,7 +355,20 @@ export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallbac
       this.#updateDisplayOrder();
     }
 
-    if (changedProperties.has("label-position")) {
+    if (changedProperties.has("labelPosition")) {
+      this.#applyLabelPosition();
+      this.#updateLabelPosition();
+    }
+  }
+
+  /** @inheritdoc */
+  protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(_changedProperties);
+
+    if (!_changedProperties.has("orientation")) {
+      this.#updateDisplayOrder();
+    }
+    if (!_changedProperties.has("labelPosition")) {
       this.#updateLabelPosition();
     }
   }
@@ -367,6 +392,27 @@ export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallbac
     }
 
     return html`${this.#renderHeader()} <slot name="panel"></slot>`;
+  }
+
+  /** @private */
+  #applyOrientation(): void {
+    if (!isStepperOrientation(this.orientation)) {
+      this.orientation = "horizontal";
+    }
+  }
+
+  /** @private */
+  #applyLabelPosition(): void {
+    if (!isStepLabelPosition(this.labelPosition)) {
+      this.labelPosition = "end";
+    }
+  }
+
+  /** @private */
+  #applyHeaderPosition(): void {
+    if (!isStepHeaderPosition(this.headerPosition)) {
+      this.headerPosition = "above";
+    }
   }
 
   /** @private */
