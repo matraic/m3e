@@ -4,7 +4,7 @@ import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { customElement, DesignToken, HtmlFor } from "@m3e/web/core";
+import { customElement, DesignToken, HtmlFor, setCustomState } from "@m3e/web/core";
 
 import { TimepickerOrientation } from "./TimepickerOrientation";
 import { M3eTimepickerDialElement } from "./TimepickerDialElement";
@@ -232,13 +232,13 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
         ${DesignToken.typescale.standard.display.large.tracking}
       );
     }
-    :host([orientation="horizontal"]) .period-toggle {
+    :host(:is(:state(--horizontal), :--horizontal)) .period-toggle {
       margin-inline-start: var(
         --m3e-timepicker-input-horizontal-period-toggle-space,
         ${DesignToken.measurement.space150}
       );
     }
-    :host([orientation="vertical"]) .period-toggle {
+    :host(:is(:state(--vertical), :--vertical)) .period-toggle {
       margin-block-start: var(--m3e-timepicker-input-vertical-period-toggle-space, ${DesignToken.measurement.space200});
     }
   `;
@@ -251,7 +251,7 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
    * The orientation of the input.
    * @default "horizontal"
    */
-  @property({ reflect: true }) orientation: Exclude<TimepickerOrientation, "auto"> = "horizontal";
+  @property({ reflect: true, useDefault: true }) orientation: Exclude<TimepickerOrientation, "auto"> = "horizontal";
 
   /**
    * Whether to hide field labels.
@@ -306,8 +306,18 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
   }
 
   /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#applyOrientation();
+  }
+
+  /** @inheritdoc */
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("orientation")) {
+      this.#applyOrientation();
+    }
 
     if (
       _changedProperties.has("hour") ||
@@ -323,6 +333,15 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
     ) {
       this.#syncControl();
     }
+  }
+
+  /** @private */
+  #applyOrientation(): void {
+    if (this.orientation !== "horizontal" && this.orientation !== "vertical") {
+      this.orientation = "horizontal";
+    }
+    setCustomState(this, "--horizontal", this.orientation === "horizontal");
+    setCustomState(this, "--vertical", this.orientation === "vertical");
   }
 
   /** @private */

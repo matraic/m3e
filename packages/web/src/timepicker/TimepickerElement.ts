@@ -21,6 +21,7 @@ import {
   TimeParts,
   HtmlFor,
   waitForUpdate,
+  setCustomEnumState,
 } from "@m3e/web/core";
 
 import { positionAnchor } from "@m3e/web/core/anchoring";
@@ -33,10 +34,10 @@ import "@m3e/web/button";
 import "@m3e/web/icon-button";
 
 import { M3eTimepickerInputElement } from "./TimepickerInputElement";
-import { TimepickerVariant } from "./TimepickerVariant";
-import { TimepickerMode } from "./TimepickerMode";
-import { TimepickerOrientation } from "./TimepickerOrientation";
-import { TimepickerFormat } from "./TimepickerFormat";
+import { isTimepickerVariant, TimepickerVariant } from "./TimepickerVariant";
+import { isTimepickerMode, TimepickerMode } from "./TimepickerMode";
+import { isTimepickerOrientation, TimepickerOrientation } from "./TimepickerOrientation";
+import { isTimepickerFormat, TimepickerFormat } from "./TimepickerFormat";
 
 import "./TimepickerDialElement";
 import "./TimepickerInputElement";
@@ -287,10 +288,10 @@ export class M3eTimepickerElement extends HtmlFor(
     .dial {
       flex: none;
     }
-    :host(:not([mode="dial"])) .dial-wrapper {
+    :host(:is(:state(--input), :--input)) .dial-wrapper {
       opacity: 0;
     }
-    :host([mode="dial"]) .dial-wrapper {
+    :host(:is(:state(--dial), :--dial)) .dial-wrapper {
       opacity: 1;
     }
     :host(:not(:is(:state(--horizontal), :--horizontal))) .dial-wrapper {
@@ -350,13 +351,13 @@ export class M3eTimepickerElement extends HtmlFor(
    * The mode in which to select time.
    * @default "dial"
    */
-  @property({ reflect: true }) mode: TimepickerMode = "dial";
+  @property({ reflect: true, useDefault: true }) mode: TimepickerMode = "dial";
 
   /**
    * The orientation of the picker.
    * @default "vertical"
    */
-  @property({ reflect: true }) orientation: TimepickerOrientation = "vertical";
+  @property() orientation: TimepickerOrientation = "vertical";
 
   /**
    * The selected date.
@@ -482,6 +483,7 @@ export class M3eTimepickerElement extends HtmlFor(
   override connectedCallback(): void {
     super.connectedCallback();
 
+    this.#applyMode();
     this.setAttribute("popover", "manual");
     this.addEventListener("toggle", this.#toggleHandler);
   }
@@ -609,10 +611,57 @@ export class M3eTimepickerElement extends HtmlFor(
   }
 
   /** @inheritdoc */
+  protected override willUpdate(changedProperties: PropertyValues<this>): void {
+    super.willUpdate(changedProperties);
+
+    if (changedProperties.has("mode")) {
+      this.#applyMode();
+    }
+
+    if (changedProperties.has("variant") && !isTimepickerVariant(this.variant)) {
+      this.variant = "docked";
+    }
+    if (changedProperties.has("orientation") && !isTimepickerOrientation(this.orientation)) {
+      this.orientation = "vertical";
+    }
+    if (changedProperties.has("format") && !isTimepickerFormat(this.format)) {
+      this.format = "12";
+    }
+
+    if (changedProperties.has("date")) {
+      this.#clearSelectionState();
+    }
+    if (changedProperties.has("variant") || changedProperties.has("orientation")) {
+      this.#breakpointUnobserve?.();
+
+      if (this.variant !== "auto") {
+        this._variant = undefined;
+        this.#updateVariant();
+      }
+      if (this.orientation !== "auto") {
+        this._orientation = undefined;
+        this.#updateOrientation();
+      }
+
+      if (this.variant === "auto" || this.orientation === "auto") {
+        this.#initBreakpointMonitoring();
+      }
+    }
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     return html`<m3e-focus-trap ?disabled="${!this._open}">
       ${this.#renderHeader()}${this.#renderPicker()}${this.#renderActions()}
     </m3e-focus-trap>`;
+  }
+
+  /** @private */
+  #applyMode(): void {
+    if (!isTimepickerMode(this.mode)) {
+      this.mode = "dial";
+    }
+    setCustomEnumState(this, this.mode, "dial", "input");
   }
 
   /** @inheritdoc */
@@ -686,31 +735,6 @@ export class M3eTimepickerElement extends HtmlFor(
   /** @private */
   #handleModeClick(): void {
     this._mode = this.currentMode === "dial" ? "input" : "dial";
-  }
-
-  /** @inheritdoc */
-  protected override willUpdate(changedProperties: PropertyValues<this>): void {
-    super.willUpdate(changedProperties);
-
-    if (changedProperties.has("date")) {
-      this.#clearSelectionState();
-    }
-    if (changedProperties.has("variant") || changedProperties.has("orientation")) {
-      this.#breakpointUnobserve?.();
-
-      if (this.variant !== "auto") {
-        this._variant = undefined;
-        this.#updateVariant();
-      }
-      if (this.orientation !== "auto") {
-        this._orientation = undefined;
-        this.#updateOrientation();
-      }
-
-      if (this.variant === "auto" || this.orientation === "auto") {
-        this.#initBreakpointMonitoring();
-      }
-    }
   }
 
   /** @private */

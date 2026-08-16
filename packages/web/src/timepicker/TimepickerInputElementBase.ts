@@ -1,14 +1,14 @@
 import { LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { timeConverter, TimeParts } from "@m3e/web/core";
+import { AttachInternals, timeConverter, TimeParts } from "@m3e/web/core";
 
-import { TimepickerFormat } from "./TimepickerFormat";
-import { TimepickerView } from "./TimepickerView";
-import { TimepickerPeriod } from "./TimepickerPeriod";
+import { isTimepickerFormat, TimepickerFormat } from "./TimepickerFormat";
+import { isTimepickerView, TimepickerView } from "./TimepickerView";
+import { isTimepickerPeriod, TimepickerPeriod } from "./TimepickerPeriod";
 
 /** A base implementation for an element used to input time. This class must be inherited. */
-export class TimepickerInputElementBase extends LitElement {
+export class TimepickerInputElementBase extends AttachInternals(LitElement) {
   /** @private */ #hour: number | null = null;
   /** @private */ #minute: number | null = null;
   /** @private */ #second: number | null = null;
@@ -110,7 +110,18 @@ export class TimepickerInputElementBase extends LitElement {
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
 
+    if (_changedProperties.has("period") && !isTimepickerPeriod(this.period)) {
+      this.period = "am";
+    }
+
+    if (_changedProperties.has("view") && !isTimepickerView(this.view)) {
+      this.view = "hour";
+    }
+
     if (_changedProperties.has("format")) {
+      if (!isTimepickerFormat(this.format)) {
+        this.format = "12";
+      }
       this.#format =
         this.format !== "auto"
           ? this.format
