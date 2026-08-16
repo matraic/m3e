@@ -5,7 +5,6 @@ This roadmap presents the ongoing development, future direction, and past accomp
 ## 🟡 Current
 
 - 2.7.x Release
-- Component hardening via attribute defaulting and defensive normalization
 
 ## 🔮 Future
 
@@ -23,7 +22,7 @@ The following components are planned for future release (in no particular order)
 
 ## 🏛️ Past Milestones
 
-- **2.7.0 – 2.7.5 — Feature release + patch releases**
+- **2.7.0 – 2.7.6 — Feature release + patch releases**
   Added `@m3e/web/date-input`, text scaling support, bug fixes.
 
 - **2.6.0 – 2.6.3 — Feature release + patch releases**
