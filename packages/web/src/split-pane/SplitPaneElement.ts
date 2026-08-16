@@ -23,7 +23,7 @@ import {
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
 import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
 
-import { SplitPaneOrientation } from "./SplitPaneOrientation";
+import { isSplitPaneOrientation, SplitPaneOrientation } from "./SplitPaneOrientation";
 
 /**
  * A dual-view layout that separates content with a movable drag handle.
@@ -307,7 +307,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
    * The orientation of the split.
    * @default "horizontal"
    */
-  @property() orientation: SplitPaneOrientation = "horizontal";
+  @property({ reflect: true, useDefault: true }) orientation: SplitPaneOrientation = "horizontal";
 
   /**
    * The accessible label given to the movable drag handle.
@@ -390,6 +390,12 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
   }
 
   /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#applyOrientation();
+  }
+
+  /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
@@ -413,6 +419,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
     super.willUpdate(changedProperties);
 
     if (changedProperties.has("orientation")) {
+      this.#applyOrientation();
       this.#breakpointUnobserve?.();
 
       if (this.orientation === "auto") {
@@ -425,7 +432,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
   }
 
   /** @inheritdoc */
-  protected override updated(_changedProperties: PropertyValues): void {
+  protected override updated(_changedProperties: PropertyValues<this>): void {
     super.updated(_changedProperties);
     if (_changedProperties.has("value")) {
       this._base.style.setProperty("--_split-pane-value", `${this.value}%`);
@@ -433,8 +440,11 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
   }
 
   /** @inheritdoc */
-  protected override firstUpdated(_changedProperties: PropertyValues): void {
+  protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
     super.firstUpdated(_changedProperties);
+    if (!_changedProperties.has("orientation")) {
+      this.#updateOrientation();
+    }
     this.#initialize();
   }
 
@@ -449,6 +459,13 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
         <slot name="end" @slotchange=${this.#handleEndSlotChange}></slot>
       </div>
     </div>`;
+  }
+
+  /** @private */
+  #applyOrientation(): void {
+    if (!isSplitPaneOrientation(this.orientation)) {
+      this.orientation = "horizontal";
+    }
   }
 
   /** @private */
