@@ -369,7 +369,7 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
    * A fractional value, between 0 and `max`, indicating buffer progress.
    * @default 0
    */
-  @property({ attribute: "buffer-value", type: Number, reflect: true }) bufferValue = 0;
+  @property({ attribute: "buffer-value", type: Number }) bufferValue = 0;
 
   /** @inheritdoc */
   override connectedCallback(): void {
