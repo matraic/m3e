@@ -80,7 +80,7 @@ export class M3eToolbarElement extends Vertical(Role(AttachInternals(LitElement)
       align-items: center;
       box-sizing: border-box;
       border-radius: inherit;
-      --_icon-button-inline-size: auto;
+      --_icon-button-size: auto;
       --_icon-button-min-size: 48px;
     }
     :host(:not([vertical])) {

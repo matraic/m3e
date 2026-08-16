@@ -25,13 +25,14 @@ export const IconButtonStyle: CSSResultGroup = css`
     justify-content: center;
   }
   .layout {
-    width: var(--_icon-button-inline-size, 100%);
+    width: var(--_icon-button-size, 100%);
     min-width: var(--_icon-button-min-size);
     min-height: var(--_icon-button-min-size);
+    height: var(--_icon-button-size, 100%);
   }
   .base {
     position: relative;
-    width: var(--_icon-button-inline-size, 100%);
+    width: var(--_icon-button-size, 100%);
     transition: ${unsafeCSS(
       `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
     )};

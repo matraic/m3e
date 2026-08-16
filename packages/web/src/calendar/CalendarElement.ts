@@ -130,7 +130,7 @@ export class M3eCalendarElement extends LitElement {
       height: 56px;
       display: flex;
       align-items: center;
-      --_icon-button-inline-size: auto;
+      --_icon-button-size: auto;
       --_icon-button-min-size: 48px;
       --m3e-text-button-label-text-color: var(
         --m3e-calendar-period-button-text-color,

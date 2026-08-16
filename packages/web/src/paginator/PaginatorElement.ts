@@ -125,7 +125,7 @@ export class M3ePaginatorElement extends SupportsDirectionality(AttachInternals(
     .range-actions {
       display: flex;
       align-items: center;
-      --_icon-button-inline-size: auto;
+      --_icon-button-size: auto;
       --_icon-button-min-size: 48px;
     }
     ::slotted([slot="first-page-icon"]),

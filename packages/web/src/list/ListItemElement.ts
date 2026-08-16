@@ -251,7 +251,7 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
     }
     slot[name="leading"],
     slot[name="leading"] {
-      --_icon-button-inline-size: auto;
+      --_icon-button-size: auto;
       --_icon-button-min-size: 48px;
     }
     ::slotted(span[slot="trailing"]),
