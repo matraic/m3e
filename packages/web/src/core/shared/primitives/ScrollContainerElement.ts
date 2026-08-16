@@ -5,7 +5,7 @@ import { customElement, debounce } from "../decorators";
 import { DesignToken } from "../tokens";
 import { AttachInternals, setCustomState } from "../mixins";
 
-import { ScrollDividers } from "./ScrollDividers";
+import { isScrollDividers, ScrollDividers } from "./ScrollDividers";
 import { FocusRingToken } from "./FocusRingToken";
 
 /**
@@ -115,6 +115,15 @@ export class M3eScrollContainerElement extends AttachInternals(LitElement) {
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.removeEventListener("scroll", this.#scrollHandler);
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("dividers") && !isScrollDividers(this.dividers)) {
+      this.dividers = "above-below";
+    }
   }
 
   /** @inheritdoc */

@@ -3,11 +3,11 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
-import { addCustomState, AttachInternals, deleteCustomState, setCustomState } from "../mixins";
+import { addCustomState, AttachInternals, deleteCustomState, setCustomEnumState, setCustomState } from "../mixins";
 import { DesignToken } from "../tokens";
 import { prefersReducedMotion } from "../utils";
 import { customElement } from "../decorators";
-import { CollapsibleOrientation } from "./CollapsibleOrientation";
+import { CollapsibleOrientation, isCollapsibleOrientation } from "./CollapsibleOrientation";
 
 /**
  * A container used to expand and collapse content.
@@ -45,7 +45,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
     :host([hidden]) {
       display: none;
     }
-    :host([orientation="vertical"]) {
+    :host(:is(:state(--vertical), :--vertical)) {
       height: 0px;
       transition: ${unsafeCSS(`visibility var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
           ${DesignToken.motion.easing.standard},
@@ -56,7 +56,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
         padding-bottom var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
           ${DesignToken.motion.easing.standard}`)};
     }
-    :host([orientation="horizontal"]) {
+    :host(:is(:state(--horizontal), :--horizontal)) {
       width: 0px;
       transition: ${unsafeCSS(`visibility var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
           ${DesignToken.motion.easing.standard},
@@ -82,12 +82,12 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
     :host(:not(:is(:state(--closing), :--closing)):not([open])) {
       visibility: hidden;
     }
-    :host([orientation="vertical"]:not([open])) {
+    :host(:is(:state(--vertical), :--vertical):not([open])) {
       min-height: unset !important;
       padding-top: 0px !important;
       padding-bottom: 0px !important;
     }
-    :host([orientation="horizontal"]:not([open])) {
+    :host(:is(:state(--horizontal), :--horizontal):not([open])) {
       min-width: unset !important;
       padding-left: 0px !important;
       padding-right: 0px !important;
@@ -101,12 +101,12 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
     :host(:is(:state(--no-animate), :--no-animate)) {
       transition-duration: 0ms;
     }
-    :host([orientation="vertical"]:is(:state(--opening), :--opening)),
-    :host([orientation="vertical"]:is(:state(--closing), :--closing)) {
+    :host(:is(:state(--vertical), :--vertical):is(:state(--opening), :--opening)),
+    :host(:is(:state(--vertical), :--vertical):is(:state(--closing), :--closing)) {
       overflow-y: hidden !important;
     }
-    :host([orientation="horizontal"]:is(:state(--opening), :--opening)),
-    :host([orientation="horizontal"]:is(:state(--closing), :--closing)) {
+    :host(:is(:state(--horizontal), :--horizontal):is(:state(--opening), :--opening)),
+    :host(:is(:state(--horizontal), :--horizontal):is(:state(--closing), :--closing)) {
       overflow-x: hidden !important;
     }
     :host([orientation="both"]:is(:state(--opening), :--opening)),
@@ -140,13 +140,28 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
    * Orientation of collapsible content.
    * @default "vertical"
    */
-  @property({ reflect: true }) orientation: CollapsibleOrientation = "vertical";
+  @property({ reflect: true, useDefault: true }) orientation: CollapsibleOrientation = "vertical";
 
   /**
    * Whether to disable animation.
    * @default false
    */
   @property({ attribute: "no-animate", type: Boolean, reflect: true }) noAnimate = false;
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#applyOrientation();
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("orientation")) {
+      this.#applyOrientation();
+    }
+  }
 
   /** @inheritdoc */
   protected override update(changedProperties: PropertyValues<this>): void {
@@ -244,6 +259,14 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<slot @slotchange=${this.#handleSlotChange}></slot>`;
+  }
+
+  /** @private */
+  #applyOrientation(): void {
+    if (!isCollapsibleOrientation(this.orientation)) {
+      this.orientation = "horizontal";
+    }
+    setCustomEnumState(this, this.orientation, "both", "horizontal", "vertical");
   }
 
   /** @private */

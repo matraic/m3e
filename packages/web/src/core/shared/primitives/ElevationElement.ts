@@ -6,7 +6,7 @@ import { HtmlFor, Role } from "../mixins";
 import { DesignToken } from "../tokens";
 import { customElement } from "../decorators";
 
-import { ElevationLevel } from "./ElevationLevel";
+import { ElevationLevel, isElevationLevel } from "./ElevationLevel";
 import { ElevationToken } from "./ElevationToken";
 
 /**
@@ -173,7 +173,7 @@ export class M3eElevationElement extends HtmlFor(Role(LitElement, "none")) {
    * The level at which to visually depict elevation.
    * @default null
    */
-  @property({ type: Number, reflect: true }) level: ElevationLevel | null = null;
+  @property({ type: Number, reflect: true, useDefault: true }) level: ElevationLevel | null = null;
 
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
@@ -208,6 +208,15 @@ export class M3eElevationElement extends HtmlFor(Role(LitElement, "none")) {
     this._shadow?.classList.toggle("focus", false);
     this._shadow?.classList.toggle("pressed", false);
     this._shadow?.classList.toggle("resting", false);
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("level") && this.level !== null && !isElevationLevel(this.level)) {
+      this.level = null;
+    }
   }
 
   /** @inheritdoc */
