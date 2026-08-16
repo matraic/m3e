@@ -131,7 +131,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       );
       --_fab-menu-ripple-color: var(--m3e-secondary-fab-ripple-color, ${DesignToken.color.onSecondaryContainer});
     }
-    :host([variant="tertiary"]) .base {
+    :host(:is(:state(--tertiary), :--tertiary)) .base {
       --_fab-menu-item-color: var(--m3e-tertiary-fab-color, ${DesignToken.color.onTertiaryContainer});
       --_fab-menu-item-container-color: var(--m3e-tertiary-fab-container-color, ${DesignToken.color.tertiaryContainer});
       --_fab-menu-background-hover-color: var(--m3e-tertiary-fab-hover-color, ${DesignToken.color.onTertiaryContainer});
