@@ -189,6 +189,12 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
 
     if (changedProperties.has("disabled") || changedProperties.has("current")) {
       this.ariaDisabled = this.disabled && !this.current ? "true" : null;
+
+      if (this.current || this.disabled) {
+        this.removeAttribute("tabindex");
+      } else {
+        this.setAttribute("tabindex", "0");
+      }
     }
 
     if (changedProperties.has("current")) {
