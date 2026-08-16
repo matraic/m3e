@@ -16,8 +16,6 @@ import { M3eFloatingPanelElement } from "@m3e/web/core/anchoring";
 
 import { M3eOptGroupElement } from "./OptGroupElement";
 import { M3eOptionElement } from "./OptionElement";
-import { property } from "lit/decorators.js";
-import { OptionPanelState } from "./OptionPanelState";
 
 /**
  * Presents a list of options on a temporary surface.
@@ -169,12 +167,6 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
       callback: () => this.#handleMutation(),
     });
   }
-
-  /**
-   * The state for which to present content.
-   * @default "content"
-   */
-  @property({ reflect: true }) state: OptionPanelState = "content";
 
   /** @inheritdoc */
   override connectedCallback(): void {
