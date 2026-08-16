@@ -11,6 +11,8 @@ import {
   hasCustomState,
   prefersReducedMotion,
   ResizeController,
+  setCustomEnumState,
+  setCustomState,
   VelocityTracker,
 } from "@m3e/web/core";
 
@@ -20,9 +22,9 @@ import { M3eSlideGroupElement } from "@m3e/web/slide-group";
 
 import "@m3e/web/slide-group";
 
-import { TabVariant } from "./TabVariant";
 import { M3eTabElement } from "./TabElement";
-import { TabHeaderPosition } from "./TabHeaderPosition";
+import { isTabVariant, TabVariant } from "./TabVariant";
+import { isTabHeaderPosition, TabHeaderPosition } from "./TabHeaderPosition";
 
 const MIN_PRIMARY_TAB_WIDTH = 24;
 
@@ -127,50 +129,52 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
         width var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard}`,
       )};
     }
-    :host([header-position="after"]) .header {
+    :host(:is(:state(--header-position-after), :--header-position-after)) .header {
       flex-direction: column-reverse;
     }
-    :host([header-position="before"]) .ink-bar {
+    :host(:is(:state(--header-position-before), :--header-position-before)) .ink-bar {
       margin-top: calc(0px - var(--_tabs-active-indicator-thickness));
     }
-    :host([header-position="before"]) .tablist {
+    :host(:is(:state(--header-position-before), :--header-position-before)) .tablist {
       --m3e-slide-group-divider-bottom: var(--m3e-divider-thickness, 1px) solid
         var(--m3e-divider-color, ${DesignToken.color.outlineVariant});
     }
-    :host([header-position="after"]) .ink-bar {
+    :host(:is(:state(--header-position-after), :--header-position-after)) .ink-bar {
       margin-bottom: calc(0px - var(--_tabs-active-indicator-thickness));
     }
-    :host([header-position="after"]) .tablist {
+    :host(:is(:state(--header-position-after), :--header-position-after)) .tablist {
       --m3e-slide-group-divider-top: var(--m3e-divider-thickness, 1px) solid
         var(--m3e-divider-color, ${DesignToken.color.outlineVariant});
     }
-    :host([header-position="before"][variant="primary"]) .active-indicator {
+    :host(:is(:state(--header-position-before), :--header-position-before):is(:state(--primary), :--primary))
+      .active-indicator {
       border-radius: var(--m3e-tabs-primary-before-active-indicator-shape, ${DesignToken.shape.corner.extraSmallTop});
     }
-    :host([header-position="after"][variant="primary"]) .active-indicator {
+    :host(:is(:state(--header-position-after), :--header-position-after):is(:state(--primary), :--primary))
+      .active-indicator {
       border-radius: var(--m3e-tabs-primary-after-active-indicator-shape, ${DesignToken.shape.corner.extraSmallBottom});
     }
     .tabs {
       flex: 1 1 auto;
     }
-    :host([variant="primary"]) .tablist {
+    :host(:is(:state(--primary), :--primary)) .tablist {
       --_tabs-activate-indicator-inset: var(--m3e-tabs-primary-active-indicator-inset, 2px);
       --_tabs-active-indicator-thickness: var(--m3e-tabs-primary-active-indicator-thickness, 3px);
       --_tab-height: 64px;
     }
-    :host([header-position="before"]) .tablist {
+    :host(:is(:state(--header-position-before), :--header-position-before)) .tablist {
       --_tab-focus-ring-bottom-offset: calc(var(--_tabs-active-indicator-thickness) + 1px);
     }
-    :host([header-position="after"]) .tablist {
+    :host(:is(:state(--header-position-after), :--header-position-after)) .tablist {
       --_tab-focus-ring-top-offset: calc(var(--_tabs-active-indicator-thickness) + 2px);
     }
-    :host([header-position="before"][variant="primary"]) .tablist {
+    :host(:is(:state(--header-position-before), :--header-position-before):is(:state(--primary), :--primary)) .tablist {
       --_tab-direction: column;
     }
-    :host([header-position="after"][variant="primary"]) .tablist {
+    :host(:is(:state(--header-position-after), :--header-position-after):is(:state(--primary), :--primary)) .tablist {
       --_tab-direction: column-reverse;
     }
-    :host([variant="secondary"]) .tablist {
+    :host(:is(:state(--secondary), :--secondary)) .tablist {
       --_tabs-active-indicator-thickness: var(--m3e-tabs-secondary-active-indicator-thickness, 2px);
       --_tab-height: 48px;
       --_tab-selected-color: ${DesignToken.color.onSurface};
@@ -278,13 +282,14 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
    * The position of the tab headers.
    * @default "before"
    */
-  @property({ attribute: "header-position", reflect: true }) headerPosition: TabHeaderPosition = "before";
+  @property({ attribute: "header-position", reflect: true, useDefault: true }) headerPosition: TabHeaderPosition =
+    "before";
 
   /**
    * The appearance variant of the tabs.
    * @default "secondary"
    */
-  @property({ reflect: true }) variant: TabVariant = "secondary";
+  @property({ reflect: true, useDefault: true }) variant: TabVariant = "secondary";
 
   /**
    * Whether tabs are stretched to fill the header.
@@ -333,6 +338,9 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
   override connectedCallback(): void {
     super.connectedCallback();
 
+    this.#applyVariant();
+    this.#applyHeaderPosition();
+
     addCustomState(this, "--no-animate");
     this.#directionalitySubscription = M3eDirectionality.observe(() => {
       this.requestUpdate();
@@ -345,6 +353,27 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
     super.disconnectedCallback();
 
     this.#directionalitySubscription?.();
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("variant")) {
+      this.#applyVariant();
+    }
+    if (_changedProperties.has("headerPosition")) {
+      this.#applyHeaderPosition();
+    }
+  }
+
+  /** @inheritdoc */
+  protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(_changedProperties);
+
+    if (!_changedProperties.has("variant") && this._selectedIndex !== null) {
+      this.#updateInkBar();
+    }
   }
 
   /** @inheritdoc */
@@ -379,6 +408,23 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
         <slot name="panel"></slot>
       </m3e-slide>
       ${this.headerPosition === "after" ? this.#renderHeader() : nothing}`;
+  }
+
+  /** @private */
+  #applyVariant(): void {
+    if (!isTabVariant(this.variant)) {
+      this.variant = "secondary";
+    }
+    setCustomEnumState(this, this.variant, "primary", "secondary");
+  }
+
+  /** @private */
+  #applyHeaderPosition(): void {
+    if (!isTabHeaderPosition(this.headerPosition)) {
+      this.headerPosition = "before";
+    }
+    setCustomState(this, "--header-position-before", this.headerPosition === "before");
+    setCustomState(this, "--header-position-after", this.headerPosition === "after");
   }
 
   /** @private */
