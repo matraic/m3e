@@ -163,7 +163,7 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
    * Indicates the current item in the breadcrumb path.
    * @default undefined
    */
-  @property({ reflect: true }) current?: BreadcrumbItemCurrent;
+  @property({ reflect: true }) current: BreadcrumbItemCurrent | null = null;
 
   /** @inheritdoc */
   override connectedCallback(): void {
@@ -204,7 +204,7 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="base" aria-current="${ifDefined(this.current)}">
+    return html`<div class="base" aria-current="${ifDefined(this.current ?? undefined)}">
       ${this.current
         ? nothing
         : html`<m3e-state-layer class="state-layer" ?disabled="${this.disabled}"> </m3e-state-layer>

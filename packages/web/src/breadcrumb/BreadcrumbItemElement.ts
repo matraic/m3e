@@ -5,7 +5,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { AttachInternals, customElement, LinkButton, Role, setCustomState } from "@m3e/web/core";
 
 import { M3eBreadcrumbItemButtonElement } from "./BreadcrumbItemButtonElement";
-import { BreadcrumbItemCurrent } from "./BreadcrumbItemCurrent";
+import { BreadcrumbItemCurrent, isBreadcrumbItemCurrent } from "./BreadcrumbItemCurrent";
 import { isIconOnly } from "./isIconOnly";
 
 import "./BreadcrumbItemButtonElement";
@@ -110,9 +110,9 @@ export class M3eBreadcrumbItemElement extends LinkButton(AttachInternals(Role(Li
 
   /**
    * Indicates the current item in the breadcrumb path.
-   * @default undefined
+   * @default null
    */
-  @property({ reflect: true }) current?: BreadcrumbItemCurrent;
+  @property({ reflect: true, useDefault: true }) current: BreadcrumbItemCurrent | null = null;
 
   /** @inheritdoc */
   override focus(options?: FocusOptions): void {
@@ -130,6 +130,14 @@ export class M3eBreadcrumbItemElement extends LinkButton(AttachInternals(Role(Li
   }
 
   /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+    if (_changedProperties.has("current") && this.current !== null && !isBreadcrumbItemCurrent(this.current)) {
+      this.current = null;
+    }
+  }
+
+  /** @inheritdoc */
   protected override updated(_changedProperties: PropertyValues<this>): void {
     super.updated(_changedProperties);
     if (_changedProperties.has("current")) {
@@ -144,7 +152,7 @@ export class M3eBreadcrumbItemElement extends LinkButton(AttachInternals(Role(Li
         class="button"
         aria-label="${ifDefined(this.itemLabel || undefined)}"
         ?disabled="${this.disabled}"
-        current="${ifDefined(this.current)}"
+        current="${ifDefined(this.current ?? undefined)}"
         href="${ifDefined(this.href || undefined)}"
         target="${ifDefined(this.target || undefined)}"
         download="${ifDefined(this.download || undefined)}"
