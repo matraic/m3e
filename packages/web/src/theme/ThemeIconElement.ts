@@ -12,8 +12,8 @@ import {
 
 import { customElement, DesignToken, Role } from "@m3e/web/core";
 
-import { ColorScheme } from "./ColorScheme";
-import { ThemeVariant } from "./ThemeVariant";
+import { ColorScheme, isColorScheme } from "./ColorScheme";
+import { isThemeVariant, ThemeVariant } from "./ThemeVariant";
 
 /**
  * An icon that visually presents a preview of a theme.
@@ -157,6 +157,18 @@ export class M3eThemeIconElement extends Role(LitElement, "img") {
 
     [this.#light, this.#dark].forEach((x) => x?.removeEventListener("change", this.#colorSchemeChangeHandler));
     this.#light = this.#dark = undefined;
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("variant") && !isThemeVariant(this.variant)) {
+      this.variant = "neutral";
+    }
+    if (_changedProperties.has("scheme") && !isColorScheme(this.scheme)) {
+      this.scheme = "auto";
+    }
   }
 
   /** @inheritdoc */

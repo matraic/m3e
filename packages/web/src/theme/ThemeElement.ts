@@ -12,10 +12,10 @@ import {
 
 import { customElement, DesignToken, registerStyleSheet } from "@m3e/web/core";
 
-import { ColorScheme } from "./ColorScheme";
-import { ContrastLevel } from "./ContrastLevel";
-import { MotionScheme } from "./MotionScheme";
-import { ThemeVariant } from "./ThemeVariant";
+import { ColorScheme, isColorScheme } from "./ColorScheme";
+import { ContrastLevel, isContrastLevel } from "./ContrastLevel";
+import { isMotionScheme, MotionScheme } from "./MotionScheme";
+import { isThemeVariant, ThemeVariant } from "./ThemeVariant";
 
 /**
  * A non-visual element responsible for application-level theming.
@@ -248,6 +248,24 @@ export class M3eThemeElement extends LitElement {
 
     if (document.adoptedStyleSheets.includes(this.#styleSheet)) {
       document.adoptedStyleSheets = document.adoptedStyleSheets.filter((x) => x !== this.#styleSheet);
+    }
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("variant") && !isThemeVariant(this.variant)) {
+      this.variant = "neutral";
+    }
+    if (_changedProperties.has("scheme") && !isColorScheme(this.scheme)) {
+      this.scheme = "auto";
+    }
+    if (_changedProperties.has("contrast") && !isContrastLevel(this.contrast)) {
+      this.contrast = "standard";
+    }
+    if (_changedProperties.has("motion") && !isMotionScheme(this.motion)) {
+      this.motion = "standard";
     }
   }
 
