@@ -19,7 +19,7 @@
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.4/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.5/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -469,6 +469,42 @@
 &lt;m3e-form-field&gt;
   &lt;label slot=&quot;label&quot; for=&quot;keywords&quot;&gt;Keywords&lt;/label&gt;
   &lt;m3e-input-chip-set aria-label=&quot;Enter keywords&quot;&gt;
+    &lt;m3e-input-chip removable&gt;Design&lt;/m3e-input-chip&gt;
+    &lt;m3e-input-chip removable&gt;Accessibility&lt;/m3e-input-chip&gt;
+    &lt;m3e-input-chip removable&gt;Motion&lt;/m3e-input-chip&gt;
+    &lt;input id=&quot;keywords&quot; slot=&quot;input&quot; placeholder=&quot;New keyword...&quot; /&gt;
+  &lt;/m3e-input-chip-set&gt;
+&lt;/m3e-form-field&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="title" size="medium" level="4">Max chips</m3e-heading>
+        <p>
+          Use the <code>max-chips</code> attribute to control how many chips are shown when the input is not focused.
+          When the number of chips exceeds this value, the component collapses the chip set and shows a summary
+          indicator (for example, <code>+2</code>) instead of rendering all chips.
+        </p>
+
+        <p>When the input is focused, all chips are displayed regardless of the <code>max-chips</code> setting.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field>
+              <label slot="label" for="keywords">Keywords</label>
+              <m3e-input-chip-set aria-label="Enter keywords" max-chips="1">
+                <m3e-input-chip removable>Design</m3e-input-chip>
+                <m3e-input-chip removable>Accessibility</m3e-input-chip>
+                <m3e-input-chip removable>Motion</m3e-input-chip>
+                <input id="keywords2" slot="input" placeholder="New keyword..." />
+              </m3e-input-chip-set>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;keywords&quot;&gt;Keywords&lt;/label&gt;
+  &lt;m3e-input-chip-set aria-label=&quot;Enter keywords&quot; max-chips=&quot;1&quot;&gt;
     &lt;m3e-input-chip removable&gt;Design&lt;/m3e-input-chip&gt;
     &lt;m3e-input-chip removable&gt;Accessibility&lt;/m3e-input-chip&gt;
     &lt;m3e-input-chip removable&gt;Motion&lt;/m3e-input-chip&gt;

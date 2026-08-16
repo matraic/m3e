@@ -19,7 +19,7 @@
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.4/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.5/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -112,13 +112,13 @@
         </p>
 
         <p>
-          The following example illustrates the <code>docked</code> mode. In this mode, the search view appears as a
-          surface anchored to the search bar, allowing users to explore results while maintaining context within the
-          surrounding layout.
+          The following example illustrates the default <code>docked</code> mode. In this mode, the search view appears
+          as a surface anchored to the search bar, allowing users to explore results while maintaining context within
+          the surrounding layout.
         </p>
         <m3e-card variant="outlined" class="showcase">
           <div slot="content">
-            <m3e-search-view mode="docked">
+            <m3e-search-view>
               <input slot="input" placeholder="Search..." />
               <m3e-list>
                 <m3e-list-item>Result One</m3e-list-item>
@@ -130,7 +130,7 @@
         </m3e-card>
         <m3e-card variant="outlined" class="example">
           <pre slot="content">
-&lt;m3e-search-view mode=&quot;docked&quot;&gt;
+&lt;m3e-search-view&gt;
   &lt;input slot=&quot;input&quot; placeholder=&quot;Search...&quot; /&gt;
   &lt;m3e-list&gt;
     &lt;m3e-list-item&gt;Result One&lt;/m3e-list-item&gt;
