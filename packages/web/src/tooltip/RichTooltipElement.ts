@@ -8,7 +8,7 @@ import { M3eAriaDescriber, M3eInteractivityChecker } from "@m3e/web/core/a11y";
 import { AnchorPosition } from "@m3e/web/core/anchoring";
 import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
 
-import { RichTooltipPosition } from "./RichTooltipPosition";
+import { isRichTooltipPosition, RichTooltipPosition } from "./RichTooltipPosition";
 import { TooltipElementBase } from "./TooltipElementBase";
 
 /**
@@ -245,6 +245,15 @@ export class M3eRichTooltipElement extends TooltipElementBase {
         return M3eDirectionality.current === "rtl" ? "bottom-start" : "bottom-end";
       case "below-before":
         return M3eDirectionality.current === "rtl" ? "bottom-end" : "bottom-start";
+    }
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("position") && !isRichTooltipPosition(this.position)) {
+      this.position = "below-after";
     }
   }
 

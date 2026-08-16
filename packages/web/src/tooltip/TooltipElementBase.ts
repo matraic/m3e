@@ -13,7 +13,7 @@ import {
 import { M3ePlatform } from "@m3e/web/core/platform";
 import { AnchorPosition, positionAnchor } from "@m3e/web/core/anchoring";
 
-import { TooltipTouchGestures } from "./TooltipTouchGestures";
+import { isTooltipTouchGestures, TooltipTouchGestures } from "./TooltipTouchGestures";
 
 /** The space, in pixels, between the tooltip and anchor. */
 const TOOLTIP_OFFSET = 4;
@@ -140,6 +140,15 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
       this.hide();
     }
     super.detach();
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("touchGestures") && !isTooltipTouchGestures(this.touchGestures)) {
+      this.touchGestures = "auto";
+    }
   }
 
   /** @inheritdoc */

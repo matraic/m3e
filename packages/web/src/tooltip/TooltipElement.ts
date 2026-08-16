@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
 import { customElement, DesignToken, getTextContent, setCustomState } from "@m3e/web/core";
@@ -6,7 +6,7 @@ import { M3eAriaDescriber } from "@m3e/web/core/a11y";
 import { AnchorPosition } from "@m3e/web/core/anchoring";
 import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
 
-import { TooltipPosition } from "./TooltipPosition";
+import { isTooltipPosition, TooltipPosition } from "./TooltipPosition";
 import { TooltipElementBase } from "./TooltipElementBase";
 
 /**
@@ -191,6 +191,15 @@ export class M3eTooltipElement extends TooltipElementBase {
   override hide(): void {
     super.hide();
     this.#anchorLastPosition = undefined;
+  }
+
+  /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("position") && !isTooltipPosition(this.position)) {
+      this.position = "below";
+    }
   }
 
   /** @inheritdoc */
