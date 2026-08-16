@@ -8,6 +8,7 @@ import {
   customElement,
   deleteCustomState,
   DesignToken,
+  hasCustomState,
   prefersReducedMotion,
   ResizeController,
   safeStyleMap,
@@ -397,6 +398,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
   /** @private */ #cachedClientLeft = 0;
   /** @private */ #cachedClientRight = 0;
   /** @private */ #cachedClientWidth = 0;
+  /** @private */ #lastThumbMoveTimestamp = 0;
 
   constructor() {
     super();
@@ -697,6 +699,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
     }
 
     this.#changedThumbs.clear();
+    this.#lastThumbMoveTimestamp = e.timeStamp;
 
     this.#activeThumb = e.composedPath().find((x) => x instanceof M3eSliderThumbElement);
 
@@ -757,7 +760,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
       return;
     }
 
-    const value = this.#valueFromPoint(e);
+    let value = this.#valueFromPoint(e);
     let min = this.min;
     let max = this.max;
 
@@ -767,8 +770,34 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
       max = Math.min(max, this.upperThumb.value ?? this.max);
     }
 
+    value = Math.min(max, Math.max(min, value));
+    if (value === this.#activeThumb.value) {
+      return;
+    }
+
+    // Only animate value change when there are steps and drag speed occurs past a tolerance.
+    // Tolerance is based on visual impact to transitions during fast drag operations.
+
     const effectiveStep = this.step === 0 ? 1 : this.step;
-    this.#changeThumb(this.#activeThumb, Math.min(max, Math.max(min, value)), effectiveStep !== 1);
+    let animate = effectiveStep !== 1;
+
+    if (animate) {
+      for (const coalescedEvent of e.getCoalescedEvents()) {
+        if (coalescedEvent.timeStamp - this.#lastThumbMoveTimestamp < 90) {
+          animate = false;
+        }
+        this.#lastThumbMoveTimestamp = coalescedEvent.timeStamp;
+      }
+    }
+
+    if (!animate) {
+      if (hasCustomState(this, "--animating")) {
+        deleteCustomState(this, "--animating");
+        this.#activeThumb.style.transition = "";
+      }
+    }
+
+    this.#changeThumb(this.#activeThumb, value, animate);
   }
 
   /** @private */
@@ -779,6 +808,8 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
     if (e.target instanceof HTMLElement) {
       e.target.releasePointerCapture(e.pointerId);
     }
+
+    this.#lastThumbMoveTimestamp = 0;
 
     if (this.#activeThumb && !this.#activeThumb.disabled) {
       this.#commitThumb(this.#activeThumb);
