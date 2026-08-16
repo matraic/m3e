@@ -8,8 +8,8 @@ import { SwitchToken } from "./SwitchToken";
  * @internal
  */
 export const SwitchIconStyle = css`
-  :host([icons="none"]) .icon,
-  :host([icons="selected"]:not([checked])) .icon,
+  :host(:is(:state(--icons-none), :--icons-none)) .icon,
+  :host(:is(:state(--icons-selected), :--icons-selected):not([checked])) .icon,
   :host([aria-disabled="true"]:not([checked])) .icon {
     display: none;
   }

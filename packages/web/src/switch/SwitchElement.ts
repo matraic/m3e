@@ -19,13 +19,14 @@ import {
   PressedController,
   HoverController,
   customElement,
+  setCustomState,
 } from "@m3e/web/core";
 
 import { SupportsDirectionality } from "@m3e/web/core/bidi";
 
 import { SwitchHandleStyle, SwitchIconStyle, SwitchStateLayerStyle, SwitchStyle, SwitchTrackStyle } from "./styles";
 
-import { SwitchIcons } from "./SwitchIcons";
+import { isSwitchIcons, SwitchIcons } from "./SwitchIcons";
 
 /**
  * An on/off control that can be toggled by clicking.
@@ -191,7 +192,7 @@ export class M3eSwitchElement extends SupportsDirectionality(
    * The icons to present.
    * @default "none"
    */
-  @property({ reflect: true }) icons: SwitchIcons = "none";
+  @property({ reflect: true, useDefault: true }) icons: SwitchIcons = "none";
 
   /**
    * A string representing the value of the switch.
@@ -208,6 +209,7 @@ export class M3eSwitchElement extends SupportsDirectionality(
   override connectedCallback(): void {
     super.connectedCallback();
 
+    this.#applyIcons();
     this.addEventListener("click", this.#clickHandler);
     for (const label of this.labels) {
       this.#hoverController.observe(label);
@@ -227,6 +229,15 @@ export class M3eSwitchElement extends SupportsDirectionality(
   }
 
   /** @inheritdoc */
+  protected override willUpdate(_changedProperties: PropertyValues<this>): void {
+    super.willUpdate(_changedProperties);
+
+    if (_changedProperties.has("icons")) {
+      this.#applyIcons();
+    }
+  }
+
+  /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
     [this._focusRing, this._stateLayer].forEach((x) => x?.attach(this));
@@ -242,6 +253,17 @@ export class M3eSwitchElement extends SupportsDirectionality(
           <div class="base">${this.#renderIcon()}</div>
         </div>
       </div>`;
+  }
+
+  /** @private */
+  #applyIcons(): void {
+    if (!isSwitchIcons(this.icons)) {
+      this.icons = "none";
+    }
+
+    setCustomState(this, "--icons-none", this.icons === "none");
+    setCustomState(this, "--icons-selected", this.icons === "selected");
+    setCustomState(this, "--icons-both", this.icons === "both");
   }
 
   /** @private */

@@ -19,11 +19,11 @@ export const SwitchStateLayerStyle = css`
           right ${DesignToken.motion.spring.fastEffects}`,
     )};
   }
-  :host(:not([checked])[icons="both"]) .track:not(.pressed) .state-layer {
+  :host(:not([checked]):is(:state(--icons-both), :--icons-both)) .track:not(.pressed) .state-layer {
     inset-inline-start: calc(0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.withIconHandleWidth}) / 2));
     top: calc(0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.withIconHandleHeight}) / 2));
   }
-  :host(:not([checked]):not([icons="both"])) .track:not(.pressed) .state-layer {
+  :host(:not([checked]):not(:is(:state(--icons-both), :--icons-both))) .track:not(.pressed) .state-layer {
     inset-inline-start: calc(
       0px - calc(calc(${SwitchToken.stateLayerSize} - ${SwitchToken.unselectedHandleWidth}) / 2)
     );

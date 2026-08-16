@@ -29,11 +29,13 @@ export const SwitchHandleStyle = css`
   .track.pressed .handle {
     --_switch-handle-effect: ${DesignToken.motion.spring.fastEffects};
   }
-  :host(:not([aria-disabled="true"]):not([checked])[icons="both"]) .track:not(.pressed) .handle {
+  :host(:not([aria-disabled="true"]):not([checked]):is(:state(--icons-both), :--icons-both))
+    .track:not(.pressed)
+    .handle {
     width: ${SwitchToken.withIconHandleWidth};
     height: ${SwitchToken.withIconHandleHeight};
   }
-  :host(:not([checked]):not([icons="both"])) .track:not(.pressed) .handle,
+  :host(:not([checked]):not(:is(:state(--icons-both), :--icons-both))) .track:not(.pressed) .handle,
   :host([aria-disabled="true"]:not([checked])) .handle {
     width: ${SwitchToken.unselectedHandleWidth};
     height: ${SwitchToken.unselectedHandleHeight};
@@ -108,7 +110,9 @@ export const SwitchHandleStyle = css`
       calc(0px - calc(${SwitchToken.trackWidth} - ${SwitchToken.pressedHandleWidth} - ${SwitchToken.trackOutlineWidth}))
     );
   }
-  :host(:not(:is(:state(--rtl), :--rtl)):not([checked]):not([icons="both"])) .track:not(.pressed) .handle,
+  :host(:not(:is(:state(--rtl), :--rtl)):not([checked]):not(:is(:state(--icons-both), :--icons-both)))
+    .track:not(.pressed)
+    .handle,
   :host(:not(:is(:state(--rtl), :--rtl))[aria-disabled="true"]:not([checked])) .handle {
     transform: translateX(
       calc(
@@ -116,7 +120,9 @@ export const SwitchHandleStyle = css`
       )
     );
   }
-  :host(:is(:state(--rtl), :--rtl):not([checked]):not([icons="both"])) .track:not(.pressed) .handle,
+  :host(:is(:state(--rtl), :--rtl):not([checked]):not(:is(:state(--icons-both), :--icons-both)))
+    .track:not(.pressed)
+    .handle,
   :host(:is(:state(--rtl), :--rtl)[aria-disabled="true"]:not([checked])) .handle {
     transform: translateX(
       calc(
@@ -127,12 +133,17 @@ export const SwitchHandleStyle = css`
       )
     );
   }
-  :host(:not(:is(:state(--rtl), :--rtl)):not([aria-disabled="true"]):not([checked])[icons="both"])
+  :host(
+      :not(:is(:state(--rtl), :--rtl)):not([aria-disabled="true"]):not([checked]):is(
+          :state(--icons-both),
+          :--icons-both
+        )
+    )
     .track:not(.pressed)
     .handle {
     transform: translateX(${SwitchToken.trackOutlineWidth});
   }
-  :host(:is(:state(--rtl), :--rtl):not([aria-disabled="true"]):not([checked])[icons="both"])
+  :host(:is(:state(--rtl), :--rtl):not([aria-disabled="true"]):not([checked]):is(:state(--icons-both), :--icons-both))
     .track:not(.pressed)
     .handle {
     transform: translateX(calc(0px - ${SwitchToken.trackOutlineWidth}));
