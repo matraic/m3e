@@ -3,7 +3,7 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, DesignToken, registerStyleSheet, Role } from "@m3e/web/core";
+import { customElement, DesignToken, registerStyleSheet, Role, waitForUpdate } from "@m3e/web/core";
 
 import "@m3e/web/button";
 import "@m3e/web/icon-button";
@@ -191,9 +191,6 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
   /** @private */ #timeoutId = -1;
   /** @private */ #actionTaken = false;
   /** @private */ readonly #beforeToggleHandler = (e: ToggleEvent) => this.#handleBeforeToggle(e);
-  /** @private */ readonly #toggleHandler = (e: ToggleEvent) => {
-    this.open = e.newState === "open";
-  };
 
   /** The currently open snackbar. */
   static get current(): M3eSnackbarElement | null {
@@ -240,7 +237,6 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
     super.connectedCallback();
 
     this.addEventListener("beforetoggle", this.#beforeToggleHandler);
-    this.addEventListener("toggle", this.#toggleHandler);
     this.setAttribute("popover", "manual");
     this.ariaLive = "polite";
   }
@@ -250,7 +246,6 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
     super.disconnectedCallback();
 
     this.removeEventListener("beforetoggle", this.#beforeToggleHandler);
-    this.removeEventListener("toggle", this.#toggleHandler);
   }
 
   /** @inheritdoc */
@@ -262,13 +257,24 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
   }
 
   /** @inheritdoc */
-  protected override updated(changed: PropertyValues): void {
+  protected override updated(changed: PropertyValues<this>): void {
     super.updated(changed);
 
     if (changed.has("open")) {
-      if (this.open && !this.matches(":popover-open")) this.showPopover();
-      else if (!this.open && this.matches(":popover-open")) this.hidePopover();
+      const popoverOpen = this.matches(":popover-open");
+      if (this.open) {
+        if (!popoverOpen) {
+          this.showPopover();
+        }
+      } else if (popoverOpen) {
+        this.hidePopover();
+      }
     }
+  }
+
+  /** @inheritdoc */
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
+    super.firstUpdated(_changedProperties);
 
     // After render, compute the (unscaled) height of the snackbar in order
     // to properly position it relative to the viewport.
@@ -286,7 +292,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
   #renderCloseButton(): unknown {
     return !this.dismissible
       ? nothing
-      : html`<m3e-icon-button aria-label="${this.closeLabel}" @click=${this.hidePopover}>
+      : html`<m3e-icon-button aria-label="${this.closeLabel}" @click=${this.#handleDismissClick}>
           <slot name="close-icon">
             <svg class="close-icon" viewBox="0 -960 960 960" fill="currentColor">
               <path
@@ -300,17 +306,25 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
   /** @private */
   #handleActionClick(): void {
     this.#actionTaken = true;
-    this.hidePopover();
+    this.open = false;
   }
 
   /** @private */
-  #handleBeforeToggle(e: ToggleEvent): void {
+  #handleDismissClick(): void {
+    this.open = false;
+  }
+
+  /** @private */
+  async #handleBeforeToggle(e: ToggleEvent): Promise<void> {
     if (e.newState == "open") {
-      M3eSnackbarElement.__current?.hidePopover();
+      if (M3eSnackbarElement.__current) {
+        M3eSnackbarElement.__current.open = false;
+        await waitForUpdate(M3eSnackbarElement.__current);
+      }
       M3eSnackbarElement.__current = this;
 
       if (this.duration > 0) {
-        this.#timeoutId = setTimeout(() => this.hidePopover(), this.duration);
+        this.#timeoutId = setTimeout(() => (this.open = false), this.duration);
       }
     } else {
       if (M3eSnackbarElement.__current === this) {

@@ -118,7 +118,7 @@ export class M3eSnackbar {
     });
 
     document.body.append(snackbar);
-    snackbar.showPopover();
+    snackbar.open = true;
   }
 
   /** Dismisses the currently visible snackbar. */
