@@ -30,6 +30,14 @@ The next example illustrates a labelled range slider with two thumbs used to sel
 </m3e-slider>
 ```
 
+The last example illustrates a vertical slider. Values run bottom-to-top, and `size` continues to control track thickness.
+
+```html
+<m3e-slider orientation="vertical" labelled discrete step="10">
+  <m3e-slider-thumb value="40"></m3e-slider-thumb>
+</m3e-slider>
+```
+
 ## 📖 API Reference
 
 ### 🗂️ Slider
@@ -38,15 +46,16 @@ This section details the attributes, events and CSS custom properties available 
 
 #### ⚙️ Attributes
 
-| Attribute  | Type                                                               | Default         | Description                                  |
-| ---------- | ------------------------------------------------------------------ | --------------- | -------------------------------------------- |
-| `disabled` | `boolean`                                                          | `false`         | Whether the element is disabled.             |
-| `discrete` | `boolean`                                                          | `false`         | Whether to show tick marks.                  |
-| `labelled` | `boolean`                                                          | `false`         | Whether to show value labels when activated. |
-| `min`      | `number`                                                           | `0`             | The minimum allowable value.                 |
-| `max`      | `number`                                                           | `100`           | The maximum allowable value.                 |
-| `step`     | `number`                                                           | `1`             | The value at which the thumb will snap.      |
-| `size`     | `"extra-small"`, `"small"`, `"medium"`, `"large"`, `"extra-large"` | `"extra-small"` | The size of the slider.                      |
+| Attribute     | Type                                                               | Default         | Description                                  |
+| ------------- | ------------------------------------------------------------------ | --------------- | -------------------------------------------- |
+| `disabled`    | `boolean`                                                          | `false`         | Whether the element is disabled.             |
+| `discrete`    | `boolean`                                                          | `false`         | Whether to show tick marks.                  |
+| `labelled`    | `boolean`                                                          | `false`         | Whether to show value labels when activated. |
+| `min`         | `number`                                                           | `0`             | The minimum allowable value.                 |
+| `max`         | `number`                                                           | `100`           | The maximum allowable value.                 |
+| `step`        | `number`                                                           | `1`             | The value at which the thumb will snap.      |
+| `orientation` | `"horizontal"`, `"vertical"`                                       | `"horizontal"`  | The orientation of the slider.               |
+| `size`        | `"extra-small"`, `"small"`, `"medium"`, `"large"`, `"extra-large"` | `"extra-small"` | The size of the slider.                      |
 
 #### 🔔 Events
 

@@ -184,6 +184,54 @@ export class M3eSliderThumbElement extends Dirty(
         background-color: GrayText;
       }
     }
+
+    /* ── Vertical orientation ────────────────────────────────────────────────
+       Set by the parent slider as a custom state: the thumb is slotted light DOM,
+       so its own stylesheet cannot select on the slider's orientation attribute.
+
+       The thumb is anchored to the bottom, because a vertical slider runs
+       bottom-to-top and the parent positions it with a negative Y translation.
+       Its block size mirrors what .wrapper gives the horizontal thumb on the
+       inline axis, so the parent's clientHeight measurement stays symmetric with
+       clientWidth. */
+    :host(:is(:state(--vertical), :--vertical)) {
+      top: auto;
+      bottom: 0;
+      inset-inline: 0;
+      height: calc(var(--m3e-slider-thumb-width, 4px) + calc(var(--m3e-slider-thumb-padding, 6px) * 2));
+    }
+    :host(:is(:state(--vertical), :--vertical)) .touch {
+      height: auto;
+      width: 48px;
+      top: 0;
+      bottom: 0;
+      inset-inline-start: 50%;
+      translate: -50% 0;
+    }
+    :host(:is(:state(--vertical), :--vertical)) .wrapper {
+      width: 100%;
+      height: 100%;
+      align-items: center;
+    }
+    :host(:is(:state(--vertical), :--vertical)) .handle {
+      width: 100%;
+      height: var(--m3e-slider-thumb-width, 4px);
+      transition: ${unsafeCSS(`height ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
+    }
+    :host(:is(:state(--vertical), :--vertical):active:not([aria-disabled="true"])) .handle {
+      width: 100%;
+      height: var(--m3e-slider-thumb-pressed-width, 2px);
+    }
+    :host(:is(:state(--vertical), :--vertical)) .focus-ring {
+      top: var(--m3e-focus-ring-thickness, 3px);
+      bottom: var(--m3e-focus-ring-thickness, 3px);
+      left: calc(0px - var(--m3e-focus-ring-thickness, 3px));
+      right: calc(0px - var(--m3e-focus-ring-thickness, 3px));
+    }
+    :host(:is(:state(--vertical), :--vertical)) .label {
+      top: calc(50% - calc(var(--_m3e-slider-label-height, 44px) / 2));
+      inset-inline-start: calc(0px - var(--m3e-slider-label-width, 48px) - var(--_m3e-slider-label-margin, 4px));
+    }
   `;
 
   /** @private */ @query(".focus-ring")

@@ -18,6 +18,7 @@ import {
 import { M3eDirectionality, SupportsDirectionality } from "@m3e/web/core/bidi";
 
 import { M3eSliderThumbElement } from "./SliderThumbElement";
+import { isSliderOrientation, SliderOrientation } from "./SliderOrientation";
 import { isSliderSize, SliderSize } from "./SliderSize";
 
 /**
@@ -45,6 +46,14 @@ import { isSliderSize, SliderSize } from "./SliderSize";
  * </m3e-slider>
  * ```
  *
+ * @example
+ * The next example illustrates a vertical slider. Values run bottom-to-top.
+ * ```html
+ * <m3e-slider orientation="vertical" labelled>
+ *  <m3e-slider-thumb value="40"></m3e-slider-thumb>
+ * </m3e-slider>
+ * ```
+ *
  * @tag m3e-slider
  *
  * @slot - Renders the thumbs of the slider.
@@ -54,6 +63,7 @@ import { isSliderSize, SliderSize } from "./SliderSize";
  * @attr labelled - Whether to show value labels when activated.
  * @attr max - The maximum allowable value.
  * @attr min - The minimum allowable value.
+ * @attr orientation - The orientation of the slider.
  * @attr step - The value at which the thumb will snap.
  * @attr size - The size of the slider.
  *
@@ -380,6 +390,180 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
         background-color: Canvas;
       }
     }
+
+    /* ── Vertical orientation ────────────────────────────────────────────────
+       Everything above lays the slider out along the inline axis. These rules
+       re-map it to the block axis and are deliberately additive: they come last
+       and so win on source order, which keeps the horizontal path untouched.
+
+       Segments are anchored with bottom rather than margin-inline-start because a
+       vertical slider runs bottom-to-top, so the offsets the element writes —
+       measured from the end holding the minimum — already point the right way.
+       The five --_slider-* custom properties are plain lengths and need no
+       change; only the property they feed does.
+
+       Corner radii are composed from the symmetric corner tokens rather than the
+       Start/End ones, whose 4-value radii round the inline edges. */
+    :host(:is(:state(--vertical), :--vertical)) {
+      min-inline-size: auto;
+      min-block-size: var(--m3e-slider-min-width, 200px);
+      /* Containing block for .base below. */
+      position: relative;
+    }
+    /* .base is taken out of flow rather than sized with height: 100%. A vertical
+       host has no definite block size of its own - its height comes from
+       min-block-size, from a flex parent, or from the consumer - and a percentage
+       height resolves against the parent's *computed* height, which is auto. That
+       collapses .base to zero and takes the track and both thumbs with it, since
+       .base is their containing block. Insets resolve against the used height, so
+       they work in every case. */
+    :host(:is(:state(--vertical), :--vertical)) .base {
+      position: absolute;
+      inset: 0;
+      width: auto;
+      height: auto;
+      flex-direction: column;
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--extra-small), :--extra-small)),
+    :host(:is(:state(--vertical), :--vertical):is(:state(--small), :--small)) {
+      height: auto;
+      width: var(--m3e-slider-small-height, 44px);
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--extra-small), :--extra-small)) .track {
+      height: auto;
+      width: calc(var(--m3e-slider-extra-small-track-height, 16px));
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--small), :--small)) .track {
+      height: auto;
+      width: calc(var(--m3e-slider-small-track-height, 24px));
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--medium), :--medium)) {
+      height: auto;
+      width: var(--m3e-slider-medium-height, 52px);
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--medium), :--medium)) .track {
+      height: auto;
+      width: var(--m3e-slider-medium-track-height, 40px);
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--large), :--large)) {
+      height: auto;
+      width: var(--m3e-slider-large-height, 68px);
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--large), :--large)) .track {
+      height: auto;
+      width: var(--m3e-slider-large-track-height, 56px);
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--extra-large), :--extra-large)) {
+      height: auto;
+      width: var(--m3e-slider-extra-large-height, 108px);
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--extra-large), :--extra-large)) .track {
+      height: auto;
+      width: var(--m3e-slider-extra-large-track-height, 96px);
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--extra-small), :--extra-small)) .base {
+      --_slider-active-track-shape: var(
+        --m3e-slider-extra-small-active-track-shape,
+        0 0 ${DesignToken.shape.corner.small} ${DesignToken.shape.corner.small}
+      );
+      --_slider-inactive-track-start-shape: var(
+        --m3e-slider-extra-small-inactive-active-track-start-shape,
+        0 0 ${DesignToken.shape.corner.small} ${DesignToken.shape.corner.small}
+      );
+      --_slider-inactive-track-end-shape: var(
+        --m3e-slider-extra-small-inactive-track-end-shape,
+        ${DesignToken.shape.corner.small} ${DesignToken.shape.corner.small} 0 0
+      );
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--small), :--small)) .base {
+      --_slider-active-track-shape: var(
+        --m3e-slider-small-active-track-shape,
+        0 0 ${DesignToken.shape.corner.small} ${DesignToken.shape.corner.small}
+      );
+      --_slider-inactive-track-start-shape: var(
+        --m3e-slider-small-inactive-active-track-start-shape,
+        0 0 ${DesignToken.shape.corner.small} ${DesignToken.shape.corner.small}
+      );
+      --_slider-inactive-track-end-shape: var(
+        --m3e-slider-small-inactive-track-end-shape,
+        ${DesignToken.shape.corner.small} ${DesignToken.shape.corner.small} 0 0
+      );
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--medium), :--medium)) .base {
+      --_slider-active-track-shape: var(
+        --m3e-slider-medium-active-track-shape,
+        0 0 ${DesignToken.shape.corner.medium} ${DesignToken.shape.corner.medium}
+      );
+      --_slider-inactive-track-start-shape: var(
+        --m3e-slider-medium-inactive-active-track-start-shape,
+        0 0 ${DesignToken.shape.corner.medium} ${DesignToken.shape.corner.medium}
+      );
+      --_slider-inactive-track-end-shape: var(
+        --m3e-slider-medium-inactive-track-end-shape,
+        ${DesignToken.shape.corner.medium} ${DesignToken.shape.corner.medium} 0 0
+      );
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--large), :--large)) .base {
+      --_slider-active-track-shape: var(
+        --m3e-slider-large-active-track-shape,
+        0 0 ${DesignToken.shape.corner.large} ${DesignToken.shape.corner.large}
+      );
+      --_slider-inactive-track-start-shape: var(
+        --m3e-slider-large-inactive-active-track-start-shape,
+        0 0 ${DesignToken.shape.corner.large} ${DesignToken.shape.corner.large}
+      );
+      --_slider-inactive-track-end-shape: var(
+        --m3e-slider-large-inactive-track-end-shape,
+        ${DesignToken.shape.corner.large} ${DesignToken.shape.corner.large} 0 0
+      );
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--extra-large), :--extra-large)) .base {
+      --_slider-active-track-shape: var(
+        --m3e-slider-extra-large-active-track-shape,
+        0 0 ${DesignToken.shape.corner.extraLarge} ${DesignToken.shape.corner.extraLarge}
+      );
+      --_slider-inactive-track-start-shape: var(
+        --m3e-slider-extra-large-inactive-active-track-start-shape,
+        0 0 ${DesignToken.shape.corner.extraLarge} ${DesignToken.shape.corner.extraLarge}
+      );
+      --_slider-inactive-track-end-shape: var(
+        --m3e-slider-extra-large-inactive-track-end-shape,
+        ${DesignToken.shape.corner.extraLarge} ${DesignToken.shape.corner.extraLarge} 0 0
+      );
+    }
+    :host(:is(:state(--vertical), :--vertical)) .track-inactive,
+    :host(:is(:state(--vertical), :--vertical)) .track-active {
+      width: 100%;
+      height: auto;
+      margin-inline-start: 0;
+    }
+    :host(:is(:state(--vertical), :--vertical)) .track-active {
+      bottom: var(--_slider-active-track-offset, 0px);
+      height: var(--_slider-active-track-size, 0px);
+    }
+    :host(:is(:state(--vertical), :--vertical)) .track-inactive.start {
+      bottom: 0;
+      height: var(--_slider-inactive-track-before-size, 0px);
+    }
+    :host(:is(:state(--vertical), :--vertical)) .track-inactive.end {
+      bottom: var(--_slider-inactive-track-after-offset, 0px);
+      height: var(--_slider-inactive-track-after-size, 0px);
+    }
+    :host(:is(:state(--vertical), :--vertical):is(:state(--animating), :--animating)) .track-active,
+    :host(:is(:state(--vertical), :--vertical):is(:state(--animating), :--animating)) .track-inactive.start,
+    :host(:is(:state(--vertical), :--vertical):is(:state(--animating), :--animating)) .track-inactive.end {
+      transition: ${unsafeCSS(`bottom ${DesignToken.motion.spring.fastEffects},
+        height ${DesignToken.motion.spring.fastEffects}`)};
+    }
+    :host(:is(:state(--vertical), :--vertical)) .ticks {
+      width: var(--m3e-slider-tick-size, 4px);
+      height: 100%;
+    }
+    :host(:is(:state(--vertical), :--vertical)) .tick {
+      top: auto;
+      inset-inline-start: 0;
+      bottom: calc(var(--m3e-slider-tick-size, 4px) + calc(var(--m3e-slider-tick-size, 4px) / 2));
+    }
   `;
 
   /** @private */ #directionalitySubscription?: () => void;
@@ -393,17 +577,26 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
   /** @private */ readonly #changedThumbs = new Set<M3eSliderThumbElement>();
   /** @private */ #thumbs = new Array<M3eSliderThumbElement>();
   /** @private */ #activeThumb?: M3eSliderThumbElement;
-  /** @private */ #cachedWidth = 0;
-  /** @private */ #cachedThumbWidth = 0;
-  /** @private */ #cachedClientLeft = 0;
-  /** @private */ #cachedClientRight = 0;
-  /** @private */ #cachedClientWidth = 0;
+  /** @private Extent of the slider along its own axis. */ #cachedSize = 0;
+  /** @private Extent of a thumb along the slider's axis. */ #cachedThumbSize = 0;
+  /** @private Client coordinate of the axis start edge — left when horizontal, top when vertical. */
+  #cachedClientStart = 0;
+  /** @private Client coordinate of the axis end edge — right when horizontal, bottom when vertical. */
+  #cachedClientEnd = 0;
+  /** @private Extent of the slider's bounding rect along its own axis. */ #cachedClientSize = 0;
   /** @private */ #lastThumbMoveTimestamp = 0;
 
   constructor() {
     super();
     new ResizeController(this, { callback: () => this.#updateDimensions(true) });
   }
+
+  /**
+   * The orientation of the slider.
+   * @default "horizontal"
+   */
+  @property({ reflect: true, useDefault: true })
+  orientation: SliderOrientation = "horizontal";
 
   /**
    * The size of the slider.
@@ -450,6 +643,14 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
   /** The function used to format display values. */
   @property({ attribute: false }) displayWith: ((value: number | null) => string) | null = null;
 
+  /**
+   * Whether the slider is laid out along the block axis.
+   * @private
+   */
+  get #vertical(): boolean {
+    return this.orientation === "vertical";
+  }
+
   /** The thumbs used to select values. */
   get thumbs(): readonly M3eSliderThumbElement[] {
     return this.#thumbs;
@@ -480,6 +681,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
     super.connectedCallback();
 
     this.#applySize();
+    this.#applyOrientation();
     this.#directionalitySubscription = M3eDirectionality.observe(() => {
       this.#updateDimensions(true);
       this.requestUpdate();
@@ -500,6 +702,9 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
     if (_changedProperties.has("size")) {
       this.#applySize();
     }
+    if (_changedProperties.has("orientation")) {
+      this.#applyOrientation();
+    }
   }
 
   /** @inheritdoc */
@@ -508,6 +713,12 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
 
     if (_changedProperties.has("disabled")) {
       this.#thumbs.forEach((x) => (x.disabled = this.disabled));
+    }
+    if (_changedProperties.has("orientation")) {
+      // The axis changed, so every cached measurement and every thumb transform
+      // now describes the wrong one.
+      this.#updateThumbs();
+      this.#updateDimensions(true);
     }
   }
 
@@ -542,11 +753,19 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
   }
 
   /** @private */
+  #applyOrientation(): void {
+    if (!isSliderOrientation(this.orientation)) {
+      this.orientation = "horizontal";
+    }
+    setCustomEnumState(this, this.orientation, "horizontal", "vertical");
+  }
+
+  /** @private */
   #renderTick(tick: { value: number; active: boolean; hidden: boolean }) {
     return html`<div
       class="tick ${tick.active ? "active" : "inactive"}${tick.hidden ? " hidden" : ""}"
       style="${safeStyleMap({
-        transform: `translate(${M3eDirectionality.current === "rtl" ? -this.#pointFromValue(tick.value) : this.#pointFromValue(tick.value)}px, 0)`,
+        transform: this.#translate(this.#pointFromValue(tick.value)),
       })}"
     ></div>`;
   }
@@ -578,24 +797,48 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
       thumb.ariaValueMin = `${this.#thumbs[i - 1]?.value ?? this.min}`;
       thumb.ariaValueMax = `${this.#thumbs[i + 1]?.value ?? this.max}`;
       thumb.ariaValueNow = `${thumb.value ?? this.#thumbs[i - 1]?.value ?? this.min}`;
+      thumb.ariaOrientation = this.orientation;
+
+      // The thumb is slotted light DOM, so its own stylesheet cannot select on the
+      // slider's orientation. A custom state carries it across.
+      if (this.#vertical) {
+        addCustomState(thumb, "--vertical");
+      } else {
+        deleteCustomState(thumb, "--vertical");
+      }
     });
+  }
+
+  /**
+   * Positions an element `pos` along the slider's axis, measured from the end that
+   * holds `min`. Vertical sliders run bottom-to-top, so the offset is negated and
+   * directionality does not apply.
+   * @private
+   */
+  #translate(pos: number): string {
+    return this.#vertical
+      ? `translate(0, ${-pos}px)`
+      : `translate(${M3eDirectionality.current === "rtl" ? -pos : pos}px, 0)`;
   }
 
   /** @private */
   #pointFromValue(value: number): number {
-    return (this.#cachedWidth - this.#cachedThumbWidth) * ((value - this.min) / (this.max - this.min));
+    return (this.#cachedSize - this.#cachedThumbSize) * ((value - this.min) / (this.max - this.min));
   }
 
   /** @private */
   #valueFromPoint(e: PointerEvent): number {
+    // The axis end holds `min` for a vertical slider, as it does in rtl.
     const pos =
-      M3eDirectionality.current === "rtl" ? this.#cachedClientRight - e.clientX : e.clientX - this.#cachedClientLeft;
+      this.#vertical || M3eDirectionality.current === "rtl"
+        ? this.#cachedClientEnd - (this.#vertical ? e.clientY : e.clientX)
+        : e.clientX - this.#cachedClientStart;
 
     const step = this.step === 0 ? 1 : this.step;
     const numSteps = Math.floor((this.max - this.min) / step);
 
-    const thumbRatio = this.#cachedWidth ? this.#cachedThumbWidth / this.#cachedWidth : 0;
-    const percentage = (pos / this.#cachedClientWidth - thumbRatio / 2) / (1 - thumbRatio || 1);
+    const thumbRatio = this.#cachedSize ? this.#cachedThumbSize / this.#cachedSize : 0;
+    const percentage = (pos / this.#cachedClientSize - thumbRatio / 2) / (1 - thumbRatio || 1);
 
     const fixedPercentage = Math.round(percentage * numSteps) / numSteps;
     const impreciseValue = fixedPercentage * (this.max - this.min) + this.min;
@@ -606,14 +849,20 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
   #updateCachedDimensions(force = false): void {
     if (!this.lowerThumb) return;
 
-    this.#cachedWidth = !force && this.#cachedWidth > 0 ? this.#cachedWidth : this.clientWidth;
-    this.#cachedThumbWidth =
-      !force && this.#cachedThumbWidth > 0 ? this.#cachedThumbWidth : this.lowerThumb.clientWidth;
+    const size = this.#vertical ? this.clientHeight : this.clientWidth;
+    const thumbSize = this.#vertical ? this.lowerThumb.clientHeight : this.lowerThumb.clientWidth;
+
+    this.#cachedSize = !force && this.#cachedSize > 0 ? this.#cachedSize : size;
+    this.#cachedThumbSize = !force && this.#cachedThumbSize > 0 ? this.#cachedThumbSize : thumbSize;
 
     const rect = this.getBoundingClientRect();
-    this.#cachedClientLeft = !force && this.#cachedClientLeft > 0 ? this.#cachedClientLeft : rect.left;
-    this.#cachedClientRight = !force && this.#cachedClientRight > 0 ? this.#cachedClientRight : rect.right;
-    this.#cachedClientWidth = !force && this.#cachedClientWidth > 0 ? this.#cachedClientWidth : rect.width;
+    const clientStart = this.#vertical ? rect.top : rect.left;
+    const clientEnd = this.#vertical ? rect.bottom : rect.right;
+    const clientSize = this.#vertical ? rect.height : rect.width;
+
+    this.#cachedClientStart = !force && this.#cachedClientStart > 0 ? this.#cachedClientStart : clientStart;
+    this.#cachedClientEnd = !force && this.#cachedClientEnd > 0 ? this.#cachedClientEnd : clientEnd;
+    this.#cachedClientSize = !force && this.#cachedClientSize > 0 ? this.#cachedClientSize : clientSize;
   }
 
   /** @private */
@@ -623,31 +872,31 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
 
     const lowerValue = this.lowerThumb.value ?? this.min;
     const lowerPos = this.#pointFromValue(lowerValue);
-    this.lowerThumb.style.transform = `translate(${M3eDirectionality.current === "rtl" ? -lowerPos : lowerPos}px, 0)`;
+    this.lowerThumb.style.transform = this.#translate(lowerPos);
 
     if (!this.upperThumb) {
       this._base?.classList.toggle("range", false);
       this._base?.style.setProperty("--_slider-active-track-size", `${lowerPos}px`);
-      this._base?.style.setProperty("--_slider-inactive-track-after-offset", `${lowerPos + this.#cachedThumbWidth}px`);
+      this._base?.style.setProperty("--_slider-inactive-track-after-offset", `${lowerPos + this.#cachedThumbSize}px`);
       this._base?.style.setProperty(
         "--_slider-inactive-track-after-size",
-        `${this.#cachedWidth - lowerPos - this.#cachedThumbWidth}px`,
+        `${this.#cachedSize - lowerPos - this.#cachedThumbSize}px`,
       );
 
       this.#updateTicks((i) => i < lowerValue);
     } else {
       const upperValue = this.upperThumb.value ?? lowerValue;
       const upperPos = this.#pointFromValue(upperValue);
-      this.upperThumb.style.transform = `translate(${M3eDirectionality.current === "rtl" ? -upperPos : upperPos}px, 0)`;
+      this.upperThumb.style.transform = this.#translate(upperPos);
 
       this._base?.classList.toggle("range", true);
       this._base?.style.setProperty("--_slider-inactive-track-before-size", `${lowerPos}px`);
-      this._base?.style.setProperty("--_slider-active-track-offset", `${lowerPos + this.#cachedThumbWidth}px`);
-      this._base?.style.setProperty("--_slider-active-track-size", `${upperPos - lowerPos - this.#cachedThumbWidth}px`);
-      this._base?.style.setProperty("--_slider-inactive-track-after-offset", `${upperPos + this.#cachedThumbWidth}px`);
+      this._base?.style.setProperty("--_slider-active-track-offset", `${lowerPos + this.#cachedThumbSize}px`);
+      this._base?.style.setProperty("--_slider-active-track-size", `${upperPos - lowerPos - this.#cachedThumbSize}px`);
+      this._base?.style.setProperty("--_slider-inactive-track-after-offset", `${upperPos + this.#cachedThumbSize}px`);
       this._base?.style.setProperty(
         "--_slider-inactive-track-after-size",
-        `${this.#cachedWidth - this.#cachedThumbWidth - upperPos}px`,
+        `${this.#cachedSize - this.#cachedThumbSize - upperPos}px`,
       );
 
       this.#updateTicks((i) => i > lowerValue && i < upperValue);
@@ -673,10 +922,10 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
 
   /** @private */
   #updateTickOverlap(): void {
-    if (this.#cachedWidth === 0 || this.#cachedThumbWidth === 0) return;
+    if (this.#cachedSize === 0 || this.#cachedThumbSize === 0) return;
     const thumbs = this.#thumbs.filter((t) => t.value != null);
     if (thumbs.length === 0) return;
-    const thumbHalfWidth = this.#cachedThumbWidth / 2;
+    const thumbHalfWidth = this.#cachedThumbSize / 2;
     this._ticks = this._ticks.map((tick) => {
       const tickPos = this.#pointFromValue(tick.value);
       const hidden = thumbs.some((thumb) => {
@@ -834,6 +1083,10 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
       max = Math.max(max, this.upperThumb.value ?? this.max);
     }
 
+    // A vertical slider runs bottom-to-top, so ArrowUp always increases and
+    // directionality — an inline-axis concern — does not apply.
+    const ascending = this.#vertical || M3eDirectionality.current === "ltr";
+
     switch (e.key) {
       case "Home":
         this.#changeThumb(this.#activeThumb, min);
@@ -846,7 +1099,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
         break;
 
       case "PageUp":
-        if (M3eDirectionality.current === "ltr") {
+        if (ascending) {
           this.#changeThumb(this.#activeThumb, Math.min(max, value + (this.step > 1 ? this.step : 10)));
         } else {
           this.#changeThumb(this.#activeThumb, Math.max(min, value - (this.step > 1 ? this.step : 10)));
@@ -856,7 +1109,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
         break;
 
       case "PageDown":
-        if (M3eDirectionality.current === "ltr") {
+        if (ascending) {
           this.#changeThumb(this.#activeThumb, Math.max(min, value - (this.step > 1 ? this.step : 10)));
         } else {
           this.#changeThumb(this.#activeThumb, Math.min(max, value + (this.step > 1 ? this.step : 10)));
@@ -868,7 +1121,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
       case "ArrowDown":
       case "Left":
       case "ArrowLeft":
-        if (M3eDirectionality.current === "ltr") {
+        if (ascending) {
           this.#changeThumb(this.#activeThumb, Math.max(min, value - this.step));
         } else {
           this.#changeThumb(this.#activeThumb, Math.min(max, value + this.step));
@@ -882,7 +1135,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
       case "ArrowUp":
       case "Right":
       case "ArrowRight":
-        if (M3eDirectionality.current === "ltr") {
+        if (ascending) {
           this.#changeThumb(this.#activeThumb, Math.min(max, value + this.step));
         } else {
           this.#changeThumb(this.#activeThumb, Math.max(min, value - this.step));
