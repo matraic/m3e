@@ -19,7 +19,7 @@
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.7/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.8/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -117,6 +117,26 @@
           <pre slot="content">
 &lt;m3e-slider min=&quot;-50&quot;&gt;
   &lt;m3e-slider-thumb value=&quot;-20&quot;&gt;&lt;/m3e-slider-thumb&gt;
+&lt;/m3e-slider&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Orientation</m3e-heading>
+        <p>
+          By default, sliders are oriented horizontally. Use the <code>orientation</code> attribute to change the
+          orientation to <code>horizontal</code> (default) or <code>vertical</code>.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-slider orientation="vertical">
+              <m3e-slider-thumb value="50"></m3e-slider-thumb>
+            </m3e-slider>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-slider orientation=&quot;vertical&quot;&gt;
+  &lt;m3e-slider-thumb value=&quot;50&quot;&gt;&lt;/m3e-slider-thumb&gt;
 &lt;/m3e-slider&gt;</pre
           >
         </m3e-card>
