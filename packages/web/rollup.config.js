@@ -29,6 +29,7 @@ const inputs = [
   "fab",
   "fab-menu",
   "form-field",
+  "gestures",
   "heading",
   "icon",
   "icon-button",
