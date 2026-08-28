@@ -103,7 +103,7 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
   /** @inheritdoc */
   override _onPointerUp(input: PointerInput): void {
     // Reject if pointer up occurs before accepted (eagerly)
-    if (this.#state && this.#state.id === input.id) {
+    if (this.#state && this.#state.id === input.id && !this.#state.accepted) {
       this._rejectInput(this.#state.id);
     }
   }
