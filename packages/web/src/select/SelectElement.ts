@@ -686,8 +686,16 @@ export class M3eSelectElement
       this.#menu.replaceChildren(...this.#clone.childNodes);
     }
 
-    // Append the panel to body to keep it out of framework‑owned DOM and prevent unintended removal.
-    document.body.appendChild(this.#menu);
+    // Mount the panel into the nearest popover or dialog host so it remains inside
+    // the active interaction subtree. Popover and dialog semantics require this.
+    // If no such host exists, fall back to <body> to avoid framework diffing.
+    // NOTE: Frameworks may still interfere when mounted inside their managed DOM,
+    // but there is no solution that satisfies all constraints.
+
+    const host =
+      this.closest("[popover]") ?? this.closest("dialog[open]") ?? this.closest("m3e-dialog") ?? document.body;
+
+    host.appendChild(this.#menu);
 
     this.ariaExpanded = "true";
     this.setAttribute("aria-controls", this.#listId);
