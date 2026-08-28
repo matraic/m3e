@@ -21,7 +21,6 @@ export * from "./expansion-panel";
 export * from "./fab";
 export * from "./fab-menu";
 export * from "./form-field";
-export * from "./gestures";
 export * from "./heading";
 export * from "./icon";
 export * from "./icon-button";
