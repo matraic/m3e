@@ -48,7 +48,7 @@ export abstract class GestureElementBase<
    * @default ["primary"]
    */
   @property({ converter: spaceSeparatedStringConverter })
-  allowedButtons: readonly GestureInputButton[] = ["primary"];
+  buttons: readonly GestureInputButton[] = ["primary"];
 
   /** @private */
   override attach(control: HTMLElement): void {
@@ -108,8 +108,8 @@ export abstract class GestureElementBase<
     if (_changedProperties.has("disabled")) {
       this.recognizer.disabled = this.disabled;
     }
-    if (_changedProperties.has("allowedButtons")) {
-      this.recognizer.buttons = this.allowedButtons;
+    if (_changedProperties.has("buttons")) {
+      this.recognizer.buttons = this.buttons;
     }
   }
 }
