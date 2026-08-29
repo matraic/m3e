@@ -159,6 +159,13 @@ export class RepeatGestureRecognizer<
           this._releaseInput(id);
         }
         break;
+
+      case "defer":
+        // Forward deferrals on input
+        if (!this.#accepted.has(id)) {
+          this._deferInput(id);
+        }
+        break;
     }
   }
 

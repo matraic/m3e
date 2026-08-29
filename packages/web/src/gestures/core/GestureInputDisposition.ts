@@ -4,5 +4,7 @@
  * - `reject` — The recognizer declines or withdraws.
  * - `hold` — The recognizer delays its decision and requests more input.
  * - `release` — The recognizer releases a previously held decision.
+ * - `defer` — The recognizer remains active without blocking resolution and will be
+ *   rejected unless it later accepts.
  */
-export type GestureInputDisposition = "accept" | "reject" | "hold" | "release";
+export type GestureInputDisposition = "accept" | "reject" | "hold" | "release" | "defer";

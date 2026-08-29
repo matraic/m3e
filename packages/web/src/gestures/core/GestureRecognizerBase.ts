@@ -98,6 +98,15 @@ export abstract class GestureRecognizerBase<
     this.onDisposition?.(id, "release");
   }
 
+  /**
+   * Dispositions the specified input as deferred.
+   * @param {number} id The identifier of the input to defer.
+   */
+  protected _deferInput(id: number): void {
+    if (this.disabled) return;
+    this.onDisposition?.(id, "defer");
+  }
+
   /** @inheritdoc */
   onResolution(id: number, resolution: GestureInputResolution): void {
     if (this.disabled) return;

@@ -4,6 +4,7 @@ import { GestureInputClaimant } from "./GestureInputClaimant";
 interface GestureInputClaim {
   readonly claims: Array<GestureInputClaimant>;
   readonly holders: Array<GestureInputClaimant>;
+  readonly deferred: Array<GestureInputClaimant>;
   timeout?: number;
 }
 
@@ -36,6 +37,10 @@ export class GestureInputResolver {
 
         case "release":
           this.#releaseInput(id, claimant);
+          break;
+
+        case "defer":
+          this.#deferInput(id, claimant);
           break;
       }
     };
@@ -91,6 +96,9 @@ export class GestureInputResolver {
     // Reject all other claims on the input
     state.claims.filter((x) => x !== resolved).forEach((x) => x.onResolution(id, "reject"));
 
+    // Reject prior deferrals on the input
+    state.deferred.filter((x) => x !== resolved).forEach((x) => x.onResolution(id, "reject"));
+
     this.#removeState(id, state);
   }
 
@@ -101,21 +109,48 @@ export class GestureInputResolver {
   }
 
   /** @private */
+  #removeClaim(claimant: GestureInputClaimant, state: GestureInputClaim): void {
+    const index = state.claims.indexOf(claimant);
+    if (index >= 0) {
+      state.claims.splice(index, 1);
+    }
+  }
+
+  /** @private */
+  #removeHold(claimant: GestureInputClaimant, state: GestureInputClaim): boolean {
+    const index = state.holders.indexOf(claimant);
+    if (index >= 0) {
+      state.holders.splice(index, 1);
+      return true;
+    }
+    return false;
+  }
+
+  /** @private */
+  #removeDeferred(claimant: GestureInputClaimant, state: GestureInputClaim): void {
+    const index = state.deferred.indexOf(claimant);
+    if (index >= 0) {
+      state.deferred.splice(index, 1);
+    }
+  }
+
+  /** @private */
   #acceptInput(id: number, claimant: GestureInputClaimant): void {
     let state = this.#states.get(id);
     if (!state) {
-      state = { claims: [], holders: [] };
+      state = { claims: [], holders: [], deferred: [] };
       this.#states.set(id, state);
     }
 
     if (state.claims.includes(claimant)) return;
 
+    // If the claimant was deferred in the past, remove it
+    this.#removeDeferred(claimant, state);
+
     // When transitioning from a hold to accept, insert as a front-of-queue claim
     // Otherwise, it is appended behind other claims
 
-    const index = state.holders.indexOf(claimant);
-    if (index >= 0) {
-      state.holders.splice(index, 1);
+    if (this.#removeHold(claimant, state)) {
       state.claims.unshift(claimant);
     } else {
       state.claims.push(claimant);
@@ -132,12 +167,15 @@ export class GestureInputResolver {
   #holdInput(id: number, claimant: GestureInputClaimant): void {
     let state = this.#states.get(id);
     if (!state) {
-      state = { claims: [], holders: [] };
+      state = { claims: [], holders: [], deferred: [] };
       this.#states.set(id, state);
     }
     if (!state.holders.includes(claimant)) {
       state.holders.push(claimant);
     }
+
+    // If the claimant was deferred in the past, remove it
+    this.#removeDeferred(claimant, state);
   }
 
   /** @private */
@@ -145,17 +183,13 @@ export class GestureInputResolver {
     const state = this.#states.get(id);
     let held = false;
     if (state) {
-      let index = state.claims.indexOf(claimant);
-      if (index >= 0) {
-        state.claims.splice(index, 1);
-      }
+      this.#removeClaim(claimant, state);
 
       // Ensure holds are removed when rejected
-      index = state.holders.indexOf(claimant);
-      if (index >= 0) {
-        state.holders.splice(index, 1);
-        held = true;
-      }
+      held = this.#removeHold(claimant, state);
+
+      // If the claimant was deferred in the past, remove it
+      this.#removeDeferred(claimant, state);
     }
 
     // Inform the claimant input was rejected
@@ -178,10 +212,10 @@ export class GestureInputResolver {
     const state = this.#states.get(id);
     if (!state) return;
 
-    const index = state.holders.indexOf(claimant);
-    if (index >= 0) {
-      state.holders.splice(index, 1);
+    // If the claimant was deferred in the past, remove it
+    this.#removeDeferred(claimant, state);
 
+    if (this.#removeHold(claimant, state)) {
       // Removing the last hold immediately attempts to resolve input with outstanding claims
       if (state.claims.length > 0 && state.holders.length === 0) {
         this.resolve(id);
@@ -192,6 +226,25 @@ export class GestureInputResolver {
     // Remove when no outstanding claims or holds
     if (state.claims.length === 0 && state.holders.length === 0) {
       this.#removeState(id, state);
+    }
+  }
+
+  /** @private */
+  #deferInput(id: number, claimant: GestureInputClaimant): void {
+    let state = this.#states.get(id);
+    if (!state) {
+      state = { claims: [], holders: [], deferred: [] };
+      this.#states.set(id, state);
+    }
+
+    if (state.deferred.includes(claimant)) return;
+
+    if (!state.deferred.includes(claimant)) {
+      state.deferred.push(claimant);
+
+      // Ensure claims and holds are removed when deferred
+      this.#removeClaim(claimant, state);
+      this.#removeHold(claimant, state);
     }
   }
 }
