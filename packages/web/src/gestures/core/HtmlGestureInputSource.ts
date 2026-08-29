@@ -1,6 +1,6 @@
 import { GestureInput } from "./GestureInput";
 import { GestureInputSource } from "./GestureInputSource";
-import { PointerInput } from "./PointerInput";
+import { PointerInput, PointerInputType } from "./PointerInput";
 import { WheelInput } from "./WheelInput";
 
 /** Provides input from an HTML element for gesture detection. */
@@ -55,7 +55,7 @@ export class HtmlGestureInputSource implements GestureInputSource {
       metaKey: e.metaKey,
       button: e.button,
       buttons: e.buttons,
-      pointerType: e.pointerType,
+      pointerType: <PointerInputType>e.pointerType,
       clientX: e.clientX,
       clientY: e.clientY,
       timestamp: e.timeStamp,

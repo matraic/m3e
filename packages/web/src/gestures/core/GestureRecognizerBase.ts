@@ -4,7 +4,7 @@ import { GestureInputButton } from "./GestureInputButton";
 import { GestureInputDisposition } from "./GestureInputDisposition";
 import { GestureInputResolution } from "./GestureInputResolution";
 import { GestureCallback, GestureRecognizer } from "./GestureRecognizer";
-import { PointerInput } from "./PointerInput";
+import { PointerInput, PointerInputType } from "./PointerInput";
 import { WheelInput } from "./WheelInput";
 
 /**
@@ -17,6 +17,7 @@ export abstract class GestureRecognizerBase<
   /** @private */ #priority: number = 1;
   /** @private */ #disabled = false;
   /** @private */ #buttons: Array<GestureInputButton> = ["primary"];
+  /** @private */ #pointerTypes: Array<PointerInputType> = ["mouse", "pen", "touch"];
 
   /** @inheritdoc */
   abstract readonly gestureType: string;
@@ -51,6 +52,14 @@ export abstract class GestureRecognizerBase<
   }
   set buttons(value: readonly GestureInputButton[]) {
     this.#buttons = [...value];
+  }
+
+  /** @inheritdoc */
+  get pointerTypes(): readonly PointerInputType[] {
+    return this.#pointerTypes;
+  }
+  set pointerTypes(value: readonly PointerInputType[]) {
+    this.#pointerTypes = [...value];
   }
 
   /** @inheritdoc */
@@ -146,7 +155,7 @@ export abstract class GestureRecognizerBase<
         break;
 
       case "pointerdown":
-        if (!this._isAllowedButton(<PointerInput>input)) {
+        if (!this.#isAllowedInput(<PointerInput>input)) {
           this._rejectInput(input.id);
         } else {
           this._onPointerDown(<PointerInput>input);
@@ -158,7 +167,7 @@ export abstract class GestureRecognizerBase<
         break;
 
       case "pointerup":
-        if (!this._isAllowedButton(<PointerInput>input)) {
+        if (!this.#isAllowedInput(<PointerInput>input)) {
           this._rejectInput(input.id);
         } else {
           this._onPointerUp(<PointerInput>input);
@@ -236,10 +245,24 @@ export abstract class GestureRecognizerBase<
   }
 
   /**
+   * Determines whether the `pointerType` for the specified input is permitted.
+   * @param {PointerInput} input The gesture input to test.
+   * @returns {boolean} `true` if the pointer type is allowed; otherwise `false`.
+   */
+  protected _isAllowedPointerType(input: PointerInput): boolean {
+    return this.pointerTypes.includes(input.pointerType);
+  }
+
+  /**
    * Emits a recognized gesture.
    * @param {TDetail} detail Detail for the recognized gesture.
    */
   protected _emitGesture(detail: TDetail): void {
     this.onGesture?.(detail);
+  }
+
+  /** @private */
+  #isAllowedInput(input: PointerInput): boolean {
+    return this._isAllowedButton(input) && this._isAllowedPointerType(input);
   }
 }

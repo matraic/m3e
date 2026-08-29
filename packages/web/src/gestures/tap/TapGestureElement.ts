@@ -41,6 +41,7 @@ import { TapGestureDetail, TapGestureRecognizer } from "./TapGestureRecognizer";
  * ```
  *
  * @attr buttons - Which buttons can be pressed.
+ * @attr pointer-types - Which types of pointers can be used to recognize gestures.
  * @attr disabled - Whether gesture recognition is disabled.
  * @attr priority - The priority in which to recognize gestures.
  * @attr pointers - Number of pointers that must be pressed before the gesture fails.

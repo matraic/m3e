@@ -8,6 +8,7 @@ import { GestureRecognizer } from "./GestureRecognizer";
 import { GestureInputButton } from "./GestureInputButton";
 import { HtmlGestureInputSource } from "./HtmlGestureInputSource";
 import { GestureDetail } from "./GestureDetail";
+import { PointerInputType } from "./PointerInput";
 
 /**
  * A base implementation for an element used to detect gestures. This class must be inherited.
@@ -49,6 +50,13 @@ export abstract class GestureElementBase<
    */
   @property({ converter: spaceSeparatedStringConverter })
   buttons: readonly GestureInputButton[] = ["primary"];
+
+  /**
+   * Which types of pointers can be used to recognize gestures.
+   * @default ["mouse", "pen", "touch"]
+   */
+  @property({ attribute: "pointer-types", converter: spaceSeparatedStringConverter })
+  pointerTypes: readonly PointerInputType[] = ["mouse", "pen", "touch"];
 
   /** @private */
   override attach(control: HTMLElement): void {
@@ -110,6 +118,9 @@ export abstract class GestureElementBase<
     }
     if (_changedProperties.has("buttons")) {
       this.recognizer.buttons = this.buttons;
+    }
+    if (_changedProperties.has("pointerTypes")) {
+      this.recognizer.pointerTypes = this.pointerTypes;
     }
   }
 }

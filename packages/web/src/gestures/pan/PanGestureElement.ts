@@ -44,6 +44,7 @@ import { PanGestureDetail, PanGestureLockAxis, PanGestureRecognizer } from "./Pa
  *
  * @tag m3e-pan-gesture
  * @attr buttons - Which buttons can be pressed.
+ * @attr pointer-types - Which types of pointers can be used to recognize gestures.
  * @attr disabled - Whether gesture recognition is disabled.
  * @attr priority - The priority in which to recognize gestures.
  * @attr min-displacement - Minimum distance (px) a pointer can move before the gesture starts.

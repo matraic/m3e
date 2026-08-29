@@ -2,6 +2,7 @@ import { GestureDetail } from "./GestureDetail";
 import { GestureInputButton } from "./GestureInputButton";
 import { GestureInputClaimant } from "./GestureInputClaimant";
 import { GestureInputSink } from "./GestureInputSink";
+import { PointerInputType } from "./PointerInput";
 
 /**
  * Function signature for gesture callbacks.
@@ -26,6 +27,9 @@ export interface GestureRecognizer<TDetail extends GestureDetail = GestureDetail
 
   /** Which buttons can be pressed. */
   buttons: readonly GestureInputButton[];
+
+  /** Which types of pointers can be used to recognize gestures. */
+  pointerTypes: readonly PointerInputType[];
 
   /** Callback invoked when a gesture is recognized. */
   onGesture?: GestureCallback<TDetail>;
