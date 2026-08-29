@@ -203,8 +203,11 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureDetail
     if (!this.#state || this.#state.id !== input.id) return;
 
     if (this.#state.active) {
-      // When active, update, and attempt to accept input
-      this.#updateState(input, this.#state);
+      // When active, update coords and timestamp only, and attempt to accept input
+      this.#state.clientX = input.clientX;
+      this.#state.clientY = input.clientY;
+      this.#state.timestamp = input.timestamp;
+
       this._acceptInput(input.id);
     } else {
       // If inactive, reset

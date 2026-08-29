@@ -2,28 +2,28 @@ import { GestureDetail, GestureInput, GestureInputDisposition, GestureRecognizer
 import { PanGestureDetail, PanGestureRecognizer } from "../pan";
 
 /**
- * Specifies the possible directions of a swipe gesture.
- * - `left` — A swipe with dominant movement toward the negative x‑axis.
- * - `right` — A swipe with dominant movement toward the positive x‑axis.
- * - `up` — A swipe with dominant movement toward the negative y‑axis.
- * - `down` — A swipe with dominant movement toward the positive y‑axis.
+ * Specifies the possible directions of a fling gesture.
+ * - `left` — A fling with dominant movement toward the negative x‑axis.
+ * - `right` — A fling with dominant movement toward the positive x‑axis.
+ * - `up` — A fling with dominant movement toward the negative y‑axis.
+ * - `down` — A fling with dominant movement toward the positive y‑axis.
  */
-export type SwipeGestureDirection = "left" | "right" | "up" | "down";
+export type FlingGestureDirection = "left" | "right" | "up" | "down";
 
 /**
- * Specifies the dominant axis of a swipe gesture.
- * - `x` — The swipe’s primary movement occurs along the horizontal axis.
- * - `y` — The swipe’s primary movement occurs along the vertical axis.
+ * Specifies the dominant axis of a fling gesture.
+ * - `x` — The fling’s primary movement occurs along the horizontal axis.
+ * - `y` — The fling’s primary movement occurs along the vertical axis.
  */
-export type SwipeGestureAxis = "x" | "y";
+export type FlingGestureAxis = "x" | "y";
 
-/** Encapsulates detail about a swipe gesture. */
-export interface SwipeGestureDetail extends GestureDetail {
-  /** Resolved swipe direction. */
-  direction: SwipeGestureDirection;
+/** Encapsulates detail about a fling gesture. */
+export interface FlingGestureDetail extends GestureDetail {
+  /** Resolved fling direction. */
+  direction: FlingGestureDirection;
 
-  /** Dominant axis of the swipe. */
-  axis: SwipeGestureAxis;
+  /** Dominant axis of the fling. */
+  axis: FlingGestureAxis;
 
   /** Total displacement (px) along the dominant axis. */
   distance: number;
@@ -35,15 +35,15 @@ export interface SwipeGestureDetail extends GestureDetail {
   angle: number;
 }
 
-/** State used to recognize swipe gestures. */
+/** State used to recognize fling gestures. */
 interface GestureState {
   detail: PanGestureDetail;
-  direction: SwipeGestureDirection;
-  axis: SwipeGestureAxis;
+  direction: FlingGestureDirection;
+  axis: FlingGestureAxis;
 }
 
-/** Recognizes a swipe gesture. */
-export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureDetail> {
+/** Recognizes a fling gesture. */
+export class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureDetail> {
   /** @private */ readonly #pan = new PanGestureRecognizer();
   /** @private */ #state?: GestureState;
 
@@ -56,7 +56,7 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureDe
   }
 
   /** @inheritdoc */
-  override readonly gestureType = "swipe";
+  override readonly gestureType = "fling";
 
   /** @inheritdoc */
   override get eager(): boolean {
@@ -64,28 +64,28 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureDe
   }
 
   /**
-   * Minimum velocity (px/ms) required to recognize a swipe.
+   * Minimum velocity (px/ms) required to recognize a fling.
    * @default 0.3
    */
   minVelocity = 0.3;
 
   /**
-   * The allowed directions of the swipe.
+   * The allowed directions of the fling.
    * @default ["left", "right", "up", "down"]
    */
-  directions: readonly SwipeGestureDirection[] = ["left", "right", "up", "down"];
+  directions: readonly FlingGestureDirection[] = ["left", "right", "up", "down"];
 
   /**
    * Minimum displacement (px) required before direction is considered valid.
-   * @default 8
+   * @default 12
    */
-  directionThreshold = 8;
+  directionThreshold = 12;
 
   /**
-   * * Maximum distance (px) a pointer can move before the gesture fails.
+   * Minimum distance (px) a pointer must move before the gesture can be recognized.
    * @default 24
    */
-  maxDisplacement = 24;
+  minDisplacement = 24;
 
   /** @private */
   override onInput(input: GestureInput): void {
@@ -112,8 +112,7 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureDe
   }
 
   /** @inheritdoc */
-  protected override _onRejectInput(_id: number): void {
-    if (!this.#state || this.#state.detail.id !== _id) return;
+  protected override _onRejectInput(): void {
     this.reset();
   }
 
@@ -138,43 +137,6 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureDe
         this.reset();
         break;
 
-      case "move": {
-        // During early window, displacement must still be within swipe threshold
-        const displacement = Math.hypot(detail.totalDeltaX, detail.totalDeltaY);
-
-        // Must be within early window, release deferment and reset if exceeded
-        if (displacement > this.maxDisplacement) {
-          this._releaseInput(detail.id);
-          this.reset();
-          break;
-        }
-
-        // Must be fast, otherwise ignore
-        if (detail.speed < this.minVelocity) break;
-
-        // Must have directional commitment, otherwise ignore
-        const axis = this.#computeAxis(detail);
-        const committed =
-          axis === "x"
-            ? Math.abs(detail.totalDeltaX) >= this.directionThreshold
-            : Math.abs(detail.totalDeltaY) >= this.directionThreshold;
-
-        if (!committed) {
-          break;
-        }
-
-        // Must be in allowed directions, otherwise ignore
-        const direction = this.#computeDirection(detail);
-        if (!this.directions.includes(direction)) {
-          break;
-        }
-
-        // Try to accept gesture
-        this.#state = { detail, direction, axis };
-        this._acceptInput(detail.id);
-        break;
-      }
-
       case "start":
         // Ensure state is cleared
         this.#state = undefined;
@@ -183,20 +145,58 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureDe
         this._deferInput(detail.id);
         break;
 
-      case "end":
-        // Swipe must be early, end velocity is fling behavior ignore
-        this.reset();
+      case "move":
+        // Fling never fires on move, only fires on end
         break;
+
+      case "end": {
+        // Must have enough displacement, otherwise release and reset
+        const displacement = Math.hypot(detail.totalDeltaX, detail.totalDeltaY);
+        if (displacement < this.minDisplacement) {
+          this.#releaseAndReset(detail.id);
+          break;
+        }
+
+        // Must be fast at end, otherwise release and reset
+        if (detail.speed < this.minVelocity) {
+          this.#releaseAndReset(detail.id);
+          break;
+        }
+
+        // Must have directional commitment, otherwise release and reset
+        const axis = this.#computeAxis(detail);
+        const committed =
+          axis === "x"
+            ? Math.abs(detail.totalDeltaX) >= this.directionThreshold
+            : Math.abs(detail.totalDeltaY) >= this.directionThreshold;
+
+        if (!committed) {
+          this.#releaseAndReset(detail.id);
+          break;
+        }
+
+        // Must be in allowed directions, otherwise release and reset
+        const direction = this.#computeDirection(detail);
+        if (!this.directions.includes(direction)) {
+          this.#releaseAndReset(detail.id);
+          break;
+        }
+
+        // Try to accept gesture
+        this.#state = { detail, direction, axis };
+        this._acceptInput(detail.id);
+        break;
+      }
     }
   }
 
   /** @private */
-  #computeAxis(detail: PanGestureDetail): SwipeGestureAxis {
+  #computeAxis(detail: PanGestureDetail): FlingGestureAxis {
     return Math.abs(detail.totalDeltaX) > Math.abs(detail.totalDeltaY) ? "x" : "y";
   }
 
   /** @private */
-  #computeDirection(detail: PanGestureDetail): SwipeGestureDirection {
+  #computeDirection(detail: PanGestureDetail): FlingGestureDirection {
     return this.#computeAxis(detail) === "x"
       ? detail.totalDeltaX > 0
         ? "right"
@@ -204,5 +204,11 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureDe
       : detail.totalDeltaY > 0
         ? "down"
         : "up";
+  }
+
+  /** @private */
+  #releaseAndReset(id: number): void {
+    this._releaseInput(id);
+    this.reset();
   }
 }
