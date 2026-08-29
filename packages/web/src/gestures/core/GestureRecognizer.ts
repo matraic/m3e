@@ -25,7 +25,7 @@ export interface GestureRecognizer<TDetail extends GestureDetail = GestureDetail
   disabled: boolean;
 
   /** Which buttons can be pressed. */
-  allowedButtons: readonly GestureInputButton[];
+  buttons: readonly GestureInputButton[];
 
   /** Callback invoked when a gesture is recognized. */
   onGesture?: GestureCallback<TDetail>;

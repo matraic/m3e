@@ -16,7 +16,7 @@ export abstract class GestureRecognizerBase<
 > implements GestureRecognizer<TDetail> {
   /** @private */ #priority: number = 1;
   /** @private */ #disabled = false;
-  /** @private */ #allowedButtons: Array<GestureInputButton> = ["primary"];
+  /** @private */ #buttons: Array<GestureInputButton> = ["primary"];
 
   /** @inheritdoc */
   abstract readonly gestureType: string;
@@ -46,11 +46,11 @@ export abstract class GestureRecognizerBase<
   }
 
   /** @inheritdoc */
-  get allowedButtons(): ReadonlyArray<GestureInputButton> {
-    return this.#allowedButtons;
+  get buttons(): readonly GestureInputButton[] {
+    return this.#buttons;
   }
-  set allowedButtons(value: ReadonlyArray<GestureInputButton>) {
-    this.#allowedButtons = [...value];
+  set buttons(value: readonly GestureInputButton[]) {
+    this.#buttons = [...value];
   }
 
   /** @inheritdoc */
@@ -232,7 +232,7 @@ export abstract class GestureRecognizerBase<
       [3, "back"],
       [4, "forward"],
     ]).get(input.button);
-    return button !== undefined && this.allowedButtons.includes(button);
+    return button !== undefined && this.buttons.includes(button);
   }
 
   /**

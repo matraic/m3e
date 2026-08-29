@@ -34,7 +34,7 @@ import { FlingGestureDetail, FlingGestureDirection, FlingGestureRecognizer } fro
  * ```
  *
  * @tag m3e-fling-gesture
- * @attr allowed-buttons - Which buttons can be pressed.
+ * @attr buttons - Which buttons can be pressed.
  * @attr disabled - Whether gesture recognition is disabled.
  * @attr priority - The priority in which to recognize gestures.
  * @attr min-displacement - * Minimum distance (px) a pointer must move before the gesture can be recognized.

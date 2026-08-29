@@ -52,7 +52,7 @@ import { GestureElementBase, GestureRecognizer } from "../core";
  * });
  * ```
  *
- * @attr allowed-buttons - Which buttons can be pressed.
+ * @attr buttons - Which buttons can be pressed.
  * @attr disabled - Whether gesture recognition is disabled.
  * @attr priority - The priority in which to recognize gestures.
  * @attr max-interval - Maximum time (ms) between gestures before the sequence fails.

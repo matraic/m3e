@@ -47,8 +47,8 @@ export abstract class GestureElementBase<
    * Which buttons can be pressed.
    * @default ["primary"]
    */
-  @property({ attribute: "allowed-buttons", converter: spaceSeparatedStringConverter })
-  allowedButtons: Array<GestureInputButton> = ["primary"];
+  @property({ converter: spaceSeparatedStringConverter })
+  allowedButtons: readonly GestureInputButton[] = ["primary"];
 
   /** @private */
   override attach(control: HTMLElement): void {
@@ -109,7 +109,7 @@ export abstract class GestureElementBase<
       this.recognizer.disabled = this.disabled;
     }
     if (_changedProperties.has("allowedButtons")) {
-      this.recognizer.allowedButtons = this.allowedButtons;
+      this.recognizer.buttons = this.allowedButtons;
     }
   }
 }
