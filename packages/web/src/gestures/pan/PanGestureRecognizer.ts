@@ -133,14 +133,9 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureDetail
   override readonly gestureType = "pan";
 
   /** @inheritdoc */
-  override get eager(): boolean {
-    return true;
-  }
-
-  /** @inheritdoc */
   override _onPointerDown(input: PointerInput): void {
     // Ignore other pointers
-    if (this.#state) return;
+    if (this.#state && this.#state.id !== input.id) return;
 
     this.#state = {
       id: input.id,
@@ -198,7 +193,6 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureDetail
       // Accept, start gesture, defer input
       this.#state.active = true;
       this._emitGesture(this.#createDetail("start", this.#state));
-
       this._deferInput(input.id);
     }
   }
@@ -208,13 +202,13 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureDetail
     // Ignore if no state, state's id doesn't match input
     if (!this.#state || this.#state.id !== input.id) return;
 
-    if (!this.#state.active) {
-      // If inactive, reset
-      this.reset();
-    } else {
+    if (this.#state.active) {
       // When active, update, and attempt to accept input
       this.#updateState(input, this.#state);
       this._acceptInput(input.id);
+    } else {
+      // If inactive, reset
+      this.reset();
     }
   }
 
@@ -223,14 +217,13 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureDetail
     // Ignore if no state, state's id doesn't match input
     if (!this.#state || this.#state.id !== input.id) return;
 
-    if (!this.#state.active) {
-      // If inactive, reset
-      this.reset();
-    } else {
-      // When active, cancel and reset
+    if (this.#state.active) {
+      // When active, cancel
       this._emitGesture(this.#createDetail("cancel", this.#state));
-      this.reset();
     }
+
+    // Reset state
+    this.reset();
   }
 
   /** @inheritdoc */
@@ -246,10 +239,14 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureDetail
   /** @inheritdoc */
   protected override _onRejectInput(id: number): void {
     // Ignore if no state, state's id doesn't match input, or inactive
-    if (!this.#state || this.#state.id !== id || !this.#state.active) return;
+    if (!this.#state || this.#state.id !== id) return;
 
-    // When active, cancel and reset
-    this._emitGesture(this.#createDetail("cancel", this.#state));
+    if (this.#state.active) {
+      // When active, cancel
+      this._emitGesture(this.#createDetail("cancel", this.#state));
+    }
+
+    // Reset state
     this.reset();
   }
 
@@ -301,9 +298,7 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureDetail
   #createDetail(phase: PanGesturePhase, state: GestureState): PanGestureDetail {
     const totalDeltaX = state.clientX - state.startClientX;
     const totalDeltaY = state.clientY - state.startClientY;
-
     const dynamicOrientation = Math.abs(totalDeltaX) > Math.abs(totalDeltaY) ? "horizontal" : "vertical";
-
     const orientation = state.orientation ?? dynamicOrientation;
 
     return {
