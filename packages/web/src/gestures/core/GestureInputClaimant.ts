@@ -3,6 +3,9 @@ import { GestureInputResolution } from "./GestureInputResolution";
 
 /** Defines functionality required dispositions claims against input. */
 export interface GestureInputClaimant {
+  /** The type of gesture produced from input. */
+  readonly gestureType: string;
+
   /** Whether dispositions should resolve immediately. */
   readonly eager: boolean;
 

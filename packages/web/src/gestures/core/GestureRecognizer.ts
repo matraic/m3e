@@ -21,9 +21,6 @@ export type GestureCallback<TDetail extends GestureDetail = GestureDetail> = (de
  */
 export interface GestureRecognizer<TDetail extends GestureDetail = GestureDetail>
   extends GestureInputSink, GestureInputClaimant {
-  /** The type of gesture emitted by the recognizer. */
-  readonly gestureType: string;
-
   /** Whether gesture recognition is disabled. */
   disabled: boolean;
 

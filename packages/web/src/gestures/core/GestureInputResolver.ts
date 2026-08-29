@@ -13,6 +13,9 @@ export class GestureInputResolver {
   /** @private */ readonly #claimants = new Array<GestureInputClaimant>();
   /** @private */ readonly #states = new Map<number, GestureInputClaim>();
 
+  /** Whether debug logging is enabled. */
+  debug: boolean = false;
+
   /**
    * Adds the specified claimant.
    * @param {GestureInputClaimant} claimant The claimant to add.
@@ -22,6 +25,8 @@ export class GestureInputResolver {
     this.#claimants.push(claimant);
 
     claimant.onDisposition = (id, disposition) => {
+      this.#debug("disposition", id, claimant, { disposition });
+
       switch (disposition) {
         case "accept":
           this.#acceptInput(id, claimant);
@@ -93,19 +98,48 @@ export class GestureInputResolver {
     // Inform the claimant input is accepted
     resolved.onResolution(id, "accept");
 
+    this.#debug("resolved", id, resolved);
+
     // Reject all other claims on the input
-    state.claims.filter((x) => x !== resolved).forEach((x) => x.onResolution(id, "reject"));
+    state.claims
+      .filter((x) => x !== resolved)
+      .forEach((x) => {
+        this.#debug("claim-rejected", id, x, { winner: resolved.gestureType });
+        x.onResolution(id, "reject");
+      });
 
     // Reject prior deferrals on the input
-    state.deferred.filter((x) => x !== resolved).forEach((x) => x.onResolution(id, "reject"));
+    state.deferred
+      .filter((x) => x !== resolved)
+      .forEach((x) => {
+        this.#debug("deferred-rejected", id, x, { winner: resolved.gestureType });
+        x.onResolution(id, "reject");
+      });
 
     this.#removeState(id, state);
+  }
+
+  /** @private */
+  #tryRemoveState(id: number, state: GestureInputClaim): void {
+    if (state && state.claims.length === 0 && state.holders.length === 0 && state.deferred.length === 0) {
+      this.#removeState(id, state);
+    }
   }
 
   /** @private */
   #removeState(id: number, state: GestureInputClaim): void {
     clearTimeout(state.timeout);
     this.#states.delete(id);
+  }
+
+  /** @private */
+  #ensureState(id: number): GestureInputClaim {
+    let state = this.#states.get(id);
+    if (!state) {
+      state = { claims: [], holders: [], deferred: [] };
+      this.#states.set(id, state);
+    }
+    return state;
   }
 
   /** @private */
@@ -136,11 +170,7 @@ export class GestureInputResolver {
 
   /** @private */
   #acceptInput(id: number, claimant: GestureInputClaimant): void {
-    let state = this.#states.get(id);
-    if (!state) {
-      state = { claims: [], holders: [], deferred: [] };
-      this.#states.set(id, state);
-    }
+    const state = this.#ensureState(id);
 
     if (state.claims.includes(claimant)) return;
 
@@ -149,12 +179,13 @@ export class GestureInputResolver {
 
     // When transitioning from a hold to accept, insert as a front-of-queue claim
     // Otherwise, it is appended behind other claims
-
     if (this.#removeHold(claimant, state)) {
       state.claims.unshift(claimant);
     } else {
       state.claims.push(claimant);
     }
+
+    this.#debug("accept", id, claimant);
 
     // If eager, immediately attempt to resolve; resolution occurs after a tick supporting pending timers
     if (claimant.eager) {
@@ -165,14 +196,13 @@ export class GestureInputResolver {
 
   /** @private */
   #holdInput(id: number, claimant: GestureInputClaimant): void {
-    let state = this.#states.get(id);
-    if (!state) {
-      state = { claims: [], holders: [], deferred: [] };
-      this.#states.set(id, state);
-    }
+    const state = this.#ensureState(id);
+
     if (!state.holders.includes(claimant)) {
       state.holders.push(claimant);
     }
+
+    this.#debug("hold", id, claimant);
 
     // If the claimant was deferred in the past, remove it
     this.#removeDeferred(claimant, state);
@@ -182,6 +212,7 @@ export class GestureInputResolver {
   #rejectInput(id: number, claimant: GestureInputClaimant): void {
     const state = this.#states.get(id);
     let held = false;
+
     if (state) {
       this.#removeClaim(claimant, state);
 
@@ -192,6 +223,8 @@ export class GestureInputResolver {
       this.#removeDeferred(claimant, state);
     }
 
+    this.#debug("reject", id, claimant);
+
     // Inform the claimant input was rejected
     claimant.onResolution(id, "reject");
 
@@ -201,9 +234,9 @@ export class GestureInputResolver {
       return;
     }
 
-    // Remove when no outstanding claims or holds
-    if (state && state.claims.length === 0 && state.holders.length === 0) {
-      this.#removeState(id, state);
+    // Remove when no outstanding claims, holds or deferrals
+    if (state) {
+      this.#tryRemoveState(id, state);
     }
   }
 
@@ -211,6 +244,8 @@ export class GestureInputResolver {
   #releaseInput(id: number, claimant: GestureInputClaimant): void {
     const state = this.#states.get(id);
     if (!state) return;
+
+    this.#debug("release", id, claimant);
 
     // If the claimant was deferred in the past, remove it
     this.#removeDeferred(claimant, state);
@@ -223,28 +258,36 @@ export class GestureInputResolver {
       }
     }
 
-    // Remove when no outstanding claims or holds
-    if (state.claims.length === 0 && state.holders.length === 0) {
-      this.#removeState(id, state);
-    }
+    // Remove when no outstanding claims, holds, or deferrals
+    this.#tryRemoveState(id, state);
   }
 
   /** @private */
   #deferInput(id: number, claimant: GestureInputClaimant): void {
-    let state = this.#states.get(id);
-    if (!state) {
-      state = { claims: [], holders: [], deferred: [] };
-      this.#states.set(id, state);
-    }
-
-    if (state.deferred.includes(claimant)) return;
+    const state = this.#ensureState(id);
 
     if (!state.deferred.includes(claimant)) {
       state.deferred.push(claimant);
-
-      // Ensure claims and holds are removed when deferred
-      this.#removeClaim(claimant, state);
-      this.#removeHold(claimant, state);
     }
+
+    this.#debug("defer", id, claimant);
+
+    // Ensure claims and holds are removed when deferred
+    this.#removeClaim(claimant, state);
+    this.#removeHold(claimant, state);
+  }
+
+  /** @private */
+  #debug(event: string, id: number, claimant?: GestureInputClaimant, data?: Record<string, unknown>): void {
+    if (!this.debug) return;
+
+    const payload = {
+      event,
+      input: id,
+      claimant: claimant?.gestureType ?? undefined,
+      ...data,
+    };
+
+    console.debug("[GestureResolver]", payload);
   }
 }
