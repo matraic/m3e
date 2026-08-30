@@ -46,7 +46,7 @@ This section details the attributes, slots and CSS custom properties available f
 | ----------- | ------------------------------ |
 | _(default)_ | Renders the items of the list. |
 
-#### 📋 Attributes
+#### ⚙️ Attributes
 
 | Attribute | Type                          | Default      | Description                         |
 | --------- | ----------------------------- | ------------ | ----------------------------------- |
@@ -161,7 +161,7 @@ This section details the attributes, slots, events, and CSS custom properties av
 | `supporting-text` | Renders the supporting text of the list item.  |
 | `trailing`        | Renders the trailing content of the list item. |
 
-#### 📋 Attributes
+#### ⚙️ Attributes
 
 | Attribute  | Type      | Default | Description                                                              |
 | ---------- | --------- | ------- | ------------------------------------------------------------------------ |
@@ -258,7 +258,7 @@ This section details the attributes, slots, events, and CSS custom properties av
 | `supporting-text` | Renders the supporting text of the list item.  |
 | `trailing`        | Renders the trailing content of the list item. |
 
-#### 📋 Attributes
+#### ⚙️ Attributes
 
 | Attribute  | Type      | Default | Description                      |
 | ---------- | --------- | ------- | -------------------------------- |
@@ -358,7 +358,7 @@ This section details the attributes, slots and CSS custom properties available f
 | ----------- | ------------------------------ |
 | _(default)_ | Renders the items of the list. |
 
-#### 📋 Attributes
+#### ⚙️ Attributes
 
 | Attribute | Type                          | Default      | Description                         |
 | --------- | ----------------------------- | ------------ | ----------------------------------- |
@@ -388,7 +388,7 @@ This section details the attributes, slots and CSS custom properties available f
 | ----------- | ------------------------------ |
 | _(default)_ | Renders the items of the list. |
 
-#### 📋 Attributes
+#### ⚙️ Attributes
 
 | Attribute                  | Type                          | Default      | Description                              |
 | -------------------------- | ----------------------------- | ------------ | ---------------------------------------- |
@@ -433,7 +433,7 @@ This section details the attributes, slots, events, and CSS custom properties av
 | `toggle-icon`     | Renders a custom icon for the expand/collapse toggle.   |
 | `items`           | Container for child list items displayed when expanded. |
 
-#### 📋 Attributes
+#### ⚙️ Attributes
 
 | Attribute  | Type      | Default | Description                      |
 | ---------- | --------- | ------- | -------------------------------- |
