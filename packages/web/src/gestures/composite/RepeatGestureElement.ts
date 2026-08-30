@@ -4,8 +4,8 @@ import { html, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
 import { customElement } from "@m3e/web/core";
+import { GestureElementBase, GestureRecognizer } from "@m3e/web/gestures";
 
-import { GestureElementBase, GestureRecognizer } from "../core";
 import { RepeatGestureDetail, RepeatGestureRecognizer } from "./RepeatGestureRecognizer";
 
 /**

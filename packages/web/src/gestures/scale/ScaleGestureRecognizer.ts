@@ -1,4 +1,4 @@
-import { GestureDetail, GestureRecognizerBase, PointerInput } from "../core";
+import { GestureDetail, GestureRecognizerBase, PointerInput } from "@m3e/web/gestures";
 
 /**
  * Represents the lifecycle phase of a scale gesture.

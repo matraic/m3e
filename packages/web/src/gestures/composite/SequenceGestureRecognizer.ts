@@ -4,7 +4,7 @@ import {
   GestureInputDisposition,
   GestureRecognizer,
   GestureRecognizerBase,
-} from "../core";
+} from "@m3e/web/gestures";
 
 /** Encapsulates detail about a sequence of gestures. */
 export interface SequenceGestureDetail extends GestureDetail {

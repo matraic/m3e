@@ -1,5 +1,5 @@
-import { GestureDetail, GestureInput, GestureInputDisposition, GestureRecognizerBase } from "../core";
-import { PanGestureDetail, PanGestureRecognizer } from "../pan";
+import { GestureDetail, GestureInput, GestureInputDisposition, GestureRecognizerBase } from "@m3e/web/gestures";
+import { PanGestureDetail, PanGestureRecognizer } from "@m3e/web/gestures/pan";
 
 /**
  * Specifies the possible directions of a fling gesture.

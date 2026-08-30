@@ -4,9 +4,9 @@ import { html, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
 import { customElement } from "@m3e/web/core";
+import { GestureElementBase, GestureRecognizer } from "@m3e/web/gestures";
 
 import { SequenceGestureDetail, SequenceGestureRecognizer } from "./SequenceGestureRecognizer";
-import { GestureElementBase, GestureRecognizer } from "../core";
 
 /**
  * A non-visual element used to detect a sequence of gestures for an associated element.

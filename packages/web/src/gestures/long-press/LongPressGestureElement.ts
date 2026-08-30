@@ -4,8 +4,8 @@ import { PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
 import { customElement } from "@m3e/web/core";
+import { GestureElementBase } from "@m3e/web/gestures";
 
-import { GestureElementBase } from "../core";
 import { LongPressGestureDetail, LongPressGestureRecognizer } from "./LongPressGestureRecognizer";
 
 /**
