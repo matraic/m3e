@@ -24,19 +24,28 @@ export interface ScaleGestureDetail extends GestureDetail {
   /** Average distance of all active pointers from the gesture centroid. */
   readonly distance: number;
 
-  /** X‑coordinate of the gesture centroid, computed from all active pointers. */
-  readonly centerX: number;
+  /** Viewport X‑coordinate of the gesture centroid, computed from all active pointers. */
+  readonly clientCenterX: number;
 
-  /** Y‑coordinate of the gesture centroid, computed from all active pointers */
-  readonly centerY: number;
+  /** Viewport Y‑coordinate of the gesture centroid, computed from all active pointers. */
+  readonly clientCenterY: number;
+
+  /** Local X‑coordinate of the gesture centroid, relative to the target element's bounding box. */
+  readonly localCenterX: number;
+
+  /** Local Y‑coordinate of the gesture centroid, relative to the target element's bounding box. */
+  readonly localCenterY: number;
 
   /** Number of active pointers contributing to the scale gesture. */
   readonly pointers: number;
 }
 
+type ScaleGestureMetrics = Omit<ScaleGestureDetail, "phase" | "gestureType" | "pointers" | "id" | "timestamp">;
+
 /** Recognizes a scale gesture. */
 export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureDetail> {
   /** @private */ #pointers = new Map<number, PointerInput>();
+  /** @private */ #bounds: DOMRect | null = null;
   /** @private */ #accepted = new Set<number>();
   /** @private */ #initialDistance: number | null = null;
   /** @private */ #started = false;
@@ -79,15 +88,18 @@ export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureDe
 
     /** If started, emit move */
     if (this.#started) {
-      this._emitGesture(this.#createDetail("move", input.id));
+      this._emitGesture(this.#createDetail("move", input));
       return;
     }
 
-    const state = this.#computeState();
+    const state = this.#computeMetrics();
 
     // On first move, set initial distance
     if (this.#initialDistance === null) {
       this.#initialDistance = state.distance;
+
+      // Capture bounds once
+      this.#bounds = input.currentTarget.getBoundingClientRect();
       return;
     }
 
@@ -104,7 +116,7 @@ export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureDe
 
     // If started, end the gesture
     if (this.#started) {
-      this._emitGesture(this.#createDetail("end", input.id));
+      this._emitGesture(this.#createDetail("end", input));
     }
 
     this.reset();
@@ -116,7 +128,7 @@ export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureDe
 
     // If started, cancel gesture
     if (this.#started) {
-      this._emitGesture(this.#createDetail("cancel", input.id));
+      this._emitGesture(this.#createDetail("cancel", input));
     }
 
     this.reset();
@@ -124,7 +136,8 @@ export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureDe
 
   /** @inheritdoc */
   protected override _onAcceptInput(id: number): void {
-    if (!this.#pointers.has(id) || this.#accepted.has(id)) return;
+    const input = this.#pointers.get(id);
+    if (!input || this.#accepted.has(id)) return;
 
     // If tracking pointer and not accepted, accept it
     this.#accepted.add(id);
@@ -132,7 +145,7 @@ export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureDe
     // When all accepted, start gesture
     if (this.#accepted.size === this.#pointers.size) {
       this.#started = true;
-      this._emitGesture(this.#createDetail("start", id));
+      this._emitGesture(this.#createDetail("start", input));
     }
   }
 
@@ -149,17 +162,17 @@ export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureDe
     this.#pointers.clear();
     this.#accepted.clear();
     this.#initialDistance = null;
+    this.#bounds = null;
     this.#started = false;
   }
 
   /** @private */
-  #createDetail(phase: ScaleGesturePhase, id: number): ScaleGestureDetail {
-    const p = this.#pointers.get(id)!;
-    const state = this.#computeState();
+  #createDetail(phase: ScaleGesturePhase, input: PointerInput): ScaleGestureDetail {
+    const state = this.#computeMetrics();
 
     return {
-      id: p.id,
-      timestamp: p.timestamp,
+      id: input.id,
+      timestamp: input.timestamp,
       phase: phase,
       gestureType: this.gestureType,
       pointers: this.#pointers.size,
@@ -168,30 +181,41 @@ export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureDe
   }
 
   /** @private */
-  #computeState(): { scale: number; distance: number; centerX: number; centerY: number } {
+  #computeMetrics(): ScaleGestureMetrics {
     const inputs = [...this.#pointers.values()];
 
     // Compute centroid
-    let centerX = 0;
-    let centerY = 0;
+    let clientCenterX = 0;
+    let clientCenterY = 0;
+
     for (const p of inputs) {
-      centerX += p.clientX;
-      centerY += p.clientY;
+      clientCenterX += p.clientX;
+      clientCenterY += p.clientY;
     }
-    centerX /= inputs.length;
-    centerY /= inputs.length;
+
+    clientCenterX /= inputs.length;
+    clientCenterY /= inputs.length;
+
+    // Local centroid (relative to element bounds)
+    let localCenterX = clientCenterX;
+    let localCenterY = clientCenterY;
+
+    if (this.#bounds) {
+      localCenterX = clientCenterX - this.#bounds.left;
+      localCenterY = clientCenterY - this.#bounds.top;
+    }
 
     // Compute average distance from centroid
     let total = 0;
     for (const p of inputs) {
-      const dx = p.clientX - centerX;
-      const dy = p.clientY - centerY;
+      const dx = p.clientX - clientCenterX;
+      const dy = p.clientY - clientCenterY;
       total += Math.hypot(dx, dy);
     }
 
     const distance = total / inputs.length;
     const scale = this.#initialDistance ? distance / this.#initialDistance : 1;
 
-    return { distance, centerX, centerY, scale };
+    return { distance, scale, clientCenterX, clientCenterY, localCenterX, localCenterY };
   }
 }
