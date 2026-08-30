@@ -4,7 +4,7 @@ import { GestureInputButton } from "./GestureInputButton";
 import { GestureInputDisposition } from "./GestureInputDisposition";
 import { GestureInputResolution } from "./GestureInputResolution";
 import { GestureCallback, GestureRecognizer } from "./GestureRecognizer";
-import { PointerInput, PointerInputType } from "./PointerInput";
+import { PointerInput, PointerType } from "./PointerInput";
 import { WheelInput } from "./WheelInput";
 
 /**
@@ -17,7 +17,7 @@ export abstract class GestureRecognizerBase<
   /** @private */ #priority: number = 1;
   /** @private */ #disabled = false;
   /** @private */ #buttons: Array<GestureInputButton> = ["primary"];
-  /** @private */ #pointerTypes: Array<PointerInputType> = ["mouse", "pen", "touch"];
+  /** @private */ #pointerTypes: Array<PointerType> = ["mouse", "pen", "touch"];
 
   /** @inheritdoc */
   abstract readonly gestureType: string;
@@ -55,10 +55,10 @@ export abstract class GestureRecognizerBase<
   }
 
   /** @inheritdoc */
-  get pointerTypes(): readonly PointerInputType[] {
+  get pointerTypes(): readonly PointerType[] {
     return this.#pointerTypes;
   }
-  set pointerTypes(value: readonly PointerInputType[]) {
+  set pointerTypes(value: readonly PointerType[]) {
     this.#pointerTypes = [...value];
   }
 
