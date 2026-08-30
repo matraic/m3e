@@ -12,8 +12,8 @@ export type SwipeGestureDirection = "left" | "right" | "up" | "down";
 
 /**
  * Specifies the dominant axis of a swipe gesture.
- * - `x` — The swipe’s primary movement occurs along the horizontal axis.
- * - `y` — The swipe’s primary movement occurs along the vertical axis.
+ * - `x` — The swipe's primary movement occurs along the horizontal axis.
+ * - `y` — The swipe's primary movement occurs along the vertical axis.
  */
 export type SwipeGestureAxis = "x" | "y";
 

@@ -22,8 +22,8 @@ import { customElement, DesignToken, getScrollbarWidth, ReconnectedCallback } fr
  *
  * @slot - Renders the content of the pane.
  *
- * @cssprop --m3e-content-pane-container-shape - Corner radius applied to the pane’s outer surface.
- * @cssprop --m3e-content-pane-container-color - Background color of the pane’s surface.
+ * @cssprop --m3e-content-pane-container-shape - Corner radius applied to the pane's outer surface.
+ * @cssprop --m3e-content-pane-container-color - Background color of the pane's surface.
  * @cssprop --m3e-content-pane-container-padding - Internal padding applied to all sides of the scrollable content.
  */
 @customElement("m3e-content-pane")

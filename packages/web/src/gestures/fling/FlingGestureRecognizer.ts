@@ -12,8 +12,8 @@ export type FlingGestureDirection = "left" | "right" | "up" | "down";
 
 /**
  * Specifies the dominant axis of a fling gesture.
- * - `x` — The fling’s primary movement occurs along the horizontal axis.
- * - `y` — The fling’s primary movement occurs along the vertical axis.
+ * - `x` — The fling's primary movement occurs along the horizontal axis.
+ * - `y` — The fling's primary movement occurs along the vertical axis.
  */
 export type FlingGestureAxis = "x" | "y";
 
