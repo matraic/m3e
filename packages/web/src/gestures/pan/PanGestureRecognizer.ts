@@ -1,9 +1,19 @@
 import { GestureDetail, GestureRecognizerBase, PointerInput } from "../core";
 
-/** Specifies the phases of a pan gesture. */
+/**
+ * Represents the lifecycle phases of a pan gesture.
+ * - `"start"` — The gesture has activated after crossing its movement threshold.
+ * - `"move"` — The gesture is actively panning, updated deltas and displacement.
+ * - `"end"` — The gesture completed normally because the active pointer was released.
+ * - `"cancel"` — The gesture was interrupted or rejected and did not complete normally.
+ */
 export type PanGesturePhase = "start" | "move" | "end" | "cancel";
 
-/** Specifies the orientation of a pan gesture. */
+/**
+ * Indicates the resolved primary axis of a pan gesture.
+ * - `"horizontal"` — Movement along the x‑axis dominates total displacement.
+ * - `"vertical"` — Movement along the y‑axis dominates total displacement.
+ */
 export type PanGestureOrientation = "horizontal" | "vertical";
 
 /** Encapsulates detail about a pan gesture. */
