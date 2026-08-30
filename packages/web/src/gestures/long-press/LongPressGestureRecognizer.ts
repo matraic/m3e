@@ -1,7 +1,17 @@
 import { GestureDetail, GestureRecognizerBase, PointerInput } from "../core";
 
+/**
+ * Represents the lifecycle phases of a long-press gesture.
+ * - `start` — The gesture is recognized after the pointer has remained stationary for the required duration.
+ * - `end`   — The gesture concludes when the pointer is released after recognition.
+ */
+export type LongPressGesturePhase = "start" | "end";
+
 /** Encapsulates detail about a long-press gesture. */
 export interface LongPressGestureDetail extends GestureDetail {
+  /** The phase of the gesture. */
+  readonly phase: LongPressGesturePhase;
+
   /** Viewport x-coordinate where the long-press began. */
   readonly clientX: number;
 
@@ -102,9 +112,16 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
 
   /** @inheritdoc */
   override _onPointerUp(input: PointerInput): void {
-    // Reject if pointer up occurs before accepted (eagerly)
-    if (this.#state && this.#state.id === input.id && !this.#state.accepted) {
-      this._rejectInput(this.#state.id);
+    if (this.#state && this.#state.id === input.id) {
+      // Reject if pointer up occurs before accepted (eagerly)
+      if (!this.#state.accepted) {
+        this._rejectInput(this.#state.id);
+      } else {
+        // End the gesture
+        this.#state.endTime = input.timestamp;
+        this._emitGesture(this.#createDetail("end", this.#state));
+        this.reset();
+      }
     }
   }
 
@@ -118,17 +135,7 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
   /** @inheritdoc */
   protected override _onAcceptInput(id: number): void {
     if (!this.#state || this.#state.id !== id) return;
-
-    this._emitGesture({
-      id: this.#state.id,
-      gestureType: this.gestureType,
-      clientX: this.#state.clientX,
-      clientY: this.#state.clientY,
-      localX: this.#state.localX,
-      localY: this.#state.localY,
-      duration: this.#state.endTime - this.#state.startTime,
-      timestamp: this.#state.endTime,
-    });
+    this._emitGesture(this.#createDetail("start", this.#state));
   }
 
   /** @inheritdoc */
@@ -142,5 +149,20 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
   override reset(): void {
     clearTimeout(this.#state?.timer);
     this.#state = undefined;
+  }
+
+  /** @private */
+  #createDetail(phase: LongPressGesturePhase, state: GestureState): LongPressGestureDetail {
+    return {
+      id: state.id,
+      gestureType: this.gestureType,
+      phase: phase,
+      clientX: state.clientX,
+      clientY: state.clientY,
+      localX: state.localX,
+      localY: state.localY,
+      duration: state.endTime - state.startTime,
+      timestamp: state.endTime,
+    };
   }
 }

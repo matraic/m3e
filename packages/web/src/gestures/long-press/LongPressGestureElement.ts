@@ -29,6 +29,9 @@ import { LongPressGestureDetail, LongPressGestureRecognizer } from "./LongPressG
  * recognizer.addEventListener("gesture", e => {
  *   const detail = e.detail;
  *
+ *   // Current phase (start, end,)
+ *   console.log(detail.phase);
+ *
  *   // Total long-press duration
  *   console.log(detail.duration);
  * });
