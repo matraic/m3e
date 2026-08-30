@@ -52,6 +52,8 @@ import { RepeatGestureDetail, RepeatGestureRecognizer } from "./RepeatGestureRec
  * });
  * ```
  *
+ * @slot - The gesture to repeat.
+ *
  * @attr buttons - Which buttons can be pressed.
  * @attr pointer-types - Which types of pointers can be used to recognize gestures.
  * @attr disabled - Whether gesture recognition is disabled.
