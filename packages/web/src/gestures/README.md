@@ -152,6 +152,123 @@ recognizer.addEventListener("gesture", (e) => {
 });
 ```
 
+### Fling Gesture
+
+The following example illustrates detecting fling gestures on an element using `<m3e-fling-gesture>`.
+Use the `for` attribute to bind the gesture recognizer to a target element:
+
+```html
+<div id="div1"></div>
+<m3e-fling-gesture for="div1"></m3e-fling-gesture>
+```
+
+Listen for the `gesture` event to handle detected fling gestures:
+
+```ts
+const recognizer = document.querySelector("m3e-fling-gesture");
+
+recognizer.addEventListener("gesture", (e) => {
+  const detail = e.detail;
+
+  // Current direction
+  console.log(detail.direction);
+});
+```
+
+### Long-Press Gesture
+
+The following example illustrates detecting long-press gestures on an element using `<m3e-long-press-gesture>`.
+Use the `for` attribute to bind the gesture recognizer to a target element:
+
+```html
+<div id="div1"></div>
+<m3e-long-press-gesture for="div1"></m3e-long-press-gesture>
+```
+
+Listen for the `gesture` event to handle detected long-press gestures:
+
+```ts
+const recognizer = document.querySelector("m3e-long-press-gesture");
+
+recognizer.addEventListener("gesture", (e) => {
+  const detail = e.detail;
+
+  // Current phase (start, end,)
+  console.log(detail.phase);
+
+  // Total long-press duration
+  console.log(detail.duration);
+});
+```
+
+### Scale Gesture
+
+The following example illustrates detecting scale gestures on an element using `<m3e-scale-gesture>`.
+Use the `for` attribute to bind the gesture recognizer to a target element:
+
+```html
+<div id="div1"></div>
+<m3e-scale-gesture for="div1"></m3e-scale-gesture>
+```
+
+Listen for the `gesture` event to handle detected scale gestures:
+
+```ts
+const recognizer = document.querySelector("m3e-scale-gesture");
+
+recognizer.addEventListener("gesture", (e) => {
+  const detail = e.detail;
+
+  // Current phase (start, move, end, cancel)
+  console.log(detail.phase);
+
+  // Scale factor relative to the initial pointer distance.
+  // A value of 1 represents no scaling; values >1 indicate expansion,
+  // and values <1 indicate contraction.
+  console.log(detail.scale);
+});
+```
+
+### Repeat Gesture
+
+The following example illustrates detecting repeated gestures on an element using `<m3e-repeat-gesture>`.
+
+The `<m3e-repeat-gesture>` accepts a **single child gesture element** which defines the gesture to repeat.
+
+Use the `count` attribute to specify how many times the gesture must occur before it is recognized. The default value is **2** (double‑gesture).
+
+```html
+<div id="div1"></div>
+
+<!-- Detect a double‑tap (default count = 2) -->
+<m3e-repeat-gesture for="div1">
+  <m3e-tap-gesture></m3e-tap-gesture>
+</m3e-repeat-gesture>
+
+<!-- Detect a triple‑tap -->
+<m3e-repeat-gesture for="div1" count="3">
+  <m3e-tap-gesture></m3e-tap-gesture>
+</m3e-repeat-gesture>
+```
+
+Listen for the `gesture` event to handle repeated gestures:
+
+```ts
+const recognizer = document.querySelector("m3e-repeat-gesture");
+
+recognizer.addEventListener("gesture", (e) => {
+  const detail = e.detail;
+
+  // Number of completed occurrences (e.g., 2 for a double‑tap)
+  console.log(detail.occurrences.length);
+
+  // Access each occurrence's detail
+  detail.occurrences.forEach((occ, i) => {
+    console.log(`Occurrence ${i + 1}:`, occ.timestamp);
+  });
+});
+```
+
 ## 📖 API Reference
 
 This section details the attributes and events available for gesture elements.
@@ -426,123 +543,6 @@ Recognizes a sequence of gestures performed in order. The recognizer emits a ges
   gestureType: "sequence";         // The type of the gesture
   sequence: readonly GestureDetail[]; // The details for each gesture in the sequence
 }
-```
-
-### Fling Gesture
-
-The following example illustrates detecting fling gestures on an element using `<m3e-fling-gesture>`.
-Use the `for` attribute to bind the gesture recognizer to a target element:
-
-```html
-<div id="div1"></div>
-<m3e-fling-gesture for="div1"></m3e-fling-gesture>
-```
-
-Listen for the `gesture` event to handle detected fling gestures:
-
-```ts
-const recognizer = document.querySelector("m3e-fling-gesture");
-
-recognizer.addEventListener("gesture", (e) => {
-  const detail = e.detail;
-
-  // Current direction
-  console.log(detail.direction);
-});
-```
-
-### Long-Press Gesture
-
-The following example illustrates detecting long-press gestures on an element using `<m3e-long-press-gesture>`.
-Use the `for` attribute to bind the gesture recognizer to a target element:
-
-```html
-<div id="div1"></div>
-<m3e-long-press-gesture for="div1"></m3e-long-press-gesture>
-```
-
-Listen for the `gesture` event to handle detected long-press gestures:
-
-```ts
-const recognizer = document.querySelector("m3e-long-press-gesture");
-
-recognizer.addEventListener("gesture", (e) => {
-  const detail = e.detail;
-
-  // Current phase (start, end,)
-  console.log(detail.phase);
-
-  // Total long-press duration
-  console.log(detail.duration);
-});
-```
-
-### Scale Gesture
-
-The following example illustrates detecting scale gestures on an element using `<m3e-scale-gesture>`.
-Use the `for` attribute to bind the gesture recognizer to a target element:
-
-```html
-<div id="div1"></div>
-<m3e-scale-gesture for="div1"></m3e-scale-gesture>
-```
-
-Listen for the `gesture` event to handle detected scale gestures:
-
-```ts
-const recognizer = document.querySelector("m3e-scale-gesture");
-
-recognizer.addEventListener("gesture", (e) => {
-  const detail = e.detail;
-
-  // Current phase (start, move, end, cancel)
-  console.log(detail.phase);
-
-  // Scale factor relative to the initial pointer distance.
-  // A value of 1 represents no scaling; values >1 indicate expansion,
-  // and values <1 indicate contraction.
-  console.log(detail.scale);
-});
-```
-
-### Repeat Gesture
-
-The following example illustrates detecting repeated gestures on an element using `<m3e-repeat-gesture>`.
-
-The `<m3e-repeat-gesture>` accepts a **single child gesture element** which defines the gesture to repeat.
-
-Use the `count` attribute to specify how many times the gesture must occur before it is recognized. The default value is **2** (double‑gesture).
-
-```html
-<div id="div1"></div>
-
-<!-- Detect a double‑tap (default count = 2) -->
-<m3e-repeat-gesture for="div1">
-  <m3e-tap-gesture></m3e-tap-gesture>
-</m3e-repeat-gesture>
-
-<!-- Detect a triple‑tap -->
-<m3e-repeat-gesture for="div1" count="3">
-  <m3e-tap-gesture></m3e-tap-gesture>
-</m3e-repeat-gesture>
-```
-
-Listen for the `gesture` event to handle repeated gestures:
-
-```ts
-const recognizer = document.querySelector("m3e-repeat-gesture");
-
-recognizer.addEventListener("gesture", (e) => {
-  const detail = e.detail;
-
-  // Number of completed occurrences (e.g., 2 for a double‑tap)
-  console.log(detail.occurrences.length);
-
-  // Access each occurrence's detail
-  detail.occurrences.forEach((occ, i) => {
-    console.log(`Occurrence ${i + 1}:`, occ.timestamp);
-  });
-});
 ```
 
 ### 🗂️ m3e-repeat-gesture
