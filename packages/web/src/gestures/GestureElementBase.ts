@@ -9,7 +9,7 @@ import { GestureInputButton } from "./GestureInputButton";
 import { HtmlGestureInputSource } from "./HtmlGestureInputSource";
 import { PointerType } from "./PointerInput";
 import { GestureDetailOf, GestureRecognizerOptions } from "./GestureRecognizerOptions";
-import { createRecognizer } from "./GestureRecognizerRegistry";
+import { createGestureRecognizer } from "./GestureRecognizerRegistry";
 
 /**
  * A base implementation for an element used to detect gestures. This class must be inherited.
@@ -35,7 +35,7 @@ export abstract class GestureElementBase<
   /** The recognizer used to detect gestures. */
   get recognizer(): GestureRecognizer<TOptions> | null {
     if (this.#recognizer) return this.#recognizer;
-    this.#recognizer = createRecognizer(this.gestureType);
+    this.#recognizer = createGestureRecognizer(this.gestureType);
     this.#recognizer?.updateOptions(<TOptions>{
       onGesture: (detail: GestureDetailOf<TOptions>) => {
         this.dispatchEvent(new CustomEvent("gesture", { detail }));

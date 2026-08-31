@@ -3,7 +3,7 @@ import {
   GestureRecognizerBase,
   GestureRecognizerOptions,
   PointerInput,
-  registerRecognizer,
+  registerGestureRecognizer,
 } from "@m3e/web/gestures";
 
 /**
@@ -186,4 +186,4 @@ class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressGestureO
 }
 
 // Register the recognizer
-registerRecognizer<LongPressGestureOptions>("long-press", (options) => new LongPressGestureRecognizer(options));
+registerGestureRecognizer<LongPressGestureOptions>("long-press", (options) => new LongPressGestureRecognizer(options));

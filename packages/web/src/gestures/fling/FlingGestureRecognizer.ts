@@ -1,11 +1,11 @@
 import {
-  createRecognizer,
+  createGestureRecognizer,
   GestureDetail,
   GestureInput,
   GestureInputDisposition,
   GestureRecognizerBase,
   GestureRecognizerOptions,
-  registerRecognizer,
+  registerGestureRecognizer,
 } from "@m3e/web/gestures";
 
 import { PanGestureDetail, PanGestureOptions } from "@m3e/web/gestures/pan";
@@ -80,7 +80,7 @@ interface GestureState {
 
 /** Recognizes a fling gesture. */
 class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureOptions> {
-  /** @private */ readonly #pan = createRecognizer<PanGestureOptions>("pan");
+  /** @private */ readonly #pan = createGestureRecognizer<PanGestureOptions>("pan");
   /** @private */ #state?: GestureState;
 
   /**
@@ -241,4 +241,4 @@ class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureOptions> 
   }
 }
 
-registerRecognizer<FlingGestureOptions>("fling", (options) => new FlingGestureRecognizer(options));
+registerGestureRecognizer<FlingGestureOptions>("fling", (options) => new FlingGestureRecognizer(options));

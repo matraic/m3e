@@ -5,7 +5,7 @@ import {
   GestureRecognizer,
   GestureRecognizerBase,
   GestureRecognizerOptions,
-  registerRecognizer,
+  registerGestureRecognizer,
 } from "@m3e/web/gestures";
 
 /** Encapsulates detail about a sequence of gestures. */
@@ -193,4 +193,4 @@ class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGestureOpt
 }
 
 // Register the recognizer
-registerRecognizer<SequenceGestureOptions>("sequence", (options) => new SequenceGestureRecognizer(options));
+registerGestureRecognizer<SequenceGestureOptions>("sequence", (options) => new SequenceGestureRecognizer(options));

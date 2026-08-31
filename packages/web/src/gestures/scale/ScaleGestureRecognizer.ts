@@ -3,7 +3,7 @@ import {
   GestureRecognizerBase,
   GestureRecognizerOptions,
   PointerInput,
-  registerRecognizer,
+  registerGestureRecognizer,
 } from "@m3e/web/gestures";
 
 /**
@@ -239,4 +239,4 @@ class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureOptions> 
 }
 
 // Register the recognizer
-registerRecognizer<ScaleGestureOptions>("scale", (options) => new ScaleGestureRecognizer(options));
+registerGestureRecognizer<ScaleGestureOptions>("scale", (options) => new ScaleGestureRecognizer(options));

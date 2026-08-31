@@ -22,7 +22,7 @@ class GestureRecognizerRegistry {
  * @param {string} gestureType The type of gesture for which to recognize.
  * @param {GestureRecognizerFactory<TOptions>} factory The factory used to create recognizers for the given gesture type.
  */
-export function registerRecognizer<TOptions extends GestureRecognizerOptions<GestureDetailOf<TOptions>>>(
+export function registerGestureRecognizer<TOptions extends GestureRecognizerOptions<GestureDetailOf<TOptions>>>(
   gestureType: string,
   factory: GestureRecognizerFactory<TOptions>,
 ): void {
@@ -36,7 +36,7 @@ export function registerRecognizer<TOptions extends GestureRecognizerOptions<Ges
  * @param {Partial<TOptions> | undefined} options Options that control gesture recognition.
  * @returns {GestureRecognizer<DetailOf<TOptions>, TOptions>} A recognizer for the specified gesture type or `null` if a recognizer could not be created.
  */
-export function createRecognizer<TOptions extends GestureRecognizerOptions<GestureDetailOf<TOptions>>>(
+export function createGestureRecognizer<TOptions extends GestureRecognizerOptions<GestureDetailOf<TOptions>>>(
   gestureType: string,
   options?: Partial<TOptions>,
 ): GestureRecognizer<TOptions> | null {

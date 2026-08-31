@@ -5,7 +5,7 @@ import {
   GestureRecognizer,
   GestureRecognizerBase,
   GestureRecognizerOptions,
-  registerRecognizer,
+  registerGestureRecognizer,
 } from "@m3e/web/gestures";
 
 /**
@@ -217,4 +217,4 @@ class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDetail> ext
 }
 
 // Register the recognizer
-registerRecognizer<RepeatGestureOptions>("repeat", (options) => new RepeatGestureRecognizer(options));
+registerGestureRecognizer<RepeatGestureOptions>("repeat", (options) => new RepeatGestureRecognizer(options));

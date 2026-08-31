@@ -3,7 +3,7 @@ import {
   GestureRecognizerBase,
   GestureRecognizerOptions,
   PointerInput,
-  registerRecognizer,
+  registerGestureRecognizer,
 } from "@m3e/web/gestures";
 
 /**
@@ -365,4 +365,4 @@ class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOptions> {
 }
 
 // Register the recognizer
-registerRecognizer<PanGestureOptions>("pan", (options) => new PanGestureRecognizer(options));
+registerGestureRecognizer<PanGestureOptions>("pan", (options) => new PanGestureRecognizer(options));

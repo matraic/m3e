@@ -3,7 +3,7 @@ import {
   GestureRecognizerBase,
   GestureRecognizerOptions,
   PointerInput,
-  registerRecognizer,
+  registerGestureRecognizer,
 } from "@m3e/web/gestures";
 
 /** Encapsulates pointer detail about a tap gesture. */
@@ -252,4 +252,4 @@ class TapGestureRecognizer extends GestureRecognizerBase<TapGestureOptions> {
 }
 
 // Register the recognizer
-registerRecognizer<TapGestureOptions>("tap", (options) => new TapGestureRecognizer(options));
+registerGestureRecognizer<TapGestureOptions>("tap", (options) => new TapGestureRecognizer(options));
