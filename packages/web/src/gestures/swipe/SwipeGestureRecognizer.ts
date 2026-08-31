@@ -3,9 +3,9 @@ import {
   GestureDetail,
   GestureInput,
   GestureInputDisposition,
+  gestureRecognizer,
   GestureRecognizerBase,
   GestureRecognizerOptions,
-  registerGestureRecognizer,
 } from "@m3e/web/gestures";
 
 import { PanGestureDetail, PanGestureOptions } from "@m3e/web/gestures/pan";
@@ -79,7 +79,8 @@ interface GestureState {
 }
 
 /** Recognizes a swipe gesture. */
-class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOptions, SwipeGestureDetail> {
+@gestureRecognizer("swipe")
+export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOptions, SwipeGestureDetail> {
   /** @private */ readonly #pan = createGestureRecognizer<PanGestureOptions, PanGestureDetail>("pan", {
     minDisplacement: 0,
   });
@@ -97,9 +98,6 @@ class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOptions, 
       this.#pan.onGesture = (detail) => this.#handlePanGesture(detail);
     }
   }
-
-  /** @inheritdoc */
-  override readonly gestureType = "swipe";
 
   /** @inheritdoc */
   override get eager(): boolean {
@@ -225,9 +223,3 @@ class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOptions, 
         : "up";
   }
 }
-
-// Register the recognizer
-registerGestureRecognizer<SwipeGestureOptions, SwipeGestureDetail>(
-  "swipe",
-  (options) => new SwipeGestureRecognizer(options),
-);

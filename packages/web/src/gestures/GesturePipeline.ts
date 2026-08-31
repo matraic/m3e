@@ -3,16 +3,8 @@ import { GestureInputResolver } from "./GestureInputResolver";
 import { GestureInputSource } from "./GestureInputSource";
 import { GestureRecognizer } from "./GestureRecognizer";
 
-/**
- * Coordinates gesture recognition by dispatching input to recognizers
- * and resolving their claims on that input.
- *
- * A GestureDetector:
- * - receives input from a {@link GestureInputSource},
- * - dispatches that input to recognizers through an internal {@link GestureInputDispatcher},
- * - and resolves recognizer claims through an internal {@link GestureInputResolver}.
- */
-export class GestureDetector {
+/** Coordinates gesture recognition by dispatching input to recognizers and resolving their claims on that input. */
+export class GesturePipeline {
   /** @private */ readonly #proxySource: GestureInputSource = {};
   /** @private */ readonly #dispatcher = new GestureInputDispatcher(this.#proxySource);
   /** @private */ readonly #resolver = new GestureInputResolver();

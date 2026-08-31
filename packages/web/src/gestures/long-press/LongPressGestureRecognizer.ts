@@ -1,9 +1,9 @@
 import {
   GestureDetail,
+  gestureRecognizer,
   GestureRecognizerBase,
   GestureRecognizerOptions,
   PointerInput,
-  registerGestureRecognizer,
 } from "@m3e/web/gestures";
 
 /**
@@ -63,14 +63,12 @@ interface GestureState {
 }
 
 /** Recognizes a long-press gesture. */
-class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressGestureOptions, LongPressGestureDetail> {
+@gestureRecognizer("long-press")
+export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressGestureOptions, LongPressGestureDetail> {
   /** @private */ #state?: GestureState;
 
   /** @inheritdoc */
-  override readonly gestureType: string = "long-press";
-
-  /** @inheritdoc */
-  protected override _defaultOptions(): Partial<LongPressGestureOptions> {
+  protected override get _defaultOptions(): Partial<LongPressGestureOptions> {
     return {
       ...super._defaultOptions,
       maxDisplacement: 4,
@@ -184,9 +182,3 @@ class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressGestureO
     };
   }
 }
-
-// Register the recognizer
-registerGestureRecognizer<LongPressGestureOptions, LongPressGestureDetail>(
-  "long-press",
-  (options) => new LongPressGestureRecognizer(options),
-);

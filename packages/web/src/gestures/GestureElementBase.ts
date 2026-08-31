@@ -3,13 +3,12 @@ import { property } from "lit/decorators.js";
 
 import { HtmlFor, spaceSeparatedStringConverter } from "@m3e/web/core";
 
-import { GestureDetector } from "./GestureDetector";
 import { GestureRecognizer } from "./GestureRecognizer";
 import { GestureInputButton } from "./GestureInputButton";
-import { HtmlGestureInputSource } from "./HtmlGestureInputSource";
 import { PointerType } from "./PointerInput";
 import { GestureRecognizerOptions } from "./GestureRecognizerOptions";
 import { createGestureRecognizer } from "./GestureRecognizerRegistry";
+import { GestureRegistry } from "./GestureRegistry";
 
 /**
  * A base implementation for an element used to detect gestures. This class must be inherited.
@@ -23,12 +22,19 @@ export abstract class GestureElementBase<TOptions extends GestureRecognizerOptio
     }
   `;
 
-  /** @private */ static readonly #detectors = new Map<HTMLElement, GestureDetector>();
-  /** @private */ static readonly #sources = new Map<HTMLElement, HtmlGestureInputSource>();
   /** @private */ #recognizer: GestureRecognizer<TOptions> | null = null;
 
+  /**
+   * Initializes a new instance of this class.
+   * @param {string} gestureType The type of gesture to recognize.
+   */
+  constructor(gestureType: string) {
+    super();
+    this.gestureType = gestureType;
+  }
+
   /** The type of gesture to recognize. */
-  abstract gestureType: string;
+  readonly gestureType: string;
 
   /** The recognizer used to detect gestures. */
   get recognizer(): GestureRecognizer<TOptions> | null {
@@ -70,33 +76,15 @@ export abstract class GestureElementBase<TOptions extends GestureRecognizerOptio
   override attach(control: HTMLElement): void {
     super.attach(control);
 
-    let source = GestureElementBase.#sources.get(control);
-    if (!source) {
-      source = new HtmlGestureInputSource(control);
-      GestureElementBase.#sources.set(control, source);
+    if (this.recognizer) {
+      GestureRegistry.addRecognizer(control, this.recognizer);
     }
-
-    let detector = GestureElementBase.#detectors.get(control);
-    if (!detector) {
-      detector = new GestureDetector(source);
-      GestureElementBase.#detectors.set(control, detector);
-    }
-
-    detector.addRecognizer(<GestureRecognizer>(<unknown>this.recognizer));
   }
 
   /** @private */
   override detach(): void {
-    if (this.control) {
-      const detector = GestureElementBase.#detectors.get(this.control);
-      if (detector) {
-        detector.removeRecognizer(<GestureRecognizer>(<unknown>this.recognizer));
-        if (detector.size === 0) {
-          GestureElementBase.#detectors.delete(this.control);
-          GestureElementBase.#sources.get(this.control)?.destroy();
-          GestureElementBase.#sources.delete(this.control);
-        }
-      }
+    if (this.control && this.recognizer) {
+      GestureRegistry.removeRecognizer(this.control, this.recognizer);
     }
 
     super.detach();

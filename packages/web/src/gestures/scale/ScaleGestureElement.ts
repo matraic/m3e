@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import { ScaleGestureDetail, ScaleGestureOptions } from "./ScaleGestureRecognizer";
+import { ScaleGestureDetail, ScaleGestureOptions, ScaleGestureRecognizer } from "./ScaleGestureRecognizer";
 
 /**
  * A non-visual element used to detect a scale gesture for an associated element.
@@ -50,8 +50,9 @@ import { ScaleGestureDetail, ScaleGestureOptions } from "./ScaleGestureRecognize
  */
 @customElement("m3e-scale-gesture")
 export class M3eScaleGestureElement extends GestureElementBase<ScaleGestureOptions> {
-  /** @inheritdoc */
-  override gestureType: string = "scale";
+  constructor() {
+    super(ScaleGestureRecognizer.gestureType);
+  }
 
   /**
    * Number of pointers that must be pressed before the gesture fails.

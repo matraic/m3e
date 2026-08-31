@@ -6,7 +6,12 @@ import { property } from "lit/decorators.js";
 import { customElement, spaceSeparatedStringConverter } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import { FlingGestureDetail, FlingGestureDirection, FlingGestureOptions } from "./FlingGestureRecognizer";
+import {
+  FlingGestureDetail,
+  FlingGestureDirection,
+  FlingGestureOptions,
+  FlingGestureRecognizer,
+} from "./FlingGestureRecognizer";
 
 /**
  * A non-visual element used to detect a fling gesture for an associated element.
@@ -47,8 +52,9 @@ import { FlingGestureDetail, FlingGestureDirection, FlingGestureOptions } from "
  */
 @customElement("m3e-fling-gesture")
 export class M3eFlingGestureElement extends GestureElementBase<FlingGestureOptions> {
-  /** @inheritdoc */
-  override gestureType: string = "fling";
+  constructor() {
+    super(FlingGestureRecognizer.gestureType);
+  }
 
   /**
    * * Minimum distance (px) a pointer must move before the gesture can be recognized.

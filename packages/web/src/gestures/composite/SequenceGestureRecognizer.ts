@@ -2,10 +2,10 @@ import {
   GestureDetail,
   GestureInput,
   GestureInputDisposition,
+  gestureRecognizer,
   GestureRecognizer,
   GestureRecognizerBase,
   GestureRecognizerOptions,
-  registerGestureRecognizer,
 } from "@m3e/web/gestures";
 
 /** Encapsulates detail about a sequence of gestures. */
@@ -27,7 +27,8 @@ export interface SequenceGestureOptions extends GestureRecognizerOptions {
 }
 
 /** Recognizes a sequence of gestures. */
-class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGestureOptions, SequenceGestureDetail> {
+@gestureRecognizer("sequence")
+export class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGestureOptions, SequenceGestureDetail> {
   /** @private */ readonly #details = new Array<GestureDetail>();
   /** @private */ readonly #accepted = new Set<number>();
   /** @private */ #timeout?: number;
@@ -38,10 +39,7 @@ class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGestureOpt
   }
 
   /** @inheritdoc */
-  override readonly gestureType: string = "sequence";
-
-  /** @inheritdoc */
-  protected override _defaultOptions(): Partial<SequenceGestureOptions> {
+  protected override get _defaultOptions(): Partial<SequenceGestureOptions> {
     return {
       ...super._defaultOptions,
       maxInterval: 250,
@@ -191,9 +189,3 @@ class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGestureOpt
     this.options.sequence.forEach((x) => x.reset());
   }
 }
-
-// Register the recognizer
-registerGestureRecognizer<SequenceGestureOptions, SequenceGestureDetail>(
-  "sequence",
-  (options) => new SequenceGestureRecognizer(options),
-);

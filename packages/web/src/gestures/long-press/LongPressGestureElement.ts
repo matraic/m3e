@@ -6,7 +6,11 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import { LongPressGestureDetail, LongPressGestureOptions } from "./LongPressGestureRecognizer";
+import {
+  LongPressGestureDetail,
+  LongPressGestureOptions,
+  LongPressGestureRecognizer,
+} from "./LongPressGestureRecognizer";
 
 /**
  * A non-visual element used to detect a long-press gesture for an associated element.
@@ -48,8 +52,9 @@ import { LongPressGestureDetail, LongPressGestureOptions } from "./LongPressGest
  */
 @customElement("m3e-long-press-gesture")
 export class M3eLongPressGestureElement extends GestureElementBase<LongPressGestureOptions> {
-  /** @inheritdoc */
-  override gestureType: string = "long-press";
+  constructor() {
+    super(LongPressGestureRecognizer.gestureType);
+  }
 
   /**
    * Maximum distance (px) a pointer can move before the gesture fails.

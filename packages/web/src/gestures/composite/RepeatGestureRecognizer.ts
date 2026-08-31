@@ -2,10 +2,10 @@ import {
   GestureDetail,
   GestureInput,
   GestureInputDisposition,
+  gestureRecognizer,
   GestureRecognizer,
   GestureRecognizerBase,
   GestureRecognizerOptions,
-  registerGestureRecognizer,
 } from "@m3e/web/gestures";
 
 /**
@@ -42,7 +42,8 @@ export interface RepeatGestureOptions extends GestureRecognizerOptions {
  * Recognizes a given number of repeated gestures.
  * @template TDetail The type of repeated detail emitted when a gesture is recognized.
  */
-class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDetail> extends GestureRecognizerBase<
+@gestureRecognizer("repeat")
+export class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDetail> extends GestureRecognizerBase<
   RepeatGestureOptions,
   RepeatGestureDetail
 > {
@@ -56,12 +57,7 @@ class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDetail> ext
   }
 
   /** @inheritdoc */
-  get gestureType(): string {
-    return "repeat";
-  }
-
-  /** @inheritdoc */
-  protected override _defaultOptions(): Partial<RepeatGestureOptions> {
+  protected override get _defaultOptions(): Partial<RepeatGestureOptions> {
     return {
       ...super._defaultOptions,
       maxInterval: 250,
@@ -214,9 +210,3 @@ class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDetail> ext
     this.options.recognizer?.reset();
   }
 }
-
-// Register the recognizer
-registerGestureRecognizer<RepeatGestureOptions, RepeatGestureDetail>(
-  "repeat",
-  (options) => new RepeatGestureRecognizer(options),
-);

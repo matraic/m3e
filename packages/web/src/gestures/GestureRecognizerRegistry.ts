@@ -3,6 +3,7 @@ import { GestureRecognizer } from "./GestureRecognizer";
 import { GestureRecognizerFactory } from "./GestureRecognizerFactory";
 import { GestureRecognizerOptions } from "./GestureRecognizerOptions";
 
+/** @private */
 class GestureRecognizerRegistry {
   static readonly #factories = new Map<string, GestureRecognizerFactory>();
 
@@ -19,6 +20,7 @@ class GestureRecognizerRegistry {
 
 /**
  * Registers a recognizer for the specified type of gesture.
+ * @internal
  * @template TOptions The type of options used to recognize gestures.
  * @template TDetail The type of detail emitted for a recognized gesture.
  * @param {string} gestureType The type of gesture for which to recognize.

@@ -1,9 +1,9 @@
 import {
   GestureDetail,
+  gestureRecognizer,
   GestureRecognizerBase,
   GestureRecognizerOptions,
   PointerInput,
-  registerGestureRecognizer,
 } from "@m3e/web/gestures";
 
 /**
@@ -145,14 +145,12 @@ interface GestureState {
 export type PanGestureLockAxis = "x" | "y" | "lock" | "none";
 
 /** Recognizes a pan gesture. */
-class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOptions, PanGestureDetail> {
+gestureRecognizer("pan");
+export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOptions, PanGestureDetail> {
   /** @private */ #state?: GestureState;
 
   /** @inheritdoc */
-  override readonly gestureType = "pan";
-
-  /** @inheritdoc */
-  protected override _defaultOptions(): Partial<PanGestureOptions> {
+  protected override get _defaultOptions(): Partial<PanGestureOptions> {
     return {
       ...super._defaultOptions,
       minDisplacement: 4,
@@ -363,6 +361,3 @@ class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOptions, PanG
     };
   }
 }
-
-// Register the recognizer
-registerGestureRecognizer<PanGestureOptions, PanGestureDetail>("pan", (options) => new PanGestureRecognizer(options));

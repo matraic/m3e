@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import { TapGestureDetail, TapGestureOptions } from "./TapGestureRecognizer";
+import { TapGestureDetail, TapGestureOptions, TapGestureRecognizer } from "./TapGestureRecognizer";
 
 /**
  * A non-visual element used to detect a tap gesture for an associated element.
@@ -54,8 +54,9 @@ import { TapGestureDetail, TapGestureOptions } from "./TapGestureRecognizer";
  */
 @customElement("m3e-tap-gesture")
 export class M3eTapGestureElement extends GestureElementBase<TapGestureOptions> {
-  /** @inheritdoc */
-  override gestureType: string = "tap";
+  constructor() {
+    super(TapGestureRecognizer.gestureType);
+  }
 
   /**
    * Number of pointers that must be pressed before the gesture fails.

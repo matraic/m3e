@@ -1,9 +1,9 @@
 import {
   GestureDetail,
+  gestureRecognizer,
   GestureRecognizerBase,
   GestureRecognizerOptions,
   PointerInput,
-  registerGestureRecognizer,
 } from "@m3e/web/gestures";
 
 /**
@@ -64,7 +64,8 @@ export interface ScaleGestureOptions extends GestureRecognizerOptions {
 type ScaleGestureMetrics = Omit<ScaleGestureDetail, "phase" | "gestureType" | "pointers" | "id" | "timestamp">;
 
 /** Recognizes a scale gesture. */
-class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureOptions, ScaleGestureDetail> {
+@gestureRecognizer("scale")
+export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureOptions, ScaleGestureDetail> {
   /** @private */ #pointers = new Map<number, PointerInput>();
   /** @private */ #bounds: DOMRect | null = null;
   /** @private */ #accepted = new Set<number>();
@@ -72,10 +73,7 @@ class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureOptions, 
   /** @private */ #started = false;
 
   /** @inheritdoc */
-  override gestureType = "scale";
-
-  /** @inheritdoc */
-  protected override _defaultOptions(): Partial<ScaleGestureOptions> {
+  protected override get _defaultOptions(): Partial<ScaleGestureOptions> {
     return {
       ...super._defaultOptions,
       pointers: 2,
@@ -237,9 +235,3 @@ class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureOptions, 
     return { distance, scale, clientCenterX, clientCenterY, localCenterX, localCenterY };
   }
 }
-
-// Register the recognizer
-registerGestureRecognizer<ScaleGestureOptions, ScaleGestureDetail>(
-  "scale",
-  (options) => new ScaleGestureRecognizer(options),
-);

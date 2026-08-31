@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase, GestureRecognizer } from "@m3e/web/gestures";
 
-import { RepeatGestureDetail, RepeatGestureOptions } from "./RepeatGestureRecognizer";
+import { RepeatGestureDetail, RepeatGestureOptions, RepeatGestureRecognizer } from "./RepeatGestureRecognizer";
 
 /**
  * A non-visual element used to detect a repeated gesture for an associated element.
@@ -65,8 +65,9 @@ import { RepeatGestureDetail, RepeatGestureOptions } from "./RepeatGestureRecogn
  */
 @customElement("m3e-repeat-gesture")
 export class M3eRepeatGestureElement extends GestureElementBase<RepeatGestureOptions> {
-  /** @inheritdoc */
-  override gestureType: string = "repeat";
+  constructor() {
+    super(RepeatGestureRecognizer.gestureType);
+  }
 
   /**
    * Maximum time (ms) between gestures before the repeated gesture fails.

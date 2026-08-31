@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase, GestureRecognizer } from "@m3e/web/gestures";
 
-import { SequenceGestureDetail, SequenceGestureOptions } from "./SequenceGestureRecognizer";
+import { SequenceGestureDetail, SequenceGestureOptions, SequenceGestureRecognizer } from "./SequenceGestureRecognizer";
 
 /**
  * A non-visual element used to detect a sequence of gestures for an associated element.
@@ -64,8 +64,9 @@ import { SequenceGestureDetail, SequenceGestureOptions } from "./SequenceGesture
  */
 @customElement("m3e-sequence-gesture")
 export class M3eSequenceGestureElement extends GestureElementBase<SequenceGestureOptions> {
-  /** @inheritdoc */
-  override gestureType: string = "sequence";
+  constructor() {
+    super(SequenceGestureRecognizer.gestureType);
+  }
 
   /**
    * Maximum time (ms) between gestures before the sequence fails.

@@ -6,7 +6,12 @@ import { property } from "lit/decorators.js";
 import { customElement, spaceSeparatedStringConverter } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import { SwipeGestureDetail, SwipeGestureDirection, SwipeGestureOptions } from "./SwipeGestureRecognizer";
+import {
+  SwipeGestureDetail,
+  SwipeGestureDirection,
+  SwipeGestureOptions,
+  SwipeGestureRecognizer,
+} from "./SwipeGestureRecognizer";
 
 /**
  * A non-visual element used to detect a swipe gesture for an associated element.
@@ -47,8 +52,9 @@ import { SwipeGestureDetail, SwipeGestureDirection, SwipeGestureOptions } from "
  */
 @customElement("m3e-swipe-gesture")
 export class M3eSwipeGestureElement extends GestureElementBase<SwipeGestureOptions> {
-  /** @inheritdoc */
-  override gestureType: string = "swipe";
+  constructor() {
+    super(SwipeGestureRecognizer.gestureType);
+  }
 
   /**
    * * Maximum distance (px) a pointer can move before the gesture fails.

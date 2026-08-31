@@ -20,6 +20,9 @@ export abstract class GestureRecognizerBase<
 > implements GestureRecognizer<TOptions, TDetail> {
   /** @private */ #options: TOptions;
 
+  /** The type of gesture to which this recognizer is registered. */
+  static gestureType: string;
+
   /**
    * Initializes a new instance of this class.
    * @param {Partial<TOptions> | undefined} options Options used to recognize gestures.
@@ -34,10 +37,13 @@ export abstract class GestureRecognizerBase<
   }
 
   /** @inheritdoc */
-  abstract readonly gestureType: string;
+  get gestureType(): string {
+    const ctor = this.constructor as typeof GestureRecognizerBase;
+    return ctor.gestureType!;
+  }
 
   /** Default options used to recognize gestures. */
-  protected _defaultOptions(): Partial<TOptions> {
+  protected get _defaultOptions(): Partial<TOptions> {
     return <TOptions>(<unknown>{
       disabled: false,
       priority: 1,

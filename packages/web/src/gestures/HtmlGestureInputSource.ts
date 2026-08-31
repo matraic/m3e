@@ -3,7 +3,10 @@ import { GestureInputSource } from "./GestureInputSource";
 import { PointerInput, PointerType } from "./PointerInput";
 import { WheelInput } from "./WheelInput";
 
-/** Provides input from an HTML element for gesture detection. */
+/**
+ * Provides input from an HTML element for gesture detection.
+ * @internal
+ */
 export class HtmlGestureInputSource implements GestureInputSource {
   /** @private */ readonly #element: HTMLElement;
   /** @private */ readonly #pointerEventHandler = (e: PointerEvent) => this.#handlePointerEvent(e);

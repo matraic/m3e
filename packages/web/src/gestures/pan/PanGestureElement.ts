@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import { PanGestureDetail, PanGestureLockAxis, PanGestureOptions } from "./PanGestureRecognizer";
+import { PanGestureDetail, PanGestureLockAxis, PanGestureOptions, PanGestureRecognizer } from "./PanGestureRecognizer";
 
 /**
  * A non-visual element used to detect a pan gesture for an associated element.
@@ -57,8 +57,9 @@ import { PanGestureDetail, PanGestureLockAxis, PanGestureOptions } from "./PanGe
  */
 @customElement("m3e-pan-gesture")
 export class M3ePanGestureElement extends GestureElementBase<PanGestureOptions> {
-  /** @inheritdoc */
-  override gestureType: string = "pan";
+  constructor() {
+    super(PanGestureRecognizer.gestureType);
+  }
 
   /**
    * Minimum distance (px) a pointer can move before the gesture starts.

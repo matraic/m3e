@@ -1,9 +1,9 @@
 import {
   GestureDetail,
+  gestureRecognizer,
   GestureRecognizerBase,
   GestureRecognizerOptions,
   PointerInput,
-  registerGestureRecognizer,
 } from "@m3e/web/gestures";
 
 /** Encapsulates pointer detail about a tap gesture. */
@@ -85,11 +85,12 @@ interface GestureState {
 }
 
 /** Recognizes a tap gesture. */
-class TapGestureRecognizer extends GestureRecognizerBase<TapGestureOptions, TapGestureDetail> {
-  readonly #state = new Array<GestureState>();
+@gestureRecognizer("tap")
+export class TapGestureRecognizer extends GestureRecognizerBase<TapGestureOptions, TapGestureDetail> {
+  /** @private */ readonly #state = new Array<GestureState>();
 
   /** @inheritdoc */
-  protected override _defaultOptions(): Partial<TapGestureOptions> {
+  protected override get _defaultOptions(): Partial<TapGestureOptions> {
     return {
       ...super._defaultOptions,
       pointers: 1,
@@ -99,9 +100,6 @@ class TapGestureRecognizer extends GestureRecognizerBase<TapGestureOptions, TapG
       maxDisplacement: 12,
     };
   }
-
-  /** @inheritdoc */
-  override readonly gestureType: string = "tap";
 
   /** @inheritdoc */
   override _onPointerDown(input: PointerInput): void {
@@ -250,6 +248,3 @@ class TapGestureRecognizer extends GestureRecognizerBase<TapGestureOptions, TapG
     }
   }
 }
-
-// Register the recognizer
-registerGestureRecognizer<TapGestureOptions, TapGestureDetail>("tap", (options) => new TapGestureRecognizer(options));
