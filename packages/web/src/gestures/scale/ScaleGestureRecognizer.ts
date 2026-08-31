@@ -47,7 +47,7 @@ export interface ScaleGestureDetail extends GestureDetail {
 }
 
 /** Encapsulates options used to recognize scale gestures. */
-export interface ScaleGestureOptions extends GestureRecognizerOptions<ScaleGestureDetail> {
+export interface ScaleGestureOptions extends GestureRecognizerOptions {
   /**
    * Number of pointers that must be pressed before the gesture fails.
    * @default 2
@@ -64,7 +64,7 @@ export interface ScaleGestureOptions extends GestureRecognizerOptions<ScaleGestu
 type ScaleGestureMetrics = Omit<ScaleGestureDetail, "phase" | "gestureType" | "pointers" | "id" | "timestamp">;
 
 /** Recognizes a scale gesture. */
-class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureOptions> {
+class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureOptions, ScaleGestureDetail> {
   /** @private */ #pointers = new Map<number, PointerInput>();
   /** @private */ #bounds: DOMRect | null = null;
   /** @private */ #accepted = new Set<number>();
@@ -239,4 +239,7 @@ class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureOptions> 
 }
 
 // Register the recognizer
-registerGestureRecognizer<ScaleGestureOptions>("scale", (options) => new ScaleGestureRecognizer(options));
+registerGestureRecognizer<ScaleGestureOptions, ScaleGestureDetail>(
+  "scale",
+  (options) => new ScaleGestureRecognizer(options),
+);

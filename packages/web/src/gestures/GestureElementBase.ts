@@ -8,16 +8,14 @@ import { GestureRecognizer } from "./GestureRecognizer";
 import { GestureInputButton } from "./GestureInputButton";
 import { HtmlGestureInputSource } from "./HtmlGestureInputSource";
 import { PointerType } from "./PointerInput";
-import { GestureDetailOf, GestureRecognizerOptions } from "./GestureRecognizerOptions";
+import { GestureRecognizerOptions } from "./GestureRecognizerOptions";
 import { createGestureRecognizer } from "./GestureRecognizerRegistry";
 
 /**
  * A base implementation for an element used to detect gestures. This class must be inherited.
  * @template TOptions The type of options used to recognize gestures.
  */
-export abstract class GestureElementBase<
-  TOptions extends GestureRecognizerOptions<GestureDetailOf<TOptions>>,
-> extends HtmlFor(LitElement) {
+export abstract class GestureElementBase<TOptions extends GestureRecognizerOptions> extends HtmlFor(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -36,11 +34,9 @@ export abstract class GestureElementBase<
   get recognizer(): GestureRecognizer<TOptions> | null {
     if (this.#recognizer) return this.#recognizer;
     this.#recognizer = createGestureRecognizer(this.gestureType);
-    this.#recognizer?.updateOptions(<TOptions>{
-      onGesture: (detail: GestureDetailOf<TOptions>) => {
-        this.dispatchEvent(new CustomEvent("gesture", { detail }));
-      },
-    });
+    if (this.#recognizer) {
+      this.#recognizer.onGesture = (detail) => this.dispatchEvent(new CustomEvent("gesture", { detail }));
+    }
     return this.#recognizer;
   }
 

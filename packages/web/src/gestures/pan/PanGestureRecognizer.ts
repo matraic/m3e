@@ -98,7 +98,7 @@ export interface PanGestureDetail extends GestureDetail {
 }
 
 /** Encapsulates options used to recognize a pan gesture. */
-export interface PanGestureOptions extends GestureRecognizerOptions<PanGestureDetail> {
+export interface PanGestureOptions extends GestureRecognizerOptions {
   /**
    * Minimum distance (px) a pointer can move before the gesture starts.
    * @default 4
@@ -145,7 +145,7 @@ interface GestureState {
 export type PanGestureLockAxis = "x" | "y" | "lock" | "none";
 
 /** Recognizes a pan gesture. */
-class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOptions> {
+class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOptions, PanGestureDetail> {
   /** @private */ #state?: GestureState;
 
   /** @inheritdoc */
@@ -365,4 +365,4 @@ class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOptions> {
 }
 
 // Register the recognizer
-registerGestureRecognizer<PanGestureOptions>("pan", (options) => new PanGestureRecognizer(options));
+registerGestureRecognizer<PanGestureOptions, PanGestureDetail>("pan", (options) => new PanGestureRecognizer(options));

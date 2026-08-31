@@ -35,7 +35,7 @@ export interface LongPressGestureDetail extends GestureDetail {
 }
 
 /** Encapsulates options used to recognize a long-press gesture. */
-export interface LongPressGestureOptions extends GestureRecognizerOptions<LongPressGestureDetail> {
+export interface LongPressGestureOptions extends GestureRecognizerOptions {
   /**
    * Maximum distance (px) a pointer can move before the gesture fails.
    * @default 4
@@ -63,7 +63,7 @@ interface GestureState {
 }
 
 /** Recognizes a long-press gesture. */
-class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressGestureOptions> {
+class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressGestureOptions, LongPressGestureDetail> {
   /** @private */ #state?: GestureState;
 
   /** @inheritdoc */
@@ -186,4 +186,7 @@ class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressGestureO
 }
 
 // Register the recognizer
-registerGestureRecognizer<LongPressGestureOptions>("long-press", (options) => new LongPressGestureRecognizer(options));
+registerGestureRecognizer<LongPressGestureOptions, LongPressGestureDetail>(
+  "long-press",
+  (options) => new LongPressGestureRecognizer(options),
+);

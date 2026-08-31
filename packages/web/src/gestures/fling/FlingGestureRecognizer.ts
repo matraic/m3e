@@ -45,7 +45,7 @@ export interface FlingGestureDetail extends GestureDetail {
 }
 
 /** Encapsulates options used to recognize a fling gesture. */
-export interface FlingGestureOptions extends GestureRecognizerOptions<FlingGestureDetail> {
+export interface FlingGestureOptions extends GestureRecognizerOptions {
   /**
    * Minimum velocity (px/ms) required to recognize a fling.
    * @default 0.3
@@ -79,8 +79,10 @@ interface GestureState {
 }
 
 /** Recognizes a fling gesture. */
-class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureOptions> {
-  /** @private */ readonly #pan = createGestureRecognizer<PanGestureOptions>("pan");
+class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureOptions, FlingGestureDetail> {
+  /** @private */ readonly #pan = createGestureRecognizer<PanGestureOptions, PanGestureDetail>("pan", {
+    minDisplacement: 0,
+  });
   /** @private */ #state?: GestureState;
 
   /**
@@ -92,7 +94,7 @@ class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureOptions> 
 
     if (this.#pan) {
       this.#pan.onDisposition = (id, disposition) => this.#handlePanDisposition(id, disposition);
-      this.#pan.updateOptions({ onGesture: (detail) => this.#handlePanGesture(detail), minDisplacement: 0 });
+      this.#pan.onGesture = (detail) => this.#handlePanGesture(detail);
     }
   }
 
@@ -241,4 +243,8 @@ class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureOptions> 
   }
 }
 
-registerGestureRecognizer<FlingGestureOptions>("fling", (options) => new FlingGestureRecognizer(options));
+// Register the recognizer
+registerGestureRecognizer<FlingGestureOptions, FlingGestureDetail>(
+  "fling",
+  (options) => new FlingGestureRecognizer(options),
+);

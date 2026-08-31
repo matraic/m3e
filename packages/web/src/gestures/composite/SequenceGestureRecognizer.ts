@@ -15,7 +15,7 @@ export interface SequenceGestureDetail extends GestureDetail {
 }
 
 /** Encapsulates options used to recognize a sequence of gestures. */
-export interface SequenceGestureOptions extends GestureRecognizerOptions<SequenceGestureDetail> {
+export interface SequenceGestureOptions extends GestureRecognizerOptions {
   /**
    * Maximum time (ms) between gestures before the sequence fails.
    * @default 250
@@ -27,7 +27,7 @@ export interface SequenceGestureOptions extends GestureRecognizerOptions<Sequenc
 }
 
 /** Recognizes a sequence of gestures. */
-class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGestureOptions> {
+class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGestureOptions, SequenceGestureDetail> {
   /** @private */ readonly #details = new Array<GestureDetail>();
   /** @private */ readonly #accepted = new Set<number>();
   /** @private */ #timeout?: number;
@@ -59,7 +59,7 @@ class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGestureOpt
   /** @private */
   #unbindSequence(): void {
     for (const recognizer of this.options.sequence) {
-      recognizer.updateOptions({ onGesture: undefined });
+      recognizer.onGesture = undefined;
       recognizer.onDisposition = undefined;
       recognizer.reset();
     }
@@ -68,7 +68,7 @@ class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGestureOpt
   /** @private */
   #bindSequence(): void {
     for (const recognizer of this.options.sequence) {
-      recognizer.updateOptions({ onGesture: (detail) => this.#handleGesture(detail) });
+      recognizer.onGesture = (detail) => this.#handleGesture(detail);
       recognizer.onDisposition = (id, disposition) => this.#handleDisposition(recognizer, id, disposition);
       recognizer.reset();
     }
@@ -193,4 +193,7 @@ class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGestureOpt
 }
 
 // Register the recognizer
-registerGestureRecognizer<SequenceGestureOptions>("sequence", (options) => new SequenceGestureRecognizer(options));
+registerGestureRecognizer<SequenceGestureOptions, SequenceGestureDetail>(
+  "sequence",
+  (options) => new SequenceGestureRecognizer(options),
+);

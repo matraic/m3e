@@ -21,9 +21,7 @@ export interface RepeatGestureDetail<TDetail extends GestureDetail = GestureDeta
  * Encapsulates options used to recognize repeated gestures.
  * @template TDetail The type of repeated detail emitted when a gesture is recognized.
  */
-export interface RepeatGestureOptions<TDetail extends GestureDetail = GestureDetail> extends GestureRecognizerOptions<
-  RepeatGestureDetail<TDetail>
-> {
+export interface RepeatGestureOptions extends GestureRecognizerOptions {
   /** The recognizer used to detect the gesture to repeat. */
   readonly recognizer?: GestureRecognizer;
 
@@ -45,7 +43,8 @@ export interface RepeatGestureOptions<TDetail extends GestureDetail = GestureDet
  * @template TDetail The type of repeated detail emitted when a gesture is recognized.
  */
 class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDetail> extends GestureRecognizerBase<
-  RepeatGestureOptions<TDetail>
+  RepeatGestureOptions,
+  RepeatGestureDetail
 > {
   /** @private */ readonly #details = new Array<TDetail>();
   /** @private */ readonly #accepted = new Set<number>();
@@ -62,7 +61,7 @@ class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDetail> ext
   }
 
   /** @inheritdoc */
-  protected override _defaultOptions(): Partial<RepeatGestureOptions<TDetail>> {
+  protected override _defaultOptions(): Partial<RepeatGestureOptions> {
     return {
       ...super._defaultOptions,
       maxInterval: 250,
@@ -71,7 +70,7 @@ class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDetail> ext
   }
 
   /** @inheritdoc */
-  override updateOptions(options: Partial<RepeatGestureOptions<TDetail>>): void {
+  override updateOptions(options: Partial<RepeatGestureOptions>): void {
     this.#unbindRecognizer();
     super.updateOptions(options);
     this.#bindRecognizer();
@@ -80,7 +79,7 @@ class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDetail> ext
   /** @private */
   #unbindRecognizer(): void {
     if (!this.options.recognizer) return;
-    this.options.recognizer.updateOptions({ onGesture: undefined });
+    this.options.recognizer.onGesture = undefined;
     this.options.recognizer.onDisposition = undefined;
     this.options.recognizer.reset();
   }
@@ -88,7 +87,7 @@ class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDetail> ext
   /** @private */
   #bindRecognizer(): void {
     if (!this.options.recognizer) return;
-    this.options.recognizer.updateOptions({ onGesture: (detail) => this.#handleGesture(<TDetail>detail) });
+    this.options.recognizer.onGesture = (detail) => this.#handleGesture(<TDetail>detail);
     this.options.recognizer.onDisposition = (id, disposition) => this.#handleDisposition(id, disposition);
     this.options.recognizer.reset();
   }
@@ -217,4 +216,7 @@ class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDetail> ext
 }
 
 // Register the recognizer
-registerGestureRecognizer<RepeatGestureOptions>("repeat", (options) => new RepeatGestureRecognizer(options));
+registerGestureRecognizer<RepeatGestureOptions, RepeatGestureDetail>(
+  "repeat",
+  (options) => new RepeatGestureRecognizer(options),
+);

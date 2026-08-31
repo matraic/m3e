@@ -45,7 +45,7 @@ export interface SwipeGestureDetail extends GestureDetail {
 }
 
 /** Encapsulates options used to recognize a swipe gesture. */
-export interface SwipeGestureOptions extends GestureRecognizerOptions<SwipeGestureDetail> {
+export interface SwipeGestureOptions extends GestureRecognizerOptions {
   /**
    * Minimum velocity (px/ms) required to recognize a swipe.
    * @default 0.3
@@ -79,8 +79,10 @@ interface GestureState {
 }
 
 /** Recognizes a swipe gesture. */
-class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOptions> {
-  /** @private */ readonly #pan = createGestureRecognizer<PanGestureOptions>("pan");
+class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOptions, SwipeGestureDetail> {
+  /** @private */ readonly #pan = createGestureRecognizer<PanGestureOptions, PanGestureDetail>("pan", {
+    minDisplacement: 0,
+  });
   /** @private */ #state?: GestureState;
 
   /**
@@ -92,7 +94,7 @@ class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOptions> 
 
     if (this.#pan) {
       this.#pan.onDisposition = (id, disposition) => this.#handlePanDisposition(id, disposition);
-      this.#pan.updateOptions({ onGesture: (detail) => this.#handlePanGesture(detail), minDisplacement: 0 });
+      this.#pan.onGesture = (detail) => this.#handlePanGesture(detail);
     }
   }
 
@@ -225,4 +227,7 @@ class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOptions> 
 }
 
 // Register the recognizer
-registerGestureRecognizer<SwipeGestureOptions>("swipe", (options) => new SwipeGestureRecognizer(options));
+registerGestureRecognizer<SwipeGestureOptions, SwipeGestureDetail>(
+  "swipe",
+  (options) => new SwipeGestureRecognizer(options),
+);

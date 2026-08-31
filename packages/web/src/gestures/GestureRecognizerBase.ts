@@ -1,19 +1,23 @@
+import { GestureCallback } from "./GestureCallback";
+import { GestureDetail } from "./GestureDetail";
 import { GestureInput } from "./GestureInput";
 import { GestureInputButton } from "./GestureInputButton";
 import { GestureInputDisposition } from "./GestureInputDisposition";
 import { GestureInputResolution } from "./GestureInputResolution";
 import { GestureRecognizer } from "./GestureRecognizer";
-import { GestureDetailOf, GestureRecognizerOptions } from "./GestureRecognizerOptions";
+import { GestureRecognizerOptions } from "./GestureRecognizerOptions";
 import { PointerInput } from "./PointerInput";
 import { WheelInput } from "./WheelInput";
 
 /**
  * A base implementation for a {@link GestureRecognizer} used to recognize gestures.
  * @template TOptions The type of options used to recognize gestures.
+ * @template TDetail The type of detail emitted for a recognized gesture.
  */
 export abstract class GestureRecognizerBase<
-  TOptions extends GestureRecognizerOptions<GestureDetailOf<TOptions>>,
-> implements GestureRecognizer<TOptions> {
+  TOptions extends GestureRecognizerOptions,
+  TDetail extends GestureDetail,
+> implements GestureRecognizer<TOptions, TDetail> {
   /** @private */ #options: TOptions;
 
   /**
@@ -48,7 +52,10 @@ export abstract class GestureRecognizerBase<
   }
 
   /** @inheritdoc */
-  onDisposition?: ((id: number, disposition: GestureInputDisposition) => void) | undefined;
+  onGesture?: GestureCallback<TDetail>;
+
+  /** @inheritdoc */
+  onDisposition?: (id: number, disposition: GestureInputDisposition) => void;
 
   /** @inheritdoc */
   updateOptions(options: Partial<TOptions>): void {
@@ -244,10 +251,10 @@ export abstract class GestureRecognizerBase<
 
   /**
    * Emits a recognized gesture.
-   * @param {GestureDetailOf<TOptions>} detail Detail for the recognized gesture.
+   * @param {TDetail} detail Detail for the recognized gesture.
    */
-  protected _emitGesture(detail: GestureDetailOf<TOptions>): void {
-    this.options.onGesture?.(detail);
+  protected _emitGesture(detail: TDetail): void {
+    this.onGesture?.(detail);
   }
 
   /** @private */

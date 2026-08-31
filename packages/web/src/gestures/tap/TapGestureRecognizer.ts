@@ -40,7 +40,7 @@ export interface TapGestureDetail extends GestureDetail {
 }
 
 /** Encapsulates options used to recognize a tap gesture. */
-export interface TapGestureOptions extends GestureRecognizerOptions<TapGestureDetail> {
+export interface TapGestureOptions extends GestureRecognizerOptions {
   /**
    * Number of pointers that must be pressed before the gesture fails.
    * @default 1
@@ -85,7 +85,7 @@ interface GestureState {
 }
 
 /** Recognizes a tap gesture. */
-class TapGestureRecognizer extends GestureRecognizerBase<TapGestureOptions> {
+class TapGestureRecognizer extends GestureRecognizerBase<TapGestureOptions, TapGestureDetail> {
   readonly #state = new Array<GestureState>();
 
   /** @inheritdoc */
@@ -252,4 +252,4 @@ class TapGestureRecognizer extends GestureRecognizerBase<TapGestureOptions> {
 }
 
 // Register the recognizer
-registerGestureRecognizer<TapGestureOptions>("tap", (options) => new TapGestureRecognizer(options));
+registerGestureRecognizer<TapGestureOptions, TapGestureDetail>("tap", (options) => new TapGestureRecognizer(options));
