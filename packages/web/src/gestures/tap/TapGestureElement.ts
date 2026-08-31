@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import { TapGestureDetail, TapGestureRecognizer } from "./TapGestureRecognizer";
+import { TapGestureDetail, TapGestureOptions } from "./TapGestureRecognizer";
 
 /**
  * A non-visual element used to detect a tap gesture for an associated element.
@@ -53,9 +53,9 @@ import { TapGestureDetail, TapGestureRecognizer } from "./TapGestureRecognizer";
  * @fires gesture - Emitted when a tap gesture is recognized.
  */
 @customElement("m3e-tap-gesture")
-export class M3eTapGestureElement extends GestureElementBase<TapGestureDetail, TapGestureRecognizer> {
+export class M3eTapGestureElement extends GestureElementBase<TapGestureOptions> {
   /** @inheritdoc */
-  override readonly recognizer = new TapGestureRecognizer();
+  override gestureType: string = "tap";
 
   /**
    * Number of pointers that must be pressed before the gesture fails.
@@ -92,19 +92,19 @@ export class M3eTapGestureElement extends GestureElementBase<TapGestureDetail, T
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("pointers")) {
-      this.recognizer.pointers = this.pointers;
+      this.recognizer?.updateOptions({ pointers: this.pointers });
     }
     if (_changedProperties.has("maxPressInterval")) {
-      this.recognizer.maxPressInterval = this.maxPressInterval;
+      this.recognizer?.updateOptions({ maxPressInterval: this.maxPressInterval });
     }
     if (_changedProperties.has("maxReleaseInterval")) {
-      this.recognizer.maxReleaseInterval = this.maxReleaseInterval;
+      this.recognizer?.updateOptions({ maxReleaseInterval: this.maxReleaseInterval });
     }
     if (_changedProperties.has("maxDisplacement")) {
-      this.recognizer.maxDisplacement = this.maxDisplacement;
+      this.recognizer?.updateOptions({ maxDisplacement: this.maxDisplacement });
     }
     if (_changedProperties.has("maxDuration")) {
-      this.recognizer.maxDuration = this.maxDuration;
+      this.recognizer?.updateOptions({ maxDuration: this.maxDuration });
     }
   }
 }

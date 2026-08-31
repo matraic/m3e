@@ -1,5 +1,14 @@
-import { GestureDetail, GestureInput, GestureInputDisposition, GestureRecognizerBase } from "@m3e/web/gestures";
-import { PanGestureDetail, PanGestureRecognizer } from "@m3e/web/gestures/pan";
+import {
+  createRecognizer,
+  GestureDetail,
+  GestureInput,
+  GestureInputDisposition,
+  GestureRecognizerBase,
+  GestureRecognizerOptions,
+  registerRecognizer,
+} from "@m3e/web/gestures";
+
+import { PanGestureDetail, PanGestureOptions } from "@m3e/web/gestures/pan";
 
 /**
  * Specifies the possible directions of a swipe gesture.
@@ -35,6 +44,33 @@ export interface SwipeGestureDetail extends GestureDetail {
   angle: number;
 }
 
+/** Encapsulates options used to recognize a swipe gesture. */
+export interface SwipeGestureOptions extends GestureRecognizerOptions<SwipeGestureDetail> {
+  /**
+   * Minimum velocity (px/ms) required to recognize a swipe.
+   * @default 0.3
+   */
+  readonly minVelocity: number;
+
+  /**
+   * The allowed directions of the swipe.
+   * @default ["left", "right", "up", "down"]
+   */
+  readonly directions: readonly SwipeGestureDirection[];
+
+  /**
+   * Minimum displacement (px) required before direction is considered valid.
+   * @default 8
+   */
+  readonly directionThreshold: number;
+
+  /**
+   * * Maximum distance (px) a pointer can move before the gesture fails.
+   * @default 24
+   */
+  readonly maxDisplacement: number;
+}
+
 /** State used to recognize swipe gestures. */
 interface GestureState {
   detail: PanGestureDetail;
@@ -43,16 +79,21 @@ interface GestureState {
 }
 
 /** Recognizes a swipe gesture. */
-export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureDetail> {
-  /** @private */ readonly #pan = new PanGestureRecognizer();
+class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOptions> {
+  /** @private */ readonly #pan = createRecognizer<PanGestureOptions>("pan");
   /** @private */ #state?: GestureState;
 
-  constructor() {
-    super();
+  /**
+   * Initializes a new instance of this class.
+   * @param {Partial<SwipeGestureOptions> | undefined} options Options used to recognize gestures.
+   */
+  constructor(options?: Partial<SwipeGestureOptions>) {
+    super(options);
 
-    this.#pan.onDisposition = (id, disposition) => this.#handlePanDisposition(id, disposition);
-    this.#pan.onGesture = (detail) => this.#handlePanGesture(detail);
-    this.#pan.minDisplacement = 0;
+    if (this.#pan) {
+      this.#pan.onDisposition = (id, disposition) => this.#handlePanDisposition(id, disposition);
+      this.#pan.updateOptions({ onGesture: (detail) => this.#handlePanGesture(detail), minDisplacement: 0 });
+    }
   }
 
   /** @inheritdoc */
@@ -63,33 +104,9 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureDe
     return true;
   }
 
-  /**
-   * Minimum velocity (px/ms) required to recognize a swipe.
-   * @default 0.3
-   */
-  minVelocity = 0.3;
-
-  /**
-   * The allowed directions of the swipe.
-   * @default ["left", "right", "up", "down"]
-   */
-  directions: readonly SwipeGestureDirection[] = ["left", "right", "up", "down"];
-
-  /**
-   * Minimum displacement (px) required before direction is considered valid.
-   * @default 8
-   */
-  directionThreshold = 8;
-
-  /**
-   * * Maximum distance (px) a pointer can move before the gesture fails.
-   * @default 24
-   */
-  maxDisplacement = 24;
-
   /** @private */
   override onInput(input: GestureInput): void {
-    this.#pan.onInput(input);
+    this.#pan?.onInput(input);
     super.onInput(input);
   }
 
@@ -119,7 +136,7 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureDe
 
   /** @inheritdoc */
   override reset(): void {
-    this.#pan.reset();
+    this.#pan?.reset();
     this.#state = undefined;
   }
 
@@ -127,7 +144,7 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureDe
   #handlePanDisposition(id: number, disposition: GestureInputDisposition): void {
     if (disposition === "accept") {
       // Fires end
-      this.#pan.onResolution(id, "accept");
+      this.#pan?.onResolution(id, "accept");
     }
   }
 
@@ -143,21 +160,21 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureDe
         const displacement = Math.hypot(detail.totalDeltaX, detail.totalDeltaY);
 
         // Must be within early window, release deferment and reset if exceeded
-        if (displacement > this.maxDisplacement) {
+        if (displacement > this.options.maxDisplacement) {
           this._releaseInput(detail.id);
           this.reset();
           break;
         }
 
         // Must be fast, otherwise ignore
-        if (detail.speed < this.minVelocity) break;
+        if (detail.speed < this.options.minVelocity) break;
 
         // Must have directional commitment, otherwise ignore
         const axis = this.#computeAxis(detail);
         const committed =
           axis === "x"
-            ? Math.abs(detail.totalDeltaX) >= this.directionThreshold
-            : Math.abs(detail.totalDeltaY) >= this.directionThreshold;
+            ? Math.abs(detail.totalDeltaX) >= this.options.directionThreshold
+            : Math.abs(detail.totalDeltaY) >= this.options.directionThreshold;
 
         if (!committed) {
           break;
@@ -165,7 +182,7 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureDe
 
         // Must be in allowed directions, otherwise ignore
         const direction = this.#computeDirection(detail);
-        if (!this.directions.includes(direction)) {
+        if (!this.options.directions.includes(direction)) {
           break;
         }
 
@@ -206,3 +223,6 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureDe
         : "up";
   }
 }
+
+// Register the recognizer
+registerRecognizer<SwipeGestureOptions>("swipe", (options) => new SwipeGestureRecognizer(options));

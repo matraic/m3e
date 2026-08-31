@@ -4,6 +4,8 @@ import {
   GestureInputDisposition,
   GestureRecognizer,
   GestureRecognizerBase,
+  GestureRecognizerOptions,
+  registerRecognizer,
 } from "@m3e/web/gestures";
 
 /** Encapsulates detail about a sequence of gestures. */
@@ -12,52 +14,73 @@ export interface SequenceGestureDetail extends GestureDetail {
   readonly sequence: readonly GestureDetail[];
 }
 
-/** Recognizes a sequence of gestures. */
-export class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGestureDetail> {
-  /** @private */ readonly #sequence = new Array<GestureRecognizer>();
-  /** @private */ readonly #details = new Array<GestureDetail>();
-  /** @private */ readonly #accepted = new Set<number>();
-  /** @private */ #timeout?: number;
-
-  get #current(): GestureRecognizer | undefined {
-    return this.#sequence[this.#details.length];
-  }
-
+/** Encapsulates options used to recognize a sequence of gestures. */
+export interface SequenceGestureOptions extends GestureRecognizerOptions<SequenceGestureDetail> {
   /**
    * Maximum time (ms) between gestures before the sequence fails.
    * @default 250
    */
-  maxInterval: number = 250;
+  readonly maxInterval: number;
+
+  /** The sequence of gestures to recognize. */
+  readonly sequence: readonly GestureRecognizer[];
+}
+
+/** Recognizes a sequence of gestures. */
+class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGestureOptions> {
+  /** @private */ readonly #details = new Array<GestureDetail>();
+  /** @private */ readonly #accepted = new Set<number>();
+  /** @private */ #timeout?: number;
+
+  constructor(options?: Partial<SequenceGestureOptions>) {
+    super(options);
+    this.#bindSequence();
+  }
 
   /** @inheritdoc */
   override readonly gestureType: string = "sequence";
 
-  /** Sequence of gestures to recognize. */
-  get sequence(): readonly GestureRecognizer[] {
-    return this.#sequence;
+  /** @inheritdoc */
+  protected override _defaultOptions(): Partial<SequenceGestureOptions> {
+    return {
+      ...super._defaultOptions,
+      maxInterval: 250,
+      sequence: [],
+    };
   }
-  set sequence(value: readonly GestureRecognizer[]) {
-    for (const recognizer of this.#sequence) {
-      recognizer.onGesture = undefined;
+
+  /** @inheritdoc */
+  override updateOptions(options: Partial<SequenceGestureOptions>): void {
+    this.#unbindSequence();
+    super.updateOptions(options);
+    this.#bindSequence();
+  }
+
+  /** @private */
+  #unbindSequence(): void {
+    for (const recognizer of this.options.sequence) {
+      recognizer.updateOptions({ onGesture: undefined });
       recognizer.onDisposition = undefined;
       recognizer.reset();
     }
+  }
 
-    this.#sequence.length = 0;
-    this.#sequence.push(...value);
-
-    for (const recognizer of this.#sequence) {
-      recognizer.onGesture = (detail) => this.#handleGesture(detail);
+  /** @private */
+  #bindSequence(): void {
+    for (const recognizer of this.options.sequence) {
+      recognizer.updateOptions({ onGesture: (detail) => this.#handleGesture(detail) });
       recognizer.onDisposition = (id, disposition) => this.#handleDisposition(recognizer, id, disposition);
       recognizer.reset();
     }
+  }
 
-    this.reset();
+  get #current(): GestureRecognizer | undefined {
+    return this.options.sequence[this.#details.length];
   }
 
   /** @inheritdoc */
   override onInput(input: GestureInput): void {
-    if (this.disabled) return;
+    if (this.options.disabled) return;
 
     // Forward input to current recognizer in sequence
     this.#current?.onInput(input);
@@ -96,12 +119,12 @@ export class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGes
 
     this.#details.push(detail);
 
-    if (this.#details.length === this.#sequence.length) {
+    if (this.#details.length === this.options.sequence.length) {
       // Disposition all inputs as accepted when detail count matches sequence
       this.#details.forEach((x) => this._acceptInput(x.id));
     } else {
       // Reset if max interval exceeded
-      this.#timeout = setTimeout(() => this.reset(), this.maxInterval);
+      this.#timeout = setTimeout(() => this.reset(), this.options.maxInterval);
     }
   }
 
@@ -165,6 +188,9 @@ export class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGes
     this.#details.length = 0;
 
     // Reset recognizer in the sequence
-    this.#sequence.forEach((x) => x.reset());
+    this.options.sequence.forEach((x) => x.reset());
   }
 }
+
+// Register the recognizer
+registerRecognizer<SequenceGestureOptions>("sequence", (options) => new SequenceGestureRecognizer(options));

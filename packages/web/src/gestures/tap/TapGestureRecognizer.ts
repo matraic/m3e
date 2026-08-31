@@ -1,4 +1,10 @@
-import { GestureDetail, GestureRecognizerBase, PointerInput } from "@m3e/web/gestures";
+import {
+  GestureDetail,
+  GestureRecognizerBase,
+  GestureRecognizerOptions,
+  PointerInput,
+  registerRecognizer,
+} from "@m3e/web/gestures";
 
 /** Encapsulates pointer detail about a tap gesture. */
 export interface TapPointerGestureDetail {
@@ -33,6 +39,39 @@ export interface TapGestureDetail extends GestureDetail {
   readonly duration: number;
 }
 
+/** Encapsulates options used to recognize a tap gesture. */
+export interface TapGestureOptions extends GestureRecognizerOptions<TapGestureDetail> {
+  /**
+   * Number of pointers that must be pressed before the gesture fails.
+   * @default 1
+   */
+  readonly pointers: number;
+
+  /**
+   * Maximum time (ms) between tap presses.
+   * @default 120
+   */
+  readonly maxPressInterval: number;
+
+  /**
+   * Maximum time (ms) between tap releases.
+   * @default 120
+   */
+  readonly maxReleaseInterval: number;
+
+  /**
+   * Maximum time (ms) taps can be pressed before the gesture fails.
+   * @default 180
+   */
+  readonly maxDuration: number;
+
+  /**
+   * Maximum distance (px) a pointer can move before the gesture fails.
+   * @default 12
+   */
+  readonly maxDisplacement: number;
+}
+
 /** State used to recognize tap gestures. */
 interface GestureState {
   id: number;
@@ -46,52 +85,34 @@ interface GestureState {
 }
 
 /** Recognizes a tap gesture. */
-export class TapGestureRecognizer extends GestureRecognizerBase<TapGestureDetail> {
+class TapGestureRecognizer extends GestureRecognizerBase<TapGestureOptions> {
   readonly #state = new Array<GestureState>();
 
-  /**
-   * Number of pointers that must be pressed before the gesture fails.
-   * @default 1
-   */
-  pointers: number = 1;
-
-  /**
-   * Maximum time (ms) between tap presses.
-   * @default 120
-   */
-  maxPressInterval = 120;
-
-  /**
-   * Maximum time (ms) between tap releases.
-   * @default 120
-   */
-  maxReleaseInterval = 120;
-
-  /**
-   * Maximum time (ms) taps can be pressed before the gesture fails.
-   * @default 180
-   */
-  maxDuration = 180;
-
-  /**
-   * Maximum distance (px) a pointer can move before the gesture fails.
-   * @default 12
-   */
-  maxDisplacement = 12;
+  /** @inheritdoc */
+  protected override _defaultOptions(): Partial<TapGestureOptions> {
+    return {
+      ...super._defaultOptions,
+      pointers: 1,
+      maxPressInterval: 120,
+      maxReleaseInterval: 120,
+      maxDuration: 180,
+      maxDisplacement: 12,
+    };
+  }
 
   /** @inheritdoc */
   override readonly gestureType: string = "tap";
 
   /** @inheritdoc */
   override _onPointerDown(input: PointerInput): void {
-    if (this.#state.length === this.pointers) {
+    if (this.#state.length === this.options.pointers) {
       // More pointers are being tracked, remove first (shifting)
       this.#state.splice(0, 1);
     }
 
     // Remove state if interval check exceeded
     for (let i = this.#state.length - 1; i >= 0; i--) {
-      if (input.timestamp - this.#state[i].startTime > this.maxPressInterval) {
+      if (input.timestamp - this.#state[i].startTime > this.options.maxPressInterval) {
         this.#rejectState(this.#state[i]);
       }
     }
@@ -118,7 +139,7 @@ export class TapGestureRecognizer extends GestureRecognizerBase<TapGestureDetail
     // Reject if max displacement is exceeded
     const dx = input.clientX - state.clientX;
     const dy = input.clientY - state.clientY;
-    const maxDispSq = this.maxDisplacement * this.maxDisplacement;
+    const maxDispSq = this.options.maxDisplacement * this.options.maxDisplacement;
     const maxDisplacementExceeded = dx * dx + dy * dy > maxDispSq;
 
     if (maxDisplacementExceeded) {
@@ -134,7 +155,7 @@ export class TapGestureRecognizer extends GestureRecognizerBase<TapGestureDetail
     state.endTime = input.timestamp;
 
     // All pointers must be known
-    if (this.#state.length !== this.pointers) return;
+    if (this.#state.length !== this.options.pointers) return;
 
     // All pointers must have lifted
     if (this.#state.some((x) => x.endTime === x.startTime)) return;
@@ -143,7 +164,7 @@ export class TapGestureRecognizer extends GestureRecognizerBase<TapGestureDetail
     const last = this.#state[this.#state.length - 1];
 
     // Reject if release interval exceeded
-    if (Math.abs(first.endTime - last.endTime) > this.maxReleaseInterval) {
+    if (Math.abs(first.endTime - last.endTime) > this.options.maxReleaseInterval) {
       this.#rejectAll();
       return;
     }
@@ -152,7 +173,7 @@ export class TapGestureRecognizer extends GestureRecognizerBase<TapGestureDetail
     const firstDown = Math.min(first.startTime, last.startTime);
     const lastUp = Math.max(first.endTime, last.endTime);
 
-    if (lastUp - firstDown > this.maxDuration) {
+    if (lastUp - firstDown > this.options.maxDuration) {
       this.#rejectAll();
       return;
     }
@@ -177,7 +198,7 @@ export class TapGestureRecognizer extends GestureRecognizerBase<TapGestureDetail
     state.accepted = true;
 
     // All pointers must be accepted
-    if (this.#state.length !== this.pointers || !this.#state.every((x) => x.accepted)) return;
+    if (this.#state.length !== this.options.pointers || !this.#state.every((x) => x.accepted)) return;
 
     const first = this.#state[0];
     const last = this.#state[this.#state.length - 1];
@@ -229,3 +250,6 @@ export class TapGestureRecognizer extends GestureRecognizerBase<TapGestureDetail
     }
   }
 }
+
+// Register the recognizer
+registerRecognizer<TapGestureOptions>("tap", (options) => new TapGestureRecognizer(options));

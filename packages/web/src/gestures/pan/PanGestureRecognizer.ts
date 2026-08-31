@@ -1,4 +1,10 @@
-import { GestureDetail, GestureRecognizerBase, PointerInput } from "@m3e/web/gestures";
+import {
+  GestureDetail,
+  GestureRecognizerBase,
+  GestureRecognizerOptions,
+  PointerInput,
+  registerRecognizer,
+} from "@m3e/web/gestures";
 
 /**
  * Represents the lifecycle phases of a pan gesture.
@@ -19,76 +25,103 @@ export type PanGestureOrientation = "horizontal" | "vertical";
 /** Encapsulates detail about a pan gesture. */
 export interface PanGestureDetail extends GestureDetail {
   /** Current phase of the pan gesture. */
-  phase: PanGesturePhase;
+  readonly phase: PanGesturePhase;
 
   /** Viewport x-coordinate where the pan began. */
-  startClientX: number;
+  readonly startClientX: number;
 
   /** Viewport y-coordinate where the pan began. */
-  startClientY: number;
+  readonly startClientY: number;
 
   /** Element-relative x-coordinate where the pan began. */
-  startLocalX: number;
+  readonly startLocalX: number;
 
   /** Element-relative y-coordinate where the pan began. */
-  startLocalY: number;
+  readonly startLocalY: number;
 
   /** Current viewport x-coordinate. */
-  clientX: number;
+  readonly clientX: number;
 
   /** Current viewport y-coordinate. */
-  clientY: number;
+  readonly clientY: number;
 
   /** Current element-relative x-coordinate. */
-  localX: number;
+  readonly localX: number;
 
   /** Current element-relative y-coordinate. */
-  localY: number;
+  readonly localY: number;
 
   /** Incremental x-axis movement since the previous pan event. */
-  deltaX: number;
+  readonly deltaX: number;
 
   /** Incremental y-axis movement since the previous pan event. */
-  deltaY: number;
+  readonly deltaY: number;
 
   /**
    * Incremental movement along the resolved primary axis.
    * Equals `deltaX` for horizontal pans and `deltaY` for vertical pans.
    */
-  primaryDelta: number;
+  readonly primaryDelta: number;
 
   /**
    * Total movement along the resolved primary axis since pan start.
    * Equals `totalDeltaX` for horizontal pans and `totalDeltaY` for vertical pans.
    */
-  totalPrimaryDelta: number;
+  readonly totalPrimaryDelta: number;
 
   /** Instantaneous x-axis velocity in px/ms. */
-  velocityX: number;
+  readonly velocityX: number;
 
   /** Instantaneous y-axis velocity in px/ms. */
-  velocityY: number;
+  readonly velocityY: number;
 
   /** Total x-axis displacement since pan start. */
-  totalDeltaX: number;
+  readonly totalDeltaX: number;
 
   /** Total y-axis displacement since pan start. */
-  totalDeltaY: number;
+  readonly totalDeltaY: number;
 
   /** Magnitude of the velocity vector. */
-  speed: number;
+  readonly speed: number;
 
   /** Movement angle in radians, based on total displacement. Computed as atan2(totalDeltaY, totalDeltaX). */
-  angle: number;
+  readonly angle: number;
 
   /** Movement direction along the x-axis: -1, 0, or 1. */
-  directionX: number;
+  readonly directionX: number;
 
   /** Movement direction along the y-axis: -1, 0, or 1. */
-  directionY: number;
+  readonly directionY: number;
 
   /** Resolved pan orientation based on dominant total displacement. */
-  orientation: PanGestureOrientation;
+  readonly orientation: PanGestureOrientation;
+}
+
+/** Encapsulates options used to recognize a pan gesture. */
+export interface PanGestureOptions extends GestureRecognizerOptions<PanGestureDetail> {
+  /**
+   * Minimum distance (px) a pointer can move before the gesture starts.
+   * @default 4
+   */
+  readonly minDisplacement: number;
+
+  /**
+   * Locks movement to an axis.
+   * @default "none"
+   */
+  readonly lockAxis: PanGestureLockAxis;
+
+  /**
+   * Minimum total displacement (px) required before axis locking resolves.
+   * @default 8
+   */
+  readonly axisThreshold: number;
+
+  /**
+   * Minimum incremental movement (px) on the secondary axis required before emitting move updates.
+   * @default 0
+   */
+  readonly deltaThreshold: number;
 }
 
 /** State used to recognize pan gestures. */
@@ -112,35 +145,22 @@ interface GestureState {
 export type PanGestureLockAxis = "x" | "y" | "lock" | "none";
 
 /** Recognizes a pan gesture. */
-export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureDetail> {
+class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOptions> {
   /** @private */ #state?: GestureState;
-
-  /**
-   * Minimum distance (px) a pointer can move before the gesture starts.
-   * @default 4
-   */
-  minDisplacement: number = 4;
-
-  /**
-   * Locks movement to an axis.
-   * @default "none"
-   */
-  lockAxis: PanGestureLockAxis = "none";
-
-  /**
-   * Minimum total displacement (px) required before axis locking resolves.
-   * @default 8
-   */
-  axisThreshold: number = 8;
-
-  /**
-   * Minimum incremental movement (px) on the secondary axis required before emitting move updates.
-   * @default 0
-   */
-  deltaThreshold: number = 0;
 
   /** @inheritdoc */
   override readonly gestureType = "pan";
+
+  /** @inheritdoc */
+  protected override _defaultOptions(): Partial<PanGestureOptions> {
+    return {
+      ...super._defaultOptions,
+      minDisplacement: 4,
+      lockAxis: "none",
+      axisThreshold: 8,
+      deltaThreshold: 0,
+    };
+  }
 
   /** @inheritdoc */
   override _onPointerDown(input: PointerInput): void {
@@ -178,13 +198,13 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureDetail
       // Don't emit move if axis is locked and delta didn't change.
       switch (this.#state.orientation) {
         case "horizontal":
-          if (Math.abs(this.#state.deltaY) < this.deltaThreshold) {
+          if (Math.abs(this.#state.deltaY) < this.options.deltaThreshold) {
             return;
           }
           break;
 
         case "vertical":
-          if (Math.abs(this.#state.deltaX) < this.deltaThreshold) {
+          if (Math.abs(this.#state.deltaX) < this.options.deltaThreshold) {
             return;
           }
           break;
@@ -199,7 +219,7 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureDetail
     const deltaX = input.clientX - this.#state.startClientX;
     const deltaY = input.clientY - this.#state.startClientY;
 
-    if (Math.hypot(deltaX, deltaY) >= this.minDisplacement) {
+    if (Math.hypot(deltaX, deltaY) >= this.options.minDisplacement) {
       // Accept, start gesture, defer input
       this.#state.active = true;
       this._emitGesture(this.#createDetail("start", this.#state));
@@ -285,24 +305,24 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureDetail
   /** @private */
   #tryLockAxis(state: GestureState): void {
     // Explicit axis locking
-    if (this.lockAxis === "x") {
+    if (this.options.lockAxis === "x") {
       state.orientation = "horizontal";
       return;
     }
 
-    if (this.lockAxis === "y") {
+    if (this.options.lockAxis === "y") {
       state.orientation = "vertical";
       return;
     }
 
     // Natural axis locking
-    if (this.lockAxis !== "lock" || state.orientation) return;
+    if (this.options.lockAxis !== "lock" || state.orientation) return;
 
     const totalDeltaX = state.clientX - state.startClientX;
     const totalDeltaY = state.clientY - state.startClientY;
 
     // Lock axis only after threshold displacement
-    if (Math.abs(totalDeltaX) >= this.axisThreshold || Math.abs(totalDeltaY) >= this.axisThreshold) {
+    if (Math.abs(totalDeltaX) >= this.options.axisThreshold || Math.abs(totalDeltaY) >= this.options.axisThreshold) {
       state.orientation = Math.abs(totalDeltaX) > Math.abs(totalDeltaY) ? "horizontal" : "vertical";
     }
   }
@@ -343,3 +363,6 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureDetail
     };
   }
 }
+
+// Register the recognizer
+registerRecognizer<PanGestureOptions>("pan", (options) => new PanGestureRecognizer(options));

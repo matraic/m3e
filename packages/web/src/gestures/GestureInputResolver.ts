@@ -79,7 +79,7 @@ export class GestureInputResolver {
     let resolved: GestureInputClaimant | null = null;
     for (const claimant of state.claims) {
       if (!claimant.eager) continue;
-      if (!resolved || claimant.priority > resolved.priority) {
+      if (!resolved || claimant.options.priority > resolved.options.priority) {
         resolved = claimant;
       }
     }
@@ -87,7 +87,7 @@ export class GestureInputResolver {
     // If not resolved, attempt to resolve to the highest priority claimant
     if (!resolved) {
       for (const claimant of state.claims) {
-        if (!resolved || claimant.priority > resolved.priority) {
+        if (!resolved || claimant.options.priority > resolved.options.priority) {
           resolved = claimant;
         }
       }

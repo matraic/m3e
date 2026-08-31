@@ -1,26 +1,46 @@
-import { GestureDetail } from "./GestureDetail";
 import { GestureInput } from "./GestureInput";
 import { GestureInputButton } from "./GestureInputButton";
 import { GestureInputDisposition } from "./GestureInputDisposition";
 import { GestureInputResolution } from "./GestureInputResolution";
-import { GestureCallback, GestureRecognizer } from "./GestureRecognizer";
-import { PointerInput, PointerType } from "./PointerInput";
+import { GestureRecognizer } from "./GestureRecognizer";
+import { GestureDetailOf, GestureRecognizerOptions } from "./GestureRecognizerOptions";
+import { PointerInput } from "./PointerInput";
 import { WheelInput } from "./WheelInput";
 
 /**
  * A base implementation for a {@link GestureRecognizer} used to recognize gestures.
- * @template TDetail The type of detail emitted when a gesture is recognized.
+ * @template TOptions The type of options used to recognize gestures.
  */
 export abstract class GestureRecognizerBase<
-  TDetail extends GestureDetail = GestureDetail,
-> implements GestureRecognizer<TDetail> {
-  /** @private */ #priority: number = 1;
-  /** @private */ #disabled = false;
-  /** @private */ #buttons: Array<GestureInputButton> = ["primary"];
-  /** @private */ #pointerTypes: Array<PointerType> = ["mouse", "pen", "touch"];
+  TOptions extends GestureRecognizerOptions<GestureDetailOf<TOptions>>,
+> implements GestureRecognizer<TOptions> {
+  /** @private */ #options: TOptions;
+
+  /**
+   * Initializes a new instance of this class.
+   * @param {Partial<TOptions> | undefined} options Options used to recognize gestures.
+   */
+  constructor(options?: Partial<TOptions>) {
+    this.#options = <TOptions>{ ...this._defaultOptions, ...options };
+  }
+
+  /** Options used to recognize gestures. */
+  get options(): TOptions {
+    return this.#options;
+  }
 
   /** @inheritdoc */
   abstract readonly gestureType: string;
+
+  /** Default options used to recognize gestures. */
+  protected _defaultOptions(): Partial<TOptions> {
+    return <TOptions>(<unknown>{
+      disabled: false,
+      priority: 1,
+      buttons: ["primary"],
+      pointerTypes: ["mouse", "pen", "touch"],
+    });
+  }
 
   /** @inheritdoc */
   get eager(): boolean {
@@ -28,45 +48,14 @@ export abstract class GestureRecognizerBase<
   }
 
   /** @inheritdoc */
-  get priority(): number {
-    return this.#priority;
-  }
-  set priority(value: number) {
-    this.#priority = value;
-  }
-
-  /** @inheritdoc */
-  get disabled(): boolean {
-    return this.#disabled;
-  }
-  set disabled(value: boolean) {
-    this.#disabled = value;
-    if (this.#disabled) {
-      this.reset();
-    }
-  }
-
-  /** @inheritdoc */
-  get buttons(): readonly GestureInputButton[] {
-    return this.#buttons;
-  }
-  set buttons(value: readonly GestureInputButton[]) {
-    this.#buttons = [...value];
-  }
-
-  /** @inheritdoc */
-  get pointerTypes(): readonly PointerType[] {
-    return this.#pointerTypes;
-  }
-  set pointerTypes(value: readonly PointerType[]) {
-    this.#pointerTypes = [...value];
-  }
-
-  /** @inheritdoc */
-  onGesture?: GestureCallback<TDetail>;
-
-  /** @inheritdoc */
   onDisposition?: ((id: number, disposition: GestureInputDisposition) => void) | undefined;
+
+  /** @inheritdoc */
+  updateOptions(options: Partial<TOptions>): void {
+    this.#options = { ...this.options, ...options };
+    // Reset state when options change
+    this.reset();
+  }
 
   /** @inheritdoc */
   abstract reset(): void;
@@ -76,7 +65,7 @@ export abstract class GestureRecognizerBase<
    * @param {number} id The identifier of the input to accepted.
    */
   protected _acceptInput(id: number): void {
-    if (this.disabled) return;
+    if (this.options.disabled) return;
     this.onDisposition?.(id, "accept");
   }
 
@@ -85,7 +74,7 @@ export abstract class GestureRecognizerBase<
    * @param {number} id The identifier of the input to reject.
    */
   protected _rejectInput(id: number): void {
-    if (this.disabled) return;
+    if (this.options.disabled) return;
     this.onDisposition?.(id, "reject");
   }
 
@@ -94,7 +83,7 @@ export abstract class GestureRecognizerBase<
    * @param {number} id The identifier of the input to hold.
    */
   protected _holdInput(id: number): void {
-    if (this.disabled) return;
+    if (this.options.disabled) return;
     this.onDisposition?.(id, "hold");
   }
 
@@ -103,7 +92,7 @@ export abstract class GestureRecognizerBase<
    * @param {number} id The identifier of the input to release.
    */
   protected _releaseInput(id: number): void {
-    if (this.disabled) return;
+    if (this.options.disabled) return;
     this.onDisposition?.(id, "release");
   }
 
@@ -112,13 +101,13 @@ export abstract class GestureRecognizerBase<
    * @param {number} id The identifier of the input to defer.
    */
   protected _deferInput(id: number): void {
-    if (this.disabled) return;
+    if (this.options.disabled) return;
     this.onDisposition?.(id, "defer");
   }
 
   /** @inheritdoc */
   onResolution(id: number, resolution: GestureInputResolution): void {
-    if (this.disabled) return;
+    if (this.options.disabled) return;
     switch (resolution) {
       case "accept":
         this._onAcceptInput(id);
@@ -144,7 +133,7 @@ export abstract class GestureRecognizerBase<
 
   /** @inheritdoc */
   onInput(input: GestureInput): void {
-    if (this.disabled) return;
+    if (this.options.disabled) return;
     switch (input.type) {
       case "pointerover":
         this._onPointerOver(<PointerInput>input);
@@ -241,7 +230,7 @@ export abstract class GestureRecognizerBase<
       [3, "back"],
       [4, "forward"],
     ]).get(input.button);
-    return button !== undefined && this.buttons.includes(button);
+    return button !== undefined && this.options.buttons.includes(button);
   }
 
   /**
@@ -250,15 +239,15 @@ export abstract class GestureRecognizerBase<
    * @returns {boolean} `true` if the pointer type is allowed; otherwise `false`.
    */
   protected _isAllowedPointerType(input: PointerInput): boolean {
-    return this.pointerTypes.includes(input.pointerType);
+    return this.options.pointerTypes.includes(input.pointerType);
   }
 
   /**
    * Emits a recognized gesture.
-   * @param {TDetail} detail Detail for the recognized gesture.
+   * @param {GestureDetailOf<TOptions>} detail Detail for the recognized gesture.
    */
-  protected _emitGesture(detail: TDetail): void {
-    this.onGesture?.(detail);
+  protected _emitGesture(detail: GestureDetailOf<TOptions>): void {
+    this.options.onGesture?.(detail);
   }
 
   /** @private */

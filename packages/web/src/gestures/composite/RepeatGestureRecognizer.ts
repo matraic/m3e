@@ -4,6 +4,8 @@ import {
   GestureInputDisposition,
   GestureRecognizer,
   GestureRecognizerBase,
+  GestureRecognizerOptions,
+  registerRecognizer,
 } from "@m3e/web/gestures";
 
 /**
@@ -16,50 +18,43 @@ export interface RepeatGestureDetail<TDetail extends GestureDetail = GestureDeta
 }
 
 /**
- * Recognizes a given number of repeated gestures.
+ * Encapsulates options used to recognize repeated gestures.
  * @template TDetail The type of repeated detail emitted when a gesture is recognized.
- * @template TRecognizer The type of recognizer used to detect the gesture to repeat.
  */
-export class RepeatGestureRecognizer<
-  TDetail extends GestureDetail = GestureDetail,
-  TRecognizer extends GestureRecognizer<TDetail> = GestureRecognizer<TDetail>,
-> extends GestureRecognizerBase<RepeatGestureDetail<TDetail>> {
-  /** @private */ readonly #details = new Array<TDetail>();
-  /** @private */ readonly #accepted = new Set<number>();
-  /** @private */ #timeout?: number;
-  /** @private */ #recognizer: TRecognizer | null = null;
-
+export interface RepeatGestureOptions<TDetail extends GestureDetail = GestureDetail> extends GestureRecognizerOptions<
+  RepeatGestureDetail<TDetail>
+> {
   /** The recognizer used to detect the gesture to repeat. */
-  get recognizer(): TRecognizer | null {
-    return this.#recognizer ?? null;
-  }
-  set recognizer(value: TRecognizer | null) {
-    if (this.#recognizer) {
-      this.#recognizer.onGesture = undefined;
-      this.#recognizer.onDisposition = undefined;
-      this.#recognizer.reset();
-    }
-
-    this.#recognizer = value;
-
-    if (this.#recognizer) {
-      this.#recognizer.onGesture = (detail) => this.#handleGesture(detail);
-      this.#recognizer.onDisposition = (id, disposition) => this.#handleDisposition(id, disposition);
-      this.#recognizer.reset();
-    }
-  }
+  readonly recognizer?: GestureRecognizer;
 
   /**
    * Maximum time (ms) between gestures before the repeated gesture fails.
    * @default 250
    */
-  maxInterval: number = 250;
+  readonly maxInterval: number;
 
   /**
    * Number of times a gesture must be repeated.
    * @default 2
    */
-  count: number = 2;
+  readonly count: number;
+}
+
+/**
+ * Recognizes a given number of repeated gestures.
+ * @template TDetail The type of repeated detail emitted when a gesture is recognized.
+ */
+class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDetail> extends GestureRecognizerBase<
+  RepeatGestureOptions<TDetail>
+> {
+  /** @private */ readonly #details = new Array<TDetail>();
+  /** @private */ readonly #accepted = new Set<number>();
+  /** @private */ #timeout?: number;
+
+  constructor(options?: Partial<RepeatGestureOptions>) {
+    super(options);
+    this.#bindRecognizer();
+  }
 
   /** @inheritdoc */
   get gestureType(): string {
@@ -67,16 +62,48 @@ export class RepeatGestureRecognizer<
   }
 
   /** @inheritdoc */
+  protected override _defaultOptions(): Partial<RepeatGestureOptions<TDetail>> {
+    return {
+      ...super._defaultOptions,
+      maxInterval: 250,
+      count: 2,
+    };
+  }
+
+  /** @inheritdoc */
+  override updateOptions(options: Partial<RepeatGestureOptions<TDetail>>): void {
+    this.#unbindRecognizer();
+    super.updateOptions(options);
+    this.#bindRecognizer();
+  }
+
+  /** @private */
+  #unbindRecognizer(): void {
+    if (!this.options.recognizer) return;
+    this.options.recognizer.updateOptions({ onGesture: undefined });
+    this.options.recognizer.onDisposition = undefined;
+    this.options.recognizer.reset();
+  }
+
+  /** @private */
+  #bindRecognizer(): void {
+    if (!this.options.recognizer) return;
+    this.options.recognizer.updateOptions({ onGesture: (detail) => this.#handleGesture(<TDetail>detail) });
+    this.options.recognizer.onDisposition = (id, disposition) => this.#handleDisposition(id, disposition);
+    this.options.recognizer.reset();
+  }
+
+  /** @inheritdoc */
   override onInput(input: GestureInput): void {
-    if (this.disabled || !this.#recognizer) return;
+    if (this.options.disabled || !this.options.recognizer) return;
 
     // Forward input to inner recognizer
-    this.#recognizer.onInput(input);
+    this.options.recognizer.onInput(input);
   }
 
   /** @inheritdoc */
   protected override _onAcceptInput(id: number): void {
-    if (!this.#recognizer) return;
+    if (!this.options.recognizer) return;
 
     // Discard if input is not accepted (held)
     if (!this.#accepted.delete(id)) return;
@@ -97,7 +124,7 @@ export class RepeatGestureRecognizer<
 
   /** @inheritdoc */
   protected override _onRejectInput(id: number): void {
-    if (!this.#recognizer) return;
+    if (!this.options.recognizer) return;
 
     // Reset if input was accepted (held)
     if (this.#accepted.has(id)) {
@@ -107,25 +134,25 @@ export class RepeatGestureRecognizer<
 
   /** @private */
   #handleGesture(detail: TDetail): void {
-    if (!this.#recognizer) return;
+    if (!this.options.recognizer) return;
     clearTimeout(this.#timeout);
 
     this.#details.push(detail);
 
-    if (this.#details.length === this.count) {
+    if (this.#details.length === this.options.count) {
       // Disposition all inputs as accepted when detail count is satisfied
       this.#details.forEach((x) => this._acceptInput(x.id));
     } else {
       // Reset for next occurrence
-      this.#recognizer.reset();
+      this.options.recognizer.reset();
       // Reset if max interval exceeded
-      this.#timeout = setTimeout(() => this.reset(), this.maxInterval);
+      this.#timeout = setTimeout(() => this.reset(), this.options.maxInterval);
     }
   }
 
   /** @private */
   #handleDisposition(id: number, disposition: GestureInputDisposition): void {
-    if (!this.#recognizer) return;
+    if (!this.options.recognizer) return;
 
     switch (disposition) {
       case "accept":
@@ -134,7 +161,7 @@ export class RepeatGestureRecognizer<
           this.#accepted.add(id);
           this._holdInput(id);
         }
-        this.#recognizer.onResolution(id, "accept");
+        this.options.recognizer.onResolution(id, "accept");
         break;
 
       case "reject":
@@ -185,6 +212,9 @@ export class RepeatGestureRecognizer<
     this.#details.length = 0;
 
     // Reset inner recognizer
-    this.#recognizer?.reset();
+    this.options.recognizer?.reset();
   }
 }
+
+// Register the recognizer
+registerRecognizer<RepeatGestureOptions>("repeat", (options) => new RepeatGestureRecognizer(options));

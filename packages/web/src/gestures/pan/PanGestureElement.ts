@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import { PanGestureDetail, PanGestureLockAxis, PanGestureRecognizer } from "./PanGestureRecognizer";
+import { PanGestureDetail, PanGestureLockAxis, PanGestureOptions } from "./PanGestureRecognizer";
 
 /**
  * A non-visual element used to detect a pan gesture for an associated element.
@@ -56,9 +56,9 @@ import { PanGestureDetail, PanGestureLockAxis, PanGestureRecognizer } from "./Pa
  * @fires gesture - Emitted when a pan gesture is recognized.
  */
 @customElement("m3e-pan-gesture")
-export class M3ePanGestureElement extends GestureElementBase<PanGestureDetail, PanGestureRecognizer> {
+export class M3ePanGestureElement extends GestureElementBase<PanGestureOptions> {
   /** @inheritdoc */
-  override readonly recognizer = new PanGestureRecognizer();
+  override gestureType: string = "pan";
 
   /**
    * Minimum distance (px) a pointer can move before the gesture starts.
@@ -89,16 +89,16 @@ export class M3ePanGestureElement extends GestureElementBase<PanGestureDetail, P
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("minDisplacement")) {
-      this.recognizer.minDisplacement = this.minDisplacement;
+      this.recognizer?.updateOptions({ minDisplacement: this.minDisplacement });
     }
     if (_changedProperties.has("lockAxis")) {
-      this.recognizer.lockAxis = this.lockAxis;
+      this.recognizer?.updateOptions({ lockAxis: this.lockAxis });
     }
     if (_changedProperties.has("axisThreshold")) {
-      this.recognizer.axisThreshold = this.axisThreshold;
+      this.recognizer?.updateOptions({ axisThreshold: this.axisThreshold });
     }
     if (_changedProperties.has("deltaThreshold")) {
-      this.recognizer.deltaThreshold = this.deltaThreshold;
+      this.recognizer?.updateOptions({ deltaThreshold: this.deltaThreshold });
     }
   }
 }

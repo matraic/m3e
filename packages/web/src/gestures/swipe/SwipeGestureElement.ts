@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 import { customElement, spaceSeparatedStringConverter } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import { SwipeGestureDetail, SwipeGestureDirection, SwipeGestureRecognizer } from "./SwipeGestureRecognizer";
+import { SwipeGestureDetail, SwipeGestureDirection, SwipeGestureOptions } from "./SwipeGestureRecognizer";
 
 /**
  * A non-visual element used to detect a swipe gesture for an associated element.
@@ -46,9 +46,9 @@ import { SwipeGestureDetail, SwipeGestureDirection, SwipeGestureRecognizer } fro
  * @fires gesture - Emitted when a swipe gesture is recognized.
  */
 @customElement("m3e-swipe-gesture")
-export class M3eSwipeGestureElement extends GestureElementBase<SwipeGestureDetail, SwipeGestureRecognizer> {
+export class M3eSwipeGestureElement extends GestureElementBase<SwipeGestureOptions> {
   /** @inheritdoc */
-  override readonly recognizer = new SwipeGestureRecognizer();
+  override gestureType: string = "swipe";
 
   /**
    * * Maximum distance (px) a pointer can move before the gesture fails.
@@ -80,16 +80,16 @@ export class M3eSwipeGestureElement extends GestureElementBase<SwipeGestureDetai
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("maxDisplacement")) {
-      this.recognizer.maxDisplacement = this.maxDisplacement;
+      this.recognizer?.updateOptions({ maxDisplacement: this.maxDisplacement });
     }
     if (_changedProperties.has("minVelocity")) {
-      this.recognizer.minVelocity = this.minVelocity;
+      this.recognizer?.updateOptions({ minVelocity: this.minVelocity });
     }
     if (_changedProperties.has("directionThreshold")) {
-      this.recognizer.directionThreshold = this.directionThreshold;
+      this.recognizer?.updateOptions({ directionThreshold: this.directionThreshold });
     }
     if (_changedProperties.has("directions")) {
-      this.recognizer.directions = this.directions;
+      this.recognizer?.updateOptions({ directions: this.directions });
     }
   }
 }

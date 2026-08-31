@@ -1,4 +1,10 @@
-import { GestureDetail, GestureRecognizerBase, PointerInput } from "@m3e/web/gestures";
+import {
+  GestureDetail,
+  GestureRecognizerBase,
+  GestureRecognizerOptions,
+  PointerInput,
+  registerRecognizer,
+} from "@m3e/web/gestures";
 
 /**
  * Represents the lifecycle phase of a scale gesture.
@@ -40,10 +46,25 @@ export interface ScaleGestureDetail extends GestureDetail {
   readonly pointers: number;
 }
 
+/** Encapsulates options used to recognize scale gestures. */
+export interface ScaleGestureOptions extends GestureRecognizerOptions<ScaleGestureDetail> {
+  /**
+   * Number of pointers that must be pressed before the gesture fails.
+   * @default 2
+   */
+  readonly pointers: number;
+
+  /**
+   * Minimum distance change (px) required to activate scale.
+   * @default 4
+   */
+  readonly distanceThreshold: number;
+}
+
 type ScaleGestureMetrics = Omit<ScaleGestureDetail, "phase" | "gestureType" | "pointers" | "id" | "timestamp">;
 
 /** Recognizes a scale gesture. */
-export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureDetail> {
+class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureOptions> {
   /** @private */ #pointers = new Map<number, PointerInput>();
   /** @private */ #bounds: DOMRect | null = null;
   /** @private */ #accepted = new Set<number>();
@@ -53,21 +74,18 @@ export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureDe
   /** @inheritdoc */
   override gestureType = "scale";
 
-  /**
-   * Number of pointers that must be pressed before the gesture fails.
-   * @default 2
-   */
-  pointers: number = 2;
-
-  /**
-   * Minimum distance change (px) required to activate scale.
-   * @default 4
-   */
-  distanceThreshold = 4;
+  /** @inheritdoc */
+  protected override _defaultOptions(): Partial<ScaleGestureOptions> {
+    return {
+      ...super._defaultOptions,
+      pointers: 2,
+      distanceThreshold: 4,
+    };
+  }
 
   /** @inheritdoc */
   protected override _onPointerDown(input: PointerInput): void {
-    if (this.#pointers.size === this.pointers) {
+    if (this.#pointers.size === this.options.pointers) {
       // Too many pointers, reject all and reset
       this.#pointers.forEach((x) => this._rejectInput(x.id));
       this.reset();
@@ -82,7 +100,7 @@ export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureDe
   /** @inheritdoc */
   protected override _onPointerMove(input: PointerInput): void {
     // Ignore if not tracking pointer or count not met
-    if (!this.#pointers.has(input.id) || this.#pointers.size !== this.pointers) return;
+    if (!this.#pointers.has(input.id) || this.#pointers.size !== this.options.pointers) return;
 
     this.#pointers.set(input.id, input);
 
@@ -104,7 +122,7 @@ export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureDe
     }
 
     // After first move, test distance and accept all pointers if threshold met
-    if (Math.abs(state.distance - this.#initialDistance) >= this.distanceThreshold) {
+    if (Math.abs(state.distance - this.#initialDistance) >= this.options.distanceThreshold) {
       this.#pointers.forEach((x) => this._acceptInput(x.id));
     }
   }
@@ -219,3 +237,6 @@ export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureDe
     return { distance, scale, clientCenterX, clientCenterY, localCenterX, localCenterY };
   }
 }
+
+// Register the recognizer
+registerRecognizer<ScaleGestureOptions>("scale", (options) => new ScaleGestureRecognizer(options));

@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase, GestureRecognizer } from "@m3e/web/gestures";
 
-import { SequenceGestureDetail, SequenceGestureRecognizer } from "./SequenceGestureRecognizer";
+import { SequenceGestureDetail, SequenceGestureOptions } from "./SequenceGestureRecognizer";
 
 /**
  * A non-visual element used to detect a sequence of gestures for an associated element.
@@ -63,9 +63,9 @@ import { SequenceGestureDetail, SequenceGestureRecognizer } from "./SequenceGest
  * @fires gesture - Emitted when a gesture sequence is recognized.
  */
 @customElement("m3e-sequence-gesture")
-export class M3eSequenceGestureElement extends GestureElementBase<SequenceGestureDetail, SequenceGestureRecognizer> {
+export class M3eSequenceGestureElement extends GestureElementBase<SequenceGestureOptions> {
   /** @inheritdoc */
-  override readonly recognizer = new SequenceGestureRecognizer();
+  override gestureType: string = "sequence";
 
   /**
    * Maximum time (ms) between gestures before the sequence fails.
@@ -78,7 +78,7 @@ export class M3eSequenceGestureElement extends GestureElementBase<SequenceGestur
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("maxInterval")) {
-      this.recognizer.maxInterval = this.maxInterval;
+      this.recognizer?.updateOptions({ maxInterval: this.maxInterval });
     }
   }
 
@@ -101,11 +101,13 @@ export class M3eSequenceGestureElement extends GestureElementBase<SequenceGestur
         element.detach();
         element.removeAttribute("for");
       }
-      sequence.push(element.recognizer);
+      if (element.recognizer) {
+        sequence.push(element.recognizer);
+      }
     }
 
     // Update recognizer sequence with nested recognizers (in order of DOM)
-    this.recognizer.sequence = sequence;
+    this.recognizer?.updateOptions({ sequence: sequence });
   }
 }
 

@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import { ScaleGestureDetail, ScaleGestureRecognizer } from "./ScaleGestureRecognizer";
+import { ScaleGestureDetail, ScaleGestureOptions } from "./ScaleGestureRecognizer";
 
 /**
  * A non-visual element used to detect a scale gesture for an associated element.
@@ -49,9 +49,9 @@ import { ScaleGestureDetail, ScaleGestureRecognizer } from "./ScaleGestureRecogn
  * @fires gesture - Emitted when a scale gesture is recognized.
  */
 @customElement("m3e-scale-gesture")
-export class M3eScaleGestureElement extends GestureElementBase<ScaleGestureDetail, ScaleGestureRecognizer> {
+export class M3eScaleGestureElement extends GestureElementBase<ScaleGestureOptions> {
   /** @inheritdoc */
-  override readonly recognizer = new ScaleGestureRecognizer();
+  override gestureType: string = "scale";
 
   /**
    * Number of pointers that must be pressed before the gesture fails.
@@ -70,10 +70,10 @@ export class M3eScaleGestureElement extends GestureElementBase<ScaleGestureDetai
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("pointers")) {
-      this.recognizer.pointers = this.pointers;
+      this.recognizer?.updateOptions({ pointers: this.pointers });
     }
     if (_changedProperties.has("distanceThreshold")) {
-      this.recognizer.distanceThreshold = this.distanceThreshold;
+      this.recognizer?.updateOptions({ distanceThreshold: this.distanceThreshold });
     }
   }
 }

@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 import { customElement, spaceSeparatedStringConverter } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import { FlingGestureDetail, FlingGestureDirection, FlingGestureRecognizer } from "./FlingGestureRecognizer";
+import { FlingGestureDetail, FlingGestureDirection, FlingGestureOptions } from "./FlingGestureRecognizer";
 
 /**
  * A non-visual element used to detect a fling gesture for an associated element.
@@ -46,9 +46,9 @@ import { FlingGestureDetail, FlingGestureDirection, FlingGestureRecognizer } fro
  * @fires gesture - Emitted when a fling gesture is recognized.
  */
 @customElement("m3e-fling-gesture")
-export class M3eFlingGestureElement extends GestureElementBase<FlingGestureDetail, FlingGestureRecognizer> {
+export class M3eFlingGestureElement extends GestureElementBase<FlingGestureOptions> {
   /** @inheritdoc */
-  override readonly recognizer = new FlingGestureRecognizer();
+  override gestureType: string = "fling";
 
   /**
    * * Minimum distance (px) a pointer must move before the gesture can be recognized.
@@ -80,16 +80,16 @@ export class M3eFlingGestureElement extends GestureElementBase<FlingGestureDetai
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("minDisplacement")) {
-      this.recognizer.minDisplacement = this.minDisplacement;
+      this.recognizer?.updateOptions({ minDisplacement: this.minDisplacement });
     }
     if (_changedProperties.has("minVelocity")) {
-      this.recognizer.minVelocity = this.minVelocity;
+      this.recognizer?.updateOptions({ minVelocity: this.minVelocity });
     }
     if (_changedProperties.has("directionThreshold")) {
-      this.recognizer.directionThreshold = this.directionThreshold;
+      this.recognizer?.updateOptions({ directionThreshold: this.directionThreshold });
     }
     if (_changedProperties.has("directions")) {
-      this.recognizer.directions = this.directions;
+      this.recognizer?.updateOptions({ directions: this.directions });
     }
   }
 }

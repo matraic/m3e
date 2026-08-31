@@ -1,4 +1,10 @@
-import { GestureDetail, GestureRecognizerBase, PointerInput } from "@m3e/web/gestures";
+import {
+  GestureDetail,
+  GestureRecognizerBase,
+  GestureRecognizerOptions,
+  PointerInput,
+  registerRecognizer,
+} from "@m3e/web/gestures";
 
 /**
  * Represents the lifecycle phases of a long-press gesture.
@@ -28,6 +34,21 @@ export interface LongPressGestureDetail extends GestureDetail {
   readonly duration: number;
 }
 
+/** Encapsulates options used to recognize a long-press gesture. */
+export interface LongPressGestureOptions extends GestureRecognizerOptions<LongPressGestureDetail> {
+  /**
+   * Maximum distance (px) a pointer can move before the gesture fails.
+   * @default 4
+   */
+  readonly maxDisplacement: number;
+
+  /**
+   * Minimum time (ms) a pointer must remain pressed.
+   * @default 500
+   */
+  readonly minDuration: number;
+}
+
 /** State used to recognize long-press gestures. */
 interface GestureState {
   id: number;
@@ -42,23 +63,20 @@ interface GestureState {
 }
 
 /** Recognizes a long-press gesture. */
-export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressGestureDetail> {
+class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressGestureOptions> {
   /** @private */ #state?: GestureState;
-
-  /**
-   * Maximum distance (px) a pointer can move before the gesture fails.
-   * @default 4
-   */
-  maxDisplacement: number = 4;
-
-  /**
-   * Minimum time (ms) a pointer must remain pressed.
-   * @default 500
-   */
-  minDuration: number = 500;
 
   /** @inheritdoc */
   override readonly gestureType: string = "long-press";
+
+  /** @inheritdoc */
+  protected override _defaultOptions(): Partial<LongPressGestureOptions> {
+    return {
+      ...super._defaultOptions,
+      maxDisplacement: 4,
+      minDuration: 500,
+    };
+  }
 
   /** @inheritdoc */
   override get eager(): boolean {
@@ -84,10 +102,10 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
           // Accept if not yet rejected
           if (this.#state) {
             this.#state.accepted = true;
-            this.#state.endTime = this.#state.startTime + this.minDuration;
+            this.#state.endTime = this.#state.startTime + this.options.minDuration;
             this._acceptInput(this.#state.id);
           }
-        }, this.minDuration),
+        }, this.options.minDuration),
       };
     } else {
       // Reject when multiple pointers detected
@@ -102,7 +120,7 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
     // Reject if max displacement is exceeded
     const dx = input.clientX - this.#state.clientX;
     const dy = input.clientY - this.#state.clientY;
-    const maxDispSq = this.maxDisplacement * this.maxDisplacement;
+    const maxDispSq = this.options.maxDisplacement * this.options.maxDisplacement;
     const maxDisplacementExceeded = dx * dx + dy * dy > maxDispSq;
 
     if (maxDisplacementExceeded) {
@@ -166,3 +184,6 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
     };
   }
 }
+
+// Register the recognizer
+registerRecognizer<LongPressGestureOptions>("long-press", (options) => new LongPressGestureRecognizer(options));

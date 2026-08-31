@@ -1,3 +1,4 @@
+import { GestureInputClaimantOptions } from "./GestureInputClaimantOptions";
 import { GestureInputDisposition } from "./GestureInputDisposition";
 import { GestureInputResolution } from "./GestureInputResolution";
 
@@ -9,8 +10,8 @@ export interface GestureInputClaimant {
   /** Whether dispositions should resolve immediately. */
   readonly eager: boolean;
 
-  /** The priority in which dispositions should resolve. */
-  priority: number;
+  /** Options used to disposition claims against input. */
+  readonly options: GestureInputClaimantOptions;
 
   /**
    * Callback invoked when a disposition is made against input.

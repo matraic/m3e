@@ -1,14 +1,7 @@
 import { GestureDetail } from "./GestureDetail";
-import { GestureInputButton } from "./GestureInputButton";
 import { GestureInputClaimant } from "./GestureInputClaimant";
 import { GestureInputSink } from "./GestureInputSink";
-import { PointerType } from "./PointerInput";
-
-/**
- * Function signature for gesture callbacks.
- * @template TDetail The type of detail emitted for the gesture.
- */
-export type GestureCallback<TDetail extends GestureDetail = GestureDetail> = (detail: TDetail) => void;
+import { GestureDetailOf, GestureRecognizerOptions } from "./GestureRecognizerOptions";
 
 /**
  * Defines functionality required to recognize gestures.
@@ -18,21 +11,20 @@ export type GestureCallback<TDetail extends GestureDetail = GestureDetail> = (de
  * - makes claims on input through {@link GestureInputClaimant},
  * - and emits recognized gesture details.
  *
- * @template TDetail The type of detail emitted when a gesture is recognized.
+ * @template TOptions The type of options used to recognize gestures.
  */
-export interface GestureRecognizer<TDetail extends GestureDetail = GestureDetail>
+export interface GestureRecognizer<
+  TOptions extends GestureRecognizerOptions<GestureDetailOf<TOptions>> = GestureRecognizerOptions<GestureDetail>,
+>
   extends GestureInputSink, GestureInputClaimant {
-  /** Whether gesture recognition is disabled. */
-  disabled: boolean;
+  /** Options used to recognize gestures. */
+  readonly options: TOptions;
 
-  /** Which buttons can be pressed. */
-  buttons: readonly GestureInputButton[];
-
-  /** Which types of pointers can be used to recognize gestures. */
-  pointerTypes: readonly PointerType[];
-
-  /** Callback invoked when a gesture is recognized. */
-  onGesture?: GestureCallback<TDetail>;
+  /**
+   * Updates options used to recognize gestures.
+   * @param {Partial<TOptions>} options Options used to recognize gestures.
+   */
+  updateOptions(options: Partial<TOptions>): void;
 
   /** Returns the recognizer to its initial state. */
   reset(): void;

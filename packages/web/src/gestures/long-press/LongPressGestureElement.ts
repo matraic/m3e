@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import { LongPressGestureDetail, LongPressGestureRecognizer } from "./LongPressGestureRecognizer";
+import { LongPressGestureDetail, LongPressGestureOptions } from "./LongPressGestureRecognizer";
 
 /**
  * A non-visual element used to detect a long-press gesture for an associated element.
@@ -47,9 +47,9 @@ import { LongPressGestureDetail, LongPressGestureRecognizer } from "./LongPressG
  * @fires gesture - Emitted when a long-press gesture is recognized.
  */
 @customElement("m3e-long-press-gesture")
-export class M3eLongPressGestureElement extends GestureElementBase<LongPressGestureDetail, LongPressGestureRecognizer> {
+export class M3eLongPressGestureElement extends GestureElementBase<LongPressGestureOptions> {
   /** @inheritdoc */
-  override readonly recognizer = new LongPressGestureRecognizer();
+  override gestureType: string = "long-press";
 
   /**
    * Maximum distance (px) a pointer can move before the gesture fails.
@@ -68,10 +68,10 @@ export class M3eLongPressGestureElement extends GestureElementBase<LongPressGest
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("maxDisplacement")) {
-      this.recognizer.maxDisplacement = this.maxDisplacement;
+      this.recognizer?.updateOptions({ maxDisplacement: this.maxDisplacement });
     }
     if (_changedProperties.has("minDuration")) {
-      this.recognizer.minDuration = this.minDuration;
+      this.recognizer?.updateOptions({ minDuration: this.minDuration });
     }
   }
 }

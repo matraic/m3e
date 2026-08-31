@@ -1,5 +1,14 @@
-import { GestureDetail, GestureInput, GestureInputDisposition, GestureRecognizerBase } from "@m3e/web/gestures";
-import { PanGestureDetail, PanGestureRecognizer } from "@m3e/web/gestures/pan";
+import {
+  createRecognizer,
+  GestureDetail,
+  GestureInput,
+  GestureInputDisposition,
+  GestureRecognizerBase,
+  GestureRecognizerOptions,
+  registerRecognizer,
+} from "@m3e/web/gestures";
+
+import { PanGestureDetail, PanGestureOptions } from "@m3e/web/gestures/pan";
 
 /**
  * Specifies the possible directions of a fling gesture.
@@ -20,19 +29,46 @@ export type FlingGestureAxis = "x" | "y";
 /** Encapsulates detail about a fling gesture. */
 export interface FlingGestureDetail extends GestureDetail {
   /** Resolved fling direction. */
-  direction: FlingGestureDirection;
+  readonly direction: FlingGestureDirection;
 
   /** Dominant axis of the fling. */
-  axis: FlingGestureAxis;
+  readonly axis: FlingGestureAxis;
 
   /** Total displacement (px) along the dominant axis. */
-  distance: number;
+  readonly distance: number;
 
   /** Velocity magnitude (px/ms). */
-  speed: number;
+  readonly speed: number;
 
   /** Angle (radians) of movement. */
-  angle: number;
+  readonly angle: number;
+}
+
+/** Encapsulates options used to recognize a fling gesture. */
+export interface FlingGestureOptions extends GestureRecognizerOptions<FlingGestureDetail> {
+  /**
+   * Minimum velocity (px/ms) required to recognize a fling.
+   * @default 0.3
+   */
+  readonly minVelocity: number;
+
+  /**
+   * The allowed directions of the fling.
+   * @default ["left", "right", "up", "down"]
+   */
+  readonly directions: readonly FlingGestureDirection[];
+
+  /**
+   * Minimum displacement (px) required before direction is considered valid.
+   * @default 12
+   */
+  readonly directionThreshold: number;
+
+  /**
+   * Minimum distance (px) a pointer must move before the gesture can be recognized.
+   * @default 24
+   */
+  readonly minDisplacement: number;
 }
 
 /** State used to recognize fling gestures. */
@@ -43,53 +79,45 @@ interface GestureState {
 }
 
 /** Recognizes a fling gesture. */
-export class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureDetail> {
-  /** @private */ readonly #pan = new PanGestureRecognizer();
+class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureOptions> {
+  /** @private */ readonly #pan = createRecognizer<PanGestureOptions>("pan");
   /** @private */ #state?: GestureState;
 
-  constructor() {
-    super();
+  /**
+   * Initializes a new instance of this class.
+   * @param {Partial<FlingGestureOptions> | undefined} options Options used to recognize gestures.
+   */
+  constructor(options?: Partial<FlingGestureOptions>) {
+    super(options);
 
-    this.#pan.onDisposition = (id, disposition) => this.#handlePanDisposition(id, disposition);
-    this.#pan.onGesture = (detail) => this.#handlePanGesture(detail);
-    this.#pan.minDisplacement = 0;
+    if (this.#pan) {
+      this.#pan.onDisposition = (id, disposition) => this.#handlePanDisposition(id, disposition);
+      this.#pan.updateOptions({ onGesture: (detail) => this.#handlePanGesture(detail), minDisplacement: 0 });
+    }
   }
 
   /** @inheritdoc */
   override readonly gestureType = "fling";
 
   /** @inheritdoc */
+  protected override _defaultOptions(): Partial<FlingGestureOptions> {
+    return {
+      ...super._defaultOptions,
+      minVelocity: 0.3,
+      directions: ["left", "right", "up", "down"],
+      directionThreshold: 12,
+      minDisplacement: 24,
+    };
+  }
+
+  /** @inheritdoc */
   override get eager(): boolean {
     return true;
   }
 
-  /**
-   * Minimum velocity (px/ms) required to recognize a fling.
-   * @default 0.3
-   */
-  minVelocity = 0.3;
-
-  /**
-   * The allowed directions of the fling.
-   * @default ["left", "right", "up", "down"]
-   */
-  directions: readonly FlingGestureDirection[] = ["left", "right", "up", "down"];
-
-  /**
-   * Minimum displacement (px) required before direction is considered valid.
-   * @default 12
-   */
-  directionThreshold = 12;
-
-  /**
-   * Minimum distance (px) a pointer must move before the gesture can be recognized.
-   * @default 24
-   */
-  minDisplacement = 24;
-
   /** @private */
   override onInput(input: GestureInput): void {
-    this.#pan.onInput(input);
+    this.#pan?.onInput(input);
     super.onInput(input);
   }
 
@@ -118,7 +146,7 @@ export class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureDe
 
   /** @inheritdoc */
   override reset(): void {
-    this.#pan.reset();
+    this.#pan?.reset();
     this.#state = undefined;
   }
 
@@ -126,7 +154,7 @@ export class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureDe
   #handlePanDisposition(id: number, disposition: GestureInputDisposition): void {
     if (disposition === "accept") {
       // Fires end
-      this.#pan.onResolution(id, "accept");
+      this.#pan?.onResolution(id, "accept");
     }
   }
 
@@ -152,13 +180,13 @@ export class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureDe
       case "end": {
         // Must have enough displacement, otherwise release and reset
         const displacement = Math.hypot(detail.totalDeltaX, detail.totalDeltaY);
-        if (displacement < this.minDisplacement) {
+        if (displacement < this.options.minDisplacement) {
           this.#releaseAndReset(detail.id);
           break;
         }
 
         // Must be fast at end, otherwise release and reset
-        if (detail.speed < this.minVelocity) {
+        if (detail.speed < this.options.minVelocity) {
           this.#releaseAndReset(detail.id);
           break;
         }
@@ -167,8 +195,8 @@ export class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureDe
         const axis = this.#computeAxis(detail);
         const committed =
           axis === "x"
-            ? Math.abs(detail.totalDeltaX) >= this.directionThreshold
-            : Math.abs(detail.totalDeltaY) >= this.directionThreshold;
+            ? Math.abs(detail.totalDeltaX) >= this.options.directionThreshold
+            : Math.abs(detail.totalDeltaY) >= this.options.directionThreshold;
 
         if (!committed) {
           this.#releaseAndReset(detail.id);
@@ -177,7 +205,7 @@ export class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureDe
 
         // Must be in allowed directions, otherwise release and reset
         const direction = this.#computeDirection(detail);
-        if (!this.directions.includes(direction)) {
+        if (!this.options.directions.includes(direction)) {
           this.#releaseAndReset(detail.id);
           break;
         }
@@ -212,3 +240,5 @@ export class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureDe
     this.reset();
   }
 }
+
+registerRecognizer<FlingGestureOptions>("fling", (options) => new FlingGestureRecognizer(options));

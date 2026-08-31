@@ -7,17 +7,16 @@ import { GestureDetector } from "./GestureDetector";
 import { GestureRecognizer } from "./GestureRecognizer";
 import { GestureInputButton } from "./GestureInputButton";
 import { HtmlGestureInputSource } from "./HtmlGestureInputSource";
-import { GestureDetail } from "./GestureDetail";
 import { PointerType } from "./PointerInput";
+import { GestureDetailOf, GestureRecognizerOptions } from "./GestureRecognizerOptions";
+import { createRecognizer } from "./GestureRecognizerRegistry";
 
 /**
  * A base implementation for an element used to detect gestures. This class must be inherited.
- * @template TDetail The type of detail emitted by the recognizer.
- * @template TRecognizer The type of recognizer used to detect gestures.
+ * @template TOptions The type of options used to recognize gestures.
  */
 export abstract class GestureElementBase<
-  TDetail extends GestureDetail,
-  TRecognizer extends GestureRecognizer<TDetail>,
+  TOptions extends GestureRecognizerOptions<GestureDetailOf<TOptions>>,
 > extends HtmlFor(LitElement) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
@@ -28,9 +27,22 @@ export abstract class GestureElementBase<
 
   /** @private */ static readonly #detectors = new Map<HTMLElement, GestureDetector>();
   /** @private */ static readonly #sources = new Map<HTMLElement, HtmlGestureInputSource>();
+  /** @private */ #recognizer: GestureRecognizer<TOptions> | null = null;
+
+  /** The type of gesture to recognize. */
+  abstract gestureType: string;
 
   /** The recognizer used to detect gestures. */
-  abstract readonly recognizer: TRecognizer;
+  get recognizer(): GestureRecognizer<TOptions> | null {
+    if (this.#recognizer) return this.#recognizer;
+    this.#recognizer = createRecognizer(this.gestureType);
+    this.#recognizer?.updateOptions(<TOptions>{
+      onGesture: (detail: GestureDetailOf<TOptions>) => {
+        this.dispatchEvent(new CustomEvent("gesture", { detail }));
+      },
+    });
+    return this.#recognizer;
+  }
 
   /**
    * The priority in which to recognize gestures.
@@ -95,32 +107,20 @@ export abstract class GestureElementBase<
   }
 
   /** @inheritdoc */
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.recognizer.onGesture = (detail) => this.dispatchEvent(new CustomEvent("gesture", { detail }));
-  }
-
-  /** @inheritdoc */
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.recognizer.onGesture = undefined;
-  }
-
-  /** @inheritdoc */
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("priority")) {
-      this.recognizer.priority = this.priority;
+      this.recognizer?.updateOptions(<TOptions>{ priority: this.priority });
     }
     if (_changedProperties.has("disabled")) {
-      this.recognizer.disabled = this.disabled;
+      this.recognizer?.updateOptions(<TOptions>{ disabled: this.disabled });
     }
     if (_changedProperties.has("buttons")) {
-      this.recognizer.buttons = this.buttons;
+      this.recognizer?.updateOptions(<TOptions>{ buttons: this.buttons });
     }
     if (_changedProperties.has("pointerTypes")) {
-      this.recognizer.pointerTypes = this.pointerTypes;
+      this.recognizer?.updateOptions(<TOptions>{ pointerTypes: this.pointerTypes });
     }
   }
 }

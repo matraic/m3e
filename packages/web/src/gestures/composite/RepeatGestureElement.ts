@@ -6,7 +6,7 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase, GestureRecognizer } from "@m3e/web/gestures";
 
-import { RepeatGestureDetail, RepeatGestureRecognizer } from "./RepeatGestureRecognizer";
+import { RepeatGestureDetail, RepeatGestureOptions } from "./RepeatGestureRecognizer";
 
 /**
  * A non-visual element used to detect a repeated gesture for an associated element.
@@ -64,9 +64,9 @@ import { RepeatGestureDetail, RepeatGestureRecognizer } from "./RepeatGestureRec
  * @fires gesture - Emitted when a repeated gesture is recognized.
  */
 @customElement("m3e-repeat-gesture")
-export class M3eRepeatGestureElement extends GestureElementBase<RepeatGestureDetail, RepeatGestureRecognizer> {
+export class M3eRepeatGestureElement extends GestureElementBase<RepeatGestureOptions> {
   /** @inheritdoc */
-  override readonly recognizer = new RepeatGestureRecognizer();
+  override gestureType: string = "repeat";
 
   /**
    * Maximum time (ms) between gestures before the repeated gesture fails.
@@ -85,10 +85,10 @@ export class M3eRepeatGestureElement extends GestureElementBase<RepeatGestureDet
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("maxInterval")) {
-      this.recognizer.maxInterval = this.maxInterval;
+      this.recognizer?.updateOptions({ maxInterval: this.maxInterval });
     }
     if (_changedProperties.has("count")) {
-      this.recognizer.count = this.count;
+      this.recognizer?.updateOptions({ count: this.count });
     }
   }
 
@@ -111,11 +111,13 @@ export class M3eRepeatGestureElement extends GestureElementBase<RepeatGestureDet
         element.detach();
         element.removeAttribute("for");
       }
-      sequence.push(element.recognizer);
+      if (element.recognizer) {
+        sequence.push(element.recognizer);
+      }
     }
 
     // Update recognizer with first recognizer (in order of DOM)
-    this.recognizer.recognizer = sequence[0] ?? null;
+    this.recognizer?.updateOptions({ recognizer: sequence[0] });
   }
 }
 
