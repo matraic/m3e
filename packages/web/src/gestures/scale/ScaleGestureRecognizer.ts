@@ -151,11 +151,6 @@ export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureOp
   }
 
   /** @inheritdoc */
-  override _onLostPointerCapture(input: PointerInput) {
-    this._onPointerCancel(input);
-  }
-
-  /** @inheritdoc */
   protected override _onAcceptInput(id: number): void {
     const input = this.#pointers.get(id);
     if (!input || this.#accepted.has(id)) return;

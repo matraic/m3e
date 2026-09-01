@@ -149,11 +149,6 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
   }
 
   /** @inheritdoc */
-  override _onLostPointerCapture(input: PointerInput) {
-    this._onPointerCancel(input);
-  }
-
-  /** @inheritdoc */
   protected override _onAcceptInput(id: number): void {
     if (!this.#state || this.#state.id !== id) return;
     this._emitGesture(this.#createDetail("start", this.#state));

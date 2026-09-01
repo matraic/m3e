@@ -189,11 +189,6 @@ export class TapGestureRecognizer extends GestureRecognizerBase<TapGestureOption
   }
 
   /** @inheritdoc */
-  override _onLostPointerCapture(input: PointerInput) {
-    this._onPointerCancel(input);
-  }
-
-  /** @inheritdoc */
   override _onAcceptInput(id: number): void {
     const state = this.#state.find((x) => x.id === id);
     if (!state) return;
