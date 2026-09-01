@@ -28,6 +28,7 @@ export class HtmlGestureInputSource implements GestureInputSource {
     this.#element.addEventListener("pointercancel", this.#pointerEventHandler);
     this.#element.addEventListener("pointerleave", this.#pointerEventHandler);
     this.#element.addEventListener("pointerout", this.#pointerEventHandler);
+    this.#element.addEventListener("lostpointercapture", this.#pointerEventHandler);
     this.#element.addEventListener("wheel", this.#wheelEventHandler, { passive: true });
     this.#element.addEventListener("gesturestart", this.#preventDefaultHandler);
     this.#element.addEventListener("gesturechange", this.#preventDefaultHandler);
@@ -47,6 +48,7 @@ export class HtmlGestureInputSource implements GestureInputSource {
     this.#element.removeEventListener("pointercancel", this.#pointerEventHandler);
     this.#element.removeEventListener("pointerleave", this.#pointerEventHandler);
     this.#element.removeEventListener("pointerout", this.#pointerEventHandler);
+    this.#element.removeEventListener("lostpointercapture", this.#pointerEventHandler);
     this.#element.removeEventListener("wheel", this.#wheelEventHandler);
     this.#element.removeEventListener("gesturestart", this.#preventDefaultHandler);
     this.#element.removeEventListener("gesturechange", this.#preventDefaultHandler);

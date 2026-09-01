@@ -258,6 +258,11 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOption
   }
 
   /** @inheritdoc */
+  override _onLostPointerCapture(input: PointerInput) {
+    this._onPointerCancel(input);
+  }
+
+  /** @inheritdoc */
   protected override _onAcceptInput(id: number): void {
     // Ignore if no state, state's id doesn't match input, or inactive
     if (!this.#state || this.#state.id !== id || !this.#state.active) return;

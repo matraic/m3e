@@ -180,6 +180,10 @@ export abstract class GestureRecognizerBase<
         this._onPointerCancel(<PointerInput>input);
         break;
 
+      case "lostpointercapture":
+        this._onLostPointerCapture(<PointerInput>input);
+        break;
+
       case "pointerout":
         this._onPointerOut(<PointerInput>input);
         break;
@@ -225,6 +229,10 @@ export abstract class GestureRecognizerBase<
   /** Processes input from a `pointerleave` event. */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected _onPointerLeave(_input: PointerInput): void {}
+
+  /** Processes input from a `lostpointercapture` event. */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected _onLostPointerCapture(_input: PointerInput): void {}
 
   /** Processes input from a `wheel` event. */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
