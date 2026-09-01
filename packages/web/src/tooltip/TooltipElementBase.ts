@@ -1,17 +1,12 @@
 import { LitElement, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import {
-  AttachInternals,
-  HoverController,
-  HtmlFor,
-  isDisabledMixin,
-  LongPressController,
-  ReconnectedCallback,
-} from "@m3e/web/core";
+import { AttachInternals, HoverController, HtmlFor, isDisabledMixin, ReconnectedCallback } from "@m3e/web/core";
 
 import { M3ePlatform } from "@m3e/web/core/platform";
 import { AnchorPosition, positionAnchor } from "@m3e/web/core/anchoring";
+import { detectGesture, GestureController } from "@m3e/web/gestures";
+import { LongPressGestureDetail } from "@m3e/web/gestures/long-press";
 
 import { isTooltipTouchGestures, TooltipTouchGestures } from "./TooltipTouchGestures";
 
@@ -51,18 +46,7 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
     },
   });
 
-  /** @private */
-  readonly #longPressController = new LongPressController(this, {
-    target: null,
-    callback: (pressed) => {
-      if (this._isInteractive) return;
-      if (pressed) {
-        this.show();
-      } else {
-        this.hide();
-      }
-    },
-  });
+  /** @private */ #longPressController?: GestureController<LongPressGestureDetail>;
 
   /**
    * Whether the element is disabled.
@@ -122,7 +106,15 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
     super.attach(control);
 
     if (M3ePlatform.iOS || M3ePlatform.Android) {
-      this.#longPressController.observe(control);
+      this.#longPressController?.destroy();
+      this.#longPressController = detectGesture<LongPressGestureDetail>(control, "long-press", (detail) => {
+        if (this._isInteractive) return;
+        if (detail.phase === "start") {
+          this.show();
+        } else {
+          this.hide();
+        }
+      });
       this.#disableNativeGesturesIfNecessary();
     } else {
       this.#hoverController.observe(control);
@@ -135,7 +127,7 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
   override detach(): void {
     if (this.control) {
       this.#hoverController.unobserve(this.control);
-      this.#longPressController.unobserve(this.control);
+      this.#longPressController?.destroy();
       this.control.removeEventListener("click", this.#controlClickHandler);
       this.hide();
     }
