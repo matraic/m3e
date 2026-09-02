@@ -65,6 +65,7 @@ const MIN_PRIMARY_TAB_WIDTH = 24;
  * @slot prev-icon - Renders the icon to present for the previous button used to paginate.
  *
  * @attr disable-pagination - Whether scroll buttons are disabled.
+ * @attr disable-swipe - Whether to disable swipe gestures for switching tabs.
  * @attr header-position - The position of the tab headers.
  * @attr next-page-label - The accessible label given to the button used to move to the previous page.
  * @attr previous-page-label - The accessible label given to the button used to move to the next page.
@@ -115,6 +116,8 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       display: flex;
       flex-wrap: nowrap;
       align-items: center;
+    }
+    :host(:not([disable-swipe])) .tabs {
       touch-action: pan-y;
     }
     .ink-bar {
@@ -311,6 +314,12 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
    */
   @property({ attribute: "next-page-label" }) nextPageLabel = "Next page";
 
+  /**
+   * Whether to disable swipe gestures for switching tabs.
+   * @default false
+   */
+  @property({ attribute: "disable-swipe", type: Boolean }) disableSwipe = false;
+
   /** The tabs. */
   get tabs(): readonly M3eTabElement[] {
     return this[selectionManager]?.items ?? [];
@@ -405,12 +414,14 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
         for="tabs"
         lock-axis="x"
         pointer-types="touch pen"
+        ?disabled="${this.disableSwipe}"
         @gesture=${this.#handlePanGesture}
       ></m3e-pan-gesture>
       <m3e-fling-gesture
         for="tabs"
         directions="left right"
         pointer-types="touch pen"
+        ?disabled="${this.disableSwipe}"
         @gesture=${this.#handleFlingGesture}
       ></m3e-fling-gesture>
       ${this.headerPosition === "after" ? this.#renderHeader() : nothing}`;
