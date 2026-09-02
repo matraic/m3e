@@ -145,7 +145,7 @@ interface GestureState {
 export type PanGestureLockAxis = "x" | "y" | "lock" | "none";
 
 /** Recognizes a pan gesture. */
-gestureRecognizer("pan");
+@gestureRecognizer("pan")
 export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOptions, PanGestureDetail> {
   /** @private */ #state?: GestureState;
 
