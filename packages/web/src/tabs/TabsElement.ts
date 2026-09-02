@@ -13,14 +13,17 @@ import {
   ResizeController,
   setCustomEnumState,
   setCustomState,
-  VelocityTracker,
 } from "@m3e/web/core";
 
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 import { M3eSlideGroupElement } from "@m3e/web/slide-group";
+import { PanGestureDetail } from "@m3e/web/gestures/pan";
+import { FlingGestureDetail } from "@m3e/web/gestures/fling";
 
 import "@m3e/web/slide-group";
+import "@m3e/web/gestures/pan";
+import "@m3e/web/gestures/fling";
 
 import { M3eTabElement } from "./TabElement";
 import { isTabVariant, TabVariant } from "./TabVariant";
@@ -112,6 +115,7 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       display: flex;
       flex-wrap: nowrap;
       align-items: center;
+      touch-action: pan-y;
     }
     .ink-bar {
       contain: layout style paint;
@@ -222,8 +226,6 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
   /** @private */ #directionalitySubscription?: () => void;
   /** @private */ @query(".tablist") private readonly _tablist!: M3eSlideGroupElement;
   /** @private */ @state() _selectedIndex: number | null = null;
-  /** @private */ #swipe?: { x: number; y: number; currentX?: number; dir?: "horizontal" | "vertical" };
-  /** @private */ readonly #velocityTracker = new VelocityTracker();
 
   /** @internal */
   readonly [selectionManager] = new SelectionManager<M3eTabElement>()
@@ -396,17 +398,21 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
     }
 
     return html` ${this.headerPosition === "before" ? this.#renderHeader() : nothing}
-      <m3e-slide
-        class="tabs"
-        selected-index="${ifDefined(panelIndex)}"
-        @pointerdown=${this.#handleTabsPointerDown}
-        @pointermove=${this.#handleTabsPointerMove}
-        @pointerup=${this.#handleTabsPointerUp}
-        @pointercancel=${this.#handleTabsPointerCancel}
-        @lostpointercapture=${this.#handleTabsLostPointerCapture}
-      >
+      <m3e-slide id="tabs" class="tabs" selected-index="${ifDefined(panelIndex)}">
         <slot name="panel"></slot>
       </m3e-slide>
+      <m3e-pan-gesture
+        for="tabs"
+        lock-axis="x"
+        pointer-types="touch pen"
+        @gesture=${this.#handlePanGesture}
+      ></m3e-pan-gesture>
+      <m3e-fling-gesture
+        for="tabs"
+        directions="left right"
+        pointer-types="touch pen"
+        @gesture=${this.#handleFlingGesture}
+      ></m3e-fling-gesture>
       ${this.headerPosition === "after" ? this.#renderHeader() : nothing}`;
   }
 
@@ -521,113 +527,60 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
   }
 
   /** @private */
-  #handleTabsPointerDown(e: PointerEvent): void {
-    if (e.pointerType !== "touch") {
-      return; // swipe only supported for touch
-    }
+  #handlePanGesture(e: CustomEvent<PanGestureDetail>): void {
+    const slide = this.shadowRoot?.querySelector("m3e-slide");
 
-    (<HTMLElement>e.currentTarget).setPointerCapture(e.pointerId);
-    this.#swipe = { x: e.clientX, y: e.clientY };
-    this.#velocityTracker.reset();
-    this.#velocityTracker.add(e.clientX);
-  }
-
-  /** @private */
-  #handleTabsPointerMove(e: PointerEvent): void {
-    if (!this.#swipe || !(<HTMLElement>e.currentTarget).hasPointerCapture(e.pointerId)) {
-      return;
-    }
-
-    let dx = e.clientX - this.#swipe.x;
-    const dy = e.clientY - this.#swipe.y;
-
-    if (this.selectedIndex === 0 && dx > 0) {
-      dx = 0;
-    }
-
-    if (this.selectedIndex === this.tabs.length - 1 && dx < 0) {
-      dx = 0;
-    }
-
-    if (!this.#swipe.dir) {
-      if (Math.abs(dx) > 10) {
-        this.#swipe.dir = "horizontal";
-      } else if (Math.abs(dy) > 10) {
-        this.#swipe.dir = "vertical";
-      } else {
-        return;
-      }
-    }
-
-    if (this.#swipe.dir === "vertical") {
-      return;
-    }
-
-    this.#velocityTracker.add(e.clientX);
-    this.#swipe.currentX = dx;
-
-    this.shadowRoot?.querySelector("m3e-slide")?.classList.add("sliding");
-    this.selectedTab?.control?.style.setProperty("--_tabs-slide-offset-x", `${dx}px`);
-
-    const nextTab = this.tabs[dx > 0 ? this.selectedIndex - 1 : this.selectedIndex + 1];
-    nextTab?.control?.style.setProperty("--_tabs-slide-offset-x", `${dx}px`);
-    nextTab?.control?.style.setProperty("--_tabs-slide-visibility", "visible");
-
-    const prevTab = this.tabs[dx > 0 ? this.selectedIndex + 1 : this.selectedIndex - 1];
-    prevTab?.control?.style.removeProperty("--_tabs-slide-offset-x");
-    prevTab?.control?.style.removeProperty("--_tabs-slide-visibility");
-  }
-
-  /** @private */
-  #handleTabsPointerUp(e: PointerEvent): void {
-    if (!(<HTMLElement>e.currentTarget).hasPointerCapture(e.pointerId)) {
-      return;
-    }
-    (<HTMLElement>e.currentTarget).releasePointerCapture(e.pointerId);
-    if (this.#swipe && this.#swipe.dir === "horizontal" && this.#swipe.currentX !== undefined) {
-      const dx = this.#swipe.currentX;
-      const threshold = this.clientWidth * 0.33;
-      const velocity = this.#velocityTracker.getVelocity();
-      const significantVelocityThreshold = e.pointerType === "touch" ? 1200 : 500;
-
-      this.#endSwipeGesture();
-
-      if (Math.abs(dx) > threshold || Math.abs(velocity) > significantVelocityThreshold) {
-        if (dx > threshold) {
-          // go to the previous tab only if its not disabled.
-          if (this.selectedIndex > 0 && this.tabs.length > 1 && !this.tabs[this.selectedIndex - 1].disabled) {
-            this.selectedIndex--;
+    switch (e.detail.phase) {
+      case "move":
+        {
+          let dx = e.detail.totalDeltaX;
+          if (this.selectedIndex === 0 && dx > 0) {
+            dx = 0;
           }
-        } else if (dx < -threshold) {
-          // go to the next tab only if its not disabled.
-          if (this.selectedIndex < this.tabs.length - 1 && !this.tabs[this.selectedIndex + 1].disabled) {
-            this.selectedIndex++;
+          if (this.selectedIndex === this.tabs.length - 1 && dx < 0) {
+            dx = 0;
           }
+
+          slide?.classList.add("sliding");
+          this.selectedTab?.control?.style.setProperty("--_tabs-slide-offset-x", `${dx}px`);
+
+          const nextTab = this.tabs[dx > 0 ? this.selectedIndex - 1 : this.selectedIndex + 1];
+          nextTab?.control?.style.setProperty("--_tabs-slide-offset-x", `${dx}px`);
+          nextTab?.control?.style.setProperty("--_tabs-slide-visibility", "visible");
+
+          const prevTab = this.tabs[dx > 0 ? this.selectedIndex + 1 : this.selectedIndex - 1];
+          prevTab?.control?.style.removeProperty("--_tabs-slide-offset-x");
+          prevTab?.control?.style.removeProperty("--_tabs-slide-visibility");
         }
-      }
-    } else {
-      this.#endSwipeGesture();
+        break;
+
+      case "end":
+      case "cancel":
+        this.#endSwipeGesture();
+        break;
     }
   }
 
   /** @private */
-  #handleTabsPointerCancel(e: PointerEvent): void {
-    if ((<HTMLElement>e.currentTarget).hasPointerCapture(e.pointerId)) {
-      (<HTMLElement>e.currentTarget).releasePointerCapture(e.pointerId);
-      this.#endSwipeGesture();
+  #handleFlingGesture(e: CustomEvent<FlingGestureDetail>): void {
+    switch (e.detail.direction) {
+      case "left":
+        // go to the next tab only if its not disabled.
+        if (this.selectedIndex < this.tabs.length - 1 && !this.tabs[this.selectedIndex + 1].disabled) {
+          this.selectedIndex++;
+        }
+        break;
+      case "right":
+        // go to the previous tab only if its not disabled.
+        if (this.selectedIndex > 0 && this.tabs.length > 1 && !this.tabs[this.selectedIndex - 1].disabled) {
+          this.selectedIndex--;
+        }
+        break;
     }
-  }
-
-  /** @private */
-  #handleTabsLostPointerCapture(): void {
-    this.#endSwipeGesture();
   }
 
   /** @private */
   #endSwipeGesture(): void {
-    this.#swipe = undefined;
-    this.#velocityTracker.reset();
-
     const slide = this.shadowRoot?.querySelector("m3e-slide");
     if (!slide || !slide.classList.contains("sliding")) {
       return;
