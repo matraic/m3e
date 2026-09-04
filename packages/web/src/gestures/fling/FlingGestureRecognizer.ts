@@ -6,6 +6,7 @@ import {
   gestureRecognizer,
   GestureRecognizerBase,
   GestureRecognizerOptions,
+  PointerInput,
 } from "@m3e/web/gestures";
 
 import { PanGestureDetail, PanGestureOptions } from "@m3e/web/gestures/pan";
@@ -113,6 +114,11 @@ export class FlingGestureRecognizer extends GestureRecognizerBase<FlingGestureOp
   /** @inheritdoc */
   override get eager(): boolean {
     return true;
+  }
+
+  /** @inheritdoc */
+  override shouldCapturePointer(input: PointerInput): boolean {
+    return this.#pan ? this.#pan.shouldCapturePointer(input) : super.shouldCapturePointer(input);
   }
 
   /** @private */

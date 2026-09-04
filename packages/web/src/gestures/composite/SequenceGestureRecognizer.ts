@@ -6,6 +6,7 @@ import {
   GestureRecognizer,
   GestureRecognizerBase,
   GestureRecognizerOptions,
+  PointerInput,
 } from "@m3e/web/gestures";
 
 /** Encapsulates detail about a sequence of gestures. */
@@ -52,6 +53,11 @@ export class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGes
     this.#unbindSequence();
     super.updateOptions(options);
     this.#bindSequence();
+  }
+
+  /** @inheritdoc */
+  override shouldCapturePointer(input: PointerInput): boolean {
+    return this.#current ? this.#current.shouldCapturePointer(input) : super.shouldCapturePointer(input);
   }
 
   /** @private */

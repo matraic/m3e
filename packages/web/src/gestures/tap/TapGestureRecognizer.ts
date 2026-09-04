@@ -102,6 +102,11 @@ export class TapGestureRecognizer extends GestureRecognizerBase<TapGestureOption
   }
 
   /** @inheritdoc */
+  override shouldCapturePointer(input: PointerInput): boolean {
+    return this.#state.some((x) => x.id === input.id);
+  }
+
+  /** @inheritdoc */
   override _onPointerDown(input: PointerInput): void {
     if (this.#state.length === this.options.pointers) {
       // More pointers are being tracked, remove first (shifting)

@@ -161,6 +161,11 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOption
   }
 
   /** @inheritdoc */
+  override shouldCapturePointer(input: PointerInput): boolean {
+    return this.#state !== undefined && this.#state.id === input.id && this.#state.active;
+  }
+
+  /** @inheritdoc */
   override _onPointerDown(input: PointerInput): void {
     // Ignore other pointers
     if (this.#state && this.#state.id !== input.id) return;

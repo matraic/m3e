@@ -28,6 +28,7 @@ export class HtmlGestureInputSource implements GestureInputSource {
     this.#element.addEventListener("pointercancel", this.#pointerEventHandler);
     this.#element.addEventListener("pointerleave", this.#pointerEventHandler);
     this.#element.addEventListener("pointerout", this.#pointerEventHandler);
+    this.#element.addEventListener("lostpointercapture", this.#pointerEventHandler);
     this.#element.addEventListener("wheel", this.#wheelEventHandler, { passive: true });
     this.#element.addEventListener("gesturestart", this.#preventDefaultHandler);
     this.#element.addEventListener("gesturechange", this.#preventDefaultHandler);
@@ -47,6 +48,7 @@ export class HtmlGestureInputSource implements GestureInputSource {
     this.#element.removeEventListener("pointercancel", this.#pointerEventHandler);
     this.#element.removeEventListener("pointerleave", this.#pointerEventHandler);
     this.#element.removeEventListener("pointerout", this.#pointerEventHandler);
+    this.#element.removeEventListener("lostpointercapture", this.#pointerEventHandler);
     this.#element.removeEventListener("wheel", this.#wheelEventHandler);
     this.#element.removeEventListener("gesturestart", this.#preventDefaultHandler);
     this.#element.removeEventListener("gesturechange", this.#preventDefaultHandler);
@@ -94,24 +96,6 @@ export class HtmlGestureInputSource implements GestureInputSource {
 
   /** @private */
   #handlePointerEvent(e: PointerEvent): void {
-    // Manage pointer capture
-    switch (e.type) {
-      case "pointerdown":
-        this.#element.setPointerCapture(e.pointerId);
-        break;
-
-      case "pointermove":
-        if (!this.#element.hasPointerCapture(e.pointerId)) return;
-        break;
-
-      case "pointerup":
-      case "pointercancel":
-        if (this.#element.hasPointerCapture(e.pointerId)) {
-          this.#element.releasePointerCapture(e.pointerId);
-        }
-        break;
-    }
-
     this.onInput?.(this.#createPointerInput(e));
   }
 

@@ -6,6 +6,7 @@ import {
   GestureRecognizer,
   GestureRecognizerBase,
   GestureRecognizerOptions,
+  PointerInput,
 } from "@m3e/web/gestures";
 
 /**
@@ -70,6 +71,13 @@ export class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDeta
     this.#unbindRecognizer();
     super.updateOptions(options);
     this.#bindRecognizer();
+  }
+
+  /** @inheritdoc */
+  override shouldCapturePointer(input: PointerInput): boolean {
+    return this.options.recognizer
+      ? this.options.recognizer.shouldCapturePointer(input)
+      : super.shouldCapturePointer(input);
   }
 
   /** @private */

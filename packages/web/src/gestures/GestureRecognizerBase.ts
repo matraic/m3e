@@ -71,6 +71,12 @@ export abstract class GestureRecognizerBase<
   }
 
   /** @inheritdoc */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  shouldCapturePointer(_input: PointerInput): boolean {
+    return false;
+  }
+
+  /** @inheritdoc */
   abstract reset(): void;
 
   /**

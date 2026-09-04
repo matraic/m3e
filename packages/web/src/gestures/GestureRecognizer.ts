@@ -3,6 +3,7 @@ import { GestureDetail } from "./GestureDetail";
 import { GestureInputClaimant } from "./GestureInputClaimant";
 import { GestureInputSink } from "./GestureInputSink";
 import { GestureRecognizerOptions } from "./GestureRecognizerOptions";
+import { PointerInput } from "./PointerInput";
 
 /**
  * Defines functionality required to recognize gestures.
@@ -22,6 +23,13 @@ export interface GestureRecognizer<
   extends GestureInputSink, GestureInputClaimant {
   /** Options used to recognize gestures. */
   readonly options: TOptions;
+
+  /**
+   * Whether to capture the specified pointer.
+   * @param {PointerInput} input The pointer input to test whether to its pointer should be captured.
+   * @returns {boolean} Whether the pointer for `input` should be captured.
+   */
+  shouldCapturePointer(input: PointerInput): boolean;
 
   /** Callback invoked when a gesture is recognized. */
   onGesture?: GestureCallback<TDetail>;

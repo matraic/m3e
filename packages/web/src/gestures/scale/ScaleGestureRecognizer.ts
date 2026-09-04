@@ -82,6 +82,11 @@ export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureOp
   }
 
   /** @inheritdoc */
+  override shouldCapturePointer(_input: PointerInput): boolean {
+    return this.#pointers.has(_input.id) && this.#started;
+  }
+
+  /** @inheritdoc */
   protected override _onPointerDown(input: PointerInput): void {
     if (this.#pointers.size === this.options.pointers) {
       // Too many pointers, reject all and reset

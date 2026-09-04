@@ -82,6 +82,11 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
   }
 
   /** @inheritdoc */
+  override shouldCapturePointer(_input: PointerInput): boolean {
+    return this.#state !== undefined && this.#state.id === _input.id;
+  }
+
+  /** @inheritdoc */
   override _onPointerDown(input: PointerInput): void {
     if (!this.#state) {
       const bounds = input.currentTarget.getBoundingClientRect();
