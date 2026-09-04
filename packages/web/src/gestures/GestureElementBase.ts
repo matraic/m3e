@@ -9,6 +9,7 @@ import { PointerType } from "./PointerInput";
 import { GestureRecognizerOptions } from "./GestureRecognizerOptions";
 import { createGestureRecognizer } from "./GestureRecognizerRegistry";
 import { GestureRegistry } from "./GestureRegistry";
+import { GestureInput } from "./GestureInput";
 
 /**
  * A base implementation for an element used to detect gestures. This class must be inherited.
@@ -72,6 +73,13 @@ export abstract class GestureElementBase<TOptions extends GestureRecognizerOptio
   @property({ attribute: "pointer-types", converter: spaceSeparatedStringConverter })
   pointerTypes: readonly PointerType[] = ["mouse", "pen", "touch"];
 
+  /**
+   * Optional predicate used to determine whether a recognizer should receive a given input.
+   * @param {GestureInput} input The input to evaluate.
+   * @returns {boolean} `true` if the recognizer should process the input; otherwise, `false`.
+   */
+  @property({ attribute: false }) inputFilter?: (input: GestureInput) => boolean;
+
   /** @private */
   override attach(control: HTMLElement): void {
     super.attach(control);
@@ -105,6 +113,9 @@ export abstract class GestureElementBase<TOptions extends GestureRecognizerOptio
     }
     if (_changedProperties.has("pointerTypes")) {
       this.recognizer?.updateOptions(<TOptions>{ pointerTypes: this.pointerTypes });
+    }
+    if (_changedProperties.has("inputFilter")) {
+      this.recognizer?.updateOptions(<TOptions>{ inputFilter: this.inputFilter });
     }
   }
 }

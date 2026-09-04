@@ -18,8 +18,11 @@ export interface GestureInput {
   /** Whether the meta key was pressed. */
   readonly metaKey: boolean;
 
-  /** The target that produced the input. */
+  /** The element to which the event handler has been attached. */
   readonly currentTarget: HTMLElement;
+
+  /** A reference to the object onto which the input was dispatched. */
+  readonly target: EventTarget;
 
   /** Which button is pressed on the input device. */
   readonly button: number;

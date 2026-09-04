@@ -1,3 +1,4 @@
+import { GestureInput } from "./GestureInput";
 import { GestureInputButton } from "./GestureInputButton";
 import { GestureInputClaimantOptions } from "./GestureInputClaimantOptions";
 import { PointerType } from "./PointerInput";
@@ -21,4 +22,11 @@ export interface GestureRecognizerOptions extends GestureInputClaimantOptions {
    * @default ["mouse", "pen", "touch"]
    */
   readonly pointerTypes: readonly PointerType[];
+
+  /**
+   * Optional predicate used to determine whether a recognizer should receive a given input.
+   * @param {GestureInput} input The input to evaluate.
+   * @returns {boolean} `true` if the recognizer should process the input; otherwise, `false`.
+   */
+  readonly inputFilter?: (input: GestureInput) => boolean;
 }

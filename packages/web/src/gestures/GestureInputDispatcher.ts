@@ -12,7 +12,7 @@ export class GestureInputDispatcher {
    */
   constructor(source: GestureInputSource) {
     this.#source = source;
-    this.#source.onInput = (i) => this.#sinks.forEach((x) => x.onInput(i));
+    this.#source.onInput = (i) => this.#sinks.filter((x) => x.canReceiveInput(i)).forEach((x) => x.onInput(i));
   }
 
   /** The number of sinks to which input will be dispatched. */

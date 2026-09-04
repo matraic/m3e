@@ -37,6 +37,11 @@ export abstract class GestureRecognizerBase<
   }
 
   /** @inheritdoc */
+  canReceiveInput(input: GestureInput): boolean {
+    return !this.options.disabled && (this.options.inputFilter?.(input) ?? true);
+  }
+
+  /** @inheritdoc */
   get gestureType(): string {
     const ctor = this.constructor as typeof GestureRecognizerBase;
     return ctor.gestureType!;
