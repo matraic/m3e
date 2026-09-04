@@ -107,6 +107,10 @@
       "types": "./dist/src/form-field/index.d.ts",
       "default": "./dist/form-field.js"
     },
+    "./gestures": {
+      "types": "./dist/src/gestures/index.d.ts",
+      "default": "./dist/gestures.js"
+    },
     "./heading": {
       "types": "./dist/src/heading/index.d.ts",
       "default": "./dist/heading.js"
