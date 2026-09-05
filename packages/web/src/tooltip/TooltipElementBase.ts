@@ -106,8 +106,8 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
     super.attach(control);
 
     if (M3ePlatform.iOS || M3ePlatform.Android) {
-      this.#longPressController?.destroy();
-      this.#longPressController = detectGesture<LongPressGestureDetail>(control, "long-press", (detail) => {
+      this.#longPressController?.detach();
+      this.#longPressController = detectGesture<LongPressGestureDetail>("long-press", (detail) => {
         if (this._isInteractive) return;
         if (detail.phase === "start") {
           this.show();
@@ -115,6 +115,7 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
           this.hide();
         }
       });
+      this.#longPressController.attach(control);
       this.#disableNativeGesturesIfNecessary();
     } else {
       this.#hoverController.observe(control);
@@ -127,7 +128,7 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
   override detach(): void {
     if (this.control) {
       this.#hoverController.unobserve(this.control);
-      this.#longPressController?.destroy();
+      this.#longPressController?.detach();
       this.control.removeEventListener("click", this.#controlClickHandler);
       this.hide();
     }
