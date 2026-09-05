@@ -25,9 +25,6 @@ export interface GestureController<
    */
   update(options: Partial<TOptions>): void;
 
-  /** Removes the recognizer from the element and cleans up all bindings. */
-  destroy(): void;
-
   /**
    * Replaces the gesture callback associated with the recognizer.
    * @param {GestureCallback} onGesture The new callback to invoke when a gesture is recognized.
@@ -119,12 +116,6 @@ export function detectGesture<TDetail extends GestureDetail, TOptions extends Ge
     },
     update(opts) {
       recognizer.updateOptions(opts);
-    },
-    destroy() {
-      if (attachedElement) {
-        GestureRegistry.removeRecognizer(attachedElement, <GestureRecognizer>recognizer);
-        attachedElement = null;
-      }
     },
     replaceCallback(cb) {
       recognizer.onGesture = (detail) => cb(detail as TDetail);
