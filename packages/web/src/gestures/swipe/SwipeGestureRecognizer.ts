@@ -35,7 +35,7 @@ export interface SwipeGestureDetail extends GestureDetail {
   /** Dominant axis of the swipe. */
   axis: SwipeGestureAxis;
 
-  /** Total displacement (px) along the dominant axis. */
+  /** Total movement distance (px) traveled by the pointer. */
   distance: number;
 
   /** Velocity magnitude (px/ms). */

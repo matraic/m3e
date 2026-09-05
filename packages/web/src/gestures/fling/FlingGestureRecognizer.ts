@@ -35,7 +35,7 @@ export interface FlingGestureDetail extends GestureDetail {
   /** Dominant axis of the fling. */
   readonly axis: FlingGestureAxis;
 
-  /** Total displacement (px) along the dominant axis. */
+  /** Total movement distance (px) traveled by the pointer. */
   readonly distance: number;
 
   /** Velocity magnitude (px/ms). */

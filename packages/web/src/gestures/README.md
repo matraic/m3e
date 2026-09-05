@@ -1,6 +1,6 @@
 # @m3e/web/gestures
 
-The `@m3e/web/gestures` module provides a comprehensive gesture recognition system for detecting and responding to user interactions including taps, pans, swipes, flings, long-presses, and multi-pointer scaling. Built with a modular architecture, it supports input arbitration through a priority-based disposition system, allowing multiple gesture recognizers to coexist peacefully on the same element. Composite gestures enable chaining of basic gestures into complex sequences or repetitions.
+The `@m3e/web/gestures` module provides a gesture recognition subsystem supporting taps, long-presses, pans, swipes, flings, and multi-pointer interactions. It uses a modular recognizer architecture with a priority-based disposition system that resolves competing claims on input. Recognizers can be composed to form complex sequences or repeated interactions, and each gesture exposes a controller for attaching, detaching, and handling gesture lifecycle events.
 
 ```ts
 import "@m3e/web/gestures";
@@ -404,7 +404,7 @@ Recognizes fast directional swipes.
   gestureType: "swipe"; // The type of the gesture
   direction: "left" | "right" | "up" | "down"; // Resolved swipe direction
   axis: "x" | "y"; // Dominant axis of the swipe
-  distance: number; // Total displacement (px) along the dominant axis
+  distance: number; // Total movement distance (px) traveled by the pointer
   speed: number; // Velocity magnitude (px/ms)
   angle: number; // Angle (radians) of movement
 }
@@ -438,7 +438,7 @@ Recognizes very fast fling gestures (high-velocity swipes).
   gestureType: "fling"; // The type of the gesture
   direction: "left" | "right" | "up" | "down"; // Resolved fling direction
   axis: "x" | "y"; // Dominant axis of the fling
-  distance: number; // Total displacement (px) along the dominant axis
+  distance: number; // Total movement distance (px) traveled by the pointer
   speed: number; // Velocity magnitude (px/ms)
   angle: number; // Angle (radians) of movement
 }
