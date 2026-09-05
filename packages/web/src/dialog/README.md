@@ -68,6 +68,7 @@ This section details the attributes, slots, events, and CSS custom properties av
 | ------------------------------------- | ----------------------------------------- |
 | `--m3e-dialog-shape`                  | Border radius of the dialog container.    |
 | `--m3e-dialog-min-width`              | Minimum width of the dialog.              |
+| `--m3e-dialog-max-height`             | Maximum height of the dialog.             |
 | `--m3e-dialog-max-width`              | Maximum width of the dialog.              |
 | `--m3e-dialog-color`                  | Foreground color of the dialog.           |
 | `--m3e-dialog-container-color`        | Background color of the dialog container. |

@@ -59,6 +59,7 @@ import "@m3e/web/icon-button";
  *
  * @cssprop --m3e-dialog-shape - Border radius of the dialog container.
  * @cssprop --m3e-dialog-min-width - Minimum width of the dialog.
+ * @cssprop --m3e-dialog-max-height - Maximum height of the dialog.
  * @cssprop --m3e-dialog-max-width - Maximum width of the dialog.
  * @cssprop --m3e-dialog-color - Foreground color of the dialog.
  * @cssprop --m3e-dialog-container-color - Background color of the dialog container.
@@ -99,6 +100,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       border-radius: var(--m3e-dialog-shape, ${DesignToken.shape.corner.extraLarge});
       min-width: var(--m3e-dialog-min-width, 280px);
       max-width: var(--m3e-dialog-max-width, 560px);
+      max-height: var(--m3e-dialog-max-height, min(560px, 100% - 48px));
       color: var(--m3e-dialog-color, ${DesignToken.color.onSurface});
       background-color: transparent;
       visibility: hidden;
@@ -106,9 +108,12 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       transform: translateY(-50px);
     }
     .container {
+      flex: 1 1 auto;
       display: flex;
       flex-direction: column;
       border-radius: inherit;
+      position: relative;
+      min-height: 0;
     }
     .container::before {
       content: "";
@@ -147,6 +152,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       font-size: var(--m3e-icon-button-icon-size, 24px) !important;
     }
     .content {
+      flex: 1 1 auto;
       padding-inline: ${DesignToken.measurement.space300};
       color: var(--m3e-dialog-content-color, ${DesignToken.color.onSurfaceVariant});
       font-size: var(--m3e-dialog-content-font-size, ${DesignToken.typescale.standard.body.medium.fontSize});
@@ -155,6 +161,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       letter-spacing: var(--m3e-dialog-content-tracking, ${DesignToken.typescale.standard.body.medium.tracking});
     }
     .actions {
+      flex: none;
       padding: ${DesignToken.measurement.space300};
     }
     ::slotted([slot="actions"]) {
