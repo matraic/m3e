@@ -48,7 +48,6 @@ import { PanGestureDetail, PanGestureLockAxis, PanGestureOptions, PanGestureReco
  * @attr disabled - Whether gesture recognition is disabled.
  * @attr priority - The priority in which to recognize gestures.
  * @attr min-displacement - Minimum distance (px) a pointer can move before the gesture starts.
- * @attr min-duration - Minimum time (ms) a pointer must remain pressed.
  * @attr lock-axis - Locks movement to an axis.
  * @attr axis-threshold - Minimum total displacement (px) required before axis locking resolves.
  * @attr delta-threshold - Minimum incremental movement (px) on the secondary axis required before emitting move updates.
