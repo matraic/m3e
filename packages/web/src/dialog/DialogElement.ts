@@ -100,67 +100,26 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       min-width: var(--m3e-dialog-min-width, 280px);
       max-width: var(--m3e-dialog-max-width, 560px);
       color: var(--m3e-dialog-color, ${DesignToken.color.onSurface});
-      background-color: var(--m3e-dialog-container-color, ${DesignToken.color.surfaceContainerHigh});
+      background-color: transparent;
       visibility: hidden;
-      opacity: 0;
       transform-origin: top;
-      transform: translateY(-50px) scaleY(0.8);
+      transform: translateY(-50px);
     }
-    .base::backdrop {
-      background-color: color-mix(in srgb, var(--m3e-dialog-scrim-color, ${DesignToken.color.scrim}) 0%, transparent);
-      margin-inline-end: -20px;
+    .container {
+      display: flex;
+      flex-direction: column;
+      border-radius: inherit;
     }
-    .base:not([open]) {
-      visibility: hidden;
-      opacity: 0;
-      transform: translateY(-50px) scaleY(0.8);
-      transition: ${unsafeCSS(
-        `opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasized}, 
-        transform ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasized},
-        overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasized} allow-discrete,
-        visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasized} allow-discrete`,
-      )};
-    }
-    .base[open] {
-      visibility: visible;
-      opacity: 1;
-      transform: translateY(0) scaleY(1);
-      transition: ${unsafeCSS(
-        `opacity ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.emphasized}, 
-        transform ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.emphasized},
-        overlay ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.emphasized} allow-discrete,
-        visibility ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.emphasized} allow-discrete`,
-      )};
-    }
-    .base:not([open])::backdrop {
-      transition: ${unsafeCSS(
-        `background-color ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
-        overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete,
-        visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
-      )};
-    }
-    .base[open]::backdrop {
-      background-color: color-mix(
-        in srgb,
-        var(--m3e-dialog-scrim-color, ${DesignToken.color.scrim}) var(--m3e-dialog-scrim-opacity, 32%),
-        transparent
-      );
-      transition: ${unsafeCSS(
-        `background-color ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard}, 
-        overlay ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard} allow-discrete,
-        visibility ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard} allow-discrete`,
-      )};
-    }
-    @starting-style {
-      .base[open] {
-        opacity: 0;
-        transform: translateY(-50px) scaleY(0.8);
-      }
-      .base[open]::backdrop {
-        background-color: color-mix(in srgb, var(--m3e-dialog-scrim-color, ${DesignToken.color.scrim}) 0%, transparent);
-      }
+    .container::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background-color: var(--m3e-dialog-container-color, ${DesignToken.color.surfaceContainerHigh});
+      box-shadow: ${DesignToken.elevation.level3};
     }
     .header {
+      position: relative;
       flex: none;
       display: flex;
       align-items: center;
@@ -177,6 +136,15 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       font-weight: var(--m3e-dialog-header-font-weight, ${DesignToken.typescale.standard.headline.small.fontWeight});
       line-height: var(--m3e-dialog-header-line-height, ${DesignToken.typescale.standard.headline.small.lineHeight});
       letter-spacing: var(--m3e-dialog-header-tracking, ${DesignToken.typescale.standard.headline.small.tracking});
+    }
+    .close {
+      margin-inline-start: ${DesignToken.measurement.space100};
+      align-self: flex-start;
+    }
+    ::slotted([slot="close-icon"]),
+    .close-icon {
+      width: 1em;
+      font-size: var(--m3e-icon-button-icon-size, 24px) !important;
     }
     .content {
       padding-inline: ${DesignToken.measurement.space300};
@@ -205,14 +173,107 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
     :host(:not(:is(:state(--with-actions), :--with-actions))) .actions {
       display: none;
     }
-    .close {
-      margin-inline-start: ${DesignToken.measurement.space100};
-      align-self: flex-start;
+    .base::backdrop {
+      background-color: color-mix(in srgb, var(--m3e-dialog-scrim-color, ${DesignToken.color.scrim}) 0%, transparent);
+      margin-inline-end: -20px;
     }
-    ::slotted([slot="close-icon"]),
-    .close-icon {
-      width: 1em;
-      font-size: var(--m3e-icon-button-icon-size, 24px) !important;
+    .base:not([open]) {
+      visibility: hidden;
+      transform: translateY(-50px);
+      transition: ${unsafeCSS(
+        `transform ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasized},
+        overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasized} allow-discrete,
+        visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasized} allow-discrete`,
+      )};
+    }
+    .base[open] {
+      visibility: visible;
+      transform: translateY(0);
+      transition: ${unsafeCSS(
+        `transform ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.emphasized},
+        overlay ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.emphasized} allow-discrete,
+        visibility ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.emphasized} allow-discrete`,
+      )};
+    }
+    .base:not([open])::backdrop {
+      transition: ${unsafeCSS(
+        `background-color ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
+        overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete,
+        visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
+      )};
+    }
+    .base[open]::backdrop {
+      background-color: color-mix(
+        in srgb,
+        var(--m3e-dialog-scrim-color, ${DesignToken.color.scrim}) var(--m3e-dialog-scrim-opacity, 32%),
+        transparent
+      );
+      transition: ${unsafeCSS(
+        `background-color ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard}, 
+        overlay ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard} allow-discrete,
+        visibility ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.standard} allow-discrete`,
+      )};
+    }
+    .base:not([open]) .container::before {
+      height: 35%;
+      transition: ${unsafeCSS(
+        `height ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.emphasizedAccelerate}`,
+      )};
+    }
+    .base[open] .container::before {
+      height: 100%;
+      transition: ${unsafeCSS(`height ${DesignToken.motion.duration.long2} ${DesignToken.motion.easing.emphasized}`)};
+    }
+    .base:not([open]) .header {
+      opacity: 0;
+      transition: opacity ${DesignToken.motion.duration.short2} linear;
+    }
+    .base[open] .header {
+      opacity: 1;
+      transition: ${unsafeCSS(
+        `opacity ${DesignToken.motion.duration.medium1} linear calc(${DesignToken.motion.duration.medium1} * 0.2)`,
+      )};
+    }
+    .base:not([open]) .content {
+      opacity: 0;
+      transition: opacity ${DesignToken.motion.duration.short2} linear;
+    }
+    .base[open] .content {
+      opacity: 1;
+      transition: ${unsafeCSS(
+        `opacity ${DesignToken.motion.duration.medium1} linear calc(${DesignToken.motion.duration.medium1} * 0.2)`,
+      )};
+    }
+    .base:not([open]) .actions {
+      opacity: 0;
+      transition: opacity ${DesignToken.motion.duration.short2} linear;
+    }
+    .base[open] .actions {
+      opacity: 1;
+      transition: ${unsafeCSS(
+        `opacity ${DesignToken.motion.duration.medium2} linear calc(${DesignToken.motion.duration.medium2} * 0.5)`,
+      )};
+    }
+    .base[open] .header {
+      opacity: 1;
+      transition: opacity ${DesignToken.motion.duration.medium1} linear;
+    }
+    @starting-style {
+      .base[open] {
+        transform: translateY(-50px);
+      }
+      .base[open] .container,
+      .base[open] .header,
+      .base[open] .content,
+      .base[open] .actions {
+        opacity: 0;
+      }
+      .base[open] .container::before {
+        height: 35%;
+      }
+      .base[open]::backdrop {
+        background-color: color-mix(in srgb, var(--m3e-dialog-scrim-color, ${DesignToken.color.scrim}) 0%, transparent);
+      }
     }
     @media (forced-colors: active) {
       .base:not([open])::backdrop,
@@ -228,6 +289,16 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
     @media (prefers-reduced-motion) {
       .base:not([open]),
       .base[open],
+      .base:not([open]) .container,
+      .base[open] .container,
+      .base:not([open]) .container::before,
+      .base[open] .container::before,
+      .base:not([open]) .header,
+      .base[open] .header,
+      .base:not([open]) .content,
+      .base[open] .content,
+      .base:not([open]) .actions,
+      .base[open] .actions,
       .base:not([open])::backdrop,
       .base[open]::backdrop {
         transition: none;
@@ -315,6 +386,11 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       return;
     }
 
+    const collapsible = this.shadowRoot?.querySelector("m3e-collapsible");
+    if (collapsible) {
+      collapsible.open = true;
+    }
+
     this.#scrollLockController.lock();
     this._base.showModal();
     this._content.scrollTop = 0;
@@ -347,6 +423,11 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       return;
     }
 
+    const collapsible = this.shadowRoot?.querySelector("m3e-collapsible");
+    if (collapsible) {
+      collapsible.open = false;
+    }
+
     const prevReturnValue = this.returnValue;
     this.returnValue = returnValue;
 
@@ -372,19 +453,20 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       @click=${this.#handleClick}
       @keydown=${this.#handleKeyDown}
     >
-      <m3e-elevation level="3"></m3e-elevation>
-      <m3e-focus-trap ?disabled="${this.noFocusTrap}">
-        <div class="header">
-          <slot name="header" id="m3e-dialog-${this.#id}-header"></slot>
-          ${this.#renderCloseButton()}
-        </div>
-        <m3e-scroll-container class="content" dividers="${this._withActions ? "above-below" : "above"}">
-          <slot></slot>
-        </m3e-scroll-container>
-        <div class="actions">
-          <slot name="actions" @slotchange=${this.#handleActionsSlotChange}></slot>
-        </div>
-      </m3e-focus-trap>
+      <div class="container">
+        <m3e-focus-trap ?disabled="${this.noFocusTrap}">
+          <div class="header">
+            <slot name="header" id="m3e-dialog-${this.#id}-header"></slot>
+            ${this.#renderCloseButton()}
+          </div>
+          <m3e-scroll-container class="content" dividers="${this._withActions ? "above-below" : "above"}">
+            <slot></slot>
+          </m3e-scroll-container>
+          <div class="actions">
+            <slot name="actions" @slotchange=${this.#handleActionsSlotChange}></slot>
+          </div>
+        </m3e-focus-trap>
+      </div>
     </dialog>`;
   }
 
