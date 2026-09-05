@@ -2,13 +2,12 @@ import { GestureCallback } from "./GestureCallback";
 import { GestureDetail } from "./GestureDetail";
 import { GestureRecognizer } from "./GestureRecognizer";
 import { GestureRecognizerOptions } from "./GestureRecognizerOptions";
-import { createGestureRecognizer } from "./GestureRecognizerRegistry";
 import { GestureRegistry } from "./GestureRegistry";
 
 /**
  * Provides lifecycle and configuration control over a gesture recognizer bound to an element.
- * @template TOptions The type of options used to recognize gestures.
  * @template TDetail The type of detail emitted for a recognized gesture.
+ * @template TOptions The type of options used to recognize gestures.
  */
 export interface GestureController<
   TDetail extends GestureDetail = GestureDetail,
@@ -48,51 +47,52 @@ export interface GestureController<
   reset(): void;
 
   /**
-   * Moves gesture recognition from its current element to a new one.
-   * @param {HTMLElement} element The new element to bind the recognizer to.
+   * Attaches the controller to the specified element
+   * @param {HTMLElement} element The element to attach.
    */
-  bindTo(element: HTMLElement): void;
+  attach(element: HTMLElement): void;
+
+  /** Detaches the controller from the previously attached element. */
+  detach(): void;
 }
 
 /**
- * Attaches a gesture recognizer to an element using the specified gesture type and callback.
+ * Creates a gesture recognizer of the given type and returns a controller that manages its lifecycle.
  * @template TDetail The type of detail emitted for a recognized gesture.
- * @param {HTMLElement} element The element to attach the recognizer to.
  * @param {string} gestureType The gesture type to instantiate.
  * @param {GestureCallback<TDetail>} onGesture Callback invoked when a gesture is recognized.
- * @returns {GestureController<TDetail>} A controller used to manage the recognizer's lifecycle and configuration.
+ * @returns {GestureController<TDetail, TOptions>} A `GestureController` used to configure, bind, and manage the recognizer.
  */
 export function detectGesture<TDetail extends GestureDetail>(
-  element: HTMLElement,
   gestureType: string,
   onGesture: GestureCallback<TDetail>,
 ): GestureController<TDetail>;
 
 /**
- * Attaches a gesture recognizer to an element using the specified gesture type and callback.
+ * Creates a gesture recognizer of the given type and returns a controller that manages its lifecycle.
  * @template TDetail The type of detail emitted for a recognized gesture.
  * @template TOptions The type of options used to recognize gestures.
- * @param {HTMLElement} element The element to attach the recognizer to.
  * @param {string} gestureType The gesture type to instantiate.
  * @param {TOptions} options Options used to recognize gestures.
  * @param {GestureCallback<TDetail>} onGesture Callback invoked when a gesture is recognized.
- * @returns {GestureController<TDetail>} A controller used to manage the recognizer's lifecycle and configuration.
+ * @returns {GestureController<TDetail, TOptions>} A `GestureController` used to configure, bind, and manage the recognizer.
  */
 export function detectGesture<TDetail extends GestureDetail, TOptions extends GestureRecognizerOptions>(
-  element: HTMLElement,
   gestureType: string,
   options: Partial<TOptions>,
   onGesture: GestureCallback<TDetail>,
 ): GestureController<TDetail, TOptions>;
 
 /**
- * Internal implementation for the `detectGesture` overloads.
- *
- * @template TDetail The detail type emitted by the recognizer.
- * @template TOptions The recognizer's options type.
+ * Creates a gesture recognizer of the given type and returns a controller that manages its lifecycle.
+ * @template TDetail The type of detail emitted for a recognized gesture.
+ * @template TOptions The type of options used to recognize gestures.
+ * @param {string} gestureType The gesture type to instantiate.
+ * @param {Partial<TOptions> | GestureCallback<TDetail>} optionsOrCallback Either the recognizer options or the gesture callback.
+ * @param {GestureCallback<TDetail> | undefined} maybeCallback The gesture callback when options are provided.
+ * @returns {GestureController<TDetail, TOptions>} A `GestureController` used to configure, bind, and manage the recognizer.
  */
 export function detectGesture<TDetail extends GestureDetail, TOptions extends GestureRecognizerOptions>(
-  element: HTMLElement,
   gestureType: string,
   optionsOrCallback: Partial<TOptions> | GestureCallback<TDetail>,
   maybeCallback?: GestureCallback<TDetail>,
@@ -100,15 +100,15 @@ export function detectGesture<TDetail extends GestureDetail, TOptions extends Ge
   const hasOptions = typeof optionsOrCallback !== "function";
   const options = hasOptions ? (optionsOrCallback as Partial<TOptions>) : undefined;
   const onGesture = hasOptions ? maybeCallback! : (optionsOrCallback as GestureCallback<TDetail>);
-
-  const recognizer = createGestureRecognizer<TOptions, TDetail>(gestureType)!;
+  const recognizer = GestureRegistry.createRecognizer<TOptions, TDetail>(gestureType)!;
 
   if (options) {
     recognizer.updateOptions(options);
   }
 
-  GestureRegistry.addRecognizer(element, recognizer as GestureRecognizer);
   recognizer.onGesture = (detail) => onGesture(detail as TDetail);
+
+  let attachedElement: HTMLElement | null = null;
 
   return {
     pause() {
@@ -121,7 +121,10 @@ export function detectGesture<TDetail extends GestureDetail, TOptions extends Ge
       recognizer.updateOptions(opts);
     },
     destroy() {
-      GestureRegistry.removeRecognizer(element, recognizer as GestureRecognizer);
+      if (attachedElement) {
+        GestureRegistry.removeRecognizer(attachedElement, <GestureRecognizer>recognizer);
+        attachedElement = null;
+      }
     },
     replaceCallback(cb) {
       recognizer.onGesture = (detail) => cb(detail as TDetail);
@@ -138,9 +141,18 @@ export function detectGesture<TDetail extends GestureDetail, TOptions extends Ge
     reset() {
       recognizer.reset?.();
     },
-    bindTo(newElement) {
-      GestureRegistry.removeRecognizer(element, recognizer as GestureRecognizer);
-      GestureRegistry.addRecognizer(newElement, recognizer as GestureRecognizer);
+    attach(element) {
+      if (attachedElement) {
+        GestureRegistry.removeRecognizer(attachedElement, <GestureRecognizer>recognizer);
+      }
+      GestureRegistry.addRecognizer(element, <GestureRecognizer>recognizer);
+      attachedElement = element;
+    },
+    detach() {
+      if (attachedElement) {
+        GestureRegistry.removeRecognizer(attachedElement, <GestureRecognizer>recognizer);
+        attachedElement = null;
+      }
     },
   };
 }

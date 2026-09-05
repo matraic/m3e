@@ -90,16 +90,16 @@ export class M3ePanGestureElement extends GestureElementBase<PanGestureOptions> 
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("minDisplacement")) {
-      this.recognizer?.updateOptions({ minDisplacement: this.minDisplacement });
+      this.gestureController.update({ minDisplacement: this.minDisplacement });
     }
     if (_changedProperties.has("lockAxis")) {
-      this.recognizer?.updateOptions({ lockAxis: this.lockAxis });
+      this.gestureController.update({ lockAxis: this.lockAxis });
     }
     if (_changedProperties.has("axisThreshold")) {
-      this.recognizer?.updateOptions({ axisThreshold: this.axisThreshold });
+      this.gestureController.update({ axisThreshold: this.axisThreshold });
     }
     if (_changedProperties.has("deltaThreshold")) {
-      this.recognizer?.updateOptions({ deltaThreshold: this.deltaThreshold });
+      this.gestureController.update({ deltaThreshold: this.deltaThreshold });
     }
   }
 }

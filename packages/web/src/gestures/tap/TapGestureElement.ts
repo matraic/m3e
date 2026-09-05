@@ -93,19 +93,19 @@ export class M3eTapGestureElement extends GestureElementBase<TapGestureOptions> 
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("pointers")) {
-      this.recognizer?.updateOptions({ pointers: this.pointers });
+      this.gestureController.update({ pointers: this.pointers });
     }
     if (_changedProperties.has("maxPressInterval")) {
-      this.recognizer?.updateOptions({ maxPressInterval: this.maxPressInterval });
+      this.gestureController.update({ maxPressInterval: this.maxPressInterval });
     }
     if (_changedProperties.has("maxReleaseInterval")) {
-      this.recognizer?.updateOptions({ maxReleaseInterval: this.maxReleaseInterval });
+      this.gestureController.update({ maxReleaseInterval: this.maxReleaseInterval });
     }
     if (_changedProperties.has("maxDisplacement")) {
-      this.recognizer?.updateOptions({ maxDisplacement: this.maxDisplacement });
+      this.gestureController.update({ maxDisplacement: this.maxDisplacement });
     }
     if (_changedProperties.has("maxDuration")) {
-      this.recognizer?.updateOptions({ maxDuration: this.maxDuration });
+      this.gestureController.update({ maxDuration: this.maxDuration });
     }
   }
 }

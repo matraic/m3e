@@ -1,15 +1,20 @@
 import { GestureInput } from "./GestureInput";
 import { GestureInputButton } from "./GestureInputButton";
-import { GestureInputClaimantOptions } from "./GestureInputClaimantOptions";
 import { PointerType } from "./PointerInput";
 
 /** Encapsulates options used to recognize gestures. */
-export interface GestureRecognizerOptions extends GestureInputClaimantOptions {
+export interface GestureRecognizerOptions {
   /**
    * Whether gesture recognition is disabled.
    * @default false
    */
   readonly disabled: boolean;
+
+  /**
+   * The priority in which dispositions should resolve.
+   * @default 1
+   */
+  readonly priority: number;
 
   /**
    * Which buttons can be pressed.

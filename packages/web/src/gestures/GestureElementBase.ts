@@ -3,13 +3,12 @@ import { property } from "lit/decorators.js";
 
 import { HtmlFor, spaceSeparatedStringConverter } from "@m3e/web/core";
 
-import { GestureRecognizer } from "./GestureRecognizer";
 import { GestureInputButton } from "./GestureInputButton";
 import { PointerType } from "./PointerInput";
 import { GestureRecognizerOptions } from "./GestureRecognizerOptions";
-import { createGestureRecognizer } from "./GestureRecognizerRegistry";
-import { GestureRegistry } from "./GestureRegistry";
 import { GestureInput } from "./GestureInput";
+import { detectGesture, GestureController } from "./detectGesture";
+import { GestureDetail } from "./GestureDetail";
 
 /**
  * A base implementation for an element used to detect gestures. This class must be inherited.
@@ -23,7 +22,7 @@ export abstract class GestureElementBase<TOptions extends GestureRecognizerOptio
     }
   `;
 
-  /** @private */ #recognizer: GestureRecognizer<TOptions> | null = null;
+  /** @private */ #gestureController?: GestureController<GestureDetail, TOptions>;
 
   /**
    * Initializes a new instance of this class.
@@ -38,13 +37,13 @@ export abstract class GestureElementBase<TOptions extends GestureRecognizerOptio
   readonly gestureType: string;
 
   /** The recognizer used to detect gestures. */
-  get recognizer(): GestureRecognizer<TOptions> | null {
-    if (this.#recognizer) return this.#recognizer;
-    this.#recognizer = createGestureRecognizer(this.gestureType);
-    if (this.#recognizer) {
-      this.#recognizer.onGesture = (detail) => this.dispatchEvent(new CustomEvent("gesture", { detail }));
+  get gestureController(): GestureController<GestureDetail, TOptions> {
+    if (!this.#gestureController) {
+      this.#gestureController = detectGesture<GestureDetail, TOptions>(this.gestureType, {}, (detail) =>
+        this.dispatchEvent(new CustomEvent("gesture", { detail })),
+      );
     }
-    return this.#recognizer;
+    return this.#gestureController;
   }
 
   /**
@@ -83,18 +82,12 @@ export abstract class GestureElementBase<TOptions extends GestureRecognizerOptio
   /** @private */
   override attach(control: HTMLElement): void {
     super.attach(control);
-
-    if (this.recognizer) {
-      GestureRegistry.addRecognizer(control, this.recognizer);
-    }
+    this.gestureController.attach(control);
   }
 
   /** @private */
   override detach(): void {
-    if (this.control && this.recognizer) {
-      GestureRegistry.removeRecognizer(this.control, this.recognizer);
-    }
-
+    this.gestureController.detach();
     super.detach();
   }
 
@@ -103,19 +96,19 @@ export abstract class GestureElementBase<TOptions extends GestureRecognizerOptio
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("priority")) {
-      this.recognizer?.updateOptions(<TOptions>{ priority: this.priority });
+      this.gestureController.update(<TOptions>{ priority: this.priority });
     }
     if (_changedProperties.has("disabled")) {
-      this.recognizer?.updateOptions(<TOptions>{ disabled: this.disabled });
+      this.gestureController.update(<TOptions>{ disabled: this.disabled });
     }
     if (_changedProperties.has("buttons")) {
-      this.recognizer?.updateOptions(<TOptions>{ buttons: this.buttons });
+      this.gestureController.update(<TOptions>{ buttons: this.buttons });
     }
     if (_changedProperties.has("pointerTypes")) {
-      this.recognizer?.updateOptions(<TOptions>{ pointerTypes: this.pointerTypes });
+      this.gestureController.update(<TOptions>{ pointerTypes: this.pointerTypes });
     }
     if (_changedProperties.has("inputFilter")) {
-      this.recognizer?.updateOptions(<TOptions>{ inputFilter: this.inputFilter });
+      this.gestureController.update(<TOptions>{ inputFilter: this.inputFilter });
     }
   }
 }

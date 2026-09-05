@@ -86,16 +86,16 @@ export class M3eSwipeGestureElement extends GestureElementBase<SwipeGestureOptio
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("maxDisplacement")) {
-      this.recognizer?.updateOptions({ maxDisplacement: this.maxDisplacement });
+      this.gestureController.update({ maxDisplacement: this.maxDisplacement });
     }
     if (_changedProperties.has("minVelocity")) {
-      this.recognizer?.updateOptions({ minVelocity: this.minVelocity });
+      this.gestureController.update({ minVelocity: this.minVelocity });
     }
     if (_changedProperties.has("directionThreshold")) {
-      this.recognizer?.updateOptions({ directionThreshold: this.directionThreshold });
+      this.gestureController.update({ directionThreshold: this.directionThreshold });
     }
     if (_changedProperties.has("directions")) {
-      this.recognizer?.updateOptions({ directions: this.directions });
+      this.gestureController.update({ directions: this.directions });
     }
   }
 }

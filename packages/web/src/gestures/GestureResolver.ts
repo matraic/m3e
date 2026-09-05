@@ -1,82 +1,153 @@
-import { GestureInputClaimant } from "./GestureInputClaimant";
+import { GestureInput } from "./GestureInput";
+import { GestureInputSource } from "./GestureInputSource";
+import { GestureRecognizer } from "./GestureRecognizer";
+import { PointerInput } from "./PointerInput";
 
-/** Encapsulates state used to resolve dispositions against input. */
+/**
+ * Encapsulates state used to resolve dispositions against input.
+ * @private
+ */
 interface GestureInputClaim {
-  readonly claims: Array<GestureInputClaimant>;
-  readonly holders: Array<GestureInputClaimant>;
-  readonly deferred: Array<GestureInputClaimant>;
+  readonly claims: Array<GestureRecognizer>;
+  readonly holders: Array<GestureRecognizer>;
+  readonly deferred: Array<GestureRecognizer>;
   timeout?: number;
 }
 
-/** Provides functionality used to resolve competing claims to input. */
-export class GestureInputResolver {
-  /** @private */ readonly #claimants = new Array<GestureInputClaimant>();
+/**
+ * Provides functionality responsible for dispatching input to recognizers and resolving claims.
+ * @internal
+ */
+export class GestureResolver {
+  /** @private */ #source: GestureInputSource | null = null;
+  /** @private */ readonly #recognizers = new Array<GestureRecognizer>();
   /** @private */ readonly #states = new Map<number, GestureInputClaim>();
+  /** @private */ readonly #releasedCaptures = new Set<number>();
 
   /** Whether debug logging is enabled. */
   debug: boolean = false;
 
-  /**
-   * Adds the specified claimant.
-   * @param {GestureInputClaimant} claimant The claimant to add.
-   */
-  addClaimant(claimant: GestureInputClaimant): void {
-    if (this.#claimants.includes(claimant)) return;
-    this.#claimants.push(claimant);
+  /** The source from which input is received. */
+  get source(): GestureInputSource | null {
+    return this.#source;
+  }
+  set source(value: GestureInputSource | null) {
+    if (this.#source) {
+      this.#source.onInput = undefined;
+    }
+    this.#source = value;
+    if (this.#source) {
+      this.#source.onInput = (input) => this.#dispatchInput(input);
+    }
+  }
 
-    claimant.onDisposition = (id, disposition) => {
-      this.#debug("disposition", id, claimant, { disposition });
+  /** The number of registered recognizers. */
+  get size(): number {
+    return this.#recognizers.length;
+  }
+
+  /**
+   * Adds the specified recognizer.
+   * @param {GestureRecognizer} recognizer The recognizer to add.
+   */
+  addRecognizer(recognizer: GestureRecognizer): void {
+    if (this.#recognizers.includes(recognizer)) return;
+    this.#recognizers.push(recognizer);
+    recognizer.reset();
+
+    recognizer.onDisposition = (id, disposition) => {
+      this.#debug("disposition", id, recognizer, { disposition });
 
       switch (disposition) {
         case "accept":
-          this.#acceptInput(id, claimant);
+          this.#acceptInput(id, recognizer);
           break;
 
         case "hold":
-          this.#holdInput(id, claimant);
+          this.#holdInput(id, recognizer);
           break;
 
         case "reject":
-          this.#rejectInput(id, claimant);
+          this.#rejectInput(id, recognizer);
           break;
 
         case "release":
-          this.#releaseInput(id, claimant);
+          this.#releaseInput(id, recognizer);
           break;
 
         case "defer":
-          this.#deferInput(id, claimant);
+          this.#deferInput(id, recognizer);
           break;
       }
     };
   }
 
   /**
-   * Removes the specified claimant.
-   * @param {GestureInputClaimant} claimant The claimant to remove.
-   * @returns {boolean} `true` if `claimant` was removed; otherwise, `false`.
+   * Removes the specified recognizer.
+   * @param {GestureRecognizer} recognizer The recognizer to remove.
+   * @returns {boolean} `true` if `recognizer` was removed; otherwise, `false`.
    */
-  removeClaimant(claimant: GestureInputClaimant): boolean {
-    const index = this.#claimants.indexOf(claimant);
+  removeRecognizer(recognizer: GestureRecognizer): boolean {
+    const index = this.#recognizers.indexOf(recognizer);
     if (index >= 0) {
-      this.#claimants.splice(index, 1);
-      claimant.onDisposition = undefined;
+      this.#recognizers.splice(index, 1);
+      recognizer.onDisposition = undefined;
+      recognizer.reset();
       return true;
     }
 
     return false;
   }
 
-  /**
-   * Resolves outstanding dispositions against input.
-   * @param {number} id The identifier of the input.
-   */
-  resolve(id: number): void {
+  /** @private */
+  #dispatchInput(input: GestureInput): void {
+    if (input.type === "lostpointercapture") {
+      // Ignore intentionally released pointer captures
+      if (this.#releasedCaptures.has(input.id)) {
+        this.#releasedCaptures.delete(input.id);
+        return;
+      }
+      // Otherwise, convert to pointer cancel for use by recognizers
+      input = { ...input, type: "pointercancel" };
+    }
+
+    // Dispatch input
+    this.#recognizers.filter((x) => x.canReceiveInput(input)).forEach((x) => x.onInput(input));
+
+    // Test each recognizer to determine whether at least one requires pointer capture.
+    if (["pointerdown", "pointermove"].includes(input.type)) {
+      let shouldCapturePointer = false;
+      const pointerInput = <PointerInput>input;
+      for (const recognizer of this.#recognizers.values()) {
+        if (recognizer.shouldCapturePointer(pointerInput)) {
+          shouldCapturePointer = true;
+          break;
+        }
+      }
+
+      if (shouldCapturePointer && !input.currentTarget.hasPointerCapture(input.id)) {
+        input.currentTarget.setPointerCapture(input.id);
+      }
+    }
+    // On terminal inputs, resolve any outstanding claims on input
+    else if (["pointerup", "pointercancel"].includes(input.type)) {
+      this.#resolve(input.id);
+
+      // Release pointer capture
+      if (input.currentTarget.hasPointerCapture(input.id)) {
+        input.currentTarget.releasePointerCapture(input.id);
+        this.#releasedCaptures.add(input.id);
+      }
+    }
+  }
+
+  /** @private */
+  #resolve(id: number): void {
     const state = this.#states.get(id);
     if (!state || state.holders.length > 0) return;
 
     // Attempt to resolve to the highest priority eager claimant
-    let resolved: GestureInputClaimant | null = null;
+    let resolved: GestureRecognizer | null = null;
     for (const claimant of state.claims) {
       if (!claimant.eager) continue;
       if (!resolved || claimant.options.priority > resolved.options.priority) {
@@ -143,7 +214,7 @@ export class GestureInputResolver {
   }
 
   /** @private */
-  #removeClaim(claimant: GestureInputClaimant, state: GestureInputClaim): void {
+  #removeClaim(claimant: GestureRecognizer, state: GestureInputClaim): void {
     const index = state.claims.indexOf(claimant);
     if (index >= 0) {
       state.claims.splice(index, 1);
@@ -151,7 +222,7 @@ export class GestureInputResolver {
   }
 
   /** @private */
-  #removeHold(claimant: GestureInputClaimant, state: GestureInputClaim): boolean {
+  #removeHold(claimant: GestureRecognizer, state: GestureInputClaim): boolean {
     const index = state.holders.indexOf(claimant);
     if (index >= 0) {
       state.holders.splice(index, 1);
@@ -161,7 +232,7 @@ export class GestureInputResolver {
   }
 
   /** @private */
-  #removeDeferred(claimant: GestureInputClaimant, state: GestureInputClaim): void {
+  #removeDeferred(claimant: GestureRecognizer, state: GestureInputClaim): void {
     const index = state.deferred.indexOf(claimant);
     if (index >= 0) {
       state.deferred.splice(index, 1);
@@ -169,7 +240,7 @@ export class GestureInputResolver {
   }
 
   /** @private */
-  #acceptInput(id: number, claimant: GestureInputClaimant): void {
+  #acceptInput(id: number, claimant: GestureRecognizer): void {
     const state = this.#ensureState(id);
 
     if (state.claims.includes(claimant)) return;
@@ -179,6 +250,7 @@ export class GestureInputResolver {
 
     // When transitioning from a hold to accept, insert as a front-of-queue claim
     // Otherwise, it is appended behind other claims
+
     if (this.#removeHold(claimant, state)) {
       state.claims.unshift(claimant);
     } else {
@@ -187,15 +259,17 @@ export class GestureInputResolver {
 
     this.#debug("accept", id, claimant);
 
-    // If eager, immediately attempt to resolve; resolution occurs after a tick supporting pending timers
+    // If eager, immediately attempt to resolve
+    // Resolution occurs after a tick supporting pending timers
+
     if (claimant.eager) {
       clearTimeout(state.timeout);
-      state.timeout = setTimeout(() => this.resolve(id));
+      state.timeout = setTimeout(() => this.#resolve(id));
     }
   }
 
   /** @private */
-  #holdInput(id: number, claimant: GestureInputClaimant): void {
+  #holdInput(id: number, claimant: GestureRecognizer): void {
     const state = this.#ensureState(id);
 
     if (!state.holders.includes(claimant)) {
@@ -209,7 +283,7 @@ export class GestureInputResolver {
   }
 
   /** @private */
-  #rejectInput(id: number, claimant: GestureInputClaimant): void {
+  #rejectInput(id: number, claimant: GestureRecognizer): void {
     const state = this.#states.get(id);
     let held = false;
 
@@ -230,7 +304,7 @@ export class GestureInputResolver {
 
     // Rejecting the last hold immediately attempts to resolve input with outstanding claims
     if (state && held && state.claims.length > 0 && state.holders.length === 0) {
-      this.resolve(id);
+      this.#resolve(id);
       return;
     }
 
@@ -241,7 +315,7 @@ export class GestureInputResolver {
   }
 
   /** @private */
-  #releaseInput(id: number, claimant: GestureInputClaimant): void {
+  #releaseInput(id: number, claimant: GestureRecognizer): void {
     const state = this.#states.get(id);
     if (!state) return;
 
@@ -253,7 +327,7 @@ export class GestureInputResolver {
     if (this.#removeHold(claimant, state)) {
       // Removing the last hold immediately attempts to resolve input with outstanding claims
       if (state.claims.length > 0 && state.holders.length === 0) {
-        this.resolve(id);
+        this.#resolve(id);
         return;
       }
     }
@@ -263,7 +337,7 @@ export class GestureInputResolver {
   }
 
   /** @private */
-  #deferInput(id: number, claimant: GestureInputClaimant): void {
+  #deferInput(id: number, claimant: GestureRecognizer): void {
     const state = this.#ensureState(id);
 
     if (!state.deferred.includes(claimant)) {
@@ -278,7 +352,7 @@ export class GestureInputResolver {
   }
 
   /** @private */
-  #debug(event: string, id: number, claimant?: GestureInputClaimant, data?: Record<string, unknown>): void {
+  #debug(event: string, id: number, claimant?: GestureRecognizer, data?: Record<string, unknown>): void {
     if (!this.debug) return;
 
     const payload = {

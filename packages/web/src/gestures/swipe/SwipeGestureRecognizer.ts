@@ -1,5 +1,5 @@
 import {
-  createGestureRecognizer,
+  detectGesture,
   GestureDetail,
   GestureInput,
   GestureInputDisposition,
@@ -82,9 +82,12 @@ interface GestureState {
 /** Recognizes a swipe gesture. */
 @gestureRecognizer("swipe")
 export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOptions, SwipeGestureDetail> {
-  /** @private */ readonly #pan = createGestureRecognizer<PanGestureOptions, PanGestureDetail>("pan", {
-    minDisplacement: 0,
-  });
+  /** @private */ readonly #pan = detectGesture<PanGestureDetail, PanGestureOptions>(
+    "pan",
+    { minDisplacement: 0 },
+    (detail) => this.#handlePanGesture(detail),
+  );
+
   /** @private */ #state?: GestureState;
 
   /**
@@ -93,11 +96,7 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOp
    */
   constructor(options?: Partial<SwipeGestureOptions>) {
     super(options);
-
-    if (this.#pan) {
-      this.#pan.onDisposition = (id, disposition) => this.#handlePanDisposition(id, disposition);
-      this.#pan.onGesture = (detail) => this.#handlePanGesture(detail);
-    }
+    this.#pan.recognizer.onDisposition = (id, disposition) => this.#handlePanDisposition(id, disposition);
   }
 
   /** @inheritdoc */
@@ -107,12 +106,12 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOp
 
   /** @inheritdoc */
   override shouldCapturePointer(input: PointerInput): boolean {
-    return this.#pan ? this.#pan.shouldCapturePointer(input) : super.shouldCapturePointer(input);
+    return this.#pan.recognizer.shouldCapturePointer(input);
   }
 
   /** @private */
   override onInput(input: GestureInput): void {
-    this.#pan?.onInput(input);
+    this.#pan.recognizer.onInput(input);
     super.onInput(input);
   }
 
@@ -142,7 +141,7 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOp
 
   /** @inheritdoc */
   override reset(): void {
-    this.#pan?.reset();
+    this.#pan.reset();
     this.#state = undefined;
   }
 
@@ -150,7 +149,7 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOp
   #handlePanDisposition(id: number, disposition: GestureInputDisposition): void {
     if (disposition === "accept") {
       // Fires end
-      this.#pan?.onResolution(id, "accept");
+      this.#pan.recognizer.onResolution(id, "accept");
     }
   }
 

@@ -86,16 +86,16 @@ export class M3eFlingGestureElement extends GestureElementBase<FlingGestureOptio
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("minDisplacement")) {
-      this.recognizer?.updateOptions({ minDisplacement: this.minDisplacement });
+      this.gestureController.update({ minDisplacement: this.minDisplacement });
     }
     if (_changedProperties.has("minVelocity")) {
-      this.recognizer?.updateOptions({ minVelocity: this.minVelocity });
+      this.gestureController.update({ minVelocity: this.minVelocity });
     }
     if (_changedProperties.has("directionThreshold")) {
-      this.recognizer?.updateOptions({ directionThreshold: this.directionThreshold });
+      this.gestureController.update({ directionThreshold: this.directionThreshold });
     }
     if (_changedProperties.has("directions")) {
-      this.recognizer?.updateOptions({ directions: this.directions });
+      this.gestureController.update({ directions: this.directions });
     }
   }
 }

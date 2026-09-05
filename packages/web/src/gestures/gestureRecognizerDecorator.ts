@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { GestureRecognizerBase } from "./GestureRecognizerBase";
-import { registerGestureRecognizer } from "./GestureRecognizerRegistry";
+import { GestureRegistry } from "./GestureRegistry";
 
 /**
  * Class decorator factory that defines the decorated class as a gesture recognizer.
@@ -16,7 +16,7 @@ export function gestureRecognizer(gestureType: string) {
 
     const register = () => {
       const concrete = ctor as new (...args: any[]) => GestureRecognizerBase<any, any>;
-      registerGestureRecognizer(gestureType, (options) => new concrete(options));
+      GestureRegistry.registerRecognizer(gestureType, (options) => new concrete(options));
     };
 
     if (context) {

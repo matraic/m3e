@@ -73,10 +73,10 @@ export class M3eLongPressGestureElement extends GestureElementBase<LongPressGest
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("maxDisplacement")) {
-      this.recognizer?.updateOptions({ maxDisplacement: this.maxDisplacement });
+      this.gestureController.update({ maxDisplacement: this.maxDisplacement });
     }
     if (_changedProperties.has("minDuration")) {
-      this.recognizer?.updateOptions({ minDuration: this.minDuration });
+      this.gestureController.update({ minDuration: this.minDuration });
     }
   }
 }

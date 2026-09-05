@@ -1,28 +1,54 @@
 import { GestureCallback } from "./GestureCallback";
 import { GestureDetail } from "./GestureDetail";
-import { GestureInputClaimant } from "./GestureInputClaimant";
-import { GestureInputSink } from "./GestureInputSink";
+import { GestureInput } from "./GestureInput";
+import { GestureInputDisposition } from "./GestureInputDisposition";
+import { GestureInputResolution } from "./GestureInputResolution";
 import { GestureRecognizerOptions } from "./GestureRecognizerOptions";
 import { PointerInput } from "./PointerInput";
 
 /**
  * Defines functionality required to recognize gestures.
- *
- * A gesture recognizer:
- * - receives input through {@link GestureInputSink},
- * - makes claims on input through {@link GestureInputClaimant},
- * - and emits recognized gesture details.
- *
  * @template TOptions The type of options used to recognize gestures.
  * @template TDetail The type of detail emitted for a recognized gesture.
  */
 export interface GestureRecognizer<
   TOptions extends GestureRecognizerOptions = GestureRecognizerOptions,
   TDetail extends GestureDetail = GestureDetail,
->
-  extends GestureInputSink, GestureInputClaimant {
+> {
+  /** The type of gesture produced from input. */
+  readonly gestureType: string;
+
+  /** Whether dispositions should resolve immediately. */
+  readonly eager: boolean;
+
   /** Options used to recognize gestures. */
   readonly options: TOptions;
+
+  /**
+   * Whether the recognizer can receive the specified input.
+   * @param {GestureInput} input The input to test.
+   * @returns {boolean} `true` if `input` can be received; otherwise, `false`.
+   */
+  canReceiveInput(input: GestureInput): boolean;
+
+  /** Receives the specified input.
+   * @param {GestureInput} input The input to receive.
+   */
+  onInput(input: GestureInput): void;
+
+  /**
+   * Callback invoked when a disposition is made against input.
+   * @param {number} id The identifier of the input for which a disposition is made.
+   * @param {GestureDisposition} disposition The disposition for the input.
+   */
+  onDisposition?: (id: number, disposition: GestureInputDisposition) => void;
+
+  /**
+   * Receives resolution for a prior disposition against input.
+   * @param {number} id The identifier of the input being resolved.
+   * @param {GestureResolution} resolution The resolution for the input.
+   */
+  onResolution(id: number, resolution: GestureInputResolution): void;
 
   /**
    * Whether to capture the specified pointer.

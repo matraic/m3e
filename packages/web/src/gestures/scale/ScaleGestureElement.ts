@@ -71,10 +71,10 @@ export class M3eScaleGestureElement extends GestureElementBase<ScaleGestureOptio
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("pointers")) {
-      this.recognizer?.updateOptions({ pointers: this.pointers });
+      this.gestureController.update({ pointers: this.pointers });
     }
     if (_changedProperties.has("distanceThreshold")) {
-      this.recognizer?.updateOptions({ distanceThreshold: this.distanceThreshold });
+      this.gestureController.update({ distanceThreshold: this.distanceThreshold });
     }
   }
 }

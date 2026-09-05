@@ -86,10 +86,10 @@ export class M3eRepeatGestureElement extends GestureElementBase<RepeatGestureOpt
     super.willUpdate(_changedProperties);
 
     if (_changedProperties.has("maxInterval")) {
-      this.recognizer?.updateOptions({ maxInterval: this.maxInterval });
+      this.gestureController.update({ maxInterval: this.maxInterval });
     }
     if (_changedProperties.has("count")) {
-      this.recognizer?.updateOptions({ count: this.count });
+      this.gestureController.update({ count: this.count });
     }
   }
 
@@ -112,13 +112,11 @@ export class M3eRepeatGestureElement extends GestureElementBase<RepeatGestureOpt
         element.detach();
         element.removeAttribute("for");
       }
-      if (element.recognizer) {
-        sequence.push(element.recognizer);
-      }
+      sequence.push(element.gestureController.recognizer);
     }
 
     // Update recognizer with first recognizer (in order of DOM)
-    this.recognizer?.updateOptions({ recognizer: sequence[0] });
+    this.gestureController.update({ recognizer: sequence[0] });
   }
 }
 
