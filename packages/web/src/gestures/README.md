@@ -1,6 +1,6 @@
 # @m3e/web/gestures
 
-The `@m3e/web/gestures` module provides a gesture recognition subsystem supporting taps, long-presses, pans, swipes, flings, and multi-pointer interactions. It uses a modular recognizer architecture with a priority-based disposition system that resolves competing claims on input. Recognizers can be composed to form complex sequences or repeated interactions, and each gesture exposes a controller for attaching, detaching, and handling gesture lifecycle events.
+The `@m3e/web/gestures` module provides a gesture recognition subsystem supporting declarative and programmatic gesture detection. It uses a modular recognizer architecture with a priority-based disposition system that resolves competing claims on input.
 
 ```ts
 import "@m3e/web/gestures";
