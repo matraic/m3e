@@ -277,13 +277,13 @@ This section details the attributes and events available for gesture elements.
 
 All gesture elements support the following attributes:
 
-| Attribute       | Type                       | Default             | Description                                         |
-| --------------- | -------------------------- | ------------------- | --------------------------------------------------- |
-| `for`           | `string`                   |                     | ID of the element to bind the gesture to.           |
-| `disabled`      | `boolean`                  | `false`             | Whether gesture recognition is disabled.            |
-| `priority`      | `number`                   | `1`                 | Priority for input arbitration (higher = priority). |
-| `buttons`       | `string` (space-separated) | `"primary"`         | Which mouse buttons can trigger the gesture.        |
-| `pointer-types` | `string` (space-separated) | `"mouse pen touch"` | Which pointer types can trigger the gesture.        |
+| Attribute       | Type                       | Default             | Description                                                |
+| --------------- | -------------------------- | ------------------- | ---------------------------------------------------------- |
+| `for`           | `string`                   |                     | ID of the element to bind the gesture to.                  |
+| `disabled`      | `boolean`                  | `false`             | Whether gesture recognition is disabled.                   |
+| `priority`      | `number`                   | `1`                 | The priority in which to recognize gestures.               |
+| `buttons`       | `string` (space-separated) | `"primary"`         | Which buttons can be pressed.                              |
+| `pointer-types` | `string` (space-separated) | `"mouse pen touch"` | Which types of pointers can be used to recognize gestures. |
 
 ### 🗂️ m3e-tap-gesture
 
@@ -291,13 +291,13 @@ Recognizes one or more taps within a specified timeframe.
 
 #### ⚙️ Attributes
 
-| Attribute              | Type     | Default | Description                                         |
-| ---------------------- | -------- | ------- | --------------------------------------------------- |
-| `pointers`             | `number` | `1`     | Number of pointers required for recognition.        |
-| `max-duration`         | `number` | `180`   | Maximum press duration (ms) before gesture fails.   |
-| `max-displacement`     | `number` | `12`    | Maximum pointer movement (px) before gesture fails. |
-| `max-press-interval`   | `number` | `120`   | Maximum time (ms) between consecutive taps.         |
-| `max-release-interval` | `number` | `120`   | Maximum time (ms) between tap releases.             |
+| Attribute              | Type     | Default | Description                                                        |
+| ---------------------- | -------- | ------- | ------------------------------------------------------------------ |
+| `pointers`             | `number` | `1`     | Number of pointers that must be pressed before the gesture fails.  |
+| `max-duration`         | `number` | `180`   | Maximum time (ms) taps can be pressed before the gesture fails.    |
+| `max-displacement`     | `number` | `12`    | Maximum distance (px) a pointer can move before the gesture fails. |
+| `max-press-interval`   | `number` | `120`   | Maximum time (ms) between tap presses.                             |
+| `max-release-interval` | `number` | `120`   | Maximum time (ms) between tap releases.                            |
 
 #### 📡 Events
 
