@@ -99,7 +99,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       overflow: visible;
       border-radius: var(--m3e-dialog-shape, ${DesignToken.shape.corner.extraLarge});
       min-width: var(--m3e-dialog-min-width, 280px);
-      max-width: var(--m3e-dialog-max-width, 560px);
+      max-width: var(--m3e-dialog-max-width, min(560px, 100% - 48px));
       max-height: var(--m3e-dialog-max-height, min(560px, 100% - 48px));
       color: var(--m3e-dialog-color, ${DesignToken.color.onSurface});
       background-color: transparent;
