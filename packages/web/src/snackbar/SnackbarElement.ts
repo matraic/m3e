@@ -59,7 +59,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
       transform-origin: bottom;
       transition: ${unsafeCSS(
         `opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
-        transform ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}, 
+        transform ${DesignToken.motion.duration.medium1} ${DesignToken.motion.easing.standard}, 
         overlay ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete,
         visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
