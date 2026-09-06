@@ -64,6 +64,13 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
         visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
+    @supports (height: 100dvh) {
+      :host {
+        top: calc(
+          100dvh - var(--_snackbar-height, 0px) - var(--m3e-snackbar-margin, ${DesignToken.measurement.space200})
+        );
+      }
+    }
     :host([hidden]) {
       display: none;
     }
