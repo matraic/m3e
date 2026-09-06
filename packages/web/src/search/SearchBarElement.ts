@@ -89,10 +89,10 @@ export class M3eSearchBarElement extends AttachInternals(LitElement) {
 
   /** Clears the search term. */
   clear(): void {
-    if (!this.#input) return;
+    if (!this.#input || this.#input.value === "") return;
+    this.#input.focus();
     this.#input.value = "";
-    this.#handleInputInput();
-
+    this.#input.dispatchEvent(new Event("input", { bubbles: true, composed: true }));
     this.dispatchEvent(new Event("clear", { bubbles: true, composed: true }));
   }
 
@@ -171,7 +171,6 @@ export class M3eSearchBarElement extends AttachInternals(LitElement) {
   /** @private */
   #handleClearClick(): void {
     this.clear();
-    this.#input?.focus();
   }
 }
 
