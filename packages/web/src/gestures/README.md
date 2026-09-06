@@ -277,13 +277,13 @@ This section details the attributes and events available for gesture elements.
 
 All gesture elements support the following attributes:
 
-| Attribute       | Type                       | Default             | Description                                                |
-| --------------- | -------------------------- | ------------------- | ---------------------------------------------------------- |
-| `for`           | `string`                   |                     | ID of the element to bind the gesture to.                  |
-| `disabled`      | `boolean`                  | `false`             | Whether gesture recognition is disabled.                   |
-| `priority`      | `number`                   | `1`                 | The priority in which to recognize gestures.               |
-| `buttons`       | `string` (space-separated) | `"primary"`         | Which buttons can be pressed.                              |
-| `pointer-types` | `string` (space-separated) | `"mouse pen touch"` | Which types of pointers can be used to recognize gestures. |
+| Attribute       | Type                       | Default             | Description                                                                  |
+| --------------- | -------------------------- | ------------------- | ---------------------------------------------------------------------------- |
+| `for`           | `string`                   |                     | The identifier of the interactive control to which this element is attached. |
+| `disabled`      | `boolean`                  | `false`             | Whether gesture recognition is disabled.                                     |
+| `priority`      | `number`                   | `1`                 | The priority in which to recognize gestures.                                 |
+| `buttons`       | `string` (space-separated) | `"primary"`         | Which buttons can be pressed.                                                |
+| `pointer-types` | `string` (space-separated) | `"mouse pen touch"` | Which types of pointers can be used to recognize gestures.                   |
 
 ### 🗂️ m3e-tap-gesture
 

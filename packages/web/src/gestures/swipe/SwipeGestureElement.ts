@@ -15,6 +15,7 @@ import {
 
 /**
  * A non-visual element used to detect a swipe gesture for an associated element.
+ * @tag m3e-swipe-gesture
  *
  * @example
  * The following example illustrates detecting swipe gestures on an element using `<m3e-swipe-gesture>`.
@@ -37,8 +38,7 @@ import {
  *   console.log(detail.direction);
  * });
  * ```
- *
- * @tag m3e-swipe-gesture
+ * @attr for - The identifier of the interactive control to which this element is attached.
  * @attr buttons - Which buttons can be pressed.
  * @attr pointer-types - Which types of pointers can be used to recognize gestures.
  * @attr disabled - Whether gesture recognition is disabled.

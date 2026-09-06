@@ -10,6 +10,7 @@ import { PanGestureDetail, PanGestureLockAxis, PanGestureOptions, PanGestureReco
 
 /**
  * A non-visual element used to detect a pan gesture for an associated element.
+ * @tag m3e-pan-gesture
  *
  * @example
  * The following example illustrates detecting pan gestures on an element using `<m3e-pan-gesture>`.
@@ -41,8 +42,7 @@ import { PanGestureDetail, PanGestureLockAxis, PanGestureOptions, PanGestureReco
  *   console.log(detail.velocityX, detail.velocityY);
  * });
  * ```
- *
- * @tag m3e-pan-gesture
+ * @attr for - The identifier of the interactive control to which this element is attached.
  * @attr buttons - Which buttons can be pressed.
  * @attr pointer-types - Which types of pointers can be used to recognize gestures.
  * @attr disabled - Whether gesture recognition is disabled.
