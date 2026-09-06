@@ -100,6 +100,12 @@ export interface PanGestureDetail extends GestureDetail {
 /** Encapsulates options used to recognize a pan gesture. */
 export interface PanGestureOptions extends GestureRecognizerOptions {
   /**
+   * Minimum press duration (ms) required before the gesture starts.
+   * @default 0
+   */
+  readonly minPressDuration: number;
+
+  /**
    * Minimum distance (px) a pointer can move before the gesture starts.
    * @default 4
    */
@@ -137,6 +143,7 @@ interface GestureState {
   velocityX: number;
   velocityY: number;
   timestamp: number;
+  pressStartTimestamp: number;
   active: boolean;
   orientation: PanGestureOrientation | null;
 }
@@ -153,6 +160,7 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOption
   protected override get _defaultOptions(): Partial<PanGestureOptions> {
     return {
       ...super._defaultOptions,
+      minPressDuration: 0,
       minDisplacement: 4,
       lockAxis: "none",
       axisThreshold: 8,
@@ -182,6 +190,7 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOption
       velocityX: 0,
       velocityY: 0,
       timestamp: input.timestamp,
+      pressStartTimestamp: input.timestamp,
       active: false,
       orientation: null,
     };
@@ -218,11 +227,19 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOption
       return;
     }
 
-    // When not active, ensure min displacement prior to activation
     const deltaX = input.clientX - this.#state.startClientX;
     const deltaY = input.clientY - this.#state.startClientY;
+    const displacement = Math.hypot(deltaX, deltaY);
+    const elapsed = input.timestamp - this.#state.pressStartTimestamp;
 
-    if (Math.hypot(deltaX, deltaY) >= this.options.minDisplacement) {
+    // Fail activation when moving past min displacement prior to min press duration
+    if (elapsed < this.options.minPressDuration && displacement >= this.options.minDisplacement) {
+      this.reset();
+      return;
+    }
+
+    // Ensure min displacement and press duration prior to activation
+    if (elapsed >= this.options.minPressDuration && Math.hypot(deltaX, deltaY) >= this.options.minDisplacement) {
       // Accept, start gesture, defer input
       this.#state.active = true;
       this._emitGesture(this.#createDetail("start", this.#state));

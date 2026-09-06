@@ -47,6 +47,7 @@ import { PanGestureDetail, PanGestureLockAxis, PanGestureOptions, PanGestureReco
  * @attr pointer-types - Which types of pointers can be used to recognize gestures.
  * @attr disabled - Whether gesture recognition is disabled.
  * @attr priority - The priority in which to recognize gestures.
+ * @attr min-press-duration - Minimum press duration (ms) required before the gesture starts.
  * @attr min-displacement - Minimum distance (px) a pointer can move before the gesture starts.
  * @attr lock-axis - Locks movement to an axis.
  * @attr axis-threshold - Minimum total displacement (px) required before axis locking resolves.
@@ -59,6 +60,12 @@ export class M3ePanGestureElement extends GestureElementBase<PanGestureOptions> 
   constructor() {
     super(PanGestureRecognizer.gestureType);
   }
+
+  /**
+   * Minimum press duration (ms) required before the gesture starts.
+   * @default 0
+   */
+  @property({ attribute: "min-press-duration", type: Number }) minPressDuration: number = 0;
 
   /**
    * Minimum distance (px) a pointer can move before the gesture starts.
@@ -88,6 +95,9 @@ export class M3ePanGestureElement extends GestureElementBase<PanGestureOptions> 
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
 
+    if (_changedProperties.has("minPressDuration")) {
+      this.gestureController.update({ minPressDuration: this.minPressDuration });
+    }
     if (_changedProperties.has("minDisplacement")) {
       this.gestureController.update({ minDisplacement: this.minDisplacement });
     }
