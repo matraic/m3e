@@ -9,8 +9,20 @@ import {
   PointerInput,
 } from "@m3e/web/gestures";
 
+/**
+ * Represents the lifecycle phases of a sequence gesture.
+ * - `"start"` — The first gesture in the sequence has been detected.
+ * - `"step"` — A subsequent gesture in the sequence has been detected.
+ * - `"end"` — All gestures in the sequence have been detected.
+ * - `"cancel"` — The gesture was interrupted or rejected and did not complete normally.
+ */
+export type SequenceGesturePhase = "start" | "step" | "end" | "cancel";
+
 /** Encapsulates detail about a sequence of gestures. */
 export interface SequenceGestureDetail extends GestureDetail {
+  /** Current phase of the sequence gesture. */
+  readonly phase: SequenceGesturePhase;
+
   /** The details for each gesture in the sequence. */
   readonly sequence: readonly GestureDetail[];
 }
@@ -95,16 +107,9 @@ export class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGes
     // Discard if input is not accepted (held)
     if (!this.#accepted.delete(id)) return;
 
-    // Emit gesture when all input has been accepted
+    // Emit end when all input has been accepted
     if (this.#accepted.size === 0 && this.#details.length > 0) {
-      const last = this.#details[this.#details.length - 1];
-      this._emitGesture({
-        id: last.id,
-        gestureType: this.gestureType,
-        timestamp: last.timestamp,
-        sequence: [...this.#details],
-      });
-
+      this._emitGesture(this.#createDetail("end"));
       this.reset();
     }
   }
@@ -113,6 +118,10 @@ export class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGes
   protected override _onRejectInput(id: number): void {
     // Reset if input was accepted (held)
     if (this.#accepted.has(id)) {
+      // If details exist, emit cancel phase
+      if (this.#details.length > 0) {
+        this._emitGesture(this.#createDetail("cancel"));
+      }
       this.reset();
     }
   }
@@ -125,10 +134,20 @@ export class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGes
 
     if (this.#details.length === this.options.sequence.length) {
       // Disposition all inputs as accepted when detail count matches sequence
+      // This will emit end or cancel phases
       this.#details.forEach((x) => this._acceptInput(x.id));
     } else {
+      // Emit start or step based on detail length
+      this._emitGesture(this.#createDetail(this.#details.length === 1 ? "start" : "step"));
+
       // Reset if max interval exceeded
-      this.#timeout = setTimeout(() => this.reset(), this.options.maxInterval);
+      this.#timeout = setTimeout(() => {
+        // If details exist, emit cancel phase
+        if (this.#details.length > 0) {
+          this._emitGesture(this.#createDetail("cancel"));
+        }
+        this.reset();
+      }, this.options.maxInterval);
     }
   }
 
@@ -193,5 +212,17 @@ export class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGes
 
     // Reset recognizer in the sequence
     this.options.sequence.forEach((x) => x.reset());
+  }
+
+  /** @private */
+  #createDetail(phase: SequenceGesturePhase): SequenceGestureDetail {
+    const last = this.#details[this.#details.length - 1];
+    return {
+      id: last.id,
+      phase: phase,
+      gestureType: this.gestureType,
+      timestamp: last.timestamp,
+      sequence: [...this.#details],
+    };
   }
 }
