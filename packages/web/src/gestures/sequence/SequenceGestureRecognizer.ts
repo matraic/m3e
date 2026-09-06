@@ -1,7 +1,9 @@
 import {
+  GestureCallback,
   GestureDetail,
   GestureInput,
   GestureInputDisposition,
+  GestureInputDispositionCallback,
   gestureRecognizer,
   GestureRecognizer,
   GestureRecognizerBase,
@@ -44,6 +46,8 @@ export interface SequenceGestureOptions extends GestureRecognizerOptions {
 export class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGestureOptions, SequenceGestureDetail> {
   /** @private */ readonly #details = new Array<GestureDetail>();
   /** @private */ readonly #accepted = new Set<number>();
+  /** @private */ readonly #gestureCallbacks = new Map<GestureRecognizer, GestureCallback>();
+  /** @private */ readonly #dispositionCallbacks = new Map<GestureRecognizer, GestureInputDispositionCallback>();
   /** @private */ #timeout?: number;
 
   constructor(options?: Partial<SequenceGestureOptions>) {
@@ -73,19 +77,38 @@ export class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGes
   }
 
   /** @private */
-  #unbindSequence(): void {
+  #bindSequence(): void {
     for (const recognizer of this.options.sequence) {
-      recognizer.onGesture = undefined;
-      recognizer.onDisposition = undefined;
+      if (recognizer.onGesture) {
+        this.#gestureCallbacks.set(recognizer, recognizer.onGesture);
+      }
+
+      if (recognizer.onDisposition) {
+        this.#dispositionCallbacks.set(recognizer, recognizer.onDisposition);
+      }
+
+      recognizer.onGesture = (detail) => {
+        this.#handleGesture(recognizer, detail);
+        this.#gestureCallbacks.get(recognizer)?.(detail);
+      };
+
+      recognizer.onDisposition = (id, disposition) => {
+        this.#handleDisposition(recognizer, id, disposition);
+        this.#dispositionCallbacks.get(recognizer)?.(id, disposition);
+      };
       recognizer.reset();
     }
   }
 
   /** @private */
-  #bindSequence(): void {
+  #unbindSequence(): void {
     for (const recognizer of this.options.sequence) {
-      recognizer.onGesture = (detail) => this.#handleGesture(detail);
-      recognizer.onDisposition = (id, disposition) => this.#handleDisposition(recognizer, id, disposition);
+      recognizer.onGesture = this.#gestureCallbacks.get(recognizer);
+      recognizer.onDisposition = this.#dispositionCallbacks.get(recognizer);
+
+      this.#gestureCallbacks.delete(recognizer);
+      this.#dispositionCallbacks.delete(recognizer);
+
       recognizer.reset();
     }
   }
@@ -127,7 +150,12 @@ export class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGes
   }
 
   /** @private */
-  #handleGesture(detail: GestureDetail): void {
+  #handleGesture(recognizer: GestureRecognizer, detail: GestureDetail): void {
+    // For continuous, phase is emitted in detail; ignore detail until ended
+    if (recognizer.continuous && "phase" in detail && detail.phase !== "end") {
+      return;
+    }
+
     clearTimeout(this.#timeout);
 
     this.#details.push(detail);
@@ -140,14 +168,16 @@ export class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGes
       // Emit start or step based on detail length
       this._emitGesture(this.#createDetail(this.#details.length === 1 ? "start" : "step"));
 
-      // Reset if max interval exceeded
-      this.#timeout = setTimeout(() => {
-        // If details exist, emit cancel phase
-        if (this.#details.length > 0) {
-          this._emitGesture(this.#createDetail("cancel"));
-        }
-        this.reset();
-      }, this.options.maxInterval);
+      if (this.options.maxInterval > 0) {
+        // Reset if max interval exceeded
+        this.#timeout = setTimeout(() => {
+          // If details exist, emit cancel phase
+          if (this.#details.length > 0) {
+            this._emitGesture(this.#createDetail("cancel"));
+          }
+          this.reset();
+        }, this.options.maxInterval);
+      }
     }
   }
 

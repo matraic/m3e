@@ -5,6 +5,7 @@ export * from "./GestureElementBase";
 export * from "./GestureInput";
 export * from "./GestureInputButton";
 export * from "./GestureInputDisposition";
+export * from "./GestureInputDispositionCallback";
 export * from "./GestureInputResolution";
 export * from "./GestureRecognizer";
 export * from "./GestureRecognizerBase";

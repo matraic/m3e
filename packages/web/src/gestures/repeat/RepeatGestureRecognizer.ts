@@ -1,7 +1,9 @@
 import {
+  GestureCallback,
   GestureDetail,
   GestureInput,
   GestureInputDisposition,
+  GestureInputDispositionCallback,
   gestureRecognizer,
   GestureRecognizer,
   GestureRecognizerBase,
@@ -50,6 +52,8 @@ export class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDeta
 > {
   /** @private */ readonly #details = new Array<TDetail>();
   /** @private */ readonly #accepted = new Set<number>();
+  /** @private */ #gestureCallback?: GestureCallback;
+  /** @private */ #dispositionCallback?: GestureInputDispositionCallback;
   /** @private */ #timeout?: number;
 
   constructor(options?: Partial<RepeatGestureOptions>) {
@@ -81,18 +85,30 @@ export class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDeta
   }
 
   /** @private */
-  #unbindRecognizer(): void {
+  #bindRecognizer(): void {
     if (!this.options.recognizer) return;
-    this.options.recognizer.onGesture = undefined;
-    this.options.recognizer.onDisposition = undefined;
+    this.#gestureCallback = this.options.recognizer.onGesture;
+    this.#dispositionCallback = this.options.recognizer.onDisposition;
+
+    this.options.recognizer.onGesture = (detail) => {
+      this.#handleGesture(<TDetail>detail);
+      this.#gestureCallback?.(detail);
+    };
+
+    this.options.recognizer.onDisposition = (id, disposition) => {
+      this.#handleDisposition(id, disposition);
+      this.#dispositionCallback?.(id, disposition);
+    };
+
     this.options.recognizer.reset();
   }
 
   /** @private */
-  #bindRecognizer(): void {
+  #unbindRecognizer(): void {
     if (!this.options.recognizer) return;
-    this.options.recognizer.onGesture = (detail) => this.#handleGesture(<TDetail>detail);
-    this.options.recognizer.onDisposition = (id, disposition) => this.#handleDisposition(id, disposition);
+    this.options.recognizer.onGesture = this.#gestureCallback;
+    this.options.recognizer.onDisposition = this.#dispositionCallback;
+    this.#gestureCallback = this.#dispositionCallback = undefined;
     this.options.recognizer.reset();
   }
 
@@ -138,6 +154,12 @@ export class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDeta
   /** @private */
   #handleGesture(detail: TDetail): void {
     if (!this.options.recognizer) return;
+
+    // For continuous, phase is emitted in detail; ignore detail until ended
+    if (this.options.recognizer.continuous && "phase" in detail && detail.phase !== "end") {
+      return;
+    }
+
     clearTimeout(this.#timeout);
 
     this.#details.push(detail);
@@ -148,8 +170,10 @@ export class RepeatGestureRecognizer<TDetail extends GestureDetail = GestureDeta
     } else {
       // Reset for next occurrence
       this.options.recognizer.reset();
-      // Reset if max interval exceeded
-      this.#timeout = setTimeout(() => this.reset(), this.options.maxInterval);
+      if (this.options.maxInterval > 0) {
+        // Reset if max interval exceeded
+        this.#timeout = setTimeout(() => this.reset(), this.options.maxInterval);
+      }
     }
   }
 

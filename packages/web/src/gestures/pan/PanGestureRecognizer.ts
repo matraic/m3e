@@ -174,6 +174,11 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOption
   }
 
   /** @inheritdoc */
+  override get continuous(): boolean {
+    return true;
+  }
+
+  /** @inheritdoc */
   override shouldCapturePointer(input: PointerInput): boolean {
     return this.#state !== undefined && this.#state.id === input.id && this.#state.active;
   }

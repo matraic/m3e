@@ -82,6 +82,11 @@ export class ScaleGestureRecognizer extends GestureRecognizerBase<ScaleGestureOp
   }
 
   /** @inheritdoc */
+  override get continuous(): boolean {
+    return true;
+  }
+
+  /** @inheritdoc */
   override shouldCapturePointer(_input: PointerInput): boolean {
     return this.#pointers.has(_input.id) && this.#started;
   }

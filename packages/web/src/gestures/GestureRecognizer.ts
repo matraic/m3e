@@ -1,7 +1,7 @@
 import { GestureCallback } from "./GestureCallback";
 import { GestureDetail } from "./GestureDetail";
 import { GestureInput } from "./GestureInput";
-import { GestureInputDisposition } from "./GestureInputDisposition";
+import { GestureInputDispositionCallback } from "./GestureInputDispositionCallback";
 import { GestureInputResolution } from "./GestureInputResolution";
 import { GestureRecognizerOptions } from "./GestureRecognizerOptions";
 import { PointerInput } from "./PointerInput";
@@ -24,6 +24,9 @@ export interface GestureRecognizer<
   /** Options used to recognize gestures. */
   readonly options: TOptions;
 
+  /** Whether continuous gestures are emitted. */
+  readonly continuous: boolean;
+
   /**
    * Whether the recognizer can receive the specified input.
    * @param {GestureInput} input The input to test.
@@ -41,7 +44,7 @@ export interface GestureRecognizer<
    * @param {number} id The identifier of the input for which a disposition is made.
    * @param {GestureDisposition} disposition The disposition for the input.
    */
-  onDisposition?: (id: number, disposition: GestureInputDisposition) => void;
+  onDisposition?: GestureInputDispositionCallback;
 
   /**
    * Receives resolution for a prior disposition against input.

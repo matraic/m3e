@@ -63,6 +63,11 @@ export abstract class GestureRecognizerBase<
   }
 
   /** @inheritdoc */
+  get continuous(): boolean {
+    return false;
+  }
+
+  /** @inheritdoc */
   onGesture?: GestureCallback<TDetail>;
 
   /** @inheritdoc */
