@@ -2,7 +2,7 @@ import React from "react";
 import { createComponent, EventName } from "@lit/react";
 
 import { M3eLongPressGestureElement, LongPressGestureDetail } from "@m3e/web/gestures/long-press";
-export type { LongPressGestureDetail } from "@m3e/web/gestures/long-press";
+export type { LongPressGestureDetail, LongPressGesturePhase } from "@m3e/web/gestures/long-press";
 
 /**
  * React binding for the `m3e-long-press-gesture` Web Component from `@m3e/web/gestures/long-press`.

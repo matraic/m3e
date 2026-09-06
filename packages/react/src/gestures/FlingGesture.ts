@@ -2,7 +2,7 @@ import React from "react";
 import { createComponent, EventName } from "@lit/react";
 
 import { M3eFlingGestureElement, FlingGestureDetail } from "@m3e/web/gestures/fling";
-export type { FlingGestureDetail } from "@m3e/web/gestures/fling";
+export type { FlingGestureDetail, FlingGestureAxis, FlingGestureDirection } from "@m3e/web/gestures/fling";
 
 /**
  * React binding for the `m3e-fling-gesture` Web Component from `@m3e/web/gestures/fling`.

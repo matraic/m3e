@@ -2,7 +2,7 @@ import React from "react";
 import { createComponent, EventName } from "@lit/react";
 
 import { M3eScaleGestureElement, ScaleGestureDetail } from "@m3e/web/gestures/scale";
-export type { ScaleGestureDetail } from "@m3e/web/gestures/scale";
+export type { ScaleGestureDetail, ScaleGesturePhase } from "@m3e/web/gestures/scale";
 
 /**
  * React binding for the `m3e-scale-gesture` Web Component from `@m3e/web/gestures/scale`.
