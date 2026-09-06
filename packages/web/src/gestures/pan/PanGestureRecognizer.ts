@@ -22,6 +22,13 @@ export type PanGesturePhase = "start" | "move" | "end" | "cancel";
  */
 export type PanGestureOrientation = "horizontal" | "vertical";
 
+/**
+ * Specifies the possible modes in which to active a pan gesture.
+ * - `"press"` — Pointer must be pressed to activate the gesture.
+ * - `"move"` — Pointer must be moved to activate the gesture.
+ */
+export type PanGestureActivationMode = "press" | "move";
+
 /** Encapsulates detail about a pan gesture. */
 export interface PanGestureDetail extends GestureDetail {
   /** Current phase of the pan gesture. */
@@ -100,11 +107,10 @@ export interface PanGestureDetail extends GestureDetail {
 /** Encapsulates options used to recognize a pan gesture. */
 export interface PanGestureOptions extends GestureRecognizerOptions {
   /**
-   * Minimum press duration (ms) required before the gesture starts.
-   * @default 0
+   * Mode in which to activate the gesture.
+   * @default "press"
    */
-  readonly minPressDuration: number;
-
+  readonly activationMode: PanGestureActivationMode;
   /**
    * Minimum distance (px) a pointer can move before the gesture starts.
    * @default 4
@@ -143,8 +149,8 @@ interface GestureState {
   velocityX: number;
   velocityY: number;
   timestamp: number;
-  pressStartTimestamp: number;
   active: boolean;
+  invalid: boolean;
   orientation: PanGestureOrientation | null;
 }
 
@@ -160,7 +166,6 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOption
   protected override get _defaultOptions(): Partial<PanGestureOptions> {
     return {
       ...super._defaultOptions,
-      minPressDuration: 0,
       minDisplacement: 4,
       lockAxis: "none",
       axisThreshold: 8,
@@ -190,16 +195,37 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOption
       velocityX: 0,
       velocityY: 0,
       timestamp: input.timestamp,
-      pressStartTimestamp: input.timestamp,
       active: false,
+      // If activation mode is move and a pointer down occurs, the state is invalid
+      invalid: this.options.activationMode === "move",
       orientation: null,
     };
   }
 
   /** @inheritdoc */
   override _onPointerMove(input: PointerInput): void {
-    // Ignore if no state or state's id doesn't match input
-    if (!this.#state || this.#state.id !== input.id) return;
+    // If activation mode is move and there is no state, capture initial state
+    if (!this.#state && this.options.activationMode === "move") {
+      this.#state = {
+        id: input.id,
+        bounds: input.currentTarget.getBoundingClientRect(),
+        startClientX: input.clientX,
+        startClientY: input.clientY,
+        clientX: input.clientX,
+        clientY: input.clientY,
+        deltaX: 0,
+        deltaY: 0,
+        velocityX: 0,
+        velocityY: 0,
+        timestamp: input.timestamp,
+        active: false,
+        invalid: false,
+        orientation: null,
+      };
+    }
+
+    // Ignore if no state, state's id doesn't match input, or state is invalid due to activation mode
+    if (!this.#state || this.#state.id !== input.id || this.#state.invalid) return;
 
     this.#updateState(input, this.#state);
 
@@ -227,19 +253,11 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOption
       return;
     }
 
+    // Ensure min displacement and prior to activation
     const deltaX = input.clientX - this.#state.startClientX;
     const deltaY = input.clientY - this.#state.startClientY;
-    const displacement = Math.hypot(deltaX, deltaY);
-    const elapsed = input.timestamp - this.#state.pressStartTimestamp;
 
-    // Fail activation when moving past min displacement prior to min press duration
-    if (elapsed < this.options.minPressDuration && displacement >= this.options.minDisplacement) {
-      this.reset();
-      return;
-    }
-
-    // Ensure min displacement and press duration prior to activation
-    if (elapsed >= this.options.minPressDuration && Math.hypot(deltaX, deltaY) >= this.options.minDisplacement) {
+    if (Math.hypot(deltaX, deltaY) >= this.options.minDisplacement) {
       // Accept, start gesture, defer input
       this.#state.active = true;
       this._emitGesture(this.#createDetail("start", this.#state));

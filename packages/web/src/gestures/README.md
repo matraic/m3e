@@ -331,13 +331,13 @@ Recognizes continuous dragging with directional and velocity tracking.
 
 #### ⚙️ Attributes
 
-| Attribute            | Type     | Default  | Description                                                                                    |
-| -------------------- | -------- | -------- | ---------------------------------------------------------------------------------------------- |
-| `min-press-duration` | `number` | `0`      | Minimum press duration (ms) required before the gesture starts.                                |
-| `min-displacement`   | `number` | `4`      | Minimum distance (px) a pointer can move before the gesture starts.                            |
-| `lock-axis`          | `string` | `"none"` | Locks movement to an axis: `"x"`, `"y"`, `"lock"`, or `"none"`.                                |
-| `axis-threshold`     | `number` | `8`      | Minimum total displacement (px) required before axis locking resolves.                         |
-| `delta-threshold`    | `number` | `0`      | Minimum incremental movement (px) on the secondary axis required before emitting move updates. |
+| Attribute          | Type                | Default   | Description                                                                                    |
+| ------------------ | ------------------- | --------- | ---------------------------------------------------------------------------------------------- |
+| `activation-mode`  | `"press" \| "move"` | `"press"` | Mode in which to activate the gesture.                                                         |
+| `min-displacement` | `number`            | `4`       | Minimum distance (px) a pointer can move before the gesture starts.                            |
+| `lock-axis`        | `string`            | `"none"`  | Locks movement to an axis: `"x"`, `"y"`, `"lock"`, or `"none"`.                                |
+| `axis-threshold`   | `number`            | `8`       | Minimum total displacement (px) required before axis locking resolves.                         |
+| `delta-threshold`  | `number`            | `0`       | Minimum incremental movement (px) on the secondary axis required before emitting move updates. |
 
 #### 📡 Events
 
