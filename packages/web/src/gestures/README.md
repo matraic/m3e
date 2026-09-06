@@ -341,9 +341,9 @@ Recognizes continuous dragging with directional and velocity tracking.
 
 #### 📡 Events
 
-| Event     | Description                               |
-| --------- | ----------------------------------------- |
-| `gesture` | Emitted when a pan gesture is recognized. |
+| Event     | Description                              |
+| --------- | ---------------------------------------- |
+| `gesture` | Emitted for each phase of a pan gesture. |
 
 #### Gesture Detail
 
@@ -392,9 +392,9 @@ Recognizes fast directional swipes.
 
 #### 📡 Events
 
-| Event     | Description                                 |
-| --------- | ------------------------------------------- |
-| `gesture` | Emitted when a swipe gesture is recognized. |
+| Event     | Description                                     |
+| --------- | ----------------------------------------------- |
+| `gesture` | Emitted for each phase of a long-press gesture. |
 
 #### Gesture Detail
 
@@ -458,9 +458,9 @@ Recognizes when a pointer remains pressed for a minimum duration.
 
 #### 📡 Events
 
-| Event     | Description                                      |
-| --------- | ------------------------------------------------ |
-| `gesture` | Emitted when a long-press gesture is recognized. |
+| Event     | Description                                     |
+| --------- | ----------------------------------------------- |
+| `gesture` | Emitted for each phase of a long-press gesture. |
 
 #### Gesture Detail
 
@@ -491,9 +491,9 @@ Recognizes multi-pointer pinch and spread gestures.
 
 #### 📡 Events
 
-| Event     | Description                                 |
-| --------- | ------------------------------------------- |
-| `gesture` | Emitted when a scale gesture is recognized. |
+| Event     | Description                                |
+| --------- | ------------------------------------------ |
+| `gesture` | Emitted for each phase of a scale gesture. |
 
 #### Gesture Detail
 
@@ -531,9 +531,9 @@ Recognizes a sequence of gestures performed in order. The recognizer emits a ges
 
 #### 📡 Events
 
-| Event     | Description                                    |
-| --------- | ---------------------------------------------- |
-| `gesture` | Emitted when a gesture sequence is recognized. |
+| Event     | Description                                   |
+| --------- | --------------------------------------------- |
+| `gesture` | Emitted for each phase of a sequence gesture. |
 
 #### Gesture Detail
 

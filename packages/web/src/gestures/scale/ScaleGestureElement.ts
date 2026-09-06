@@ -46,7 +46,7 @@ import { ScaleGestureDetail, ScaleGestureOptions, ScaleGestureRecognizer } from 
  * @attr pointers - Number of pointers that must be pressed before the gesture fails.
  * @attr distance-threshold - Minimum distance change (px) required to activate scale.
  *
- * @fires gesture - Emitted when a scale gesture is recognized.
+ * @fires gesture - Emitted for each phase of a scale gesture.
  */
 @customElement("m3e-scale-gesture")
 export class M3eScaleGestureElement extends GestureElementBase<ScaleGestureOptions> {

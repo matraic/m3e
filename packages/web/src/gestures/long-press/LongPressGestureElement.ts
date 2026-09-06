@@ -48,7 +48,7 @@ import {
  * @attr max-displacement - Maximum distance (px) a pointer can move before the gesture fails.
  * @attr min-duration - Minimum time (ms) a pointer must remain pressed.
  *
- * @fires gesture - Emitted when a long-press gesture is recognized.
+ * @fires gesture - Emitted for each phase of a long-press gesture.
  */
 @customElement("m3e-long-press-gesture")
 export class M3eLongPressGestureElement extends GestureElementBase<LongPressGestureOptions> {

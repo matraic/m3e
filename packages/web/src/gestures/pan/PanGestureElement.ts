@@ -59,7 +59,7 @@ import {
  * @attr axis-threshold - Minimum total displacement (px) required before axis locking resolves.
  * @attr delta-threshold - Minimum incremental movement (px) on the secondary axis required before emitting move updates.
  *
- * @fires gesture - Emitted when a pan gesture is recognized.
+ * @fires gesture - Emitted for each phase of a pan gesture.
  */
 @customElement("m3e-pan-gesture")
 export class M3ePanGestureElement extends GestureElementBase<PanGestureOptions> {
