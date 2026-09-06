@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent, EventName } from "@lit/react";
 
-import { M3eSequenceGestureElement, SequenceGestureDetail } from "@m3e/web/gestures/composite";
-export type { SequenceGestureDetail } from "@m3e/web/gestures/composite";
+import { M3eSequenceGestureElement, SequenceGestureDetail } from "@m3e/web/gestures/sequence";
+export type { SequenceGestureDetail } from "@m3e/web/gestures/sequence";
 
 /**
- * React binding for the `m3e-sequence-gesture` Web Component from `@m3e/web/gestures/composite`.
+ * React binding for the `m3e-sequence-gesture` Web Component from `@m3e/web/gestures/sequence`.
  *
  * This component renders the underlying `<m3e-sequence-gesture>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

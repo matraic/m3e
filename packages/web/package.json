@@ -187,10 +187,6 @@
       "types": "./dist/src/gestures/index.d.ts",
       "default": "./dist/gestures.js"
     },
-    "./gestures/composite": {
-      "types": "./dist/src/gestures/composite/index.d.ts",
-      "default": "./dist/gestures-composite.js"
-    },
     "./gestures/fling": {
       "types": "./dist/src/gestures/fling/index.d.ts",
       "default": "./dist/gestures-fling.js"
@@ -203,9 +199,17 @@
       "types": "./dist/src/gestures/pan/index.d.ts",
       "default": "./dist/gestures-pan.js"
     },
+    "./gestures/repeat": {
+      "types": "./dist/src/gestures/repeat/index.d.ts",
+      "default": "./dist/gestures-repeat.js"
+    },
     "./gestures/scale": {
       "types": "./dist/src/gestures/scale/index.d.ts",
       "default": "./dist/gestures-scale.js"
+    },
+    "./gestures/sequence": {
+      "types": "./dist/src/gestures/sequence/index.d.ts",
+      "default": "./dist/gestures-sequence.js"
     },
     "./gestures/swipe": {
       "types": "./dist/src/gestures/swipe/index.d.ts",
