@@ -13,5 +13,6 @@ export * from "./registerStyleSheet";
 export * from "./resolveElementById";
 export * from "./resolveFragmentUrl";
 export * from "./scrollIntoViewIfNeeded";
+export * from "./VelocityTracker";
 export * from "./waitForUpdate";
 export * from "./waitForUpgrade";

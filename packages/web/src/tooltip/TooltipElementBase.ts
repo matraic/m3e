@@ -1,12 +1,17 @@
 import { LitElement, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { AttachInternals, HoverController, HtmlFor, isDisabledMixin, ReconnectedCallback } from "@m3e/web/core";
+import {
+  AttachInternals,
+  HoverController,
+  HtmlFor,
+  isDisabledMixin,
+  LongPressController,
+  ReconnectedCallback,
+} from "@m3e/web/core";
 
 import { M3ePlatform } from "@m3e/web/core/platform";
 import { AnchorPosition, positionAnchor } from "@m3e/web/core/anchoring";
-import { detectGesture, GestureController } from "@m3e/web/gestures";
-import { LongPressGestureDetail } from "@m3e/web/gestures/long-press";
 
 import { isTooltipTouchGestures, TooltipTouchGestures } from "./TooltipTouchGestures";
 
@@ -46,7 +51,18 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
     },
   });
 
-  /** @private */ #longPressController?: GestureController<LongPressGestureDetail>;
+  /** @private */
+  readonly #longPressController = new LongPressController(this, {
+    target: null,
+    callback: (pressed) => {
+      if (this._isInteractive) return;
+      if (pressed) {
+        this.show();
+      } else {
+        this.hide();
+      }
+    },
+  });
 
   /**
    * Whether the element is disabled.
@@ -106,16 +122,7 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
     super.attach(control);
 
     if (M3ePlatform.iOS || M3ePlatform.Android) {
-      this.#longPressController?.detach();
-      this.#longPressController = detectGesture<LongPressGestureDetail>("long-press", (detail) => {
-        if (this._isInteractive) return;
-        if (detail.phase === "start") {
-          this.show();
-        } else {
-          this.hide();
-        }
-      });
-      this.#longPressController.attach(control);
+      this.#longPressController.observe(control);
       this.#disableNativeGesturesIfNecessary();
     } else {
       this.#hoverController.observe(control);
@@ -128,7 +135,7 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
   override detach(): void {
     if (this.control) {
       this.#hoverController.unobserve(this.control);
-      this.#longPressController?.detach();
+      this.#longPressController.unobserve(this.control);
       this.control.removeEventListener("click", this.#controlClickHandler);
       this.hide();
     }

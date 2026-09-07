@@ -10,4 +10,5 @@ export default tseslint.config(eslint.configs.recommended, tseslint.configs.reco
       tsconfigRootDir: dirname(fileURLToPath(import.meta.url)),
     },
   },
+  ignores: ["src/gestures/**"],
 });

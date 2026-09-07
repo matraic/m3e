@@ -5,5 +5,5 @@
     "outDir": "./dist/src"
   },
   "include": ["src/**/*.ts", "**/*.mjs", "**/*.js"],
-  "exclude": []
+  "exclude": ["src/gestures", "src/gestures/**/*"]
 }
