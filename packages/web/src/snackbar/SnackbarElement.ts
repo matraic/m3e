@@ -49,7 +49,7 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
       display: inline-flex;
       align-items: center;
       min-width: var(--m3e-snackbar-min-width, 344px);
-      max-width: var(--m3e-snackbar-max-width, 672px);
+      max-width: var(--m3e-snackbar-max-width, min(672px, 100% - 48px));
       visibility: hidden;
       border: none;
       margin: 0;
