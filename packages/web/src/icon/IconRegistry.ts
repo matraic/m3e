@@ -67,7 +67,8 @@ export class IconRegistry {
       filled: svg`<svg viewBox="${fillSet.filled.viewBox}"><path d="${fillSet.filled.path}"/></svg>`,
     });
 
-    this.#observers.get(key)?.forEach((x) => x());
+    const observers = this.#observers.get(key);
+    observers?.slice().forEach((x) => x());
   }
 
   /**
