@@ -157,6 +157,11 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       color: var(--m3e-bottom-sheet-color, ${DesignToken.color.onSurface});
       background-color: var(--m3e-bottom-sheet-container-color, ${DesignToken.color.surfaceContainerLow});
     }
+    @supports (height: 100dvh) {
+      :host {
+        top: calc(100dvh - var(--_bottom-sheet-height));
+      }
+    }
     :host([hidden]) {
       display: none;
     }
