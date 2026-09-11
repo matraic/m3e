@@ -942,11 +942,12 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
     }
 
     const bodyStyle = getComputedStyle(body);
-    return (
+    return Math.min(
       this.#cachedHeaderHeight +
-      this.#cachedContentHeight +
-      parseFloat(bodyStyle.paddingBlockStart) +
-      parseFloat(bodyStyle.paddingBlockEnd)
+        this.#cachedContentHeight +
+        parseFloat(bodyStyle.paddingBlockStart) +
+        parseFloat(bodyStyle.paddingBlockEnd),
+      this.#computeMaxHeight(),
     );
   }
 
