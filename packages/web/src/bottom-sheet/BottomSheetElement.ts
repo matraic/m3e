@@ -273,10 +273,6 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       border-top-left-radius: inherit;
       border-top-right-radius: inherit;
       padding-block-start: var(--m3e-bottom-sheet-padding-block, ${DesignToken.measurement.space100});
-      font-size: var(--m3e-bottom-sheet-header-font-size, ${DesignToken.typescale.standard.title.large.fontSize});
-      font-weight: var(--m3e-bottom-sheet-header-font-weight, ${DesignToken.typescale.standard.title.large.fontWeight});
-      line-height: var(--m3e-bottom-sheet-header-line-height, ${DesignToken.typescale.standard.title.large.lineHeight});
-      letter-spacing: var(--m3e-bottom-sheet-header-tracking, ${DesignToken.typescale.standard.title.large.tracking});
     }
     .header {
       cursor: grab;
@@ -290,6 +286,10 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       flex-direction: column;
       min-height: 48px;
       --m3e-app-bar-container-color: var(--m3e-bottom-sheet-container-color, ${DesignToken.color.surfaceContainerLow});
+      font-size: var(--m3e-bottom-sheet-header-font-size, ${DesignToken.typescale.standard.title.large.fontSize});
+      font-weight: var(--m3e-bottom-sheet-header-font-weight, ${DesignToken.typescale.standard.title.large.fontWeight});
+      line-height: var(--m3e-bottom-sheet-header-line-height, ${DesignToken.typescale.standard.title.large.lineHeight});
+      letter-spacing: var(--m3e-bottom-sheet-header-tracking, ${DesignToken.typescale.standard.title.large.tracking});
     }
     .handle-row {
       position: relative;
