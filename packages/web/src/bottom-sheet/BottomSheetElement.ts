@@ -19,6 +19,7 @@ import {
   ReconnectedCallback,
   registerStyleSheet,
   InertController,
+  hasAssignedNodes,
 } from "@m3e/web/core";
 
 import { isModifierAllowed, M3eInteractivityChecker } from "@m3e/web/core/a11y";
@@ -265,7 +266,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
     .content {
       height: fit-content;
     }
-    :host(:not([handle])) .header {
+    :host(:not([handle]):not(:is(:state(--with-header), :--with-header))) .header {
       display: none;
     }
     :host(:not([handle])) .body,
@@ -620,7 +621,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
                 </div>
               </div>`
             : nothing}
-          <slot name="header"></slot>
+          <slot name="header" @slotchange=${this.#handleHeaderSlotChange}></slot>
         </div>
         <div class="body">
           <div class="content">
@@ -644,6 +645,11 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       this.#cachedHeaderHeight = header.clientHeight;
       this.#resizeController.observe(header);
     }
+  }
+
+  /** @private */
+  #handleHeaderSlotChange(e: Event): void {
+    setCustomState(this, "--with-header", hasAssignedNodes(e.target as HTMLSlotElement));
   }
 
   /** @private */
