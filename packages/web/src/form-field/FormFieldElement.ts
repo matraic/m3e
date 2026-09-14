@@ -81,6 +81,7 @@ import { FloatLabelType, isFloatLabelType } from "./FloatLabelType";
  * @attr hide-required-marker - Whether the required marker should be hidden.
  * @attr hide-subscript - Whether subscript content is hidden.
  * @attr variant - The appearance variant of the field.
+ * @attr error - Manually forces the field into an error state using the error slot text.
  *
  * @cssprop --m3e-form-field-font-size - Font size for the form field container text.
  * @cssprop --m3e-form-field-font-weight - Font weight for the form field container text.
@@ -644,6 +645,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     }
   `;
 
+  /** @private */ #ownsValidity = false;
   /** @private */ #control: FormFieldControl | null = null;
   /** @private */ #removeValueInterceptor?: () => void;
   /** @private */ readonly #formResetHandler = () => this.#handleFormReset();
@@ -784,6 +786,12 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   @property({ attribute: "float-label", reflect: true, useDefault: true }) floatLabel: FloatLabelType = "auto";
 
   /**
+   * Manually forces the field into an error state using the error slot text.
+   * @default false
+   */
+  @property({ type: Boolean, reflect: false, useDefault: true }) error = false;
+
+  /**
    * Notifies the form field that the state of the hosted `control` has changed.
    * @param {boolean} [checkValidity=false] Whether to check validity.
    */
@@ -856,6 +864,11 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   /** @inheritdoc */
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
+
+    if (changedProperties.has("error")) {
+      this.#ownsValidity = true;
+      this.#updateCustomValidity();
+    }
 
     if (changedProperties.has("_invalid") && this.#control) {
       this.#control.ariaInvalid = this._invalid ? "true" : null;
@@ -1055,6 +1068,9 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
       this._base.style.setProperty("--_form-field-cursor", "pointer");
     }
 
+    // Reset validity ownership when the control changes.
+    this.#ownsValidity = this.error;
+
     if (this.#control) {
       this.#controlMutationController.observe(this.#control);
       this.#control.addEventListener("invalid", this.#controlInvalidHandler);
@@ -1065,13 +1081,17 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         M3eAriaDescriber.describe(this.#control, this.#hintText);
       }
 
-      this.notifyControlStateChange();
-
       const tagname = this.#control.tagName.toLowerCase();
       if (tagname.startsWith("m3e-") && !customElements.get(tagname)) {
         customElements.whenDefined(tagname).then(() => this.#bindValueInterceptor());
       } else {
         this.#bindValueInterceptor();
+      }
+
+      if (this.#ownsValidity) {
+        this.#updateCustomValidity();
+      } else {
+        this.notifyControlStateChange();
       }
     }
   }
@@ -1108,6 +1128,10 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     const errorText = getTextContent(this._error, true);
     if (errorText === this.#errorText) return;
 
+    if (this.#ownsValidity) {
+      this.#updateCustomValidity();
+    }
+
     if (this.#control && this.#errorText) {
       M3eAriaDescriber.removeDescription(this.#control, this.#errorText);
     }
@@ -1117,6 +1141,19 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     if (this.#control && this.#errorText && this._invalid) {
       M3eAriaDescriber.describe(this.#control, this.#errorText);
     }
+  }
+
+  /** @inheritdoc */
+  #updateCustomValidity(): void {
+    if (!this.#ownsValidity) return;
+    if (this.error) {
+      this.control?.setAttribute("aria-invalid", "true");
+    } else {
+      this.control?.removeAttribute("aria-invalid");
+    }
+
+    this.control?.setCustomValidity?.(this.error ? this.#errorText : "");
+    this.#handleControlChange();
   }
 }
 

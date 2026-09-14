@@ -41,6 +41,12 @@ export interface FormFieldControl extends HTMLElement {
    * returns `false`, fires an invalid event.
    */
   checkValidity?: () => boolean;
+
+  /**
+   * Sets a custom validity message for the element.
+   * @param {string} errorMessage The message to use for validity errors.
+   */
+  setCustomValidity?: (errorMessage: string) => void;
 }
 
 const KNOWN_FORM_FIELD_TAGS = ["m3e-input-chip-set", "m3e-select", "m3e-date-input"];

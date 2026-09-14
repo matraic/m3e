@@ -27,12 +27,13 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### ⚙️ Attributes
 
-| Attribute              | Type                                | Default      | Description                                                             |
-| ---------------------- | ----------------------------------- | ------------ | ----------------------------------------------------------------------- |
-| `variant`              | `"filled"` \| `"outlined"`          | `"outlined"` | The appearance variant of the field.                                    |
-| `hide-required-marker` | `boolean`                           | `false`      | Whether the required marker should be hidden.                           |
-| `hide-subscript`       | `"always"` \| `"auto"` \| `"never"` | `"auto"`     | Whether subscript content is hidden.                                    |
-| `float-label`          | `"always"` \| `"auto"`              | `"auto"`     | Specifies whether the label should float always or only when necessary. |
+| Attribute              | Type                                | Default      | Description                                                              |
+| ---------------------- | ----------------------------------- | ------------ | ------------------------------------------------------------------------ |
+| `variant`              | `"filled"` \| `"outlined"`          | `"outlined"` | The appearance variant of the field.                                     |
+| `hide-required-marker` | `boolean`                           | `false`      | Whether the required marker should be hidden.                            |
+| `hide-subscript`       | `"always"` \| `"auto"` \| `"never"` | `"auto"`     | Whether subscript content is hidden.                                     |
+| `float-label`          | `"always"` \| `"auto"`              | `"auto"`     | Specifies whether the label should float always or only when necessary.  |
+| `error`                | `boolean`                           | `false`      | Manually forces the field into an error state using the error slot text. |
 
 ### 🧩 Slots
 
