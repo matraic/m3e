@@ -183,6 +183,46 @@
       "types": "./dist/src/form-field/index.d.ts",
       "default": "./dist/form-field.js"
     },
+    "./gestures": {
+      "types": "./dist/src/gestures/index.d.ts",
+      "default": "./dist/gestures.js"
+    },
+    "./gestures/long-press": {
+      "types": "./dist/src/gestures/long-press/index.d.ts",
+      "default": "./dist/gestures-long-press.js"
+    },
+    "./gestures/pan": {
+      "types": "./dist/src/gestures/pan/index.d.ts",
+      "default": "./dist/gestures-pan.js"
+    },
+    "./gestures/repeat": {
+      "types": "./dist/src/gestures/repeat/index.d.ts",
+      "default": "./dist/gestures-repeat.js"
+    },
+    "./gestures/rotate": {
+      "types": "./dist/src/gestures/rotate/index.d.ts",
+      "default": "./dist/gestures-rotate.js"
+    },
+    "./gestures/scale": {
+      "types": "./dist/src/gestures/scale/index.d.ts",
+      "default": "./dist/gestures-scale.js"
+    },
+    "./gestures/sequence": {
+      "types": "./dist/src/gestures/sequence/index.d.ts",
+      "default": "./dist/gestures-sequence.js"
+    },
+    "./gestures/swipe": {
+      "types": "./dist/src/gestures/swipe/index.d.ts",
+      "default": "./dist/gestures-swipe.js"
+    },
+    "./gestures/tap": {
+      "types": "./dist/src/gestures/tap/index.d.ts",
+      "default": "./dist/gestures-tap.js"
+    },
+    "./gestures/transform": {
+      "types": "./dist/src/gestures/transform/index.d.ts",
+      "default": "./dist/gestures-transform.js"
+    },
     "./heading": {
       "types": "./dist/src/heading/index.d.ts",
       "default": "./dist/heading.js"

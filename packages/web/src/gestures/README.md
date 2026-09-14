@@ -1,581 +1,329 @@
-# @m3e/web/gestures
+# Gestures
 
 The `@m3e/web/gestures` module provides a gesture recognition subsystem supporting declarative and programmatic gesture detection. It uses a modular recognizer architecture with a priority-based disposition system that resolves competing claims on input.
 
-```ts
-import "@m3e/web/gestures";
-```
+The subsystem includes:
 
-## ✨ Features
+- Pointer tracking and gesture details with viewport and element-local coordinates
+- Configurable thresholds, pointer types, buttons, priorities, and input filters
+- Arbitration for recognizers competing for the same input stream
+- Composed recognizers for sequences and repetitions
+- Declarative elements that bind to a target with the `for` attribute
 
-- **Single & Multi-Touch**: Recognize gestures from mouse, pen, and touch pointers
-- **Input Arbitration**: Priority-based system for resolving competing gesture claims
-- **Rich Details**: Comprehensive gesture data including coordinates, velocities, displacement, and phase information
-- **Composite Gestures**: Chain basic gestures into sequences or repetitions
-- **Configurable**: Fine-tune recognition thresholds, durations, and constraints per gesture type
-- **Web Components**: Non-visual elements that bind to target elements via the `for` attribute
-- **Accessibility**: Respects disabled state and pointer type filters
+## Installation
 
-## 🗂️ Elements
-
-- `m3e-tap-gesture` — A non-visual element used to detect a tap gesture for an associated element.
-- `m3e-pan-gesture` — A non-visual element used to detect a pan gesture for an associated element.
-- `m3e-swipe-gesture` — A non-visual element used to detect a swipe gesture for an associated element.
-- `m3e-fling-gesture` — A non-visual element used to detect a fling gesture for an associated element.
-- `m3e-long-press-gesture` — A non-visual element used to detect a long-press gesture for an associated element.
-- `m3e-scale-gesture` — A non-visual element used to detect a scale gesture for an associated element.
-- `m3e-sequence-gesture` — A non-visual element used to detect a sequence of gestures for an associated element.
-- `m3e-repeat-gesture` — A non-visual element used to detect a repeated gesture for an associated element.
-
-## 🧪 Examples
-
-### Tap Gesture
-
-The following example illustrates detecting tap gestures on an element using `<m3e-tap-gesture>`.
-Use the `for` attribute to bind the gesture recognizer to a target element:
-
-```html
-<div id="div1"></div>
-<m3e-tap-gesture for="div1"></m3e-tap-gesture>
-```
-
-Listen for the `gesture` event to handle detected tap gestures:
+Import the base module when using the shared types or `detectGesture`:
 
 ```ts
-const recognizer = document.querySelector("m3e-tap-gesture");
+import { detectGesture } from "@m3e/web/gestures";
+```
 
-recognizer.addEventListener("gesture", (e) => {
-  const detail = e.detail;
+Each recognizer has its own entry point. Import only the recognizers used by an application:
 
-  // Number of pointers (fingers) involved in the tap
-  console.log(detail.pointers.length);
+```ts
+import { tap } from "@m3e/web/gestures/tap";
+import { swipe } from "@m3e/web/gestures/swipe";
+```
 
-  // Coordinates of the first pointer (finger)
-  console.log(detail.pointers[0].clientX, detail.pointers[0].clientY);
+The recognizer entry points are:
 
-  // Total tap duration
-  console.log(detail.duration);
+| Entry point                                                                                                               | Factory       | Gesture                                                  | Element                    |
+| ------------------------------------------------------------------------------------------------------------------------- | ------------- | -------------------------------------------------------- | -------------------------- |
+| [`@m3e/web/gestures/long-press`](https://github.com/matraic/m3e/tree/HEAD/packages/web/src/gestures/long-press/README.md) | `longPress()` | Press held for a minimum duration                        | `<m3e-long-press-gesture>` |
+| [`@m3e/web/gestures/pan`](https://github.com/matraic/m3e/tree/HEAD/packages/web/src/gestures/pan/README.md)               | `pan()`       | Continuous dragging                                      | `<m3e-pan-gesture>`        |
+| [`@m3e/web/gestures/repeat`](https://github.com/matraic/m3e/tree/HEAD/packages/web/src/gestures/repeat/README.md)         | `repeat()`    | Repeated child gesture                                   | `<m3e-repeat-gesture>`     |
+| [`@m3e/web/gestures/rotate`](https://github.com/matraic/m3e/tree/HEAD/packages/web/src/gestures/rotate/README.md)         | `rotate()`    | Multi-pointer rotation                                   | `<m3e-rotate-gesture>`     |
+| [`@m3e/web/gestures/scale`](https://github.com/matraic/m3e/tree/HEAD/packages/web/src/gestures/scale/README.md)           | `scale()`     | Pinch or spread                                          | `<m3e-scale-gesture>`      |
+| [`@m3e/web/gestures/sequence`](https://github.com/matraic/m3e/tree/HEAD/packages/web/src/gestures/sequence/README.md)     | `sequence()`  | Child gestures in order                                  | `<m3e-sequence-gesture>`   |
+| [`@m3e/web/gestures/swipe`](https://github.com/matraic/m3e/tree/HEAD/packages/web/src/gestures/swipe/README.md)           | `swipe()`     | Fast directional movement                                | `<m3e-swipe-gesture>`      |
+| [`@m3e/web/gestures/tap`](https://github.com/matraic/m3e/tree/HEAD/packages/web/src/gestures/tap/README.md)               | `tap()`       | One or more taps                                         | `<m3e-tap-gesture>`        |
+| [`@m3e/web/gestures/transform`](https://github.com/matraic/m3e/tree/HEAD/packages/web/src/gestures/transform/README.md)   | `transform()` | Low-level multi-pointer translation, scale, and rotation | `<m3e-transform-gesture>`  |
+
+The base `@m3e/web/gestures` entry point exports shared types, recognizer base classes, pointer tracking, and `detectGesture`. Individual recognizer APIs and their detail and option types are exported from their entry points.
+
+## Programmatic API
+
+Create a recognizer, bind it to an element, and destroy the binding when it is no longer needed:
+
+```ts
+import { detectGesture } from "@m3e/web/gestures";
+import { tap } from "@m3e/web/gestures/tap";
+
+const button = document.querySelector("button")!;
+const recognizer = tap(
+  (detail) => {
+    console.log("Tapped at", detail.pointers[0].clientX, detail.pointers[0].clientY);
+  },
+  { maxDuration: 180 },
+);
+
+const controller = detectGesture(button, recognizer);
+
+// Temporarily disable every recognizer managed by this controller.
+controller.disabled = true;
+
+// Remove the binding when the owning view is disposed.
+controller.destroy();
+```
+
+Factories accept a listener, partial options, or both:
+
+```ts
+import { pan } from "@m3e/web/gestures/pan";
+
+const recognizer = pan({
+  activationMode: "move",
+  lockAxis: "x",
+  minDisplacement: 8,
+});
+
+recognizer.addListener((detail) => {
+  if (detail.phase === "update") {
+    console.log(detail.totalDeltaX, detail.velocityX);
+  }
 });
 ```
 
-### Pan Gesture
-
-The following example illustrates detecting pan gestures on an element using `<m3e-pan-gesture>`.
-Use the `for` attribute to bind the gesture recognizer to a target element:
-
-```html
-<div id="div1"></div>
-<m3e-pan-gesture for="div1"></m3e-pan-gesture>
-```
-
-Listen for the `gesture` event to handle detected pan gestures:
+Every recognizer also exposes its options and can be combined with other recognizers on the same element:
 
 ```ts
-const recognizer = document.querySelector("m3e-pan-gesture");
+import { detectGesture } from "@m3e/web/gestures";
+import { longPress } from "@m3e/web/gestures/long-press";
+import { swipe } from "@m3e/web/gestures/swipe";
+import { tap } from "@m3e/web/gestures/tap";
 
-recognizer.addEventListener("gesture", (e) => {
-  const detail = e.detail;
+const controller = detectGesture(element, tap(), longPress(), swipe());
+```
 
-  // Current phase (start, move, end, cancel)
-  console.log(detail.phase);
+The resolver uses recognizer priority and disposition to decide which recognizers may claim an input stream. Set a higher `priority` when a recognizer should win a conflict.
 
-  // Total displacement along the primary axis
-  console.log(detail.totalPrimaryDelta);
+## Arbitration
 
-  // Current incremental movement
-  console.log(detail.deltaX, detail.deltaY);
+When multiple recognizers receive the same input stream, each reports a disposition while it evaluates the input. The resolver tracks these dispositions independently for each input stream:
 
-  // Current velocity
-  console.log(detail.velocityX, detail.velocityY);
+| Disposition | Meaning                                                                                            |
+| ----------- | -------------------------------------------------------------------------------------------------- |
+| `accept`    | The recognizer intends to claim the input stream.                                                  |
+| `reject`    | The recognizer declines or withdraws its claim.                                                    |
+| `hold`      | The recognizer delays resolution while it waits for more input. A hold blocks arbitration.         |
+| `release`   | The recognizer releases a previous hold.                                                           |
+| `defer`     | The recognizer remains active without blocking resolution. It is rejected unless it later accepts. |
+
+The resolver follows this process:
+
+1. If any recognizer holds the input stream, resolution waits until every hold is released or rejected.
+2. Once there are no holds, an eager acceptor is preferred. If multiple eager recognizers accept, the one with the highest `priority` wins.
+3. If there are no eager acceptors, the acceptor with the highest `priority` wins.
+4. The winning recognizer receives an `accept` resolution. Remaining acceptors and all deferrers receive a `reject` resolution.
+5. If no recognizer can accept, the input stream is removed from the resolver.
+
+Priority is compared only when a recognizer has a strictly higher value, so equal-priority contenders retain their existing resolution order. A recognizer that accepts after holding moves to the front of the acceptor queue, allowing it to be considered first when priorities are equal.
+
+## Declarative API
+
+Import the element entry point, then bind a gesture element to a target with `for`:
+
+```ts
+import "@m3e/web/gestures/tap";
+```
+
+```html
+<button id="save-button">Save</button> <m3e-tap-gesture for="save-button"></m3e-tap-gesture>
+```
+
+Gesture elements are non-visual and dispatch a `gesture` event with the recognizer's detail object:
+
+```ts
+const gesture = document.querySelector("m3e-tap-gesture")!;
+
+gesture.addEventListener("gesture", (event) => {
+  const detail = event.detail;
+  console.log(detail.gestureName, detail.timestamp);
 });
 ```
 
-### Swipe Gesture
+The common element properties are:
 
-The following example illustrates detecting swipe gestures on an element using `<m3e-swipe-gesture>`.
-Use the `for` attribute to bind the gesture recognizer to a target element:
+| Property / attribute | Default             | Description                                              |
+| -------------------- | ------------------- | -------------------------------------------------------- |
+| `for`                | Required            | ID of the element receiving pointer input                |
+| `disabled`           | `false`             | Disables recognition                                     |
+| `priority`           | `1`                 | Resolver priority used during arbitration                |
+| `buttons`            | `"primary"`         | Space-separated buttons accepted by the recognizer       |
+| `pointer-types`      | `"mouse pen touch"` | Space-separated pointer types accepted by the recognizer |
 
-```html
-<div id="div1"></div>
-<m3e-swipe-gesture for="div1"></m3e-swipe-gesture>
-```
+Recognizer-specific attributes are documented by each element's option type in its entry point. For example, tap supports `max-duration`, `max-displacement`, and `max-press-interval`; pan supports `activation-mode`, `lock-axis`, and `min-displacement`.
 
-Listen for the `gesture` event to handle detected swipe gestures:
+## Composing gestures
+
+`sequence` and `repeat` accept recognizers as children when used programmatically, or gesture elements when used declaratively.
 
 ```ts
-const recognizer = document.querySelector("m3e-swipe-gesture");
+import { detectGesture } from "@m3e/web/gestures";
+import { repeat } from "@m3e/web/gestures/repeat";
+import { tap } from "@m3e/web/gestures/tap";
 
-recognizer.addEventListener("gesture", (e) => {
-  const detail = e.detail;
+const doubleTap = repeat({ count: 2 }, tap());
 
-  // Current direction
-  console.log(detail.direction);
+detectGesture(element, doubleTap);
+doubleTap.addListener((detail) => {
+  console.log(`${detail.occurrences.length} taps`);
 });
 ```
 
-### Sequence Gesture
-
-The following example illustrates detecting gesture sequences using `<m3e-sequence-gesture>`.
-
-The `<m3e-sequence-gesture>` accepts one or more gesture elements, each representing one step in the sequence.
-
-The recognizer emits a gesture only after **all child gestures complete in order**. If any gesture fails, the entire sequence fails.
-
-The following example illustrates detecting a **press + tap** sequence (long‑press followed by a tap):
-
 ```html
-<div id="div1"></div>
-
-<m3e-sequence-gesture for="div1">
+<div id="canvas"></div>
+<m3e-sequence-gesture for="canvas">
   <m3e-long-press-gesture></m3e-long-press-gesture>
   <m3e-tap-gesture></m3e-tap-gesture>
 </m3e-sequence-gesture>
 ```
 
-Listen for the `gesture` event to handle completed sequences:
+## Gesture phases
+
+Every gesture detail includes a `phase` describing its position in the recognition lifecycle:
+
+| Phase    | Description                                                                                                |
+| -------- | ---------------------------------------------------------------------------------------------------------- |
+| `start`  | The recognizer has begun tracking or has activated the gesture.                                            |
+| `update` | The active gesture has changed or progressed. Details such as movement, scale, or rotation may be updated. |
+| `end`    | The gesture completed successfully.                                                                        |
+| `cancel` | The gesture failed, was interrupted, or lost the input stream.                                             |
+
+Not every recognizer emits every phase. Continuous recognizers such as pan, scale, rotate, and transform can emit `start`, `update`, and `end`; a failed recognition may emit `cancel`. Discrete recognizers may emit only the phases relevant to their lifecycle.
 
 ```ts
-const recognizer = document.querySelector("m3e-sequence-gesture");
-
-recognizer.addEventListener("gesture", (e) => {
-  const detail = e.detail;
-
-  // Sequence steps in order (press detail, then tap detail)
-  console.log(detail.sequence.length);
-
-  // Access each step's detail
-  const pressDetail = detail.sequence[0];
-  const tapDetail = detail.sequence[1];
-
-  console.log("Press duration:", pressDetail.duration);
-  console.log("Tap timestamp:", tapDetail.timestamp);
+recognizer.addListener((detail) => {
+  switch (detail.phase) {
+    case "start":
+      console.log("Gesture started");
+      break;
+    case "update":
+      console.log("Gesture changed");
+      break;
+    case "end":
+      console.log("Gesture completed");
+      break;
+    case "cancel":
+      console.log("Gesture cancelled");
+      break;
+  }
 });
 ```
 
-### Fling Gesture
+## Gesture details
 
-The following example illustrates detecting fling gestures on an element using `<m3e-fling-gesture>`.
-Use the `for` attribute to bind the gesture recognizer to a target element:
+Details share an `inputId`, `timestamp`, `gestureName`, and `phase`. The remaining fields depend on the recognizer:
 
-```html
-<div id="div1"></div>
-<m3e-fling-gesture for="div1"></m3e-fling-gesture>
-```
+| Gesture    | Useful detail fields                                                                |
+| ---------- | ----------------------------------------------------------------------------------- |
+| Tap        | `duration`, `pointers`                                                              |
+| Long press | `phase`, `duration`, `clientX`, `clientY`                                           |
+| Pan        | `phase`, `deltaX`, `deltaY`, `totalDeltaX`, `totalDeltaY`, `velocityX`, `velocityY` |
+| Swipe      | `direction`, `axis`, `distance`, `speed`, `angle`                                   |
+| Scale      | `phase`, `scale`, `distance`, `clientCenterX`, `clientCenterY`                      |
+| Rotate     | `rotation`, `rotationDelta`, `rotationVelocity`, `currentAngle`                     |
+| Transform  | `phase`, translation, scale, and rotation values                                    |
+| Sequence   | `sequence` containing each child detail                                             |
+| Repeat     | `occurrences` containing each completed detail                                      |
 
-Listen for the `gesture` event to handle detected fling gestures:
-
-```ts
-const recognizer = document.querySelector("m3e-fling-gesture");
-
-recognizer.addEventListener("gesture", (e) => {
-  const detail = e.detail;
-
-  // Current direction
-  console.log(detail.direction);
-});
-```
-
-### Long-Press Gesture
-
-The following example illustrates detecting long-press gestures on an element using `<m3e-long-press-gesture>`.
-Use the `for` attribute to bind the gesture recognizer to a target element:
-
-```html
-<div id="div1"></div>
-<m3e-long-press-gesture for="div1"></m3e-long-press-gesture>
-```
-
-Listen for the `gesture` event to handle detected long-press gestures:
+Use the generated TypeScript declarations for the complete detail and option contracts:
 
 ```ts
-const recognizer = document.querySelector("m3e-long-press-gesture");
-
-recognizer.addEventListener("gesture", (e) => {
-  const detail = e.detail;
-
-  // Current phase (start, end,)
-  console.log(detail.phase);
-
-  // Total long-press duration
-  console.log(detail.duration);
-});
+import type { TapGestureDetail } from "@m3e/web/gestures/tap";
+import type { PanGestureOptions } from "@m3e/web/gestures/pan";
 ```
 
-### Scale Gesture
+## Creating custom recognizers
 
-The following example illustrates detecting scale gestures on an element using `<m3e-scale-gesture>`.
-Use the `for` attribute to bind the gesture recognizer to a target element:
-
-```html
-<div id="div1"></div>
-<m3e-scale-gesture for="div1"></m3e-scale-gesture>
-```
-
-Listen for the `gesture` event to handle detected scale gestures:
+Extend `GestureRecognizerBase` when implementing a recognizer from normalized input. Define an options interface that extends `GestureOptions`, a detail interface that extends `GestureDetail`, and a default value for every custom option.
 
 ```ts
-const recognizer = document.querySelector("m3e-scale-gesture");
+import {
+  DefaultGestureOptions,
+  GestureDetail,
+  GestureOptions,
+  PointerInput,
+  GestureRecognizerBase,
+} from "@m3e/web/gestures";
 
-recognizer.addEventListener("gesture", (e) => {
-  const detail = e.detail;
+interface CustomGestureOptions extends GestureOptions {
+  minDistance: number;
+}
 
-  // Current phase (start, move, end, cancel)
-  console.log(detail.phase);
+interface CustomGestureDetail extends GestureDetail {
+  distance: number;
+}
 
-  // Scale factor relative to the initial pointer distance.
-  // A value of 1 represents no scaling; values >1 indicate expansion,
-  // and values <1 indicate contraction.
-  console.log(detail.scale);
-});
-```
+class CustomGestureRecognizer extends GestureRecognizerBase<CustomGestureOptions, CustomGestureDetail> {
+  override get defaultOptions(): CustomGestureOptions {
+    return { ...DefaultGestureOptions, minDistance: 8 };
+  }
 
-### Repeat Gesture
+  protected override _onPointerDown(input: PointerInput): void {
+    this._hold(input.inputId);
+  }
 
-The following example illustrates detecting repeated gestures on an element using `<m3e-repeat-gesture>`.
+  protected override _onPointerMove(input: PointerInput): void {
+    // Evaluate the input and call _accept, _reject, _hold, _release, or _defer.
+  }
 
-The `<m3e-repeat-gesture>` accepts a **single child gesture element** which defines the gesture to repeat.
+  protected override _onAccept(_inputId: number): void {
+    // Emit CustomGestureDetail when the resolver accepts the claim.
+  }
 
-Use the `count` attribute to specify how many times the gesture must occur before it is recognized. The default value is **2** (double‑gesture).
+  protected override _onReject(_inputId: number): void {
+    // Stop tracking state for a rejected input stream.
+  }
 
-```html
-<div id="div1"></div>
-
-<!-- Detect a double‑tap (default count = 2) -->
-<m3e-repeat-gesture for="div1">
-  <m3e-tap-gesture></m3e-tap-gesture>
-</m3e-repeat-gesture>
-
-<!-- Detect a triple‑tap -->
-<m3e-repeat-gesture for="div1" count="3">
-  <m3e-tap-gesture></m3e-tap-gesture>
-</m3e-repeat-gesture>
-```
-
-Listen for the `gesture` event to handle repeated gestures:
-
-```ts
-const recognizer = document.querySelector("m3e-repeat-gesture");
-
-recognizer.addEventListener("gesture", (e) => {
-  const detail = e.detail;
-
-  // Number of completed occurrences (e.g., 2 for a double‑tap)
-  console.log(detail.occurrences.length);
-
-  // Access each occurrence's detail
-  detail.occurrences.forEach((occ, i) => {
-    console.log(`Occurrence ${i + 1}:`, occ.timestamp);
-  });
-});
-```
-
-## 📖 API Reference
-
-This section details the attributes and events available for gesture elements.
-
-### ⚙️ Common Attributes
-
-All gesture elements support the following attributes:
-
-| Attribute       | Type                       | Default             | Description                                                                  |
-| --------------- | -------------------------- | ------------------- | ---------------------------------------------------------------------------- |
-| `for`           | `string`                   |                     | The identifier of the interactive control to which this element is attached. |
-| `disabled`      | `boolean`                  | `false`             | Whether gesture recognition is disabled.                                     |
-| `priority`      | `number`                   | `1`                 | The priority in which to recognize gestures.                                 |
-| `buttons`       | `string` (space-separated) | `"primary"`         | Which buttons can be pressed.                                                |
-| `pointer-types` | `string` (space-separated) | `"mouse pen touch"` | Which types of pointers can be used to recognize gestures.                   |
-
-### 🗂️ m3e-tap-gesture
-
-Recognizes one or more taps within a specified timeframe.
-
-#### ⚙️ Attributes
-
-| Attribute              | Type     | Default | Description                                                        |
-| ---------------------- | -------- | ------- | ------------------------------------------------------------------ |
-| `pointers`             | `number` | `1`     | Number of pointers that must be pressed before the gesture fails.  |
-| `max-duration`         | `number` | `180`   | Maximum time (ms) taps can be pressed before the gesture fails.    |
-| `max-displacement`     | `number` | `12`    | Maximum distance (px) a pointer can move before the gesture fails. |
-| `max-press-interval`   | `number` | `120`   | Maximum time (ms) between tap presses.                             |
-| `max-release-interval` | `number` | `120`   | Maximum time (ms) between tap releases.                            |
-
-#### 📡 Events
-
-| Event     | Description                               |
-| --------- | ----------------------------------------- |
-| `gesture` | Emitted when a tap gesture is recognized. |
-
-#### Gesture Detail
-
-```ts
-{
-  id: number;                 // Identifier of the input that produced the gesture
-  timestamp: number;          // Timestamp the gesture was detected
-  gestureType: "tap";         // The type of the gesture
-  duration: number;           // The total press duration (ms)
-  pointers: [{
-    id: number;               // Identifier of the input that produced the detail
-    timestamp: number;        // Timestamp the detail was detected
-    clientX: number;          // Viewport x-coordinate where the tap began
-    clientY: number;          // Viewport y-coordinate where the tap began
-    localX: number;           // Element-relative x-coordinate where the tap began
-    localY: number;           // Element-relative y-coordinate where the tap began
-    duration: number;         // The total press duration (ms)
-  }];
+  override reset(): void {
+    // Clear all internal tracking state.
+  }
 }
 ```
 
-### 🗂️ m3e-pan-gesture
+`GestureRecognizerBase` filters disabled recognizers, pointer types, buttons, and `inputFilter` before dispatching normalized input to the protected pointer and wheel hooks. Use its protected helpers to participate in arbitration:
 
-Recognizes continuous dragging with directional and velocity tracking.
+| Helper              | Purpose                                                   |
+| ------------------- | --------------------------------------------------------- |
+| `_accept(inputId)`  | Claim an input stream.                                    |
+| `_reject(inputId)`  | Withdraw from an input stream.                            |
+| `_hold(inputId)`    | Delay arbitration while more input is required.           |
+| `_release(inputId)` | Release a previous hold.                                  |
+| `_defer(inputId)`   | Stay active without blocking another recognizer.          |
+| `_emit(detail)`     | Notify registered listeners with semantic gesture detail. |
 
-#### ⚙️ Attributes
-
-| Attribute          | Type                | Default   | Description                                                                                    |
-| ------------------ | ------------------- | --------- | ---------------------------------------------------------------------------------------------- |
-| `activation-mode`  | `"press" \| "move"` | `"press"` | Mode in which to activate the gesture.                                                         |
-| `min-displacement` | `number`            | `4`       | Minimum distance (px) a pointer can move before the gesture starts.                            |
-| `lock-axis`        | `string`            | `"none"`  | Locks movement to an axis: `"x"`, `"y"`, `"lock"`, or `"none"`.                                |
-| `axis-threshold`   | `number`            | `8`       | Minimum total displacement (px) required before axis locking resolves.                         |
-| `delta-threshold`  | `number`            | `0`       | Minimum incremental movement (px) on the secondary axis required before emitting move updates. |
-
-#### 📡 Events
-
-| Event     | Description                              |
-| --------- | ---------------------------------------- |
-| `gesture` | Emitted for each phase of a pan gesture. |
-
-#### Gesture Detail
+Implement `_onAccept`, `_onReject`, and `reset` to handle resolver results and cleanup. Bind a custom recognizer with `detectGesture` just like a built-in recognizer:
 
 ```ts
-{
-  id: number; // Identifier of the input that produced the gesture
-  timestamp: number; // Timestamp the gesture was detected
-  gestureType: "pan"; // The type of the gesture
-  phase: "start" | "move" | "end" | "cancel"; // Current phase of the pan gesture
-  startClientX: number; // Viewport x-coordinate where the pan began
-  startClientY: number; // Viewport y-coordinate where the pan began
-  clientX: number; // Current viewport x-coordinate
-  clientY: number; // Current viewport y-coordinate
-  startLocalX: number; // Element-relative x-coordinate where the pan began
-  startLocalY: number; // Element-relative y-coordinate where the pan began
-  localX: number; // Current element-relative x-coordinate
-  localY: number; // Current element-relative y-coordinate
-  deltaX: number; // Incremental x-axis movement since the previous pan event
-  deltaY: number; // Incremental y-axis movement since the previous pan event
-  primaryDelta: number; // Incremental movement along the resolved primary axis. Equals `deltaX` for horizontal pans and `deltaY` for vertical pans
-  totalPrimaryDelta: number; // Total movement along the resolved primary axis since pan start. Equals `totalDeltaX` for horizontal pans and `totalDeltaY` for vertical pans
-  velocityX: number; // Instantaneous x-axis velocity in px/ms
-  velocityY: number; // Instantaneous y-axis velocity in px/ms
-  totalDeltaX: number; // Total x-axis displacement since pan start
-  totalDeltaY: number; // Total y-axis displacement since pan start
-  speed: number; // Magnitude of the velocity vector
-  angle: number; // Movement angle in radians, based on total displacement. Computed as atan2(totalDeltaY, totalDeltaX)
-  directionX: number; // Movement direction along the x-axis: -1, 0, or 1
-  directionY: number; // Movement direction along the y-axis: -1, 0, or 1
-  orientation: "horizontal" | "vertical"; // Resolved pan orientation based on dominant total displacement
+import { detectGesture } from "@m3e/web/gestures";
+
+const recognizer = new CustomGestureRecognizer({ minDistance: 12 });
+const controller = detectGesture(element, recognizer);
+```
+
+To expose the recognizer declaratively, extend `GestureElementBase`, expose any custom options as reactive properties, and provide the recognizer instance:
+
+```ts
+import { PropertyValues } from "lit";
+import { property } from "lit/decorators.js";
+
+import { customElement } from "@m3e/web/core";
+import { GestureElementBase } from "@m3e/web/gestures";
+
+import { CustomGestureDetail, CustomGestureOptions, CustomGestureRecognizer } from "./CustomGestureRecognizer";
+
+@customElement("m3e-custom-gesture")
+class M3eCustomGestureElement extends GestureElementBase<CustomGestureOptions, CustomGestureDetail> {
+  readonly recognizer = new CustomGestureRecognizer();
+
+  @property({ type: Number }) minDistance = 8;
+
+  protected override willUpdate(changedProperties: PropertyValues<this>): void {
+    super.willUpdate(changedProperties);
+    this.recognizer.options = { minDistance: this.minDistance };
+  }
 }
 ```
 
-### 🗂️ m3e-swipe-gesture
-
-Recognizes fast directional swipes.
-
-#### ⚙️ Attributes
-
-| Attribute             | Type     | Default                | Description                                                              |
-| --------------------- | -------- | ---------------------- | ------------------------------------------------------------------------ |
-| `max-displacement`    | `number` | `24`                   | Maximum distance (px) a pointer can move before the gesture fails.       |
-| `min-velocity`        | `number` | `0.3`                  | Minimum velocity (px/ms) required to recognize a swipe.                  |
-| `direction-threshold` | `number` | `8`                    | Minimum displacement (px) required before direction is considered valid. |
-| `directions`          | `string` | `"left right up down"` | The allowed directions of the swipe (space-separated).                   |
-
-#### 📡 Events
-
-| Event     | Description                                     |
-| --------- | ----------------------------------------------- |
-| `gesture` | Emitted for each phase of a long-press gesture. |
-
-#### Gesture Detail
-
-```ts
-{
-  id: number; // Identifier of the input that produced the gesture
-  timestamp: number; // Timestamp the gesture was detected
-  gestureType: "swipe"; // The type of the gesture
-  direction: "left" | "right" | "up" | "down"; // Resolved swipe direction
-  axis: "x" | "y"; // Dominant axis of the swipe
-  distance: number; // Total movement distance (px) traveled by the pointer
-  speed: number; // Velocity magnitude (px/ms)
-  angle: number; // Angle (radians) of movement
-}
-```
-
-### 🗂️ m3e-fling-gesture
-
-Recognizes very fast fling gestures (high-velocity swipes).
-
-#### ⚙️ Attributes
-
-| Attribute             | Type     | Default                | Description                                                                     |
-| --------------------- | -------- | ---------------------- | ------------------------------------------------------------------------------- |
-| `min-displacement`    | `number` | `12`                   | Minimum distance (px) a pointer must move before the gesture can be recognized. |
-| `min-velocity`        | `number` | `0.3`                  | Minimum velocity (px/ms) required to recognize a fling.                         |
-| `direction-threshold` | `number` | `12`                   | Minimum displacement (px) required before direction is considered valid.        |
-| `directions`          | `string` | `"left right up down"` | The allowed directions of the fling (space-separated).                          |
-
-#### 📡 Events
-
-| Event     | Description                                 |
-| --------- | ------------------------------------------- |
-| `gesture` | Emitted when a fling gesture is recognized. |
-
-#### Gesture Detail
-
-```ts
-{
-  id: number; // Identifier of the input that produced the gesture
-  timestamp: number; // Timestamp the gesture was detected
-  gestureType: "fling"; // The type of the gesture
-  direction: "left" | "right" | "up" | "down"; // Resolved fling direction
-  axis: "x" | "y"; // Dominant axis of the fling
-  distance: number; // Total movement distance (px) traveled by the pointer
-  speed: number; // Velocity magnitude (px/ms)
-  angle: number; // Angle (radians) of movement
-}
-```
-
-### 🗂️ m3e-long-press-gesture
-
-Recognizes when a pointer remains pressed for a minimum duration.
-
-#### ⚙️ Attributes
-
-| Attribute          | Type     | Default | Description                                         |
-| ------------------ | -------- | ------- | --------------------------------------------------- |
-| `min-duration`     | `number` | `500`   | Minimum press duration (ms) for recognition.        |
-| `max-displacement` | `number` | `4`     | Maximum pointer movement (px) before gesture fails. |
-
-#### 📡 Events
-
-| Event     | Description                                     |
-| --------- | ----------------------------------------------- |
-| `gesture` | Emitted for each phase of a long-press gesture. |
-
-#### Gesture Detail
-
-```ts
-{
-  id: number; // Identifier of the input that produced the gesture
-  timestamp: number; // Timestamp the gesture was detected
-  gestureType: "long-press"; // The type of the gesture
-  phase: "start" | "end"; // The phase of the gesture
-  clientX: number; // Viewport x-coordinate where the long-press began
-  clientY: number; // Viewport y-coordinate where the long-press began
-  localX: number; // Element-relative x-coordinate where the long-press began
-  localY: number; // Element-relative y-coordinate where the long-press began
-  duration: number; // The total press duration (ms)
-}
-```
-
-### 🗂️ m3e-scale-gesture
-
-Recognizes multi-pointer pinch and spread gestures.
-
-#### ⚙️ Attributes
-
-| Attribute            | Type     | Default | Description                                     |
-| -------------------- | -------- | ------- | ----------------------------------------------- |
-| `pointers`           | `number` | `2`     | Number of pointers required for recognition.    |
-| `distance-threshold` | `number` | `4`     | Minimum distance change (px) to activate scale. |
-
-#### 📡 Events
-
-| Event     | Description                                |
-| --------- | ------------------------------------------ |
-| `gesture` | Emitted for each phase of a scale gesture. |
-
-#### Gesture Detail
-
-```ts
-{
-  id: number; // Identifier of the input that produced the gesture
-  timestamp: number; // Timestamp the gesture was detected
-  gestureType: "scale"; // The type of the gesture
-  phase: "start" | "move" | "end" | "cancel"; // The current phase of the scale gesture
-  scale: number; // Scale factor relative to the initial pointer distance. A value of 1 represents no scaling; values >1 indicate expansion, and values <1 indicate contraction
-  distance: number; // Average distance of all active pointers from the gesture centroid
-  clientCenterX: number; // Viewport X‑coordinate of the gesture centroid, computed from all active pointers
-  clientCenterY: number; // Viewport Y‑coordinate of the gesture centroid, computed from all active pointers
-  localCenterX: number; // Local X‑coordinate of the gesture centroid, relative to the target element's bounding box
-  localCenterY: number; // Local Y‑coordinate of the gesture centroid, relative to the target element's bounding box
-  pointers: number; // Number of active pointers contributing to the scale gesture
-}
-```
-
-### 🗂️ m3e-sequence-gesture
-
-Recognizes a sequence of gestures performed in order. The recognizer emits a gesture only after **all child gestures complete in order**. If any gesture fails, the entire sequence fails.
-
-#### ⚙️ Attributes
-
-| Attribute      | Type     | Default | Description                                                   |
-| -------------- | -------- | ------- | ------------------------------------------------------------- |
-| `max-interval` | `number` | `250`   | Maximum time (ms) between gestures before the sequence fails. |
-
-#### 🧩 Slots
-
-| Slot        | Description                             |
-| ----------- | --------------------------------------- |
-| _(default)_ | The gestures that make up the sequence. |
-
-#### 📡 Events
-
-| Event     | Description                                   |
-| --------- | --------------------------------------------- |
-| `gesture` | Emitted for each phase of a sequence gesture. |
-
-#### Gesture Detail
-
-```ts
-{
-  id: number;                      // Identifier of the input that produced the gesture
-  timestamp: number;               // Timestamp the gesture was detected
-  gestureType: "sequence";         // The type of the gesture
-  sequence: readonly GestureDetail[]; // The details for each gesture in the sequence
-}
-```
-
-### 🗂️ m3e-repeat-gesture
-
-Recognizes a given number of repeated gestures. Accepts a **single child gesture element** which defines the gesture to repeat. Use the `count` attribute to specify how many times the gesture must occur before it is recognized. The default value is **2** (double‑gesture).
-
-#### ⚙️ Attributes
-
-| Attribute      | Type     | Default | Description                                                           |
-| -------------- | -------- | ------- | --------------------------------------------------------------------- |
-| `count`        | `number` | `2`     | Number of times a gesture must be repeated.                           |
-| `max-interval` | `number` | `250`   | Maximum time (ms) between gestures before the repeated gesture fails. |
-
-#### 🧩 Slots
-
-| Slot        | Description            |
-| ----------- | ---------------------- |
-| _(default)_ | The gesture to repeat. |
-
-#### 📡 Events
-
-| Event     | Description                                    |
-| --------- | ---------------------------------------------- |
-| `gesture` | Emitted when a repeated gesture is recognized. |
-
-#### Gesture Detail
-
-```ts
-{
-  id: number;                            // Identifier of the input that produced the gesture
-  timestamp: number;                     // Timestamp the gesture was detected
-  gestureType: "repeat";                 // The type of the gesture
-  occurrences: readonly GestureDetail[]; // The details for each occurrence of the gesture
-}
-```
+Use `DelegatingGestureRecognizerBase` instead when the custom recognizer transforms or composes another recognizer's input and detail. This keeps input forwarding, resolution, disabled state, and option propagation aligned with the built-in composed recognizers.

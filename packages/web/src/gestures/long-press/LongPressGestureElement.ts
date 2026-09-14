@@ -1,83 +1,73 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-
 import { PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import {
-  LongPressGestureDetail,
-  LongPressGestureOptions,
-  LongPressGestureRecognizer,
-} from "./LongPressGestureRecognizer";
+import { LongPressGestureDetail } from "./LongPressGestureDetail";
+import { LongPressGestureOptions } from "./LongPressGestureOptions";
+import { LongPressGestureRecognizer } from "./LongPressGestureRecognizer";
 
 /**
- * A non-visual element used to detect a long-press gesture for an associated element.
+ * A non-visual element used to detect and interpret long-press gestures from an input stream
+ * produced from an attached element.
+ *
  * @tag m3e-long-press-gesture
  *
- * @example
- * The following example illustrates detecting long-press gestures on an element using `<m3e-long-press-gesture>`.
- * Use the `for` attribute to bind the gesture recognizer to a target element:
- *
- * ```html
- * <div id="div1"></div>
- * <m3e-long-press-gesture for="div1"></m3e-long-press-gesture>
- * ```
- *
- * Listen for the `gesture` event to handle detected long-press gestures:
- *
- * ```ts
- * const recognizer = document.querySelector("m3e-long-press-gesture");
- *
- * recognizer.addEventListener("gesture", e => {
- *   const detail = e.detail;
- *
- *   // Current phase (start, end,)
- *   console.log(detail.phase);
- *
- *   // Total long-press duration
- *   console.log(detail.duration);
- * });
- * ```
  * @attr for - The identifier of the interactive control to which this element is attached.
  * @attr buttons - Which buttons can be pressed.
  * @attr pointer-types - Which types of pointers can be used to recognize gestures.
  * @attr disabled - Whether gesture recognition is disabled.
  * @attr priority - The priority in which to recognize gestures.
- * @attr max-displacement - Maximum distance (px) a pointer can move before the gesture fails.
+ * @attr pointers - Number of pointers required for the gesture to be recognized.
+ * @attr max-displacement - Maximum allowed movement (px).
  * @attr min-duration - Minimum time (ms) a pointer must remain pressed.
+ * @attr max-press-interval - Maximum allowed time (ms) between the earliest and latest press.
  *
- * @fires gesture - Emitted for each phase of a long-press gesture.
+ * @fires gesture - Emitted when semantic detail about a gesture is detected.
  */
 @customElement("m3e-long-press-gesture")
-export class M3eLongPressGestureElement extends GestureElementBase<LongPressGestureOptions> {
-  constructor() {
-    super(LongPressGestureRecognizer.gestureType);
-  }
+export class M3eLongPressGestureElement extends GestureElementBase<LongPressGestureOptions, LongPressGestureDetail> {
+  /** @inheritdoc */
+  override readonly recognizer = new LongPressGestureRecognizer();
 
   /**
-   * Maximum distance (px) a pointer can move before the gesture fails.
-   * @default 4
+   * Number of pointers required for the gesture to be recognized.
+   * @default 1
    */
-  @property({ attribute: "max-displacement", type: Number }) maxDisplacement: number = 4;
+  @property({ type: Number, reflect: false }) pointers: number = this.recognizer.defaultOptions.pointers;
 
   /**
    * Minimum time (ms) a pointer must remain pressed.
    * @default 500
    */
-  @property({ attribute: "min-duration", type: Number }) minDuration: number = 500;
+  @property({ attribute: "min-duration", type: Number, reflect: false }) minDuration: number =
+    this.recognizer.defaultOptions.minDuration;
+
+  /**
+   * Maximum allowed movement (px).
+   * @default 4
+   */
+  @property({ attribute: "max-displacement", type: Number, reflect: false }) maxDisplacement: number =
+    this.recognizer.defaultOptions.maxDisplacement;
+
+  /**
+   * Maximum allowed time (ms) between the earliest and latest press.
+   * @default 120
+   */
+  @property({ attribute: "max-press-interval", type: Number, reflect: false }) maxPressInterval: number =
+    this.recognizer.defaultOptions.maxPressInterval;
 
   /** @inheritdoc */
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
-
-    if (_changedProperties.has("maxDisplacement")) {
-      this.gestureController.update({ maxDisplacement: this.maxDisplacement });
-    }
-    if (_changedProperties.has("minDuration")) {
-      this.gestureController.update({ minDuration: this.minDuration });
-    }
+    this.recognizer.options = {
+      pointers: this.pointers,
+      minDuration: this.minDuration,
+      maxDisplacement: this.maxDisplacement,
+      maxPressInterval: this.maxPressInterval,
+    };
   }
 }
 

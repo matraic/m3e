@@ -1,79 +1,23 @@
-import {
-  GestureDetail,
-  gestureRecognizer,
-  GestureRecognizerBase,
-  GestureRecognizerOptions,
-  PointerInput,
-} from "@m3e/web/gestures";
+import { GesturePhase, GestureRecognizerBase, PointerInput, PointerTracker } from "@m3e/web/gestures";
 
-/**
- * Represents the lifecycle phases of a long-press gesture.
- * - `start` — The gesture is recognized after the pointer has remained stationary for the required duration.
- * - `end`   — The gesture concludes when the pointer is released after recognition.
- */
-export type LongPressGesturePhase = "start" | "end";
+import { LongPressGestureDetail } from "./LongPressGestureDetail";
+import { DefaultLongPressGestureOptions, LongPressGestureOptions } from "./LongPressGestureOptions";
 
-/** Encapsulates detail about a long-press gesture. */
-export interface LongPressGestureDetail extends GestureDetail {
-  /** The phase of the gesture. */
-  readonly phase: LongPressGesturePhase;
-
-  /** Viewport x-coordinate where the long-press began. */
-  readonly clientX: number;
-
-  /** Viewport y-coordinate where the long-press began. */
-  readonly clientY: number;
-
-  /** Element-relative x-coordinate where the long-press began. */
-  readonly localX: number;
-
-  /** Element-relative y-coordinate where the long-press began. */
-  readonly localY: number;
-
-  /** The total press duration (ms). */
-  readonly duration: number;
-}
-
-/** Encapsulates options used to recognize a long-press gesture. */
-export interface LongPressGestureOptions extends GestureRecognizerOptions {
-  /**
-   * Maximum distance (px) a pointer can move before the gesture fails.
-   * @default 4
-   */
-  readonly maxDisplacement: number;
-
-  /**
-   * Minimum time (ms) a pointer must remain pressed.
-   * @default 500
-   */
-  readonly minDuration: number;
-}
-
-/** State used to recognize long-press gestures. */
-interface GestureState {
-  id: number;
-  clientX: number;
-  clientY: number;
-  localX: number;
-  localY: number;
-  startTime: number;
-  endTime: number;
-  timer: number;
-  accepted: boolean;
-}
-
-/** Recognizes a long-press gesture. */
-@gestureRecognizer("long-press")
+/** A {@link GestureRecognizer} used to detect and interpret long-press gestures from incoming input streams. */
 export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressGestureOptions, LongPressGestureDetail> {
-  /** @private */ #state?: GestureState;
+  /** @private */ readonly #state = new Map<
+    number,
+    { tracker: PointerTracker; pressTimestamp: number; accepted?: boolean }
+  >();
+
+  /** @private */ #timeout?: number;
+  /** @private */ #started = false;
+  /** @private */ #cancelled = false;
+  /** @private */ #cancelling = false;
 
   /** @inheritdoc */
-  protected override get _defaultOptions(): Partial<LongPressGestureOptions> {
-    return {
-      ...super._defaultOptions,
-      maxDisplacement: 4,
-      minDuration: 500,
-    };
+  override get defaultOptions(): LongPressGestureOptions {
+    return { ...DefaultLongPressGestureOptions };
   }
 
   /** @inheritdoc */
@@ -82,108 +26,150 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
   }
 
   /** @inheritdoc */
-  override shouldCapturePointer(_input: PointerInput): boolean {
-    return this.#state !== undefined && this.#state.id === _input.id;
+  override shouldCapturePointer(input: PointerInput): boolean {
+    return this.#state.has(input.inputId);
   }
 
   /** @inheritdoc */
   override _onPointerDown(input: PointerInput): void {
-    if (!this.#state) {
-      const bounds = input.currentTarget.getBoundingClientRect();
+    // Reject duplicate input or too many pointers.
+    if (this.#state.has(input.inputId) || this.#state.size >= this.options.pointers) {
+      this.#cancel();
+      return;
+    }
 
-      // Begin tracking
-      this.#state = {
-        id: input.id,
-        clientX: input.clientX,
-        clientY: input.clientY,
-        localX: input.clientX - bounds.left,
-        localY: input.clientY - bounds.top,
-        startTime: input.timestamp,
-        endTime: input.timestamp,
-        accepted: false,
-        timer: setTimeout(() => {
-          // Accept if not yet rejected
-          if (this.#state) {
-            this.#state.accepted = true;
-            this.#state.endTime = this.#state.startTime + this.options.minDuration;
-            this._acceptInput(this.#state.id);
+    // Reject if press exceeds interval from initial press.
+    if (this.#state.size > 0 && this.options.maxPressInterval > 0) {
+      const initialPress = Math.min(...[...this.#state.values()].map((x) => x.pressTimestamp));
+      if (input.timestamp - initialPress > this.options.maxPressInterval) {
+        this.#cancel();
+        return;
+      }
+    }
+
+    this.#state.set(input.inputId, { tracker: new PointerTracker(input), pressTimestamp: input.timestamp });
+
+    this._defer(input.inputId);
+
+    if (this.#state.size === this.options.pointers) {
+      // Emit start only when all pointers are down.
+      this.#started = true;
+      this._emit(this.#createDetail("start"));
+
+      // Start acceptance timeout
+      this.#timeout = setTimeout(() => {
+        if (!this.#cancelled) {
+          // Acceptance emits the final detail only after every pointer is accepted.
+          for (const inputId of this.#state.keys()) {
+            this._accept(inputId);
           }
-        }, this.options.minDuration),
-      };
-    } else {
-      // Reject when multiple pointers detected
-      this._rejectInput(this.#state.id);
+        }
+      }, this.options.minDuration);
     }
   }
 
   /** @inheritdoc */
   override _onPointerMove(input: PointerInput): void {
-    if (!this.#state) return;
+    // Ignore if pointer is not tracked.
+    const state = this.#state.get(input.inputId);
+    if (!state) return;
 
-    // Reject if max displacement is exceeded
-    const dx = input.clientX - this.#state.clientX;
-    const dy = input.clientY - this.#state.clientY;
-    const maxDispSq = this.options.maxDisplacement * this.options.maxDisplacement;
-    const maxDisplacementExceeded = dx * dx + dy * dy > maxDispSq;
+    state.tracker.append(input);
 
-    if (maxDisplacementExceeded) {
-      this._rejectInput(this.#state.id);
+    // Only enforce displacement after gesture has started and not cancelled.
+    if (!this.#started || this.#cancelled) return;
+
+    // Reject when the centroid of the pointers moves beyond the allowed displacement.
+    const trackers = [...this.#state.values()].map((x) => x.tracker);
+    if (PointerTracker.centroid(...trackers).totalDisplacement > this.options.maxDisplacement) {
+      this.#cancel();
     }
   }
 
   /** @inheritdoc */
   override _onPointerUp(input: PointerInput): void {
-    if (this.#state && this.#state.id === input.id) {
-      // Reject if pointer up occurs before accepted (eagerly)
-      if (!this.#state.accepted) {
-        this._rejectInput(this.#state.id);
-      } else {
-        // End the gesture
-        this.#state.endTime = input.timestamp;
-        this._emitGesture(this.#createDetail("end", this.#state));
-        this.reset();
-      }
+    const state = this.#state.get(input.inputId);
+    if (state) {
+      // If any pointer comes up before the gesture has fully ended, the long‑press must cancel.
+      // If pointers are pending acceptance (other gestures have holds), these will be rejected.
+      this.#cancel();
     }
   }
 
   /** @inheritdoc */
   override _onPointerCancel(input: PointerInput) {
-    if (this.#state && this.#state.id === input.id) {
-      this._rejectInput(this.#state.id);
+    const state = this.#state.get(input.inputId);
+    if (state) {
+      this.#cancel();
     }
   }
 
   /** @inheritdoc */
-  protected override _onAcceptInput(id: number): void {
-    if (!this.#state || this.#state.id !== id) return;
-    this._emitGesture(this.#createDetail("start", this.#state));
-  }
+  override _onAccept(inputId: number): void {
+    const state = this.#state.get(inputId);
+    if (!state) return;
 
-  /** @inheritdoc */
-  protected override _onRejectInput(id: number): void {
-    if (this.#state?.id === id) {
+    state.accepted = true;
+
+    // Only emit end if gesture started, not cancelled and all inputs are accepted.
+    if (this.#started && !this.#cancelled && [...this.#state.values()].every((x) => x.accepted)) {
+      this._emit(this.#createDetail("end"));
       this.reset();
     }
   }
 
   /** @inheritdoc */
-  override reset(): void {
-    clearTimeout(this.#state?.timer);
-    this.#state = undefined;
+  protected override _onReject(inputId: number): void {
+    if (this.#state.has(inputId)) {
+      this.#cancel(inputId);
+    }
+  }
+
+  /** @inheritdoc */
+  reset(): void {
+    clearTimeout(this.#timeout);
+    this.#timeout = undefined;
+    this.#state.clear();
+    this.#started = false;
+    this.#cancelled = false;
   }
 
   /** @private */
-  #createDetail(phase: LongPressGesturePhase, state: GestureState): LongPressGestureDetail {
+  #cancel(excludeInputId?: number): void {
+    // Resolver callbacks are synchronous, so guard the rejection loop against recursive cancellation.
+    if (this.#state.size === 0 || this.#cancelling) return;
+    try {
+      this.#cancelling = true;
+
+      // Emit cancel if started and not yet cancelled.
+      if (this.#started && !this.#cancelled) {
+        this._emit(this.#createDetail("cancel"));
+      }
+
+      this.#cancelled = true;
+
+      // Reject all inputs and reset.
+      [...this.#state.keys()].filter((x) => x !== excludeInputId).forEach((x) => this._reject(x));
+      this.reset();
+    } finally {
+      this.#cancelling = false;
+    }
+  }
+
+  /** @private */
+  #createDetail(phase: GesturePhase): LongPressGestureDetail {
+    const trackers = [...this.#state.values()].map((x) => x.tracker);
+    const centroid = PointerTracker.centroid(...trackers);
     return {
-      id: state.id,
-      gestureType: this.gestureType,
-      phase: phase,
-      clientX: state.clientX,
-      clientY: state.clientY,
-      localX: state.localX,
-      localY: state.localY,
-      duration: state.endTime - state.startTime,
-      timestamp: state.endTime,
+      gestureName: "long-press",
+      phase,
+      inputId: [...this.#state.keys()],
+      timestamp: Math.max(...trackers.map((x) => x.current.timestamp)),
+      clientX: centroid.clientX,
+      clientY: centroid.clientY,
+      localX: centroid.localX,
+      localY: centroid.localY,
+      duration: trackers.reduce((sum, x) => sum + x.detail.duration, 0) / trackers.length,
     };
   }
 }

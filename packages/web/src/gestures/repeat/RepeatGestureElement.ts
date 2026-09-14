@@ -6,51 +6,15 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase, GestureRecognizer } from "@m3e/web/gestures";
 
-import { RepeatGestureDetail, RepeatGestureOptions, RepeatGestureRecognizer } from "./RepeatGestureRecognizer";
+import { RepeatGestureRecognizer } from "./RepeatGestureRecognizer";
+import { RepeatGestureOptions } from "./RepeatGestureOptions";
+import { RepeatGestureDetail } from "./RepeatGestureDetail";
 
 /**
- * A non-visual element used to detect a repeated gesture for an associated element.
+ * A non-visual element used to detect and interpret repeated gestures from an input stream
+ * produced from an attached element.
+ *
  * @tag m3e-repeat-gesture
- *
- * @example
- * The following example illustrates detecting repeated gestures on an element using `<m3e-repeat-gesture>`.
- *
- * The `<m3e-repeat-gesture>` accepts a **single child gesture element** which defines the gesture to repeat.
- *
- * Use the `count` attribute to specify how many times the gesture must occur
- * before it is recognized. The default value is **2** (double‑gesture).
- *
- * ```html
- * <div id="div1"></div>
- *
- * <!-- Detect a double‑tap (default count = 2) -->
- * <m3e-repeat-gesture for="div1">
- *   <m3e-tap-gesture></m3e-tap-gesture>
- * </m3e-repeat-gesture>
- *
- * <!-- Detect a triple‑tap -->
- * <m3e-repeat-gesture for="div1" count="3">
- *   <m3e-tap-gesture></m3e-tap-gesture>
- * </m3e-repeat-gesture>
- * ```
- *
- * Listen for the `gesture` event to handle repeated gestures:
- *
- * ```ts
- * const recognizer = document.querySelector("m3e-repeat-gesture");
- *
- * recognizer.addEventListener("gesture", e => {
- *   const detail = e.detail;
- *
- *   // Number of completed occurrences (e.g., 2 for a double‑tap)
- *   console.log(detail.occurrences.length);
- *
- *   // Access each occurrence's detail
- *   detail.occurrences.forEach((occ, i) => {
- *     console.log(`Occurrence ${i + 1}:`, occ.timestamp);
- *   });
- * });
- * ```
  *
  * @slot - The gesture to repeat.
  *
@@ -59,39 +23,36 @@ import { RepeatGestureDetail, RepeatGestureOptions, RepeatGestureRecognizer } fr
  * @attr pointer-types - Which types of pointers can be used to recognize gestures.
  * @attr disabled - Whether gesture recognition is disabled.
  * @attr priority - The priority in which to recognize gestures.
- * @attr max-interval - Maximum time (ms) between gestures before the sequence fails.
+ * @attr max-interval - Maximum allowed time (ms) between consecutive gesture occurrences.
  * @attr count - Number of times a gesture must be repeated.
  *
- * @fires gesture - Emitted when a repeated gesture is recognized.
+ * @fires gesture - Emitted when semantic detail about a repeated gesture is detected.
  */
 @customElement("m3e-repeat-gesture")
-export class M3eRepeatGestureElement extends GestureElementBase<RepeatGestureOptions> {
-  constructor() {
-    super(RepeatGestureRecognizer.gestureType);
-  }
+export class M3eRepeatGestureElement extends GestureElementBase<RepeatGestureOptions, RepeatGestureDetail> {
+  /** @inheritdoc */
+  override readonly recognizer = new RepeatGestureRecognizer();
 
   /**
-   * Maximum time (ms) between gestures before the repeated gesture fails.
+   * Maximum allowed time (ms) between consecutive gesture occurrences.
    * @default 250
    */
-  @property({ attribute: "max-interval", type: Number }) maxInterval: number = 250;
+  @property({ attribute: "max-interval", type: Number, reflect: false }) maxInterval: number =
+    this.recognizer.defaultOptions.maxInterval;
 
   /**
    * Number of times a gesture must be repeated.
    * @default 2
    */
-  @property({ type: Number }) count: number = 2;
+  @property({ type: Number, reflect: false }) count: number = this.recognizer.defaultOptions.count;
 
   /** @inheritdoc */
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
-
-    if (_changedProperties.has("maxInterval")) {
-      this.gestureController.update({ maxInterval: this.maxInterval });
-    }
-    if (_changedProperties.has("count")) {
-      this.gestureController.update({ count: this.count });
-    }
+    this.recognizer.options = {
+      maxInterval: this.maxInterval,
+      count: this.count,
+    };
   }
 
   /** @inheritdoc */
@@ -108,16 +69,16 @@ export class M3eRepeatGestureElement extends GestureElementBase<RepeatGestureOpt
     const sequence = new Array<GestureRecognizer>();
 
     for (const element of elements) {
-      // Ensure nested elements are not attached
+      // Ensure nested elements are not attached.
       if (element.htmlFor) {
         element.detach();
         element.removeAttribute("for");
       }
-      sequence.push(element.gestureController.recognizer);
+      sequence.push(element.recognizer);
     }
 
-    // Update recognizer with first recognizer (in order of DOM)
-    this.gestureController.update({ recognizer: sequence[0] });
+    // Update recognizer with first recognizer (in order of DOM).
+    this.recognizer.recognizer = sequence[0];
   }
 }
 

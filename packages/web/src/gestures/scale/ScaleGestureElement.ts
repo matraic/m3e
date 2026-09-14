@@ -1,81 +1,64 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-
 import { PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import { ScaleGestureDetail, ScaleGestureOptions, ScaleGestureRecognizer } from "./ScaleGestureRecognizer";
+import { ScaleGestureDetail } from "./ScaleGestureDetail";
+import { ScaleGestureOptions } from "./ScaleGestureOptions";
+import { ScaleGestureRecognizer } from "./ScaleGestureRecognizer";
 
 /**
- * A non-visual element used to detect a scale gesture for an associated element.
+ * A non-visual element used to detect and interpret scale gestures from an input stream
+ * produced from an attached element.
+ *
  * @tag m3e-scale-gesture
  *
- * @example
- * The following example illustrates detecting scale gestures on an element using `<m3e-scale-gesture>`.
- * Use the `for` attribute to bind the gesture recognizer to a target element:
- *
- * ```html
- * <div id="div1"></div>
- * <m3e-scale-gesture for="div1"></m3e-scale-gesture>
- * ```
- *
- * Listen for the `gesture` event to handle detected scale gestures:
- *
- * ```ts
- * const recognizer = document.querySelector("m3e-scale-gesture");
- *
- * recognizer.addEventListener("gesture", e => {
- *   const detail = e.detail;
- *
- *   // Current phase (start, move, end, cancel)
- *   console.log(detail.phase);
- *
- *   // Scale factor relative to the initial pointer distance.
- *   // A value of 1 represents no scaling; values >1 indicate expansion,
- *   // and values <1 indicate contraction.
- *   console.log(detail.scale);
- * });
- * ```
  * @attr for - The identifier of the interactive control to which this element is attached.
  * @attr buttons - Which buttons can be pressed.
  * @attr pointer-types - Which types of pointers can be used to recognize gestures.
  * @attr disabled - Whether gesture recognition is disabled.
  * @attr priority - The priority in which to recognize gestures.
- * @attr pointers - Number of pointers that must be pressed before the gesture fails.
- * @attr distance-threshold - Minimum distance change (px) required to activate scale.
+ * @attr pointers - Number of pointers required for the gesture to be recognized.
+ * @attr min-displacement - Minimum distance (px) a pointer must move before the gesture starts.
+ * @attr max-press-interval - Maximum allowed time (ms) between the earliest and latest press.
  *
- * @fires gesture - Emitted for each phase of a scale gesture.
+ * @fires gesture - Emitted when semantic detail about a gesture is detected.
  */
 @customElement("m3e-scale-gesture")
-export class M3eScaleGestureElement extends GestureElementBase<ScaleGestureOptions> {
-  constructor() {
-    super(ScaleGestureRecognizer.gestureType);
-  }
+export class M3eScaleGestureElement extends GestureElementBase<ScaleGestureOptions, ScaleGestureDetail> {
+  /** @inheritdoc */
+  override readonly recognizer = new ScaleGestureRecognizer();
 
   /**
-   * Number of pointers that must be pressed before the gesture fails.
+   * Number of pointers required for the gesture to be recognized.
    * @default 2
    */
-  @property({ type: Number }) pointers: number = 2;
+  @property({ type: Number, reflect: false }) pointers: number = this.recognizer.defaultOptions.pointers;
 
   /**
-   * Minimum distance change (px) required to activate scale.
+   * Minimum distance (px) a pointer must move before the gesture starts.
    * @default 4
    */
-  @property({ attribute: "distance-threshold", type: Number }) distanceThreshold = 4;
+  @property({ attribute: "min-displacement", type: Number, reflect: false }) minDisplacement: number =
+    this.recognizer.defaultOptions.minDisplacement;
+
+  /**
+   * Maximum allowed time (ms) between the earliest and latest press.
+   * @default 120
+   */
+  @property({ attribute: "max-press-interval", type: Number, reflect: false }) maxPressInterval: number =
+    this.recognizer.defaultOptions.maxPressInterval;
 
   /** @inheritdoc */
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
-
-    if (_changedProperties.has("pointers")) {
-      this.gestureController.update({ pointers: this.pointers });
-    }
-    if (_changedProperties.has("distanceThreshold")) {
-      this.gestureController.update({ distanceThreshold: this.distanceThreshold });
-    }
+    this.recognizer.options = {
+      pointers: this.pointers,
+      minDisplacement: this.minDisplacement,
+      maxPressInterval: this.maxPressInterval,
+    };
   }
 }
 

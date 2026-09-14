@@ -1,255 +1,194 @@
-import {
-  GestureDetail,
-  gestureRecognizer,
-  GestureRecognizerBase,
-  GestureRecognizerOptions,
-  PointerInput,
-} from "@m3e/web/gestures";
+import { GesturePhase, GestureRecognizerBase, PointerInput, PointerTracker } from "@m3e/web/gestures";
 
-/** Encapsulates pointer detail about a tap gesture. */
-export interface TapPointerGestureDetail {
-  /** Identifier of the input that produced the detail. */
-  readonly id: number;
+import { TapGestureDetail } from "./TapGestureDetail";
+import { DefaultTapGestureOptions, TapGestureOptions } from "./TapGestureOptions";
 
-  /** Timestamp the detail was detected. */
-  readonly timestamp: number;
-
-  /** Viewport x-coordinate where the tap began. */
-  readonly clientX: number;
-
-  /** Viewport y-coordinate where the tap began. */
-  readonly clientY: number;
-
-  /** Element-relative x-coordinate where the tap began. */
-  readonly localX: number;
-
-  /** Element-relative y-coordinate where the tap began. */
-  readonly localY: number;
-
-  /** The total press duration (ms). */
-  readonly duration: number;
-}
-
-/** Encapsulates detail about a tap gesture. */
-export interface TapGestureDetail extends GestureDetail {
-  /** Tap detail for each pointer. */
-  readonly pointers: ReadonlyArray<TapPointerGestureDetail>;
-
-  /** The total press duration (ms). */
-  readonly duration: number;
-}
-
-/** Encapsulates options used to recognize a tap gesture. */
-export interface TapGestureOptions extends GestureRecognizerOptions {
-  /**
-   * Number of pointers that must be pressed before the gesture fails.
-   * @default 1
-   */
-  readonly pointers: number;
-
-  /**
-   * Maximum time (ms) between tap presses.
-   * @default 120
-   */
-  readonly maxPressInterval: number;
-
-  /**
-   * Maximum time (ms) between tap releases.
-   * @default 120
-   */
-  readonly maxReleaseInterval: number;
-
-  /**
-   * Maximum time (ms) taps can be pressed before the gesture fails.
-   * @default 180
-   */
-  readonly maxDuration: number;
-
-  /**
-   * Maximum distance (px) a pointer can move before the gesture fails.
-   * @default 12
-   */
-  readonly maxDisplacement: number;
-}
-
-/** State used to recognize tap gestures. */
-interface GestureState {
-  id: number;
-  clientX: number;
-  clientY: number;
-  localX: number;
-  localY: number;
-  startTime: number;
-  endTime: number;
-  accepted: boolean;
-}
-
-/** Recognizes a tap gesture. */
-@gestureRecognizer("tap")
+/** A {@link GestureRecognizer} used to detect and interpret tap gestures from incoming input streams. */
 export class TapGestureRecognizer extends GestureRecognizerBase<TapGestureOptions, TapGestureDetail> {
-  /** @private */ readonly #state = new Array<GestureState>();
+  /** @private */ readonly #state = new Map<
+    number,
+    { tracker: PointerTracker; pressTimestamp: number; releaseTimestamp?: number; accepted?: boolean }
+  >();
+
+  /** @private */ #timeout?: number;
+  /** @private */ #started = false;
+  /** @private */ #cancelled = false;
+  /** @private */ #cancelling = false;
 
   /** @inheritdoc */
-  protected override get _defaultOptions(): Partial<TapGestureOptions> {
-    return {
-      ...super._defaultOptions,
-      pointers: 1,
-      maxPressInterval: 120,
-      maxReleaseInterval: 120,
-      maxDuration: 180,
-      maxDisplacement: 12,
-    };
+  override get defaultOptions(): TapGestureOptions {
+    return { ...DefaultTapGestureOptions };
   }
 
   /** @inheritdoc */
   override shouldCapturePointer(input: PointerInput): boolean {
-    return this.#state.some((x) => x.id === input.id);
+    return this.#state.has(input.inputId);
   }
 
   /** @inheritdoc */
   override _onPointerDown(input: PointerInput): void {
-    if (this.#state.length === this.options.pointers) {
-      // More pointers are being tracked, remove first (shifting)
-      this.#state.splice(0, 1);
+    // Reject duplicate input or too many pointers.
+    if (this.#state.has(input.inputId) || this.#state.size >= this.options.pointers) {
+      this.#cancel();
+      return;
     }
 
-    // Remove state if interval check exceeded
-    for (let i = this.#state.length - 1; i >= 0; i--) {
-      if (input.timestamp - this.#state[i].startTime > this.options.maxPressInterval) {
-        this.#rejectState(this.#state[i]);
+    // Reject if press exceeds interval from initial press.
+    if (this.#state.size > 0 && this.options.maxPressInterval > 0) {
+      const initialPress = Math.min(...[...this.#state.values()].map((x) => x.pressTimestamp));
+      if (input.timestamp - initialPress > this.options.maxPressInterval) {
+        this.#cancel();
+        return;
       }
     }
 
-    const bounds = input.currentTarget.getBoundingClientRect();
+    this.#state.set(input.inputId, { tracker: new PointerTracker(input), pressTimestamp: input.timestamp });
 
-    this.#state.push({
-      id: input.id,
-      clientX: input.clientX,
-      clientY: input.clientY,
-      localX: input.clientX - bounds.left,
-      localY: input.clientY - bounds.top,
-      startTime: input.timestamp,
-      endTime: input.timestamp,
-      accepted: false,
-    });
+    // Ensure max duration is not exceeded (starts from first pointer down).
+    if (this.options.maxDuration > 0 && this.#state.size === 1) {
+      this.#timeout = setTimeout(() => this.#cancel(), this.options.maxDuration);
+    }
+
+    // Input is deferred in order to notify the recognizer via reject when other gesture accepts.
+    this._defer(input.inputId);
+
+    if (this.#state.size === this.options.pointers) {
+      // Emit start only when all pointers are down.
+      this.#started = true;
+      this._emit(this.#createDetail("start"));
+    }
   }
 
   /** @inheritdoc */
   override _onPointerMove(input: PointerInput): void {
-    const state = this.#state.find((x) => x.id === input.id);
+    // Ignore if pointer is not tracked.
+    const state = this.#state.get(input.inputId);
     if (!state) return;
 
-    // Reject if max displacement is exceeded
-    const dx = input.clientX - state.clientX;
-    const dy = input.clientY - state.clientY;
-    const maxDispSq = this.options.maxDisplacement * this.options.maxDisplacement;
-    const maxDisplacementExceeded = dx * dx + dy * dy > maxDispSq;
+    state.tracker.append(input);
 
-    if (maxDisplacementExceeded) {
-      this.#rejectAll();
+    // Only enforce displacement after gesture has started and not cancelled.
+    if (!this.#started || this.#cancelled) return;
+
+    // Reject when the centroid of the pointers moves beyond the allowed displacement.
+    const trackers = [...this.#state.values()].map((x) => x.tracker);
+    if (PointerTracker.centroid(...trackers).totalDisplacement > this.options.maxDisplacement) {
+      this.#cancel();
     }
   }
 
   /** @inheritdoc */
   override _onPointerUp(input: PointerInput): void {
-    const state = this.#state.find((x) => x.id === input.id);
+    // Ignore if pointer is not tracked.
+    const state = this.#state.get(input.inputId);
     if (!state) return;
 
-    state.endTime = input.timestamp;
-
-    // All pointers must be known
-    if (this.#state.length !== this.options.pointers) return;
-
-    // All pointers must have lifted
-    if (this.#state.some((x) => x.endTime === x.startTime)) return;
-
-    const first = this.#state[0];
-    const last = this.#state[this.#state.length - 1];
-
-    // Reject if release interval exceeded
-    if (Math.abs(first.endTime - last.endTime) > this.options.maxReleaseInterval) {
-      this.#rejectAll();
+    if (!this.#started) {
+      this.#cancel();
       return;
     }
 
-    // Reject is combined tap duration exceeded
-    const firstDown = Math.min(first.startTime, last.startTime);
-    const lastUp = Math.max(first.endTime, last.endTime);
-
-    if (lastUp - firstDown > this.options.maxDuration) {
-      this.#rejectAll();
-      return;
+    // Reject if release exceeds interval from initial release.
+    if (this.options.maxReleaseInterval > 0) {
+      const states = [...this.#state.values()];
+      if (states.some((x) => x.releaseTimestamp !== undefined)) {
+        const initialRelease = Math.min(
+          ...states.filter((x) => x.releaseTimestamp !== undefined).map((x) => x.releaseTimestamp!),
+        );
+        if (input.timestamp - initialRelease > this.options.maxReleaseInterval) {
+          this.#cancel();
+          return;
+        }
+      }
     }
 
-    // Accepted
-    this._acceptInput(input.id);
+    state.tracker.append(input);
+    state.releaseTimestamp = input.timestamp;
+
+    // Clear max duration timeout when all pointers have pressed and released.
+    if (this.#started && [...this.#state.values()].every((x) => x.releaseTimestamp !== undefined)) {
+      clearTimeout(this.#timeout);
+      this.#timeout = undefined;
+    }
+
+    // Acceptance emits the final detail only after every pointer is accepted.
+    this._accept(input.inputId);
   }
 
   /** @inheritdoc */
   override _onPointerCancel(input: PointerInput) {
-    const state = this.#state.find((x) => x.id === input.id);
+    const state = this.#state.get(input.inputId);
     if (state) {
-      this.#rejectState(state);
+      this.#cancel();
     }
   }
 
   /** @inheritdoc */
-  override _onAcceptInput(id: number): void {
-    const state = this.#state.find((x) => x.id === id);
+  override _onAccept(inputId: number): void {
+    const state = this.#state.get(inputId);
     if (!state) return;
 
     state.accepted = true;
 
-    // All pointers must be accepted
-    if (this.#state.length !== this.options.pointers || !this.#state.every((x) => x.accepted)) return;
-
-    const first = this.#state[0];
-    const last = this.#state[this.#state.length - 1];
-
-    this._emitGesture({
-      id: last.id,
-      gestureType: this.gestureType,
-      timestamp: last.endTime,
-      pointers: this.#state.map<TapPointerGestureDetail>((x) => {
-        return {
-          id: x.id,
-          clientX: x.clientX,
-          clientY: x.clientY,
-          localX: x.localX,
-          localY: x.localY,
-          duration: x.endTime - x.startTime,
-          timestamp: x.endTime,
-        };
-      }),
-      duration: last.endTime - first.startTime,
-    });
-  }
-
-  /** @inheritdoc */
-  protected override _onRejectInput(id: number): void {
-    if (this.#state.some((x) => x.id === id)) {
+    // Only emit end if gesture started, not cancelled and all inputs are accepted.
+    if (this.#started && !this.#cancelled && [...this.#state.values()].every((x) => x.accepted)) {
+      this._emit(this.#createDetail("end"));
       this.reset();
     }
   }
 
   /** @inheritdoc */
-  reset(): void {
-    this.#state.length = 0;
-  }
-
-  /** @private */
-  #rejectAll(): void {
-    this.#state.forEach((x) => this._rejectInput(x.id));
-    this.#state.length = 0;
-  }
-
-  /** @private */
-  #rejectState(state: GestureState) {
-    this._rejectInput(state.id);
-
-    const index = this.#state.indexOf(state);
-    if (index >= 0) {
-      this.#state.splice(index, 1);
+  protected override _onReject(inputId: number): void {
+    if (this.#state.has(inputId)) {
+      this.#cancel(inputId);
     }
+  }
+
+  /** @inheritdoc */
+  reset(): void {
+    clearTimeout(this.#timeout);
+    this.#timeout = undefined;
+    this.#state.clear();
+    this.#started = false;
+    this.#cancelled = false;
+  }
+
+  /** @private */
+  #cancel(excludeInputId?: number): void {
+    // Resolver callbacks are synchronous, so guard the rejection loop against recursive cancellation.
+    if (this.#state.size === 0 || this.#cancelling) return;
+    try {
+      this.#cancelling = true;
+
+      // Emit cancel if started and not yet cancelled.
+      if (this.#started && !this.#cancelled) {
+        this._emit(this.#createDetail("cancel"));
+      }
+
+      this.#cancelled = true;
+
+      // Reject all inputs and reset.
+      [...this.#state.keys()].filter((x) => x !== excludeInputId).forEach((x) => this._reject(x));
+      this.reset();
+    } finally {
+      this.#cancelling = false;
+    }
+  }
+
+  /** @private */
+  #createDetail(phase: GesturePhase): TapGestureDetail {
+    const trackers = [...this.#state.values()].map((x) => x.tracker);
+    const centroid = PointerTracker.centroid(...trackers);
+    return {
+      gestureName: "tap",
+      phase,
+      inputId: [...this.#state.keys()],
+      timestamp: Math.max(...trackers.map((x) => x.current.timestamp)),
+      clientX: centroid.clientX,
+      clientY: centroid.clientY,
+      localX: centroid.localX,
+      localY: centroid.localY,
+      duration: trackers.reduce((sum, x) => sum + x.detail.duration, 0) / trackers.length,
+    };
   }
 }

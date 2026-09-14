@@ -1,258 +1,249 @@
 import {
-  GestureCallback,
   GestureDetail,
+  GestureDisposition,
   GestureInput,
-  GestureInputDisposition,
-  GestureInputDispositionCallback,
-  gestureRecognizer,
+  GestureListener,
+  GesturePhase,
   GestureRecognizer,
   GestureRecognizerBase,
-  GestureRecognizerOptions,
   PointerInput,
+  WheelInput,
 } from "@m3e/web/gestures";
 
-/**
- * Represents the lifecycle phases of a sequence gesture.
- * - `"start"` — The first gesture in the sequence has been detected.
- * - `"step"` — A subsequent gesture in the sequence has been detected.
- * - `"end"` — All gestures in the sequence have been detected.
- * - `"cancel"` — The gesture was interrupted or rejected and did not complete normally.
- */
-export type SequenceGesturePhase = "start" | "step" | "end" | "cancel";
+import { SequenceGestureDetail } from "./SequenceGestureDetail";
+import { DefaultSequenceGestureOptions, SequenceGestureOptions } from "./SequenceGestureOptions";
 
-/** Encapsulates detail about a sequence of gestures. */
-export interface SequenceGestureDetail extends GestureDetail {
-  /** Current phase of the sequence gesture. */
-  readonly phase: SequenceGesturePhase;
-
-  /** The details for each gesture in the sequence. */
-  readonly sequence: readonly GestureDetail[];
-}
-
-/** Encapsulates options used to recognize a sequence of gestures. */
-export interface SequenceGestureOptions extends GestureRecognizerOptions {
-  /**
-   * Maximum time (ms) between gestures before the sequence fails.
-   * @default 250
-   */
-  readonly maxInterval: number;
-
-  /** The sequence of gestures to recognize. */
-  readonly sequence: readonly GestureRecognizer[];
-}
-
-/** Recognizes a sequence of gestures. */
-@gestureRecognizer("sequence")
+/** A {@link GestureRecognizer} used to detect and interpret a sequence of gestures from incoming input streams. */
 export class SequenceGestureRecognizer extends GestureRecognizerBase<SequenceGestureOptions, SequenceGestureDetail> {
+  /** @private */ readonly #listener: GestureListener = (detail) => this.#handleGesture(detail);
   /** @private */ readonly #details = new Array<GestureDetail>();
   /** @private */ readonly #accepted = new Set<number>();
-  /** @private */ readonly #gestureCallbacks = new Map<GestureRecognizer, GestureCallback>();
-  /** @private */ readonly #dispositionCallbacks = new Map<GestureRecognizer, GestureInputDispositionCallback>();
+  /** @private */ #recognizers = new Array<GestureRecognizer>();
   /** @private */ #timeout?: number;
 
-  constructor(options?: Partial<SequenceGestureOptions>) {
-    super(options);
-    this.#bindSequence();
+  /**
+   * Initializes a new instance of this class.
+   * @param {Partial<SequenceGestureOptions>} options The options used to detect and interpret gestures.
+   * @param {GestureListener<SequenceGestureDetail>} listener The function invoked when semantic detail is emitted.
+   * @param {readonly GestureRecognizer[]} recognizers The recognizers used to detect a sequence of gesture gestures.
+   */
+  constructor(
+    options?: Partial<SequenceGestureOptions>,
+    listener?: GestureListener<SequenceGestureDetail>,
+    ...recognizers: readonly GestureRecognizer[]
+  ) {
+    super(options, listener);
+    this.recognizers = recognizers;
+  }
+
+  /** The current recognizer in the sequence. */
+  get recognizer(): GestureRecognizer | undefined {
+    return this.#recognizers[this.#details.length];
+  }
+
+  /** The recognizers used to detect a sequence of gestures. */
+  get recognizers(): readonly GestureRecognizer[] {
+    return this.#recognizers;
+  }
+
+  set recognizers(value: readonly GestureRecognizer[]) {
+    this.#recognizers.forEach((x) => {
+      x.removeListener(this.#listener);
+      x.onDisposition = undefined;
+      x.reset();
+    });
+
+    this.#recognizers.length = 0;
+    this.#recognizers.push(...value);
+
+    this.#recognizers.forEach((x) => {
+      x.addListener(this.#listener);
+      x.onDisposition = this.#handleDisposition.bind(this, x);
+      x.reset();
+    });
+
+    this.reset();
   }
 
   /** @inheritdoc */
-  protected override get _defaultOptions(): Partial<SequenceGestureOptions> {
-    return {
-      ...super._defaultOptions,
-      maxInterval: 250,
-      sequence: [],
-    };
-  }
-
-  /** @inheritdoc */
-  override updateOptions(options: Partial<SequenceGestureOptions>): void {
-    this.#unbindSequence();
-    super.updateOptions(options);
-    this.#bindSequence();
+  override get defaultOptions(): SequenceGestureOptions {
+    return { ...DefaultSequenceGestureOptions };
   }
 
   /** @inheritdoc */
   override shouldCapturePointer(input: PointerInput): boolean {
-    return this.#current ? this.#current.shouldCapturePointer(input) : super.shouldCapturePointer(input);
-  }
-
-  /** @private */
-  #bindSequence(): void {
-    for (const recognizer of this.options.sequence) {
-      if (recognizer.onGesture) {
-        this.#gestureCallbacks.set(recognizer, recognizer.onGesture);
-      }
-
-      if (recognizer.onDisposition) {
-        this.#dispositionCallbacks.set(recognizer, recognizer.onDisposition);
-      }
-
-      recognizer.onGesture = (detail) => {
-        this.#handleGesture(recognizer, detail);
-        this.#gestureCallbacks.get(recognizer)?.(detail);
-      };
-
-      recognizer.onDisposition = (id, disposition) => {
-        this.#handleDisposition(recognizer, id, disposition);
-        this.#dispositionCallbacks.get(recognizer)?.(id, disposition);
-      };
-      recognizer.reset();
-    }
-  }
-
-  /** @private */
-  #unbindSequence(): void {
-    for (const recognizer of this.options.sequence) {
-      recognizer.onGesture = this.#gestureCallbacks.get(recognizer);
-      recognizer.onDisposition = this.#dispositionCallbacks.get(recognizer);
-
-      this.#gestureCallbacks.delete(recognizer);
-      this.#dispositionCallbacks.delete(recognizer);
-
-      recognizer.reset();
-    }
-  }
-
-  get #current(): GestureRecognizer | undefined {
-    return this.options.sequence[this.#details.length];
+    return this.recognizer?.shouldCapturePointer(input) ?? super.shouldCapturePointer(input);
   }
 
   /** @inheritdoc */
-  override onInput(input: GestureInput): void {
-    if (this.options.disabled) return;
-
-    // Forward input to current recognizer in sequence
-    this.#current?.onInput(input);
+  override canReceiveInput(input: GestureInput): boolean {
+    return this.recognizer !== undefined && this.recognizer.canReceiveInput(input) && super.canReceiveInput(input);
   }
 
   /** @inheritdoc */
-  protected override _onAcceptInput(id: number): void {
+  protected override _onPointerOver(input: PointerInput): void {
+    this.recognizer?.onInput(input);
+  }
+
+  /** @inheritdoc */
+  protected override _onPointerEnter(input: PointerInput): void {
+    this.recognizer?.onInput(input);
+  }
+
+  /** @inheritdoc */
+  protected override _onPointerDown(input: PointerInput): void {
+    this.recognizer?.onInput(input);
+  }
+
+  /** @inheritdoc */
+  protected override _onPointerMove(input: PointerInput): void {
+    this.recognizer?.onInput(input);
+  }
+
+  /** @inheritdoc */
+  protected override _onPointerUp(input: PointerInput): void {
+    this.recognizer?.onInput(input);
+  }
+
+  /** @inheritdoc */
+  protected override _onPointerCancel(input: PointerInput): void {
+    this.recognizer?.onInput(input);
+  }
+
+  /** @inheritdoc */
+  protected override _onPointerOut(input: PointerInput): void {
+    this.recognizer?.onInput(input);
+  }
+
+  /** @inheritdoc */
+  protected override _onPointerLeave(input: PointerInput): void {
+    this.recognizer?.onInput(input);
+  }
+
+  /** @inheritdoc */
+  protected override _onWheel(input: WheelInput): void {
+    this.recognizer?.onInput(input);
+  }
+
+  /** @inheritdoc */
+  protected override _onAccept(inputId: number): void {
     // Discard if input is not accepted (held)
-    if (!this.#accepted.delete(id)) return;
+    if (!this.#accepted.delete(inputId)) return;
 
-    // Emit end when all input has been accepted
-    if (this.#accepted.size === 0 && this.#details.length > 0) {
-      this._emitGesture(this.#createDetail("end"));
+    // End gesture when all input has been accepted
+    if (this.#accepted.size === 0 && this.#details.length === this.recognizers.length) {
+      this._emit(this.#createDetail("end"));
       this.reset();
     }
   }
 
   /** @inheritdoc */
-  protected override _onRejectInput(id: number): void {
-    // Reset if input was accepted (held)
-    if (this.#accepted.has(id)) {
-      // If details exist, emit cancel phase
-      if (this.#details.length > 0) {
-        this._emitGesture(this.#createDetail("cancel"));
-      }
+  protected override _onReject(inputId: number): void {
+    // Cancel and reset if accepted input was rejected
+    if (this.#accepted.has(inputId)) {
+      this._emit(this.#createDetail("cancel"));
       this.reset();
     }
   }
 
-  /** @private */
-  #handleGesture(recognizer: GestureRecognizer, detail: GestureDetail): void {
-    // For continuous, phase is emitted in detail; ignore detail until ended
-    if (recognizer.continuous && "phase" in detail && detail.phase !== "end") {
-      return;
-    }
-
+  /** @inheritdoc */
+  override reset(): void {
     clearTimeout(this.#timeout);
+    this.#timeout = undefined;
 
-    this.#details.push(detail);
-
-    if (this.#details.length === this.options.sequence.length) {
-      // Disposition all inputs as accepted when detail count matches sequence
-      // This will emit end or cancel phases
-      this.#details.forEach((x) => this._acceptInput(x.id));
-    } else {
-      // Emit start or step based on detail length
-      this._emitGesture(this.#createDetail(this.#details.length === 1 ? "start" : "step"));
-
-      if (this.options.maxInterval > 0) {
-        // Reset if max interval exceeded
-        this.#timeout = setTimeout(() => {
-          // If details exist, emit cancel phase
-          if (this.#details.length > 0) {
-            this._emitGesture(this.#createDetail("cancel"));
-          }
-          this.reset();
-        }, this.options.maxInterval);
-      }
-    }
+    this.#recognizers.forEach((x) => x.reset());
+    this.#accepted.forEach((x) => this._release(x));
+    this.#accepted.clear();
+    this.#details.length = 0;
   }
 
   /** @private */
-  #handleDisposition(recognizer: GestureRecognizer, id: number, disposition: GestureInputDisposition): void {
+  #handleDisposition(recognizer: GestureRecognizer, inputId: number, disposition: GestureDisposition): void {
     switch (disposition) {
       case "accept":
-        // Place holds on accepted input and inform the recognizer it can be accepted (firing onGesture)
-        if (!this.#accepted.has(id)) {
-          this.#accepted.add(id);
-          this._holdInput(id);
+        // Place holds on accepted input and inform the recognizer it can be accepted.
+        if (!this.#accepted.has(inputId)) {
+          this.#accepted.add(inputId);
+          this._hold(inputId);
         }
-        recognizer.onResolution(id, "accept");
+        recognizer.onResolution(inputId, "accept");
         break;
 
       case "reject":
-        // When a recognizer rejects, the sequence is rejected.
-        if (!this.#accepted.has(id)) {
-          this._rejectInput(id);
+        // When a recognizer rejects, the sequence gesture is rejected.
+        if (!this.#accepted.has(inputId)) {
+          this._reject(inputId);
         }
 
         this.reset();
         break;
 
       case "hold":
-        // Forward holds on input
-        if (!this.#accepted.has(id)) {
-          this._holdInput(id);
+        // Forward holds on input.
+        if (!this.#accepted.has(inputId)) {
+          this._hold(inputId);
         }
         break;
 
       case "release":
-        // Forward releases to holds on input
-        if (!this.#accepted.has(id)) {
-          this._releaseInput(id);
+        // Forward releases to holds on input.
+        if (!this.#accepted.has(inputId)) {
+          this._release(inputId);
         }
         break;
 
       case "defer":
-        // Forward deferrals on input
-        if (!this.#accepted.has(id)) {
-          this._deferInput(id);
+        // Forward deferrals on input.
+        if (!this.#accepted.has(inputId)) {
+          this._defer(inputId);
         }
         break;
     }
   }
 
-  /** @inheritdoc */
-  reset(): void {
-    // Clear max interval timeout
-    clearTimeout(this.#timeout);
-    this.#timeout = undefined;
+  /** @private */
+  #handleGesture(detail: GestureDetail): void {
+    // Ignore non-terminal detail
+    if (detail.phase === "start" || detail.phase === "update") return;
 
-    // Release outstanding holds on input
-    for (const accepted of this.#accepted.keys()) {
-      this.#accepted.delete(accepted);
-      this._releaseInput(accepted);
+    if (detail.phase === "cancel") {
+      if (this.#details.length > 0) {
+        // The gesture has started, cancel it
+        this._emit(this.#createDetail("cancel"));
+      }
+
+      this.reset();
+      return;
     }
 
-    // Clear gesture state
-    this.#details.length = 0;
+    this.#details.push(detail);
 
-    // Reset recognizer in the sequence
-    this.options.sequence.forEach((x) => x.reset());
+    if (this.#details.length === this.recognizers.length) {
+      // Disposition all inputs as accepted when detail count is satisfied
+      this.#details.forEach((x) => this._accept(x.inputId));
+    } else {
+      this._emit(this.#createDetail(this.#details.length === 1 ? "start" : "update"));
+
+      if (this.options.maxInterval > 0) {
+        clearTimeout(this.#timeout);
+        // Cancel and reset (releasing outstanding holds) if max interval exceeded
+        this.#timeout = setTimeout(() => {
+          this._emit(this.#createDetail("cancel"));
+          this.reset();
+        }, this.options.maxInterval);
+      }
+    }
   }
 
-  /** @private */
-  #createDetail(phase: SequenceGesturePhase): SequenceGestureDetail {
+  /** @inheritdoc */
+  #createDetail(phase: GesturePhase): SequenceGestureDetail {
     const last = this.#details[this.#details.length - 1];
     return {
-      id: last.id,
-      phase: phase,
-      gestureType: this.gestureType,
+      inputId: this.#details.flatMap((d) => (Array.isArray(d.inputId) ? d.inputId : [d.inputId])),
+      gestureName: "sequence",
+      phase,
       timestamp: last.timestamp,
-      sequence: [...this.#details],
+      details: [...this.#details],
     };
   }
 }

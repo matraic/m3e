@@ -6,56 +6,15 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase, GestureRecognizer } from "@m3e/web/gestures";
 
-import { SequenceGestureDetail, SequenceGestureOptions, SequenceGestureRecognizer } from "./SequenceGestureRecognizer";
+import { SequenceGestureRecognizer } from "./SequenceGestureRecognizer";
+import { SequenceGestureOptions } from "./SequenceGestureOptions";
+import { SequenceGestureDetail } from "./SequenceGestureDetail";
 
 /**
- * A non-visual element used to detect a sequence of gestures for an associated element.
+ * A non-visual element used to detect and interpret a sequence of gestures from an input stream
+ * produced from an attached element.
+ *
  * @tag m3e-sequence-gesture
- *
- * @example
- * The following example illustrates detecting gesture sequences using `<m3e-sequence-gesture>`.
- *
- * The `<m3e-sequence-gesture>` accepts one or more gesture elements, each representing one step in the sequence.
- *
- * The recognizer emits a gesture only after **all child gestures complete
- * in order**. If any gesture fails, the entire sequence fails.
- *
- * The following example illustrates detecting a **press + tap** sequence
- * (long‑press followed by a tap):
- *
- * ```html
- * <div id="div1"></div>
- *
- * <m3e-sequence-gesture for="div1">
- *   <m3e-long-press-gesture></m3e-long-press-gesture>
- *   <m3e-tap-gesture></m3e-tap-gesture>
- * </m3e-sequence-gesture>
- * ```
- *
- * Listen for the `gesture` event to handle completed sequences:
- *
- * ```ts
- * const recognizer = document.querySelector("m3e-sequence-gesture");
- *
- * recognizer.addEventListener("gesture", e => {
- *   const detail = e.detail;
- *
- *   // Current phase (start, step, end, cancel)
- *   console.log(detail.phase);
- *
- *   // Sequence steps in order (press detail, then tap detail)
- *   console.log(detail.steps.length);
- *
- *   if (detail.phase === "end") {
- *     // Access each step's detail
- *     const pressDetail = detail.steps[0];
- *     const tapDetail = detail.steps[1];
- *
- *     console.log("Press duration:", (<LongPressGestureDetail>pressDetail).duration);
- *     console.log("Tap timestamp:", (<TapGestureDetail>tapDetail).timestamp);
- *   }
- * });
- * ```
  *
  * @slot - The gestures that make up the sequence.
  *
@@ -64,29 +23,26 @@ import { SequenceGestureDetail, SequenceGestureOptions, SequenceGestureRecognize
  * @attr pointer-types - Which types of pointers can be used to recognize gestures.
  * @attr disabled - Whether gesture recognition is disabled.
  * @attr priority - The priority in which to recognize gestures.
- * @attr max-interval - Maximum time (ms) between gestures before the sequence fails.
+ * @attr max-interval - Maximum allowed time (ms) between each gesture in the sequence.
  *
- * @fires gesture - Emitted for each phase of a sequence gesture.
+ * @fires gesture - Emitted when semantic detail about a sequence of gestures is detected.
  */
 @customElement("m3e-sequence-gesture")
-export class M3eSequenceGestureElement extends GestureElementBase<SequenceGestureOptions> {
-  constructor() {
-    super(SequenceGestureRecognizer.gestureType);
-  }
+export class M3eSequenceGestureElement extends GestureElementBase<SequenceGestureOptions, SequenceGestureDetail> {
+  /** @inheritdoc */
+  override readonly recognizer = new SequenceGestureRecognizer();
 
   /**
-   * Maximum time (ms) between gestures before the sequence fails.
+   * Maximum allowed time (ms) between each gesture in the sequence.
    * @default 250
    */
-  @property({ attribute: "max-interval", type: Number }) maxInterval: number = 250;
+  @property({ attribute: "max-interval", type: Number, reflect: false }) maxInterval: number =
+    this.recognizer.defaultOptions.maxInterval;
 
   /** @inheritdoc */
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
-
-    if (_changedProperties.has("maxInterval")) {
-      this.gestureController.update({ maxInterval: this.maxInterval });
-    }
+    this.recognizer.options = { maxInterval: this.maxInterval };
   }
 
   /** @inheritdoc */
@@ -103,17 +59,16 @@ export class M3eSequenceGestureElement extends GestureElementBase<SequenceGestur
     const sequence = new Array<GestureRecognizer>();
 
     for (const element of elements) {
-      // Ensure nested elements are not attached
+      // Ensure nested elements are not attached.
       if (element.htmlFor) {
         element.detach();
         element.removeAttribute("for");
       }
-
-      sequence.push(element.gestureController.recognizer);
+      sequence.push(element.recognizer);
     }
 
-    // Update recognizer sequence with nested recognizers (in order of DOM)
-    this.gestureController.update({ sequence: sequence });
+    // Update recognizers (in order of DOM).
+    this.recognizer.recognizers = sequence;
   }
 }
 

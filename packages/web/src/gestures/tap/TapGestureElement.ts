@@ -1,112 +1,83 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-
 import { PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import { TapGestureDetail, TapGestureOptions, TapGestureRecognizer } from "./TapGestureRecognizer";
+import { TapGestureDetail } from "./TapGestureDetail";
+import { TapGestureOptions } from "./TapGestureOptions";
+import { TapGestureRecognizer } from "./TapGestureRecognizer";
 
 /**
- * A non-visual element used to detect a tap gesture for an associated element.
+ * A non-visual element used to detect and interpret tap gestures from an input stream
+ * produced from an attached element.
+ *
  * @tag m3e-tap-gesture
  *
- * @example
- * The following example illustrates detecting tap gestures on an element using `<m3e-tap-gesture>`.
- * Use the `for` attribute to bind the gesture recognizer to a target element:
- *
- * ```html
- * <div id="div1"></div>
- * <m3e-tap-gesture for="div1"></m3e-tap-gesture>
- * ```
- *
- * Listen for the `gesture` event to handle detected tap gestures:
- *
- * ```ts
- * const recognizer = document.querySelector("m3e-tap-gesture");
- *
- * recognizer.addEventListener("gesture", e => {
- *   const detail = e.detail;
- *
- *   // Number of pointers (fingers) involved in the tap
- *   console.log(detail.pointers.length);
- *
- *   // Coordinates of the first pointer (finger)
- *   console.log(detail.pointers[0].clientX, detail.pointers[0].clientY);
- *
- *   // Total tap duration
- *   console.log(detail.duration);
- * });
- * ```
  * @attr for - The identifier of the interactive control to which this element is attached.
  * @attr buttons - Which buttons can be pressed.
  * @attr pointer-types - Which types of pointers can be used to recognize gestures.
  * @attr disabled - Whether gesture recognition is disabled.
  * @attr priority - The priority in which to recognize gestures.
- * @attr pointers - Number of pointers that must be pressed before the gesture fails.
- * @attr max-press-interval - Maximum time (ms) between tap presses.
- * @attr max-release-interval - Maximum time (ms) between tap releases.
- * @attr max-displacement - Maximum distance (px) a pointer can move before the gesture fails.
- * @attr max-duration - Maximum time (ms) taps can be pressed before the gesture fails.
+ * @attr pointers - Number of pointers required for the gesture to be recognized.
+ * @attr max-displacement - Maximum allowed movement (px).
+ * @attr max-duration - Maximum allowed press duration (ms).
+ * @attr max-press-interval - Maximum allowed time (ms) between the earliest and latest press.
+ * @attr max-release-interval - Maximum allowed time (ms) between the earliest and latest release.
  *
- * @fires gesture - Emitted when a tap gesture is recognized.
+ * @fires gesture - Emitted when semantic detail about a gesture is detected.
  */
 @customElement("m3e-tap-gesture")
-export class M3eTapGestureElement extends GestureElementBase<TapGestureOptions> {
-  constructor() {
-    super(TapGestureRecognizer.gestureType);
-  }
+export class M3eTapGestureElement extends GestureElementBase<TapGestureOptions, TapGestureDetail> {
+  /** @inheritdoc */
+  override readonly recognizer = new TapGestureRecognizer();
 
   /**
-   * Number of pointers that must be pressed before the gesture fails.
+   * Number of pointers required for the gesture to be recognized.
    * @default 1
    */
-  @property({ type: Number }) pointers: number = 1;
+  @property({ type: Number, reflect: false }) pointers: number = this.recognizer.defaultOptions.pointers;
 
   /**
-   * Maximum time (ms) between tap presses.
-   * @default 120
-   */
-  @property({ attribute: "max-press-interval", type: Number }) maxPressInterval = 120;
-
-  /**
-   * Maximum time (ms) between tap releases.
-   * @default 120
-   */
-  @property({ attribute: "max-release-interval", type: Number }) maxReleaseInterval = 120;
-
-  /**
-   * Maximum time (ms) taps can be pressed before the gesture fails.
+   * Maximum allowed press duration (ms).
    * @default 180
    */
-  @property({ attribute: "max-duration", type: Number }) maxDuration = 180;
+  @property({ attribute: "max-duration", type: Number, reflect: false }) maxDuration: number =
+    this.recognizer.defaultOptions.maxDuration;
 
   /**
-   * Maximum distance (px) a pointer can move before the gesture fails.
+   * Maximum allowed movement (px).
    * @default 12
    */
-  @property({ attribute: "max-displacement", type: Number }) maxDisplacement = 12;
+  @property({ attribute: "max-displacement", type: Number, reflect: false }) readonly maxDisplacement: number =
+    this.recognizer.defaultOptions.maxDisplacement;
+
+  /**
+   * Maximum allowed time (ms) between the earliest and latest press.
+   * @default 120
+   */
+  @property({ attribute: "max-press-interval", type: Number, reflect: false }) maxPressInterval: number =
+    this.recognizer.defaultOptions.maxPressInterval;
+
+  /**
+   * Maximum allowed time (ms) between the earliest and latest release.
+   * @default 120
+   */
+  @property({ attribute: "max-release-interval", type: Number, reflect: false }) maxReleaseInterval: number =
+    this.recognizer.defaultOptions.maxReleaseInterval;
 
   /** @inheritdoc */
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
 
-    if (_changedProperties.has("pointers")) {
-      this.gestureController.update({ pointers: this.pointers });
-    }
-    if (_changedProperties.has("maxPressInterval")) {
-      this.gestureController.update({ maxPressInterval: this.maxPressInterval });
-    }
-    if (_changedProperties.has("maxReleaseInterval")) {
-      this.gestureController.update({ maxReleaseInterval: this.maxReleaseInterval });
-    }
-    if (_changedProperties.has("maxDisplacement")) {
-      this.gestureController.update({ maxDisplacement: this.maxDisplacement });
-    }
-    if (_changedProperties.has("maxDuration")) {
-      this.gestureController.update({ maxDuration: this.maxDuration });
-    }
+    this.recognizer.options = {
+      pointers: this.pointers,
+      maxPressInterval: this.maxPressInterval,
+      maxReleaseInterval: this.maxReleaseInterval,
+      maxDuration: this.maxDuration,
+      maxDisplacement: this.maxDisplacement,
+    };
   }
 }
 

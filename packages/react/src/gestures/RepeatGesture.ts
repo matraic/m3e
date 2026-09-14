@@ -2,7 +2,7 @@ import React from "react";
 import { createComponent, EventName } from "@lit/react";
 
 import { M3eRepeatGestureElement, RepeatGestureDetail } from "@m3e/web/gestures/repeat";
-export type { RepeatGestureDetail } from "@m3e/web/gestures/repeat";
+export type { RepeatGestureDetail, RepeatGestureOptions } from "@m3e/web/gestures/repeat";
 
 /**
  * React binding for the `m3e-repeat-gesture` Web Component from `@m3e/web/gestures/repeat`.

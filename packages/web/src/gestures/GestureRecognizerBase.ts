@@ -1,60 +1,70 @@
-import { GestureCallback } from "./GestureCallback";
 import { GestureDetail } from "./GestureDetail";
-import { GestureInput } from "./GestureInput";
-import { GestureInputButton } from "./GestureInputButton";
-import { GestureInputDisposition } from "./GestureInputDisposition";
-import { GestureInputResolution } from "./GestureInputResolution";
-import { GestureRecognizer } from "./GestureRecognizer";
-import { GestureRecognizerOptions } from "./GestureRecognizerOptions";
-import { PointerInput } from "./PointerInput";
-import { WheelInput } from "./WheelInput";
+import { GestureInput, PointerInput, PointerType, WheelInput } from "./GestureInput";
+import { DefaultGestureOptions, GestureInputButton, GestureOptions } from "./GestureOptions";
+import {
+  GestureDisposition,
+  GestureDispositionCallback,
+  GestureListener,
+  GestureRecognizer,
+  GestureResolution,
+} from "./GestureRecognizer";
+
+const GESTURE_INPUT_BUTTON_NAME_TO_INDEX = new Map<GestureInputButton, number>([
+  ["primary", 0],
+  ["middle", 1],
+  ["secondary", 2],
+  ["back", 3],
+  ["forward", 4],
+]);
 
 /**
- * A base implementation for a {@link GestureRecognizer} used to recognize gestures.
- * @template TOptions The type of options used to recognize gestures.
- * @template TDetail The type of detail emitted for a recognized gesture.
+ * A base implementation for a {@link GestureRecognizer} used to detect and interpret gestures from incoming input
+ * streams. This class must be inherited.
+ * @template TOptions The type of options used to detect and interpret gestures.
+ * @template TDetail The type of semantic detail emitted for a gesture.
  */
 export abstract class GestureRecognizerBase<
-  TOptions extends GestureRecognizerOptions,
+  TOptions extends GestureOptions,
   TDetail extends GestureDetail,
 > implements GestureRecognizer<TOptions, TDetail> {
   /** @private */ #options: TOptions;
-
-  /** The type of gesture to which this recognizer is registered. */
-  static gestureType: string;
+  /** @private */ #disabled: boolean = false;
+  /** @private */ readonly #listeners = new Array<GestureListener<TDetail>>();
 
   /**
    * Initializes a new instance of this class.
-   * @param {Partial<TOptions> | undefined} options Options used to recognize gestures.
+   * @param {Partial<TOptions>} options The options used to detect and interpret gestures.
+   * @param {GestureListener<TDetail>} listener The function invoked when semantic detail is emitted.
    */
-  constructor(options?: Partial<TOptions>) {
-    this.#options = <TOptions>{ ...this._defaultOptions, ...options };
+  constructor(options?: Partial<TOptions>, listener?: GestureListener<TDetail>) {
+    this.#options = { ...this.defaultOptions, ...options };
+    if (listener) {
+      this.addListener(listener);
+    }
   }
 
-  /** Options used to recognize gestures. */
+  /** @inheritdoc */
   get options(): TOptions {
     return this.#options;
   }
-
-  /** @inheritdoc */
-  canReceiveInput(input: GestureInput): boolean {
-    return !this.options.disabled && (this.options.inputFilter?.(input) ?? true);
+  set options(value: Partial<TOptions>) {
+    this.#options = { ...this.#options, ...value };
   }
 
-  /** @inheritdoc */
-  get gestureType(): string {
-    const ctor = this.constructor as typeof GestureRecognizerBase;
-    return ctor.gestureType!;
+  /** Whether gesture recognition is disabled. */
+  get disabled(): boolean {
+    return this.#disabled;
+  }
+  set disabled(value: boolean) {
+    this.#disabled = value;
+    if (this.#disabled) {
+      this.reset();
+    }
   }
 
-  /** Default options used to recognize gestures. */
-  protected get _defaultOptions(): Partial<TOptions> {
-    return <TOptions>(<unknown>{
-      disabled: false,
-      priority: 1,
-      buttons: ["primary"],
-      pointerTypes: ["mouse", "pen", "touch"],
-    });
+  /** The default options used to detect and interpret gestures. */
+  get defaultOptions(): TOptions {
+    return { ...DefaultGestureOptions } as TOptions;
   }
 
   /** @inheritdoc */
@@ -63,21 +73,36 @@ export abstract class GestureRecognizerBase<
   }
 
   /** @inheritdoc */
-  get continuous(): boolean {
-    return false;
-  }
+  canReceiveInput(input: GestureInput): boolean {
+    if (this.disabled) return false;
+    if (!(this.options.inputFilter?.(input) ?? true)) return false;
 
-  /** @inheritdoc */
-  onGesture?: GestureCallback<TDetail>;
+    // Only test allowed buttons on pointerdown.
+    if (input.kind === "pointerdown" && this.options.buttons.length > 0) {
+      let allowedButton = false;
+      for (const allowedName of this.options.buttons) {
+        const allowedIndex = GESTURE_INPUT_BUTTON_NAME_TO_INDEX.get(allowedName);
+        if (allowedIndex === undefined) continue;
 
-  /** @inheritdoc */
-  onDisposition?: (id: number, disposition: GestureInputDisposition) => void;
+        const allowedMask = 1 << allowedIndex;
+        if ((input.buttons & allowedMask) !== 0) {
+          allowedButton = true;
+          break;
+        }
+      }
 
-  /** @inheritdoc */
-  updateOptions(options: Partial<TOptions>): void {
-    this.#options = { ...this.options, ...options };
-    // Reset state when options change
-    this.reset();
+      if (!allowedButton) {
+        return false;
+      }
+    }
+
+    if (this.options.pointerTypes.length > 0) {
+      if ("pointerType" in input && !this.options.pointerTypes.includes(<PointerType>input.pointerType)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   /** @inheritdoc */
@@ -87,83 +112,10 @@ export abstract class GestureRecognizerBase<
   }
 
   /** @inheritdoc */
-  abstract reset(): void;
-
-  /**
-   * Dispositions the specified input as accepted.
-   * @param {number} id The identifier of the input to accepted.
-   */
-  protected _acceptInput(id: number): void {
-    if (this.options.disabled) return;
-    this.onDisposition?.(id, "accept");
-  }
-
-  /**
-   * Dispositions the specified input as rejected.
-   * @param {number} id The identifier of the input to reject.
-   */
-  protected _rejectInput(id: number): void {
-    if (this.options.disabled) return;
-    this.onDisposition?.(id, "reject");
-  }
-
-  /**
-   * Dispositions the specified input as held.
-   * @param {number} id The identifier of the input to hold.
-   */
-  protected _holdInput(id: number): void {
-    if (this.options.disabled) return;
-    this.onDisposition?.(id, "hold");
-  }
-
-  /**
-   * Dispositions the specified input as released.
-   * @param {number} id The identifier of the input to release.
-   */
-  protected _releaseInput(id: number): void {
-    if (this.options.disabled) return;
-    this.onDisposition?.(id, "release");
-  }
-
-  /**
-   * Dispositions the specified input as deferred.
-   * @param {number} id The identifier of the input to defer.
-   */
-  protected _deferInput(id: number): void {
-    if (this.options.disabled) return;
-    this.onDisposition?.(id, "defer");
-  }
-
-  /** @inheritdoc */
-  onResolution(id: number, resolution: GestureInputResolution): void {
-    if (this.options.disabled) return;
-    switch (resolution) {
-      case "accept":
-        this._onAcceptInput(id);
-        break;
-
-      case "reject":
-        this._onRejectInput(id);
-        break;
-    }
-  }
-
-  /**
-   * Handles accepted input.
-   * @param id The identifier of the accepted input.
-   */
-  protected abstract _onAcceptInput(id: number): void;
-
-  /**
-   * Handles rejected input.
-   * @param id The identifier of the rejected input.
-   */
-  protected abstract _onRejectInput(id: number): void;
-
-  /** @inheritdoc */
   onInput(input: GestureInput): void {
-    if (this.options.disabled) return;
-    switch (input.type) {
+    if (!this.canReceiveInput(input)) return;
+
+    switch (input.kind) {
       case "pointerover":
         this._onPointerOver(<PointerInput>input);
         break;
@@ -173,11 +125,7 @@ export abstract class GestureRecognizerBase<
         break;
 
       case "pointerdown":
-        if (!this.#isAllowedInput(<PointerInput>input)) {
-          this._rejectInput(input.id);
-        } else {
-          this._onPointerDown(<PointerInput>input);
-        }
+        this._onPointerDown(<PointerInput>input);
         break;
 
       case "pointermove":
@@ -185,11 +133,7 @@ export abstract class GestureRecognizerBase<
         break;
 
       case "pointerup":
-        if (!this.#isAllowedInput(<PointerInput>input)) {
-          this._rejectInput(input.id);
-        } else {
-          this._onPointerUp(<PointerInput>input);
-        }
+        this._onPointerUp(<PointerInput>input);
         break;
 
       case "pointercancel":
@@ -246,41 +190,104 @@ export abstract class GestureRecognizerBase<
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected _onWheel(_input: WheelInput): void {}
 
+  /** @inheritdoc */
+  onDisposition?: GestureDispositionCallback | undefined;
+
   /**
-   * Determines whether the `button` for the specified input is permitted.
-   * @param {PointerInput} input The gesture input to test.
-   * @returns {boolean} `true` if the changed button is allowed; otherwise `false`.
+   * Dispositions the specified input stream as accepted.
+   * @param {number | readonly number[]} inputId The identifier(s) of the input stream to accepted.
    */
-  protected _isAllowedButton(input: PointerInput): boolean {
-    const button = new Map<number, GestureInputButton>([
-      [0, "primary"],
-      [1, "middle"],
-      [2, "secondary"],
-      [3, "back"],
-      [4, "forward"],
-    ]).get(input.button);
-    return button !== undefined && this.options.buttons.includes(button);
+  protected _accept(inputId: number | readonly number[]): void {
+    this.#disposition(inputId, "accept");
   }
 
   /**
-   * Determines whether the `pointerType` for the specified input is permitted.
-   * @param {PointerInput} input The gesture input to test.
-   * @returns {boolean} `true` if the pointer type is allowed; otherwise `false`.
+   * Dispositions the specified input stream as rejected.
+   * @param {number | readonly number[]} inputId The identifier(s) of the input stream to reject.
    */
-  protected _isAllowedPointerType(input: PointerInput): boolean {
-    return this.options.pointerTypes.includes(input.pointerType);
+  protected _reject(inputId: number | readonly number[]): void {
+    this.#disposition(inputId, "reject");
   }
 
   /**
-   * Emits a recognized gesture.
-   * @param {TDetail} detail Detail for the recognized gesture.
+   * Dispositions the specified input stream as held.
+   * @param {number} inputId The identifier of the input stream to hold.
    */
-  protected _emitGesture(detail: TDetail): void {
-    this.onGesture?.(detail);
+  protected _hold(inputId: number | readonly number[]): void {
+    this.#disposition(inputId, "hold");
   }
+
+  /**
+   * Dispositions the specified input stream as released.
+   * @param {number} inputId The identifier of the input stream to release.
+   */
+  protected _release(inputId: number | readonly number[]): void {
+    this.#disposition(inputId, "release");
+  }
+
+  /**
+   * Dispositions the specified input stream as deferred.
+   * @param {number} inputId The identifier of the input stream to defer.
+   */
+  protected _defer(inputId: number | readonly number[]): void {
+    this.#disposition(inputId, "defer");
+  }
+
+  /**
+   * Emits semantic detail about a recognized gesture.
+   * @param {TDetail} detail The detail to emit.
+   */
+  protected _emit(detail: TDetail): void {
+    this.#listeners.forEach((x) => x(detail));
+  }
+
+  /** @inheritdoc */
+  addListener(listener: GestureListener<TDetail>): void {
+    if (!this.#listeners.includes(listener)) {
+      this.#listeners.push(listener);
+    }
+  }
+
+  /** @inheritdoc */
+  removeListener(listener: GestureListener<TDetail>): void {
+    const index = this.#listeners.indexOf(listener);
+    if (index >= 0) {
+      this.#listeners.splice(index, 1);
+    }
+  }
+
+  /** @inheritdoc */
+  onResolution(inputId: number, resolution: GestureResolution): void {
+    switch (resolution) {
+      case "accept":
+        this._onAccept(inputId);
+        break;
+      case "reject":
+        this._onReject(inputId);
+        break;
+    }
+  }
+
+  /**
+   * Handles an accepted input stream.
+   * @param {number} inputId The identifier of the accepted input stream.
+   */
+  protected abstract _onAccept(inputId: number): void;
+
+  /**
+   * Handles a rejected input stream.
+   * @param {number} inputId The identifier of the rejected input stream.
+   */
+  protected abstract _onReject(inputId: number): void;
+
+  /** @inheritdoc */
+  abstract reset(): void;
 
   /** @private */
-  #isAllowedInput(input: PointerInput): boolean {
-    return this._isAllowedButton(input) && this._isAllowedPointerType(input);
+  #disposition(inputId: number | readonly number[], disposition: GestureDisposition): void {
+    const ids = Array.isArray(inputId) ? inputId : [inputId];
+    for (const id of ids) {
+      this.onDisposition?.(id, disposition);
+    }
   }
 }

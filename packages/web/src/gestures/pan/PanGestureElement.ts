@@ -7,115 +7,101 @@ import { customElement } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
 import {
-  PanGestureActivationMode,
-  PanGestureDetail,
-  PanGestureLockAxis,
-  PanGestureOptions,
-  PanGestureRecognizer,
-} from "./PanGestureRecognizer";
+  TransformGestureActivationMode,
+  TransformGestureLockAxis,
+  TransformGestureOptions,
+} from "@m3e/web/gestures/transform";
+
+import { PanGestureDetail } from "./PanGestureDetail";
+import { PanGestureRecognizer } from "./PanGestureRecognizer";
 
 /**
- * A non-visual element used to detect a pan gesture for an associated element.
+ * A non-visual element used to detect and interpret pan gestures from an input stream
+ * produced from an attached element.
+ *
  * @tag m3e-pan-gesture
  *
- * @example
- * The following example illustrates detecting pan gestures on an element using `<m3e-pan-gesture>`.
- * Use the `for` attribute to bind the gesture recognizer to a target element:
- *
- * ```html
- * <div id="div1"></div>
- * <m3e-pan-gesture for="div1"></m3e-pan-gesture>
- * ```
- *
- * Listen for the `gesture` event to handle detected pan gestures:
- *
- * ```ts
- * const recognizer = document.querySelector("m3e-pan-gesture");
- *
- * recognizer.addEventListener("gesture", e => {
- *   const detail = e.detail;
- *
- *   // Current phase (start, move, end, cancel)
- *   console.log(detail.phase);
- *
- *   // Total displacement along the primary axis
- *   console.log(detail.totalPrimaryDelta);
- *
- *   // Current incremental movement
- *   console.log(detail.deltaX, detail.deltaY);
- *
- *   // Current velocity
- *   console.log(detail.velocityX, detail.velocityY);
- * });
- * ```
  * @attr for - The identifier of the interactive control to which this element is attached.
  * @attr buttons - Which buttons can be pressed.
  * @attr pointer-types - Which types of pointers can be used to recognize gestures.
  * @attr disabled - Whether gesture recognition is disabled.
  * @attr priority - The priority in which to recognize gestures.
+ * @attr pointers - Number of pointers required for the gesture to be recognized.
  * @attr activation-mode - Mode in which to activate the gesture.
  * @attr min-displacement - Minimum distance (px) a pointer can move before the gesture starts.
  * @attr lock-axis - Locks movement to an axis.
  * @attr axis-threshold - Minimum total displacement (px) required before axis locking resolves.
- * @attr delta-threshold - Minimum incremental movement (px) on the secondary axis required before emitting move updates.
+ * @attr delta-threshold - Minimum incremental movement (px) on the secondary axis required before emitting detail for a locked axis.
+ * @attr max-press-interval - Maximum allowed time (ms) between the earliest and latest press.
  *
- * @fires gesture - Emitted for each phase of a pan gesture.
+ * @fires gesture - Emitted when semantic detail about a pan gesture is detected.
  */
 @customElement("m3e-pan-gesture")
-export class M3ePanGestureElement extends GestureElementBase<PanGestureOptions> {
-  constructor() {
-    super(PanGestureRecognizer.gestureType);
-  }
+export class M3ePanGestureElement extends GestureElementBase<TransformGestureOptions, PanGestureDetail> {
+  /** @inheritdoc */
+  override readonly recognizer = new PanGestureRecognizer();
+
+  /**
+   * Number of pointers required for the gesture to be recognized.
+   * @default 1
+   */
+  @property({ type: Number, reflect: false }) pointers: number = this.recognizer.defaultOptions.pointers;
 
   /**
    * Mode in which to activate the gesture.
    * @default "press"
    */
-  @property({ attribute: "activation-mode", useDefault: true }) activationMode: PanGestureActivationMode = "press";
+  @property({ attribute: "activation-mode", useDefault: true, reflect: false })
+  activationMode: TransformGestureActivationMode = this.recognizer.defaultOptions.activationMode;
 
   /**
    * Minimum distance (px) a pointer can move before the gesture starts.
    * @default 4
    */
-  @property({ attribute: "min-displacement", type: Number }) minDisplacement: number = 4;
+  @property({ attribute: "min-displacement", type: Number, reflect: false }) minDisplacement: number =
+    this.recognizer.defaultOptions.minDisplacement;
 
   /**
    * Locks movement to an axis.
    * @default "none"
    */
-  @property({ attribute: "lock-axis" }) lockAxis: PanGestureLockAxis = "none";
+  @property({ attribute: "lock-axis", reflect: false }) lockAxis: TransformGestureLockAxis =
+    this.recognizer.defaultOptions.lockAxis;
 
   /**
    * Minimum total displacement (px) required before axis locking resolves orientation.
    * @default 8
    */
-  @property({ attribute: "axis-threshold", type: Number }) axisThreshold: number = 8;
+  @property({ attribute: "axis-threshold", type: Number, reflect: false }) axisThreshold: number =
+    this.recognizer.defaultOptions.axisThreshold;
 
   /**
-   * Minimum incremental movement (px) on the secondary axis required before emitting move updates.
+   * Minimum incremental movement (px) on the secondary axis required before emitting detail for a locked axis.
    * @default 0
    */
-  @property({ attribute: "delta-threshold", type: Number }) deltaThreshold: number = 0;
+  @property({ attribute: "delta-threshold", type: Number, reflect: false }) deltaThreshold: number =
+    this.recognizer.defaultOptions.deltaThreshold;
+
+  /**
+   * Maximum allowed time (ms) between the earliest and latest press.
+   * @default 120
+   */
+  @property({ attribute: "max-press-interval", type: Number, reflect: false }) maxPressInterval: number =
+    this.recognizer.defaultOptions.maxPressInterval;
 
   /** @inheritdoc */
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
 
-    if (_changedProperties.has("activationMode")) {
-      this.gestureController.update({ activationMode: this.activationMode });
-    }
-    if (_changedProperties.has("minDisplacement")) {
-      this.gestureController.update({ minDisplacement: this.minDisplacement });
-    }
-    if (_changedProperties.has("lockAxis")) {
-      this.gestureController.update({ lockAxis: this.lockAxis });
-    }
-    if (_changedProperties.has("axisThreshold")) {
-      this.gestureController.update({ axisThreshold: this.axisThreshold });
-    }
-    if (_changedProperties.has("deltaThreshold")) {
-      this.gestureController.update({ deltaThreshold: this.deltaThreshold });
-    }
+    this.recognizer.options = {
+      pointers: this.pointers,
+      activationMode: this.activationMode,
+      minDisplacement: this.minDisplacement,
+      lockAxis: this.lockAxis,
+      axisThreshold: this.axisThreshold,
+      deltaThreshold: this.deltaThreshold,
+      maxPressInterval: this.maxPressInterval,
+    };
   }
 }
 

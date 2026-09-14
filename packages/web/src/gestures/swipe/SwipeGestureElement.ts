@@ -6,97 +6,109 @@ import { property } from "lit/decorators.js";
 import { customElement, spaceSeparatedStringConverter } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import {
-  SwipeGestureDetail,
-  SwipeGestureDirection,
-  SwipeGestureOptions,
-  SwipeGestureRecognizer,
-} from "./SwipeGestureRecognizer";
+import { SwipeGestureRecognizer } from "./SwipeGestureRecognizer";
+import { SwipeGestureDetail } from "./SwipeGestureDetail";
+import { SwipeGestureDirection, SwipeGestureOptions } from "./SwipeGestureOptions";
 
 /**
- * A non-visual element used to detect a swipe gesture for an associated element.
+ * A non-visual element used to detect and interpret swipe gestures from an input stream
+ * produced from an attached element.
+ *
  * @tag m3e-swipe-gesture
  *
- * @example
- * The following example illustrates detecting swipe gestures on an element using `<m3e-swipe-gesture>`.
- * Use the `for` attribute to bind the gesture recognizer to a target element:
- *
- * ```html
- * <div id="div1"></div>
- * <m3e-swipe-gesture for="div1"></m3e-swipe-gesture>
- * ```
- *
- * Listen for the `gesture` event to handle detected swipe gestures:
- *
- * ```ts
- * const recognizer = document.querySelector("m3e-swipe-gesture");
- *
- * recognizer.addEventListener("gesture", e => {
- *   const detail = e.detail;
- *
- *   // Current direction
- *   console.log(detail.direction);
- * });
- * ```
  * @attr for - The identifier of the interactive control to which this element is attached.
  * @attr buttons - Which buttons can be pressed.
  * @attr pointer-types - Which types of pointers can be used to recognize gestures.
  * @attr disabled - Whether gesture recognition is disabled.
  * @attr priority - The priority in which to recognize gestures.
- * @attr max-displacement - * Maximum distance (px) a pointer can move before the gesture fails.
+ * @attr pointers - Number of pointers required for the gesture to be recognized.
+ * @attr start-threshold - Minimum distance (px) a pointer must move before the gesture starts.
+ * @attr min-displacement - * Minimum distance (px) a pointer must move before the gesture can be recognized.
  * @attr min-velocity - Minimum velocity (px/ms) required to recognize a swipe.
  * @attr direction-threshold - Minimum displacement (px) required before direction is considered valid.
+ * @attr direction-grace-period - Maximum amount of time (ms) a pointer can move in an uncommitted or
+ * disallowed direction before the gesture is rejected.
  * @attr directions - The allowed directions of the swipe.
+ * @attr max-press-interval - Maximum allowed time (ms) between the earliest and latest press.
  *
- * @fires gesture - Emitted when a swipe gesture is recognized.
+ * @fires gesture - Emitted when semantic detail about a swipe gesture is detected.
  */
 @customElement("m3e-swipe-gesture")
-export class M3eSwipeGestureElement extends GestureElementBase<SwipeGestureOptions> {
-  constructor() {
-    super(SwipeGestureRecognizer.gestureType);
-  }
+export class M3eSwipeGestureElement extends GestureElementBase<SwipeGestureOptions, SwipeGestureDetail> {
+  /** @inheritdoc */
+  override readonly recognizer = new SwipeGestureRecognizer();
 
   /**
-   * * Maximum distance (px) a pointer can move before the gesture fails.
-   * @default 24
+   * Number of pointers required for the gesture to be recognized.
+   * @default 1
    */
-  @property({ attribute: "max-displacement", type: Number }) maxDisplacement: number = 24;
+  @property({ type: Number, reflect: false }) pointers: number = this.recognizer.defaultOptions.pointers;
+
+  /**
+   * Minimum distance (px) a pointer must move before the gesture starts.
+   * @default 4
+   */
+  @property({ attribute: "start-threshold", type: Number, reflect: false }) startThreshold: number =
+    this.recognizer.defaultOptions.startThreshold;
+
+  /**
+   * * Minimum distance (px) a pointer must move before the gesture can be recognized.
+   * @default 12
+   */
+  @property({ attribute: "min-displacement", type: Number, reflect: false }) minDisplacement: number =
+    this.recognizer.defaultOptions.minDisplacement;
 
   /**
    * Minimum velocity (px/ms) required before the gesture fails.
    * @default 0.3
    */
-  @property({ attribute: "min-velocity", type: Number }) minVelocity = 0.3;
+  @property({ attribute: "min-velocity", type: Number, reflect: false }) minVelocity =
+    this.recognizer.defaultOptions.minVelocity;
 
   /**
    * Minimum displacement (px) required before direction is considered valid.
-   * @default 8
+   * @default 12
    */
-  @property({ attribute: "direction-threshold", type: Number }) directionThreshold = 8;
+  @property({ attribute: "direction-threshold", type: Number, reflect: false }) directionThreshold =
+    this.recognizer.defaultOptions.directionThreshold;
+
+  /**
+   * Maximum amount of time (ms) a pointer can move in an uncommitted or
+   * disallowed direction before the gesture is rejected. When set to 0,
+   * early‑direction rejection is disabled.
+   * @default 0
+   */
+  @property({ attribute: "direction-grace-period", type: Number, reflect: false }) directionGracePeriod: number =
+    this.recognizer.defaultOptions.directionGracePeriod;
 
   /**
    * The allowed directions of the swipe.
    * @default ["left", "right", "up", "down"]
    */
-  @property({ converter: spaceSeparatedStringConverter })
-  directions: readonly SwipeGestureDirection[] = ["left", "right", "up", "down"];
+  @property({ converter: spaceSeparatedStringConverter, reflect: false })
+  directions: readonly SwipeGestureDirection[] = this.recognizer.defaultOptions.directions;
+
+  /**
+   * Maximum allowed time (ms) between the earliest and latest press.
+   * @default 120
+   */
+  @property({ attribute: "max-press-interval", type: Number, reflect: false }) maxPressInterval: number =
+    this.recognizer.defaultOptions.maxPressInterval;
 
   /** @inheritdoc */
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
 
-    if (_changedProperties.has("maxDisplacement")) {
-      this.gestureController.update({ maxDisplacement: this.maxDisplacement });
-    }
-    if (_changedProperties.has("minVelocity")) {
-      this.gestureController.update({ minVelocity: this.minVelocity });
-    }
-    if (_changedProperties.has("directionThreshold")) {
-      this.gestureController.update({ directionThreshold: this.directionThreshold });
-    }
-    if (_changedProperties.has("directions")) {
-      this.gestureController.update({ directions: this.directions });
-    }
+    this.recognizer.options = {
+      pointers: this.pointers,
+      startThreshold: this.startThreshold,
+      minDisplacement: this.minDisplacement,
+      minVelocity: this.minVelocity,
+      directionThreshold: this.directionThreshold,
+      directionGracePeriod: this.directionGracePeriod,
+      directions: this.directions,
+      maxPressInterval: this.maxPressInterval,
+    };
   }
 }
 

@@ -1,102 +1,43 @@
+import { DelegatingGestureRecognizerBase, GestureDisposition, GestureListener, GesturePhase } from "@m3e/web/gestures";
+
 import {
-  detectGesture,
-  GestureDetail,
-  GestureInput,
-  GestureInputDisposition,
-  gestureRecognizer,
-  GestureRecognizerBase,
-  GestureRecognizerOptions,
-  PointerInput,
-} from "@m3e/web/gestures";
+  TransformGestureDetail,
+  TransformGestureOptions,
+  TransformGestureRecognizer,
+} from "@m3e/web/gestures/transform";
 
-import { PanGestureDetail, PanGestureOptions } from "@m3e/web/gestures/pan";
+import { DefaultSwipeGestureOptions, SwipeGestureDirection, SwipeGestureOptions } from "./SwipeGestureOptions";
+import { SwipeGestureDetail } from "./SwipeGestureDetail";
 
-/**
- * Specifies the possible directions of a swipe gesture.
- * - `left` — A swipe with dominant movement toward the negative x‑axis.
- * - `right` — A swipe with dominant movement toward the positive x‑axis.
- * - `up` — A swipe with dominant movement toward the negative y‑axis.
- * - `down` — A swipe with dominant movement toward the positive y‑axis.
- */
-export type SwipeGestureDirection = "left" | "right" | "up" | "down";
-
-/**
- * Specifies the dominant axis of a swipe gesture.
- * - `x` — The swipe's primary movement occurs along the horizontal axis.
- * - `y` — The swipe's primary movement occurs along the vertical axis.
- */
-export type SwipeGestureAxis = "x" | "y";
-
-/** Encapsulates detail about a swipe gesture. */
-export interface SwipeGestureDetail extends GestureDetail {
-  /** Resolved swipe direction. */
+/** Encapsulates state used to recognize swipe gestures. */
+interface SwipeGestureState {
+  detail: TransformGestureDetail;
   direction: SwipeGestureDirection;
-
-  /** Dominant axis of the swipe. */
-  axis: SwipeGestureAxis;
-
-  /** Total movement distance (px) traveled by the pointer. */
-  distance: number;
-
-  /** Velocity magnitude (px/ms). */
-  speed: number;
-
-  /** Angle (radians) of movement. */
-  angle: number;
+  axis: "x" | "y";
 }
 
-/** Encapsulates options used to recognize a swipe gesture. */
-export interface SwipeGestureOptions extends GestureRecognizerOptions {
-  /**
-   * Minimum velocity (px/ms) required to recognize a swipe.
-   * @default 0.3
-   */
-  readonly minVelocity: number;
-
-  /**
-   * The allowed directions of the swipe.
-   * @default ["left", "right", "up", "down"]
-   */
-  readonly directions: readonly SwipeGestureDirection[];
-
-  /**
-   * Minimum displacement (px) required before direction is considered valid.
-   * @default 8
-   */
-  readonly directionThreshold: number;
-
-  /**
-   * * Maximum distance (px) a pointer can move before the gesture fails.
-   * @default 24
-   */
-  readonly maxDisplacement: number;
-}
-
-/** State used to recognize swipe gestures. */
-interface GestureState {
-  detail: PanGestureDetail;
-  direction: SwipeGestureDirection;
-  axis: SwipeGestureAxis;
-}
-
-/** Recognizes a swipe gesture. */
-@gestureRecognizer("swipe")
-export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOptions, SwipeGestureDetail> {
-  /** @private */ readonly #pan = detectGesture<PanGestureDetail, PanGestureOptions>(
-    "pan",
-    { minDisplacement: 0 },
-    (detail) => this.#handlePanGesture(detail),
-  );
-
-  /** @private */ #state?: GestureState;
+/** A {@link GestureRecognizer} used to detect and interpret swipe gestures from incoming input streams. */
+export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
+  SwipeGestureOptions,
+  SwipeGestureDetail,
+  TransformGestureOptions,
+  TransformGestureDetail,
+  TransformGestureRecognizer
+> {
+  /** @private */ #state?: SwipeGestureState;
 
   /**
    * Initializes a new instance of this class.
-   * @param {Partial<SwipeGestureOptions> | undefined} options Options used to recognize gestures.
+   * @param {Partial<SwipeGestureOptions>} options The options used to detect and interpret gestures.
+   * @param {GestureListener<SwipeGestureDetail>} listener The function invoked when semantic detail is emitted.
    */
-  constructor(options?: Partial<SwipeGestureOptions>) {
-    super(options);
-    this.#pan.recognizer.onDisposition = (id, disposition) => this.#handlePanDisposition(id, disposition);
+  constructor(options?: Partial<SwipeGestureOptions>, listener?: GestureListener<SwipeGestureDetail>) {
+    super(options, listener, new TransformGestureRecognizer());
+  }
+
+  /** @inheritdoc */
+  override get defaultOptions(): SwipeGestureOptions {
+    return { ...DefaultSwipeGestureOptions };
   }
 
   /** @inheritdoc */
@@ -105,126 +46,169 @@ export class SwipeGestureRecognizer extends GestureRecognizerBase<SwipeGestureOp
   }
 
   /** @inheritdoc */
-  override shouldCapturePointer(input: PointerInput): boolean {
-    return this.#pan.recognizer.shouldCapturePointer(input);
-  }
-
-  /** @private */
-  override onInput(input: GestureInput): void {
-    this.#pan.recognizer.onInput(input);
-    super.onInput(input);
+  protected override _applyOptions(options: SwipeGestureOptions, inner: TransformGestureRecognizer): void {
+    inner.options = {
+      minDisplacement: options.startThreshold,
+      pointers: options.pointers,
+      maxPressInterval: options.maxPressInterval,
+    };
   }
 
   /** @inheritdoc */
-  protected override _onAcceptInput(id: number): void {
-    if (!this.#state || this.#state.detail.id !== id) return;
-
-    this._emitGesture({
-      gestureType: this.gestureType,
-      id: this.#state.detail.id,
-      timestamp: this.#state.detail.timestamp,
-      direction: this.#state.direction,
-      axis: this.#state.axis,
-      distance: Math.hypot(this.#state.detail.totalDeltaX, this.#state.detail.totalDeltaY),
-      speed: this.#state.detail.speed,
-      angle: this.#state.detail.angle,
-    });
-
+  protected override _onAccept(inputId: number): void {
+    // Ignore if no state or state is for a different input.
+    if (!this.#state || this.#shouldIgnoreInput(inputId, this.#state)) return;
+    this._emit(this.#createDetail("end", this.#state));
     this.reset();
   }
 
   /** @inheritdoc */
-  protected override _onRejectInput(_id: number): void {
-    if (!this.#state || this.#state.detail.id !== _id) return;
+  protected override _onReject(inputId: number): void {
+    // Ignore if no state or state is for a different input.
+    if (!this.#state || this.#shouldIgnoreInput(inputId, this.#state)) return;
+    this._emit(this.#createDetail("cancel", this.#state));
     this.reset();
   }
 
-  /** @inheritdoc */
-  override reset(): void {
-    this.#pan.reset();
-    this.#state = undefined;
-  }
-
   /** @private */
-  #handlePanDisposition(id: number, disposition: GestureInputDisposition): void {
+  protected override _handleDisposition(inputId: number, disposition: GestureDisposition): void {
     if (disposition === "accept") {
-      // Fires end
-      this.#pan.recognizer.onResolution(id, "accept");
+      // The inner recognizer does not compete with other gestures.
+      this._inner?.onResolution(inputId, "accept");
     }
   }
 
-  /** @private */
-  #handlePanGesture(detail: PanGestureDetail): void {
+  protected override _handleGesture(detail: TransformGestureDetail): void {
     switch (detail.phase) {
       case "cancel":
-        this.reset();
+        // If cancelled and there is state (gesture started), cancel and release deferred input.
+        // Otherwise, just reset the recognizer.
+
+        if (this.#state) {
+          this._emit(this.#createDetail("cancel", this.#state));
+          this.#releaseAndReset(detail.inputId);
+        } else {
+          this.reset();
+        }
         break;
 
-      case "move": {
-        // During early window, displacement must still be within swipe threshold
-        const displacement = Math.hypot(detail.totalDeltaX, detail.totalDeltaY);
+      case "start":
+        // On start, initialize state, emit start and defer input. Input is deferred so that the
+        // recognizer can be informed when another gesture accepts the input.
 
-        // Must be within early window, release deferment and reset if exceeded
-        if (displacement > this.options.maxDisplacement) {
-          this._releaseInput(detail.id);
-          this.reset();
+        this.#state = { detail, direction: this.#computeDirection(detail), axis: detail.axis };
+        this._emit(this.#createDetail("start", this.#state));
+        this._defer(detail.inputId);
+        break;
+
+      case "update": {
+        // On update (pointer move), update state, and validate whether the started gesture should be cancelled.
+        const previousAxis = this.#state?.axis ?? detail.axis;
+        const newAxis = detail.axis;
+        this.#state = { detail, direction: this.#computeDirection(detail), axis: newAxis };
+
+        if (this.options.directionGracePeriod > 0 && detail.duration > this.options.directionGracePeriod) {
+          // Cancel early if axis flips after a grace period.
+          if (previousAxis !== newAxis) {
+            this._emit(this.#createDetail("cancel", this.#state));
+            this.#releaseAndReset(detail.inputId);
+            break;
+          }
+
+          // Cancel early if direction is not supported after a grace period.
+          if (!this.options.directions.includes(this.#state.direction)) {
+            this._emit(this.#createDetail("cancel", this.#state));
+            this.#releaseAndReset(detail.inputId);
+            break;
+          }
+        }
+
+        // Emit an update if the gesture has not been cancelled.
+        this._emit(this.#createDetail("update", this.#state));
+        break;
+      }
+
+      case "end": {
+        this.#state = { detail, direction: this.#computeDirection(detail), axis: detail.axis };
+        // Cancel if there is not enough displacement.
+        if (detail.totalDisplacement < this.options.minDisplacement) {
+          this._emit(this.#createDetail("cancel", this.#state));
+          this.#releaseAndReset(detail.inputId);
           break;
         }
 
-        // Must be fast, otherwise ignore
-        if (detail.speed < this.options.minVelocity) break;
+        // Cancel if not enough velocity.
+        if (detail.speed < this.options.minVelocity) {
+          this._emit(this.#createDetail("cancel", this.#state));
+          this.#releaseAndReset(detail.inputId);
+          break;
+        }
 
-        // Must have directional commitment, otherwise ignore
-        const axis = this.#computeAxis(detail);
+        // Cancel if there is no directional commitment.
         const committed =
-          axis === "x"
+          this.#state.axis === "x"
             ? Math.abs(detail.totalDeltaX) >= this.options.directionThreshold
             : Math.abs(detail.totalDeltaY) >= this.options.directionThreshold;
 
         if (!committed) {
+          this._emit(this.#createDetail("cancel", this.#state));
+          this.#releaseAndReset(detail.inputId);
           break;
         }
 
-        // Must be in allowed directions, otherwise ignore
-        const direction = this.#computeDirection(detail);
-        if (!this.options.directions.includes(direction)) {
+        // Cancel if not in an allowed directions
+        if (!this.options.directions.includes(this.#state.direction)) {
+          this._emit(this.#createDetail("cancel", this.#state));
+          this.#releaseAndReset(detail.inputId);
           break;
         }
 
-        // Try to accept gesture
-        this.#state = { detail, direction, axis };
-        this._acceptInput(detail.id);
+        // Attempt to accept input (eagerly).
+        this._accept(detail.inputId);
         break;
       }
-
-      case "start":
-        // Ensure state is cleared
-        this.#state = undefined;
-
-        // Defer input so that if another gesture is recognized, this will be rejected
-        this._deferInput(detail.id);
-        break;
-
-      case "end":
-        // Swipe must be early, end velocity is fling behavior ignore
-        this.reset();
-        break;
     }
   }
 
-  /** @private */
-  #computeAxis(detail: PanGestureDetail): SwipeGestureAxis {
-    return Math.abs(detail.totalDeltaX) > Math.abs(detail.totalDeltaY) ? "x" : "y";
+  /** @inheritdoc */
+  override reset(): void {
+    super.reset();
+    this.#state = undefined;
   }
 
   /** @private */
-  #computeDirection(detail: PanGestureDetail): SwipeGestureDirection {
-    return this.#computeAxis(detail) === "x"
-      ? detail.totalDeltaX > 0
-        ? "right"
-        : "left"
-      : detail.totalDeltaY > 0
-        ? "down"
-        : "up";
+  #shouldIgnoreInput(inputId: number, state: SwipeGestureState): boolean {
+    const ids = Array.isArray(state.detail.inputId) ? state.detail.inputId : [state.detail.inputId];
+    return !ids.includes(inputId);
+  }
+
+  /** @private */
+  #computeDirection(detail: TransformGestureDetail): SwipeGestureDirection {
+    return detail.axis === "x" ? (detail.totalDeltaX > 0 ? "right" : "left") : detail.totalDeltaY > 0 ? "down" : "up";
+  }
+
+  /** @private */
+  #createDetail(phase: GesturePhase, state: SwipeGestureState): SwipeGestureDetail {
+    return {
+      inputId: state.detail.inputId,
+      gestureName: "swipe",
+      phase,
+      timestamp: state.detail.timestamp,
+      direction: state.direction,
+      axis: state.detail.axis,
+      translationX: state.detail.totalDeltaX,
+      translationY: state.detail.totalDeltaY,
+      displacement: state.detail.totalDisplacement,
+      velocityX: state.detail.velocityX,
+      velocityY: state.detail.velocityY,
+      speed: state.detail.speed,
+      duration: state.detail.duration,
+    };
+  }
+
+  /** @private */
+  #releaseAndReset(inputId: number | readonly number[]): void {
+    this._release(inputId);
+    this.reset();
   }
 }
