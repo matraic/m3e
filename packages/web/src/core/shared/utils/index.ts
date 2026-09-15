@@ -1,5 +1,6 @@
 export * from "./computeCssSize";
 export * from "./computeLineCount";
+export * from "./DeferredPromise";
 export * from "./focusWhenReady";
 export * from "./forcedColorsActive";
 export * from "./generateClipPaths";

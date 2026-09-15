@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { property, query } from "lit/decorators.js";
+import { property, query, state } from "lit/decorators.js";
 
 import {
   AttachInternals,
@@ -26,6 +26,8 @@ import {
   customElement,
   MutationController,
   ReconnectedCallback,
+  commaSeparatedStringConverter,
+  waitForUpgrade,
 } from "@m3e/web/core";
 
 import { ListKeyManager } from "@m3e/web/core/a11y";
@@ -73,6 +75,7 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * @attr name - The name that identifies the element when submitting the associated form.
  * @attr panel-class - Class or list of classes to be applied to the select's overlay panel.
  * @attr required - Whether the element is required.
+ * @attr value - Selected value(s), single for single‑select or comma‑separated for multi‑select.
  *
  * @fires beforeinput - Dispatched before the selected state changes.
  * @fires input - Dispatched when the selected state changes.
@@ -160,6 +163,8 @@ export class M3eSelectElement
 
   /** @private */ static __nextId = 0;
 
+  /** @private */ @state() private _pendingValue?: { value: string | readonly string[] | null };
+
   /** @private */ private _options = new Array<M3eOptionElement>();
   /** @private */ #clone?: HTMLElement;
   /** @private */ #slot?: HTMLSlotElement | null;
@@ -203,6 +208,28 @@ export class M3eSelectElement
     callback: () => this.#handleMutation(),
   });
 
+  /** The selected (enabled) value(s). */
+  @property({ converter: commaSeparatedStringConverter, reflect: false })
+  get value(): string | readonly string[] | null {
+    const values = this.selected.filter((x) => !x.disabled).map((x) => x.value);
+    switch (values.length) {
+      case 0:
+        return null;
+      case 1:
+        return values[0];
+      default:
+        return values;
+    }
+  }
+  set value(value: string | readonly string[] | null) {
+    // If array, ensure array is copied.
+    if (Array.isArray(value)) {
+      value = [...value];
+    }
+
+    this._pendingValue = { value };
+  }
+
   /**
    * Whether to hide the selection indicator for single select options.
    * @default false
@@ -237,19 +264,6 @@ export class M3eSelectElement
   /** The selected option(s). */
   get selected(): readonly M3eOptionElement[] {
     return this.options.filter((x) => x.selected);
-  }
-
-  /** The selected (enabled) value(s). */
-  get value(): string | readonly string[] | null {
-    const values = this.selected.filter((x) => !x.disabled).map((x) => x.value);
-    switch (values.length) {
-      case 0:
-        return null;
-      case 1:
-        return values[0];
-      default:
-        return values;
-    }
   }
 
   /** @inheritdoc @internal */
@@ -339,11 +353,15 @@ export class M3eSelectElement
   }
 
   /** @inheritdoc */
-  protected override update(changedProperties: PropertyValues<this>): void {
+  protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
 
     if (changedProperties.has("hideSelectionIndicator")) {
       this.#options.forEach((x) => setCustomState(x, "--hide-selection-indicator", this.hideSelectionIndicator));
+    }
+
+    if (changedProperties.has("_pendingValue") && this.options.length > 0) {
+      this.#applyPendingValue();
     }
   }
 
@@ -445,6 +463,8 @@ export class M3eSelectElement
     this._options = slotted
       ? slotted.filter((x) => x instanceof M3eOptionElement)
       : [...this.querySelectorAll("m3e-option")];
+
+    this.#applyPendingValue();
 
     this.#formField?.notifyControlStateChange();
     if (this.#menu) {
@@ -767,6 +787,33 @@ export class M3eSelectElement
 
       this.dispatchEvent(new Event("input", { bubbles: true }));
       this.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  }
+
+  /** @private */
+  async #applyPendingValue(): Promise<void> {
+    if (!this._pendingValue) return;
+    const values = !this._pendingValue.value
+      ? null
+      : !Array.isArray(this._pendingValue.value)
+        ? [this._pendingValue.value]
+        : this._pendingValue.value;
+
+    this._pendingValue = undefined;
+
+    if (values === null) {
+      for (const option of this.options) {
+        await waitForUpgrade(option);
+        await option.valueReady;
+        option.selected = false;
+      }
+    } else {
+      for (const option of this.options) {
+        await waitForUpgrade(option);
+        await option.valueReady;
+
+        option.selected = values.includes(option.value);
+      }
     }
   }
 }

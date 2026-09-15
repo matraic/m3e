@@ -4,6 +4,7 @@ import { property, query } from "lit/decorators.js";
 import {
   AttachInternals,
   customElement,
+  DeferredPromise,
   DesignToken,
   Disabled,
   getTextContent,
@@ -205,12 +206,15 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
   /** @private */ #value?: string;
   /** @private */ #textContent = "";
 
+  /** @private */ readonly #valueReady = new DeferredPromise();
+  /** @private */ readonly #labelReady = new DeferredPromise();
+
   /** @internal */ @query(".focus-ring") readonly focusRing?: M3eFocusRingElement;
   /** @internal */ @query(".state-layer") readonly stateLayer?: M3eStateLayerElement;
   /** @private */ @query(".ripple") private readonly _ripple?: M3eRippleElement;
 
   /** A string representing the value of the option. */
-  @property() get value() {
+  @property({ useDefault: true }) get value(): string {
     return this.#value ?? this.#textContent;
   }
   set value(value: string) {
@@ -240,6 +244,16 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
     return this.#textContent;
   }
 
+  /** Returns a `Promise` that resolves when the label is ready. */
+  get labelReady(): Promise<void> {
+    return this.#labelReady.ready;
+  }
+
+  /** Returns a `Promise` that resolves when the value is ready. */
+  get valueReady(): Promise<void> {
+    return this.#valueReady.ready;
+  }
+
   /** @internal */
   [typeaheadLabel](): string {
     return this.label;
@@ -265,6 +279,10 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
   /** @inheritdoc */
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
+
+    if (changedProperties.has("value")) {
+      this.#valueReady.resolve();
+    }
 
     if (changedProperties.has("selected") && this.selected) {
       const panel = this.closest("[role='listbox']") ?? this.closest("m3e-autocomplete") ?? this.closest("m3e-select");
@@ -312,6 +330,9 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
   #handleSlotChange(e: Event): void {
     this.#textContent = getTextContent(<HTMLSlotElement>e.target);
     setCustomState(this, "--empty", this.isEmpty);
+
+    this.#labelReady.resolve();
+    this.#valueReady.resolve();
 
     if (this.selected) {
       this.closest<LitElement>("m3e-select")?.requestUpdate?.();
