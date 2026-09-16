@@ -211,6 +211,10 @@ export class M3eSelectElement
   /** The selected (enabled) value(s). */
   @property({ converter: commaSeparatedStringConverter, reflect: false })
   get value(): string | readonly string[] | null {
+    if (this._pendingValue) {
+      return Array.isArray(this._pendingValue.value) ? [...this._pendingValue.value] : this._pendingValue.value;
+    }
+
     const values = this.selected.filter((x) => !x.disabled).map((x) => x.value);
     switch (values.length) {
       case 0:
