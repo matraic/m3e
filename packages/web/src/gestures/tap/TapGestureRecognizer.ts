@@ -184,10 +184,10 @@ export class TapGestureRecognizer extends GestureRecognizerBase<TapGestureOption
       phase,
       inputId: [...this.#state.keys()],
       timestamp: Math.max(...trackers.map((x) => x.current.timestamp)),
-      clientX: centroid.clientX,
-      clientY: centroid.clientY,
-      localX: centroid.localX,
-      localY: centroid.localY,
+      clientX: centroid.startClientX,
+      clientY: centroid.startClientY,
+      localX: centroid.startLocalX,
+      localY: centroid.startLocalY,
       duration: trackers.reduce((sum, x) => sum + x.detail.duration, 0) / trackers.length,
     };
   }
