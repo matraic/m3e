@@ -2,7 +2,7 @@
 
 The `@m3e/web/gestures` module provides a gesture recognition subsystem supporting declarative and programmatic gesture detection. It uses a modular recognizer architecture with a priority-based disposition system that resolves competing claims on input.
 
-The subsystem includes:
+Features include:
 
 - Pointer tracking and gesture details with viewport and element-local coordinates
 - Configurable thresholds, pointer types, buttons, priorities, and input filters
@@ -52,7 +52,7 @@ import { tap } from "@m3e/web/gestures/tap";
 const button = document.querySelector("button")!;
 const recognizer = tap(
   (detail) => {
-    console.log("Tapped at", detail.pointers[0].clientX, detail.pointers[0].clientY);
+    console.log("Tapped at", detail.clientX, detail.clientY);
   },
   { maxDuration: 180 },
 );
@@ -209,6 +209,30 @@ recognizer.addListener((detail) => {
       break;
   }
 });
+```
+
+The `phase()` helper provides a convenient way to register handlers for specific phases without writing a `switch` statement.
+
+```ts
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { tap } from "@m3e/web/gestures/tap";
+
+detectGesture(
+  button,
+  tap(
+    phase({
+      onStart: (detail) => {
+        console.log("Tap started at", detail.clientX, detail.clientY);
+      },
+      onEnd: (detail) => {
+        console.log("Tap completed in", detail.duration, "ms");
+      },
+      onCancel: () => {
+        console.log("Tap cancelled");
+      },
+    }),
+  ),
+);
 ```
 
 ## Gesture details
