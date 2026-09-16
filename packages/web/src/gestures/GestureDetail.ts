@@ -1,8 +1,9 @@
 /**
  * Specifies the possible phases of a gesture during recognition.
- * - `start` — The gesture has begun.
- * - `update` — The gesture has changed or progressed.
- * - `end` — The gesture has completed successfully.
+ *
+ * - `start` — Initial conditions are satisfied and the gesture begins.
+ * - `update` — The interaction continues and the gesture has changed or progressed.
+ * - `end` — The interaction completes the gesture.
  * - `cancel` — The gesture has failed or been interrupted.
  */
 export type GesturePhase = "start" | "update" | "end" | "cancel";

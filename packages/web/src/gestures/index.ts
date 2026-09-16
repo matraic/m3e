@@ -7,3 +7,4 @@ export * from "./GestureRecognizer";
 export * from "./GestureRecognizerBase";
 export * from "./PointerTracker";
 export * from "./detectGesture";
+export * from "./phase";
