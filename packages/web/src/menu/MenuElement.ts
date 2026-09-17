@@ -176,7 +176,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
     :host(:not([submenu]):popover-open) {
       transform: scaleY(1);
       animation: ${unsafeCSS(
-        `bounce-open ${DesignToken.motion.duration.medium1} ${DesignToken.motion.easing.standard}`,
+        `bounce-open ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standardDecelerate}`,
       )};
     }
     @keyframes bounce-open {
