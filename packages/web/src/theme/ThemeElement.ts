@@ -152,41 +152,41 @@ export class M3eThemeElement extends LitElement {
    * The hex color from which to derive dynamic color palettes.
    * @default "#6750A4"
    */
-  @property() color = "#6750A4";
+  @property({ reflect: false }) color = "#6750A4";
 
   /** The color variant of the theme.
    * @default "neutral"
    */
-  @property() variant: ThemeVariant = "neutral";
+  @property({ reflect: false }) variant: ThemeVariant = "neutral";
 
   /**
    * The color scheme of the theme.
    * @default "auto"
    */
-  @property() scheme: ColorScheme = "auto";
+  @property({ reflect: false }) scheme: ColorScheme = "auto";
 
   /**
    * The contrast level of the theme.
    * @default "standard"
    */
-  @property() contrast: ContrastLevel = "standard";
+  @property({ reflect: false }) contrast: ContrastLevel = "standard";
 
   /**
    * Whether to enable strong focus indicators.
    * @default false
    */
-  @property({ attribute: "strong-focus", type: Boolean }) strongFocus = false;
+  @property({ attribute: "strong-focus", type: Boolean, reflect: false }) strongFocus = false;
 
   /**
    * The density scale (0, -1, -2).
    * @default 0
    */
-  @property({ type: Number }) density = 0;
+  @property({ type: Number, reflect: false }) density = 0;
 
   /** The motion scheme.
    * @default "standard"
    */
-  @property() motion: MotionScheme = "standard";
+  @property({ reflect: false }) motion: MotionScheme = "standard";
 
   /** Whether a dark theme is applied. */
   get isDark(): boolean {
