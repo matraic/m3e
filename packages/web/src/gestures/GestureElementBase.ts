@@ -65,19 +65,28 @@ export abstract class GestureElementBase<
    */
   @property({ attribute: false, reflect: false }) inputFilter?: (input: GestureInput) => boolean;
 
-  /** @private */
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.recognizer.addListener(this.#gestureListener);
+  }
+
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.recognizer.removeListener(this.#gestureListener);
+  }
+
+  /** @inheritdoc */
   override attach(control: HTMLElement): void {
     super.attach(control);
-
-    this.recognizer.addListener(this.#gestureListener);
     GestureBinder.bind(control, this.recognizer);
   }
 
-  /** @private */
+  /** @inheritdoc */
   override detach(): void {
     if (this.control) {
       GestureBinder.unbind(this.control, this.recognizer);
-      this.recognizer.removeListener(this.#gestureListener);
     }
     super.detach();
   }
