@@ -10,6 +10,18 @@ export interface SwipeGestureDetail extends GestureDetail {
   /** Dominant axis of movement. */
   readonly axis: "x" | "y";
 
+  /** Horizontal viewport coordinate of the initial input sample. */
+  readonly startClientX: number;
+
+  /** Vertical viewport coordinate of the initial input sample. */
+  readonly startClientY: number;
+
+  /** Element-relative horizontal coordinate of the initial input sample. */
+  readonly startLocalX: number;
+
+  /** Element-relative vertical coordinate of the initial input sample. */
+  readonly startLocalY: number;
+
   /** Total horizontal movement (px). */
   readonly translationX: number;
 
