@@ -21,8 +21,8 @@ The following components are planned for future release (in no particular order)
 
 ## 🏛️ Past Milestones
 
-- **2.8.0 — Feature release**
-  Added `@m3e/web/gestures`, form-field manual error state, select settable value
+- **2.8.0 – 2.8.1 — Feature release + patch releases**
+  Added `@m3e/web/gestures`, form-field manual error state, select settable value, bug fixes.
 
 - **2.7.0 – 2.7.12 — Feature release + patch releases**
   Added `@m3e/web/date-input`, text scaling support, bug fixes.
