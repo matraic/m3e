@@ -228,7 +228,7 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOption
     const trackers = [...this.#state.values()].map((x) => x.tracker);
     const centroid = PointerTracker.centroid(...trackers);
     return {
-      gestureName: "transform",
+      gestureName: "pan",
       phase: phase,
       inputId: [...this.#state.keys()],
       ...centroid,
