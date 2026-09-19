@@ -826,7 +826,7 @@ detectGesture(item, scale(phase({
         <m3e-card variant="outlined" class="showcase">
           <div slot="content">
             <div id="target5" class="target"></div>
-            <m3e-repeat-gesture for="target5" count="3">
+            <m3e-repeat-gesture for="target5" count="3" max-interval="350">
               <m3e-tap-gesture></m3e-tap-gesture>
             </m3e-repeat-gesture>
             <div class="gesture-log-wrapper">
@@ -837,7 +837,7 @@ detectGesture(item, scale(phase({
         <m3e-card variant="outlined" class="example">
           <pre slot="content">
 &lt;div id=&quot;item&quot; class=&quot;target&quot;&gt;&lt;/div&gt;
-&lt;m3e-repeat-gesture for=&quot;item&quot; count=&quot;3&quot;&gt;
+&lt;m3e-repeat-gesture for=&quot;item&quot; count=&quot;3&quot; max-interval=&quot;350&quot;&gt;
   &lt;m3e-tap-gesture&gt;&lt;/m3e-tap-gesture&gt;
 &lt;/m3e-repeat-gesture&gt;
 </pre
@@ -858,6 +858,7 @@ detectGesture(item, repeat(
   }),
   {
     count: 3,
+    maxInterval: 350
   },
   tap(),
 ));</pre
