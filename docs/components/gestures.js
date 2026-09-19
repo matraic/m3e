@@ -98,7 +98,7 @@ window.addEventListener("DOMContentLoaded", () => {
         `initialAngle=${e.detail.initialAngle.toFixed(2)}, ` +
         `rotation=${e.detail.rotation.toFixed(2)}, ` +
         `rotationDelta=${e.detail.rotationDelta.toFixed(2)}, ` +
-        `rotationVelocity=${e.detail.rotationVelocity.toFixed(2)}, ` +
+        `rotationVelocity=${e.detail.rotationVelocity.toFixed(4)}, ` +
         `currentAngle=${e.detail.currentAngle.toFixed(2)}`;
 
       if (log.childNodes.length > 10) {
@@ -121,7 +121,7 @@ window.addEventListener("DOMContentLoaded", () => {
         `currentDistance=${e.detail.currentDistance.toFixed(2)}, ` +
         `scale=${e.detail.scale.toFixed(2)}, ` +
         `scaleDelta=${e.detail.scaleDelta.toFixed(2)}, ` +
-        `scaleVelocity=${e.detail.scaleVelocity.toFixed(2)}`;
+        `scaleVelocity=${e.detail.scaleVelocity.toFixed(4)}`;
 
       if (log.childNodes.length > 10) {
         log.removeChild(log.firstChild);
