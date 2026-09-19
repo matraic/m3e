@@ -20,6 +20,9 @@ export class GestureResolver {
 
       /** Timeout for pending resolution of the input stream. */
       timeout?: number;
+
+      /** Whether an explicit resolution attempt occurred but could not complete. */
+      stale?: boolean;
     }
   >();
 
@@ -60,42 +63,7 @@ export class GestureResolver {
    * @param {number} inputId The identifier of the input stream to resolve.
    */
   resolve(inputId: number): void {
-    const stream = this.#streams.get(inputId);
-
-    // Input cannot be resolved when there are holds.
-    if (!stream || stream.holders.length > 0) return;
-
-    // Find the first eager recognizer with highest priority.
-    let resolved: GestureRecognizer | null = null;
-    for (const recognizer of stream.acceptors) {
-      if (!recognizer.eager) continue;
-      if (!resolved || recognizer.options.priority > resolved.options.priority) {
-        resolved = recognizer;
-      }
-    }
-
-    // If there are no eager recognizers, fallback the recognizer with highest priority.
-    if (!resolved) {
-      for (const recognizer of stream.acceptors) {
-        if (!resolved || recognizer.options.priority > resolved.options.priority) {
-          resolved = recognizer;
-        }
-      }
-    }
-
-    if (!resolved) return;
-
-    // Notify the recognizer that input can be accepted.
-    resolved.onResolution(inputId, "accept");
-
-    this.#exclude(resolved, stream.acceptors);
-
-    // Notify remaining acceptors and any deferrers that input should be rejected.
-    stream.acceptors.forEach((x) => x.onResolution(inputId, "reject"));
-    stream.deferrers.forEach((x) => x.onResolution(inputId, "reject"));
-
-    clearTimeout(stream.timeout);
-    this.#streams.delete(inputId);
+    this.#resolve(inputId, true);
   }
 
   /** Clears any dispositions on input . */
@@ -150,10 +118,12 @@ export class GestureResolver {
       stream.acceptors.push(recognizer);
     }
 
-    // If eager, immediately attempt to resolve; wait a tick to support pending timers.
-    if (recognizer.eager) {
+    // If eager or stale, immediately attempt to resolve; wait a tick to support pending timers.
+    // A stream becomes stale when resolve is explicitly called and input could not resolve.
+
+    if (recognizer.eager || stream.stale) {
       clearTimeout(stream.timeout);
-      stream.timeout = setTimeout(() => this.resolve(inputId));
+      stream.timeout = setTimeout(() => this.#resolve(inputId));
     }
   }
 
@@ -177,7 +147,7 @@ export class GestureResolver {
     // otherwise, remove the stream if there are no further acceptors, holders or deferrers.
 
     if (held && stream.acceptors.length > 0 && stream.holders.length === 0) {
-      this.resolve(inputId);
+      this.#resolve(inputId);
     } else if (stream.acceptors.length === 0 && stream.holders.length === 0 && stream.deferrers.length === 0) {
       clearTimeout(stream.timeout);
       this.#streams.delete(inputId);
@@ -203,7 +173,7 @@ export class GestureResolver {
     // otherwise, remove the stream if there are no further acceptors, holders or deferrers.
 
     if (this.#exclude(recognizer, stream.holders) && stream.acceptors.length > 0 && stream.holders.length === 0) {
-      this.resolve(inputId);
+      this.#resolve(inputId);
     } else if (stream.acceptors.length === 0 && stream.holders.length === 0 && stream.deferrers.length === 0) {
       clearTimeout(stream.timeout);
       this.#streams.delete(inputId);
@@ -217,6 +187,60 @@ export class GestureResolver {
     this.#include(recognizer, stream.deferrers);
     this.#exclude(recognizer, stream.acceptors);
     this.#exclude(recognizer, stream.holders);
+  }
+
+  /** @private */
+  #resolve(inputId: number, explicit: boolean = false): void {
+    const stream = this.#streams.get(inputId);
+
+    if (!stream) return;
+
+    // Input cannot be resolved when there are holds.
+    if (stream.holders.length > 0) {
+      // Mark the stream as stale when resolution is explicit and the stream cannot be resolved.
+      if (explicit) {
+        stream.stale = true;
+      }
+      return;
+    }
+
+    // Find the first eager recognizer with highest priority.
+    let resolved: GestureRecognizer | null = null;
+    for (const recognizer of stream.acceptors) {
+      if (!recognizer.eager) continue;
+      if (!resolved || recognizer.options.priority > resolved.options.priority) {
+        resolved = recognizer;
+      }
+    }
+
+    // If there are no eager recognizers, fallback the recognizer with highest priority.
+    if (!resolved) {
+      for (const recognizer of stream.acceptors) {
+        if (!resolved || recognizer.options.priority > resolved.options.priority) {
+          resolved = recognizer;
+        }
+      }
+    }
+
+    if (!resolved) {
+      // Mark the stream as stale when resolution is explicit and the stream cannot be resolved.
+      if (explicit) {
+        stream.stale = true;
+      }
+      return;
+    }
+
+    // Notify the recognizer that input can be accepted.
+    resolved.onResolution(inputId, "accept");
+
+    this.#exclude(resolved, stream.acceptors);
+
+    // Notify remaining acceptors and any deferrers that input should be rejected.
+    stream.acceptors.forEach((x) => x.onResolution(inputId, "reject"));
+    stream.deferrers.forEach((x) => x.onResolution(inputId, "reject"));
+
+    clearTimeout(stream.timeout);
+    this.#streams.delete(inputId);
   }
 
   /** @private */
