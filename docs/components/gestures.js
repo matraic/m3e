@@ -95,12 +95,11 @@ window.addEventListener("DOMContentLoaded", () => {
       line.textContent =
         `gestureName="${e.detail.gestureName}", ` +
         `phase="${e.detail.phase}", ` +
-        `axis=${e.detail.axis}, ` +
-        `initialAngle=${Math.round(e.detail.initialAngle)}, ` +
-        `rotation=${Math.round(e.detail.rotation)}, ` +
-        `rotationDelta=${Math.round(e.detail.rotationDelta)}, ` +
+        `initialAngle=${e.detail.initialAngle.toFixed(2)}, ` +
+        `rotation=${e.detail.rotation.toFixed(2)}, ` +
+        `rotationDelta=${e.detail.rotationDelta.toFixed(2)}, ` +
         `rotationVelocity=${e.detail.rotationVelocity.toFixed(2)}, ` +
-        `currentAngle=${Math.round(e.detail.currentAngle)}`;
+        `currentAngle=${e.detail.currentAngle.toFixed(2)}`;
 
       if (log.childNodes.length > 10) {
         log.removeChild(log.firstChild);
@@ -118,11 +117,10 @@ window.addEventListener("DOMContentLoaded", () => {
       line.textContent =
         `gestureName="${e.detail.gestureName}", ` +
         `phase="${e.detail.phase}", ` +
-        `axis=${e.detail.axis}, ` +
-        `initialDistance=${Math.round(e.detail.initialDistance)}, ` +
-        `currentDistance=${Math.round(e.detail.currentDistance)}, ` +
-        `scale=${Math.round(e.detail.scale)}, ` +
-        `scaleDelta=${Math.round(e.detail.scaleDelta)}, ` +
+        `initialDistance=${e.detail.initialDistance.toFixed(2)}, ` +
+        `currentDistance=${e.detail.currentDistance.toFixed(2)}, ` +
+        `scale=${e.detail.scale.toFixed(2)}, ` +
+        `scaleDelta=${e.detail.scaleDelta.toFixed(2)}, ` +
         `scaleVelocity=${e.detail.scaleVelocity.toFixed(2)}`;
 
       if (log.childNodes.length > 10) {
