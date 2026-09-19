@@ -63,7 +63,7 @@ export class ScaleGestureRecognizer extends DelegatingGestureRecognizerBase<
     }
 
     const scale = currentDistance / this.#initialDistance;
-    const scaleDelta = currentDistance / this.#previousDistance;
+    const scaleDelta = (currentDistance - this.#previousDistance) / this.#initialDistance;
     const scaleVelocity = detail.deltaTime > 0 ? scaleDelta / detail.deltaTime : 0;
 
     this.#previousDistance = currentDistance;
