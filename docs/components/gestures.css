@@ -5,6 +5,9 @@
   background-color: var(--md-sys-color-primary);
   border-radius: var(--md-sys-shape-corner-large);
   touch-action: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 .gesture-log-wrapper {
   display: flex;
