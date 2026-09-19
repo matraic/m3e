@@ -2,7 +2,12 @@ import React from "react";
 import { createComponent, EventName } from "@lit/react";
 
 import { M3ePanGestureElement, PanGestureDetail } from "@m3e/web/gestures/pan";
-export type { PanGestureDetail } from "@m3e/web/gestures/pan";
+export type {
+  PanGestureDetail,
+  PanGestureActivationMode,
+  PanGestureLockAxis,
+  PanGestureOptions,
+} from "@m3e/web/gestures/pan";
 
 /**
  * React binding for the `m3e-pan-gesture` Web Component from `@m3e/web/gestures/pan`.

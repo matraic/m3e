@@ -1,17 +1,13 @@
 import { DelegatingGestureRecognizerBase, GestureDisposition, GestureListener, GesturePhase } from "@m3e/web/gestures";
 
-import {
-  TransformGestureDetail,
-  TransformGestureOptions,
-  TransformGestureRecognizer,
-} from "@m3e/web/gestures/transform";
+import { PanGestureDetail, PanGestureOptions, PanGestureRecognizer } from "@m3e/web/gestures/pan";
 
 import { DefaultSwipeGestureOptions, SwipeGestureDirection, SwipeGestureOptions } from "./SwipeGestureOptions";
 import { SwipeGestureDetail } from "./SwipeGestureDetail";
 
 /** Encapsulates state used to recognize swipe gestures. */
 interface SwipeGestureState {
-  detail: TransformGestureDetail;
+  detail: PanGestureDetail;
   direction: SwipeGestureDirection;
   axis: "x" | "y";
 }
@@ -20,9 +16,9 @@ interface SwipeGestureState {
 export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
   SwipeGestureOptions,
   SwipeGestureDetail,
-  TransformGestureOptions,
-  TransformGestureDetail,
-  TransformGestureRecognizer
+  PanGestureOptions,
+  PanGestureDetail,
+  PanGestureRecognizer
 > {
   /** @private */ #state?: SwipeGestureState;
 
@@ -32,7 +28,7 @@ export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
    * @param {GestureListener<SwipeGestureDetail>} listener The function invoked when semantic detail is emitted.
    */
   constructor(options?: Partial<SwipeGestureOptions>, listener?: GestureListener<SwipeGestureDetail>) {
-    super(options, listener, new TransformGestureRecognizer());
+    super(options, listener, new PanGestureRecognizer());
   }
 
   /** @inheritdoc */
@@ -46,7 +42,7 @@ export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
   }
 
   /** @inheritdoc */
-  protected override _applyOptions(options: SwipeGestureOptions, inner: TransformGestureRecognizer): void {
+  protected override _applyOptions(options: SwipeGestureOptions, inner: PanGestureRecognizer): void {
     inner.options = {
       minDisplacement: options.startThreshold,
       pointers: options.pointers,
@@ -78,7 +74,7 @@ export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
     }
   }
 
-  protected override _handleGesture(detail: TransformGestureDetail): void {
+  protected override _handleGesture(detail: PanGestureDetail): void {
     switch (detail.phase) {
       case "cancel":
         // If cancelled and there is state (gesture started), cancel and release deferred input.
@@ -183,7 +179,7 @@ export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
   }
 
   /** @private */
-  #computeDirection(detail: TransformGestureDetail): SwipeGestureDirection {
+  #computeDirection(detail: PanGestureDetail): SwipeGestureDirection {
     return detail.axis === "x" ? (detail.totalDeltaX > 0 ? "right" : "left") : detail.totalDeltaY > 0 ? "down" : "up";
   }
 

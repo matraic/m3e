@@ -1,5 +1,5 @@
 import { DefaultGestureOptions, GestureOptions } from "@m3e/web/gestures";
-import { TransformGestureActivationMode } from "@m3e/web/gestures/transform";
+import { PanGestureActivationMode } from "@m3e/web/gestures/pan";
 
 /** Encapsulates options used to detect and interpret rotate gestures. */
 export interface RotateGestureOptions extends GestureOptions {
@@ -13,7 +13,7 @@ export interface RotateGestureOptions extends GestureOptions {
    * Mode in which to activate the gesture.
    * @default "press"
    */
-  readonly activationMode: TransformGestureActivationMode;
+  readonly activationMode: PanGestureActivationMode;
 
   /**
    * Minimum centroid displacement (px) before rotation starts.

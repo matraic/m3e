@@ -38,7 +38,6 @@ const inputs = [
   "gestures/sequence",
   "gestures/swipe",
   "gestures/tap",
-  "gestures/transform",
   "heading",
   "icon",
   "icon-button",

@@ -4,7 +4,7 @@ import { property } from "lit/decorators.js";
 
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
-import { TransformGestureActivationMode } from "@m3e/web/gestures/transform";
+import { PanGestureActivationMode } from "@m3e/web/gestures/pan";
 
 import { RotateGestureDetail } from "./RotateGestureDetail";
 import { RotateGestureOptions } from "./RotateGestureOptions";
@@ -44,7 +44,7 @@ export class M3eRotateGestureElement extends GestureElementBase<RotateGestureOpt
    * @default "press"
    */
   @property({ attribute: "activation-mode", useDefault: true, reflect: false })
-  activationMode: TransformGestureActivationMode = this.recognizer.defaultOptions.activationMode;
+  activationMode: PanGestureActivationMode = this.recognizer.defaultOptions.activationMode;
 
   /**
    * Minimum centroid displacement (px) before rotation starts.

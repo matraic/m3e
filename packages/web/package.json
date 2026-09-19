@@ -219,10 +219,6 @@
       "types": "./dist/src/gestures/tap/index.d.ts",
       "default": "./dist/gestures-tap.js"
     },
-    "./gestures/transform": {
-      "types": "./dist/src/gestures/transform/index.d.ts",
-      "default": "./dist/gestures-transform.js"
-    },
     "./heading": {
       "types": "./dist/src/heading/index.d.ts",
       "default": "./dist/heading.js"

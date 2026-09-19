@@ -6,13 +6,9 @@ import { property } from "lit/decorators.js";
 import { customElement } from "@m3e/web/core";
 import { GestureElementBase } from "@m3e/web/gestures";
 
-import {
-  TransformGestureActivationMode,
-  TransformGestureLockAxis,
-  TransformGestureOptions,
-} from "@m3e/web/gestures/transform";
-
 import { PanGestureDetail } from "./PanGestureDetail";
+import { PanGestureActivationMode, PanGestureLockAxis, PanGestureOptions } from "./PanGestureOptions";
+
 import { PanGestureRecognizer } from "./PanGestureRecognizer";
 
 /**
@@ -37,7 +33,7 @@ import { PanGestureRecognizer } from "./PanGestureRecognizer";
  * @fires gesture - Emitted when semantic detail about a pan gesture is detected.
  */
 @customElement("m3e-pan-gesture")
-export class M3ePanGestureElement extends GestureElementBase<TransformGestureOptions, PanGestureDetail> {
+export class M3ePanGestureElement extends GestureElementBase<PanGestureOptions, PanGestureDetail> {
   /** @inheritdoc */
   override readonly recognizer = new PanGestureRecognizer();
 
@@ -52,7 +48,7 @@ export class M3ePanGestureElement extends GestureElementBase<TransformGestureOpt
    * @default "press"
    */
   @property({ attribute: "activation-mode", useDefault: true, reflect: false })
-  activationMode: TransformGestureActivationMode = this.recognizer.defaultOptions.activationMode;
+  activationMode: PanGestureActivationMode = this.recognizer.defaultOptions.activationMode;
 
   /**
    * Minimum distance (px) a pointer can move before the gesture starts.
@@ -65,7 +61,7 @@ export class M3ePanGestureElement extends GestureElementBase<TransformGestureOpt
    * Locks movement to an axis.
    * @default "none"
    */
-  @property({ attribute: "lock-axis", reflect: false }) lockAxis: TransformGestureLockAxis =
+  @property({ attribute: "lock-axis", reflect: false }) lockAxis: PanGestureLockAxis =
     this.recognizer.defaultOptions.lockAxis;
 
   /**

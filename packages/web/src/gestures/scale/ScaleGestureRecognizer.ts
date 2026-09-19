@@ -1,10 +1,6 @@
 import { DelegatingGestureRecognizerBase, GestureListener } from "@m3e/web/gestures";
 
-import {
-  TransformGestureDetail,
-  TransformGestureOptions,
-  TransformGestureRecognizer,
-} from "@m3e/web/gestures/transform";
+import { PanGestureDetail, PanGestureOptions, PanGestureRecognizer } from "@m3e/web/gestures/pan";
 
 import { ScaleGestureDetail } from "./ScaleGestureDetail";
 import { DefaultScaleGestureOptions, ScaleGestureOptions } from "./ScaleGestureOptions";
@@ -13,9 +9,9 @@ import { DefaultScaleGestureOptions, ScaleGestureOptions } from "./ScaleGestureO
 export class ScaleGestureRecognizer extends DelegatingGestureRecognizerBase<
   ScaleGestureOptions,
   ScaleGestureDetail,
-  TransformGestureOptions,
-  TransformGestureDetail,
-  TransformGestureRecognizer
+  PanGestureOptions,
+  PanGestureDetail,
+  PanGestureRecognizer
 > {
   /** @private */ #initialDistance = 0;
   /** @private */ #previousDistance = 0;
@@ -26,7 +22,7 @@ export class ScaleGestureRecognizer extends DelegatingGestureRecognizerBase<
    * @param {GestureListener<ScaleGestureDetail>} listener The function invoked when semantic detail is emitted.
    */
   constructor(options?: Partial<ScaleGestureOptions>, listener?: GestureListener<ScaleGestureDetail>) {
-    super(options, listener, new TransformGestureRecognizer());
+    super(options, listener, new PanGestureRecognizer());
   }
 
   /** @inheritdoc */
@@ -35,7 +31,7 @@ export class ScaleGestureRecognizer extends DelegatingGestureRecognizerBase<
   }
 
   /** @inheritdoc */
-  protected override _applyOptions(options: ScaleGestureOptions, inner: TransformGestureRecognizer): void {
+  protected override _applyOptions(options: ScaleGestureOptions, inner: PanGestureRecognizer): void {
     inner.options = {
       minDisplacement: options.minDisplacement,
       pointers: options.pointers,
@@ -44,7 +40,7 @@ export class ScaleGestureRecognizer extends DelegatingGestureRecognizerBase<
   }
 
   /** @inheritdoc */
-  protected override _handleGesture(detail: TransformGestureDetail): void {
+  protected override _handleGesture(detail: PanGestureDetail): void {
     const trackers = this._inner?.trackers;
     if (!trackers || trackers.length < 2) return;
 
@@ -73,21 +69,8 @@ export class ScaleGestureRecognizer extends DelegatingGestureRecognizerBase<
     this.#previousDistance = currentDistance;
 
     const scaleDetail: ScaleGestureDetail = {
-      inputId: detail.inputId,
+      ...detail,
       gestureName: "scale",
-      phase: detail.phase,
-      timestamp: detail.timestamp,
-      startClientX: detail.startClientX,
-      startClientY: detail.startClientY,
-      startLocalX: detail.startLocalX,
-      startLocalY: detail.startLocalY,
-      translationX: detail.totalDeltaX,
-      translationY: detail.totalDeltaY,
-      velocityX: detail.velocityX,
-      velocityY: detail.velocityY,
-      directionX: detail.directionX,
-      directionY: detail.directionY,
-      axis: detail.axis,
       initialDistance: this.#initialDistance,
       currentDistance,
       scale,

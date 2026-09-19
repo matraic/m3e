@@ -30,7 +30,6 @@ export * from "./gestures/scale";
 export * from "./gestures/sequence";
 export * from "./gestures/swipe";
 export * from "./gestures/tap";
-export * from "./gestures/transform";
 export * from "./heading";
 export * from "./icon";
 export * from "./icon-button";

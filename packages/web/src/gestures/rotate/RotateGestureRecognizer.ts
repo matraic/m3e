@@ -1,10 +1,6 @@
 import { DelegatingGestureRecognizerBase, GestureListener } from "@m3e/web/gestures";
 
-import {
-  TransformGestureDetail,
-  TransformGestureOptions,
-  TransformGestureRecognizer,
-} from "@m3e/web/gestures/transform";
+import { PanGestureDetail, PanGestureOptions, PanGestureRecognizer } from "@m3e/web/gestures/pan";
 
 import { RotateGestureDetail } from "./RotateGestureDetail";
 import { DefaultRotateGestureOptions, RotateGestureOptions } from "./RotateGestureOptions";
@@ -13,9 +9,9 @@ import { DefaultRotateGestureOptions, RotateGestureOptions } from "./RotateGestu
 export class RotateGestureRecognizer extends DelegatingGestureRecognizerBase<
   RotateGestureOptions,
   RotateGestureDetail,
-  TransformGestureOptions,
-  TransformGestureDetail,
-  TransformGestureRecognizer
+  PanGestureOptions,
+  PanGestureDetail,
+  PanGestureRecognizer
 > {
   /** @private */ #initialAngle = 0;
   /** @private */ #previousAngle = 0;
@@ -26,7 +22,7 @@ export class RotateGestureRecognizer extends DelegatingGestureRecognizerBase<
    * @param {GestureListener<RotateGestureDetail>} listener The function invoked when semantic detail is emitted.
    */
   constructor(options?: Partial<RotateGestureOptions>, listener?: GestureListener<RotateGestureDetail>) {
-    super(options, listener, new TransformGestureRecognizer());
+    super(options, listener, new PanGestureRecognizer());
   }
 
   /** @inheritdoc */
@@ -35,7 +31,7 @@ export class RotateGestureRecognizer extends DelegatingGestureRecognizerBase<
   }
 
   /** @inheritdoc */
-  protected override _applyOptions(options: RotateGestureOptions, inner: TransformGestureRecognizer): void {
+  protected override _applyOptions(options: RotateGestureOptions, inner: PanGestureRecognizer): void {
     inner.options = {
       activationMode: options.activationMode,
       minDisplacement: options.minDisplacement,
@@ -45,7 +41,7 @@ export class RotateGestureRecognizer extends DelegatingGestureRecognizerBase<
   }
 
   /** @inheritdoc */
-  protected override _handleGesture(detail: TransformGestureDetail): void {
+  protected override _handleGesture(detail: PanGestureDetail): void {
     const trackers = this._inner?.trackers;
     if (!trackers || trackers.length < 2) return;
 

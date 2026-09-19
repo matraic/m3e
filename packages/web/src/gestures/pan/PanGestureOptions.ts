@@ -1,17 +1,17 @@
 import { DefaultGestureOptions, GestureOptions } from "@m3e/web/gestures";
 
 /**
- * Specifies the possible modes in which to active a low-level transform gesture.
+ * Specifies the possible modes in which to active a pan gesture.
  * - `"press"` — Pointer must be pressed to activate the gesture.
  * - `"move"` — Pointer must be moved to activate the gesture.
  */
-export type TransformGestureActivationMode = "press" | "move";
+export type PanGestureActivationMode = "press" | "move";
 
-/** Specifies the axes to which a low-level transform gesture can lock. */
-export type TransformGestureLockAxis = "x" | "y" | "auto" | "none";
+/** Specifies the axes to which a pan gesture can lock. */
+export type PanGestureLockAxis = "x" | "y" | "auto" | "none";
 
-/** Encapsulates options used to detect and interpret low-level transform gestures. */
-export interface TransformGestureOptions extends GestureOptions {
+/** Encapsulates options used to detect and interpret pan gestures. */
+export interface PanGestureOptions extends GestureOptions {
   /**
    * Number of pointers required for the gesture to be recognized.
    * @default 1
@@ -22,7 +22,7 @@ export interface TransformGestureOptions extends GestureOptions {
    * Mode in which to activate the gesture.
    * @default "press"
    */
-  readonly activationMode: TransformGestureActivationMode;
+  readonly activationMode: PanGestureActivationMode;
 
   /**
    * Minimum distance (px) a pointer must move before the gesture starts.
@@ -34,7 +34,7 @@ export interface TransformGestureOptions extends GestureOptions {
    * The axis to which movement is locked.
    * @default "none"
    */
-  readonly lockAxis: TransformGestureLockAxis;
+  readonly lockAxis: PanGestureLockAxis;
 
   /**
    * Minimum total displacement (px) required before axis locking resolves.
@@ -55,8 +55,8 @@ export interface TransformGestureOptions extends GestureOptions {
   readonly maxPressInterval: number;
 }
 
-/** Defines the default options used to detect and interpret low-level transform gestures. */
-export const DefaultTransformGestureOptions: TransformGestureOptions = {
+/** Defines the default options used to detect and interpret pan gestures. */
+export const DefaultPanGestureOptions: PanGestureOptions = {
   ...DefaultGestureOptions,
   activationMode: "press",
   minDisplacement: 4,
