@@ -4,7 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 2.7.x Release
+- 2.8.x Release
 
 ## 🔮 Future
 
@@ -14,13 +14,15 @@ The following components are planned for future release (in no particular order)
 
 - Inputs (Numeric, Masked)
 - Carousel
-- Gestures (long press, swipe to reveal, etc.)
 
 ### 📜 Building with AI
 
 - MCP Server enabling IDEs and AI tools to query local knowledge about components and documentation
 
 ## 🏛️ Past Milestones
+
+- **2.8.0 — Feature release**
+  Added `@m3e/web/gestures`, form-field manual error state, select settable value
 
 - **2.7.0 – 2.7.12 — Feature release + patch releases**
   Added `@m3e/web/date-input`, text scaling support, bug fixes.

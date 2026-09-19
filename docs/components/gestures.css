@@ -1,0 +1,28 @@
+.target {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  background-color: var(--md-sys-color-primary);
+  border-radius: var(--md-sys-shape-corner-large);
+  touch-action: none;
+}
+.gesture-log-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-inline: 16px;
+  padding-block-start: 16px;
+}
+.gesture-log {
+  width: fit-content;
+  box-sizing: border-box;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--md-sys-typescale-body-medium-font-size);
+  font-weight: var(--md-sys-typescale-body-medium-font-weight);
+  line-height: var(--md-sys-typescale-body-medium-line-height);
+  letter-spacing: var(--md-sys-typescale-body-medium-tracking);
+  max-height: calc(var(--md-sys-typescale-body-medium-line-height) * 4);
+  white-space: nowrap;
+  overflow: auto;
+  scrollbar-width: var(--m3e-scrollbar-thin-width, thin);
+  scrollbar-color: var(--m3e-scrollbar-thumb-color, #938f94) var(--m3e-scrollbar-track-color, transparent);
+}

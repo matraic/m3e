@@ -20,7 +20,7 @@
     <link href="api-viewer.css" rel="stylesheet" />
     <link href="form-field.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.12/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.8.0/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -170,6 +170,33 @@
 &lt;m3e-form-field&gt;
   &lt;label slot=&quot;label&quot; for=&quot;fld&quot;&gt;Required field&lt;/label&gt;
   &lt;input id=&quot;fld&quot; required /&gt;
+  &lt;span slot=&quot;hint&quot;&gt;Hint text&lt;/span&gt;
+  &lt;span slot=&quot;error&quot;&gt;Custom error message&lt;/span&gt;
+&lt;/m3e-form-field&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Manual validation</m3e-heading>
+        <p>
+          Alternatively, you may use the <code>error</code> attribute to manually control a field's error state and
+          message. In this mode, the text in the error slot is applied as the control's custom validity. Removing the
+          attribute clears the error state.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field error>
+              <label slot="label" for="fld9">Manually validated field</label>
+              <input id="fld9" />
+              <span slot="hint">Hint text</span>
+              <span slot="error">Custom error message</span>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field error&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;fld&quot;&gt;Manually validated field&lt;/label&gt;
+  &lt;input id=&quot;fld&quot; /&gt;
   &lt;span slot=&quot;hint&quot;&gt;Hint text&lt;/span&gt;
   &lt;span slot=&quot;error&quot;&gt;Custom error message&lt;/span&gt;
 &lt;/m3e-form-field&gt;</pre

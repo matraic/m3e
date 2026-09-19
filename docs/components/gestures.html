@@ -1,0 +1,1135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Gestures for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Gestures for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="./gestures.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.8.0/dist/all.min.js"></script>
+    <script src="../main.js"></script>
+    <script src="./gestures.js"></script>
+  </head>
+  <body>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Gestures</m3e-heading>
+        <p>
+          The <code>@m3e/web/gestures</code> module provides a gesture recognition subsystem supporting declarative and
+          programmatic gesture detection. It uses a modular recognizer architecture with a priority-based disposition
+          system that resolves competing claims on input.
+        </p>
+        <p>Features include:</p>
+        <ul>
+          <li>Pointer tracking and gesture details with viewport and element-local coordinates</li>
+          <li>Configurable thresholds, pointer types, buttons, priorities, and input filters</li>
+          <li>Arbitration for recognizers competing for the same input stream</li>
+          <li>Composed recognizers for sequences and repetitions</li>
+          <li>Declarative elements that bind to a target with the `for` attribute</li>
+        </ul>
+        <p>
+          The <code>@m3e/web/gestures</code> module is organized around a base module that installs the gesture
+          subsystem and provides shared infrastructure for all recognizers.
+        </p>
+        <m3e-card variant="outlined" class="install"><pre slot="content">import "@m3e/web/gestures";</pre></m3e-card>
+
+        <p>
+          Each recognizer is published as its own entry point, so applications can import only the gestures they use.
+          For example:
+        </p>
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
+import "@m3e/web/gestures/tap";
+import "@m3e/web/gestures/swipe";</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+        <p>This section outlines usage examples and configuration guidance for the components in this package.</p>
+
+        <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+        <p>
+          Gestures represent semantic actions (e.g., tap, pan, long-press) derived from analyzing sequences of pointer
+          events. Each gesture progresses through phases (<code>start</code>, <code>update</code>, <code>end</code>,
+          <code>cancel</code>) with recognizers emitting semantic detail at each phase.
+        </p>
+
+        <ul>
+          <li><code>start</code> occurs when initial conditions are satisfied and recognition begins.</li>
+          <li>
+            <code>update</code> is emitted as the interaction continues and additional pointer events refine the
+            gesture.
+          </li>
+          <li><code>end</code> indicates that the gesture has completed successfully.</li>
+          <li><code>cancel</code> indicates that recognition failed or was interrupted.</li>
+        </ul>
+
+        <p>
+          Gestures can be recognized declaratively or programmatically. Declarative recognition uses
+          <code>&lt;m3e-*-gesture&gt;</code> elements bound to a target element using the <code>for</code> attribute.
+          When the recognizer determines that a gesture has entered a phase, it emits a <code>gesture</code> event
+          containing the phase and its associated detail. Programmatic recognition uses the
+          <code>detectGesture</code> function, which binds one or more recognizers to an element and invokes callback
+          handlers for each phase. These handlers receive the same gesture detail emitted by declarative usage, allowing
+          both approaches to produce identical results.
+        </p>
+        <p>Gesture recognition can be configured with a set of common options that apply to all recognizers.</p>
+        <ul>
+          <li>
+            <code>priority</code> (default 1) determines the order in which recognizers compete to produce gestures.
+          </li>
+          <li>
+            <code>buttons</code> specifies which input buttons may be pressed. Valid values are
+            <code>"primary"</code> (default), <code>"secondary"</code>, <code>"middle"</code>, <code>"back"</code>, and
+            <code>"forward"</code>.
+          </li>
+          <li>
+            <code>pointer-types</code> (<code>pointerTypes</code>) limits recognition to particular pointer sources.
+            Declarative usage accepts a space-separated string, and programmatic usage accepts an array. Valid values
+            are <code>"mouse"</code>, <code>"pen"</code>, and <code>"touch"</code>. By default, all pointer types are
+            allowed.
+          </li>
+          <li>
+            <code>input-filter</code> (<code>inputFilter</code>) provides an optional predicate that controls which
+            input is eligible for recognition.
+          </li>
+        </ul>
+
+        <p>All gestures emit a common set of detail fields that describe the semantic output of recognition.</p>
+        <ul>
+          <li><code>gestureName</code> identifies which gesture produced the detail.</li>
+          <li>
+            <code>phase</code> reports the current stage of the gesture lifecycle (<code>start</code>,
+            <code>update</code>, <code>end</code>, <code>cancel</code>).
+          </li>
+          <li>
+            <code>inputId</code> specifies the identifier of the input stream or streams that contributed to the
+            gesture.
+          </li>
+          <li><code>timestamp</code> records when the detail was generated.</li>
+        </ul>
+
+        <m3e-heading variant="headline" size="small" level="3">Tap</m3e-heading>
+        <p>
+          Use the <code>m3e-tap-gesture</code> element or the <code>tap</code> function from the
+          <code>@m3e/web/gestures/tap</code> module to recognize a short press and release with minimal pointer
+          movement.
+        </p>
+        <p>Tap the element below to see it in action.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <div id="target1" class="target"></div>
+            <m3e-tap-gesture for="target1"></m3e-tap-gesture>
+            <div class="gesture-log-wrapper">
+              <div class="gesture-log"></div>
+            </div>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;div id=&quot;item&quot;&gt;&lt;/div&gt;
+&lt;m3e-tap-gesture for=&quot;item&quot;&gt;&lt;/m3e-tap-gesture&gt;
+</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { tap } from "@m3e/web/gestures/tap";
+
+const item = document.getElementById("item");
+detectGesture(item, tap(phase({
+  onEnd: (detail) => {
+    // Handle tap
+  }
+})));</pre
+          >
+        </m3e-card>
+
+        <p>In addition to common options, the tap recognizer provides settings that control how a tap is validated:</p>
+        <ul>
+          <li>
+            <code>pointers</code> specifies how many pointers must be pressed for the gesture to be recognized (default
+            1).
+          </li>
+          <li>
+            <code>max-duration</code> (<code>maxDuration</code>) defines the maximum allowed press time in milliseconds
+            (default 180).
+          </li>
+          <li>
+            <code>max-displacement</code> (<code>maxDisplacement</code>) sets the maximum permitted movement in pixels
+            (default 12).
+          </li>
+          <li>
+            <code>max-press-interval</code> (<code>maxPressInterval</code>) limits the time between the earliest and
+            latest <code>pointerdown</code> events (default 120).
+          </li>
+          <li>
+            <code>max-release-interval</code> (<code>maxReleaseInterval</code>) limits the time between the earliest and
+            latest <code>pointerup</code> events (default 120).
+          </li>
+        </ul>
+
+        <p>A tap gesture follows a simple lifecycle based on pointer events:</p>
+        <ul>
+          <li>
+            The gesture enters the <code>start</code> phase when the required pointers produce a
+            <code>pointerdown</code> event and initial conditions are satisfied.
+          </li>
+          <li>
+            The gesture enters the <code>end</code> phase when those pointers release with a
+            <code>pointerup</code> event.
+          </li>
+          <li>The gesture enters the <code>cancel</code> phase if any pointer is canceled.</li>
+          <li>
+            The gesture also enters the <code>cancel</code> phase if validation rules are exceeded, including
+            <code>max-displacement</code> (<code>maxDisplacement</code>),
+            <code>max-duration</code> (<code>maxDuration</code>),
+            <code>max-press-interval</code> (<code>maxPressInterval</code>), or
+            <code>max-release-interval</code> (<code>maxReleaseInterval</code>).
+          </li>
+        </ul>
+
+        <p>
+          In addition to common detail, tap <code>gesture</code> events provide tap-specific fields that describe where
+          the interaction began and how long it lasted:
+        </p>
+        <ul>
+          <li><code>clientX</code> and <code>clientY</code> report the viewport coordinates where the tap began.</li>
+          <li>
+            <code>localX</code> and <code>localY</code> report the element-relative coordinates where the tap began.
+          </li>
+          <li><code>duration</code> provides the total time of the interaction.</li>
+        </ul>
+
+        <m3e-heading variant="headline" size="small" level="3">Long-press</m3e-heading>
+        <p>
+          Use the <code>m3e-long-press-gesture</code> element or the <code>longPress</code> function from the
+          <code>@m3e/web/gestures/long-press</code> module to recognize a pointer held in place for a minimum duration
+          with minimal movement.
+        </p>
+        <p>Press and hold the element below to see it in action.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <div id="target2" class="target"></div>
+            <m3e-long-press-gesture for="target2"></m3e-long-press-gesture>
+            <div class="gesture-log-wrapper">
+              <div class="gesture-log"></div>
+            </div>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;div id=&quot;item&quot;&gt;&lt;/div&gt;
+&lt;m3e-long-press-gesture for=&quot;item&quot;&gt;&lt;/m3e-long-press-gesture&gt;
+</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { longPress } from "@m3e/web/gestures/long-press";
+
+const item = document.getElementById("item");
+detectGesture(item, longPress(phase({
+  onEnd: (detail) => {
+    // Handle long-press
+  }
+})));</pre
+          >
+        </m3e-card>
+
+        <p>
+          The long-press recognizer shares the same options as tap, except for <code>max-release-interval</code>, and
+          includes one additional setting:
+        </p>
+        <ul>
+          <li>
+            <code>min-duration</code> (<code>minDuration</code>) specifies the minimum press time required for the
+            gesture to be recognized (default 500).
+          </li>
+        </ul>
+
+        <p>
+          A long-press gesture follows a similar lifecycle to tap, progressing through the
+          <code>start</code>, <code>end</code>, and <code>cancel</code> phases.
+        </p>
+        <ul>
+          <li>
+            <code>start</code> occurs when the required pointers produce a <code>pointerdown</code> event and initial
+            conditions are satisfied.
+          </li>
+          <li>
+            <code>end</code> occurs when the minimum press duration is met. This phase is emitted by a timer rather than
+            by a <code>pointerup</code> event.
+          </li>
+          <li>
+            <code>cancel</code> indicates that recognition failed or was interrupted, including exceeding validation
+            rules such as <code>max-displacement</code>, <code>max-duration</code>, or <code>max-press-interval</code>.
+          </li>
+        </ul>
+        <p>
+          Long-press <code>gesture</code> events emit the same detail fields as tap, including the coordinates where the
+          press began and the total duration of the interaction.
+        </p>
+
+        <m3e-heading variant="headline" size="small" level="3">Swipe</m3e-heading>
+        <p>
+          Use the <code>m3e-swipe-gesture</code> element or the <code>swipe</code> function from the
+          <code>@m3e/web/gestures/swipe</code> module to recognize high-velocity directional swipe gestures.
+        </p>
+        <p>Swipe the element below to see it in action.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <div id="target3" class="target"></div>
+            <m3e-swipe-gesture for="target3"></m3e-swipe-gesture>
+            <div class="gesture-log-wrapper">
+              <div class="gesture-log"></div>
+            </div>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;div id=&quot;item&quot;&gt;&lt;/div&gt;
+&lt;m3e-swipe-gesture for=&quot;item&quot;&gt;&lt;/m3e-swipe-gesture&gt;
+</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { swipe } from "@m3e/web/gestures/swipe";
+
+const item = document.getElementById("item");
+detectGesture(item, swipe(phase({
+  onEnd: (detail) => {
+    // Handle swipe
+  }
+})));</pre
+          >
+        </m3e-card>
+
+        <p>
+          Swipe gestures can be configured using the following options, which control how movement, velocity, and
+          direction are interpreted during recognition:
+        </p>
+        <ul>
+          <li>
+            <code>pointers</code> (<code>pointers</code>) specifies the number of pointers required for recognition
+            (default 1).
+          </li>
+          <li>
+            <code>start-threshold</code> (<code>startThreshold</code>) defines the minimum distance (px) a pointer must
+            move before the gesture begins (default 4).
+          </li>
+          <li>
+            <code>min-velocity</code> (<code>minVelocity</code>) specifies the minimum velocity (px/ms) required to
+            recognize a swipe (default 0.3).
+          </li>
+          <li>
+            <code>directions</code> lists the allowed swipe directions (default
+            <code>["left","right","up","down"]</code>).
+          </li>
+          <li>
+            <code>direction-threshold</code> (<code>directionThreshold</code>) defines the minimum displacement (px)
+            required before a direction is considered valid (default 12).
+          </li>
+          <li>
+            <code>direction-grace-period</code> (<code>directionGracePeriod</code>) sets the maximum time (ms) a pointer
+            may move in an uncommitted or disallowed direction before rejection (default 0).
+          </li>
+          <li>
+            <code>min-displacement</code> (<code>minDisplacement</code>) specifies the minimum distance (px) required
+            before the gesture can be recognized (default 24).
+          </li>
+          <li>
+            <code>max-press-interval</code> (<code>maxPressInterval</code>) defines the maximum allowed time (ms)
+            between the earliest and latest press (default 120).
+          </li>
+        </ul>
+
+        <p>
+          A swipe gesture progresses through all phases and is recognized on <code>pointerup</code> once its velocity,
+          displacement, and direction requirements have been met.
+        </p>
+        <ul>
+          <li>
+            <code>start</code> occurs when the required pointers produce a <code>pointerdown</code> event and initial
+            conditions are satisfied.
+          </li>
+          <li>
+            <code>update</code> is emitted during movement as <code>pointermove</code> events refine the gesture. The
+            recognizer tracks displacement, velocity, and direction during this phase.
+          </li>
+          <li>
+            <code>end</code> occurs on <code>pointerup</code> when the gesture meets the required velocity,
+            displacement, and direction thresholds. Recognition happens at release rather than during movement.
+          </li>
+          <li>
+            <code>cancel</code> indicates that recognition failed or was interrupted, including exceeding validation
+            rules such as <code>max-displacement</code>, <code>max-duration</code>, <code>max-press-interval</code>, or
+            violating direction constraints.
+          </li>
+        </ul>
+
+        <p>
+          Swipe gestures emit detail describing the resolved direction, movement, velocity, and initial input
+          coordinates:
+        </p>
+        <ul>
+          <li>
+            <code>direction</code> (<code>"left" | "right" | "up" | "down"</code>) specifies the resolved swipe
+            direction.
+          </li>
+          <li><code>axis</code> (<code>"x" | "y"</code>) indicates the dominant axis of movement.</li>
+          <li>
+            <code>startClientX</code> and <code>startClientY</code> provide the viewport coordinates of the initial
+            input sample.
+          </li>
+          <li>
+            <code>startLocalX</code> and <code>startLocalY</code> provide the element-relative coordinates of the
+            initial input sample.
+          </li>
+          <li>
+            <code>translationX</code> and <code>translationY</code> report the total movement in pixels along each axis.
+          </li>
+          <li>
+            <code>velocityX</code> and <code>velocityY</code> report instantaneous velocity in pixels per millisecond.
+          </li>
+          <li><code>speed</code> provides the velocity magnitude in pixels per millisecond.</li>
+          <li><code>displacement</code> reports the total movement in pixels.</li>
+          <li>
+            <code>duration</code> specifies the total time in milliseconds from the initial input sample to gesture
+            completion.
+          </li>
+        </ul>
+
+        <m3e-heading variant="headline" size="small" level="3">Pan</m3e-heading>
+        <p>
+          Use the <code>m3e-pan-gesture</code> element or the <code>pan</code> function from the
+          <code>@m3e/web/gestures/pan</code> module to track continuous pointer movement across an element.
+        </p>
+        <p>Pan the element below to see it in action.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <div id="target4" class="target"></div>
+            <m3e-pan-gesture for="target4"></m3e-pan-gesture>
+            <div class="gesture-log-wrapper">
+              <div class="gesture-log"></div>
+            </div>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;div id=&quot;item&quot;&gt;&lt;/div&gt;
+&lt;m3e-pan-gesture for=&quot;item&quot;&gt;&lt;/m3e-pan-gesture&gt;
+</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { pan } from "@m3e/web/gestures/pan";
+
+const item = document.getElementById("item");
+detectGesture(item, pan(phase({
+  onStart: (detail) => {
+    // Begin tracking
+  },
+  onUpdate: (detail) => {
+    // Continuous movement
+  },
+  onEnd: (detail) => {
+    // Finalize pan
+  },
+  onCancel: (detail) => {
+    // Abort pan
+  }
+})));</pre
+          >
+        </m3e-card>
+
+        <p>
+          Pan gestures support options that control activation, movement thresholds, axis behavior, and multi-pointer
+          coordination:
+        </p>
+        <ul>
+          <li>
+            <code>pointers</code> specifies the number of pointers required for the gesture to be recognized. A value of
+            <code>1</code> enables single-pointer panning, while higher values allow multi-pointer movement tracking
+            (default 1).
+          </li>
+          <li>
+            <code>activation-mode</code> (<code>activationMode</code>) determines how the gesture activates. When set to
+            <code>"press"</code>, the gesture activates as soon as the pointer is pressed. When set to
+            <code>"move"</code>, activation occurs only after movement begins (default "press").
+          </li>
+          <li>
+            <code>min-displacement</code> (<code>minDisplacement</code>) specifies the minimum movement in pixels
+            required before the gesture begins emitting updates. This prevents accidental activation from minor jitter
+            (default 4).
+          </li>
+          <li>
+            <code>lock-axis</code> (<code>lockAxis</code>) determines whether movement is locked to a specific axis.
+            When set to <code>"auto"</code>, the dominant axis is chosen automatically once sufficient displacement is
+            detected (default "none").
+          </li>
+          <li>
+            <code>axis-threshold</code> (<code>axisThreshold</code>) defines the minimum total displacement in pixels
+            required before axis locking resolves when <code>lockAxis</code> is <code>"auto"</code> (default 8).
+          </li>
+          <li>
+            <code>delta-threshold</code> (<code>deltaThreshold</code>) specifies the minimum incremental movement in
+            pixels on the secondary axis required before emitting detail when the gesture is locked to a primary axis
+            (default 0).
+          </li>
+          <li>
+            <code>max-press-interval</code> (<code>maxPressInterval</code>) defines the maximum allowed time in
+            milliseconds between the earliest and latest press when multiple pointers are required. This ensures
+            multi-pointer activation occurs within a consistent time window (default 120).
+          </li>
+        </ul>
+
+        <p>
+          A pan gesture progresses through all phases and is recognized continuously as the pointer moves. It begins
+          once the required pointers are pressed and the minimum displacement has been met, emits updates throughout
+          movement, and completes on <code>pointerup</code> with the final translation and axis information.
+        </p>
+        <ul>
+          <li>
+            <code>start</code> occurs when the required pointers produce a <code>pointerdown</code> event and initial
+            conditions are satisfied.
+          </li>
+          <li>
+            <code>update</code> is emitted during movement as <code>pointermove</code> events refine the gesture. The
+            recognizer tracks displacement, velocity, and axis behavior during this phase.
+          </li>
+          <li>
+            <code>end</code> occurs on <code>pointerup</code> and provides the final translation values and resolved
+            axis. Recognition happens at release rather than during movement.
+          </li>
+          <li>
+            <code>cancel</code> indicates that recognition failed or was interrupted, including exceeding validation
+            rules such as <code>max-press-interval</code> or losing required pointers.
+          </li>
+        </ul>
+
+        <p>
+          The pan gesture detail describes the semantic output of continuous pointer movement. It reports both
+          incremental and accumulated motion, along with positional, directional, and temporal information derived from
+          the input stream.
+        </p>
+        <ul>
+          <li>
+            <code>startClientX</code> and <code>startClientY</code> are the viewport coordinates of the initial input
+            sample.
+          </li>
+          <li>
+            <code>startLocalX</code> and <code>startLocalY</code> are the element-relative coordinates of the initial
+            input sample.
+          </li>
+          <li>
+            <code>clientX</code> and <code>clientY</code> are the viewport coordinates of the most recent input sample.
+          </li>
+          <li>
+            <code>localX</code> and <code>localY</code> are the element-relative coordinates of the most recent input
+            sample.
+          </li>
+          <li>
+            <code>deltaX</code> and <code>deltaY</code> represent incremental movement in pixels between the last two
+            samples.
+          </li>
+          <li><code>displacement</code> is the Euclidean magnitude of the incremental movement.</li>
+          <li>
+            <code>totalDeltaX</code> and <code>totalDeltaY</code> represent total movement in pixels from the initial
+            sample.
+          </li>
+          <li><code>totalDisplacement</code> is the Euclidean magnitude of the total movement.</li>
+          <li><code>axis</code> indicates the dominant axis of movement, either <code>x</code> or <code>y</code>.</li>
+          <li>
+            <code>velocityX</code> and <code>velocityY</code> are the instantaneous velocities in pixels per
+            millisecond.
+          </li>
+          <li>
+            <code>directionX</code> and <code>directionY</code> represent movement direction along each axis as
+            <code>-1</code>, <code>0</code>, or <code>1</code>.
+          </li>
+          <li><code>speed</code> is the magnitude of the velocity vector.</li>
+          <li><code>angle</code> is the movement angle in radians, computed from total displacement.</li>
+          <li><code>duration</code> is the total time in milliseconds from the initial sample.</li>
+          <li><code>deltaTime</code> is the time in milliseconds between the last two samples.</li>
+        </ul>
+
+        <m3e-heading variant="headline" size="small" level="3">Rotate</m3e-heading>
+        <p>
+          Use the <code>m3e-rotate-gesture</code> element or the <code>rotate</code> function from the
+          <code>@m3e/web/gestures/rotate</code> module to detect rotational movement from multiple pointers.
+        </p>
+        <p>Rotate the element below using two pointer devices (two fingers) to see the gesture in action.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <div id="target7" class="target"></div>
+            <m3e-rotate-gesture for="target7"></m3e-rotate-gesture>
+            <div class="gesture-log-wrapper">
+              <div class="gesture-log"></div>
+            </div>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;div id=&quot;item&quot;&gt;&lt;/div&gt;
+&lt;m3e-rotate-gesture for=&quot;item&quot;&gt;&lt;/m3e-rotate-gesture&gt;
+</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { rotate } from "@m3e/web/gestures/rotate";
+
+const item = document.getElementById("item");
+detectGesture(item, rotate(phase({
+  onStart: (detail) => {
+    // Begin tracking
+  },
+  onUpdate: (detail) => {
+    // Continuous movement
+  },
+  onEnd: (detail) => {
+    // Finalize rotate
+  },
+  onCancel: (detail) => {
+    // Abort rotate
+  }
+})));</pre
+          >
+        </m3e-card>
+
+        <p>
+          Rotate gesture options control how multi-pointer rotation is interpreted. They define the number of pointers
+          required, the activation mode, the minimum displacement needed to begin rotation, and the maximum allowed
+          interval between pointer presses.
+        </p>
+        <ul>
+          <li>
+            <code>pointers</code> specifies the number of pointers required for rotation to be recognized (default 2).
+          </li>
+          <li>
+            <code>activation-mode</code> (<code>activationMode</code>) defines how the gesture activates, using the same
+            modes available to pan (default <code>press</code>).
+          </li>
+          <li>
+            <code>min-displacement</code> (<code>minDisplacement</code>) is the minimum centroid displacement in pixels
+            required before rotation begins (default 4).
+          </li>
+          <li>
+            <code>max-press-interval</code> (<code>maxPressInterval</code>) specifies the maximum allowed time in
+            milliseconds between the earliest and latest pointer press (default 120).
+          </li>
+        </ul>
+
+        <p>
+          A rotate gesture progresses through all phases and is recognized once the required number of pointers have
+          pressed within the allowed interval and rotation has begun. The recognizer computes pointer angles relative to
+          the centroid and emits detail as rotation changes over time.
+        </p>
+        <ul>
+          <li>
+            <code>start</code> occurs when rotation first becomes detectable, after the centroid has displaced beyond
+            <code>min-displacement</code> and the initial angle is established.
+          </li>
+          <li>
+            <code>update</code> is emitted as the pointers rotate around the centroid. The recognizer reports
+            incremental rotation, velocity, and the current average angle during this phase.
+          </li>
+          <li>
+            <code>end</code> occurs when all pointers are released or otherwise resolve successfully. Recognition
+            happens immediately once rotation concludes.
+          </li>
+          <li>
+            <code>cancel</code> indicates that recognition failed or was interrupted. Cancellation occurs when the press
+            interval exceeds <code>max-press-interval</code>, when required pointers are lost, or when rotation cannot
+            continue.
+          </li>
+        </ul>
+
+        <p>
+          The rotate gesture detail describes the semantic output of multi-pointer rotation. It reports the initial
+          angle, current angle, total rotation, incremental rotation, and angular velocity derived from pointer movement
+          around the centroid.
+        </p>
+        <ul>
+          <li>
+            <code>initialAngle</code> is the angle in radians of all pointers relative to the centroid at activation.
+          </li>
+          <li>
+            <code>currentAngle</code> is the average angle in radians of all pointers relative to the centroid at the
+            most recent sample.
+          </li>
+          <li><code>rotation</code> is the total rotation in radians since activation.</li>
+          <li><code>rotationDelta</code> is the incremental rotation in radians between the last two samples.</li>
+          <li><code>rotationVelocity</code> is the instantaneous angular velocity in radians per millisecond.</li>
+        </ul>
+
+        <m3e-heading variant="headline" size="small" level="3">Scale</m3e-heading>
+        <p>
+          Use the <code>m3e-scale-gesture</code> element or the <code>scale</code> function from the
+          <code>@m3e/web/gestures/scale</code> module to detect multi-pointer scaling. A scale gesture measures how far
+          active pointers move toward or away from their centroid, producing a scale factor that represents zoom in or
+          out.
+        </p>
+        <p>Pinch the element below using two pointer devices (two fingers) to see the gesture in action.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <div id="target8" class="target"></div>
+            <m3e-scale-gesture for="target8"></m3e-scale-gesture>
+            <div class="gesture-log-wrapper">
+              <div class="gesture-log"></div>
+            </div>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;div id=&quot;item&quot;&gt;&lt;/div&gt;
+&lt;m3e-scale-gesture for=&quot;item&quot;&gt;&lt;/m3e-scale-gesture&gt;
+</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { scale } from "@m3e/web/gestures/scale";
+
+const item = document.getElementById("item");
+detectGesture(item, scale(phase({
+  onStart: (detail) => {
+    // Begin tracking
+  },
+  onUpdate: (detail) => {
+    // Continuous movement
+  },
+  onEnd: (detail) => {
+    // Finalize rotate
+  },
+  onCancel: (detail) => {
+    // Abort rotate
+  }
+})));</pre
+          >
+        </m3e-card>
+
+        <p>
+          Scale gesture options control how multi-pointer zooming is interpreted. They define the number of pointers
+          required, the minimum displacement needed to begin scaling, and the maximum allowed interval between pointer
+          presses.
+        </p>
+
+        <ul>
+          <li>
+            <code>pointers</code> specifies the number of pointers required for scaling to be recognized (default 2).
+          </li>
+
+          <li>
+            <code>min-displacement</code> (<code>minDisplacement</code>) is the minimum average distance change in
+            pixels required before scaling begins (default 4).
+          </li>
+
+          <li>
+            <code>max-press-interval</code> (<code>maxPressInterval</code>) specifies the maximum allowed time in
+            milliseconds between the earliest and latest pointer press (default 120).
+          </li>
+        </ul>
+
+        <p>
+          A scale gesture progresses through all phases and is recognized once the required number of pointers have
+          pressed within the allowed interval and the centroid has displaced enough to begin scaling. The recognizer
+          computes distances from each pointer to the centroid and emits detail as the scale factor changes over time.
+        </p>
+
+        <ul>
+          <li>
+            <code>start</code> occurs when scaling first becomes detectable, after the average pointer distance from the
+            centroid has changed beyond <code>min-displacement</code> and the initial distance is established.
+          </li>
+
+          <li>
+            <code>update</code> is emitted as the pointers move closer or farther from the centroid. The recognizer
+            reports incremental scale changes, velocity, and the current average distance during this phase.
+          </li>
+
+          <li>
+            <code>end</code> occurs when all pointers are released or otherwise resolve successfully. Recognition
+            happens immediately once scaling concludes.
+          </li>
+
+          <li>
+            <code>cancel</code> indicates that recognition failed or was interrupted. Cancellation occurs when the press
+            interval exceeds <code>max-press-interval</code>, when required pointers are lost, or when scaling cannot
+            continue.
+          </li>
+        </ul>
+
+        <p>
+          The scale gesture detail describes the semantic output of multi-pointer scaling. It reports the initial and
+          current average distances from the centroid, the total scale factor, incremental scale changes, and
+          instantaneous scale velocity.
+        </p>
+
+        <ul>
+          <li>
+            <code>initialDistance</code> is the average distance in pixels from each active pointer to the centroid at
+            activation.
+          </li>
+
+          <li>
+            <code>currentDistance</code> is the average distance in pixels from each active pointer to the centroid at
+            the most recent sample.
+          </li>
+
+          <li><code>scale</code> is the total scale factor representing zoom since activation.</li>
+
+          <li><code>scaleDelta</code> is the incremental scale change between the last two samples.</li>
+
+          <li><code>scaleVelocity</code> is the instantaneous scale velocity in units per millisecond.</li>
+        </ul>
+
+        <m3e-heading variant="headline" size="small" level="3">Repeat</m3e-heading>
+        <p>
+          Use the <code>m3e-repeat-gesture</code> element or the <code>repeat</code> function from the
+          <code>@m3e/web/gestures/repeat</code> module to detect repeated activations of a gesture over time. The
+          element must contain a single nested gesture element that defines which gesture is repeated, and the
+          <code>repeat</code> function requires the recognizer to repeat to be explicitly provided.
+        </p>
+        <p>Tipple tap the element below to see repeat behavior in action.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <div id="target5" class="target"></div>
+            <m3e-repeat-gesture for="target5" count="3">
+              <m3e-tap-gesture></m3e-tap-gesture>
+            </m3e-repeat-gesture>
+            <div class="gesture-log-wrapper">
+              <div class="gesture-log"></div>
+            </div>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;div id=&quot;item&quot; class=&quot;target&quot;&gt;&lt;/div&gt;
+&lt;m3e-repeat-gesture for=&quot;item&quot; count=&quot;3&quot;&gt;
+  &lt;m3e-tap-gesture&gt;&lt;/m3e-tap-gesture&gt;
+&lt;/m3e-repeat-gesture&gt;
+</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { tap } from "@m3e/web/gestures/tap";
+import { repeat } from "@m3e/web/gestures/repeat";
+
+const item = document.getElementById("item");
+detectGesture(item, repeat(
+  phase({
+    onEnd: (detail) => {
+      // Handle triple tap
+    },
+  }),
+  {
+    count: 3,
+  },
+  tap(),
+));</pre
+          >
+        </m3e-card>
+
+        <p>
+          Repeat gesture options control how consecutive activations of a nested gesture are interpreted. They define
+          the maximum allowed interval between occurrences and the number of repetitions required before the repeat
+          gesture is recognized.
+        </p>
+        <ul>
+          <li>
+            <code>max-interval</code> (<code>maxInterval</code>) specifies the maximum allowed time in milliseconds
+            between consecutive gesture occurrences. If the interval between activations exceeds this value, the
+            repeated gesture fails (default 250).
+          </li>
+          <li>
+            <code>count</code> specifies the number of times the gesture must be repeated before recognition succeeds. A
+            value of <code>2</code> detects a double activation, while higher values require additional repetitions
+            (default 2).
+          </li>
+        </ul>
+        <p>
+          A repeat gesture progresses through all phases and is recognized once its nested gesture has produced the
+          required number of terminal occurrences within the allowed interval. Each occurrence contributes a terminal
+          detail, and the repeat recognizer emits its own detail stream as repetitions accumulate.
+        </p>
+        <ul>
+          <li>
+            <code>start</code> occurs when the nested gesture produces its first terminal detail. The repeat recognizer
+            begins tracking repetitions and starts the interval timer.
+          </li>
+          <li>
+            <code>update</code> is emitted for each subsequent terminal occurrence as additional details are collected.
+            After emitting <code>update</code>, the nested recognizer is reset to allow the next occurrence to begin,
+            and the interval timer is refreshed.
+          </li>
+          <li>
+            <code>end</code> occurs when the nested gesture has produced the required number of terminal occurrences and
+            all accepted pointers have resolved. Recognition happens immediately once both count and acceptance
+            conditions are satisfied.
+          </li>
+          <li>
+            <code>cancel</code> indicates that recognition failed or was interrupted. Cancellation occurs when the
+            interval between occurrences exceeds <code>max-interval</code>, when the nested recognizer produces a
+            terminal <code>cancel</code> detail after repetitions have begun, or when accepted pointers are rejected.
+            Any condition that prevents the nested gesture from completing its next occurrence results in cancellation.
+          </li>
+        </ul>
+
+        <p>
+          The repeat gesture detail describes the semantic output of a repeated gesture. It aggregates the terminal
+          details produced by each occurrence of the nested gesture in the order they were recognized.
+        </p>
+        <ul>
+          <li>
+            <code>details</code> is the ordered list of terminal gesture details that form the repeated gesture. Each
+            entry represents one completed occurrence of the nested gesture.
+          </li>
+        </ul>
+
+        <m3e-heading variant="headline" size="small" level="3">Sequence</m3e-heading>
+        <p>
+          Use the <code>m3e-sequence-gesture</code> element or the <code>sequence</code> function from the
+          <code>@m3e/web/gestures/sequence</code> module to detect ordered activations of multiple gestures over time.
+          The element must contain the gesture elements in the order they must occur, and the
+          <code>sequence</code> function requires the recognizers to be explicitly provided.
+        </p>
+        <p>Press and hold the element below, then pan to see a sequential gesture in action.</p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <div id="target6" class="target"></div>
+            <m3e-sequence-gesture for="target6" max-interval="0">
+              <m3e-long-press-gesture></m3e-long-press-gesture>
+              <m3e-pan-gesture activation-mode="move"></m3e-pan-gesture>
+            </m3e-sequence-gesture>
+            <div class="gesture-log-wrapper">
+              <div class="gesture-log"></div>
+            </div>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;div id=&quot;item&quot; class=&quot;target&quot;&gt;&lt;/div&gt;
+&lt;m3e-sequence-gesture for=&quot;item&quot; max-interval=&quot;0&quot;&gt;
+  &lt;m3e-long-press-gesture&gt;&lt;/m3e-long-press-gesture&gt;
+  &lt;m3e-pan-gesture activation-mode=&quot;move&quot;&gt;&lt;/m3e-pan-gesture&gt;
+&lt;/m3e-sequence-gesture&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { longPress } from "@m3e/web/gestures/long-press";
+import { pan } from "@m3e/web/gestures/pan";
+import { sequence } from "@m3e/web/gestures/sequence";
+
+const item = document.getElementById("item");
+detectGesture(
+  item,
+  sequence(
+    { maxInterval: 0 },
+    longPress(
+      phase({
+        onEnd: (detail) => {
+          // Handle pick up
+        },
+      }),
+    ),
+    pan(
+      {
+        activationMode: "move",
+      },
+      phase({
+        onUpdate: (detail) => {
+          // Handle move
+        },
+      }),
+    ),
+  ),
+);</pre
+          >
+        </m3e-card>
+        <p>
+          Sequence gesture options control how ordered gesture activations are interpreted. They define the maximum
+          allowed interval between each gesture in the sequence, ensuring that the sequence progresses within a
+          consistent time window.
+        </p>
+        <ul>
+          <li>
+            <code>max-interval</code> (<code>maxInterval</code>) specifies the maximum allowed time in milliseconds
+            between each gesture in the sequence. If the interval between activations exceeds this value, the sequence
+            fails (default 250).
+          </li>
+        </ul>
+        <p>
+          A sequence gesture progresses through all phases and is recognized once each gesture in the sequence has been
+          activated in order within the allowed interval. The recognizer advances through its nested gestures one by
+          one, emitting detail as each step completes.
+        </p>
+
+        <ul>
+          <li>
+            <code>start</code> occurs when the first gesture in the sequence produces its terminal detail. The sequence
+            begins tracking progress and starts the interval timer.
+          </li>
+          <li>
+            <code>update</code> is emitted each time the next gesture in the sequence completes. After emitting
+            <code>update</code>, the recognizer advances to the next gesture and refreshes the interval timer. Progress
+            only continues when gestures occur in the defined order.
+          </li>
+          <li>
+            <code>end</code> occurs when all gestures in the sequence have been activated in order within the configured
+            interval. Recognition happens immediately once the final gesture completes.
+          </li>
+          <li>
+            <code>cancel</code> indicates that recognition failed or was interrupted. Cancellation occurs when the
+            interval between steps exceeds <code>max-interval</code>, when a gesture completes out of order, when a
+            nested recognizer produces a terminal <code>cancel</code> detail after the sequence has begun, or when any
+            condition prevents the next gesture in the sequence from completing.
+          </li>
+        </ul>
+
+        <p>
+          The sequence gesture detail describes the semantic output of an ordered series of gestures. It aggregates the
+          terminal details produced by each gesture in the sequence in the order they were recognized.
+        </p>
+        <ul>
+          <li>
+            <code>details</code> is the ordered list of terminal gesture details that form the sequence. Each entry
+            represents one completed step in the sequence.
+          </li>
+        </ul>
+
+        <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+        <p>
+          By default, gesture elements are not given an ARIA role, indicating that they are treated as neutral,
+          non-semantic elements in the accessibility tree unless explicitly referenced or annotated.
+        </p>
+
+        <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package uses
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+            target="_blank"
+            >JavaScript Modules</a
+          >. To use it directly in a browser without a bundler, use a module script similar to the following.
+        </p>
+
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/gestures.js&quot;&gt;&lt;/script&gt;</pre
+          >
+        </m3e-card>
+        <p>To include specific recognizers:</p>
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/gestures-long-press.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/gestures-pan.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/gestures-repeat.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/gestures-rotate.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/gestures-scale.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/gestures-sequence.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/gestures-swipe.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/gestures-tap.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/gestures-transform.js&quot;&gt;&lt;/script&gt;</pre
+          >
+        </m3e-card>
+        <p>
+          In addition, you must use an
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+            target="_blank"
+            >import map</a
+          >
+          to include dependencies.
+        </p>
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;tslib&quot;: &quot;https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm&quot;,
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;lit/&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/&quot;,
+      &quot;lit-html&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/+esm&quot;,
+      &quot;lit-html/directive.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directive.js&quot;,
+      &quot;@lit/reactive-element&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm&quot;,
+      &quot;@lit/reactive-element/&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/&quot;,
+      &quot;@m3e/web/core&quot;: &quot;/node_modules/@m3e/web/dist/core.js&quot;
+      &quot;@m3e/web/gestures&quot;: &quot;/node_modules/@m3e/web/dist/gestures.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+          >
+        </m3e-card>
+        <p>For production builds, use the minified files to ensure optimal load performance.</p>
+
+        <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package includes a
+          <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank"
+            >Custom Elements Manifest</a
+          >
+          (<code>custom-elements.json</code>), which documents the properties, attributes, slots, events and CSS custom
+          properties of each component.
+        </p>
+        <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+        <m3e-heading variant="headline" size="small" level="3">m3e-long-press-gesture</m3e-heading>
+        <api-viewer only="m3e-long-press-gesture"></api-viewer>
+        <m3e-heading variant="headline" size="small" level="3">m3e-pan-gesture</m3e-heading>
+        <api-viewer only="m3e-pan-gesture"></api-viewer>
+        <m3e-heading variant="headline" size="small" level="3">m3e-repeat-gesture</m3e-heading>
+        <api-viewer only="m3e-repeat-gesture"></api-viewer>
+        <m3e-heading variant="headline" size="small" level="3">m3e-rotate-gesture</m3e-heading>
+        <api-viewer only="m3e-rotate-gesture"></api-viewer>
+        <m3e-heading variant="headline" size="small" level="3">m3e-scale-gesture</m3e-heading>
+        <api-viewer only="m3e-scale-gesture"></api-viewer>
+        <m3e-heading variant="headline" size="small" level="3">m3e-sequence-gesture</m3e-heading>
+        <api-viewer only="m3e-sequence-gesture"></api-viewer>
+        <m3e-heading variant="headline" size="small" level="3">m3e-swipe-gesture</m3e-heading>
+        <api-viewer only="m3e-swipe-gesture"></api-viewer>
+        <m3e-heading variant="headline" size="small" level="3">m3e-tap-gesture</m3e-heading>
+        <api-viewer only="m3e-tap-gesture"></api-viewer>
+      </m3e-content-pane>
+      <m3e-toc class="toc" for="body" max-depth="4">
+        <span slot="overline">On this page</span>
+        <span slot="title">Gestures</span>
+      </m3e-toc>
+    </div>
+  </body>
+</html>

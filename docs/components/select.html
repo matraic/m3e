@@ -19,7 +19,7 @@
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.7.12/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.8.0/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -195,6 +195,43 @@
   &lt;m3e-select id=&quot;select&quot; multi&gt;
     &lt;m3e-option selected&gt;Extra cheese&lt;/m3e-option&gt;
     &lt;m3e-option selected&gt;Mushroom&lt;/m3e-option&gt;
+    &lt;!-- Additional option groups omitted for brevity --&gt;
+  &lt;/m3e-select&gt;
+&lt;/m3e-form-field&gt;</pre
+          >
+        </m3e-card>
+
+        <p>
+          Alternatively, you may use the <code>value</code> attribute to specify which options are selected. In
+          multi-select mode, this attribute accepts a comma-separated list of values.
+        </p>
+        <p>
+          Setting <code>value</code> updates all option <code>selected</code> states, so it shouldn't be combined with
+          option-level <code>selected</code> attributes.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-form-field>
+              <label slot="label" for="select8">Toppings</label>
+              <m3e-select id="select8" multi value="extra-cheese,mushroom">
+                <m3e-option value="extra-cheese">Extra cheese</m3e-option>
+                <m3e-option value="mushroom">Mushroom</m3e-option>
+                <m3e-option value="onion">Onion</m3e-option>
+                <m3e-option value="pepperoni">Pepperoni</m3e-option>
+                <m3e-option value="sausage">Sausage</m3e-option>
+                <m3e-option value="tomato">Tomato</m3e-option>
+              </m3e-select>
+            </m3e-form-field>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-form-field&gt;
+  &lt;label slot=&quot;label&quot; for=&quot;select&quot;&gt;Toppings&lt;/label&gt;
+  &lt;m3e-select id=&quot;select&quot; multi value=&quot;extra-cheese,mushroom&quot;&gt;
+    &lt;m3e-option value=&quot;extra-cheese&quot;&gt;Extra cheese&lt;/m3e-option&gt;
+    &lt;m3e-option value=&quot;mushroom&quot;&gt;Mushroom&lt;/m3e-option&gt;
     &lt;!-- Additional option groups omitted for brevity --&gt;
   &lt;/m3e-select&gt;
 &lt;/m3e-form-field&gt;</pre
