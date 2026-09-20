@@ -20,6 +20,7 @@ import { LongPressGestureRecognizer } from "./LongPressGestureRecognizer";
  * @attr pointer-types - Which types of pointers can be used to recognize gestures.
  * @attr disabled - Whether gesture recognition is disabled.
  * @attr priority - The priority in which to recognize gestures.
+ * @attr discrete - Whether the gesture is discrete.
  * @attr pointers - Number of pointers required for the gesture to be recognized.
  * @attr max-displacement - Maximum allowed movement (px).
  * @attr min-duration - Minimum time (ms) a pointer must remain pressed.
@@ -59,6 +60,14 @@ export class M3eLongPressGestureElement extends GestureElementBase<LongPressGest
   @property({ attribute: "max-press-interval", type: Number, reflect: false }) maxPressInterval: number =
     this.recognizer.defaultOptions.maxPressInterval;
 
+  /**
+   * Whether the gesture is discrete. If `true`, starts after `minDuration`
+   * while pointers stay down and ends on pointer-up. If `false`, starts
+   * immediately when pointers are down and ends after `minDuration`.
+   * @default false
+   */
+  @property({ type: Boolean, reflect: false }) discrete: boolean = false;
+
   /** @inheritdoc */
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
@@ -67,6 +76,7 @@ export class M3eLongPressGestureElement extends GestureElementBase<LongPressGest
       minDuration: this.minDuration,
       maxDisplacement: this.maxDisplacement,
       maxPressInterval: this.maxPressInterval,
+      discrete: this.discrete,
     };
   }
 }

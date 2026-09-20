@@ -11,6 +11,7 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
   >();
 
   /** @private */ #timeout?: number;
+  /** @private */ #starting = false;
   /** @private */ #started = false;
   /** @private */ #cancelled = false;
   /** @private */ #cancelling = false;
@@ -51,20 +52,37 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
 
     this._defer(input.inputId);
 
-    if (this.#state.size === this.options.pointers) {
+    // Ignore unless all pointers are down.
+    if (this.#state.size !== this.options.pointers) return;
+
+    if (!this.options.discrete) {
       // Emit start only when all pointers are down.
       this.#started = true;
       this._emit(this.#createDetail("start"));
 
       // Start acceptance timeout
-      this.#timeout = setTimeout(() => {
+      const timeout = (this.#timeout = setTimeout(() => {
+        if (this.#timeout !== timeout) return;
+        this.#timeout = undefined;
+
         if (!this.#cancelled) {
           // Acceptance emits the final detail only after every pointer is accepted.
-          for (const inputId of this.#state.keys()) {
-            this._accept(inputId);
-          }
+          this._accept([...this.#state.keys()]);
         }
-      }, this.options.minDuration);
+      }, this.options.minDuration));
+    } else {
+      this.#starting = true;
+      const timeout = (this.#timeout = setTimeout(() => {
+        if (this.#timeout !== timeout) return;
+        this.#timeout = undefined;
+
+        if (!this.#cancelled) {
+          // Emit start only when all all pointers held for min-duration.
+          // Acceptance and end occur on pointerup.
+          this.#started = true;
+          this._emit(this.#createDetail("start"));
+        }
+      }, this.options.minDuration));
     }
   }
 
@@ -76,8 +94,10 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
 
     state.tracker.append(input);
 
-    // Only enforce displacement after gesture has started and not cancelled.
-    if (!this.#started || this.#cancelled) return;
+    // Only enforce displacement after gesture has started (or discrete is starting) and not cancelled.
+    if (this.#cancelled) return;
+    if (!this.options.discrete && !this.#started) return;
+    if (this.options.discrete && !this.#starting) return;
 
     // Reject when the centroid of the pointers moves beyond the allowed displacement.
     const trackers = [...this.#state.values()].map((x) => x.tracker);
@@ -90,6 +110,12 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
   override _onPointerUp(input: PointerInput): void {
     const state = this.#state.get(input.inputId);
     if (state) {
+      if (this.options.discrete && this.#started) {
+        // Acceptance emits the final detail only after every pointer is accepted.
+        this._accept([...this.#state.keys()]);
+        return;
+      }
+
       // If any pointer comes up before the gesture has fully ended, the long‑press must cancel.
       // If pointers are pending acceptance (other gestures have holds), these will be rejected.
       this.#cancel();
@@ -130,8 +156,7 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
     clearTimeout(this.#timeout);
     this.#timeout = undefined;
     this.#state.clear();
-    this.#started = false;
-    this.#cancelled = false;
+    this.#starting = this.#started = this.#cancelled = false;
   }
 
   /** @private */

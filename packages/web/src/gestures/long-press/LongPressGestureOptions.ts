@@ -25,6 +25,14 @@ export interface LongPressGestureOptions extends GestureOptions {
    * @default 120
    */
   readonly maxPressInterval: number;
+
+  /**
+   * Whether the gesture is discrete. If `true`, starts after `minDuration`
+   * while pointers stay down and ends on pointer-up. If `false`, starts
+   * immediately when pointers are down and ends after `minDuration`.
+   * @default false
+   */
+  readonly discrete: boolean;
 }
 
 /** Defines the default options used to detect and interpret long-press gestures. */
@@ -34,4 +42,5 @@ export const DefaultLongPressGestureOptions: LongPressGestureOptions = {
   minDuration: 500,
   maxDisplacement: 4,
   maxPressInterval: 120,
+  discrete: false,
 } as const;

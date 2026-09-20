@@ -31,6 +31,7 @@ The element dispatches a `gesture` event with `LongPressGestureDetail` as its de
 | `buttons`            | `readonly GestureInputButton[]` | `["primary"]`               | Which buttons can be pressed.                                    |
 | `pointer-types`      | `readonly PointerType[]`        | `["mouse", "pen", "touch"]` | Which pointer types can be used.                                 |
 | `input-filter`       | `GestureInputFilter`            | —                           | Predicate used to determine whether input can be recognized.     |
+| `discrete`           | `boolean`                       | `false`                     | Whether the gesture is discrete.                                 |
 | `pointers`           | `number`                        | `1`                         | Number of pointers required for the gesture to be recognized.    |
 | `max-displacement`   | `number`                        | `4`                         | Maximum allowed movement (px).                                   |
 | `min-duration`       | `number`                        | `500`                       | Minimum time (ms) a pointer must remain pressed.                 |
