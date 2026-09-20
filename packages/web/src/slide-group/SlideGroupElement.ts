@@ -111,6 +111,7 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
     }
   `;
 
+  /** @private */ private static __rtlScrollType?: "default" | "negative" | "reverse";
   /** @private */ #directionalitySubscription?: () => void;
 
   /** @private */
@@ -159,7 +160,10 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-    this.#directionalitySubscription = M3eDirectionality.observe(() => this.requestUpdate());
+    this.#directionalitySubscription = M3eDirectionality.observe(() => {
+      this.requestUpdate();
+      this._updatePaging();
+    });
   }
 
   /** @inheritdoc */
@@ -226,11 +230,11 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
   /** @private */
   #pageStart(): void {
     if (!this.vertical) {
-      let left = this.scrollContainer.scrollLeft - this.scrollContainer.clientWidth;
+      let left = this.#horizontalScrollPosition() - this.scrollContainer.clientWidth;
       if (left <= this.threshold) {
         left = 0;
       }
-      this.scrollContainer.scrollTo({ left, behavior: "smooth" });
+      this.#scrollToHorizontalPosition(left);
     } else {
       let top = this.scrollContainer.scrollTop - this.scrollContainer.clientHeight;
       if (top <= this.threshold) {
@@ -243,11 +247,12 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
   /** @private */
   #pageEnd(): void {
     if (!this.vertical) {
-      let left = this.scrollContainer.scrollLeft + this.scrollContainer.clientWidth;
-      if (left >= this.scrollContainer.scrollWidth - this.scrollContainer.clientWidth - this.threshold) {
-        left = this.scrollContainer.scrollWidth - this.scrollContainer.clientWidth;
+      const max = this.scrollContainer.scrollWidth - this.scrollContainer.clientWidth;
+      let left = this.#horizontalScrollPosition() + this.scrollContainer.clientWidth;
+      if (left >= max - this.threshold) {
+        left = max;
       }
-      this.scrollContainer.scrollTo({ left, behavior: "smooth" });
+      this.#scrollToHorizontalPosition(left);
     } else {
       let top = this.scrollContainer.scrollTop + this.scrollContainer.clientHeight;
       if (top >= this.scrollContainer.scrollHeight - this.scrollContainer.clientHeight - this.threshold) {
@@ -267,10 +272,10 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
       this._canPage =
         Math.round(this.scrollContainer.scrollWidth) > Math.round(this.scrollContainer.clientWidth) + this.threshold;
       if (this._canPage) {
-        this._canPageStart = Math.round(this.scrollContainer.scrollLeft) > this.threshold;
+        const left = Math.round(this.#horizontalScrollPosition());
+        this._canPageStart = left > this.threshold;
         this._canPageEnd =
-          Math.round(this.scrollContainer.scrollLeft) + this.threshold <
-          Math.round(this.scrollContainer.scrollWidth - this.scrollContainer.clientWidth);
+          left + this.threshold < Math.round(this.scrollContainer.scrollWidth - this.scrollContainer.clientWidth);
       }
     } else {
       this._canPage =
@@ -291,6 +296,62 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
       // Emit internal (undocumented) event for use with tabs.
       this["dispatchEvent"](new CustomEvent("pagination-changed"));
     }
+  }
+
+  /** @private */
+  #horizontalScrollPosition(): number {
+    const scrollLeft = this.scrollContainer.scrollLeft;
+    if (M3eDirectionality.current !== "rtl") {
+      return scrollLeft;
+    }
+
+    const max = this.scrollContainer.scrollWidth - this.scrollContainer.clientWidth;
+    switch (this.#rtlScrollType()) {
+      case "negative":
+        return -scrollLeft;
+      case "reverse":
+        return max - scrollLeft;
+      default:
+        return scrollLeft;
+    }
+  }
+
+  /** @private */
+  #scrollToHorizontalPosition(left: number): void {
+    if (M3eDirectionality.current === "rtl") {
+      const max = this.scrollContainer.scrollWidth - this.scrollContainer.clientWidth;
+      switch (this.#rtlScrollType()) {
+        case "negative":
+          left = -left;
+          break;
+        case "reverse":
+          left = max - left;
+          break;
+      }
+    }
+    this.scrollContainer.scrollTo({ left, behavior: "smooth" });
+  }
+
+  /** @private */
+  #rtlScrollType(): "default" | "negative" | "reverse" {
+    if (M3eSlideGroupElement.__rtlScrollType) {
+      return M3eSlideGroupElement.__rtlScrollType;
+    }
+
+    const element = document.createElement("div");
+    const content = document.createElement("div");
+    element.dir = "rtl";
+    element.style.cssText = "position:absolute;width:4px;height:1px;overflow:scroll;visibility:hidden;";
+    content.style.width = "8px";
+    element.append(content);
+    document.body.append(element);
+
+    const initial = element.scrollLeft;
+    element.scrollLeft = 1;
+    M3eSlideGroupElement.__rtlScrollType = initial > 0 ? "reverse" : element.scrollLeft === 0 ? "negative" : "default";
+    element.remove();
+
+    return M3eSlideGroupElement.__rtlScrollType;
   }
 }
 
