@@ -16,7 +16,7 @@ import {
 } from "@m3e/web/core";
 
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { M3eDirectionality, SupportsDirectionality } from "@m3e/web/core/bidi";
 import { M3eSlideGroupElement } from "@m3e/web/slide-group";
 import { SwipeGestureDetail } from "@m3e/web/gestures/swipe";
 
@@ -83,7 +83,7 @@ const MIN_PRIMARY_TAB_WIDTH = 24;
  * @cssprop --m3e-tabs-secondary-active-indicator-thickness - Thickness for secondary variant's active indicator.
  */
 @customElement("m3e-tabs")
-export class M3eTabsElement extends AttachInternals(LitElement) {
+export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitElement)) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -114,7 +114,6 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
       display: flex;
       flex-wrap: nowrap;
       align-items: center;
-      touch-action: pan-y;
     }
     .ink-bar {
       contain: layout style paint;
@@ -124,13 +123,19 @@ export class M3eTabsElement extends AttachInternals(LitElement) {
     .active-indicator {
       position: relative;
       height: var(--_tabs-active-indicator-thickness);
-      left: calc(var(--_tabs-active-tab-position) + var(--_tabs-activate-indicator-inset, 0px));
       width: calc(var(--_tabs-active-tab-size) - calc(var(--_tabs-activate-indicator-inset, 0px) * 2));
       background-color: var(--m3e-tabs-active-indicator-color, ${DesignToken.color.primary});
       transition: ${unsafeCSS(
         `left var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard},
+        right var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard},
         width var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard}`,
       )};
+    }
+    :host(:not(:is(:state(--rtl), :--rtl))) .active-indicator {
+      left: calc(var(--_tabs-active-tab-position) + var(--_tabs-activate-indicator-inset, 0px));
+    }
+    :host(:is(:state(--rtl), :--rtl)) .active-indicator {
+      right: calc(var(--_tabs-active-tab-position) + var(--_tabs-activate-indicator-inset, 0px));
     }
     :host(:is(:state(--header-position-after), :--header-position-after)) .header {
       flex-direction: column-reverse;
