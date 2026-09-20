@@ -14,7 +14,6 @@ import {
   ScrollLockController,
   setCustomState,
   spaceSeparatedStringConverter,
-  VelocityTracker,
   SuppressInitialAnimation,
   ReconnectedCallback,
   registerStyleSheet,
@@ -23,7 +22,13 @@ import {
 } from "@m3e/web/core";
 
 import { isModifierAllowed, M3eInteractivityChecker } from "@m3e/web/core/a11y";
+import { GestureInput } from "@m3e/web/gestures";
+import { TapGestureDetail } from "@m3e/web/gestures/tap";
+import { M3eSwipeGestureElement, SwipeGestureDetail } from "@m3e/web/gestures/swipe";
+
 import "@m3e/web/core/a11y";
+import "@m3e/web/gestures/swipe";
+import "@m3e/web/gestures/tap";
 
 /**
  * A sheet used to show secondary content anchored to the bottom of the screen.
@@ -360,7 +365,11 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
   /** @private */ readonly #documentClickHandler = (e: Event) => this.#handleDocumentClick(e);
   /** @private */ readonly #documentKeyDownHandler = (e: KeyboardEvent) => this.#handleDocumentKeyDown(e);
   /** @private */ readonly #windowResizeHandler = () => this.#handleWindowResize();
-  /** @private */ readonly #velocityTracker = new VelocityTracker();
+  /** @private */ readonly #headerSwipeInputFilter = (input: GestureInput) =>
+    !(
+      input.target instanceof HTMLElement &&
+      (input.target.classList.contains("handle-touch") || M3eInteractivityChecker.isFocusable(input.target))
+    );
   /** @private */ readonly #scrollLockController = new ScrollLockController(this);
   /** @private */ readonly #inertController = new InertController(this);
 
@@ -373,13 +382,11 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
 
   /** @private */ #trigger: Element | null = null;
   /** @private */ #dragState?: {
-    startY: number;
     startHeight: number;
     effectiveMaxHeight: number;
     maxHeight: number;
     minHeight: number;
   };
-  /** @private */ #dragged = false;
   /** @private */ #activeDetent = 0;
   /** @private */ #requestDetent?: number;
   /** @private */ #cachedContentHeight = 0;
@@ -511,8 +518,15 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
   }
 
   /** @inheritdoc */
-  protected override updated(_changedProperties: PropertyValues): void {
+  protected override updated(_changedProperties: PropertyValues<this>): void {
     super.updated(_changedProperties);
+
+    if (_changedProperties.has("handle")) {
+      // Ensure handle swipe gesture is initialized.
+      if (this.handle) {
+        this.#initializeSwipeGesture("handle");
+      }
+    }
 
     if (_changedProperties.has("open")) {
       if (this.open) {
@@ -599,30 +613,27 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
     return html`<m3e-focus-trap ?disabled="${!this.modal}">
       <div class="base">
         <m3e-elevation class="elevation"></m3e-elevation>
-        <div
-          class="header"
-          @pointerdown=${this.#handleHeaderPointerDown}
-          @pointermove=${this.#handleHeaderPointerMove}
-          @pointerup=${this.#handleHeaderPointerUp}
-        >
+        <div id="header" class="header">
           ${this.handle
             ? html`<div class="handle-row">
-                <div
-                  id="handle"
-                  class="handle"
-                  role="button"
-                  aria-label="${this.handleLabel}"
-                  tabindex="0"
-                  @click=${this.#handleDragHandleClick}
-                  @keydown=${this.#handleDragHandleKeyDown}
-                >
-                  <m3e-focus-ring class="focus-ring" for="handle"></m3e-focus-ring>
-                  <div class="handle-touch" aria-hidden="true"></div>
+                  <div
+                    id="handle"
+                    class="handle"
+                    role="button"
+                    aria-label="${this.handleLabel}"
+                    tabindex="0"
+                    @keydown=${this.#handleDragHandleKeyDown}
+                  >
+                    <m3e-focus-ring class="focus-ring" for="handle"></m3e-focus-ring>
+                    <div class="handle-touch" aria-hidden="true"></div>
+                  </div>
                 </div>
-              </div>`
+                <m3e-tap-gesture for="handle" @gesture=${this.#handleHandleTapGesture}></m3e-tap-gesture>
+                <m3e-swipe-gesture for="handle" @gesture=${this.#handleSwipeGesture}></m3e-swipe-gesture>`
             : nothing}
           <slot name="header" @slotchange=${this.#handleHeaderSlotChange}></slot>
         </div>
+        <m3e-swipe-gesture for="header" @gesture=${this.#handleSwipeGesture}></m3e-swipe-gesture>
         <div class="body">
           <div class="content">
             <slot></slot>
@@ -645,6 +656,21 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       this.#cachedHeaderHeight = header.clientHeight;
       this.#resizeController.observe(header);
     }
+
+    this.#initializeSwipeGesture("header");
+    this.#initializeSwipeGesture("handle");
+  }
+
+  /** @private */
+  #initializeSwipeGesture(id: "header" | "handle"): void {
+    const swipeGesture = this.shadowRoot?.querySelector<M3eSwipeGestureElement>(`m3e-swipe-gesture[for='${id}']`);
+    if (swipeGesture) {
+      if (id === "header") {
+        swipeGesture.inputFilter = this.#headerSwipeInputFilter;
+      }
+      swipeGesture.startThreshold = 0;
+      swipeGesture.directions = ["up", "down"];
+    }
   }
 
   /** @private */
@@ -653,115 +679,119 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
   }
 
   /** @private */
-  #handleHeaderPointerDown(e: PointerEvent): void {
-    if (e.target instanceof HTMLElement && M3eInteractivityChecker.isFocusable(e.target)) {
-      return;
+  #handleHandleTapGesture(e: CustomEvent<TapGestureDetail>): void {
+    if (e.detail.phase === "end") {
+      this.cycle();
     }
-
-    (<HTMLElement>e.target).setPointerCapture(e.pointerId);
-    (<HTMLElement>e.target).style.cursor = "grabbing";
-
-    this.#velocityTracker.reset();
-    this.#velocityTracker.add(e.clientY);
-
-    const maxHeight = this.#computeMaxHeight();
-    const effectiveMaxHeight =
-      this.detents.length > 0 ? Math.max(...this.detents.map((x) => this.#computeDetentHeight(x))) : maxHeight;
-
-    this.#dragState = {
-      startY: e.clientY,
-      startHeight: this.clientHeight,
-      effectiveMaxHeight,
-      maxHeight,
-      minHeight: this.#computeMinHeight(),
-    };
-    this.#dragged = false;
   }
 
   /** @private */
-  #handleHeaderPointerMove(e: PointerEvent): void {
-    if (!this.#dragState) {
-      return;
+  #handleSwipeGesture(e: CustomEvent<SwipeGestureDetail>): void {
+    switch (e.detail.phase) {
+      case "start":
+        {
+          this.#updateHeaderCursor("grabbing");
+          const maxHeight = this.#computeMaxHeight();
+          const effectiveMaxHeight =
+            this.detents.length > 0 ? Math.max(...this.detents.map((x) => this.#computeDetentHeight(x))) : maxHeight;
+
+          this.#dragState = {
+            startHeight: this.clientHeight,
+            effectiveMaxHeight,
+            maxHeight,
+            minHeight: this.#computeMinHeight(),
+          };
+        }
+        break;
+      case "update":
+        {
+          if (!this.#dragState) break;
+
+          let newHeight = this.#dragState.startHeight - e.detail.translationY;
+          if (newHeight < this.#dragState.minHeight) {
+            if (this.hideable) {
+              const overshoot = (this.#dragState.minHeight - newHeight) * this.hideFriction;
+              newHeight = this.#dragState.minHeight - overshoot;
+            } else {
+              const overshoot = this.#dragState.minHeight - newHeight;
+              const overshootLimit = this.#dragState.maxHeight * (this.overshootLimit / 100);
+              const compressed = (overshootLimit * overshoot) / (overshoot + overshootLimit);
+              newHeight = this.#dragState.minHeight - compressed;
+            }
+          } else if (newHeight > this.#dragState.effectiveMaxHeight) {
+            const overshoot = newHeight - this.#dragState.effectiveMaxHeight;
+            const overshootLimit = this.#dragState.maxHeight * (this.overshootLimit / 100);
+            const compressed = (overshootLimit * overshoot) / (overshoot + overshootLimit);
+            newHeight = this.#dragState.effectiveMaxHeight + compressed;
+          }
+
+          this.#updateHeight(newHeight);
+        }
+        break;
+
+      case "cancel":
+        {
+          if (!this.#dragState) return;
+
+          this.#updateHeaderCursor("");
+          const hideDistanceThreshold = 20;
+          if (this.hideable) {
+            const collapsed = this.#dragState.minHeight;
+            if (this.clientHeight < collapsed - hideDistanceThreshold) {
+              this.hide();
+              return;
+            }
+          }
+
+          if (this.detents.length > 0) {
+            this.#snapToDetent(this.#getClosestDetent());
+          } else if (this.clientHeight < this.#dragState.minHeight) {
+            this.#snapToHeight(this.#dragState.minHeight);
+          } else if (this.clientHeight > this.#dragState.effectiveMaxHeight) {
+            this.#snapToHeight(this.#dragState.effectiveMaxHeight);
+          }
+
+          this.#dragState = undefined;
+        }
+        break;
+
+      case "end":
+        if (!this.#dragState) return;
+
+        this.#updateHeaderCursor("");
+
+        switch (e.detail.direction) {
+          case "up":
+            if (this.detents.length > 0) {
+              const nextDetent = this.#getNextHigherDetent();
+              if (nextDetent !== this.#activeDetent) {
+                this.#snapToDetent(nextDetent);
+              }
+            } else {
+              this.#snapToHeight(this.#computeDetentHeight("full"));
+            }
+            break;
+          case "down":
+            if (this.hideable) {
+              if (this.dispatchEvent(new Event("cancel", { cancelable: true }))) {
+                this.hide();
+              }
+            }
+
+            break;
+        }
+
+        this.#dragState = undefined;
+
+        break;
     }
-
-    const minDragThreshold = 8;
-    if (Math.abs(e.clientY - this.#dragState.startY) <= minDragThreshold) {
-      // Ignore movement under threshold
-      return;
-    }
-
-    (e.getCoalescedEvents?.() ?? [e]).forEach((x) => this.#velocityTracker.add(x.clientY, e.timeStamp));
-
-    let newHeight = this.#dragState.startHeight - (e.clientY - this.#dragState.startY);
-    if (newHeight < this.#dragState.minHeight) {
-      if (this.hideable) {
-        const overshoot = (this.#dragState.minHeight - newHeight) * this.hideFriction;
-        newHeight = this.#dragState.minHeight - overshoot;
-      } else {
-        const overshoot = this.#dragState.minHeight - newHeight;
-        const overshootLimit = this.#dragState.maxHeight * (this.overshootLimit / 100);
-        const compressed = (overshootLimit * overshoot) / (overshoot + overshootLimit);
-        newHeight = this.#dragState.minHeight - compressed;
-      }
-    } else if (newHeight > this.#dragState.effectiveMaxHeight) {
-      const overshoot = newHeight - this.#dragState.effectiveMaxHeight;
-      const overshootLimit = this.#dragState.maxHeight * (this.overshootLimit / 100);
-      const compressed = (overshootLimit * overshoot) / (overshoot + overshootLimit);
-      newHeight = this.#dragState.effectiveMaxHeight + compressed;
-    }
-
-    this.#updateHeight(newHeight);
-    this.#dragged = true;
   }
 
   /** @private */
-  #handleHeaderPointerUp(e: PointerEvent): void {
-    if (!this.#dragState) return;
-
-    try {
-      (<HTMLElement>e.target).releasePointerCapture(e.pointerId);
-      (<HTMLElement>e.target).style.cursor = "";
-
-      if (!this.#dragged) return;
-
-      const significantVelocityThreshold = e.pointerType === "touch" ? 1200 : 500;
-      const velocity = this.#velocityTracker.getVelocity();
-
-      this.#velocityTracker.reset();
-
-      if (this.hideable && velocity >= significantVelocityThreshold) {
-        if (this.dispatchEvent(new Event("cancel", { cancelable: true }))) {
-          this.hide();
-        }
-      } else if (Math.abs(velocity) >= significantVelocityThreshold) {
-        if (this.detents.length > 0) {
-          const nextDetent = this.#getNextHigherDetent();
-          if (nextDetent !== this.#activeDetent) {
-            this.#snapToDetent(nextDetent);
-          }
-        } else {
-          this.#snapToHeight(this.#computeDetentHeight("full"));
-        }
-      } else {
-        const hideDistanceThreshold = 20;
-        if (this.hideable) {
-          const collapsed = this.#dragState.minHeight;
-          if (this.clientHeight < collapsed - hideDistanceThreshold) {
-            this.hide();
-            return;
-          }
-        }
-
-        if (this.detents.length > 0) {
-          this.#snapToDetent(this.#getClosestDetent());
-        } else if (this.clientHeight < this.#dragState.minHeight) {
-          this.#snapToHeight(this.#dragState.minHeight);
-        } else if (this.clientHeight > this.#dragState.effectiveMaxHeight) {
-          this.#snapToHeight(this.#dragState.effectiveMaxHeight);
-        }
-      }
-    } finally {
-      this.#dragState = undefined;
+  #updateHeaderCursor(cursor: string) {
+    const header = this.shadowRoot?.querySelector<HTMLElement>(".header");
+    if (header) {
+      header.style.cursor = cursor;
     }
   }
 
@@ -801,14 +831,6 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
     } else if (this.clientHeight > maxHeight) {
       this.#updateHeight(maxHeight);
     }
-  }
-
-  /** @private */
-  #handleDragHandleClick(): void {
-    if (!this.#dragged) {
-      this.cycle();
-    }
-    this.#dragged = false;
   }
 
   /** @private */
