@@ -20,7 +20,7 @@
     <link href="./gestures.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.8.1/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.8.2/dist/all.min.js"></script>
     <script src="../main.js"></script>
     <script src="./gestures.js"></script>
   </head>
@@ -258,9 +258,14 @@ detectGesture(item, longPress(phase({
 
         <p>
           The long-press recognizer shares the same options as tap, except for <code>max-release-interval</code>, and
-          includes one additional setting:
+          includes the following additional settings:
         </p>
         <ul>
+          <li>
+            <code>discrete</code> Whether the gesture is discrete. If <code>true</code> it starts after
+            <code>minDuration</code> while pointers stay down and ends on pointer-up. If <code>false</code> it starts
+            immediately when pointers are down and ends after <code>minDuration</code>. (default <code>false</code>)
+          </li>
           <li>
             <code>min-duration</code> (<code>minDuration</code>) specifies the minimum press time required for the
             gesture to be recognized (default 500).
@@ -268,23 +273,24 @@ detectGesture(item, longPress(phase({
         </ul>
 
         <p>
-          A long-press gesture follows a similar lifecycle to tap, progressing through the
-          <code>start</code>, <code>end</code>, and <code>cancel</code> phases.
+          A long-press gesture progresses through <code>start</code>, <code>end</code>, and <code>cancel</code> phases.
+          The exact lifecycle depends on whether the gesture is continuous (default) or discrete.
         </p>
         <ul>
           <li>
-            <code>start</code> occurs when the required pointers produce a <code>pointerdown</code> event and initial
-            conditions are satisfied.
+            <code>start</code> occurs immediately when pointers go down for continuous gestures, or after
+            <code>minDuration</code> for discrete gestures.
           </li>
           <li>
-            <code>end</code> occurs when the minimum press duration is met. This phase is emitted by a timer rather than
-            by a <code>pointerup</code> event.
+            <code>end</code> occurs after <code>minDuration</code> for continuous gestures, or on
+            <code>pointerup</code> for discrete gestures.
           </li>
           <li>
-            <code>cancel</code> indicates that recognition failed or was interrupted, including exceeding validation
-            rules such as <code>max-displacement</code>, <code>max-duration</code>, or <code>max-press-interval</code>.
+            <code>cancel</code> indicates that recognition failed or was interrupted. For discrete gestures,
+            cancellations before <code>start</code> are silent.
           </li>
         </ul>
+
         <p>
           Long-press <code>gesture</code> events emit the same detail fields as tap, including the coordinates where the
           press began and the total duration of the interaction.
