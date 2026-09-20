@@ -22,6 +22,12 @@ import {
 
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
 import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
+import { PanGestureDetail } from "@m3e/web/gestures/pan";
+import { RepeatGestureDetail } from "@m3e/web/gestures/repeat";
+
+import "@m3e/web/gestures/pan";
+import "@m3e/web/gestures/repeat";
+import "@m3e/web/gestures/tap";
 
 import { isSplitPaneOrientation, SplitPaneOrientation } from "./SplitPaneOrientation";
 
@@ -235,7 +241,7 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
   /** @private */ @query(".base") private _base!: HTMLElement;
   /** @private */ @query(".drag-handle") private _dragHandle!: HTMLElement;
 
-  /** @private */ #dragState?: { startPos: number; startValue: number; cachedSize: number; min: number; max: number };
+  /** @private */ #dragState?: { startValue: number; cachedSize: number; min: number; max: number };
   /** @private */ #valueChanged = false;
   /** @private */ #snapAnimation?: Animation;
 
@@ -471,34 +477,39 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
   /** @private */
   #renderDragHandle(): unknown {
     return html`<div
-      id="drag-handle"
-      class="drag-handle"
-      role="separator"
-      tabindex="${ifDefined(this.disabled ? undefined : 0)}"
-      aria-label="${this.label}"
-      aria-controls="start"
-      aria-disabled="${ifDefined(this.disabled ? "true" : undefined)}"
-      aria-orientation="${this.currentOrientation === "horizontal" ? "vertical" : "horizontal"}"
-      aria-valuemin="${this.min}"
-      aria-valuemax="${this.max}"
-      aria-valuenow="${this.value}"
-      aria-valuetext="${ifDefined(
-        this.valueFormatter?.(this.value, this.currentOrientation, M3eDirectionality.current),
-      )}"
-      @pointerdown=${this.#handlePointerDown}
-      @pointerup=${this.#handlePointerUp}
-      @pointermove=${this.#handlePointerMove}
-      @keydown=${this.#handleKeyDown}
-      @dblclick=${this.#cycleDetent}
-    >
-      ${this.disabled
-        ? nothing
-        : html`<div class="handle">
-              <m3e-focus-ring for="drag-handle"></m3e-focus-ring>
-              <m3e-state-layer for="drag-handle"></m3e-state-layer>
-            </div>
-            <div class="touch"></div>`}
-    </div>`;
+        id="drag-handle"
+        class="drag-handle"
+        role="separator"
+        tabindex="${ifDefined(this.disabled ? undefined : 0)}"
+        aria-label="${this.label}"
+        aria-controls="start"
+        aria-disabled="${ifDefined(this.disabled ? "true" : undefined)}"
+        aria-orientation="${this.currentOrientation === "horizontal" ? "vertical" : "horizontal"}"
+        aria-valuemin="${this.min}"
+        aria-valuemax="${this.max}"
+        aria-valuenow="${this.value}"
+        aria-valuetext="${ifDefined(
+          this.valueFormatter?.(this.value, this.currentOrientation, M3eDirectionality.current),
+        )}"
+        @keydown=${this.#handleKeyDown}
+      >
+        ${this.disabled
+          ? nothing
+          : html`<div class="handle">
+                <m3e-focus-ring for="drag-handle"></m3e-focus-ring>
+                <m3e-state-layer for="drag-handle"></m3e-state-layer>
+              </div>
+              <div class="touch"></div>`}
+      </div>
+      <m3e-pan-gesture
+        for="drag-handle"
+        lock-axis="${this.currentOrientation === "horizontal" ? "x" : "y"}"
+        ?disabled="${this.disabled}"
+        @gesture=${this.#handlePanGesture}
+      ></m3e-pan-gesture>
+      <m3e-repeat-gesture for="drag-handle" ?disabled="${this.disabled}" @gesture=${this.#handleDblTapGesture}>
+        <m3e-tap-gesture></m3e-tap-gesture>
+      </m3e-repeat-gesture>`;
   }
 
   /** @private */
@@ -570,89 +581,96 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
   }
 
   /** @private */
-  #handlePointerDown(e: PointerEvent): void {
-    if (e.pointerType === "mouse" && e.button > 1) return;
-    if (this.disabled) return;
-
-    this._dragHandle.setPointerCapture(e.pointerId);
-    this.#valueChanged = false;
-
-    let min = this.min;
-    if (min === 0 && this.detents.length > 0) {
-      const detent = this.#getClosestDetent(0);
-      if (detent > -1) {
-        min = this.#computeDetent(this.detents[detent]) ?? this.min;
-      }
-    }
-
-    let max = this.max;
-    if (max === 100 && this.detents.length > 0) {
-      const detent = this.#getClosestDetent(100);
-      if (detent > -1) {
-        max = this.#computeDetent(this.detents[detent]) ?? this.max;
-      }
-    }
-
-    this.#dragState = {
-      startPos: this.currentOrientation === "vertical" ? e.clientY : e.clientX,
-      startValue: this.value,
-      cachedSize: this.currentOrientation === "vertical" ? this.clientHeight : this.clientWidth,
-      min,
-      max,
-    };
-  }
-
-  /** @private */
-  #handlePointerMove(e: PointerEvent): void {
-    if (!this._dragHandle.hasPointerCapture(e.pointerId) || !this.#dragState) return;
-
-    const pos = this.currentOrientation === "vertical" ? e.clientY : e.clientX;
-
-    let delta =
-      this.#dragState.cachedSize > 0 ? ((pos - this.#dragState.startPos) / this.#dragState.cachedSize) * 100 : 0;
-    if (M3eDirectionality.current === "rtl" && this.currentOrientation !== "vertical") {
-      delta = -delta;
-    }
-
-    let value = this.#dragState.startValue + delta;
-    if (value < this.#dragState.min) {
-      const overshoot = this.#dragState.min - value;
-      const compressed = (this.overshootLimit * overshoot) / (overshoot + this.overshootLimit);
-      value = this.#dragState.min - compressed;
-    } else if (value > this.#dragState.max) {
-      const overshoot = value - this.#dragState.max;
-      const compressed = (this.overshootLimit * overshoot) / (overshoot + this.overshootLimit);
-      value = this.#dragState.max + compressed;
-    }
-
-    if (this.#changeValue(value, false, true)) {
-      this.#valueChanged = true;
+  #handleDblTapGesture(e: CustomEvent<RepeatGestureDetail>): void {
+    if (e.detail.phase === "end") {
+      this.#cycleDetent();
     }
   }
 
   /** @private */
-  #handlePointerUp(e: PointerEvent): void {
-    if (e.pointerType === "mouse" && e.button > 1) return;
-    if (this._dragHandle.hasPointerCapture(e.pointerId)) {
-      this._dragHandle.releasePointerCapture(e.pointerId);
-      this.#dragState = undefined;
+  #handlePanGesture(e: CustomEvent<PanGestureDetail>): void {
+    switch (e.detail.phase) {
+      case "start":
+        {
+          this.#valueChanged = false;
 
-      const detent = this.#getClosestDetent(this.value);
-      if (detent >= 0) {
-        const value = this.#computeDetent(this.detents[detent]);
-        if (value !== undefined) {
-          this.#snapToValue(value, false);
+          let min = this.min;
+          if (min === 0 && this.detents.length > 0) {
+            const detent = this.#getClosestDetent(0);
+            if (detent > -1) {
+              min = this.#computeDetent(this.detents[detent]) ?? this.min;
+            }
+          }
+
+          let max = this.max;
+          if (max === 100 && this.detents.length > 0) {
+            const detent = this.#getClosestDetent(100);
+            if (detent > -1) {
+              max = this.#computeDetent(this.detents[detent]) ?? this.max;
+            }
+          }
+
+          this.#dragState = {
+            startValue: this.value,
+            cachedSize: this.currentOrientation === "vertical" ? this.clientHeight : this.clientWidth,
+            min,
+            max,
+          };
         }
-      } else if (this.value < this.min) {
-        this.#snapToValue(this.min, false);
-      } else if (this.value > this.max) {
-        this.#snapToValue(this.max, false);
-      }
+        break;
 
-      if (this.#valueChanged) {
-        this.dispatchEvent(new Event("change", { bubbles: true }));
-        this.#valueChanged = false;
-      }
+      case "update":
+        {
+          if (!this.#dragState) return;
+
+          const displacement = this.currentOrientation === "vertical" ? e.detail.totalDeltaY : e.detail.totalDeltaX;
+          let delta = this.#dragState.cachedSize > 0 ? (displacement / this.#dragState.cachedSize) * 100 : 0;
+          if (M3eDirectionality.current === "rtl" && this.currentOrientation !== "vertical") {
+            delta = -delta;
+          }
+
+          let value = this.#dragState.startValue + delta;
+          if (value < this.#dragState.min) {
+            const overshoot = this.#dragState.min - value;
+            const compressed = (this.overshootLimit * overshoot) / (overshoot + this.overshootLimit);
+            value = this.#dragState.min - compressed;
+          } else if (value > this.#dragState.max) {
+            const overshoot = value - this.#dragState.max;
+            const compressed = (this.overshootLimit * overshoot) / (overshoot + this.overshootLimit);
+            value = this.#dragState.max + compressed;
+          }
+
+          if (this.#changeValue(value, false, true)) {
+            this.#valueChanged = true;
+          }
+        }
+        break;
+
+      case "cancel":
+      case "end":
+        {
+          if (!this.#dragState) return;
+
+          this.#dragState = undefined;
+
+          const detent = this.#getClosestDetent(this.value);
+          if (detent >= 0) {
+            const value = this.#computeDetent(this.detents[detent]);
+            if (value !== undefined) {
+              this.#snapToValue(value, false);
+            }
+          } else if (this.value < this.min) {
+            this.#snapToValue(this.min, false);
+          } else if (this.value > this.max) {
+            this.#snapToValue(this.max, false);
+          }
+
+          if (this.#valueChanged) {
+            this.dispatchEvent(new Event("change", { bubbles: true }));
+            this.#valueChanged = false;
+          }
+        }
+        break;
     }
   }
 
