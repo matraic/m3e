@@ -15,9 +15,10 @@ import {
   setCustomState,
 } from "@m3e/web/core";
 
-import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
+import { SelectionManager, selectionManager, M3eInteractivityChecker } from "@m3e/web/core/a11y";
 import { M3eDirectionality, SupportsDirectionality } from "@m3e/web/core/bidi";
 import { M3eSlideGroupElement } from "@m3e/web/slide-group";
+import { GestureInput } from "@m3e/web/gestures";
 import { SwipeGestureDetail } from "@m3e/web/gestures/swipe";
 
 import "@m3e/web/slide-group";
@@ -230,6 +231,8 @@ export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitEl
   /** @private */ #directionalitySubscription?: () => void;
   /** @private */ @query(".tablist") private readonly _tablist!: M3eSlideGroupElement;
   /** @private */ @state() _selectedIndex: number | null = null;
+  /** @private */ readonly #swipeInputFilter = (input: GestureInput) =>
+    !(input.target instanceof HTMLElement && M3eInteractivityChecker.isFocusable(input.target));
 
   /** @internal */
   readonly [selectionManager] = new SelectionManager<M3eTabElement>()
@@ -416,6 +419,7 @@ export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitEl
         pointer-types="touch"
         directions="left right"
         ?disabled="${this.disableSwipe}"
+        .inputFilter="${this.#swipeInputFilter}"
         @gesture=${this.#handleSwipeGesture}
       ></m3e-swipe-gesture>
       ${this.headerPosition === "after" ? this.#renderHeader() : nothing}`;
