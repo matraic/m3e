@@ -55,6 +55,14 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOption
     this.#invalid = this.options.activationMode === "move";
     if (!this.#invalid) {
       this._defer(input.inputId);
+
+      // Immediately start gesture if there is no min displacement
+      // requirement and all pointers are down and active.
+
+      if (!this.#started && this.options.minDisplacement <= 0 && this.#allPointersDownAndActive()) {
+        this.#started = true;
+        this._emit(this.#createDetail("start"));
+      }
     }
   }
 
@@ -72,12 +80,21 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOption
       });
 
       this._defer(input.inputId);
+
+      // Immediately start gesture if there is no min displacement
+      // requirement and all pointers are down and active.
+
+      if (!this.#started && this.options.minDisplacement <= 0 && this.#allPointersDownAndActive()) {
+        this.#started = true;
+        this._emit(this.#createDetail("start"));
+        return;
+      }
     }
 
     const state = this.#state.get(input.inputId);
 
     // Ignore if no state, all pointers are not down, or all pointers are not active.
-    if (!state || this.#state.size !== this.options.pointers || ![...this.#state.values()].every((x) => x.active)) {
+    if (!state || !this.#allPointersDownAndActive()) {
       return;
     }
 
@@ -182,6 +199,11 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOption
     this.#started = false;
     this.#cancelled = false;
     this.#axis = null;
+  }
+
+  /** @private */
+  #allPointersDownAndActive(): boolean {
+    return this.#state.size === this.options.pointers && [...this.#state.values()].every((x) => x.active);
   }
 
   /** @private */
