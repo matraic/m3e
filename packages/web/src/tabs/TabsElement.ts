@@ -389,6 +389,13 @@ export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitEl
     if (!_changedProperties.has("variant") && this._selectedIndex !== null) {
       this.#updateInkBar();
     }
+
+    const swipeGesture = this.shadowRoot?.querySelector("m3e-swipe-gesture");
+    if (swipeGesture) {
+      swipeGesture.inputFilter = this.#swipeInputFilter;
+      swipeGesture.pointerTypes = ["touch"];
+      swipeGesture.directions = ["left", "right"];
+    }
   }
 
   /** @inheritdoc */
@@ -416,10 +423,7 @@ export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitEl
       </m3e-slide>
       <m3e-swipe-gesture
         for="tabs"
-        pointer-types="touch"
-        directions="left right"
         ?disabled="${this.disableSwipe}"
-        .inputFilter="${this.#swipeInputFilter}"
         @gesture=${this.#handleSwipeGesture}
       ></m3e-swipe-gesture>
       ${this.headerPosition === "after" ? this.#renderHeader() : nothing}`;
