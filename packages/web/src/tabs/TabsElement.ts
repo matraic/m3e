@@ -540,7 +540,6 @@ export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitEl
           let dir = e.detail.direction;
           if (M3eDirectionality.current === "rtl") {
             dir = dir === "left" ? "right" : "left";
-            dx = -dx;
           }
 
           if (
@@ -553,11 +552,11 @@ export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitEl
           this.shadowRoot?.querySelector("m3e-slide")?.classList.add("sliding");
           this.selectedTab?.control?.style.setProperty("--_tabs-slide-offset-x", `${dx}px`);
 
-          const nextTab = this.tabs[dx > 0 ? this.selectedIndex - 1 : this.selectedIndex + 1];
+          const nextTab = this.tabs[dir === "right" ? this.selectedIndex - 1 : this.selectedIndex + 1];
           nextTab?.control?.style.setProperty("--_tabs-slide-offset-x", `${dx}px`);
           nextTab?.control?.style.setProperty("--_tabs-slide-visibility", "visible");
 
-          const prevTab = this.tabs[dx > 0 ? this.selectedIndex + 1 : this.selectedIndex - 1];
+          const prevTab = this.tabs[dir === "right" ? this.selectedIndex + 1 : this.selectedIndex - 1];
           prevTab?.control?.style.removeProperty("--_tabs-slide-offset-x");
           prevTab?.control?.style.removeProperty("--_tabs-slide-visibility");
         }
