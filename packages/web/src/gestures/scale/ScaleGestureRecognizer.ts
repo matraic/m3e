@@ -32,6 +32,7 @@ export class ScaleGestureRecognizer extends DelegatingGestureRecognizerBase<
 
   /** @inheritdoc */
   protected override _applyOptions(options: ScaleGestureOptions, inner: PanGestureRecognizer): void {
+    super._applyOptions(options, inner);
     inner.options = {
       minDisplacement: options.minDisplacement,
       pointers: options.pointers,

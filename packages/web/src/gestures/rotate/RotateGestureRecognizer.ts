@@ -32,6 +32,7 @@ export class RotateGestureRecognizer extends DelegatingGestureRecognizerBase<
 
   /** @inheritdoc */
   protected override _applyOptions(options: RotateGestureOptions, inner: PanGestureRecognizer): void {
+    super._applyOptions(options, inner);
     inner.options = {
       activationMode: options.activationMode,
       minDisplacement: options.minDisplacement,

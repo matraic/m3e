@@ -43,6 +43,7 @@ export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
 
   /** @inheritdoc */
   protected override _applyOptions(options: SwipeGestureOptions, inner: PanGestureRecognizer): void {
+    super._applyOptions(options, inner);
     inner.options = {
       minDisplacement: options.startThreshold,
       pointers: options.pointers,
