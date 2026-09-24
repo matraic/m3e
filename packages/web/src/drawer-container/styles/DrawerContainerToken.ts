@@ -11,7 +11,12 @@ export const DrawerContainerToken = {
   containerElevation: unsafeCSS(`var(--m3e-drawer-container-elevation, ${DesignToken.elevation.level0})`),
   containerWidth: unsafeCSS(`var(--m3e-drawer-container-width, 360px)`),
   scrimOpacity: unsafeCSS("var(--m3e-drawer-container-scrim-opacity, 32%)"),
-  cornerShape: unsafeCSS(`var(--m3e-modal-drawer-corner-shape, ${DesignToken.shape.corner.large})`),
+  startShape: unsafeCSS(
+    `var(--m3e-modal-drawer-start-shape, var(--m3e-modal-drawer-corner-shape, ${DesignToken.shape.corner.large}))`,
+  ),
+  endShape: unsafeCSS(
+    `var(--m3e-modal-drawer-end-shape, var(--m3e-modal-drawer-corner-shape, ${DesignToken.shape.corner.large}))`,
+  ),
   modalContainerColor: unsafeCSS(`var(--m3e-modal-drawer-container-color, ${DesignToken.color.surfaceContainerLow})`),
   modalContainerElevation: unsafeCSS(`var(--m3e-modal-drawer-elevation, ${DesignToken.elevation.level1})`),
   dividerColor: unsafeCSS(`var(--m3e-drawer-divider-color, ${DesignToken.color.outline})`),

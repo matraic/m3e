@@ -140,13 +140,13 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   }
   :host(:is(:state(--start-push), :--start-push)) .start,
   :host(:is(:state(--start-over), :--start-over)) .start {
-    border-start-end-radius: ${DrawerContainerToken.cornerShape};
-    border-end-end-radius: ${DrawerContainerToken.cornerShape};
+    border-start-end-radius: ${DrawerContainerToken.endShape};
+    border-end-end-radius: ${DrawerContainerToken.endShape};
   }
   :host(:is(:state(--end-push), :--end-push)) .end,
   :host(:is(:state(--end-over), :--end-over)) .end {
-    border-start-start-radius: ${DrawerContainerToken.cornerShape};
-    border-end-start-radius: ${DrawerContainerToken.cornerShape};
+    border-start-start-radius: ${DrawerContainerToken.startShape};
+    border-end-start-radius: ${DrawerContainerToken.startShape};
   }
   :host(:is(:state(--start-push), :--start-push)) .start,
   :host(:is(:state(--end-push), :--end-push)) .end,
