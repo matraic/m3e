@@ -73,14 +73,29 @@ export function LinkButton<T extends Constructor<LitElement>>(
         e.stopPropagation();
       }
 
+      // Capture the originating element before yielding, as the composed path is only available during dispatch.
+      const origin = e.composedPath()[0];
+
       await new Promise<void>((resolve) => resolve());
       if (e.defaultPrevented) {
         return;
       }
 
       if (this.href) {
-        e.preventDefault();
         e.stopImmediatePropagation();
+
+        // Clicks with modifier keys (e.g. open in new tab/window, download) are left to the pseudo link's
+        // native activation behavior, as not all browsers honor modifier keys for synthetic clicks.
+        if (
+          origin instanceof HTMLAnchorElement &&
+          origin.getRootNode() === this.shadowRoot &&
+          e instanceof MouseEvent &&
+          (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey)
+        ) {
+          return;
+        }
+
+        e.preventDefault();
 
         const link = document.createElement("a");
         link.href = this.href;
