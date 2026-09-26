@@ -23,8 +23,13 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
   /** @private */ #for: HTMLElement | null = null;
   /** @private */ #anchorCleanup?: () => void;
   /** @private */ #tooltipHovering = false;
+  /** @private */ #controlFocused = false;
+  /** @private */ #focusDelay?: ReturnType<typeof setTimeout>;
 
   /** @private */ readonly #controlClickHandler = () => this.#handleControlClick();
+  /** @private */ readonly #controlFocusInHandler = (e: FocusEvent) => this.#handleControlFocusIn(e);
+  /** @private */ readonly #controlFocusOutHandler = () => this.#handleControlFocusOut();
+  /** @private */ readonly #documentKeyDownHandler = (e: KeyboardEvent) => this.#handleDocumentKeyDown(e);
 
   /** @private */
   readonly #hoverController = new HoverController(this, {
@@ -40,7 +45,9 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
         this.show();
       } else if (!this.#tooltipHovering || target === this._base) {
         this.#tooltipHovering = false;
-        this.hide();
+        if (!this.#controlFocused) {
+          this.hide();
+        }
       }
     },
   });
@@ -127,6 +134,8 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
     }
 
     control.addEventListener("click", this.#controlClickHandler);
+    control.addEventListener("focusin", this.#controlFocusInHandler);
+    control.addEventListener("focusout", this.#controlFocusOutHandler);
   }
 
   /** @inheritdoc */
@@ -135,6 +144,8 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
       this.#hoverController.unobserve(this.control);
       this.#longPressController?.destroy();
       this.control.removeEventListener("click", this.#controlClickHandler);
+      this.control.removeEventListener("focusin", this.#controlFocusInHandler);
+      this.control.removeEventListener("focusout", this.#controlFocusOutHandler);
       this.hide();
     }
     super.detach();
@@ -204,6 +215,10 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
     if (!TooltipElementBase.__openTooltips.includes(this)) {
       TooltipElementBase.__openTooltips.push(this);
     }
+
+    if (!this._isInteractive) {
+      document.addEventListener("keydown", this.#documentKeyDownHandler);
+    }
   }
 
   /** Manually hides the tooltip. */
@@ -212,6 +227,9 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
     this.#anchorCleanup?.();
     this.#anchorCleanup = undefined;
     this.#hoverController.clearDelays();
+    this.#clearFocusDelay();
+    this.#controlFocused = false;
+    document.removeEventListener("keydown", this.#documentKeyDownHandler);
 
     if (TooltipElementBase.__openTooltips.includes(this)) {
       TooltipElementBase.__openTooltips = TooltipElementBase.__openTooltips.filter((x) => x !== this);
@@ -238,6 +256,65 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
     } else {
       this.hide();
     }
+  }
+
+  /** @private */
+  #handleControlFocusIn(e: FocusEvent): void {
+    if (this._isInteractive) return;
+
+    // Only show for keyboard focus (i.e. not when focused by pointer or touch).
+    const target = e.composedPath()[0];
+    if (!(target instanceof Element) || !target.matches(":focus-visible")) return;
+
+    this.#controlFocused = true;
+    this.#clearFocusDelay();
+
+    if (this.isOpen) return;
+
+    if (this.showDelay > 0) {
+      this.#focusDelay = setTimeout(() => {
+        this.#focusDelay = undefined;
+        this.show();
+      }, this.showDelay);
+    } else {
+      this.show();
+    }
+  }
+
+  /** @private */
+  #handleControlFocusOut(): void {
+    if (this._isInteractive || !this.#controlFocused) return;
+
+    this.#controlFocused = false;
+
+    // If there is a pending show delay, cancel it and do not hide.
+    if (this.#focusDelay !== undefined) {
+      this.#clearFocusDelay();
+      return;
+    }
+
+    if (this.hideDelay > 0) {
+      this.#focusDelay = setTimeout(() => {
+        this.#focusDelay = undefined;
+        this.hide();
+      }, this.hideDelay);
+    } else {
+      this.hide();
+    }
+  }
+
+  /** @private */
+  #handleDocumentKeyDown(e: KeyboardEvent): void {
+    if (e.key === "Escape" && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) {
+      e.preventDefault();
+      this.hide();
+    }
+  }
+
+  /** @private */
+  #clearFocusDelay(): void {
+    clearTimeout(this.#focusDelay);
+    this.#focusDelay = undefined;
   }
 
   /** @private */
