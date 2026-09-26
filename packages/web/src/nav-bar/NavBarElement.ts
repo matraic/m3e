@@ -1,7 +1,15 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property, state } from "lit/decorators.js";
 
-import { AttachInternals, customElement, DesignToken, ReconnectedCallback, Role, setCustomState } from "@m3e/web/core";
+import {
+  AttachInternals,
+  customElement,
+  DesignToken,
+  hasAssignedNodes,
+  ReconnectedCallback,
+  Role,
+  setCustomState,
+} from "@m3e/web/core";
 
 import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
 import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
@@ -9,6 +17,9 @@ import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
 import { M3eNavItemElement } from "./NavItemElement";
 import { NavItemOrientation } from "./NavItemOrientation";
 import { isNavBarMode, NavBarMode } from "./NavBarMode";
+
+/** Specifies where a nav bar or rail is presented relative to its panel. */
+export type NavBarPlacement = "top" | "bottom" | "left" | "right";
 
 /**
  * A horizontal bar, typically used on smaller devices, that allows a user to switch between 3-5 views.
@@ -32,8 +43,10 @@ import { isNavBarMode, NavBarMode } from "./NavBarMode";
  * @tag m3e-nav-bar
  *
  * @slot - Renders the items of the bar.
+ * @slot panel - Renders the panels of the bar.
  *
  * @attr mode - The mode in which items in the bar are presented.
+ * @attr placement - The position of the bar relative to its panel.
  *
  * @fires beforeinput - Dispatched before the selected state of an item changes.
  * @fires input - Dispatched when the selected state of an item changes.
@@ -50,12 +63,11 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
-      display: block;
-      overflow-x: auto;
-      overflow-y: hidden;
-      scrollbar-width: ${DesignToken.scrollbar.thinWidth};
-      scrollbar-color: ${DesignToken.scrollbar.color};
-      min-height: var(--m3e-nav-bar-height, 64px);
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    :host([placement="top"]) {
+      flex-direction: column;
     }
     :host([hidden]) {
       display: none;
@@ -63,10 +75,15 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
     .base {
       contain: layout style;
       display: flex;
+      flex: none;
       align-items: stretch;
       justify-content: center;
       box-sizing: border-box;
-      min-height: inherit;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: ${DesignToken.scrollbar.thinWidth};
+      scrollbar-color: ${DesignToken.scrollbar.color};
+      min-height: var(--m3e-nav-bar-height, 64px);
       height: inherit;
       width: 100%;
       background-color: var(--m3e-nav-bar-container-color, ${DesignToken.color.surfaceContainer});
@@ -91,6 +108,12 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
    * @default "compact"
    */
   @property({ reflect: true, useDefault: true }) mode: NavBarMode = "compact";
+
+  /**
+   * The position of the bar relative to its panel.
+   * @default "bottom"
+   */
+  @property({ reflect: true, useDefault: true }) placement: NavBarPlacement = "bottom";
 
   /** The items of the bar. */
   get items(): readonly M3eNavItemElement[] {
@@ -180,13 +203,19 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
   protected override render(): unknown {
     return html`<div class="base">
       <slot @change=${this.#handleChange} @slotchange=${this.#handleSlotChange}></slot>
-    </div>`;
+    </div>
+    <slot name="panel" @slotchange=${this.#handlePanelSlotChange}></slot>`;
   }
 
   /** @private */
   #handleSlotChange(): void {
     this[selectionManager].setItems([...this.querySelectorAll("m3e-nav-item")]);
     this._updateItems();
+  }
+
+  /** @private */
+  #handlePanelSlotChange(e: Event): void {
+    setCustomState(this, "--panel", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */

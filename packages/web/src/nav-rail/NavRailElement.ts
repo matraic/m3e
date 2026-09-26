@@ -1,4 +1,5 @@
 import { css, CSSResultGroup, unsafeCSS } from "lit";
+import { property } from "lit/decorators.js";
 
 import {
   customElement,
@@ -9,7 +10,7 @@ import {
 } from "@m3e/web/core";
 
 import { M3eInteractivityChecker, RovingTabIndexManager, selectionManager } from "@m3e/web/core/a11y";
-import { M3eNavBarElement, NavItemOrientation } from "@m3e/web/nav-bar";
+import { M3eNavBarElement, NavBarPlacement, NavItemOrientation } from "@m3e/web/nav-bar";
 
 /**
  * A vertical bar, typically used on larger devices, that allows a user to switch between views.
@@ -45,6 +46,7 @@ import { M3eNavBarElement, NavItemOrientation } from "@m3e/web/nav-bar";
  * @tag m3e-nav-rail
  *
  * @attr mode - The mode in which items in the rail are presented.
+ * @attr placement - The position of the rail relative to its panel.
  *
  * @fires beforeinput - Dispatched before the selected state of an item changes.
  * @fires input - Dispatched when the selected state of an item changes.
@@ -80,40 +82,46 @@ export class M3eNavRailElement extends SuppressInitialAnimation(M3eNavBarElement
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
-      display: block;
-      overflow-x: hidden;
-      overflow-y: auto;
-      scrollbar-width: ${DesignToken.scrollbar.thinWidth};
-      scrollbar-color: ${DesignToken.scrollbar.color};
+      display: flex;
+      flex-direction: row;
+      width: fit-content;
+    }
+    :host([placement="right"]) {
+      flex-direction: row-reverse;
+    }
+    :host(:is(:state(--panel), :--panel)) {
+      width: auto;
     }
     :host([hidden]) {
       display: none;
     }
-    :host(:not(:is(:state(--no-animate), :--no-animate))) {
-      transition: ${unsafeCSS(`width ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standard}`)};
-    }
     .base {
       contain: layout style;
       display: flex;
-      width: inherit;
+      flex: none;
       flex-direction: column;
       align-items: flex-start;
       box-sizing: border-box;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scrollbar-width: ${DesignToken.scrollbar.thinWidth};
+      scrollbar-color: ${DesignToken.scrollbar.color};
       padding-block-start: var(--m3e-nav-rail-top-space, ${DesignToken.measurement.space550});
       padding-block-end: var(--m3e-nav-rail-bottom-space, ${DesignToken.measurement.space100});
       padding-inline: var(--m3e-nav-rail-inline-padding, ${DesignToken.measurement.space250});
     }
-    :host(:is(:state(--compact), :--compact)) {
-      width: var(--m3e-nav-rail-compact-width, 96px);
+    :host(:not(:is(:state(--no-animate), :--no-animate))) .base {
+      transition: ${unsafeCSS(`width ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standard}`)};
     }
     :host(:is(:state(--compact), :--compact)) .base {
+      width: var(--m3e-nav-rail-compact-width, 96px);
       --_vertical-nav-item-width: var(--m3e-nav-rail-compact-width, 96px);
       --_vertical-nav-item-margin-inline: calc(
         0px - var(--m3e-nav-rail-inline-padding, ${DesignToken.measurement.space250})
       );
       --_vertical-nav-item-inset-start: calc(50% - calc(var(--m3e-vertical-nav-item-active-indicator-width, 56px)) / 2);
     }
-    :host(:not(:is(:state(--compact), :--compact))) {
+    :host(:not(:is(:state(--compact), :--compact))) .base {
       width: var(--m3e-nav-rail-expanded-width, 220px);
     }
     :host(:not(:is(:state(--compact), :--compact))) {
@@ -121,7 +129,7 @@ export class M3eNavRailElement extends SuppressInitialAnimation(M3eNavBarElement
       --_nav-item-align-self: stretch;
       --_nav-item-justify-content: flex-start;
     }
-    ::slotted(*) {
+    ::slotted(*:not(m3e-nav-panel)) {
       flex: none;
     }
     ::slotted(m3e-fab) {
@@ -137,11 +145,17 @@ export class M3eNavRailElement extends SuppressInitialAnimation(M3eNavBarElement
       --m3e-fab-lowered-hover-container-elevation: ${DesignToken.elevation.level1};
     }
     @media (prefers-reduced-motion) {
-      :host(:not(:is(:state(--no-animate), :--no-animate))) {
+      :host(:not(:is(:state(--no-animate), :--no-animate))) .base {
         transition: none;
       }
     }
   `;
+
+  /**
+   * The position of the rail relative to its panel.
+   * @default "left"
+   */
+  @property({ reflect: true, useDefault: true }) override placement: NavBarPlacement = "left";
 
   /** @private */ #focusKeyManager = new RovingTabIndexManager().withHomeAndEnd().withWrap();
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);

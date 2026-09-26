@@ -41,6 +41,7 @@ This section details the attributes, slots, events and CSS custom properties ava
 | Attribute | Type                              | Default | Description                                        |
 | --------- | --------------------------------- | ------- | -------------------------------------------------- |
 | mode      | "compact" \| "expanded" \| "auto" | auto    | The mode in which items in the rail are presented. |
+| placement | "left" \| "right"               | left    | The position of the rail relative to its panel. |
 
 ### 🔔 Events
 
