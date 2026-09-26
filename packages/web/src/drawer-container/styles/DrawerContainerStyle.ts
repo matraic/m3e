@@ -12,7 +12,7 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   :host {
     display: block;
     position: relative;
-    overflow: hidden;
+    overflow: clip;
     flex: 1 1 auto;
   }
   :host([hidden]) {
