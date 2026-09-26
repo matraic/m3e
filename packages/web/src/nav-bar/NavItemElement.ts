@@ -9,6 +9,7 @@ import {
   DisabledInteractive,
   Focusable,
   hasAssignedNodes,
+  HtmlFor,
   KeyboardClick,
   LinkButton,
   M3eFocusRingElement,
@@ -23,11 +24,12 @@ import {
   SuppressInitialAnimation,
 } from "@m3e/web/core";
 
-import { selectionManager } from "@m3e/web/core/a11y";
+import { addAriaReferencedId, removeAriaReferencedId, selectionManager } from "@m3e/web/core/a11y";
 import { SupportsDirectionality } from "@m3e/web/core/bidi";
 
 import type { M3eNavBarElement } from "./NavBarElement";
 import { isNavItemOrientation, NavItemOrientation } from "./NavItemOrientation";
+import { M3eNavPanelElement } from "./NavPanelElement";
 
 /**
  * An item, placed in a navigation bar or rail, used to navigate to destinations in an application.
@@ -57,6 +59,7 @@ import { isNavItemOrientation, NavItemOrientation } from "./NavItemOrientation";
  * @attr disabled - Whether the element is disabled.
  * @attr disabled-interactive - Whether the element is disabled and interactive.
  * @attr download - Whether the `target` of the link button will be downloaded, optionally specifying the new name of the file.
+ * @attr for - The identifier of the panel presented when this element is selected.
  * @attr href - The URL to which the link button points.
  * @attr orientation - The layout orientation of the item.
  * @attr rel - The relationship between the `target` of the link button and the document.
@@ -103,7 +106,9 @@ export class M3eNavItemElement extends SupportsDirectionality(
     SuppressInitialAnimation(
       LinkButton(
         Selected(
-          KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))),
+          HtmlFor(
+            KeyboardClick(Focusable(DisabledInteractive(Disabled(AttachInternals(Role(LitElement, "button"), true))))),
+          ),
         ),
       ),
     ),
@@ -539,6 +544,32 @@ export class M3eNavItemElement extends SupportsDirectionality(
   }
 
   /** @inheritdoc */
+  override attach(control: HTMLElement): void {
+    super.attach(control);
+
+    if (control instanceof M3eNavPanelElement) {
+      if (control.id) {
+        addAriaReferencedId(this, "aria-controls", control.id);
+      }
+      control.refresh();
+    }
+  }
+
+  /** @inheritdoc */
+  override detach(): void {
+    const control = this.control;
+
+    if (control instanceof M3eNavPanelElement) {
+      if (control.id) {
+        removeAriaReferencedId(this, "aria-controls", control.id);
+      }
+      control.refresh();
+    }
+
+    super.detach();
+  }
+
+  /** @inheritdoc */
   override connectedCallback(): void {
     this.#inRail = this.closest("m3e-nav-rail") !== null;
     super.connectedCallback();
@@ -578,6 +609,9 @@ export class M3eNavItemElement extends SupportsDirectionality(
       this.ariaCurrent = `${this.selected}`;
       for (const icon of this.querySelectorAll("m3e-icon")) {
         icon.toggleAttribute("filled", this.selected);
+      }
+      if (this.control instanceof M3eNavPanelElement) {
+        this.control.refresh();
       }
       this.navBar?.[selectionManager].notifySelectionChange(this);
     }

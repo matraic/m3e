@@ -1,6 +1,6 @@
 # @m3e/web/nav-bar
 
-The `m3e-nav-bar` and `m3e-nav-item` components provide a navigation bar and interactive items for switching between primary destinations in your application. Designed for smaller devices, they support 3-5 interactive items, orientation, selection, and extensive theming via CSS custom properties.
+The `m3e-nav-bar`, `m3e-nav-item`, and `m3e-nav-panel` components provide a navigation bar, interactive items for switching between primary destinations in your application, and the panels presented for those destinations. Designed for smaller devices, they support 3-5 interactive items, orientation, selection, and extensive theming via CSS custom properties.
 
 ```ts
 import "@m3e/web/nav-bar";
@@ -10,15 +10,20 @@ import "@m3e/web/nav-bar";
 
 - `m3e-nav-bar` — A horizontal bar, typically used on smaller devices, that allows a user to switch between 3-5 views.
 - `m3e-nav-item` — An item, placed in a navigation bar or rail, used to navigate to destinations in an application.
+- `m3e-nav-panel` — A panel presented for a navigation item.
 
 ## 🧪 Example
 
 ```html
 <m3e-nav-bar>
-  <m3e-nav-item><m3e-icon slot="icon" name="news"></m3e-icon>News</m3e-nav-item>
-  <m3e-nav-item><m3e-icon slot="icon" name="globe"></m3e-icon>Global</m3e-nav-item>
-  <m3e-nav-item><m3e-icon slot="icon" name="star"></m3e-icon>For you</m3e-nav-item>
-  <m3e-nav-item><m3e-icon slot="icon" name="newsstand"></m3e-icon>Trending</m3e-nav-item>
+  <m3e-nav-item selected for="news"><m3e-icon slot="icon" name="news"></m3e-icon>News</m3e-nav-item>
+  <m3e-nav-item for="global"><m3e-icon slot="icon" name="globe"></m3e-icon>Global</m3e-nav-item>
+  <m3e-nav-item for="for-you"><m3e-icon slot="icon" name="star"></m3e-icon>For you</m3e-nav-item>
+  <m3e-nav-item for="trending"><m3e-icon slot="icon" name="newsstand"></m3e-icon>Trending</m3e-nav-item>
+  <m3e-nav-panel id="news">News</m3e-nav-panel>
+  <m3e-nav-panel id="global">Global</m3e-nav-panel>
+  <m3e-nav-panel id="for-you">For you</m3e-nav-panel>
+  <m3e-nav-panel id="trending">Trending</m3e-nav-panel>
 </m3e-nav-bar>
 ```
 
@@ -33,6 +38,7 @@ This section details the attributes, slots, events and CSS custom properties ava
 | Attribute | Type                                    | Default     | Description                                       |
 | --------- | --------------------------------------- | ----------- | ------------------------------------------------- |
 | `mode`    | `"compact"` \| `"expanded"` \| `"auto"` | `"compact"` | The mode in which items in the bar are presented. |
+| `placement` | `"top"` \| `"bottom"` | `"bottom"` | The position of the bar relative to its panel. |
 
 #### 🔔 Events
 
@@ -44,9 +50,10 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🧩 Slots
 
-| Slot        | Description                   |
-| ----------- | ----------------------------- |
-| _(default)_ | Renders the items of the bar. |
+| Slot        | Description                                       |
+| ----------- | ------------------------------------------------- |
+| _(default)_ | Renders the items of the bar.                     |
+| `panel`     | Renders the panels presented for the bar's items. |
 
 #### 🎛️ CSS Custom Properties
 
@@ -69,6 +76,7 @@ This section details the attributes, slots, events and CSS custom properties ava
 | `disabled`             | `boolean`                      | `false`      | Whether the item is disabled.                |
 | `disabled-interactive` | `boolean`                      | `false`      | Whether the item is disabled and interactive |
 | `download`             | `string`                       |              | Download target for link button.             |
+| `for`                  | `string`                       |              | The identifier of the panel presented when this element is selected. |
 | `href`                 | `string`                       |              | URL for the link button.                     |
 | `orientation`          | `"vertical"` \| `"horizontal"` | `"vertical"` | The layout orientation of the item.          |
 | `rel`                  | `string`                       |              | Relationship for the link button.            |
@@ -123,3 +131,15 @@ This section details the attributes, slots, events and CSS custom properties ava
 | `--m3e-vertical-nav-item-active-indicator-width`    | Width of the active indicator (vertical).    |
 | `--m3e-vertical-nav-item-active-indicator-height`   | Height of the active indicator (vertical).   |
 | `--m3e-vertical-nav-item-active-indicator-margin`   | Margin for the active indicator (vertical).  |
+
+### 🗂️ m3e-nav-panel
+
+A panel is presented when an `m3e-nav-item` that links to it via `for` is selected, and hidden otherwise. A panel not linked by any item is always presented. Panels are nested within the nav bar or rail using the `panel` slot.
+
+This section details the slots available for the `m3e-nav-panel` component.
+
+#### 🧩 Slots
+
+| Slot        | Description                       |
+| ----------- | --------------------------------- |
+| _(default)_ | Renders the content of the panel. |
