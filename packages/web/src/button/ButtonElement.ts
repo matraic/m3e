@@ -701,8 +701,14 @@ export class M3eButtonElement extends KeyboardClick(
   @debounce(40)
   private _handleResize(): void {
     if (this.grouped && !hasCustomState(this, "--no-resize") && this !== document.activeElement) {
-      this.style.setProperty("--_button-width", `${this.getBoundingClientRect().width}px`);
-      this.#updateButtonShape(true);
+      const width = this.getBoundingClientRect().width;
+      if (width > 0) {
+        this.style.setProperty("--_button-width", `${width}px`);
+        this.#updateButtonShape(true);
+      } else {
+        // Hidden (display:none): drop the lock so natural size restores on re-show.
+        this.style.removeProperty("--_button-width");
+      }
     }
   }
 
