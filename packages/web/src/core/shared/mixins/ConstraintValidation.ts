@@ -54,7 +54,7 @@ export interface ConstraintValidationMixin extends FormAssociatedMixin {
 
   /**
    * Sets a custom validity message for the element.
-   * @param error The message to use for validity errors.
+   * @param {string} error The message to use for validity errors.
    */
   setCustomValidity(error: string): void;
 }
