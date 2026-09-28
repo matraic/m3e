@@ -122,21 +122,48 @@ export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitEl
       height: var(--_tabs-active-indicator-thickness);
     }
     .active-indicator {
-      position: relative;
+      position: absolute;
       height: var(--_tabs-active-indicator-thickness);
-      width: calc(var(--_tabs-active-tab-size) - calc(var(--_tabs-activate-indicator-inset, 0px) * 2));
       background-color: var(--m3e-tabs-active-indicator-color, ${DesignToken.color.primary});
-      transition: ${unsafeCSS(
-        `left var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard},
-        right var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard},
-        width var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard}`,
-      )};
     }
     :host(:not(:is(:state(--rtl), :--rtl))) .active-indicator {
       left: calc(var(--_tabs-active-tab-position) + var(--_tabs-activate-indicator-inset, 0px));
+      right: calc(
+        100% -
+          (
+            var(--_tabs-active-tab-position) + var(--_tabs-active-tab-size) -
+              ((var(--_tabs-activate-indicator-inset, 0px) * 2))
+          )
+      );
     }
     :host(:is(:state(--rtl), :--rtl)) .active-indicator {
       right: calc(var(--_tabs-active-tab-position) + var(--_tabs-activate-indicator-inset, 0px));
+      left: calc(
+        100% -
+          (
+            var(--_tabs-active-tab-position) + var(--_tabs-active-tab-size) -
+              ((var(--_tabs-activate-indicator-inset, 0px) * 2))
+          )
+      );
+    }
+    :host(:is(:state(--primary), :--primary)) .active-indicator.start {
+      transition: ${unsafeCSS(
+        `left var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.emphasizedDecelerate},
+        right var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard}`,
+      )};
+    }
+    :host(:is(:state(--primary), :--primary)) .active-indicator.end {
+      transition: ${unsafeCSS(
+        `left var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard},
+        right var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.emphasizedDecelerate}`,
+      )};
+    }
+    :host(:is(:state(--primary), :--primary)) .active-indicator:not(.start):not(.end),
+    :host(:is(:state(--secondary), :--secondary)) .active-indicator {
+      transition: ${unsafeCSS(
+        `left var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard},
+        right var(--m3e-slide-animation-duration, ${DesignToken.motion.duration.long2}) ${DesignToken.motion.easing.standard}`,
+      )};
     }
     :host(:is(:state(--header-position-after), :--header-position-after)) .header {
       flex-direction: column-reverse;
@@ -213,8 +240,9 @@ export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitEl
       transition: none;
     }
     @media (prefers-reduced-motion) {
-      .active-indicator {
-        transition: none;
+      :host(:is(:state(--secondary), :--secondary)) .active-indicator,
+      :host(:is(:state(--primary), :--primary)) .active-indicator {
+        transition: none !important;
       }
       .tabs.snap ::slotted([slot="panel"]) {
         transition: none;
@@ -514,12 +542,17 @@ export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitEl
     if (selectedIndex === -1) {
       selectedIndex = null;
     }
-    this._selectedIndex = selectedIndex;
 
-    if (selected) {
-      this.#scrollTabIntoView(selected, hasCustomState(this, "--no-animate"));
-    } else {
-      this.#updateInkBar();
+    if (this._selectedIndex !== selectedIndex) {
+      const previousIndex = this._selectedIndex ?? -1;
+      this._selectedIndex = selectedIndex;
+
+      if (selected) {
+        const instant = hasCustomState(this, "--no-animate");
+        this.#scrollTabIntoView(selected, instant, previousIndex);
+      } else {
+        this.#updateInkBar();
+      }
     }
   }
 
@@ -618,7 +651,7 @@ export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitEl
   }
 
   /** @private */
-  async #scrollTabIntoView(tab: M3eTabElement, instant: boolean): Promise<void> {
+  async #scrollTabIntoView(tab: M3eTabElement, instant: boolean, previousIndex: number = -1): Promise<void> {
     await this.updateComplete;
     for (const tab of this.tabs) {
       await tab.updateComplete;
@@ -642,11 +675,11 @@ export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitEl
       ),
     });
 
-    this.#updateInkBar();
+    this.#updateInkBar(previousIndex);
   }
 
   /** @private */
-  #updateInkBar(): void {
+  #updateInkBar(previousIndex: number = -1): void {
     if (!this._tablist) return;
     const selected = this[selectionManager].selectedItems[0];
     let left = 0;
@@ -666,6 +699,31 @@ export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitEl
           width = MIN_PRIMARY_TAB_WIDTH;
         }
       }
+    }
+
+    let indicator: HTMLElement | undefined | null;
+    if (
+      previousIndex >= 0 &&
+      previousIndex !== this._selectedIndex &&
+      this._selectedIndex !== null &&
+      this.variant === "primary" &&
+      !hasCustomState(this, "--no-animate") &&
+      !prefersReducedMotion()
+    ) {
+      indicator = this.shadowRoot?.querySelector<HTMLElement>(".active-indicator");
+    }
+
+    if (indicator) {
+      let dir = previousIndex < this._selectedIndex! ? "end" : "start";
+      if (M3eDirectionality.current === "rtl") {
+        dir = dir === "start" ? "end" : "start";
+      }
+
+      indicator.classList.remove("start");
+      indicator.classList.remove("end");
+
+      indicator.classList.add(dir);
+      indicator.addEventListener("transitionend", () => indicator?.classList.remove(dir), { once: true });
     }
 
     this._tablist.style.setProperty("--_tabs-active-tab-position", `${left}px`);
