@@ -12,7 +12,8 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 The following components are planned for future release (in no particular order):
 
-- Inputs (Numeric, Masked)
+- Inputs (numeric, masked)
+- Form‑field derived composite inputs (text, date, number, combobox, etc.)
 - Carousel
 
 ### 📜 Building with AI
