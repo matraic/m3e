@@ -14,6 +14,7 @@ The following components are planned for future release (in no particular order)
 
 - Inputs (numeric, masked)
 - Form‑field derived composite inputs (text, date, number, combobox, etc.)
+- Scroll view (overscroll stretch effect, auto-hide scrollbars)
 - Carousel
 
 ### 📜 Building with AI
