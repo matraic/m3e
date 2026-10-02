@@ -25,7 +25,7 @@ export const SearchViewToken = {
     `var(--m3e-search-view-contained-trailing-margin, ${DesignToken.measurement.space300})`,
   ),
   containedFocusedLeadingMargin: unsafeCSS(
-    `var(--m3e-search-view-contained-focused-leading-margin, ${DesignToken.measurement.space300})`,
+    `var(--m3e-search-view-contained-focused-leading-margin, ${DesignToken.measurement.space150})`,
   ),
   containedFocusedTrailingMargin: unsafeCSS(
     `var(--m3e-search-view-contained-focused-trailing-margin, ${DesignToken.measurement.space150})`,
