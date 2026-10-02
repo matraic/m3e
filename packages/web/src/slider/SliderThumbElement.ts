@@ -219,7 +219,7 @@ export class M3eSliderThumbElement extends Dirty(
       transition: ${unsafeCSS(`height ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
     }
     :host(
-        :is(:state(--vertical), :--vertical):is(:active, :focus-visible :is(:state(--active), :--active)):not(
+        :is(:state(--vertical), :--vertical):is(:active, :focus-visible, :is(:state(--active), :--active)):not(
             [aria-disabled="true"]
           )
       )
