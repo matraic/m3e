@@ -996,6 +996,10 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
         }
       }
     }
+
+    if (this.#activeThumb) {
+      addCustomState(this.#activeThumb, "--active");
+    }
   }
 
   /** @private */
@@ -1063,6 +1067,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
     if (this.#activeThumb && !this.#activeThumb.disabled) {
       this.#commitThumb(this.#activeThumb);
       this.#activeThumb.focus();
+      deleteCustomState(this.#activeThumb, "--active");
     }
   }
 

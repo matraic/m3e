@@ -155,7 +155,7 @@ export class M3eSliderThumbElement extends Dirty(
       border-radius: inherit;
       transition: ${unsafeCSS(`width ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
     }
-    :host(:active:not([aria-disabled="true"])) .handle {
+    :host(:is(:active, :focus-visible, :is(:state(--active), :--active)):not([aria-disabled="true"])) .handle {
       width: var(--m3e-slider-thumb-pressed-width, 2px);
     }
     :host(:not([aria-disabled="true"])) .handle {
@@ -218,7 +218,12 @@ export class M3eSliderThumbElement extends Dirty(
       height: var(--m3e-slider-thumb-width, 4px);
       transition: ${unsafeCSS(`height ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
     }
-    :host(:is(:state(--vertical), :--vertical):active:not([aria-disabled="true"])) .handle {
+    :host(
+        :is(:state(--vertical), :--vertical):is(:active, :focus-visible :is(:state(--active), :--active)):not(
+            [aria-disabled="true"]
+          )
+      )
+      .handle {
       width: 100%;
       height: var(--m3e-slider-thumb-pressed-width, 2px);
     }
