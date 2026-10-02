@@ -58,6 +58,7 @@ export const SearchViewStyle: CSSResultGroup = css`
   }
   .bar {
     flex: 1 1 auto;
+    min-width: 0;
   }
   :host(:is(:state(--fullscreen), :--fullscreen)) .bar {
     transition: ${unsafeCSS(`margin ${DesignToken.motion.duration.short2} ${DesignToken.motion.easing.standard}`)};
