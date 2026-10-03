@@ -17,6 +17,30 @@ import { ContrastLevel, isContrastLevel } from "./ContrastLevel";
 import { isMotionScheme, MotionScheme } from "./MotionScheme";
 import { isThemeVariant, ThemeVariant } from "./ThemeVariant";
 
+function composeCss(token: Record<string, CSSResult>): string {
+  let css = "";
+  for (const key in token) {
+    const cssVar = token[key].toString();
+    if (!cssVar.startsWith("var(")) continue;
+    const inner = cssVar.trim().slice(4, -1); // remove "var(" and ")"
+    const [prop, fallback] = inner.split(/,(.+)/).map((s) => s.trim());
+
+    if (!prop.startsWith("--") || !fallback) continue;
+    css += `${prop}:${fallback};`;
+  }
+
+  return css;
+}
+
+function omitKeys<T extends object, K extends keyof T>(obj: T, ...keys: readonly K[]): Omit<T, K> {
+  const rest = { ...obj };
+  for (const key of keys) {
+    delete rest[key];
+  }
+
+  return rest as Omit<T, K>;
+}
+
 /**
  * A non-visual element responsible for application-level theming.
  *
@@ -59,30 +83,6 @@ import { isThemeVariant, ThemeVariant } from "./ThemeVariant";
 export class M3eThemeElement extends LitElement {
   static {
     if (typeof window !== "undefined") {
-      const composeCss = (token: Record<string, CSSResult>): string => {
-        let css = "";
-        for (const key in token) {
-          const cssVar = token[key].toString();
-          if (!cssVar.startsWith("var(")) continue;
-          const inner = cssVar.trim().slice(4, -1); // remove "var(" and ")"
-          const [prop, fallback] = inner.split(/,(.+)/).map((s) => s.trim());
-
-          if (!prop.startsWith("--") || !fallback) continue;
-          css += `${prop}:${fallback};`;
-        }
-
-        return css;
-      };
-
-      const omitKeys = <T extends object, K extends keyof T>(obj: T, ...keys: readonly K[]): Omit<T, K> => {
-        const rest = { ...obj };
-        for (const key of keys) {
-          delete rest[key];
-        }
-
-        return rest as Omit<T, K>;
-      };
-
       let css = "";
       css += composeCss(DesignToken.typescale.standard.display.large);
       css += composeCss(DesignToken.typescale.standard.display.medium);
@@ -184,9 +184,9 @@ export class M3eThemeElement extends LitElement {
   @property({ type: Number, reflect: false }) density = 0;
 
   /** The motion scheme.
-   * @default "standard"
+   * @default "expressive"
    */
-  @property({ reflect: false }) motion: MotionScheme = "standard";
+  @property({ reflect: false }) motion: MotionScheme = "expressive";
 
   /** Whether a dark theme is applied. */
   get isDark(): boolean {
@@ -330,6 +330,8 @@ export class M3eThemeElement extends LitElement {
       css += "--md-sys-motion-spring-fast-effects: 150ms cubic-bezier(0.31, 0.94, 0.34, 1.00);";
       css += "--md-sys-motion-spring-default-effects: 200ms cubic-bezier(0.34, 0.80, 0.34, 1.00);";
       css += "--md-sys-motion-spring-slow-effects: 300ms cubic-bezier(0.34, 0.88, 0.34, 1.00);";
+    } else if (!(this.parentElement instanceof HTMLBodyElement)) {
+      css += composeCss(DesignToken.motion.spring);
     }
 
     css += `--md-sys-density-scale: ${this.density};`;

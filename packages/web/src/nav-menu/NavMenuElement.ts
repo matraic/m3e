@@ -106,7 +106,6 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
       display: block;
       outline: none;
       overflow-y: auto;
-      overflow-x: hidden;
       min-height: 0;
       scrollbar-width: ${DesignToken.scrollbar.width};
       scrollbar-color: ${DesignToken.scrollbar.color};

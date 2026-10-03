@@ -139,7 +139,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       --_fab-menu-ripple-color: var(--m3e-tertiary-fab-ripple-color, ${DesignToken.color.onTertiaryContainer});
     }
     :host {
-      transform: scaleX(0.8);
+      transform: scaleX(0);
     }
     :host(:is(:state(--left), :--left)) {
       align-items: flex-start;
@@ -162,7 +162,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
         opacity: 0;
       }
       :host(:popover-open) {
-        transform: scaleX(0.8);
+        transform: scaleX(0);
       }
     }
     @media (prefers-reduced-motion) {

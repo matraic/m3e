@@ -133,8 +133,8 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
       margin-bottom: 0px;
       transition: ${unsafeCSS(
         `margin-bottom 
-        var(--m3e-expandable-list-item-bounce-duration, ${DesignToken.motion.duration.medium1})
-        ${DesignToken.motion.easing.standard}`,
+        var(--m3e-expandable-list-item-bounce-duration, ${DesignToken.motion.duration.medium3})
+        cubic-bezier(0.42, 1.67, 0.21, 0.90)`,
       )};
       --_list-item-button-trailing-align-self: stretch;
     }
@@ -178,7 +178,7 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
     }
     :host([open]) .header.opening {
       margin-bottom: calc(
-        var(--_expandable-list-item-items-segment-gap, 0px) * var(--m3e-expandable-list-item-bounce-factor, 4)
+        var(--_expandable-list-item-items-segment-gap, 0px) * var(--m3e-expandable-list-item-bounce-factor, 12)
       );
     }
     :host([open]) .header,
@@ -203,7 +203,7 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
     .items {
       --m3e-collapsible-animation-duration: var(
         --m3e-expandable-list-item-expand-duration,
-        ${DesignToken.motion.duration.medium1}
+        ${DesignToken.motion.duration.short3}
       );
     }
     @media (forced-colors: active) {

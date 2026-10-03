@@ -2,6 +2,7 @@ import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
 import { AttachInternals, customElement, DesignToken, Role, setCustomEnumState, setCustomState } from "@m3e/web/core";
+import type { M3eThemeElement } from "@m3e/web/theme";
 
 import { isListVariant, ListVariant } from "./ListVariant";
 import { M3eListItemElement } from "./ListItemElement";
@@ -142,11 +143,19 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
       --_list-item-leading-reserved-display: block;
       --_list-item-leading-reserved-space: var(--m3e-list-item-icon-size, 24px);
     }
+    :host(:not(:is(:state(--expressive), :--expressive))) slot {
+      --m3e-expandable-list-item-bounce-duration: 0ms;
+      --m3e-expandable-list-item-bounce-factor: 1;
+    }
   `;
 
+  /** @private */ #theme: M3eThemeElement | null = null;
   /** @private */ #items = new Array<M3eListItemElement>();
   /** @private */ #leadingContentTypes = { video: 0, image: 0, avatar: 0, icon: 0, text: 0 };
   /** @private */ #trailingContentTypes = { video: 0, image: 0, avatar: 0, icon: 0, text: 0 };
+
+  /** @private */ readonly #themeChange = () =>
+    setCustomState(this, "--expressive", this.#theme?.motion === "expressive");
 
   /**
    * The appearance variant of the list.
@@ -192,7 +201,26 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
+
+    this.#theme = this.closest("m3e-theme");
+    if (!this.#theme) {
+      this.#theme = document.querySelector("body > m3e-theme");
+    }
+
+    if (this.#theme) {
+      this.#theme.addEventListener("change", this.#themeChange);
+      this.#themeChange();
+    }
+
     this.#applyVariant();
+  }
+
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.#theme?.removeEventListener("change", this.#themeChange);
+    this.#theme = null;
   }
 
   /** @inheritdoc */

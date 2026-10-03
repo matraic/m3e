@@ -101,10 +101,10 @@ export const FabStyle: CSSResultGroup = css`
     --m3e-icon-size: calc(var(--m3e-fab-menu-close-button-icon-size, 24px) + ${DesignToken.density.calc(-3)});
   }
   .base.with-menu {
-    transition: min-height ${DesignToken.motion.spring.fastSpatial};
+    transition: min-height ${DesignToken.motion.spring.fastEffects};
   }
   .base.with-menu .wrapper {
-    transition: padding ${DesignToken.motion.spring.fastSpatial};
+    transition: padding ${DesignToken.motion.spring.fastEffects};
   }
   a {
     all: unset;

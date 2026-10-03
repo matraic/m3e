@@ -39,15 +39,15 @@ This section details the attributes, events, and slots available for the `m3e-th
 
 #### ⚙️ Attributes
 
-| Attribute      | Type                                                                                                                              | Default      | Description                                                |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------ | ---------------------------------------------------------- |
-| `color`        | `string`                                                                                                                          | `"#6750A4"`  | The hex color from which to derive dynamic color palettes. |
-| `variant`      | `"monochrome" \| "neutral" \| "tonal-spot" \| "vibrant" \| "expressive" \| "fidelity" \| "rainbow" \| "fruit-salad" \| "content"` | `"content"`  | The color variant of the theme.                            |
-| `scheme`       | `"auto" \| "light" \| "dark"`                                                                                                     | `"auto"`     | The color scheme of the theme.                             |
-| `contrast`     | `"standard" \| "medium" \| "high"`                                                                                                | `"standard"` | The contrast level of the theme.                           |
-| `strong-focus` | `boolean`                                                                                                                         | `false`      | Whether to enable strong focus indicators.                 |
-| `density`      | `number`                                                                                                                          | `0`          | The density scale (0, -1, -2).                             |
-| `motion`       | `"standard" \| "expressive"`                                                                                                      | `"standard"` | The motion scheme.                                         |
+| Attribute      | Type                                                                                                                              | Default        | Description                                                |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------------- | ---------------------------------------------------------- |
+| `color`        | `string`                                                                                                                          | `"#6750A4"`    | The hex color from which to derive dynamic color palettes. |
+| `variant`      | `"monochrome" \| "neutral" \| "tonal-spot" \| "vibrant" \| "expressive" \| "fidelity" \| "rainbow" \| "fruit-salad" \| "content"` | `"content"`    | The color variant of the theme.                            |
+| `scheme`       | `"auto" \| "light" \| "dark"`                                                                                                     | `"auto"`       | The color scheme of the theme.                             |
+| `contrast`     | `"standard" \| "medium" \| "high"`                                                                                                | `"standard"`   | The contrast level of the theme.                           |
+| `strong-focus` | `boolean`                                                                                                                         | `false`        | Whether to enable strong focus indicators.                 |
+| `density`      | `number`                                                                                                                          | `0`            | The density scale (0, -1, -2).                             |
+| `motion`       | `"standard" \| "expressive"`                                                                                                      | `"expressive"` | The motion scheme.                                         |
 
 #### 🔔 Events
 

@@ -90,7 +90,7 @@ export class M3eNavRailElement extends SuppressInitialAnimation(M3eNavBarElement
       display: none;
     }
     :host(:not(:is(:state(--no-animate), :--no-animate))) {
-      transition: ${unsafeCSS(`width ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standard}`)};
+      transition: ${unsafeCSS(`width ${DesignToken.motion.spring.defaultSpatial}`)};
     }
     .base {
       contain: layout style;

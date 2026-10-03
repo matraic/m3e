@@ -229,6 +229,9 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
     .group {
       padding-inline-start: var(--m3e-nav-menu-item-inset, ${DesignToken.measurement.space200});
     }
+    .group[open] {
+      overflow: unset;
+    }
     :host([open]) .toggle {
       transform: rotate(180deg);
     }
@@ -512,6 +515,7 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
     return html`<div class="base" @click=${this.#handleClick}>
         <m3e-focus-ring class="focus-ring" inward ?disabled="${this.disabled}"></m3e-focus-ring>
         <m3e-selection-indicator
+          bounce
           class="indicator"
           ?selected="${this.selected}"
           ?disabled="${this.disabled}"

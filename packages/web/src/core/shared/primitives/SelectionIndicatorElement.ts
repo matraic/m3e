@@ -113,14 +113,10 @@ export class M3eSelectionIndicatorElement extends SuppressInitialAnimation(
       transform-origin: center center;
     }
     :host([selected]:not([bounce]):not(:is(:state(--no-animate), :--no-animate))) .base {
-      animation: ${unsafeCSS(
-        `grow ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standardDecelerate}`,
-      )};
+      animation: grow ${DesignToken.motion.spring.fastEffects};
     }
     :host([selected][bounce]:not(:is(:state(--no-animate), :--no-animate))) .base {
-      animation: ${unsafeCSS(
-        `grow-bounce ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standardDecelerate}`,
-      )};
+      animation: grow ${DesignToken.motion.spring.fastSpatial};
     }
     :host([selected]) .indicator {
       opacity: 1;
@@ -132,17 +128,6 @@ export class M3eSelectionIndicatorElement extends SuppressInitialAnimation(
     @keyframes grow {
       0% {
         transform: scaleX(0);
-      }
-      100% {
-        transform: scaleX(1);
-      }
-    }
-    @keyframes grow-bounce {
-      0% {
-        transform: scaleX(0);
-      }
-      60% {
-        transform: scaleX(1.05);
       }
       100% {
         transform: scaleX(1);
