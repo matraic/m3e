@@ -90,18 +90,13 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
     }
     :host(:popover-open) {
       transform: scaleY(1);
-      animation: ${unsafeCSS(
-        `bounce-open ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standardDecelerate}`,
-      )};
+      animation: bounce-open ${DesignToken.motion.spring.fastSpatial};
       display: block;
       opacity: 1;
     }
     @keyframes bounce-open {
       0% {
-        transform: scaleY(0.8);
-      }
-      70% {
-        transform: scaleY(1.02);
+        transform: scaleY(0);
       }
       100% {
         transform: scaleY(1);
