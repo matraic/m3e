@@ -217,14 +217,14 @@ export class M3eThemeElement extends LitElement {
         this.shadowRoot.adoptedStyleSheets = this.shadowRoot.adoptedStyleSheets.filter((x) => x !== this.#styleSheet);
       }
       if (!document.adoptedStyleSheets.includes(this.#styleSheet)) {
-        document.adoptedStyleSheets = [this.#styleSheet, ...document.adoptedStyleSheets];
+        document.adoptedStyleSheets = [...document.adoptedStyleSheets, this.#styleSheet];
       }
     } else {
       if (document.adoptedStyleSheets.includes(this.#styleSheet)) {
         document.adoptedStyleSheets = document.adoptedStyleSheets.filter((x) => x !== this.#styleSheet);
       }
       if (this.shadowRoot && !this.shadowRoot.adoptedStyleSheets.includes(this.#styleSheet)) {
-        this.shadowRoot.adoptedStyleSheets = [this.#styleSheet, ...this.shadowRoot.adoptedStyleSheets];
+        this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, this.#styleSheet];
       }
     }
 
