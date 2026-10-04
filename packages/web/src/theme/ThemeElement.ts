@@ -7,7 +7,6 @@ import {
   Hct,
   hexFromArgb,
   MaterialDynamicColors,
-  themeFromSourceColor,
 } from "@material/material-color-utilities";
 
 import { customElement, DesignToken, registerStyleSheet } from "@m3e/web/core";
@@ -154,10 +153,11 @@ export class M3eThemeElement extends LitElement {
    */
   @property({ reflect: false }) color = "#6750A4";
 
-  /** The color variant of the theme.
-   * @default "neutral"
+  /**
+   * The color variant of the theme.
+   * @default "tonal-spot"
    */
-  @property({ reflect: false }) variant: ThemeVariant = "neutral";
+  @property({ reflect: false }) variant: ThemeVariant = "tonal-spot";
 
   /**
    * The color scheme of the theme.
@@ -274,7 +274,7 @@ export class M3eThemeElement extends LitElement {
     super.updated(_changedProperties);
     this.#apply(
       this.#firstUpdated &&
-        ["color", "scheme", "contrast"].some((x) => _changedProperties.has(<keyof M3eThemeElement>x)),
+        ["color", "variant", "scheme", "contrast"].some((x) => _changedProperties.has(<keyof M3eThemeElement>x)),
     );
   }
 
@@ -292,18 +292,12 @@ export class M3eThemeElement extends LitElement {
   /** @private */
   #apply(forceReflow: boolean): void {
     const color = argbFromHex(this.color);
-    const theme = themeFromSourceColor(color);
     const scheme = new DynamicScheme({
       sourceColorHct: Hct.fromInt(color),
       variant: this.#getVariant(),
       contrastLevel: this.#getContrastLevel(),
       isDark: this.isDark,
-      primaryPalette: theme.palettes.primary,
-      secondaryPalette: theme.palettes.secondary,
-      tertiaryPalette: theme.palettes.tertiary,
-      neutralPalette: theme.palettes.neutral,
-      neutralVariantPalette: theme.palettes.neutralVariant,
-      errorPalette: theme.palettes.error,
+      specVersion: "2025",
     });
 
     let css = "";
