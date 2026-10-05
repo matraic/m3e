@@ -61,9 +61,6 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-expandable-list-item-toggle-icon-container-shape - Border radius of the toggle icon container.
  * @cssprop --m3e-expandable-list-item-toggle-icon-size - Size of the toggle icon.
  * @cssprop --m3e-expandable-list-item-expanded-toggle-icon-container-color - Background color of the toggle icon container when expanded.
- * @cssprop --m3e-expandable-list-item-bounce-duration - Duration of the bounce animation when expanding.
- * @cssprop --m3e-expandable-list-item-bounce-factor - Multiplication factor for the bounce effect.
- * @cssprop --m3e-expandable-list-item-expand-duration - Duration of the expand/collapse animation.
  * @cssprop --m3e-list-item-between-space - Horizontal gap between elements.
  * @cssprop --m3e-list-item-padding-inline - Horizontal padding for the list item.
  * @cssprop --m3e-list-item-padding-block - Vertical padding for the list item.

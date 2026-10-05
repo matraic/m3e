@@ -457,9 +457,6 @@ This section details the attributes, slots, events, and CSS custom properties av
 | `--m3e-expandable-list-item-toggle-icon-container-shape`          | Border radius of the toggle icon container.                  |
 | `--m3e-expandable-list-item-toggle-icon-size`                     | Size of the toggle icon.                                     |
 | `--m3e-expandable-list-item-expanded-toggle-icon-container-color` | Background color of the toggle icon container when expanded. |
-| `--m3e-expandable-list-item-bounce-duration`                      | Duration of the bounce animation when expanding.             |
-| `--m3e-expandable-list-item-bounce-factor`                        | Multiplication factor for the bounce effect.                 |
-| `--m3e-expandable-list-item-expand-duration`                      | Duration of the expand/collapse animation.                   |
 | `--m3e-list-item-between-space`                                   | Horizontal gap between elements.                             |
 | `--m3e-list-item-padding-inline`                                  | Horizontal padding for the list item.                        |
 | `--m3e-list-item-padding-block`                                   | Vertical padding for the list item.                          |
