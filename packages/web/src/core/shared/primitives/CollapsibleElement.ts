@@ -26,13 +26,17 @@ import { CollapsibleOrientation, isCollapsibleOrientation } from "./CollapsibleO
  * @attr open - Whether content is visible.
  * @attr orientation - Orientation of collapsible content.
  * @attr no-animate - Whether to disable animation.
+ * @attr slide - Whether content slides into view.
  *
  * @fires opening - Dispatched when the collapsible begins to open.
  * @fires opened - Dispatched when the collapsible has opened.
  * @fires closing - Dispatched when the collapsible begins to close.
  * @fires closed - Dispatched when the collapsible has closed.
  *
+ * @cssprop --m3e-collapsible-animation - The animation shorthand for expanding and collapsing content.
  * @cssprop --m3e-collapsible-animation-duration - The duration of the expand / collapse animation.
+ * @cssprop --m3e-collapsible-animation-function - The timing function of the expand / collapse animation.
+ * @cssprop --m3e-collapsible-slide-animation - The animation shorthand for the slide transform when `slide` is enabled.
  */
 @customElement("m3e-collapsible")
 export class M3eCollapsibleElement extends AttachInternals(LitElement) {
@@ -41,43 +45,63 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
     :host {
       display: block;
       overflow: hidden;
+      --_collapsible-animation: var(
+        --m3e-collapsible-animation,
+        var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
+          var(--m3e-collapsible-animation-function, ${DesignToken.motion.easing.standard})
+      );
     }
     :host([hidden]) {
       display: none;
     }
     :host(:is(:state(--vertical), :--vertical)) {
       height: 0px;
-      transition: ${unsafeCSS(`visibility var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
-          ${DesignToken.motion.easing.standard},
-        height var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
-          ${DesignToken.motion.easing.standard},
-        padding-top var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
-          ${DesignToken.motion.easing.standard},
-        padding-bottom var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
-          ${DesignToken.motion.easing.standard}`)};
+    }
+    :host(:is(:state(--vertical), :--vertical):not([slide])) {
+      transition: ${unsafeCSS(`visibility var(--_collapsible-animation),
+        height var(--_collapsible-animation),
+        padding-top var(--_collapsible-animation),
+        padding-bottom var(--_collapsible-animation)`)};
+    }
+    :host(:is(:state(--vertical), :--vertical)[slide]) {
+      transition: ${unsafeCSS(`visibility var(--_collapsible-animation),
+        height var(--_collapsible-animation),
+        transform var(--m3e-collapsible-slide-animation, var(--_collapsible-animation)),
+        padding-top var(--_collapsible-animation),
+        padding-bottom var(--_collapsible-animation)`)};
     }
     :host(:is(:state(--horizontal), :--horizontal)) {
       width: 0px;
-      transition: ${unsafeCSS(`visibility var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
-          ${DesignToken.motion.easing.standard},
-        width var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
-          ${DesignToken.motion.easing.standard},
-        padding-left var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
-          ${DesignToken.motion.easing.standard},
-        padding-right var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
-          ${DesignToken.motion.easing.standard}`)};
     }
-    :host([orientation="both"]) {
+    :host(:is(:state(--horizontal), :--horizontal):not([slide])) {
+      transition: ${unsafeCSS(`visibility var(--_collapsible-animation),
+        width var(--_collapsible-animation),
+        padding-left var(--_collapsible-animation),
+        padding-right var(--_collapsible-animation)`)};
+    }
+    :host(:is(:state(--horizontal), :--horizontal)[slide]) {
+      transition: ${unsafeCSS(`visibility var(--_collapsible-animation),
+        width var(--_collapsible-animation),
+        transform var(--m3e-collapsible-slide-animation, var(--_collapsible-animation)),
+        padding-left var(--_collapsible-animation),
+        padding-right var(--_collapsible-animation)`)};
+    }
+    :host(:is(:state(--both), :--both)) {
       height: 0px;
       width: 0px;
-      transition: ${unsafeCSS(`visibility var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
-          ${DesignToken.motion.easing.standard},
-        width var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
-          ${DesignToken.motion.easing.standard},
-        height var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
-          ${DesignToken.motion.easing.standard},
-        padding var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
-          ${DesignToken.motion.easing.standard}`)};
+    }
+    :host(:is(:state(--both), :--both):not([slide])) {
+      transition: ${unsafeCSS(`visibility var(--_collapsible-animation),
+        width var(--_collapsible-animation),
+        height var(--_collapsible-animation),
+        padding var(--_collapsible-animation)`)};
+    }
+    :host(:is(:state(--both), :--both)[slide]) {
+      transition: ${unsafeCSS(`visibility var(--_collapsible-animation),
+        width var(--_collapsible-animation),
+        height var(--_collapsible-animation),
+        transform var(--m3e-collapsible-slide-animation, var(--_collapsible-animation)),
+        padding var(--_collapsible-animation)`)};
     }
     :host(:not(:is(:state(--closing), :--closing)):not([open])) {
       visibility: hidden;
@@ -92,7 +116,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
       padding-left: 0px !important;
       padding-right: 0px !important;
     }
-    :host([orientation="both"]:not([open])) {
+    :host(:is(:state(--both), :--both):not([open])) {
       min-height: unset !important;
       min-width: unset !important;
       padding: 0px !important;
@@ -109,19 +133,45 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
     :host(:is(:state(--horizontal), :--horizontal):is(:state(--closing), :--closing)) {
       overflow-x: hidden !important;
     }
-    :host([orientation="both"]:is(:state(--opening), :--opening)),
-    :host([orientation="both"]:is(:state(--closing), :--closing)) {
+    :host(:is(:state(--both), :--both):is(:state(--opening), :--opening)),
+    :host(:is(:state(--both), :--both):is(:state(--closing), :--closing)) {
       overflow-y: hidden !important;
       overflow-x: hidden !important;
     }
     :host(:is(:state(--overflows), :--overflows)) {
       scrollbar-gutter: stable;
     }
+    :host(:is(:state(--vertical), :--vertical)[slide]:not([open])) {
+      transform: translateY(var(--_collapsible-vertical-offset, 0px));
+    }
+    :host(:is(:state(--vertical), :--vertical)[slide][open]) {
+      transform: translateY(0px);
+    }
+    :host(:is(:state(--horizontal), :--horizontal)[slide]:not([open])) {
+      transform: translateX(var(--_collapsible-horizontal-offset, 0px));
+    }
+    :host(:is(:state(--horizontal), :--horizontal)[slide][open]) {
+      transform: translateX(0px);
+    }
+    :host(:is(:state(--both), :--both)[slide]:not([open])) {
+      transform: translateX(var(--_collapsible-horizontal-offset, 0px))
+        translateY(var(--_collapsible-vertical-offset, 0px));
+    }
+    :host(:is(:state(--both), :--both)[slide][open]) {
+      transform: translateX(0px) translateY(0px);
+    }
     ::slotted(*) {
+      --m3e-collapsible-animation: initial;
       --m3e-collapsible-animation-duration: initial;
+      --m3e-collapsible-animation-function: initial;
     }
     @media (prefers-reduced-motion) {
-      :host {
+      :host(:is(:state(--vertical), :--vertical):not([slide])),
+      :host(:is(:state(--vertical), :--vertical)[slide]),
+      :host(:is(:state(--horizontal), :--horizontal):not([slide])),
+      :host(:is(:state(--horizontal), :--horizontal)[slide]),
+      :host(:is(:state(--both), :--both):not([slide])),
+      :host(:is(:state(--both), :--both)[slide]) {
         transition: none;
       }
     }
@@ -148,6 +198,12 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
    */
   @property({ attribute: "no-animate", type: Boolean, reflect: true }) noAnimate = false;
 
+  /**
+   * Whether content slides into view.
+   * @default false
+   */
+  @property({ type: Boolean, reflect: true }) slide = false;
+
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
@@ -167,7 +223,9 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
 
-    const noAnimate = this.noAnimate || (changedProperties.has("orientation") && !changedProperties.has("open"));
+    const noAnimate =
+      this.noAnimate ||
+      ((changedProperties.has("orientation") || changedProperties.has("slide")) && !changedProperties.has("open"));
 
     addCustomState(this, "--no-animate");
 
@@ -272,6 +330,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
   /** @private */
   #handleSlotChange() {
     this.#slotChanged = true;
+    this.#updateSlideState();
   }
 
   /** @private */
@@ -316,6 +375,25 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
       case "both":
         this.style.height = `${this.scrollHeight}px`;
         this.style.width = `${this.scrollWidth}px`;
+        break;
+    }
+
+    this.#updateSlideState();
+  }
+
+  /** @private */
+  #updateSlideState(): void {
+    if (!this.slide) return;
+    switch (this.orientation) {
+      case "vertical":
+        this.style.setProperty("--_collapsible-vertical-offset", `${-this.clientHeight}px`);
+        break;
+      case "horizontal":
+        this.style.setProperty("--_collapsible-horizontal-offset", `${-this.scrollWidth}px`);
+        break;
+      case "both":
+        this.style.setProperty("--_collapsible-vertical-offset", `${-this.clientHeight}px`);
+        this.style.setProperty("--_collapsible-horizontal-offset", `${-this.scrollWidth}px`);
         break;
     }
   }

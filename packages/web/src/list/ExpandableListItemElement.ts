@@ -131,11 +131,7 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
     .header {
       width: 100%;
       margin-bottom: 0px;
-      transition: ${unsafeCSS(
-        `margin-bottom 
-        var(--m3e-expandable-list-item-bounce-duration, ${DesignToken.motion.duration.medium3})
-        cubic-bezier(0.42, 1.67, 0.21, 0.90)`,
-      )};
+      z-index: 1;
       --_list-item-button-trailing-align-self: stretch;
     }
     .toggle-container {
@@ -176,17 +172,15 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
       --_list-item-bottom-container-shape: initial;
       margin-bottom: var(--_expandable-list-item-items-segment-gap, 0px);
     }
-    :host([open]) .header.opening {
-      margin-bottom: calc(
-        var(--_expandable-list-item-items-segment-gap, 0px) * var(--m3e-expandable-list-item-bounce-factor, 12)
-      );
-    }
     :host([open]) .header,
     :host([open]) .items {
       --_list-item-container-color: var(
         --m3e-expandable-list-item-expanded-container-color,
-        var(--m3e-list-item-container-color, transparent)
+        var(--m3e-list-item-container-color, ${DesignToken.color.surface})
       );
+    }
+    .base {
+      overflow-y: hidden;
     }
     .base,
     ::slotted([slot="items"]) {
@@ -201,10 +195,8 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
       row-gap: var(--_expandable-list-item-items-segment-gap, 0px);
     }
     .items {
-      --m3e-collapsible-animation-duration: var(
-        --m3e-expandable-list-item-expand-duration,
-        ${DesignToken.motion.duration.short3}
-      );
+      --m3e-collapsible-animation: var(--_expandable-list-item-animation);
+      --m3e-collapsible-slide-animation: var(--_expandable-list-item-slide-animation);
     }
     @media (forced-colors: active) {
       .header {
@@ -315,6 +307,7 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
         role="list"
         aria-labelledby="${this.#headerId}"
         ?open="${this.open}"
+        slide
         @opening=${this.#handleCollapsibleEvent}
         @opened=${this.#handleCollapsibleEvent}
         @closing=${this.#handleCollapsibleEvent}
@@ -353,7 +346,7 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
       if (i == this.#items.length - 1) {
         x.style.setProperty(
           "--_list-item-bottom-container-shape",
-          `var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large})`,
+          `var(--_expandable-list-item-bottom-container-shape)`,
         );
       } else {
         x.style.removeProperty("--_list-item-bottom-container-shape");
