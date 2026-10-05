@@ -46,6 +46,8 @@ main {
   padding-inline: 16px;
   padding-block: 8px;
   overflow-x: auto;
+  scrollbar-width: var(--m3e-scrollbar-width, auto);
+  scrollbar-color: var(--m3e-scrollbar-thumb-color, #938f94) var(--m3e-scrollbar-track-color, transparent);
 }
 #settings-drawer > m3e-segmented-button {
   width: fit-content;
