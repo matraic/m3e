@@ -7,7 +7,7 @@ import { DesignToken } from "@m3e/web/core";
  * @internal
  */
 export const SwitchToken = {
-  selectedIconColor: unsafeCSS(`var(--m3e-switch-selected-icon-color, ${DesignToken.color.onPrimaryContainer})`),
+  selectedIconColor: unsafeCSS(`var(--m3e-switch-selected-icon-color, ${DesignToken.color.primary})`),
   selectedIconSize: unsafeCSS("var(--m3e-switch-selected-icon-size, 16px)"),
   unselectedIconColor: unsafeCSS(
     `var(--m3e-switch-unselected-icon-color, ${DesignToken.color.surfaceContainerHighest})`,
@@ -97,7 +97,7 @@ export const SwitchToken = {
   ),
   unselectedHoverStateLayerOpacity: unsafeCSS("var(--m3e-switch-unselected-hover-state-layer-opacity, 8%)"),
   selectedHoverHandleColor: unsafeCSS(
-    `var(--m3e-switch-selected-hover-handle-color, ${DesignToken.color.surfaceContainerHighest})`,
+    `var(--m3e-switch-selected-hover-handle-color, ${DesignToken.color.primaryContainer})`,
   ),
   unselectedHoverHandleColor: unsafeCSS(
     `var(--m3e-switch-unselected-hover-handle-color, ${DesignToken.color.onSurfaceVariant})`,
