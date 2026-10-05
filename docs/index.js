@@ -41,6 +41,17 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  var colorVariant = document.querySelector("#color-variant");
+  if (colorVariant) {
+    colorVariant.addEventListener("change", () => {
+      document.querySelector("m3e-theme").variant = colorVariant.value;
+      frame.contentWindow.postMessage(
+        { type: "color-variant-change", variant: colorVariant.value },
+        window.location.origin,
+      );
+    });
+  }
+
   const colorSchemeButton = document.querySelector("#color-scheme-button");
   if (colorSchemeButton) {
     colorSchemeButton.addEventListener("change", () => {
@@ -68,6 +79,15 @@ window.addEventListener("DOMContentLoaded", () => {
       const theme = document.querySelector("m3e-theme");
       theme.contrast = contrastButton.value;
       frame.contentWindow.postMessage({ type: "contrast-change", contrast: theme.contrast }, window.location.origin);
+    });
+  }
+
+  const motionButton = document.querySelector("#motion-button");
+  if (motionButton) {
+    motionButton.addEventListener("change", () => {
+      const theme = document.querySelector("m3e-theme");
+      theme.motion = motionButton.value;
+      frame.contentWindow.postMessage({ type: "motion-change", motion: theme.motion }, window.location.origin);
     });
   }
 

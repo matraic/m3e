@@ -4,7 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 2.8.x Release
+- 2.9.x Release
 
 ## 🔮 Future
 
@@ -22,6 +22,9 @@ The following components are planned for future release (in no particular order)
 - MCP Server enabling IDEs and AI tools to query local knowledge about components and documentation
 
 ## 🏛️ Past Milestones
+
+- **2.9.0 — Feature release**
+  Updated `@m3e/web/theme` to use 2025 spec (correcting color variant support), updated components to support standard/expressive motion.
 
 - **2.8.0 – 2.8.3 — Feature release + patch releases**
   Added `@m3e/web/gestures`, form-field manual error state, select settable value, bug fixes.

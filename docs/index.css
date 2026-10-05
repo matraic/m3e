@@ -59,6 +59,10 @@ input[type="color"] {
   padding: 0;
   cursor: pointer;
   outline-color: var(--md-sys-color-secondary);
+  flex: none;
+}
+#settings-drawer > m3e-filter-chip-set {
+  margin-inline-end: 8px;
 }
 input[type="color"]::-webkit-color-swatch-wrapper {
   padding: 0;

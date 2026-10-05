@@ -12,6 +12,8 @@ window.addEventListener("DOMContentLoaded", async () => {
     theme.scheme = parentTheme.scheme;
     theme.color = parentTheme.color;
     theme.contrast = parentTheme.contrast;
+    theme.motion = parentTheme.motion;
+    theme.variant = parentTheme.variant;
 
     switch (parentTheme.scheme) {
       case "light":
@@ -28,7 +30,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   drawerContainer?.addEventListener("change", () => updateBodyMargin());
   updateBodyMargin();
 
-  const cem = await (await fetch("https://cdn.jsdelivr.net/npm/@m3e/web@2.8.3/dist/custom-elements.json")).json();
+  const cem = await (await fetch("https://cdn.jsdelivr.net/npm/@m3e/web@2.9.0/dist/custom-elements.json")).json();
   mergeParsedTypes(cem);
 
   const promises = [];
@@ -139,8 +141,16 @@ window.addEventListener("message", (e) => {
       document.querySelector("m3e-theme").color = e.data.color;
       break;
 
+    case "color-variant-change":
+      document.querySelector("m3e-theme").variant = e.data.variant;
+      break;
+
     case "contrast-change":
       document.querySelector("m3e-theme").contrast = e.data.contrast;
+      break;
+
+    case "motion-change":
+      document.querySelector("m3e-theme").motion = e.data.motion;
       break;
 
     case "color-scheme-change":
