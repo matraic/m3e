@@ -330,7 +330,10 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       color: var(--m3e-list-item-trailing-color, ${DesignToken.color.onSurfaceVariant});
     }
     :host(:not(:disabled)) .base {
-      background-color: var(--_list-item-container-color, var(--m3e-list-item-container-color, transparent));
+      background-color: var(
+        --_list-item-container-color,
+        var(--m3e-list-item-container-color, ${DesignToken.color.surface})
+      );
     }
     :host(:disabled) .base {
       background-color: var(--m3e-list-item-disabled-container-color, transparent);
