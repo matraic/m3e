@@ -386,13 +386,13 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
     if (!this.slide) return;
     switch (this.orientation) {
       case "vertical":
-        this.style.setProperty("--_collapsible-vertical-offset", `${-this.clientHeight}px`);
+        this.style.setProperty("--_collapsible-vertical-offset", `${-this.scrollHeight}px`);
         break;
       case "horizontal":
         this.style.setProperty("--_collapsible-horizontal-offset", `${-this.scrollWidth}px`);
         break;
       case "both":
-        this.style.setProperty("--_collapsible-vertical-offset", `${-this.clientHeight}px`);
+        this.style.setProperty("--_collapsible-vertical-offset", `${-this.scrollHeight}px`);
         this.style.setProperty("--_collapsible-horizontal-offset", `${-this.scrollWidth}px`);
         break;
     }
