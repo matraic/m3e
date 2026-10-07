@@ -44,11 +44,16 @@ window.addEventListener("DOMContentLoaded", () => {
   var colorVariant = document.querySelector("#color-variant");
   if (colorVariant) {
     colorVariant.addEventListener("change", () => {
-      document.querySelector("m3e-theme").variant = colorVariant.value;
-      frame.contentWindow.postMessage(
-        { type: "color-variant-change", variant: colorVariant.value },
-        window.location.origin,
-      );
+      let value = colorVariant.value;
+      if (!value) {
+        value = "tonal-spot";
+        colorVariant.querySelector("[value='tonal-spot']").selected = true;
+      }
+      const theme = document.querySelector("m3e-theme");
+      if (theme.variant !== value) {
+        theme.variant = value;
+        frame.contentWindow.postMessage({ type: "color-variant-change", variant: value }, window.location.origin);
+      }
     });
   }
 
