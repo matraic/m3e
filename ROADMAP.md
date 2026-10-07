@@ -23,7 +23,7 @@ The following components are planned for future release (in no particular order)
 
 ## 🏛️ Past Milestones
 
-- **2.9.0 – 2.9.1 — Feature release + patch releases**
+- **2.9.0 – 2.9.2 — Feature release + patch releases**
   Updated `@m3e/web/theme` to use 2025 spec (correcting color variant support), updated components to support standard/expressive motion, bug fixes.
 
 - **2.8.0 – 2.8.3 — Feature release + patch releases**
