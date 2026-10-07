@@ -44,12 +44,12 @@ window.addEventListener("DOMContentLoaded", () => {
   var colorVariant = document.querySelector("#color-variant");
   if (colorVariant) {
     colorVariant.addEventListener("change", () => {
+      const theme = document.querySelector("m3e-theme");
       let value = colorVariant.value;
       if (!value) {
-        value = "tonal-spot";
-        colorVariant.querySelector("[value='tonal-spot']").selected = true;
+        value = theme.variant;
+        colorVariant.querySelector(`[value='${value}']`).selected = true;
       }
-      const theme = document.querySelector("m3e-theme");
       if (theme.variant !== value) {
         theme.variant = value;
         frame.contentWindow.postMessage({ type: "color-variant-change", variant: value }, window.location.origin);
