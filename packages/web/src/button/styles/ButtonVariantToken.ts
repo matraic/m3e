@@ -1138,6 +1138,9 @@ export const ButtonVariantToken: Record<ButtonVariant, _ButtonVariantToken> = {
       `var(--m3e-text-button-icon-color, var(--m3e-button-icon-color, ${DesignToken.color.primary}))`,
     ),
 
+    /** Default container background color. */
+    containerColor: unsafeCSS(`var(--m3e-text-button-container-color)`),
+
     /** Unselected label color. */
     unselectedLabelTextColor: unsafeCSS(
       `var(--m3e-text-button-unselected-label-text-color, var(--m3e-button-unselected-label-text-color, ${DesignToken.color.primary}))`,
@@ -1148,6 +1151,9 @@ export const ButtonVariantToken: Record<ButtonVariant, _ButtonVariantToken> = {
       `var(--m3e-text-button-unselected-icon-color, var(--m3e-button-unselected-icon-color, ${DesignToken.color.primary}))`,
     ),
 
+    /** Unselected container background color. */
+    unselectedContainerColor: unsafeCSS(`var(--m3e-text-button-unselected-container-color)`),
+
     /** Selected label color. */
     selectedLabelTextColor: unsafeCSS(
       `var(--m3e-text-button-selected-label-text-color, var(--m3e-button-selected-label-text-color, ${DesignToken.color.primary}))`,
@@ -1157,6 +1163,9 @@ export const ButtonVariantToken: Record<ButtonVariant, _ButtonVariantToken> = {
     selectedIconColor: unsafeCSS(
       `var(--m3e-text-button-selected-icon-color, var(--m3e-button-selected-icon-color, ${DesignToken.color.primary}))`,
     ),
+
+    /** Selected container background color. */
+    selectedContainerColor: unsafeCSS(`var(--m3e-text-button-selected-container-color)`),
 
     /** Design tokens that control disabled state. */
     disabled: {

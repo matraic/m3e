@@ -314,8 +314,11 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
  * @cssprop --m3e-tonal-icon-button-pressed-selected-icon-color - Selected icon color on pressed (tonal).
  * @cssprop --m3e-tonal-icon-button-pressed-selected-state-layer-color - Selected state layer color on pressed (tonal).
  * @cssprop --m3e-standard-icon-button-icon-color - Default icon color for standard variant.
+ * @cssprop --m3e-standard-icon-button-container-color - Default container background color for standard variant.
  * @cssprop --m3e-standard-icon-button-unselected-icon-color - Unselected icon color for standard variant.
+ * @cssprop --m3e-standard-icon-button-unselected-container-color - Unselected container background color for standard variant.
  * @cssprop --m3e-standard-icon-button-selected-icon-color - Selected icon color for standard variant.
+ * @cssprop --m3e-standard-icon-button-selected-container-color - Selected container background color for standard variant.
  * @cssprop --m3e-standard-icon-button-disabled-container-color - Container background color when disabled (standard).
  * @cssprop --m3e-standard-icon-button-disabled-container-opacity - Opacity of container when disabled (standard).
  * @cssprop --m3e-standard-icon-button-disabled-icon-color - Icon color when disabled (standard).

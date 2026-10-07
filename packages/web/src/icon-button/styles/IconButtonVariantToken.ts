@@ -788,10 +788,18 @@ export const IconButtonVariantToken: Record<IconButtonVariant | "elevated", _Ico
       `var(--m3e-standard-icon-button-icon-color, var(--m3e-icon-button-icon-color, ${DesignToken.color.onSurfaceVariant}))`,
     ),
 
+    /** Default container background color. */
+    containerColor: unsafeCSS(`var(--m3e-standard-icon-button-container-color)`),
+
     /** Unselected icon color. */
     unselectedIconColor: unsafeCSS(
       `var(--m3e-standard-icon-button-unselected-icon-color, var(--m3e-icon-button-unselected-icon-color, ${DesignToken.color.onSurfaceVariant}))`,
     ),
+    /** Unselected container background color. */
+    unselectedContainerColor: unsafeCSS(`var(--m3e-standard-icon-button-unselected-container-color)`),
+
+    /** Selected container background color. */
+    selectedContainerColor: unsafeCSS(`var(--m3e-standard-icon-button-selected-container-color)`),
 
     /** Selected icon color. */
     selectedIconColor: unsafeCSS(

@@ -433,10 +433,13 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * @cssprop --m3e-tonal-button-pressed-selected-state-layer-color - Pressed selected state layer color, for the tonal variant.
  * @cssprop --m3e-text-button-label-text-color - Label color, for the text variant.
  * @cssprop --m3e-text-button-icon-color - Icon color, for the text variant.
+ * @cssprop --m3e-text-button-container-color - Container background color, for the text variant.
  * @cssprop --m3e-text-button-unselected-label-text-color - Unselected label color, for the text variant.
  * @cssprop --m3e-text-button-unselected-icon-color - Unselected icon color, for the text variant.
+ * @cssprop --m3e-text-button-unselected-container-color - Unselected container color, for the text variant.
  * @cssprop --m3e-text-button-selected-label-text-color - Selected label color, for the text variant.
  * @cssprop --m3e-text-button-selected-icon-color - Selected icon color, for the text variant.
+ * @cssprop --m3e-text-button-selected-container-color - Selected container color, for the text variant.
  * @cssprop --m3e-text-button-disabled-container-color - Disabled container color, for the text variant.
  * @cssprop --m3e-text-button-disabled-container-opacity - Disabled container opacity, for the text variant.
  * @cssprop --m3e-text-button-disabled-icon-color - Disabled icon color, for the text variant.
