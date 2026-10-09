@@ -174,7 +174,9 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
     :host(:not(:is(:state(--no-animate), :--no-animate))) {
       transition: ${unsafeCSS(
         `transform ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standardDecelerate},
-        border-radius ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standard}`,
+        border-radius ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standard},
+        display ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standard} allow-discrete,
+        overlay ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
     }
     :host(:not([modal]):not(:is(:state(--full), :--full))) .elevation {
@@ -590,17 +592,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
             focusWhenReady(focusable);
           }
         } else {
-          this.#snapToHeight(0).then(() => {
-            this.#inertController.unlock();
-            this.#scrollLockController.unlock();
-            document.removeEventListener("click", this.#documentClickHandler);
-            document.removeEventListener("keydown", this.#documentKeyDownHandler);
-            this.hidePopover();
-            if (this.#trigger instanceof HTMLElement) {
-              this.#trigger.focus();
-            }
-            this.#trigger = null;
-          });
+          this.#closeModal();
         }
       }
 
@@ -831,6 +823,29 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
     } else if (this.clientHeight > maxHeight) {
       this.#updateHeight(maxHeight);
     }
+  }
+
+  /** @private */
+  async #closeModal(): Promise<void> {
+    if (this.#snapAnimation) {
+      this.#updateHeight(this.clientHeight);
+      this.#snapAnimation.cancel();
+      this.#snapAnimation = undefined;
+    }
+
+    this.hidePopover();
+    await Promise.allSettled(this.getAnimations().map((animation) => animation.finished));
+
+    if (this.open) return;
+
+    this.#inertController.unlock();
+    this.#scrollLockController.unlock();
+    document.removeEventListener("click", this.#documentClickHandler);
+    document.removeEventListener("keydown", this.#documentKeyDownHandler);
+    if (this.#trigger instanceof HTMLElement) {
+      this.#trigger.focus();
+    }
+    this.#trigger = null;
   }
 
   /** @private */
