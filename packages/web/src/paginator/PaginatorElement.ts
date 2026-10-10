@@ -11,7 +11,7 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
-import { AttachInternals, customElement, DesignToken, Role } from "@m3e/web/core";
+import { AttachInternals, customElement, DesignToken, prefersReducedMotion, Role } from "@m3e/web/core";
 import { SupportsDirectionality } from "@m3e/web/core/bidi";
 import type { M3eSelectElement } from "@m3e/web/select";
 import type { FormFieldVariant } from "@m3e/web/form-field";
@@ -23,6 +23,7 @@ import "@m3e/web/icon-button";
 import "@m3e/web/tooltip";
 
 import { PaginatorPageEventDetail } from "./PaginatorPageEventDetail";
+import { M3eOptionElement } from "@m3e/web/option";
 
 /**
  * Provides navigation for paged information, typically used with a table.
@@ -93,6 +94,16 @@ export class M3ePaginatorElement extends SupportsDirectionality(AttachInternals(
       width: 100%;
       --_density-scale: ${DesignToken.density.scale};
     }
+    .page-size {
+      display: flex;
+      align-items: center;
+    }
+    .page-size[hidden],
+    .range-actions[hidden] {
+      visibility: hidden;
+      min-width: 0;
+      max-width: 0;
+    }
     .form-field {
       --md-sys-density-scale: min(-2, var(--_density-scale));
       --m3e-form-field-font-size: var(--m3e-paginator-font-size, ${DesignToken.typescale.standard.body.small.fontSize});
@@ -144,6 +155,7 @@ export class M3ePaginatorElement extends SupportsDirectionality(AttachInternals(
 
   /* @private */ private static __nextId = 0;
   /* @private */ readonly #pageSizeLabelId = `m3e-paginator-page-size-label-${M3ePaginatorElement.__nextId++}`;
+  /* @private */ #selectOpen = false;
 
   /* @private */
   readonly #defaultRangeLabelFormatter = (pageIndex: number, pageSize: number | "all", length: number): string => {
@@ -310,6 +322,60 @@ export class M3ePaginatorElement extends SupportsDirectionality(AttachInternals(
   }
 
   /** @inheritdoc */
+  protected override update(changedProperties: PropertyValues<this>): void {
+    if (prefersReducedMotion() || (!changedProperties.has("pageSize") && !changedProperties.has("pageIndex"))) {
+      super.update(changedProperties);
+      return;
+    }
+
+    // FLIP the page-size and (optionally) range-actions sections to provide smooth transitions during layout shifts.
+
+    const pageSize = this.shadowRoot?.querySelector<HTMLElement>(".page-size");
+    const rangeElement =
+      changedProperties.has("pageSize") && (changedProperties.get("pageSize") === "all" || this.pageSize === "all")
+        ? this.shadowRoot?.querySelector<HTMLElement>(".range-actions")
+        : null;
+
+    const items = new Array<HTMLElement>();
+    if (pageSize) items.push(pageSize);
+    if (rangeElement) items.push(rangeElement);
+
+    if (items.length > 0) {
+      const first = items.map((x) => x.getBoundingClientRect());
+      super.update(changedProperties);
+
+      const last = items.map((x) => x.getBoundingClientRect());
+      items.forEach((x, i) => {
+        const dx = first[i].left - last[i].left;
+        x.style.transformOrigin = `${dx > 0 ? "right" : "left"} center`;
+        x.style.transform = `translateX(${dx}px)`;
+      });
+
+      requestAnimationFrame(() => {
+        items.forEach((x) => {
+          x.addEventListener(
+            "transitionend",
+            () => {
+              x.style.transition = "";
+              x.style.transformOrigin = "";
+            },
+            { once: true },
+          );
+
+          // Note: a shorter duration is used when not changing from/to "all" page size to avoid flicker on the outlined
+          // form-field’s 1px border caused by GPU layer promotion drawing the outline at subpixel positions.
+
+          const duration = rangeElement ? DesignToken.motion.duration.short3 : DesignToken.motion.duration.short2;
+          x.style.transition = `transform ${duration} ${DesignToken.motion.easing.standard}`;
+          x.style.transform = "";
+        });
+      });
+    } else {
+      super.update(changedProperties);
+    }
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="outer">
       <div class="inner">${this.#renderPageSize()} ${this.#renderRangeActions()}</div>
@@ -319,27 +385,26 @@ export class M3ePaginatorElement extends SupportsDirectionality(AttachInternals(
   /** @private */
   #renderPageSize(): unknown {
     const sizes = this.#parsePageSizes();
-    return this.hidePageSize
-      ? nothing
-      : html`<div id="${this.#pageSizeLabelId}" class="items-per-page-label" aria-live="polite">
-            ${this.itemsPerPageLabel}
-          </div>
-          <m3e-form-field class="form-field" variant="${this.pageSizeVariant}" hide-subscript="always">
-            <m3e-select
-              class="select"
-              aria-labelledby="${this.#pageSizeLabelId}"
-              hide-selection-indicator
-              ?disabled="${this.disabled || sizes.length <= 1}"
-              @change=${this.#handleSelectChange}
-            >
-              ${sizes.map(
-                (x) =>
-                  html`<m3e-option value="${x}" ?selected="${x === this.pageSize}">
-                    ${x === "all" ? "All" : x}
-                  </m3e-option>`,
-              )}
-            </m3e-select>
-          </m3e-form-field>`;
+    return html`<div class="page-size" ?hidden="${this.hidePageSize}">
+      <div id="${this.#pageSizeLabelId}" class="items-per-page-label" aria-live="polite">${this.itemsPerPageLabel}</div>
+      <m3e-form-field class="form-field" variant="${this.pageSizeVariant}" hide-subscript="always">
+        <m3e-select
+          class="select"
+          aria-labelledby="${this.#pageSizeLabelId}"
+          hide-selection-indicator
+          ?disabled="${this.disabled || sizes.length <= 1}"
+          @change=${this.#handleSelectChange}
+          @toggle=${this.#handleSelectToggle}
+        >
+          ${sizes.map(
+            (x) =>
+              html`<m3e-option value="${x}" ?selected="${x === this.pageSize}">
+                ${x === "all" ? "All" : x}
+              </m3e-option>`,
+          )}
+        </m3e-select>
+      </m3e-form-field>
+    </div>`;
   }
 
   /** @private */
@@ -358,75 +423,88 @@ export class M3ePaginatorElement extends SupportsDirectionality(AttachInternals(
   /** @private */
   #renderRangeActions(): unknown {
     const rangeLabelFormatter = this.rangeLabelFormatter ?? this.#defaultRangeLabelFormatter;
-
-    return this.pageSize === "all"
-      ? nothing
-      : html`<div class="range-actions">
-          <div class="range-label">${rangeLabelFormatter(this.pageIndex, this.pageSize, this.length)}</div>
-          ${!this.showFirstLastButtons
-            ? nothing
-            : html`<m3e-icon-button
-                  id="firstPageButton"
-                  aria-label="${this.firstPageLabel}"
-                  ?disabled="${this.disabled || !this.hasPreviousPage}"
-                  @click=${this.firstPage}
-                >
-                  <slot name="first-page-icon">
-                    <svg viewBox="0 -960 960 960" fill="currentColor">
-                      <path d="M240-240v-480h80v480h-80Zm440 0L440-480l240-240 56 56-184 184 184 184-56 56Z" />
-                    </svg>
-                  </slot>
-                </m3e-icon-button>
-                <m3e-tooltip for="firstPageButton" position="above">${this.firstPageLabel}</m3e-tooltip>`}
-          <m3e-icon-button
-            id="previousPageButton"
-            aria-label="${this.previousPageLabel}"
-            ?disabled="${this.disabled || !this.hasPreviousPage}"
-            @click=${this.previousPage}
-          >
-            <slot name="previous-page-icon">
-              <svg viewBox="0 -960 960 960" fill="currentColor">
-                <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
-              </svg>
-            </slot>
-          </m3e-icon-button>
-          <m3e-tooltip for="previousPageButton" position="above">${this.previousPageLabel}</m3e-tooltip>
-          <m3e-icon-button
-            id="nextPageButton"
-            aria-label="${this.nextPageLabel}"
-            ?disabled="${this.disabled || !this.hasNextPage}"
-            @click=${this.nextPage}
-          >
-            <slot name="next-page-icon">
-              <svg viewBox="0 -960 960 960" fill="currentColor">
-                <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
-              </svg>
-            </slot>
-          </m3e-icon-button>
-          <m3e-tooltip for="nextPageButton" position="above">${this.nextPageLabel}</m3e-tooltip>
-          ${!this.showFirstLastButtons
-            ? nothing
-            : html`<m3e-icon-button
-                  id="lastPageButton"
-                  aria-label="${this.lastPageLabel}"
-                  ?disabled="${this.disabled || !this.hasNextPage}"
-                  @click=${this.lastPage}
-                >
-                  <slot name="last-page-icon">
-                    <svg viewBox="0 -960 960 960" fill="currentColor">
-                      <path d="m280-240-56-56 184-184-184-184 56-56 240 240-240 240Zm360 0v-480h80v480h-80Z" />
-                    </svg>
-                  </slot>
-                </m3e-icon-button>
-                <m3e-tooltip for="lastPageButton" position="above">${this.lastPageLabel}</m3e-tooltip>`}
-        </div>`;
+    return html`<div class="range-actions" ?hidden="${this.pageSize === "all"}">
+      <div class="range-label">${rangeLabelFormatter(this.pageIndex, this.pageSize, this.length)}</div>
+      ${!this.showFirstLastButtons
+        ? nothing
+        : html`<m3e-icon-button
+              id="firstPageButton"
+              aria-label="${this.firstPageLabel}"
+              ?disabled="${this.disabled || !this.hasPreviousPage}"
+              @click=${this.firstPage}
+            >
+              <slot name="first-page-icon">
+                <svg viewBox="0 -960 960 960" fill="currentColor">
+                  <path d="M240-240v-480h80v480h-80Zm440 0L440-480l240-240 56 56-184 184 184 184-56 56Z" />
+                </svg>
+              </slot>
+            </m3e-icon-button>
+            <m3e-tooltip for="firstPageButton" position="above">${this.firstPageLabel}</m3e-tooltip>`}
+      <m3e-icon-button
+        id="previousPageButton"
+        aria-label="${this.previousPageLabel}"
+        ?disabled="${this.disabled || !this.hasPreviousPage}"
+        @click=${this.previousPage}
+      >
+        <slot name="previous-page-icon">
+          <svg viewBox="0 -960 960 960" fill="currentColor">
+            <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
+          </svg>
+        </slot>
+      </m3e-icon-button>
+      <m3e-tooltip for="previousPageButton" position="above">${this.previousPageLabel}</m3e-tooltip>
+      <m3e-icon-button
+        id="nextPageButton"
+        aria-label="${this.nextPageLabel}"
+        ?disabled="${this.disabled || !this.hasNextPage}"
+        @click=${this.nextPage}
+      >
+        <slot name="next-page-icon">
+          <svg viewBox="0 -960 960 960" fill="currentColor">
+            <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
+          </svg>
+        </slot>
+      </m3e-icon-button>
+      <m3e-tooltip for="nextPageButton" position="above">${this.nextPageLabel}</m3e-tooltip>
+      ${!this.showFirstLastButtons
+        ? nothing
+        : html`<m3e-icon-button
+              id="lastPageButton"
+              aria-label="${this.lastPageLabel}"
+              ?disabled="${this.disabled || !this.hasNextPage}"
+              @click=${this.lastPage}
+            >
+              <slot name="last-page-icon">
+                <svg viewBox="0 -960 960 960" fill="currentColor">
+                  <path d="m280-240-56-56 184-184-184-184 56-56 240 240-240 240Zm360 0v-480h80v480h-80Z" />
+                </svg>
+              </slot>
+            </m3e-icon-button>
+            <m3e-tooltip for="lastPageButton" position="above">${this.lastPageLabel}</m3e-tooltip>`}
+    </div>`;
   }
 
   /** @private */
   #handleSelectChange(e: Event): void {
     const option = (e.target as M3eSelectElement)?.selected[0];
-    if (!option) return;
+    if (option && (prefersReducedMotion() || !this.#selectOpen)) {
+      this.#updatePageSize(option);
+    }
+  }
 
+  /** @private */
+  #handleSelectToggle(e: ToggleEvent): void {
+    this.#selectOpen = e.newState !== "closed";
+    if (!this.#selectOpen && !prefersReducedMotion()) {
+      const option = this.shadowRoot?.querySelector("m3e-select")?.selected[0];
+      if (option) {
+        this.#updatePageSize(option);
+      }
+    }
+  }
+
+  /** @private */
+  #updatePageSize(option: M3eOptionElement): void {
     const pageSize = option.value === "all" ? "all" : Number(option.value);
     if (pageSize !== this.pageSize) {
       const previousPageIndex = this.pageIndex;
