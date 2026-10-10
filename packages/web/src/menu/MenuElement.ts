@@ -254,6 +254,9 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
       :host(:not(:is(:state(--no-animate), :--no-animate))) {
         transition: none;
       }
+      :host(:not([submenu]):popover-open) {
+        animation: none;
+      }
     }
     @media (forced-colors: active) {
       :host {

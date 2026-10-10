@@ -120,6 +120,9 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
       :host(:not(:is(:state(--no-animate), :--no-animate))) {
         transition: none;
       }
+      :host(:popover-open) {
+        animation: none;
+      }
     }
     @media (forced-colors: active) {
       :host {
