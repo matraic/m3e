@@ -25,5 +25,6 @@ export const M3eSelect = createComponent({
     onBeforeInput: "beforeinput",
     onInput: "input",
     onChange: "change",
+    onToggle: "toggle",
   },
 });
