@@ -80,6 +80,7 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * @fires beforeinput - Dispatched before the selected state changes.
  * @fires input - Dispatched when the selected state changes.
  * @fires change - Dispatched when the selected state changes.
+ * @fires toggle - Dispatched when the options menu opens or closes.
  *
  * @cssprop --m3e-form-field-font-size - The font size of the select control.
  * @cssprop --m3e-form-field-font-weight - The font weight of the select control.
