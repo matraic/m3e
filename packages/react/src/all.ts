@@ -7,6 +7,7 @@ export * from "./breadcrumb";
 export * from "./button";
 export * from "./button-group";
 export * from "./calendar";
+export * from "./callout";
 export * from "./card";
 export * from "./checkbox";
 export * from "./chips";

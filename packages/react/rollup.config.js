@@ -10,6 +10,7 @@ const inputs = [
   "button",
   "button-group",
   "calendar",
+  "callout",
   "card",
   "checkbox",
   "chips",

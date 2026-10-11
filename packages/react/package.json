@@ -51,6 +51,10 @@
       "types": "./dist/src/calendar/index.d.ts",
       "default": "./dist/calendar.js"
     },
+    "./callout": {
+      "types": "./dist/src/callout/index.d.ts",
+      "default": "./dist/callout.js"
+    },
     "./card": {
       "types": "./dist/src/card/index.d.ts",
       "default": "./dist/card.js"
