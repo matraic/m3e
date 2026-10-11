@@ -17,7 +17,7 @@
       rel="stylesheet"
     />
     <link href="../main.css" rel="stylesheet" />
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.9.2/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.10.0/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -28,9 +28,14 @@
         <p>
           The <strong>@m3e/react</strong> package provides idiomatic React bindings for all M3E Web Components. Each
           component is exposed as its own React module, offering typed props, event mappings, and seamless integration
-          with the React rendering model. However, the React bindings are <strong>client-only</strong>. In Next.js, you
-          <strong>must</strong> use them inside a <code>"use client"</code> boundary.
+          with the React rendering model.
         </p>
+        <m3e-callout>
+          <m3e-icon slot="icon" name="info"></m3e-icon>
+          <span slot="label">Next.js support</span>
+          React bindings are <strong>client-only</strong>. In Next.js, you <strong>must</strong> use them inside a
+          <code>"use client"</code> boundary.
+        </m3e-callout>
 
         <m3e-card variant="outlined" class="install">
           <pre slot="content">npm i @m3e/react</pre>

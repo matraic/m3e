@@ -26,6 +26,8 @@ m3e-heading {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+m3e-callout + m3e-heading,
+m3e-callout + m3e-card,
 m3e-heading + m3e-heading,
 m3e-heading + .install,
 .install + m3e-heading,
