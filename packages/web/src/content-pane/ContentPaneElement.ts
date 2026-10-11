@@ -70,6 +70,12 @@ export class M3eContentPaneElement extends ReconnectedCallback(LitElement) {
         transition: none;
       }
     }
+    @media (forced-colors: active) {
+      .base {
+        border-radius: unset;
+        transition: none;
+      }
+    }
   `;
 
   /** @inheritdoc */

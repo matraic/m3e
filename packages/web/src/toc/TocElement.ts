@@ -189,6 +189,11 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
         transition: none;
       }
     }
+    @media (forced-colors: active) {
+      .base {
+        border-radius: unset;
+      }
+    }
   `;
 
   /** @private */ @state() private _toc: Array<TocNode> = [];
