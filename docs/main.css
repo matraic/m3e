@@ -10,7 +10,7 @@ body {
   visibility: hidden;
   overflow: hidden;
   transition:
-    opacity 250ms cubic-bezier(0, 0, 0, 1) allow-discrete,
+    opacity 250ms cubic-bezier(0, 0, 0, 1),
     visibility 250ms cubic-bezier(0, 0, 0, 1) allow-discrete;
 }
 body.loaded {
@@ -136,6 +136,30 @@ pre {
 }
 .showcase m3e-button {
   max-width: 100%;
+}
+.example pre,
+.install pre {
+  position: relative;
+}
+.example:not(:hover) .copy-code,
+.install:not(:hover) .copy-code {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.copy-code {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  opacity: 1;
+  transition:
+    opacity 250ms cubic-bezier(0, 0, 0, 1),
+    visibility 250ms cubic-bezier(0, 0, 0, 1) allow-discrete;
+}
+@media (hover: none) {
+  .copy-code {
+    display: none;
+  }
 }
 .density-3 {
   --md-sys-density-scale: -3;

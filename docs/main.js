@@ -41,8 +41,45 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   await Promise.all(promises);
 
+  addCopyCode();
+
   document.body.classList.add("loaded");
 });
+
+function addCopyCode() {
+  for (const card of document.querySelectorAll("m3e-card.install,m3e-card.example")) {
+    const pre = card.querySelector("pre");
+    if (!pre) continue;
+
+    const copyToClipboardText = pre.textContent;
+    const copyToClipboardBtn = document.createElement("m3e-icon-button");
+    copyToClipboardBtn.toggleAttribute("toggle", true);
+    copyToClipboardBtn.ariaLabel = "Copy code";
+    copyToClipboardBtn.classList.add("copy-code");
+
+    const copyToClipboardIcon = document.createElement("m3e-icon");
+    copyToClipboardIcon.setAttribute("name", "content_copy");
+    copyToClipboardBtn.appendChild(copyToClipboardIcon);
+
+    const copiedToClipboardIcon = document.createElement("m3e-icon");
+    copiedToClipboardIcon.setAttribute("name", "check");
+    copiedToClipboardIcon.slot = "selected";
+    copyToClipboardBtn.appendChild(copiedToClipboardIcon);
+
+    pre.appendChild(copyToClipboardBtn);
+
+    copyToClipboardBtn.addEventListener("beforeinput", (e) => {
+      if (copyToClipboardBtn.selected) {
+        e.preventDefault();
+      }
+    });
+
+    copyToClipboardBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(copyToClipboardText);
+      setTimeout(() => copyToClipboardBtn.removeAttribute("selected"), 1000 * 2);
+    });
+  }
+}
 
 function updateBodyMargin() {
   const drawerContainer = window.parent.document.querySelector(".docs-drawer-container");
