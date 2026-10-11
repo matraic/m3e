@@ -137,9 +137,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
 
       border-radius: var(--m3e-toc-item-shape, ${DesignToken.shape.corner.largeIncreased});
       border: 1px solid var(--m3e-toc-active-indicator-color, ${DesignToken.color.outline});
-      transition: ${unsafeCSS(`visibility var(--m3e-toc-active-indicator-animation-duration, ${DesignToken.motion.duration.long1})
-          ${DesignToken.motion.easing.standard},
-        height var(--m3e-toc-active-indicator-animation-duration, ${DesignToken.motion.duration.long1})
+      transition: ${unsafeCSS(`height var(--m3e-toc-active-indicator-animation-duration, ${DesignToken.motion.duration.long1})
           ${DesignToken.motion.easing.standard},
         top var(--m3e-toc-active-indicator-animation-duration, ${DesignToken.motion.duration.long1})
           ${DesignToken.motion.easing.standard}`)};
