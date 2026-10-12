@@ -48,9 +48,8 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(AttachI
     :host {
       display: inline-block;
       aspect-ratio: 1 / 1;
-      contain: strict;
+      contain: layout paint style;
       vertical-align: middle;
-      content-visibility: auto;
     }
     :host([hidden]) {
       display: none;
@@ -76,6 +75,7 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(AttachI
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
       border-radius: ${LoadingIndicatorToken.containerShape};
     }
     .active-indicator {
