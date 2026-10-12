@@ -10,7 +10,10 @@
     "url": "git+https://github.com/matraic/m3e.git"
   },
   "keywords": [
+    "material",
     "material design",
+    "material 3",
+    "material 3 expressive",
     "web components",
     "app-bar",
     "autocomplete",
