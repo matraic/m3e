@@ -129,7 +129,9 @@ export class M3eCalloutElement extends AttachInternals(LitElement) {
     return html`<aside class="base">
       <div class="header">
         <slot name="icon" @slotchange=${this.#handleIconSlotChange}></slot>
-        <slot name="label" @slotchange=${this.#handleLabelSlotChange}></slot>
+        <m3e-text-overflow>
+          <slot name="label" @slotchange=${this.#handleLabelSlotChange}></slot>
+        </m3e-text-overflow>
       </div>
       <div class="content">
         <slot></slot>
