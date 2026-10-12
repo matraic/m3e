@@ -60,7 +60,7 @@ export class M3eFloatingPanelElement extends SuppressInitialAnimation(AttachInte
       border-radius: var(--m3e-floating-panel-container-shape, ${DesignToken.shape.corner.large});
       min-width: var(--m3e-floating-panel-container-min-width, 112px);
       max-width: var(--m3e-floating-panel-container-max-width, 280px);
-      max-height: var(--m3e-floating-panel-container-max-height, 280px);
+      max-height: var(--m3e-floating-panel-container-max-height, 282px);
       background-color: var(--m3e-floating-panel-container-color, ${DesignToken.color.surfaceContainer});
       box-shadow: var(--m3e-floating-panel-container-elevation, ${DesignToken.elevation.level3});
       opacity: 0;

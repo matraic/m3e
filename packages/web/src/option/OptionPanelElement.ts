@@ -68,7 +68,7 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
         );
         --m3e-floating-panel-container-min-width: var(--m3e-option-panel-container-min-width, 112px);
         --m3e-floating-panel-container-max-width: var(--m3e-option-panel-container-max-width, 280px);
-        --m3e-floating-panel-container-max-height: var(--m3e-option-panel-container-max-height, 280px);
+        --m3e-floating-panel-container-max-height: var(--m3e-option-panel-container-max-height, 282px);
         --m3e-floating-panel-container-color: var(
           --m3e-option-panel-container-color,
           ${DesignToken.color.surfaceContainer}

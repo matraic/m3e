@@ -130,7 +130,7 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
       );
       min-width: var(--m3e-menu-container-min-width, 112px);
       max-width: var(--m3e-menu-container-max-width, 280px);
-      max-height: var(--m3e-menu-container-max-height, 280px);
+      max-height: var(--m3e-menu-container-max-height, 282px);
       box-shadow: var(--m3e-menu-container-elevation, ${DesignToken.elevation.level3});
       opacity: 0;
       display: none;
