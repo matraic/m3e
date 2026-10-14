@@ -21,9 +21,12 @@ export const SwitchTrackStyle = css`
       `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
     )};
   }
-  :host(:not([checked])) .track {
+  .track {
     border-width: ${SwitchToken.trackOutlineWidth};
     border-style: solid;
+  }
+  :host([checked]) .track {
+    border-color: transparent;
   }
   :host(:not([aria-disabled="true"]):not([checked]):not(:focus):not(:hover)) .track:not(.pressed) {
     border-color: ${SwitchToken.trackOutlineColor};
