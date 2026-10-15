@@ -33,6 +33,7 @@ import { ShapePolygon } from "./ShapePolygon";
  * @tag m3e-loading-indicator
  *
  * @attr variant - The appearance variant of the indicator.
+ * @attr pull-progress - Pull-to-refresh progress in turns; each increment of 1 rotates the indicator one full turn.
  *
  * @cssprop --m3e-loading-indicator-active-indicator-color - Uncontained active indicator color.
  * @cssprop --m3e-loading-indicator-contained-active-indicator-color - Contained active indicator color.
@@ -94,13 +95,23 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(AttachI
       --_polygon-4-sided-cookie: polygon(${ShapePolygon["4-sided-cookie"]});
       --_polygon-oval: polygon(${ShapePolygon["oval"]});
     }
-    .container.animate .active-indicator-wrapper {
-      animation: rotate-outer 4666ms linear infinite;
+    .active-indicator-wrapper {
       transform-origin: center;
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+    .container.animate .active-indicator-wrapper {
+      animation: rotate-outer 4666ms linear infinite;
       will-change: transform;
+    }
+    .container.pull .active-indicator-wrapper {
+      transform: rotate(var(--_pull-rotation, 0deg));
+      transition: transform ${DesignToken.motion.spring.fastEffects};
+      will-change: transform;
+    }
+    .container.pull .active-indicator {
+      clip-path: var(--_polygon-soft-burst);
     }
     @keyframes rotate-outer {
       0% {
@@ -163,6 +174,13 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(AttachI
    */
   @property({ reflect: true, useDefault: true }) variant: LoadingIndicatorVariant = "uncontained";
 
+  /**
+   * Pull-to-refresh progress in turns; each increment of 1 rotates the indicator one full turn. Set to `null` when no
+   * pull gesture is active.
+   * @default null
+   */
+  @property({ attribute: "pull-progress", type: Number, reflect: true }) pullProgress: number | null = null;
+
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
@@ -176,12 +194,13 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(AttachI
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this._container?.classList.toggle("animate", false);
+    this._container?.classList.toggle("pull", false);
   }
 
   /** @inheritdoc */
   override reconnectedCallback(): void {
     super.reconnectedCallback();
-    this._container?.classList.toggle("animate", true);
+    this.#applyPullProgress();
   }
 
   /** @inheritdoc */
@@ -191,12 +210,15 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(AttachI
     if (_changedProperties.has("variant")) {
       this.#applyVariant();
     }
+    if (_changedProperties.has("pullProgress")) {
+      this.#applyPullProgress();
+    }
   }
 
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
-    this._container?.classList.toggle("animate", true);
+    this.#applyPullProgress();
   }
 
   /** @inheritdoc */
@@ -214,6 +236,22 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(AttachI
       this.variant = "uncontained";
     }
     setCustomEnumState(this, this.variant, "contained", "uncontained");
+  }
+
+  /** @private */
+  #applyPullProgress(): void {
+    const pullProgress = this.pullProgress;
+    const pulling = pullProgress !== null && !Number.isNaN(pullProgress);
+
+    this._container?.classList.toggle("pull", pulling);
+    this._container?.classList.toggle("animate", !pulling);
+
+    if (pulling) {
+      this._container?.style.setProperty(
+        "--_pull-rotation",
+        `${-360 * (Number.isFinite(pullProgress) ? Math.max(0, pullProgress) : 0)}deg`,
+      );
+    }
   }
 }
 
