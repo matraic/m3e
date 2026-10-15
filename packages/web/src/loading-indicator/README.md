@@ -30,9 +30,9 @@ This section details the attributes and CSS custom properties available for the 
 
 ### ⚙️ Attributes
 
-| Attribute       | Type                           | Default         | Description                                                                                                         |
-| --------------- | ------------------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `variant`       | `"uncontained" \| "contained"` | `"uncontained"` | The appearance variant of the indicator.                                                                            |
+| Attribute       | Type                           | Default         | Description                                                                                                                                                                     |
+| --------------- | ------------------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant`       | `"uncontained" \| "contained"` | `"uncontained"` | The appearance variant of the indicator.                                                                                                                                        |
 | `pull-progress` | `number \| null`               | `null`          | Pull-to-refresh progress; each increment of 1 rotates the indicator counterclockwise by one turn. Negative values are clamped to 0; `null` indicates no pull gesture is active. |
 
 ### 🎛️ CSS Custom Properties
