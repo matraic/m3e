@@ -32,8 +32,10 @@ export const SwitchStyle = css`
   }
   .base {
     contain: layout style paint;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
+  }
+  .icon {
+    grid-area: 1 / 1;
   }
 `;

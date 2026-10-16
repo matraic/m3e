@@ -250,7 +250,16 @@ export class M3eSwitchElement extends SupportsDirectionality(
         <div class="touch" aria-hidden="true"></div>
         <div class="handle">
           <m3e-state-layer class="state-layer" ?disabled="${this.disabled}"></m3e-state-layer>
-          <div class="base">${this.#renderIcon()}</div>
+          <div class="base" aria-hidden="true">
+            <svg class="icon unselected" viewBox="0 -960 960 960" fill="currentColor">
+              <path
+                d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+              />
+            </svg>
+            <svg class="icon selected" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z"></path>
+            </svg>
+          </div>
         </div>
       </div>`;
   }
@@ -264,17 +273,6 @@ export class M3eSwitchElement extends SupportsDirectionality(
     setCustomState(this, "--icons-none", this.icons === "none");
     setCustomState(this, "--icons-selected", this.icons === "selected");
     setCustomState(this, "--icons-both", this.icons === "both");
-  }
-
-  /** @private */
-  #renderIcon(): unknown {
-    return this.checked
-      ? html`<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path fill="currentColor" d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z"></path>
-        </svg>`
-      : html`<svg class="icon" viewBox="0 -960 960 960" fill="currentColor">
-          <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-        </svg>`;
   }
 
   /** @private */
