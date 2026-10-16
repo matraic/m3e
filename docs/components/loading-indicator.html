@@ -17,10 +17,12 @@
       rel="stylesheet"
     />
     <link href="../main.css" rel="stylesheet" />
+    <link href="./loading-indicator.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.10.0/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.10.1/dist/all.min.js"></script>
     <script src="../main.js"></script>
+    <script src="./loading-indicator.js"></script>
   </head>
   <body>
     <m3e-theme strong-focus></m3e-theme>
@@ -53,6 +55,63 @@
           <pre slot="content">
 &lt;m3e-loading-indicator&gt;&lt;/m3e-loading-indicator&gt;
 &lt;m3e-loading-indicator variant=&quot;contained&quot;&gt;&lt;/m3e-loading-indicator&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Pull to refresh</m3e-heading>
+        <p>
+          Material 3's pull-to-refresh pattern uses the loading indicator as part of the gesture, letting it rotate in
+          reverse based on how far the user has dragged before the refresh begins.
+        </p>
+        <p>
+          Use the <code>pull-progress</code> attribute (or <code>pullProgress</code> property) to control the
+          indicator's pull-to-refresh progress. A value of <code>1</code> represents one full turn of rotation. Changing
+          the value updates the indicator's counterclockwise rotation, and holding the value steady leaves it still. To
+          return to the normal clockwise animation, remove the attribute or set the property to <code>null</code>.
+        </p>
+        <p>
+          The following example illustrates use of the <code>m3e-pan-gesture</code> to capture drag movement and maps
+          120px of downward drag to a full rotation cycle. See <a href="../components/gestures.html">Gestures</a> for
+          more information.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <div id="pull-progress-target" class="pull-progress-target">
+              <span>Drag down to pull</span>
+              <m3e-loading-indicator id="pull-progress-indicator" variant="contained"></m3e-loading-indicator>
+            </div>
+            <m3e-pan-gesture id="pull-progress-gesture" for="pull-progress-target" lock-axis="y"></m3e-pan-gesture>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;div id=&quot;pull-target&quot;&gt;
+  &lt;m3e-loading-indicator id=&quot;indicator&quot; variant=&quot;contained&quot;&gt;&lt;/m3e-loading-indicator&gt;
+&lt;/div&gt;
+&lt;m3e-pan-gesture id=&quot;pull-gesture&quot; for=&quot;pull-target&quot; lock-axis=&quot;y&quot;&gt;&lt;/m3e-pan-gesture&gt;
+
+&lt;script&gt;
+  const target = document.getElementById(&quot;pull-target&quot;);
+  const indicator = document.getElementById(&quot;indicator&quot;);
+  const gesture = document.getElementById(&quot;pull-gesture&quot;);
+  const pullDistancePerTurn = 120;
+
+  gesture.addEventListener(&quot;gesture&quot;, ({ detail }) =&gt; {
+    switch (detail.phase) {
+      case &quot;start&quot;:
+        indicator.pullProgress = 0;
+        break;
+      case &quot;update&quot;:
+        indicator.pullProgress = Math.max(0, detail.totalDeltaY / pullDistancePerTurn);
+        break;
+      case &quot;cancel&quot;:
+      case &quot;end&quot;:
+        indicator.pullProgress = null;
+        break;
+    }
+  });
+&lt;/script&gt;</pre
           >
         </m3e-card>
 

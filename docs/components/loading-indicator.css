@@ -1,0 +1,10 @@
+.pull-progress-target {
+  display: flex;
+  min-height: 160px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  touch-action: none;
+  user-select: none;
+}

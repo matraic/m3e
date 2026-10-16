@@ -23,8 +23,8 @@ The following components are planned for future release (in no particular order)
 
 ## 🏛️ Past Milestones
 
-- **2.10.0 — Feature release**
-  Added `@m3e/web/callout`, bug fixes.
+- **2.10.0 – 2.10.1 — Feature release + patch releases**
+  Added `@m3e/web/callout`, switch improvements, loading-indicator pull-to-refresh support, bug fixes.
 
 - **2.9.0 – 2.9.2 — Feature release + patch releases**
   Updated `@m3e/web/theme` to use 2025 spec (correcting color variant support), updated components to support standard/expressive motion, bug fixes.
