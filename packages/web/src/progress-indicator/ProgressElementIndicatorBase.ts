@@ -15,9 +15,9 @@ export abstract class ProgressElementIndicatorBase extends ReconnectedCallback(
       display: none;
     }
     @media (forced-colors: active) {
-      :host {
+      .progress {
+        --m3e-progress-indicator-track-color: GrayText;
         --m3e-progress-indicator-color: CanvasText;
-        --m3e-progress-indicator-track-color: Canvas;
       }
     }
   `;

@@ -333,12 +333,6 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
           width: 8%;
         }
       }
-      @media (forced-colors: active) {
-        .progress {
-          --m3e-progress-indicator-track-color: GrayText;
-          --m3e-progress-indicator-color: CanvasText;
-        }
-      }
     `,
   ];
 

@@ -244,12 +244,6 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
             var(--m3e-progress-indicator-color, ${DesignToken.color.primary}) Canvas Canvas;
         }
       }
-      @media (forced-colors: active) {
-        .progress {
-          --m3e-progress-indicator-track-color: GrayText;
-          --m3e-progress-indicator-color: CanvasText;
-        }
-      }
     `,
   ];
 
