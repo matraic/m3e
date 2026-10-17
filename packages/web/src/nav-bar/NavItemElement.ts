@@ -1,5 +1,5 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
-import { property, query } from "lit/decorators.js";
+import { property, query, state } from "lit/decorators.js";
 
 import {
   AttachInternals,
@@ -8,6 +8,7 @@ import {
   Disabled,
   DisabledInteractive,
   Focusable,
+  FocusController,
   hasAssignedNodes,
   KeyboardClick,
   LinkButton,
@@ -521,11 +522,21 @@ export class M3eNavItemElement extends SupportsDirectionality(
   /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;
   /** @private */ @query(".indicator") private readonly _indicator?: M3eSelectionIndicatorElement;
   /** @private */ @query(".inner") private readonly _inner?: HTMLElement;
+  /** @private */ @state() _focusVisible = false;
 
   /** @private */ readonly #resizeController = new ResizeController(this, {
     target: null,
     callback: (entries) => this.#handleStateLayerResize(entries),
   });
+
+  constructor() {
+    super();
+
+    new FocusController(this, {
+      target: null,
+      callback: (focused, focusVisible) => (this._focusVisible = focused && focusVisible),
+    });
+  }
 
   /**
    * The layout orientation of the item.
@@ -612,7 +623,7 @@ export class M3eNavItemElement extends SupportsDirectionality(
           ${this.orientation === "horizontal" ? html`<m3e-focus-ring class="focus-ring"></m3e-focus-ring>` : nothing}
           <m3e-selection-indicator
             class="indicator"
-            bounce
+            ?bounce="${this.orientation === "vertical" || !this._focusVisible}"
             ?centered="${this.orientation === "vertical"}"
             ?selected="${this.selected}"
             ?disabled="${disabled}"
