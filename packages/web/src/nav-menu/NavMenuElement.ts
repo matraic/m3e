@@ -401,6 +401,10 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
   /** @private */
   #updateItemFocusVisible(item: M3eNavMenuItemElement, focused: boolean, focusVisible: boolean): void {
+    if (item.indicator) {
+      // Ensure selection indicator doesn't bounce outside the bounds of the focus ring.
+      item.indicator.bounce = !focusVisible;
+    }
     if (focused && focusVisible) {
       item.indicator?.show("focused");
     } else {
