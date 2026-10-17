@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
 import { property, query } from "lit/decorators.js";
 
 import {
@@ -149,13 +149,64 @@ export class M3eCheckboxElement extends Labelled(
     .wrapper {
       box-sizing: border-box;
       pointer-events: none;
+      position: relative;
+      isolation: isolate;
+      --_checkbox-outline-thickness: var(--m3e-checkbox-unselected-outline-thickness, 2px);
       width: var(--m3e-checkbox-icon-size, 18px);
       height: var(--m3e-checkbox-icon-size, 18px);
       border-radius: var(--m3e-checkbox-container-shape, 2px);
+      border: var(--_checkbox-outline-thickness) solid
+        var(--m3e-checkbox-unselected-outline-color, ${DesignToken.color.onSurfaceVariant});
+      transition: ${unsafeCSS(
+        `border-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard},
+        color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
+      )};
     }
-    :host(:not([checked]):not([indeterminate])) .wrapper {
-      border-width: var(--m3e-checkbox-unselected-outline-thickness, 2px);
-      border-style: solid;
+    .wrapper::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0;
+      transition: ${unsafeCSS(
+        `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard},
+        opacity ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
+      )};
+    }
+    .wrapper svg {
+      position: absolute;
+      inset: 0;
+      margin: calc(0px - var(--_checkbox-outline-thickness));
+      z-index: 1;
+      width: calc(100% + var(--_checkbox-outline-thickness) + var(--_checkbox-outline-thickness));
+      height: calc(100% + var(--_checkbox-outline-thickness) + var(--_checkbox-outline-thickness));
+      opacity: 0;
+      transition: ${unsafeCSS(`opacity ${DesignToken.motion.duration.short1} ${DesignToken.motion.easing.standard}`)};
+    }
+    .check-icon {
+      clip-path: inset(0 100% 0 0);
+    }
+    :host([checked]:not([indeterminate])) .check-icon {
+      clip-path: inset(0);
+      opacity: 1;
+      transition: none;
+      animation: draw ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standardDecelerate} both;
+    }
+    @keyframes draw {
+      from {
+        clip-path: inset(0 100% 0 0);
+        opacity: 0.8;
+      }
+      to {
+        clip-path: inset(0);
+        opacity: 1;
+      }
+    }
+    .indeterminate-icon {
+      opacity: 0;
+    }
+    :host([indeterminate]) .indeterminate-icon {
+      opacity: 1;
     }
     :host(
         :not(:is(:state(--touched), :--touched):is(:state(--invalid), :--invalid)):not([indeterminate]):not([checked])
@@ -174,6 +225,19 @@ export class M3eCheckboxElement extends Labelled(
     :host(
         :not([aria-disabled="true"]):not(:is(:state(--touched), :--touched):is(:state(--invalid), :--invalid))[checked]
       )
+      .wrapper::before,
+    :host(
+        :not([aria-disabled="true"]):not(
+            :is(:state(--touched), :--touched):is(:state(--invalid), :--invalid)
+          )[indeterminate]
+      )
+      .wrapper::before {
+      background-color: var(--m3e-checkbox-selected-container-color, ${DesignToken.color.primary});
+      opacity: 1;
+    }
+    :host(
+        :not([aria-disabled="true"]):not(:is(:state(--touched), :--touched):is(:state(--invalid), :--invalid))[checked]
+      )
       .wrapper,
     :host(
         :not([aria-disabled="true"]):not(
@@ -181,7 +245,7 @@ export class M3eCheckboxElement extends Labelled(
           )[indeterminate]
       )
       .wrapper {
-      background-color: var(--m3e-checkbox-selected-container-color, ${DesignToken.color.primary});
+      border-color: var(--m3e-checkbox-selected-container-color, ${DesignToken.color.primary});
       color: var(--m3e-checkbox-selected-icon-color, ${DesignToken.color.onPrimary});
     }
     :host(
@@ -208,9 +272,19 @@ export class M3eCheckboxElement extends Labelled(
         transparent
       );
     }
+    :host([aria-disabled="true"][checked]) .wrapper::before,
+    :host([aria-disabled="true"][indeterminate]) .wrapper::before {
+      background-color: color-mix(
+        in srgb,
+        var(--m3e-checkbox-selected-disabled-container-color, ${DesignToken.color.onSurface})
+          var(--m3e-checkbox-selected-disabled-container-opacity, 38%),
+        transparent
+      );
+      opacity: 1;
+    }
     :host([aria-disabled="true"][checked]) .wrapper,
     :host([aria-disabled="true"][indeterminate]) .wrapper {
-      background-color: color-mix(
+      border-color: color-mix(
         in srgb,
         var(--m3e-checkbox-selected-disabled-container-color, ${DesignToken.color.onSurface})
           var(--m3e-checkbox-selected-disabled-container-opacity, 38%),
@@ -252,6 +326,14 @@ export class M3eCheckboxElement extends Labelled(
       border-color: var(--m3e-checkbox-unselected-error-outline-color, ${DesignToken.color.error});
     }
     @media (forced-colors: active) {
+      :host([checked]:not([indeterminate])) .check-icon {
+        animation: none;
+      }
+      .wrapper,
+      .wrapper::before,
+      .wrapper svg {
+        transition: none;
+      }
       :host(
           :not(:is(:state(--touched), :--touched):is(:state(--invalid), :--invalid)):not([indeterminate]):not([checked])
         )
@@ -281,6 +363,21 @@ export class M3eCheckboxElement extends Labelled(
               :is(:state(--touched), :--touched):is(:state(--invalid), :--invalid)
             )[checked]
         )
+        .wrapper::before,
+      :host(
+          :not([aria-disabled="true"]):not(
+              :is(:state(--touched), :--touched):is(:state(--invalid), :--invalid)
+            )[indeterminate]
+        )
+        .wrapper::before {
+        background-color: CanvasText;
+        opacity: 1;
+      }
+      :host(
+          :not([aria-disabled="true"]):not(
+              :is(:state(--touched), :--touched):is(:state(--invalid), :--invalid)
+            )[checked]
+        )
         .wrapper,
       :host(
           :not([aria-disabled="true"]):not(
@@ -288,15 +385,20 @@ export class M3eCheckboxElement extends Labelled(
             )[indeterminate]
         )
         .wrapper {
-        background-color: CanvasText;
+        border-color: CanvasText;
         color: Canvas;
       }
       :host([aria-disabled="true"]:not([checked]):not([indeterminate])) .wrapper {
         border-color: GrayText;
       }
+      :host([aria-disabled="true"][checked]) .wrapper::before,
+      :host([aria-disabled="true"][indeterminate]) .wrapper::before {
+        background-color: GrayText;
+        opacity: 1;
+      }
       :host([aria-disabled="true"][checked]) .wrapper,
       :host([aria-disabled="true"][indeterminate]) .wrapper {
-        background-color: GrayText;
+        border-color: GrayText;
         color: Canvas;
       }
       :host(
@@ -325,6 +427,16 @@ export class M3eCheckboxElement extends Labelled(
         --m3e-state-layer-hover-color: Highlight;
         --m3e-state-layer-focus-color: Highlight;
         --m3e-ripple-color: Highlight;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      :host([checked]:not([indeterminate])) .check-icon {
+        animation: none;
+      }
+      .wrapper,
+      .wrapper::before,
+      .wrapper svg {
+        transition: none;
       }
     }
   `;
@@ -405,25 +517,15 @@ export class M3eCheckboxElement extends Labelled(
       <m3e-focus-ring class="focus-ring" ?disabled="${this.disabled}"></m3e-focus-ring>
       <m3e-ripple class="ripple" centered ?disabled="${this.disabled}"></m3e-ripple>
       <div class="touch" aria-hidden="true"></div>
-      <div class="wrapper" aria-hidden="true">${this.#renderIcon()}</div>
+      <div class="wrapper" aria-hidden="true">
+        <svg class="check-icon" viewBox="0 -960 960 960" fill="currentColor">
+          <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
+        </svg>
+        <svg class="indeterminate-icon" viewBox="0 -960 960 960" fill="currentColor">
+          <path Required d="M240-440v-80h480v80H240Z" />
+        </svg>
+      </div>
     </div>`;
-  }
-
-  /** @private */
-  #renderIcon(): unknown {
-    if (this.indeterminate) {
-      return html`<svg viewBox="0 -960 960 960" fill="currentColor">
-        <path Required d="M240-440v-80h480v80H240Z" />
-      </svg>`;
-    }
-
-    if (this.checked) {
-      return html`<svg viewBox="0 -960 960 960" fill="currentColor">
-        <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
-      </svg>`;
-    }
-
-    return nothing;
   }
 
   /** @private */
