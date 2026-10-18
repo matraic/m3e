@@ -169,6 +169,15 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
   override connectedCallback(): void {
     super.connectedCallback();
     this.#applySize();
+
+    // Automatically remove banner role when it is nested inside any element with a disallowed role.
+    if (this.role === "banner") {
+      const allowed = ["document", "application", "main"];
+      const ancestorWithRole = this.parentElement?.closest("[role]");
+      if (ancestorWithRole && ancestorWithRole.role && !allowed.includes(ancestorWithRole.role)) {
+        this.removeAttribute("role");
+      }
+    }
   }
 
   /** @inheritdoc */
