@@ -20,7 +20,7 @@
     <link href="api-viewer.css" rel="stylesheet" />
     <link href="app-bar.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.10.1/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.10.2/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -241,6 +241,13 @@
           region for branding, navigation, or contextual identity. This role signals to assistive technologies that the
           app bar serves as the top-level heading for the page or application.
         </p>
+        <m3e-callout>
+          An app bar may only expose the <code>banner</code> landmark when it is at the top of its landmark context. If
+          it is nested inside an element whose role is not <code>document</code>, <code>application</code>, or
+          <code>main</code>, the <code>banner</code> role is automatically removed and the app bar is treated as a
+          neutral, non-semantic element. When no ancestor has a role at all, the app bar is considered top-level and its
+          <code>banner</code> role is preserved.
+        </m3e-callout>
 
         <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
         <p>
