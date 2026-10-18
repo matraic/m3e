@@ -3,7 +3,6 @@ import { property, query } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
 import { customElement, LinkButton } from "@m3e/web/core";
-import { selectionManager } from "@m3e/web/core/a11y";
 
 import { M3eListItemElement } from "./ListItemElement";
 import { M3eListItemButtonElement } from "./ListItemButtonElement";
@@ -103,7 +102,7 @@ export class M3eListActionElement extends LinkButton(M3eListItemElement, true) {
   `;
 
   /** @internal */
-  @query(".button") readonly button!: M3eListItemButtonElement;
+  @query(".button") private readonly _button?: M3eListItemButtonElement;
 
   /**
    * Whether the element is disabled.
@@ -113,17 +112,17 @@ export class M3eListActionElement extends LinkButton(M3eListItemElement, true) {
 
   /** @inheritdoc */
   override focus(options?: FocusOptions): void {
-    this.button?.focus(options);
+    this._button?.focus(options);
   }
 
   /** @inheritdoc */
   override blur(): void {
-    this.button?.blur();
+    this._button?.blur();
   }
 
   /** @inheritdoc */
   override click(): void {
-    this.button?.click();
+    this._button?.click();
   }
 
   /** @inheritdoc */
@@ -135,7 +134,6 @@ export class M3eListActionElement extends LinkButton(M3eListItemElement, true) {
       target="${ifDefined(this.target || undefined)}"
       download="${ifDefined(this.download || undefined)}"
       rel="${ifDefined(this.rel || undefined)}"
-      @click=${this.#handleClick}
     >
       <slot name="leading" slot="leading" @slotchange=${this._handleLeadingSlotChange}></slot>
       <slot name="overline" slot="overline"></slot>
@@ -143,13 +141,6 @@ export class M3eListActionElement extends LinkButton(M3eListItemElement, true) {
       <slot name="supporting-text" slot="supporting-text"></slot>
       <slot name="trailing" slot="trailing" @slotchange=${this._handleTrailingSlotChange}></slot>
     </m3e-list-item-button>`;
-  }
-
-  /** @private */
-  #handleClick(e: Event): void {
-    if (!e.defaultPrevented) {
-      this.closest("m3e-action-list")?.[selectionManager].updateActiveItem(this.button);
-    }
   }
 }
 

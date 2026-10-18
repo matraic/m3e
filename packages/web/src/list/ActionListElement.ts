@@ -1,11 +1,6 @@
-import { customElement, waitForUpdate } from "@m3e/web/core";
-import { RovingTabIndexManager, selectionManager } from "@m3e/web/core/a11y";
+import { customElement } from "@m3e/web/core";
 
 import { M3eListElement } from "./ListElement";
-import { M3eListActionElement } from "./ListActionElement";
-import { M3eExpandableListItemElement } from "./ExpandableListItemElement";
-import { M3eListItemButtonElement } from "./ListItemButtonElement";
-import { M3eListItemElement } from "./ListItemElement";
 
 /**
  * A list of actions.
@@ -34,73 +29,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-segmented-list-item-selected-container-shape - Border radius of items in segmented variant when selected.
  */
 @customElement("m3e-action-list")
-export class M3eActionListElement extends M3eListElement {
-  /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this[selectionManager].onKeyDown(e);
-
-  /** @private */
-  readonly [selectionManager] = new RovingTabIndexManager<M3eListItemButtonElement>()
-    .withWrap()
-    .withHomeAndEnd()
-    .withVerticalOrientation()
-    .withSkipPredicate((x) => {
-      if (x.disabled) return true;
-
-      const listItem = (x.getRootNode() as ShadowRoot).host as M3eListItemElement;
-      if (listItem.parentElement?.slot === "items") {
-        let expandable = listItem.closest("m3e-expandable-list-item");
-        while (expandable) {
-          if (!expandable.open) {
-            return true;
-          }
-
-          const ancestor = expandable.parentElement?.closest<M3eExpandableListItemElement | M3eActionListElement>(
-            "m3e-expandable-list-item,m3e-action-list",
-          );
-          if (ancestor instanceof M3eExpandableListItemElement) {
-            expandable = ancestor;
-            continue;
-          }
-          break;
-        }
-      }
-      return false;
-    });
-
-  /** @inheritdoc */
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.addEventListener("keydown", this.#keyDownHandler);
-  }
-
-  /** @inheritdoc */
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.removeEventListener("keydown", this.#keyDownHandler);
-  }
-
-  /** @inheritdoc */
-  override async notifyItemsChange(): Promise<void> {
-    const items = [
-      ...this.querySelectorAll<M3eListActionElement | M3eExpandableListItemElement>(
-        "m3e-list-action,m3e-expandable-list-item",
-      ),
-    ];
-
-    for (const item of items) {
-      await waitForUpdate(item);
-    }
-
-    await waitForUpdate(this);
-
-    const { added } = this[selectionManager].setItems(
-      items.map((x) => (x instanceof M3eExpandableListItemElement ? x.button : x.button)),
-    );
-
-    if (!this[selectionManager].activeItem) {
-      this[selectionManager].updateActiveItem(added.find((x) => !x.disabled));
-    }
-  }
-}
+export class M3eActionListElement extends M3eListElement {}
 
 declare global {
   interface HTMLElementTagNameMap {
