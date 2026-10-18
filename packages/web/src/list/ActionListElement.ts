@@ -7,9 +7,7 @@ import { M3eListElement } from "./ListElement";
  *
  * @description
  * The `m3e-action-list` component provides a specialized list container for action-based
- * interactions following Material 3 design principles. It manages keyboard navigation with
- * roving tab index, supporting arrow keys, Home/End navigation, and vertical orientation.
- * The component is optimized for scenarios where each list item represents a clickable action.
+ * interactions following Material 3 design principles.
  *
  * @tag m3e-action-list
  *

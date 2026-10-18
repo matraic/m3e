@@ -1,6 +1,6 @@
 # @m3e/web/list
 
-The `@m3e/list` package provides expressive, accessible components for organizing and displaying lists of items. It includes list containers (`m3e-list`, `m3e-action-list`, `m3e-selection-list`), basic list items (`m3e-list-item`), interactive items (`m3e-list-action`, `m3e-list-option`), and hierarchical items (`m3e-expandable-list-item`). All components support rich content, flexible layout, keyboard navigation, and extensive theming via CSS custom properties following Material 3 design principles.
+The `@m3e/list` package provides expressive, accessible components for organizing and displaying lists of items. It includes list containers (`m3e-list`, `m3e-action-list`, `m3e-selection-list`), basic list items (`m3e-list-item`), interactive items (`m3e-list-action`, `m3e-list-option`), and hierarchical items (`m3e-expandable-list-item`). All components support rich content, flexible layout, and extensive theming via CSS custom properties following Material 3 design principles.
 
 ```ts
 import "@m3e/web/list";
@@ -12,7 +12,7 @@ import "@m3e/web/list";
 - `m3e-list-item` — A single item within a list with support for rich content and flexible layout.
 - `m3e-list-action` — An interactive list item that performs a user-initiated action.
 - `m3e-list-option` — A selectable option in a list with selection capabilities.
-- `m3e-action-list` — A specialized list container for action-based interactions with keyboard navigation.
+- `m3e-action-list` — A specialized list container for action-based interactions.
 - `m3e-selection-list` — A list of selectable options with multi-select support.
 - `m3e-expandable-list-item` — An item in a list that can be expanded to show nested items.
 

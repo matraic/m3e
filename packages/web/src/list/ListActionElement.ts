@@ -15,7 +15,7 @@ import "./ListItemButtonElement";
  * @description
  * The `m3e-list-action` component represents an interactive list item that performs a
  * user-initiated action. It combines the semantic structure of a list item with
- * button-like interactions, supporting keyboard navigation, ripple effects, and state layers.
+ * button-like interactions, supporting ripple effects, and state layers.
  *
  * @tag m3e-list-action
  *
