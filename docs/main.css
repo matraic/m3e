@@ -76,7 +76,7 @@ pre {
   width: 100vw;
   box-sizing: border-box;
   padding-block-end: 16px;
-  transition: padding var(--md-sys-motion-spring-slow-effects, 200ms cubic-bezier(0.34, 0.88, 0.34, 1));
+  transition: padding var(--md-sys-motion-spring-slow-effects, 300ms cubic-bezier(0.34, 0.88, 0.34, 1));
 }
 .panes > * {
   height: 100%;
@@ -87,7 +87,7 @@ pre {
   margin-inline-end: 16px;
   min-width: 0;
   --m3e-content-pane-container-color: var(--md-sys-color-surface-container-lowest);
-  transition: margin var(--md-sys-motion-spring-slow-effects, 200ms cubic-bezier(0.34, 0.88, 0.34, 1));
+  transition: margin var(--md-sys-motion-spring-slow-effects, 300ms cubic-bezier(0.34, 0.88, 0.34, 1));
 }
 #body > m3e-card > div[slot="content"] {
   --m3e-content-pane-container-color: initial;
