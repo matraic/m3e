@@ -41,7 +41,7 @@ const SpringToken = {
   defaultEffects: unsafeCSS("var(--md-sys-motion-spring-default-effects, 200ms cubic-bezier(0.34, 0.80, 0.34, 1.00))"),
 
   /** Slow effects spring. */
-  slowEffects: unsafeCSS("var(--md-sys-motion-spring-slow-effects, 200ms cubic-bezier(0.34, 0.88, 0.34, 1.00))"),
+  slowEffects: unsafeCSS("var(--md-sys-motion-spring-slow-effects, 300ms cubic-bezier(0.34, 0.88, 0.34, 1.00))"),
 } as const;
 
 const DurationToken = {
