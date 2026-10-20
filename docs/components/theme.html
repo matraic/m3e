@@ -548,9 +548,15 @@
 
         <m3e-heading variant="headline" size="small" level="3">Motion</m3e-heading>
         <p>
-          Themes support two motion schemes: <code>standard</code> (default) and <code>expressive</code>. These schemes
+          Themes support two motion schemes: <code>standard</code> and <code>expressive</code> (default). These schemes
           define how components animate across the system, using spring-based physics to guide spatial and effect
           transitions. Use the <code>motion</code> attribute to control the motion scheme.
+        </p>
+        <p>
+          Where the CSS <code>linear()</code> easing function is supported, each
+          <code>--md-sys-motion-spring-*</code> token is sampled from its spring's damping ratio and stiffness;
+          otherwise, a <code>cubic-bezier()</code>
+          approximation is used.
         </p>
         <p>
           The following example illustrates how the <code>m3e-switch</code> adapts to the motion scheme. Note the spring
