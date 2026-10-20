@@ -8,6 +8,7 @@
     "build": "npm run build --workspaces",
     "cem": "npm run cem --workspaces",
     "lint": "npm run lint --workspaces",
+    "test": "npm run test --workspaces --if-present",
     "all": "npm run build && npm run cem && npm run lint",
     "clean": "npm run clean --workspaces",
     "release": "npm publish --access public --workspace=@m3e/web --workspace=@m3e/react",
@@ -17,6 +18,7 @@
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.4",
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.1",
     "@rollup/plugin-babel": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^1.0.0",

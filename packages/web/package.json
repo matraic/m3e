@@ -368,6 +368,7 @@
     "build": "rollup -c",
     "cem": "cem analyze --config cem.config.mjs",
     "lint": "npx eslint ./src",
+    "test": "playwright test",
     "clean": "rimraf dist"
   },
   "dependencies": {

@@ -3,3 +3,7 @@ node_modules/
 
 # Build outputs
 dist/
+
+# Test outputs
+test-results/
+playwright-report/
