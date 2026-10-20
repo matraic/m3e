@@ -4,3 +4,7 @@ cem.config.mjs
 eslint.config.mjs
 rollup.config.js
 tsconfig.json
+playwright.config.ts
+test/
+test-results/
+playwright-report/

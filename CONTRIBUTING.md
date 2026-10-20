@@ -21,6 +21,12 @@ Thank you for your interest in contributing to the M3E monorepo! We welcome cont
    - Write clear, maintainable code and add documentation as needed.
 5. **Test Your Changes**
    - Ensure all tests pass and your changes do not break existing functionality.
+   - Tests use [Playwright](https://playwright.dev) and run against the built bundle:
+     ```
+     npx playwright install chromium
+     npm run build -w @m3e/web
+     npm test
+     ```
 6. **Commit and Push**
    - Commit your changes with a descriptive message:
      ```
