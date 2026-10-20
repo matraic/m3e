@@ -14,6 +14,7 @@ import { customElement, DesignToken, registerStyleSheet } from "@m3e/web/core";
 import { ColorScheme, isColorScheme } from "./ColorScheme";
 import { ContrastLevel, isContrastLevel } from "./ContrastLevel";
 import { isMotionScheme, MotionScheme } from "./MotionScheme";
+import { MotionSchemeSprings, springEasing, supportsLinearEasing } from "./SpringEasing";
 import { isThemeVariant, ThemeVariant } from "./ThemeVariant";
 
 function composeCss(token: Record<string, CSSResult>): string {
@@ -317,7 +318,12 @@ export class M3eThemeElement extends LitElement {
       css += `${token}: ${hex};`;
     }
 
-    if (this.motion === "expressive") {
+    if (supportsLinearEasing()) {
+      // Sample the springs into linear() easings; browsers without linear() keep the cubic-bezier approximations below.
+      for (const [name, { damping, stiffness, duration }] of Object.entries(MotionSchemeSprings[this.motion])) {
+        css += `--md-sys-motion-spring-${name}: ${duration}ms ${springEasing(damping, stiffness, duration)};`;
+      }
+    } else if (this.motion === "expressive") {
       css += "--md-sys-motion-spring-fast-spatial: 350ms cubic-bezier(0.42, 1.67, 0.21, 0.90);";
       css += "--md-sys-motion-spring-default-spatial: 500ms cubic-bezier(0.38, 1.21, 0.22, 1.00);";
       css += "--md-sys-motion-spring-slow-spatial: 650ms cubic-bezier(0.39, 1.29, 0.35, 0.98);";
