@@ -76,4 +76,69 @@ test.describe("m3e-icon-button", () => {
     await button.evaluate((x: HTMLElement) => x.click());
     await expect(button).toHaveAttribute("aria-pressed", "false");
   });
+
+  test("toggles with the keyboard and updates its icon state", async ({ page, render }) => {
+    await render(`
+      <m3e-icon-button toggle aria-label="Favorite">
+        <m3e-icon name="favorite"></m3e-icon>
+      </m3e-icon-button>
+    `);
+    const button = page.getByRole("button", { name: "Favorite" });
+    const icon = page.locator('m3e-icon[name="favorite"]');
+
+    await button.focus();
+    await page.keyboard.press("Space");
+    await expect(button).toHaveAttribute("aria-pressed", "true");
+    await expect(icon).toHaveAttribute("filled", "");
+
+    await page.keyboard.press("Space");
+    await expect(button).toHaveAttribute("aria-pressed", "false");
+    await expect(icon).not.toHaveAttribute("filled");
+  });
+
+  test("resets its form when type is reset", async ({ page, render }) => {
+    await render(`
+      <form>
+        <input id="name" value="Original" />
+        <m3e-icon-button type="reset" aria-label="Reset"></m3e-icon-button>
+      </form>
+    `);
+    const input = page.locator("#name");
+
+    await input.fill("Changed");
+    await page.getByRole("button", { name: "Reset" }).click();
+
+    await expect(input).toHaveValue("Original");
+  });
+
+  test("submits its form name and value when type is submit", async ({ page, render }) => {
+    await render(`
+      <form>
+        <m3e-icon-button type="submit" name="action" value="save" aria-label="Save"></m3e-icon-button>
+      </form>
+    `);
+    await page.evaluate(() => {
+      const form = document.querySelector("form")!;
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const submitter = (event as SubmitEvent).submitter as HTMLElement | null;
+        (window as unknown as { submitted: unknown }).submitted = {
+          submitter: submitter?.localName,
+          values: Array.from(new FormData(form).entries()),
+        };
+      });
+    });
+
+    await page.getByRole("button", { name: "Save" }).click();
+
+    await expect
+      .poll(() => page.evaluate(() => (window as unknown as { submitted: unknown }).submitted))
+      .toEqual({ submitter: "m3e-icon-button", values: [["action", "save"]] });
+  });
+
+  test("exposes link buttons as links", async ({ page, render }) => {
+    await render('<m3e-icon-button href="#destination" aria-label="Go to destination"></m3e-icon-button>');
+
+    await expect(page.getByRole("link", { name: "Go to destination" })).toBeVisible();
+  });
 });

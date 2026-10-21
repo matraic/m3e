@@ -76,4 +76,66 @@ test.describe("m3e-button", () => {
     await button.evaluate((x: HTMLElement) => x.click());
     await expect(button).toHaveAttribute("aria-pressed", "false");
   });
+
+  test("shows the selected label when toggled", async ({ page, render }) => {
+    await render(`
+      <m3e-button toggle>
+        Start
+        <span slot="selected">Stop</span>
+      </m3e-button>
+    `);
+
+    const button = page.getByRole("button", { name: "Start" });
+    await expect(button).toBeVisible();
+
+    await button.click();
+
+    await expect(page.getByRole("button", { name: "Stop" })).toBeVisible();
+  });
+
+  test("resets its form when type is reset", async ({ page, render }) => {
+    await render(`
+      <form>
+        <input id="name" value="Original" />
+        <m3e-button type="reset">Reset</m3e-button>
+      </form>
+    `);
+    const input = page.locator("#name");
+
+    await input.fill("Changed");
+    await page.getByRole("button", { name: "Reset" }).click();
+
+    await expect(input).toHaveValue("Original");
+  });
+
+  test("submits its form name and value when type is submit", async ({ page, render }) => {
+    await render(`
+      <form>
+        <m3e-button type="submit" name="action" value="save">Save</m3e-button>
+      </form>
+    `);
+    await page.evaluate(() => {
+      const form = document.querySelector("form")!;
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const submitter = (event as SubmitEvent).submitter as HTMLElement | null;
+        (window as unknown as { submitted: unknown }).submitted = {
+          submitter: submitter?.localName,
+          values: Array.from(new FormData(form).entries()),
+        };
+      });
+    });
+
+    await page.getByRole("button", { name: "Save" }).click();
+
+    await expect
+      .poll(() => page.evaluate(() => (window as unknown as { submitted: unknown }).submitted))
+      .toEqual({ submitter: "m3e-button", values: [["action", "save"]] });
+  });
+
+  test("exposes link buttons as links", async ({ page, render }) => {
+    await render('<m3e-button href="#destination" target="_self">Go to destination</m3e-button>');
+
+    await expect(page.getByRole("link", { name: "Go to destination" })).toBeVisible();
+  });
 });
