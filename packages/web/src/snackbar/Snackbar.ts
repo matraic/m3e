@@ -88,7 +88,7 @@ export class M3eSnackbar {
 
     if (typeof dismissibleOrOptions == "boolean") {
       snackbar.dismissible = dismissibleOrOptions;
-    } else {
+    } else if (dismissibleOrOptions) {
       actualOptions = dismissibleOrOptions;
     }
 
