@@ -334,6 +334,7 @@ export class M3eButtonSegmentElement extends Dirty(
 
     if (changedProperties.has("checked")) {
       segmentedButton?.[selectionManager].notifySelectionChange(this);
+      segmentedButton?.requestUpdate();
     }
 
     if (changedProperties.has("disabled")) {
@@ -395,6 +396,12 @@ export class M3eButtonSegmentElement extends Dirty(
     if (e.defaultPrevented) return;
 
     const segmentedButton = this.closest("m3e-segmented-button");
+    if (this.disabled || segmentedButton?.disabled) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      return;
+    }
+
     if (segmentedButton && (segmentedButton.multi || !this.checked)) {
       if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
         this.checked = !this.checked;
