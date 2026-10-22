@@ -350,8 +350,13 @@ export class M3eHeadingElement extends AttachInternals(LitElement) {
     super.update(changedProperties);
 
     if (changedProperties.has("level")) {
-      this.ariaLevel = this.level !== undefined ? `${this.level}` : null;
-      this.role = this.ariaLevel ? "heading" : null;
+      if (typeof this.level !== "number") {
+        this.removeAttribute("aria-level");
+        this.removeAttribute("role");
+      } else {
+        this.setAttribute("aria-level", `${this.level}`);
+        this.setAttribute("role", "heading");
+      }
     }
   }
 
