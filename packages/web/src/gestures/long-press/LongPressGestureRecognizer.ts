@@ -110,6 +110,8 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
   override _onPointerUp(input: PointerInput): void {
     const state = this.#state.get(input.inputId);
     if (state) {
+      state.tracker.append(input);
+
       if (this.options.discrete && this.#started) {
         // Acceptance emits the final detail only after every pointer is accepted.
         this._accept([...this.#state.keys()]);
@@ -194,7 +196,10 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
       clientY: centroid.startClientY,
       localX: centroid.startLocalX,
       localY: centroid.startLocalY,
-      duration: trackers.reduce((sum, x) => sum + x.detail.duration, 0) / trackers.length,
+      duration: Math.max(
+        trackers.reduce((sum, x) => sum + x.detail.duration, 0) / trackers.length,
+        phase === "end" ? this.options.minDuration : 0,
+      ),
     };
   }
 }
