@@ -1,4 +1,12 @@
+import type { Page } from "@playwright/test";
+
 import { expect, test } from "./fixtures";
+
+async function openMenu(page: Page, menu = page.getByRole("menu")): Promise<void> {
+  await page.locator("m3e-button").first().click();
+  await expect(menu).toBeVisible();
+  await expect(menu).toBeInViewport();
+}
 
 const basic = `
   <m3e-button><m3e-menu-trigger for="menu">Open</m3e-menu-trigger></m3e-button>
@@ -34,7 +42,7 @@ test.describe("m3e-menu", () => {
     await render(basic);
     const button = page.locator("m3e-button");
 
-    await button.click();
+    await openMenu(page);
     await page.getByRole("menuitem", { name: "Apple" }).click();
 
     await expect(page.getByRole("menu")).toBeHidden();
@@ -45,8 +53,8 @@ test.describe("m3e-menu", () => {
   test("does not close when a disabled item is clicked", async ({ page, render }) => {
     await render(basic);
 
-    await page.locator("m3e-button").click();
-    await page.getByRole("menuitem", { name: "Apricot" }).click({ force: true });
+    await openMenu(page);
+    await page.getByRole("menuitem", { name: "Apricot" }).dispatchEvent("click");
 
     await expect(page.getByRole("menu")).toBeVisible();
   });
@@ -55,7 +63,7 @@ test.describe("m3e-menu", () => {
     await render(basic);
     const button = page.locator("m3e-button");
 
-    await button.click();
+    await openMenu(page);
     await page.getByRole("menuitem", { name: "Apple" }).focus();
     await page.keyboard.press("Escape");
 
@@ -66,7 +74,7 @@ test.describe("m3e-menu", () => {
   test("closes on Tab", async ({ page, render }) => {
     await render(basic);
 
-    await page.locator("m3e-button").click();
+    await openMenu(page);
     await page.getByRole("menuitem", { name: "Apple" }).focus();
     await page.keyboard.press("Tab");
 
@@ -76,7 +84,7 @@ test.describe("m3e-menu", () => {
   test("moves focus between enabled items with the arrow keys, skipping disabled ones", async ({ page, render }) => {
     await render(basic);
 
-    await page.locator("m3e-button").click();
+    await openMenu(page);
     const apple = page.getByRole("menuitem", { name: "Apple" });
     const avocado = page.getByRole("menuitem", { name: "Avocado" });
 
@@ -99,7 +107,7 @@ test.describe("m3e-menu", () => {
     const bold = page.getByRole("menuitemcheckbox", { name: "Bold" });
     const italic = page.getByRole("menuitemcheckbox", { name: "Italic" });
 
-    await page.locator("m3e-button").click();
+    await openMenu(page);
     await expect(bold).not.toBeChecked();
     await expect(italic).toBeChecked();
 
@@ -126,13 +134,13 @@ test.describe("m3e-menu", () => {
     const ascending = page.getByRole("menuitemradio", { name: "Ascending" });
     const descending = page.getByRole("menuitemradio", { name: "Descending" });
 
-    await page.locator("m3e-button").click();
+    await openMenu(page);
     await expect(page.getByRole("group", { name: "Order" })).toBeVisible();
     await expect(ascending).toBeChecked();
     await expect(descending).not.toBeChecked();
 
     await descending.click();
-    await page.locator("m3e-button").click();
+    await openMenu(page);
     await expect(descending).toBeChecked();
     await expect(ascending).not.toBeChecked();
   });
@@ -155,7 +163,7 @@ test.describe("m3e-menu", () => {
     const fruits = page.getByRole("menuitem", { name: "Fruits" });
     const apricot = page.getByRole("menuitem", { name: "Apricot" });
 
-    await page.locator("m3e-button").click();
+    await openMenu(page);
     await expect(fruits).toHaveAttribute("aria-haspopup", "menu");
     await expect(fruits).toHaveAttribute("aria-expanded", "false");
     await expect(apricot).toBeHidden();
@@ -184,7 +192,7 @@ test.describe("m3e-menu", () => {
     const fruits = page.getByRole("menuitem", { name: "Fruits" });
     const apricot = page.getByRole("menuitem", { name: "Apricot" });
 
-    await page.locator("m3e-button").click();
+    await openMenu(page);
     await fruits.focus();
     await page.keyboard.press("ArrowRight");
     await expect(apricot).toBeVisible();
