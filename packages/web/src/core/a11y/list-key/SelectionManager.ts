@@ -81,7 +81,9 @@ export class SelectionManager<
       }
 
       if (item) {
-        this.#selectedItems.push(item);
+        if (!this.#selectedItems.includes(item)) {
+          this.#selectedItems.push(item);
+        }
         if (!isCheckedOrSelected(item)) {
           checkOrSelect(item, true);
         }
