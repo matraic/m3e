@@ -3,7 +3,7 @@ import { unsafeCSS } from "lit";
 import { DesignToken } from "@m3e/web/core";
 
 export const LoadingIndicatorToken = {
-  activeIndicatorSize: unsafeCSS(`var(--m3e-loading-indicator-size, 38px)`),
+  activeIndicatorSize: unsafeCSS(`var(--m3e-loading-indicator-active-indicator-size, 38px)`),
   activeIndicatorColor: unsafeCSS(`var(--m3e-loading-indicator-active-indicator-color, ${DesignToken.color.primary})`),
   containedActiveIndicatorColor: unsafeCSS(
     `var(--m3e-loading-indicator-contained-active-indicator-color, ${DesignToken.color.onPrimaryContainer})`,

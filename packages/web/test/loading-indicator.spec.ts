@@ -1,6 +1,6 @@
 import { expect, test } from "./fixtures";
 
-const sizes = "--m3e-loading-indicator-size: 30px; --m3e-loading-indicator-container-size: 60px;";
+const sizes = "--m3e-loading-indicator-active-indicator-size: 30px; --m3e-loading-indicator-container-size: 60px;";
 
 test.describe("m3e-loading-indicator", () => {
   test("exposes an indeterminate progressbar", async ({ page, render }) => {
