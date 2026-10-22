@@ -402,7 +402,7 @@ export class M3eSplitButtonElement extends Role(AttachInternals(LitElement), "gr
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
 
-    if (changedProperties.has("variant")) {
+    if (changedProperties.has("variant") || changedProperties.has("size")) {
       this.#updateButtons();
     }
   }
