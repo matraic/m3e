@@ -200,6 +200,10 @@ export class M3eNavBarElement extends ReconnectedCallback(AttachInternals(Role(L
     const orientation: NavItemOrientation = this.currentMode === "compact" ? "vertical" : "horizontal";
     this._updateOrientation(orientation);
     setCustomState(this, "--compact", orientation === "vertical");
+
+    // Internal notification (not part of the public API) so dependents, such as a rail toggle,
+    // can react to the effective mode changing.
+    this["dispatchEvent"](new Event("mode-change"));
   }
 
   /** @internal */

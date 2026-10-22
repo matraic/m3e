@@ -1,6 +1,6 @@
 import { LitElement } from "lit";
 
-import { ActionElementBase, customElement, HtmlFor, MutationController } from "@m3e/web/core";
+import { ActionElementBase, customElement, HtmlFor } from "@m3e/web/core";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y";
 
 import { M3eNavRailElement } from "./NavRailElement";
@@ -35,16 +35,12 @@ import { M3eNavRailElement } from "./NavRailElement";
  */
 @customElement("m3e-nav-rail-toggle")
 export class M3eNavRailToggleElement extends HtmlFor(ActionElementBase) {
-  /** @private */ readonly #mutationController = new MutationController(this, {
-    target: null,
-    config: { attributeFilter: ["class"] },
-    callback: () => this.#updateToggle(),
-  });
+  /** @private */ readonly #modeChangeHandler = () => this.#updateToggle();
 
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
     if (control instanceof M3eNavRailElement) {
-      this.#mutationController.observe(control);
+      control.addEventListener("mode-change", this.#modeChangeHandler);
     }
     if (this.htmlFor && this.parentElement) {
       addAriaReferencedId(this.parentElement, "aria-controls", this.htmlFor);
@@ -55,9 +51,7 @@ export class M3eNavRailToggleElement extends HtmlFor(ActionElementBase) {
 
   /** @inheritdoc */
   override detach(): void {
-    for (const target of this.#mutationController.targets) {
-      this.#mutationController.unobserve(target);
-    }
+    this.control?.removeEventListener("mode-change", this.#modeChangeHandler);
 
     if (this.parentElement) {
       if (this.htmlFor) {
