@@ -506,7 +506,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
     if (e.target !== this._base) return;
     this.#escapePressedWithoutCancel = false;
     e.preventDefault();
-    if (this.dispatchEvent(new Event("cancel", { cancelable: true }))) {
+    if (this.dispatchEvent(new Event("cancel", { cancelable: true })) && !this.disableClose) {
       this.hide();
     }
   }
