@@ -34,7 +34,9 @@ test.describe("m3e-breadcrumb", () => {
 
   for (const current of ["page", "step", "location", "date", "time", "true"]) {
     test(`supports current="${current}"`, async ({ page, render }) => {
-      await render(`<m3e-breadcrumb><m3e-breadcrumb-item current="${current}">Current</m3e-breadcrumb-item></m3e-breadcrumb>`);
+      await render(
+        `<m3e-breadcrumb><m3e-breadcrumb-item current="${current}">Current</m3e-breadcrumb-item></m3e-breadcrumb>`,
+      );
 
       const item = page.locator("m3e-breadcrumb-item");
       await expect(item).toHaveAttribute("current", current);
@@ -53,5 +55,37 @@ test.describe("m3e-breadcrumb", () => {
     const item = page.getByRole("link", { name: "Dashboard" });
     await expect(item).toHaveAttribute("aria-disabled", "true");
     await expect(item).not.toHaveAttribute("tabindex");
+  });
+});
+
+test.describe("m3e-breadcrumb wrap", () => {
+  const items = Array.from(
+    { length: 12 },
+    (_, i) => `<m3e-breadcrumb-item href="/${i}">Section number ${i}</m3e-breadcrumb-item>`,
+  ).join("");
+  const tops = (page: import("@playwright/test").Page) =>
+    page
+      .locator("m3e-breadcrumb-item")
+      .evaluateAll((els) => new Set(els.map((x) => Math.round(x.getBoundingClientRect().top))).size);
+
+  test("does not wrap by default", async ({ page, render }) => {
+    await render(`<m3e-breadcrumb style="width: 300px">${items}</m3e-breadcrumb>`);
+
+    await expect(page.locator("m3e-breadcrumb")).not.toHaveAttribute("wrap");
+    expect(await tops(page)).toBe(1);
+  });
+
+  test("wraps onto multiple lines when wrap is set", async ({ page, render }) => {
+    await render(`<m3e-breadcrumb wrap style="width: 300px">${items}</m3e-breadcrumb>`);
+
+    await expect(page.locator("m3e-breadcrumb")).toHaveAttribute("wrap", "");
+    expect(await tops(page)).toBeGreaterThan(1);
+  });
+
+  test("toggling wrap at runtime changes the layout", async ({ page, render }) => {
+    await render(`<m3e-breadcrumb style="width: 300px">${items}</m3e-breadcrumb>`);
+    await page.locator("m3e-breadcrumb").evaluate((el) => el.toggleAttribute("wrap", true));
+
+    await expect.poll(() => tops(page)).toBeGreaterThan(1);
   });
 });
