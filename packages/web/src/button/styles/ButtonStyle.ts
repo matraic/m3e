@@ -92,10 +92,10 @@ export const ButtonStyle: CSSResultGroup = css`
     flex: 1 1 auto;
   }
   :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) {
-    transition: ${unsafeCSS(`width ${DesignToken.motion.spring.fastEffects}`)};
+    transition: ${unsafeCSS(`width ${DesignToken.motion.spring.fastSpatial}`)};
   }
   :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) .wrapper {
-    transition: ${unsafeCSS(`padding-inline ${DesignToken.motion.spring.fastEffects}`)};
+    transition: ${unsafeCSS(`padding-inline ${DesignToken.motion.spring.fastSpatial}`)};
   }
   :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) {
     flex-shrink: 0;
@@ -121,9 +121,9 @@ export const ButtonStyle: CSSResultGroup = css`
         :--pressed
       ):not([disabled-interactive]):not(:disabled)
   ) {
-    width: calc(
-      var(--_button-width) + calc(var(--_button-width) * var(--m3e-standard-button-group-width-multiplier, 0.15))
-    );
+    width: calc(var(--_button-width) + var(--_pressed-growth, 0px));
+    /* Padding grows with the width, so the label keeps its box while the spring overshoots on release. */
+    --_adjacent-shrink: calc(var(--_pressed-growth, 0px) * -1);
   }
   :host(
       :is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):is(
