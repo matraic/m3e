@@ -41,7 +41,7 @@ test.describe("m3e-autocomplete", () => {
     await page.keyboard.press("Enter");
 
     await expect(input).toHaveValue("Apples");
-    await expect(page.locator('m3e-autocomplete m3e-option').filter({ hasText: "Apples" })).toHaveAttribute(
+    await expect(page.locator("m3e-autocomplete m3e-option").filter({ hasText: "Apples" })).toHaveAttribute(
       "selected",
       "",
     );
@@ -62,16 +62,84 @@ test.describe("m3e-autocomplete", () => {
     const eventPromise = page.evaluate(
       () =>
         new Promise<string>((resolve) => {
-          document.querySelector("m3e-autocomplete")!.addEventListener(
-            "query",
-            (event) => resolve((event as CustomEvent<{ term: string }>).detail.term),
-            { once: true },
-          );
+          document
+            .querySelector("m3e-autocomplete")!
+            .addEventListener("query", (event) => resolve((event as CustomEvent<{ term: string }>).detail.term), {
+              once: true,
+            });
         }),
     );
 
     await input.fill("pear");
 
     await expect(eventPromise).resolves.toBe("pear");
+  });
+});
+
+test.describe("m3e-autocomplete options", () => {
+  test("shows the no-data label when nothing matches", async ({ page, render }) => {
+    await render(autocompleteMarkup);
+    await page.getByRole("combobox").fill("zzz");
+
+    await expect(page.locator("m3e-autocomplete-menu, [id$=-menu]").getByText("No options")).toBeVisible();
+  });
+
+  test("uses a custom no-data label", async ({ page, render }) => {
+    await render(autocompleteMarkup.replace("<m3e-autocomplete ", '<m3e-autocomplete no-data-label="Nothing here" '));
+    await page.getByRole("combobox").fill("zzz");
+
+    await expect(page.locator("[id$=-menu]").getByText("Nothing here")).toBeVisible();
+  });
+
+  test("hide-no-data suppresses the no-data message", async ({ page, render }) => {
+    await render(autocompleteMarkup.replace("<m3e-autocomplete ", "<m3e-autocomplete hide-no-data "));
+    await page.getByRole("combobox").fill("zzz");
+
+    await expect(page.getByRole("option", { name: "Apples" })).toBeHidden();
+    await expect(page.locator("m3e-autocomplete-menu, [id$=-menu]").getByText("No options")).toBeHidden();
+  });
+
+  test("shows the loading label while loading", async ({ page, render }) => {
+    await render(autocompleteMarkup.replace("<m3e-autocomplete ", "<m3e-autocomplete loading "));
+    await page.getByRole("combobox").focus();
+
+    await expect(page.locator("[id$=-menu]").getByText("Loading...")).toBeVisible();
+  });
+
+  test("hide-loading suppresses the loading message", async ({ page, render }) => {
+    await render(autocompleteMarkup.replace("<m3e-autocomplete ", "<m3e-autocomplete loading hide-loading "));
+    await page.getByRole("combobox").focus();
+
+    await expect(page.locator("[id$=-menu]").getByText("Loading...")).toBeHidden();
+  });
+
+  test("case-sensitive filtering requires matching case", async ({ page, render }) => {
+    await render(autocompleteMarkup.replace("<m3e-autocomplete ", "<m3e-autocomplete case-sensitive "));
+    const input = page.getByRole("combobox");
+
+    await input.fill("ban");
+    await expect(page.getByRole("option", { name: "Bananas" })).toBeHidden();
+
+    await input.fill("Ban");
+    await expect(page.getByRole("option", { name: "Bananas" })).toBeVisible();
+  });
+
+  test("applies panel-class to the suggestion panel", async ({ page, render }) => {
+    await render(autocompleteMarkup.replace("<m3e-autocomplete ", '<m3e-autocomplete panel-class="fancy wide" '));
+    await page.getByRole("combobox").focus();
+
+    await expect(page.getByRole("option", { name: "Apples" })).toBeVisible();
+    await expect(page.locator(".fancy.wide")).toHaveCount(1);
+  });
+
+  test("Escape closes the suggestions", async ({ page, render }) => {
+    await render(autocompleteMarkup);
+    const input = page.getByRole("combobox");
+    await input.focus();
+    await expect(input).toHaveAttribute("aria-expanded", "true");
+
+    await page.keyboard.press("Escape");
+
+    await expect(input).toHaveAttribute("aria-expanded", "false");
   });
 });

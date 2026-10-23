@@ -768,7 +768,13 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
     }
 
     const input = this.#input;
-    setTimeout(() => this.#menu?.show(input, this.#formField?.menuAnchor));
+    const menu = this.#menu;
+    // Skip the deferred show if the options were filtered away in the meantime.
+    setTimeout(() => {
+      if (this.#menu === menu && this.#shouldShowMenu) {
+        menu.show(input, this.#formField?.menuAnchor);
+      }
+    });
   }
 
   /** @private */
