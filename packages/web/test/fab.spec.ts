@@ -38,7 +38,15 @@ test.describe("m3e-fab", () => {
   });
 
   test("accepts each supported variant", async ({ page, render }) => {
-    const variants = ["primary", "primary-container", "secondary", "secondary-container", "tertiary", "tertiary-container", "surface"];
+    const variants = [
+      "primary",
+      "primary-container",
+      "secondary",
+      "secondary-container",
+      "tertiary",
+      "tertiary-container",
+      "surface",
+    ];
     await render(variants.map((variant) => `<m3e-fab variant="${variant}"></m3e-fab>`).join(""));
     const fabs = page.locator("m3e-fab");
 
@@ -86,8 +94,46 @@ test.describe("m3e-fab", () => {
     await page.getByRole("button", { name: "Create" }).click();
 
     await expect
-      .poll(() => page.evaluate(() => (window as unknown as { submittedValues: [string, FormDataEntryValue][] }).submittedValues))
+      .poll(() =>
+        page.evaluate(() => (window as unknown as { submittedValues: [string, FormDataEntryValue][] }).submittedValues),
+      )
       .toEqual([["action", "create"]]);
   });
+});
 
+test.describe("m3e-fab lowered", () => {
+  test("reflects the lowered attribute", async ({ page, render }) => {
+    await render('<m3e-fab lowered aria-label="Add"><span slot="label">Add</span></m3e-fab>');
+
+    await expect(page.locator("m3e-fab")).toHaveAttribute("lowered", "");
+  });
+
+  test("is not lowered by default", async ({ page, render }) => {
+    await render('<m3e-fab aria-label="Add"><span slot="label">Add</span></m3e-fab>');
+
+    await expect(page.locator("m3e-fab")).not.toHaveAttribute("lowered");
+  });
+
+  test("a lowered fab casts a different shadow than a raised one", async ({ page, render }) => {
+    await render(`
+      <m3e-fab id="raised" aria-label="Add"><span slot="label">Add</span></m3e-fab>
+      <m3e-fab id="low" lowered aria-label="Add"><span slot="label">Add</span></m3e-fab>
+    `);
+    const shadow = (id: string) =>
+      page.locator(id).evaluate((el) => {
+        const elevation = el.shadowRoot!.querySelector("m3e-elevation")!;
+        return (
+          getComputedStyle(elevation).getPropertyValue("--m3e-elevation-level") + getComputedStyle(elevation).boxShadow
+        );
+      });
+
+    expect(await shadow("#raised")).not.toBe(await shadow("#low"));
+  });
+
+  test("toggling lowered at runtime reflects", async ({ page, render }) => {
+    await render('<m3e-fab aria-label="Add"><span slot="label">Add</span></m3e-fab>');
+    await page.locator("m3e-fab").evaluate((el) => ((el as HTMLElement & { lowered: boolean }).lowered = true));
+
+    await expect(page.locator("m3e-fab")).toHaveAttribute("lowered", "");
+  });
 });
