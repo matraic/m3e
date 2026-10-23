@@ -438,7 +438,7 @@ export class M3eRichTooltipElement extends TooltipElementBase {
 
   /** @private */
   #updateMessage() {
-    const message = this.#subheadText ? `${this.#subheadText}/n${this.#contentText}` : this.#contentText;
+    const message = this.#subheadText ? `${this.#subheadText}\n${this.#contentText}` : this.#contentText;
     if (this.isConnected && this.control) {
       if (this.#message && this.#messageRegistered) {
         M3eAriaDescriber.removeDescription(this.control, this.#message);
