@@ -8,6 +8,7 @@ import {
   customElement,
   DesignToken,
   Disabled,
+  getTextContent,
   hasAssignedNodes,
   M3eFocusRingElement,
   M3eRippleElement,
@@ -18,7 +19,7 @@ import {
   setCustomState,
 } from "@m3e/web/core";
 
-import { selectionManager } from "@m3e/web/core/a11y";
+import { selectionManager, typeaheadLabel } from "@m3e/web/core/a11y";
 
 import type { M3eTreeElement } from "./TreeElement";
 
@@ -276,6 +277,7 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
   /** @private */ #tree: M3eTreeElement | null = null;
   /** @private */ #path = new Array<M3eTreeItemElement>();
   /** @private */ #link: HTMLAnchorElement | null = null;
+  /** @private */ #labelText = "";
 
   /**
    * Whether the item is expanded.
@@ -292,6 +294,11 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
   /** A reference to the nested `HTMLAnchorElement`. */
   get link(): HTMLAnchorElement | null {
     return this.#link;
+  }
+
+  /** @internal */
+  [typeaheadLabel](): string {
+    return this.#labelText;
   }
 
   /** A reference to the element used to present the label of the item. */
@@ -502,6 +509,7 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
 
   /** @private */
   #handleSlotChange(e: Event): void {
+    this.#labelText = getTextContent(<HTMLSlotElement>e.target, true);
     this.#link =
       (<HTMLSlotElement>e.target).assignedElements({ flatten: true }).find((x) => x instanceof HTMLAnchorElement) ??
       null;
