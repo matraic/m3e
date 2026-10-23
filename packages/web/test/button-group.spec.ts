@@ -195,6 +195,70 @@ test.describe("m3e-button-group", () => {
     expect(overflow).toBeLessThan(0.01);
   });
 
+  test("shrinks a neighbor by at most its end padding", async ({ page, render }) => {
+    await render(`
+      <m3e-button-group>
+        <m3e-button>Start turn-by-turn navigation</m3e-button>
+        <m3e-button>Day</m3e-button>
+        <m3e-button>Week</m3e-button>
+      </m3e-button-group>
+    `);
+
+    const measure = () =>
+      page.evaluate(() =>
+        [...document.querySelectorAll("m3e-button")].map((x) => ({
+          width: x.getBoundingClientRect().width,
+          endPadding: parseFloat(getComputedStyle(x.shadowRoot!.querySelector(".wrapper")!).paddingInlineEnd),
+        })),
+      );
+    const rest = await measure();
+
+    const day = page.getByRole("button", { name: "Day" });
+    await page.getByRole("button", { name: "Start turn-by-turn navigation" }).hover();
+    await day.evaluate(armWidthTransition);
+    await page.mouse.down();
+    await day.evaluate((x: ArmedButton) => x.widthTransition);
+    await page.evaluate(() =>
+      document.querySelectorAll("m3e-button").forEach((x) => x.getAnimations().forEach((a) => a.finish())),
+    );
+    const held = await measure();
+    await page.mouse.up();
+
+    // 15% of the wide button is more than the neighbor's end padding, so the shrink stops at the padding and the
+    // pressed button grows by the same amount.
+    const shrink = rest[1].width - held[1].width;
+    expect(shrink).toBeCloseTo(rest[1].endPadding, 0);
+    expect(held[0].width - rest[0].width).toBeCloseTo(shrink, 0);
+    expect(held[2].width).toBeCloseTo(rest[2].width, 0);
+  });
+
+  test("returns every button to its rest width after quick successive presses", async ({ page, render }) => {
+    await render(`
+      <m3e-button-group>
+        <m3e-button>Start turn-by-turn navigation</m3e-button>
+        <m3e-button>Day</m3e-button>
+        <m3e-button>Week</m3e-button>
+      </m3e-button-group>
+    `);
+
+    const widths = () =>
+      page.evaluate(() => [...document.querySelectorAll("m3e-button")].map((x) => x.getBoundingClientRect().width));
+    const rest = await widths();
+
+    for (const name of ["Start turn-by-turn navigation", "Day", "Day", "Week"]) {
+      await page.getByRole("button", { name }).hover();
+      await page.mouse.down();
+      await page.waitForTimeout(50);
+      await page.mouse.up();
+      await page.waitForTimeout(50);
+    }
+
+    // Largest distance of any button from its rest width, once the presses have settled.
+    await expect
+      .poll(async () => Math.max(...(await widths()).map((x, i) => Math.abs(x - rest[i]))), { timeout: 5000 })
+      .toBeLessThan(0.5);
+  });
+
   test("resizes pressed buttons without a transition when reduced motion is preferred", async ({ page, render }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await render(`

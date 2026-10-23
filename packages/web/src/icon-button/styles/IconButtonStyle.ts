@@ -128,11 +128,9 @@ export const IconButtonStyle: CSSResultGroup = css`
         :--pressed
       ):not([disabled-interactive]):not(:disabled)
   ) {
-    width: calc(
-      var(--_button-width) + calc(var(--_button-width) * var(--m3e-standard-button-group-width-multiplier, 0.15))
-    );
+    width: calc(var(--_button-width) + var(--_pressed-growth, 0px));
     /* Padding grows with the width, so the icon keeps its box while the spring overshoots on release. */
-    --_adjacent-shrink: calc(var(--_button-width) * var(--m3e-standard-button-group-width-multiplier, 0.15) * -1);
+    --_adjacent-shrink: calc(var(--_pressed-growth, 0px) * -1);
   }
   @media (forced-colors: active) {
     .base,
