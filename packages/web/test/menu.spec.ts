@@ -192,7 +192,7 @@ test.describe("m3e-menu", () => {
     const fruits = page.getByRole("menuitem", { name: "Fruits" });
     const apricot = page.getByRole("menuitem", { name: "Apricot" });
 
-    await openMenu(page);
+    await openMenu(page, page.locator("#menu"));
     await fruits.focus();
     await page.keyboard.press("ArrowRight");
     await expect(apricot).toBeVisible();
