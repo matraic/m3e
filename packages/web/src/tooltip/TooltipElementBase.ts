@@ -216,9 +216,7 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
       TooltipElementBase.__openTooltips.push(this);
     }
 
-    if (!this._isInteractive) {
-      document.addEventListener("keydown", this.#documentKeyDownHandler);
-    }
+    document.addEventListener("keydown", this.#documentKeyDownHandler);
   }
 
   /** Manually hides the tooltip. */

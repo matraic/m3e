@@ -294,6 +294,18 @@ test.describe("m3e-rich-tooltip", () => {
     await expect(page.locator("#btn")).toBeFocused();
   });
 
+  test("Escape closes the dialog while focus is still on the control", async ({ page, render }) => {
+    await render(interactive());
+    await page.locator("#btn").click();
+    await expect.poll(() => isOpen(page, "m3e-rich-tooltip")).toBe(true);
+    await expect(page.locator("#btn")).toBeFocused();
+
+    await page.keyboard.press("Escape");
+
+    await expect.poll(() => isOpen(page, "m3e-rich-tooltip")).toBe(false);
+    await expect(page.locator("#btn")).toBeFocused();
+  });
+
   test("clicking outside closes the dialog", async ({ page, render }) => {
     await render(interactive());
     await page.locator("#btn").click();
