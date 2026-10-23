@@ -139,3 +139,72 @@ test.describe("m3e-button", () => {
     await expect(page.getByRole("link", { name: "Go to destination" })).toBeVisible();
   });
 });
+
+test.describe("m3e-button appearance", () => {
+  for (const variant of ["elevated", "filled", "tonal", "outlined", "text"]) {
+    test(`reflects the ${variant} variant`, async ({ page, render }) => {
+      await render(`<m3e-button variant="${variant}">Go</m3e-button>`);
+
+      await expect(page.locator("m3e-button")).toHaveAttribute("variant", variant);
+    });
+  }
+
+  test("falls back to the text variant for an unknown value", async ({ page, render }) => {
+    await render('<m3e-button variant="bogus">Go</m3e-button>');
+
+    await expect(page.locator("m3e-button")).toHaveAttribute("variant", "text");
+  });
+
+  test("defaults to the small size and rounded shape", async ({ page, render }) => {
+    await render("<m3e-button>Go</m3e-button>");
+    const button = page.locator("m3e-button");
+
+    expect(await button.evaluate((el) => (el as HTMLElement & { size: string }).size)).toBe("small");
+    expect(await button.evaluate((el) => (el as HTMLElement & { shape: string }).shape)).toBe("rounded");
+  });
+
+  test("falls back to small for an unknown size", async ({ page, render }) => {
+    await render('<m3e-button size="bogus">Go</m3e-button>');
+
+    await expect(page.locator("m3e-button")).toHaveAttribute("size", "small");
+  });
+
+  test("falls back to rounded for an unknown shape", async ({ page, render }) => {
+    await render('<m3e-button shape="bogus">Go</m3e-button>');
+
+    await expect(page.locator("m3e-button")).toHaveAttribute("shape", "rounded");
+  });
+
+  test("taller sizes render taller buttons", async ({ page, render }) => {
+    const sizes = ["extra-small", "small", "medium", "large", "extra-large"];
+    await render(sizes.map((x) => `<m3e-button id="${x}" size="${x}">Go</m3e-button>`).join(""));
+
+    const heights = await Promise.all(
+      sizes.map((x) => page.locator(`#${x}`).evaluate((el) => el.getBoundingClientRect().height)),
+    );
+    for (let i = 1; i < heights.length; i++) {
+      expect(heights[i]).toBeGreaterThan(heights[i - 1]);
+    }
+  });
+
+  test("square and rounded shapes have different corner radii", async ({ page, render }) => {
+    await render(`
+      <m3e-button id="r" shape="rounded" variant="filled">Go</m3e-button>
+      <m3e-button id="s" shape="square" variant="filled">Go</m3e-button>
+    `);
+    const radius = (id: string) =>
+      page.locator(id).evaluate((el) => getComputedStyle(el.shadowRoot!.querySelector(".base")!).borderTopLeftRadius);
+
+    expect(await radius("#r")).not.toBe(await radius("#s"));
+  });
+
+  test("a rounded button is fully rounded", async ({ page, render }) => {
+    await render('<m3e-button shape="rounded" variant="filled">Go</m3e-button>');
+
+    const { radius, height } = await page.locator("m3e-button").evaluate((el) => ({
+      radius: Number.parseFloat(getComputedStyle(el.shadowRoot!.querySelector(".base")!).borderTopLeftRadius),
+      height: el.getBoundingClientRect().height,
+    }));
+    expect(radius).toBeGreaterThanOrEqual(height / 2 - 1);
+  });
+});
