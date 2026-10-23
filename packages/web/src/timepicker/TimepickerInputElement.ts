@@ -565,8 +565,8 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
     if (typedDigit !== null && !atEnd) {
       // Cursor not at end, always treat as fresh single-digit overwrite
       value = typedDigit;
-    } else if (raw.length >= 2 && atEnd && raw.startsWith("0")) {
-      // Natural 2-digit typing or paste
+    } else if (raw.length >= 2 && atEnd && (typedDigit === null || raw.startsWith("0"))) {
+      // Natural 2-digit typing, or a paste / autofill of a whole value
       const candidate = parseInt(raw.slice(-2));
       value = isValid(candidate) ? candidate : Number(raw.slice(-1));
     } else {
