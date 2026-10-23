@@ -297,6 +297,8 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
         deleteCustomState(this, "--closing");
         this.dispatchEvent(new Event("closed"));
       } else {
+        // Commit the explicit size so the collapse transitions from it rather than from `auto`.
+        void this.offsetHeight;
         requestAnimationFrame(() => {
           this.#clearSize();
           this.addEventListener(
