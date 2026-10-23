@@ -342,6 +342,44 @@ test.describe("m3e-tree", () => {
     await expect.poll(() => itemProp(page, "a", "open")).toBe(false);
   });
 
+  test("Right on an open item moves to its first enabled child", async ({ page, render }) => {
+    await render(tree("", { a1: "disabled" }));
+    await page.locator(label("c")).click();
+    await page.locator("m3e-tree").focus();
+    await page.keyboard.press("Home");
+
+    await page.keyboard.press("ArrowRight");
+    expect(await itemProp(page, "a", "open")).toBe(true);
+    expect(await activeId(page)).toBe("a");
+
+    await page.keyboard.press("ArrowRight");
+    expect(await activeId(page)).toBe("a2");
+  });
+
+  test("Right on a leaf item does nothing", async ({ page, render }) => {
+    await render(tree());
+    await page.locator(label("c")).click();
+    await page.locator("m3e-tree").focus();
+
+    await page.keyboard.press("ArrowRight");
+
+    expect(await activeId(page)).toBe("c");
+  });
+
+  test("Left moves to the first child in right-to-left", async ({ page, render }) => {
+    await render(tree());
+    await page.evaluate(() => document.documentElement.setAttribute("dir", "rtl"));
+    await page.locator(label("c")).click();
+    await page.locator("m3e-tree").focus();
+    await page.keyboard.press("Home");
+
+    await page.keyboard.press("ArrowLeft");
+    expect(await itemProp(page, "a", "open")).toBe(true);
+    await page.keyboard.press("ArrowLeft");
+    expect(await activeId(page)).toBe("a1");
+    await page.evaluate(() => document.documentElement.removeAttribute("dir"));
+  });
+
   test("keyboard navigation skips collapsed and disabled items", async ({ page, render }) => {
     await render(tree("", { b: "disabled" }));
     await page.locator(label("c")).click();

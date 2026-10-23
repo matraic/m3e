@@ -393,6 +393,8 @@ export class M3eTreeElement extends Role(LitElement, "tree") {
           }
         } else if (item.hasChildItems && !item.open) {
           item.expand();
+        } else {
+          this.#activateFirstChild(item);
         }
 
         break;
@@ -411,12 +413,24 @@ export class M3eTreeElement extends Role(LitElement, "tree") {
           }
         } else if (item.hasChildItems && !item.open) {
           item.expand();
+        } else {
+          this.#activateFirstChild(item);
         }
         break;
 
       default:
         this[selectionManager].onKeyDown(e);
         break;
+    }
+  }
+
+  /** @private */
+  #activateFirstChild(item: M3eTreeItemElement): void {
+    if (item.hasChildItems && item.open) {
+      const child = item.childItems.find((x) => !x.disabled);
+      if (child) {
+        this[selectionManager].setActiveItem(child);
+      }
     }
   }
 
