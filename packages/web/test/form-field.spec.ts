@@ -5,21 +5,27 @@ async function isSubscriptContentVisible(
   fieldIndex: number,
   content: "hint" | "error",
 ): Promise<boolean> {
-  return page.locator("m3e-form-field").nth(fieldIndex).evaluate((element, selector) => {
-    const content = element.shadowRoot!.querySelector(`.${selector}`)!;
-    return getComputedStyle(content).display !== "none";
-  }, content);
+  return page
+    .locator("m3e-form-field")
+    .nth(fieldIndex)
+    .evaluate((element, selector) => {
+      const content = element.shadowRoot!.querySelector(`.${selector}`)!;
+      return getComputedStyle(content).display !== "none";
+    }, content);
 }
 
 async function getSubscriptStyle(
   page: import("@playwright/test").Page,
   fieldIndex: number,
 ): Promise<{ display: string; opacity: string }> {
-  return page.locator("m3e-form-field").nth(fieldIndex).evaluate((element) => {
-    const subscript = element.shadowRoot!.querySelector(".subscript")!;
-    const style = getComputedStyle(subscript);
-    return { display: style.display, opacity: style.opacity };
-  });
+  return page
+    .locator("m3e-form-field")
+    .nth(fieldIndex)
+    .evaluate((element) => {
+      const subscript = element.shadowRoot!.querySelector(".subscript")!;
+      const style = getComputedStyle(subscript);
+      return { display: style.display, opacity: style.opacity };
+    });
 }
 
 test.describe("m3e-form-field", () => {
@@ -132,9 +138,7 @@ test.describe("m3e-form-field", () => {
     const input = page.getByRole("textbox", { name: "Username" });
 
     await expect.poll(() => isSubscriptContentVisible(page, 0, "hint")).toBe(true);
-    await expect
-      .poll(() => input.getAttribute("aria-describedby"))
-      .toMatch(/\S/);
+    await expect.poll(() => input.getAttribute("aria-describedby")).toMatch(/\S/);
   });
 
   test("hides the subscript completely when hide-subscript is always", async ({ page, render }) => {
@@ -203,8 +207,43 @@ test.describe("m3e-form-field", () => {
 
     await expect(input).toHaveAttribute("aria-invalid", "true");
     await expect.poll(() => isSubscriptContentVisible(page, 0, "error")).toBe(true);
-    expect(
-      await input.evaluate((element) => !(element as HTMLInputElement).checkValidity()),
-    ).toBe(true);
+    expect(await input.evaluate((element) => !(element as HTMLInputElement).checkValidity())).toBe(true);
+  });
+
+  const requiredField = (attrs = "") => `
+    <m3e-form-field ${attrs}>
+      <label slot="label">Name</label>
+      <input required />
+    </m3e-form-field>
+  `;
+
+  test("shows a required marker for a required control", async ({ page, render }) => {
+    await render(requiredField());
+
+    await expect
+      .poll(() => page.locator("m3e-form-field").evaluate((el) => el.matches(":state(--required)")))
+      .toBe(true);
+    await expect(page.locator("m3e-form-field .required-marker")).toHaveCount(1);
+  });
+
+  test("hide-required-marker removes the marker", async ({ page, render }) => {
+    await render(requiredField("hide-required-marker"));
+
+    await expect
+      .poll(() => page.locator("m3e-form-field").evaluate((el) => el.matches(":state(--required)")))
+      .toBe(true);
+    await expect(page.locator("m3e-form-field .required-marker")).toHaveCount(0);
+  });
+
+  test("an optional control has no required marker", async ({ page, render }) => {
+    await render(`
+      <m3e-form-field>
+        <label slot="label">Name</label>
+        <input />
+      </m3e-form-field>
+    `);
+
+    await expect(page.locator("m3e-form-field .required-marker")).toHaveCount(0);
+    expect(await page.locator("m3e-form-field").evaluate((el) => el.matches(":state(--required)"))).toBe(false);
   });
 });
