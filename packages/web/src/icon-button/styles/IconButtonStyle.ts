@@ -131,6 +131,8 @@ export const IconButtonStyle: CSSResultGroup = css`
     width: calc(
       var(--_button-width) + calc(var(--_button-width) * var(--m3e-standard-button-group-width-multiplier, 0.15))
     );
+    /* Padding grows with the width, so the icon keeps its box while the spring overshoots on release. */
+    --_adjacent-shrink: calc(var(--_button-width) * var(--m3e-standard-button-group-width-multiplier, 0.15) * -1);
   }
   @media (forced-colors: active) {
     .base,

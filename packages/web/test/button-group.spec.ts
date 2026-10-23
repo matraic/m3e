@@ -1,5 +1,23 @@
 import { expect, test } from "./fixtures";
 
+/** A button that pauses its transitions when its next `width` transition starts. */
+type ArmedButton = HTMLElement & { widthTransition?: Promise<void> };
+
+/** Arms `button` so that its own and its wrapper's transitions pause as soon as its next `width` transition runs. */
+function armWidthTransition(button: ArmedButton): void {
+  button.widthTransition = new Promise((resolve) => {
+    const listener = (e: TransitionEvent) => {
+      if (e.propertyName !== "width") return;
+      button.removeEventListener("transitionrun", listener);
+      [button, button.shadowRoot!.querySelector(".wrapper")!].forEach((x) =>
+        x.getAnimations().forEach((a) => a.pause()),
+      );
+      resolve();
+    };
+    button.addEventListener("transitionrun", listener);
+  });
+}
+
 test.describe("m3e-button-group", () => {
   test("exposes a group containing its buttons", async ({ page, render }) => {
     await render(`
@@ -131,6 +149,50 @@ test.describe("m3e-button-group", () => {
     for (const peak of peaks) {
       expect(peak).toBeGreaterThan(1.05);
     }
+  });
+
+  test("keeps the label of a released button within its box while the width springs back", async ({ page, render }) => {
+    await render(`
+      <m3e-theme motion="expressive">
+        <m3e-button-group>
+          <m3e-button>Start</m3e-button>
+          <m3e-button>Directions</m3e-button>
+          <m3e-button>Share</m3e-button>
+        </m3e-button-group>
+      </m3e-theme>
+    `);
+
+    const directions = page.getByRole("button", { name: "Directions" });
+    const widthTransition = () => directions.evaluate((x: ArmedButton) => x.widthTransition);
+
+    await directions.hover();
+    await directions.evaluate(armWidthTransition);
+    await page.mouse.down();
+    await widthTransition();
+    // Width and padding move together; finish both so the release starts from the same point for each.
+    await directions.evaluate((x) =>
+      [x, x.shadowRoot!.querySelector(".wrapper")!].forEach((y) => y.getAnimations().forEach((a) => a.finish())),
+    );
+    await directions.evaluate(armWidthTransition);
+    await page.mouse.up();
+    await widthTransition();
+
+    // Largest overflow of the label text beyond the label box, sampled every millisecond while paused.
+    const overflow = await directions.evaluate((button) => {
+      const transitions = [button, button.shadowRoot!.querySelector(".wrapper")!].flatMap((x) => x.getAnimations());
+      const label = button.shadowRoot!.querySelector(".label")!;
+      const text = document.createRange();
+      text.selectNodeContents(button);
+      const end = Math.max(...transitions.map((x) => Number(x.effect!.getComputedTiming().endTime)));
+      let max = 0;
+      for (let time = 0; time <= end; time++) {
+        transitions.forEach((x) => (x.currentTime = time));
+        max = Math.max(max, text.getBoundingClientRect().width - label.getBoundingClientRect().width);
+      }
+      return max;
+    });
+
+    expect(overflow).toBeLessThan(0.01);
   });
 
   test("resizes pressed buttons without a transition when reduced motion is preferred", async ({ page, render }) => {

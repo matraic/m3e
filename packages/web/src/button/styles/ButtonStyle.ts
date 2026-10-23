@@ -124,6 +124,8 @@ export const ButtonStyle: CSSResultGroup = css`
     width: calc(
       var(--_button-width) + calc(var(--_button-width) * var(--m3e-standard-button-group-width-multiplier, 0.15))
     );
+    /* Padding grows with the width, so the label keeps its box while the spring overshoots on release. */
+    --_adjacent-shrink: calc(var(--_button-width) * var(--m3e-standard-button-group-width-multiplier, 0.15) * -1);
   }
   :host(
       :is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):is(
