@@ -89,7 +89,16 @@ test.describe("m3e-toolbar", () => {
     await expect(items.nth(2)).toBeFocused();
     await page.keyboard.press("Home");
     await expect(items.nth(0)).toBeFocused();
+  });
+
+  test("arrow keys wrap at the ends", async ({ page, render }) => {
+    await render(toolbar());
+    const items = page.locator("m3e-icon-button");
+
+    await items.nth(0).focus();
     await page.keyboard.press("ArrowLeft");
+    await expect(items.nth(2)).toBeFocused();
+    await page.keyboard.press("ArrowRight");
     await expect(items.nth(0)).toBeFocused();
   });
 
