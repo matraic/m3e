@@ -8,6 +8,8 @@ import {
   customElement,
   DesignToken,
   DisabledMixin,
+  hasCustomState,
+  prefersReducedMotion,
   Role,
   ScrollController,
   setCustomEnumState,
@@ -22,6 +24,38 @@ import { positionAnchor } from "@m3e/web/core/anchoring";
 import { M3eFabElement } from "@m3e/web/fab";
 
 import { FabMenuVariant, isFabMenuVariant } from "./FabMenuVariant";
+
+/**
+ * Returns when each item of a menu appears or disappears, as in Compose's `FloatingActionButtonMenu`: a counter animates
+ * between 0 and the number of items with the slow effects spring (damping ratio 1, stiffness 800 in both motion
+ * schemes) and is truncated to an integer, and an item shows while the counter is at least the number of items minus
+ * its index. The counter reaches the number of items only when its animation ends, at a remaining distance of 1, so the
+ * top two items appear together.
+ * @param {number} count The number of items.
+ * @param {boolean} open Whether the menu is opening.
+ * @returns {Array<number>} The delay of each item, from top to bottom, in whole milliseconds as Compose advances the
+ * counter.
+ */
+function staggerDelays(count: number, open: boolean): number[] {
+  const w = Math.sqrt(800);
+
+  // The time, in milliseconds, at which the remaining distance of the counter, count * (1 + wt) * e^-wt, drops to
+  // `remaining`.
+  const crossing = (remaining: number) => {
+    if (remaining >= count) return 0;
+    let [low, high] = [0, 1];
+    for (let i = 0; i < 40; i++) {
+      const mid = (low + high) / 2;
+      if (count * (1 + w * mid) * Math.exp(-w * mid) > remaining) low = mid;
+      else high = mid;
+    }
+    return high * 1000;
+  };
+
+  // The animation snaps to its target at its estimated duration, truncated to a whole millisecond.
+  const end = Math.floor(crossing(1));
+  return Array.from({ length: count }, (_, i) => Math.min(Math.ceil(crossing(open ? Math.max(i, 1) : count - i)), end));
+}
 
 /**
  * A menu, opened from a floating action button (FAB), used to display multiple related actions.
@@ -89,8 +123,8 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       margin: unset;
       border: unset;
       overflow: visible;
+      width: var(--_fab-menu-width, fit-content);
       max-width: var(--m3e-fab-menu-max-width, 280px);
-      opacity: 0;
       background-color: transparent;
       display: none;
     }
@@ -99,10 +133,22 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     }
     :host(:not(:is(:state(--no-animate), :--no-animate))) {
       transition: ${unsafeCSS(
-        `opacity ${DesignToken.motion.spring.fastEffects}, 
-        transform ${DesignToken.motion.spring.fastSpatial},
-        overlay ${DesignToken.motion.spring.fastEffects} allow-discrete,
-        display ${DesignToken.motion.spring.fastEffects} allow-discrete`,
+        `overlay ${DesignToken.motion.spring.fastSpatial} allow-discrete var(--_fab-menu-delay, 0ms),
+        display ${DesignToken.motion.spring.fastSpatial} allow-discrete var(--_fab-menu-delay, 0ms)`,
+      )};
+    }
+    ::slotted(m3e-fab-menu-item) {
+      width: 0;
+      opacity: 0;
+    }
+    :host(:popover-open) ::slotted(m3e-fab-menu-item) {
+      width: var(--_fab-menu-item-width, auto);
+      opacity: 1;
+    }
+    :host(:not(:is(:state(--no-animate), :--no-animate))) ::slotted(m3e-fab-menu-item) {
+      transition: ${unsafeCSS(
+        `width ${DesignToken.motion.spring.fastSpatial} var(--_fab-menu-item-delay, 0ms),
+        opacity ${DesignToken.motion.spring.fastEffects} var(--_fab-menu-item-delay, 0ms)`,
       )};
     }
     .base {
@@ -138,35 +184,28 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       --_fab-menu-background-focus-color: var(--m3e-tertiary-fab-focus-color, ${DesignToken.color.onTertiaryContainer});
       --_fab-menu-ripple-color: var(--m3e-tertiary-fab-ripple-color, ${DesignToken.color.onTertiaryContainer});
     }
-    :host {
-      transform: scaleX(0);
-    }
     :host(:is(:state(--left), :--left)) {
       align-items: flex-start;
-      transform-origin: left;
+      --_fab-menu-item-justify: flex-start;
     }
     :host(:is(:state(--right), :--right)) {
       align-items: flex-end;
-      transform-origin: right;
+      --_fab-menu-item-justify: flex-end;
     }
     :host(:popover-open) {
-      transform: scaleX(1);
       display: inline-flex;
-      opacity: 1;
     }
     :host::backdrop {
       background-color: transparent;
     }
     @starting-style {
-      :host(:popover-open) {
+      :host(:popover-open) ::slotted(m3e-fab-menu-item) {
         opacity: 0;
-      }
-      :host(:popover-open) {
-        transform: scaleX(0);
       }
     }
     @media (prefers-reduced-motion) {
-      :host(:not(:is(:state(--no-animate), :--no-animate))) {
+      :host(:not(:is(:state(--no-animate), :--no-animate))),
+      :host(:not(:is(:state(--no-animate), :--no-animate))) ::slotted(m3e-fab-menu-item) {
         transition: none;
       }
     }
@@ -190,6 +229,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     .withVerticalOrientation();
 
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);
+  /** @private */ readonly #transitionEndHandler = (e: TransitionEvent) => this.#handleTransitionEnd(e);
 
   /** @private */
   readonly #scrollController = new ScrollController(this, { target: null, callback: () => this.hide() });
@@ -264,7 +304,22 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       },
     );
 
+    const items = this.#items();
+    const animate = this.#animates();
+
+    // A menu still closing keeps the widths its items close from, so they grow back from where they are.
+    const closing = animate && getComputedStyle(this).display !== "none";
+
+    this.#stagger(items, true);
+    if (!closing) {
+      this.#unpin(items);
+    }
+
     this.showPopover();
+
+    if (animate && !closing) {
+      this.#grow(items);
+    }
 
     this.#trigger = trigger;
     this.#trigger.ariaExpanded = "true";
@@ -292,6 +347,12 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       this.#scrollController.unobserve(this.#trigger);
       this.#trigger = undefined;
     }
+
+    const items = this.#items();
+    if (this.#animates() && this.matches(":popover-open")) {
+      this.#pin(items);
+    }
+    this.#stagger(items, false);
     this.hidePopover();
   }
 
@@ -317,6 +378,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     this.setAttribute("popover", "manual");
     this.addEventListener("keydown", this.#keyDownHandler);
     this.addEventListener("toggle", this.#toggleHandler);
+    this.addEventListener("transitionend", this.#transitionEndHandler);
   }
 
   /** @inheritdoc */
@@ -325,6 +387,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
 
     this.removeEventListener("keydown", this.#keyDownHandler);
     this.removeEventListener("toggle", this.#toggleHandler);
+    this.removeEventListener("transitionend", this.#transitionEndHandler);
   }
 
   /** @inheritdoc */
@@ -353,6 +416,75 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     const { added } = this.#listManager.setItems([...this.querySelectorAll("m3e-fab-menu-item")]);
     if (!this.#listManager.activeItem) {
       this.#listManager.updateActiveItem(added.find((x) => !x.disabled));
+    }
+  }
+
+  /** @private */
+  #items(): HTMLElement[] {
+    return [...this.querySelectorAll<HTMLElement>("m3e-fab-menu-item")].filter((x) => !x.hidden);
+  }
+
+  /** @private */
+  #animates(): boolean {
+    return !hasCustomState(this, "--no-animate") && !prefersReducedMotion();
+  }
+
+  /** @private */
+  #stagger(items: HTMLElement[], open: boolean): void {
+    const delays = staggerDelays(items.length, open);
+    items.forEach((x, i) => x.style.setProperty("--_fab-menu-item-delay", `${delays[i]}ms`));
+
+    // The menu stays displayed until its last item has closed.
+    this.style.setProperty("--_fab-menu-delay", `${open ? 0 : Math.max(0, ...delays)}ms`);
+  }
+
+  /** @private */
+  #grow(items: HTMLElement[]): void {
+    // Items are measured at their natural widths and grow to them from zero, as Compose measures an item before
+    // animating its width. The menu takes the width of its widest item meanwhile, so its anchored position does not
+    // move. Its own box is not measured: its first position was computed while it was hidden.
+    const widths = items.map((x) => x.getBoundingClientRect().width);
+    this.style.setProperty("--_fab-menu-width", `${Math.max(0, ...widths)}px`);
+
+    // Commit zero so the items transition from it rather than from `auto`.
+    items.forEach((x) => x.style.setProperty("--_fab-menu-item-width", "0px"));
+    void this.offsetWidth;
+
+    items.forEach((x, i) => x.style.setProperty("--_fab-menu-item-width", `${widths[i]}px`));
+  }
+
+  /** @private */
+  #pin(items: HTMLElement[]): void {
+    // Commit explicit widths so the items close from them rather than from `auto`, and keep their content laid out at
+    // them while clipped. Items still growing keep the widths they grow to.
+    for (const item of items) {
+      if (!item.style.getPropertyValue("--_fab-menu-item-width")) {
+        item.style.setProperty("--_fab-menu-item-width", `${item.getBoundingClientRect().width}px`);
+      }
+    }
+    if (!this.style.getPropertyValue("--_fab-menu-width")) {
+      this.style.setProperty("--_fab-menu-width", `${this.getBoundingClientRect().width}px`);
+    }
+    void this.offsetWidth;
+  }
+
+  /** @private */
+  #unpin(items: HTMLElement[]): void {
+    this.style.removeProperty("--_fab-menu-width");
+    items.forEach((x) => x.style.removeProperty("--_fab-menu-item-width"));
+  }
+
+  /** @private */
+  #handleTransitionEnd(e: TransitionEvent): void {
+    // Once grown, an item returns to its natural width, so that it follows later changes to its content.
+    if (e.propertyName !== "width" || !this.matches(":popover-open")) return;
+    const items = this.#items();
+    const item = items.find((x) => x === e.target);
+    if (!item) return;
+
+    item.style.removeProperty("--_fab-menu-item-width");
+    if (items.every((x) => !x.style.getPropertyValue("--_fab-menu-item-width"))) {
+      this.style.removeProperty("--_fab-menu-width");
     }
   }
 

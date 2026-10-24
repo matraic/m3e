@@ -133,7 +133,15 @@ export class M3eFabMenuItemElement extends KeyboardClick(
     }
     .wrapper {
       width: 100%;
-      overflow: hidden;
+      overflow: clip;
+      display: inline-flex;
+      justify-content: var(--_fab-menu-item-justify, center);
+      border-radius: inherit;
+    }
+    .content {
+      flex: none;
+      box-sizing: border-box;
+      width: var(--_fab-menu-item-width, 100%);
       display: inline-flex;
       align-items: center;
       padding-block-start: var(--m3e-fab-menu-item-top-space, ${DesignToken.measurement.space200});
@@ -243,8 +251,10 @@ export class M3eFabMenuItemElement extends KeyboardClick(
       <div class="touch" aria-hidden="true"></div>
       ${this[renderPseudoLink]()}
       <div class="wrapper">
-        <slot class="icon" name="icon" aria-hidden="true"></slot>
-        <div class="label"><slot></slot></div>
+        <div class="content">
+          <slot class="icon" name="icon" aria-hidden="true"></slot>
+          <div class="label"><slot></slot></div>
+        </div>
       </div>
     </div>`;
   }
