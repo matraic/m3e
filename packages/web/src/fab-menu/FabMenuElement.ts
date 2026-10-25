@@ -287,7 +287,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
         position: "top-end",
         inline: true,
         shift: "main",
-        flip: true,
+
         offset: 8,
       },
       (x, y, position) => {
