@@ -10,7 +10,7 @@ const ITEMS = ["Share", "Edit details", "Duplicate", "Move to folder", "Download
 function motionMenu(motion: "standard" | "expressive"): string {
   return `
     <m3e-theme motion="${motion}">
-      <div id="probe" style="width: 0; transition: width var(--md-sys-motion-spring-fast-spatial)"></div>
+      <div id="probe" style="margin: 50%; width: 0; transition: width var(--md-sys-motion-spring-fast-spatial)"></div>
       <m3e-fab aria-label="More actions" style="position: fixed; right: 16px; bottom: 16px">
         <m3e-fab-menu-trigger for="actions"></m3e-fab-menu-trigger>
       </m3e-fab>
@@ -24,7 +24,7 @@ function motionMenu(motion: "standard" | "expressive"): string {
 test.describe("m3e-fab-menu", () => {
   test("opens from its FAB trigger and exposes menu items", async ({ page, render }) => {
     await render(`
-      <m3e-fab aria-label="More actions">
+      <m3e-fab style="margin-top: 50%;" aria-label="More actions">
         <m3e-fab-menu-trigger for="actions"></m3e-fab-menu-trigger>
       </m3e-fab>
       <m3e-fab-menu id="actions">
@@ -50,7 +50,7 @@ test.describe("m3e-fab-menu", () => {
 
   test("closes when a menu item is selected and restores focus to the FAB", async ({ page, render }) => {
     await render(`
-      <m3e-fab aria-label="More actions">
+      <m3e-fab style="margin-top: 50%;" aria-label="More actions">
         <m3e-fab-menu-trigger for="actions"></m3e-fab-menu-trigger>
       </m3e-fab>
       <m3e-fab-menu id="actions">
@@ -70,7 +70,7 @@ test.describe("m3e-fab-menu", () => {
 
   test("closes on Escape and restores focus to the FAB", async ({ page, render }) => {
     await render(`
-      <m3e-fab aria-label="More actions">
+      <m3e-fab style="margin-top: 50%;" aria-label="More actions">
         <m3e-fab-menu-trigger for="actions"></m3e-fab-menu-trigger>
       </m3e-fab>
       <m3e-fab-menu id="actions">
@@ -91,7 +91,7 @@ test.describe("m3e-fab-menu", () => {
 
   test("moves focus through menu items with arrow keys", async ({ page, render }) => {
     await render(`
-      <m3e-fab aria-label="More actions">
+      <m3e-fab style="margin-top: 50%;" aria-label="More actions">
         <m3e-fab-menu-trigger for="actions"></m3e-fab-menu-trigger>
       </m3e-fab>
       <m3e-fab-menu id="actions">
@@ -137,8 +137,8 @@ test.describe("m3e-fab-menu", () => {
       const items = [...menu.querySelectorAll("m3e-fab-menu-item")];
       const widthDelays = () =>
         items.map((x) => {
-          const transition = x.getAnimations().find((a) => (a as CSSTransition).transitionProperty === "width")!;
-          return transition.effect!.getTiming().delay;
+          const delay = x.style.getPropertyValue("--_fab-menu-item-delay");
+          return delay ? parseFloat(delay) : undefined;
         });
 
       await menu.show(document.querySelector("m3e-fab")!);
@@ -280,9 +280,10 @@ test.describe("m3e-fab-menu", () => {
       const before = items.map((x) => x.getBoundingClientRect().width);
       await menu.show(fab);
       const after = items.map((x) => x.getBoundingClientRect().width);
-      const targets = widthTransitions().map((x) =>
-        parseFloat(String((x.effect as KeyframeEffect).getKeyframes().at(-1)!.width)),
-      );
+      const targets = widthTransitions().map((x) => {
+        const keyframes = (x.effect as KeyframeEffect).getKeyframes();
+        return parseFloat(String(keyframes[keyframes.length - 1]!.width));
+      });
       return { natural, before, after, targets };
     });
 
