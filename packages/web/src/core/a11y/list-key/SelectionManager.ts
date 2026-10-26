@@ -1,6 +1,6 @@
 import { LitElement } from "lit";
 
-import { CheckedOrSelectedMixin, DisabledMixin, checkOrSelect, isCheckedOrSelected } from "@m3e/web/core";
+import { CheckedOrSelectedMixin, DisabledMixin, checkOrSelect, isCheckedOrSelected } from "@pulse/web/core";
 
 import { RadioKeyManager } from "./RadioKeyManager";
 

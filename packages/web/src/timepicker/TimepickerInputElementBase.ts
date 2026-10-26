@@ -1,7 +1,7 @@
 import { LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { AttachInternals, timeConverter, TimeParts } from "@m3e/web/core";
+import { AttachInternals, timeConverter, TimeParts } from "@pulse/web/core";
 
 import { isTimepickerFormat, TimepickerFormat } from "./TimepickerFormat";
 import { isTimepickerView, TimepickerView } from "./TimepickerView";

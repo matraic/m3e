@@ -12,10 +12,10 @@ import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { customElement, dateConverter, DesignToken } from "@m3e/web/core";
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { customElement, dateConverter, DesignToken } from "@pulse/web/core";
+import { M3eDirectionality } from "@pulse/web/core/bidi";
 
-import "@m3e/web/tooltip";
+import "@pulse/web/tooltip";
 
 import { CalendarViewElementBase } from "./CalendarViewElementBase";
 import {

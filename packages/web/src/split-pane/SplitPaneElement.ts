@@ -18,16 +18,16 @@ import {
   registerStyleSheet,
   setCustomState,
   spaceSeparatedStringConverter,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
-import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
-import { PanGestureDetail } from "@m3e/web/gestures/pan";
-import { RepeatGestureDetail } from "@m3e/web/gestures/repeat";
+import { Breakpoint, M3eBreakpointObserver } from "@pulse/web/core/layout";
+import { Direction, M3eDirectionality } from "@pulse/web/core/bidi";
+import { PanGestureDetail } from "@pulse/web/gestures/pan";
+import { RepeatGestureDetail } from "@pulse/web/gestures/repeat";
 
-import "@m3e/web/gestures/pan";
-import "@m3e/web/gestures/repeat";
-import "@m3e/web/gestures/tap";
+import "@pulse/web/gestures/pan";
+import "@pulse/web/gestures/repeat";
+import "@pulse/web/gestures/tap";
 
 import { isSplitPaneOrientation, SplitPaneOrientation } from "./SplitPaneOrientation";
 

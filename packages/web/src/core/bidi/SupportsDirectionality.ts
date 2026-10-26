@@ -1,6 +1,6 @@
 import { LitElement } from "lit";
 
-import { AttachInternalsMixin, deleteCustomState, setCustomState } from "@m3e/web/core";
+import { AttachInternalsMixin, deleteCustomState, setCustomState } from "@pulse/web/core";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T = object> = abstract new (...args: any[]) => T;

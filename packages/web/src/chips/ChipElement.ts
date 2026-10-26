@@ -17,7 +17,7 @@ import {
   renderPseudoLink,
   setCustomEnumState,
   setCustomState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
 import { ChipVariant, isChipVariant } from "./ChipVariant";
 

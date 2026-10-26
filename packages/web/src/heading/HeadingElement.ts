@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { AttachInternals, customElement, DesignToken, setCustomEnumState } from "@m3e/web/core";
+import { AttachInternals, customElement, DesignToken, setCustomEnumState } from "@pulse/web/core";
 
 import { HeadingLevel } from "./HeadingLevel";
 import { HeadingSize, isHeadingSize } from "./HeadingSize";

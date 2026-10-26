@@ -1,6 +1,6 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 
-import { AttachInternals, customElement, deleteCustomState, DesignToken, Role, setCustomState } from "@m3e/web/core";
+import { AttachInternals, customElement, deleteCustomState, DesignToken, Role, setCustomState } from "@pulse/web/core";
 
 /**
  * A top-level semantic grouping of items in a navigation menu.

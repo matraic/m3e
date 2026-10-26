@@ -1,5 +1,5 @@
-import { DefaultGestureOptions, GestureOptions } from "@m3e/web/gestures";
-import { PanGestureActivationMode } from "@m3e/web/gestures/pan";
+import { DefaultGestureOptions, GestureOptions } from "@pulse/web/gestures";
+import { PanGestureActivationMode } from "@pulse/web/gestures/pan";
 
 /** Encapsulates options used to detect and interpret rotate gestures. */
 export interface RotateGestureOptions extends GestureOptions {

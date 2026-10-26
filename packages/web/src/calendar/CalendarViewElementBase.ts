@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, LitElement } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { dateConverter, DesignToken, focusWhenReady, waitForUpdate } from "@m3e/web/core";
+import { dateConverter, DesignToken, focusWhenReady, waitForUpdate } from "@pulse/web/core";
 
 import { clampDate, sameDate } from "./utils";
 

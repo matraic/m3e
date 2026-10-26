@@ -1,6 +1,6 @@
 import { isServer } from "lit";
 
-import { prefersReducedMotion } from "@m3e/web/core";
+import { prefersReducedMotion } from "@pulse/web/core";
 
 import { M3eSnackbarElement } from "./SnackbarElement";
 

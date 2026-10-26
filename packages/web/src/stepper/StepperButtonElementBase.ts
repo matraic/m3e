@@ -1,4 +1,4 @@
-import { ActionElementBase } from "@m3e/web/core";
+import { ActionElementBase } from "@pulse/web/core";
 
 /** A base implementation for a button used to move to a step in a stepper. This class must be inherited. */
 export abstract class StepperButtonElementBase extends ActionElementBase {

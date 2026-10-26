@@ -28,12 +28,12 @@ import {
   ReconnectedCallback,
   commaSeparatedStringConverter,
   waitForUpgrade,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { ListKeyManager } from "@m3e/web/core/a11y";
+import { ListKeyManager } from "@pulse/web/core/a11y";
 
-import type { M3eFormFieldElement, FormFieldControl } from "@m3e/web/form-field";
-import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
+import type { M3eFormFieldElement, FormFieldControl } from "@pulse/web/form-field";
+import { M3eOptionElement, M3eOptionPanelElement } from "@pulse/web/option";
 
 /**
  * A form control that allows users to select a value from a set of predefined options.

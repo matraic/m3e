@@ -1,6 +1,6 @@
 import { LitElement } from "lit";
 
-import { CheckedOrSelectedMixin, DisabledMixin, isCheckedOrSelected } from "@m3e/web/core";
+import { CheckedOrSelectedMixin, DisabledMixin, isCheckedOrSelected } from "@pulse/web/core";
 
 import { RovingTabIndexManager } from "./RovingTabIndexManager";
 

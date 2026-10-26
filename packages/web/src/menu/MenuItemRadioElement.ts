@@ -1,6 +1,6 @@
 import { CSSResultGroup, html, PropertyValues } from "lit";
 
-import { Checked, customElement, hasAssignedNodes, prefersReducedMotion, Role, setCustomState } from "@m3e/web/core";
+import { Checked, customElement, hasAssignedNodes, prefersReducedMotion, Role, setCustomState } from "@pulse/web/core";
 
 import { M3eMenuItemCheckboxElement } from "./MenuItemCheckboxElement";
 import { M3eMenuItemElement } from "./MenuItemElement";

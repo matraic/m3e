@@ -1,4 +1,4 @@
-import { DefaultGestureOptions, GestureOptions } from "@m3e/web/gestures";
+import { DefaultGestureOptions, GestureOptions } from "@pulse/web/gestures";
 
 /**
  * Specifies the possible directions of a swipe gesture.

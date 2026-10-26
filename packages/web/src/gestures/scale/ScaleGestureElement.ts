@@ -2,8 +2,8 @@
 import { PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement } from "@m3e/web/core";
-import { GestureElementBase } from "@m3e/web/gestures";
+import { customElement } from "@pulse/web/core";
+import { GestureElementBase } from "@pulse/web/gestures";
 
 import { ScaleGestureDetail } from "./ScaleGestureDetail";
 import { ScaleGestureOptions } from "./ScaleGestureOptions";

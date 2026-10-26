@@ -1,4 +1,4 @@
-import { GestureDetail } from "@m3e/web/gestures";
+import { GestureDetail } from "@pulse/web/gestures";
 
 /** Describes the semantic output of a long-press gesture. */
 export interface LongPressGestureDetail extends GestureDetail {

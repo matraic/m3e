@@ -9,10 +9,10 @@ import {
   MutationController,
   ReconnectedCallback,
   setCustomEnumState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { M3eDirectionality, SupportsDirectionality } from "@m3e/web/core/bidi";
-import { AnchorPosition, positionAnchor } from "@m3e/web/core/anchoring";
+import { M3eDirectionality, SupportsDirectionality } from "@pulse/web/core/bidi";
+import { AnchorPosition, positionAnchor } from "@pulse/web/core/anchoring";
 
 import { BadgeSize, isBadgeSize } from "./BadgeSize";
 import { BadgePosition, isBadgePosition } from "./BadgePosition";

@@ -2,7 +2,7 @@ import { css, CSSResultGroup, html } from "lit";
 import { property, query } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { customElement, LinkButton } from "@m3e/web/core";
+import { customElement, LinkButton } from "@pulse/web/core";
 
 import { M3eListItemElement } from "./ListItemElement";
 import { M3eListItemButtonElement } from "./ListItemButtonElement";

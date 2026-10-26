@@ -11,19 +11,19 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { property } from "lit/decorators.js";
 
-import { AttachInternals, customElement, DesignToken, prefersReducedMotion, Role } from "@m3e/web/core";
-import { SupportsDirectionality } from "@m3e/web/core/bidi";
-import type { M3eSelectElement } from "@m3e/web/select";
-import type { FormFieldVariant } from "@m3e/web/form-field";
+import { AttachInternals, customElement, DesignToken, prefersReducedMotion, Role } from "@pulse/web/core";
+import { SupportsDirectionality } from "@pulse/web/core/bidi";
+import type { M3eSelectElement } from "@pulse/web/select";
+import type { FormFieldVariant } from "@pulse/web/form-field";
 
-import "@m3e/web/form-field";
-import "@m3e/web/select";
-import "@m3e/web/option";
-import "@m3e/web/icon-button";
-import "@m3e/web/tooltip";
+import "@pulse/web/form-field";
+import "@pulse/web/select";
+import "@pulse/web/option";
+import "@pulse/web/icon-button";
+import "@pulse/web/tooltip";
 
 import { PaginatorPageEventDetail } from "./PaginatorPageEventDetail";
-import { M3eOptionElement } from "@m3e/web/option";
+import { M3eOptionElement } from "@pulse/web/option";
 
 /**
  * Provides navigation for paged information, typically used with a table.

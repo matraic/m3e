@@ -13,7 +13,7 @@ import {
   M3eRippleElement,
   M3eStateLayerElement,
   renderPseudoLink,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
 import type { M3eMenuElement } from "./MenuElement";
 

@@ -2,7 +2,7 @@ import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "
 import { property, query } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { AttachInternals, customElement, LinkButton, Role, setCustomState } from "@m3e/web/core";
+import { AttachInternals, customElement, LinkButton, Role, setCustomState } from "@pulse/web/core";
 
 import { M3eBreadcrumbItemButtonElement } from "./BreadcrumbItemButtonElement";
 import { BreadcrumbItemCurrent, isBreadcrumbItemCurrent } from "./BreadcrumbItemCurrent";

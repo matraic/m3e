@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { HtmlFor, spaceSeparatedStringConverter } from "@m3e/web/core";
+import { HtmlFor, spaceSeparatedStringConverter } from "@pulse/web/core";
 
 import { GestureBinder } from "./GestureBinder";
 import { GestureDetail } from "./GestureDetail";

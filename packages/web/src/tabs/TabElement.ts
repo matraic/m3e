@@ -14,9 +14,9 @@ import {
   M3eStateLayerElement,
   Role,
   Selected,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { addAriaReferencedId, removeAriaReferencedId, selectionManager } from "@m3e/web/core/a11y";
+import { addAriaReferencedId, removeAriaReferencedId, selectionManager } from "@pulse/web/core/a11y";
 
 /**
  * An interactive element that, when activated, presents an associated tab panel.

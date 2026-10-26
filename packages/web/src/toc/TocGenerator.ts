@@ -1,4 +1,4 @@
-import { getTextContent, guid } from "@m3e/web/core";
+import { getTextContent, guid } from "@pulse/web/core";
 
 /** A node in a table of contents. */
 export interface TocNode {

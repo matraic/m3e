@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { AttachInternals, customElement, DesignToken, Role, setCustomEnumState, setCustomState } from "@m3e/web/core";
+import { AttachInternals, customElement, DesignToken, Role, setCustomEnumState, setCustomState } from "@pulse/web/core";
 
 import { isListVariant, ListVariant } from "./ListVariant";
 import { M3eListItemElement } from "./ListItemElement";

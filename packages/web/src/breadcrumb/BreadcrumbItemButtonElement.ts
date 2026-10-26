@@ -16,7 +16,7 @@ import {
   renderPseudoLink,
   Role,
   setCustomState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
 import { BreadcrumbItemCurrent } from "./BreadcrumbItemCurrent";
 import { isIconOnly } from "./isIconOnly";

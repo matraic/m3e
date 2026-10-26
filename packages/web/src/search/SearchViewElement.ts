@@ -14,13 +14,13 @@ import {
   registerStyleSheet,
   ScrollLockController,
   setCustomState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { positionAnchor } from "@m3e/web/core/anchoring";
-import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
-import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
+import { positionAnchor } from "@pulse/web/core/anchoring";
+import { Direction, M3eDirectionality } from "@pulse/web/core/bidi";
+import { Breakpoint, M3eBreakpointObserver } from "@pulse/web/core/layout";
 
-import "@m3e/web/core/a11y";
+import "@pulse/web/core/a11y";
 
 import { SearchViewLightDomStyle, SearchViewStyle } from "./styles";
 import { isSearchViewMode, SearchViewMode } from "./SearchViewMode";

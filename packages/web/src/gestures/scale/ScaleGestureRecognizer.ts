@@ -1,6 +1,6 @@
-import { DelegatingGestureRecognizerBase, GestureListener } from "@m3e/web/gestures";
+import { DelegatingGestureRecognizerBase, GestureListener } from "@pulse/web/gestures";
 
-import { PanGestureDetail, PanGestureOptions, PanGestureRecognizer } from "@m3e/web/gestures/pan";
+import { PanGestureDetail, PanGestureOptions, PanGestureRecognizer } from "@pulse/web/gestures/pan";
 
 import { ScaleGestureDetail } from "./ScaleGestureDetail";
 import { DefaultScaleGestureOptions, ScaleGestureOptions } from "./ScaleGestureOptions";

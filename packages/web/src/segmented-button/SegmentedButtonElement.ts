@@ -13,10 +13,10 @@ import {
   Role,
   setCustomState,
   Touched,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { SelectionManager, selectionManager } from "@pulse/web/core/a11y";
+import { M3eDirectionality } from "@pulse/web/core/bidi";
 
 import { M3eButtonSegmentElement } from "./ButtonSegmentElement";
 

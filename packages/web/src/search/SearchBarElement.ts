@@ -2,9 +2,9 @@
 import { html, LitElement, nothing } from "lit";
 import { property } from "lit/decorators.js";
 
-import { AttachInternals, customElement, hasAssignedNodes, registerStyleSheet, setCustomState } from "@m3e/web/core";
+import { AttachInternals, customElement, hasAssignedNodes, registerStyleSheet, setCustomState } from "@pulse/web/core";
 
-import "@m3e/web/icon-button";
+import "@pulse/web/icon-button";
 
 import { SearchBarLightDomStyle, SearchBarStyle } from "./styles";
 

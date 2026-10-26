@@ -9,7 +9,7 @@ import {
   Role,
   AttachInternals,
   setCustomEnumState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
 import { AppBarSize, isAppBarSize } from "./AppBarSize";
 

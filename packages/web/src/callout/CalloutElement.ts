@@ -1,7 +1,7 @@
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { AttachInternals, customElement, hasAssignedNodes, setCustomEnumState, setCustomState } from "@m3e/web/core";
+import { AttachInternals, customElement, hasAssignedNodes, setCustomEnumState, setCustomState } from "@pulse/web/core";
 
 import { CalloutShape, isCalloutShape } from "./CalloutShape";
 import { CalloutVariant, isCalloutVariant } from "./CalloutVariant";

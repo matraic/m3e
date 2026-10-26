@@ -3,8 +3,8 @@
 import { html, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement } from "@m3e/web/core";
-import { GestureElementBase, GestureRecognizer } from "@m3e/web/gestures";
+import { customElement } from "@pulse/web/core";
+import { GestureElementBase, GestureRecognizer } from "@pulse/web/gestures";
 
 import { SequenceGestureRecognizer } from "./SequenceGestureRecognizer";
 import { SequenceGestureOptions } from "./SequenceGestureOptions";

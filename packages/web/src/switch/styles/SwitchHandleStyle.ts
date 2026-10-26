@@ -1,5 +1,5 @@
 import { css, unsafeCSS } from "lit";
-import { DesignToken } from "@m3e/web/core";
+import { DesignToken } from "@pulse/web/core";
 
 import { SwitchToken } from "./SwitchToken";
 

@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, Role } from "@m3e/web/core";
+import { customElement, Role } from "@pulse/web/core";
 
 import type { M3eBreadcrumbItemElement } from "./BreadcrumbItemElement";
 

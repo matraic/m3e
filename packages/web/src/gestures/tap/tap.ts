@@ -1,4 +1,4 @@
-import { GestureListener } from "@m3e/web/gestures";
+import { GestureListener } from "@pulse/web/gestures";
 
 import { TapGestureDetail } from "./TapGestureDetail";
 import { TapGestureOptions } from "./TapGestureOptions";

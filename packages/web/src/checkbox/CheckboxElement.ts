@@ -23,7 +23,7 @@ import {
   HoverController,
   PressedController,
   customElement,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
 /**
  * A checkbox that allows a user to select one or more options from a limited number of choices.

@@ -4,7 +4,7 @@ import {
   GestureOptions,
   GestureRecognizer,
   isGestureRecognizer,
-} from "@m3e/web/gestures";
+} from "@pulse/web/gestures";
 
 import { RepeatGestureDetail } from "./RepeatGestureDetail";
 import { RepeatGestureOptions } from "./RepeatGestureOptions";

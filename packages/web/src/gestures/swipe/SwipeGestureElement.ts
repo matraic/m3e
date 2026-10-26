@@ -3,8 +3,8 @@
 import { PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, spaceSeparatedStringConverter } from "@m3e/web/core";
-import { GestureElementBase } from "@m3e/web/gestures";
+import { customElement, spaceSeparatedStringConverter } from "@pulse/web/core";
+import { GestureElementBase } from "@pulse/web/gestures";
 
 import { SwipeGestureRecognizer } from "./SwipeGestureRecognizer";
 import { SwipeGestureDetail } from "./SwipeGestureDetail";

@@ -3,10 +3,10 @@ import { css, CSSResultGroup, html, PropertyValues, unsafeCSS } from "lit";
 import { property, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { ClickOutsideController, customElement, DesignToken, getTextContent, hasAssignedNodes } from "@m3e/web/core";
-import { M3eAriaDescriber, M3eInteractivityChecker } from "@m3e/web/core/a11y";
-import { AnchorPosition } from "@m3e/web/core/anchoring";
-import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
+import { ClickOutsideController, customElement, DesignToken, getTextContent, hasAssignedNodes } from "@pulse/web/core";
+import { M3eAriaDescriber, M3eInteractivityChecker } from "@pulse/web/core/a11y";
+import { AnchorPosition } from "@pulse/web/core/anchoring";
+import { Direction, M3eDirectionality } from "@pulse/web/core/bidi";
 
 import { isRichTooltipPosition, RichTooltipPosition } from "./RichTooltipPosition";
 import { TooltipElementBase } from "./TooltipElementBase";

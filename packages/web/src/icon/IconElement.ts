@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { AttachInternals, customElement, Role, setCustomEnumState } from "@m3e/web/core";
+import { AttachInternals, customElement, Role, setCustomEnumState } from "@pulse/web/core";
 
 import { IconRegistry } from "./IconRegistry";
 import { IconVariant, isIconVariant } from "./IconVariant";

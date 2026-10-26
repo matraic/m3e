@@ -2,9 +2,9 @@
 import { PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement } from "@m3e/web/core";
-import { GestureElementBase } from "@m3e/web/gestures";
-import { PanGestureActivationMode } from "@m3e/web/gestures/pan";
+import { customElement } from "@pulse/web/core";
+import { GestureElementBase } from "@pulse/web/gestures";
+import { PanGestureActivationMode } from "@pulse/web/gestures/pan";
 
 import { RotateGestureDetail } from "./RotateGestureDetail";
 import { RotateGestureOptions } from "./RotateGestureOptions";

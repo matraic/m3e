@@ -1,7 +1,7 @@
 import { LitElement } from "lit";
 
-import { ActionElementBase, customElement, HtmlFor } from "@m3e/web/core";
-import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y";
+import { ActionElementBase, customElement, HtmlFor } from "@pulse/web/core";
+import { addAriaReferencedId, removeAriaReferencedId } from "@pulse/web/core/a11y";
 
 import { M3eNavRailElement } from "./NavRailElement";
 

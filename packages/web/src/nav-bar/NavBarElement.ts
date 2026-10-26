@@ -1,10 +1,10 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property, state } from "lit/decorators.js";
 
-import { AttachInternals, customElement, DesignToken, ReconnectedCallback, Role, setCustomState } from "@m3e/web/core";
+import { AttachInternals, customElement, DesignToken, ReconnectedCallback, Role, setCustomState } from "@pulse/web/core";
 
-import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
-import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
+import { SelectionManager, selectionManager } from "@pulse/web/core/a11y";
+import { Breakpoint, M3eBreakpointObserver } from "@pulse/web/core/layout";
 
 import { M3eNavItemElement } from "./NavItemElement";
 import { NavItemOrientation } from "./NavItemOrientation";

@@ -1,6 +1,6 @@
 import { unsafeCSS } from "lit";
 
-import { DesignToken } from "@m3e/web/core";
+import { DesignToken } from "@pulse/web/core";
 
 /** @internal */
 export const SearchBarToken = {

@@ -12,11 +12,11 @@ import {
   ReconnectedCallback,
   registerStyleSheet,
   setCustomState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
-import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
-import { M3eDirectionality, SupportsDirectionality } from "@m3e/web/core/bidi";
+import { SelectionManager, selectionManager } from "@pulse/web/core/a11y";
+import { Breakpoint, M3eBreakpointObserver } from "@pulse/web/core/layout";
+import { M3eDirectionality, SupportsDirectionality } from "@pulse/web/core/bidi";
 
 import { M3eStepElement } from "./StepElement";
 import { isStepLabelPosition, StepLabelPosition } from "./StepLabelPosition";

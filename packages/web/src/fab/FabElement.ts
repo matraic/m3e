@@ -18,7 +18,7 @@ import {
   KeyboardClick,
   customElement,
   setCustomEnumState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
 import { FabSize, isFabSize } from "./FabSize";
 import { FabVariant, isFabVariant } from "./FabVariant";

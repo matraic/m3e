@@ -1,11 +1,11 @@
 import { LitElement, PropertyValues } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { AttachInternals, HoverController, HtmlFor, isDisabledMixin, ReconnectedCallback } from "@m3e/web/core";
-import { M3ePlatform } from "@m3e/web/core/platform";
-import { AnchorPosition, positionAnchor } from "@m3e/web/core/anchoring";
-import { detectGesture, GestureController, phase } from "@m3e/web/gestures";
-import { longPress } from "@m3e/web/gestures/long-press";
+import { AttachInternals, HoverController, HtmlFor, isDisabledMixin, ReconnectedCallback } from "@pulse/web/core";
+import { M3ePlatform } from "@pulse/web/core/platform";
+import { AnchorPosition, positionAnchor } from "@pulse/web/core/anchoring";
+import { detectGesture, GestureController, phase } from "@pulse/web/gestures";
+import { longPress } from "@pulse/web/gestures/long-press";
 
 import { isTooltipTouchGestures, TooltipTouchGestures } from "./TooltipTouchGestures";
 

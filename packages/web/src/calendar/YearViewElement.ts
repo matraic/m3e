@@ -11,8 +11,8 @@ import { css, CSSResultGroup, html } from "lit";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { customElement, DesignToken } from "@m3e/web/core";
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { customElement, DesignToken } from "@pulse/web/core";
+import { M3eDirectionality } from "@pulse/web/core/bidi";
 
 import { CalendarViewElementBase } from "./CalendarViewElementBase";
 import { addCalendarMonths, addCalendarYears, clampDate, MONTHS_PER_ROW } from "./utils";

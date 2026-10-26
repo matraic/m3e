@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, PropertyValues, unsafeCSS } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { customElement, DesignToken, setCustomState } from "@m3e/web/core";
+import { customElement, DesignToken, setCustomState } from "@pulse/web/core";
 
 import type { M3eListElement } from "./ListElement";
 import { M3eListItemButtonElement } from "./ListItemButtonElement";

@@ -1,4 +1,4 @@
-import { GestureDetail } from "@m3e/web/gestures";
+import { GestureDetail } from "@pulse/web/gestures";
 
 import { SwipeGestureDirection } from "./SwipeGestureOptions";
 

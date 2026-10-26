@@ -12,9 +12,9 @@ import {
   Role,
   setCustomState,
   Touched,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { SelectionManager, selectionManager } from "@m3e/web/core/a11y";
+import { SelectionManager, selectionManager } from "@pulse/web/core/a11y";
 
 import { M3eListElement } from "./ListElement";
 import { M3eListOptionElement } from "./ListOptionElement";

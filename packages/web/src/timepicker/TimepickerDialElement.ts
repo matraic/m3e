@@ -10,7 +10,7 @@ import {
   Role,
   safeStyleMap,
   SuppressInitialAnimation,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
 import { TimepickerInputElementBase } from "./TimepickerInputElementBase";
 

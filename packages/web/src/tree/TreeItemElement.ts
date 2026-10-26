@@ -17,9 +17,9 @@ import {
   Role,
   Selected,
   setCustomState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { selectionManager, typeaheadLabel } from "@m3e/web/core/a11y";
+import { selectionManager, typeaheadLabel } from "@pulse/web/core/a11y";
 
 import type { M3eTreeElement } from "./TreeElement";
 

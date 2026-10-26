@@ -17,9 +17,9 @@ import {
   PressedController,
   HoverController,
   customElement,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { selectionManager } from "@m3e/web/core/a11y";
+import { selectionManager } from "@pulse/web/core/a11y";
 
 import { M3eListItemElement } from "./ListItemElement";
 

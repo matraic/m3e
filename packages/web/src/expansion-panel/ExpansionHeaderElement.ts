@@ -11,7 +11,7 @@ import {
   M3eStateLayerElement,
   Role,
   setCustomEnumState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
 import { ExpansionTogglePosition, isExpansionTogglePosition } from "./ExpansionTogglePosition";
 import { ExpansionToggleDirection, isExpansionToggleDirection } from "./ExpansionToggleDirection";

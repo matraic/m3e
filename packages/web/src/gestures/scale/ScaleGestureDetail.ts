@@ -1,4 +1,4 @@
-import { PanGestureDetail } from "@m3e/web/gestures/pan";
+import { PanGestureDetail } from "@pulse/web/gestures/pan";
 
 /** Describes the semantic output of a scale gesture. */
 export interface ScaleGestureDetail extends PanGestureDetail {

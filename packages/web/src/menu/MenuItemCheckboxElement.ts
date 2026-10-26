@@ -8,7 +8,7 @@ import {
   prefersReducedMotion,
   Role,
   setCustomState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
 import { M3eMenuItemElement } from "./MenuItemElement";
 import { MenuItemElementBase } from "./MenuItemElementBase";

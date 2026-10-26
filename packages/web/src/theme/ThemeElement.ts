@@ -9,7 +9,7 @@ import {
   MaterialDynamicColors,
 } from "@material/material-color-utilities";
 
-import { customElement, DesignToken, registerStyleSheet } from "@m3e/web/core";
+import { customElement, DesignToken, registerStyleSheet } from "@pulse/web/core";
 
 import { ColorScheme, isColorScheme } from "./ColorScheme";
 import { ContrastLevel, isContrastLevel } from "./ContrastLevel";

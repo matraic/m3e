@@ -8,7 +8,7 @@ import {
   ReconnectedCallback,
   Role,
   setCustomEnumState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
 import { isLoadingIndicatorVariant, LoadingIndicatorVariant } from "./LoadingIndicatorVariant";
 import { LoadingIndicatorToken } from "./LoadingIndicatorToken";

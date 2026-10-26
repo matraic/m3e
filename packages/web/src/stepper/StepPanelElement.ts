@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { state } from "lit/decorators.js";
 
-import { customElement, Role } from "@m3e/web/core";
+import { customElement, Role } from "@pulse/web/core";
 
 /**
  * A panel presented for a step in a wizard-like workflow.

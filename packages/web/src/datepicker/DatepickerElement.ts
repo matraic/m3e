@@ -18,17 +18,17 @@ import {
   prefersReducedMotion,
   HtmlFor,
   waitForUpdate,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { positionAnchor } from "@m3e/web/core/anchoring";
-import { Direction, M3eDirectionality } from "@m3e/web/core/bidi";
-import { Breakpoint, M3eBreakpointObserver } from "@m3e/web/core/layout";
-import { M3eCalendarElement, CalendarView } from "@m3e/web/calendar";
-import type { M3eDateInputElement } from "@m3e/web/date-input";
+import { positionAnchor } from "@pulse/web/core/anchoring";
+import { Direction, M3eDirectionality } from "@pulse/web/core/bidi";
+import { Breakpoint, M3eBreakpointObserver } from "@pulse/web/core/layout";
+import { M3eCalendarElement, CalendarView } from "@pulse/web/calendar";
+import type { M3eDateInputElement } from "@pulse/web/date-input";
 
-import "@m3e/web/core/a11y";
-import "@m3e/web/button";
-import "@m3e/web/calendar";
+import "@pulse/web/core/a11y";
+import "@pulse/web/button";
+import "@pulse/web/calendar";
 
 import { DatepickerVariant, isDatepickerVariant } from "./DatepickerVariant";
 

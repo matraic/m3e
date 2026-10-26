@@ -7,7 +7,7 @@
  * See LICENSE file in the project root for full license text.
  */
 
-import { isDisabledMixin } from "@m3e/web/core";
+import { isDisabledMixin } from "@pulse/web/core";
 
 import { hasModifierKey, isModifierAllowed, ModifierKey } from "../keycodes";
 

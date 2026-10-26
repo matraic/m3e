@@ -4,7 +4,7 @@ import { property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { customElement, DesignToken, HtmlFor, setCustomState } from "@m3e/web/core";
+import { customElement, DesignToken, HtmlFor, setCustomState } from "@pulse/web/core";
 
 import { TimepickerOrientation } from "./TimepickerOrientation";
 import { M3eTimepickerDialElement } from "./TimepickerDialElement";

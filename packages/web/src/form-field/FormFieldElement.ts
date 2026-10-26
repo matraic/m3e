@@ -29,9 +29,9 @@ import {
   ResizeController,
   setCustomEnumState,
   setCustomState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { M3eAriaDescriber } from "@m3e/web/core/a11y";
+import { M3eAriaDescriber } from "@pulse/web/core/a11y";
 
 import { findFormFieldControl, FormFieldControl } from "./FormFieldControl";
 import { FormFieldVariant, isFormFieldVariant } from "./FormFieldVariant";

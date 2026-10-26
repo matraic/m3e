@@ -1,1 +1,1 @@
-throw new Error("This package has no default export. Use subpath imports like '@m3e/web/button'.");
+throw new Error("This package has no default export. Use subpath imports like '@pulse/web/button'.");

@@ -1,6 +1,6 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 
-import { customElement, DesignToken } from "@m3e/web/core";
+import { customElement, DesignToken } from "@pulse/web/core";
 
 /**
  * An image, icon or textual initials representing a user or other identity.

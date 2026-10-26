@@ -1,4 +1,4 @@
-import { GestureDetail } from "@m3e/web/gestures";
+import { GestureDetail } from "@pulse/web/gestures";
 
 /** Describes the semantic output for a sequence of gestures. */
 export interface SequenceGestureDetail extends GestureDetail {

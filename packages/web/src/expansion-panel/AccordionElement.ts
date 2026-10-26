@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, DesignToken } from "@m3e/web/core";
+import { customElement, DesignToken } from "@pulse/web/core";
 
 import { M3eExpansionPanelElement } from "./ExpansionPanelElement";
 

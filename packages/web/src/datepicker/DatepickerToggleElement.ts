@@ -1,5 +1,5 @@
-import { customElement, ActionElementBase, HtmlFor } from "@m3e/web/core";
-import type { M3eFormFieldElement } from "@m3e/web/form-field";
+import { customElement, ActionElementBase, HtmlFor } from "@pulse/web/core";
+import type { M3eFormFieldElement } from "@pulse/web/form-field";
 
 import { M3eDatepickerElement } from "./DatepickerElement";
 

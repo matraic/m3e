@@ -17,12 +17,12 @@ import {
   Touched,
   registerStyleSheet,
   waitForUpdate,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { ListKeyManager, ListManager } from "@m3e/web/core/a11y";
-import { M3eDirectionality } from "@m3e/web/core/bidi";
-import { FormFieldControl } from "@m3e/web/form-field";
-import type { M3eOptionElement } from "@m3e/web/option";
+import { ListKeyManager, ListManager } from "@pulse/web/core/a11y";
+import { M3eDirectionality } from "@pulse/web/core/bidi";
+import { FormFieldControl } from "@pulse/web/form-field";
+import type { M3eOptionElement } from "@pulse/web/option";
 
 import { M3eChipSetElement } from "./ChipSetElement";
 import { M3eInputChipElement } from "./InputChipElement";

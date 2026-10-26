@@ -13,9 +13,9 @@ import {
   ResizeController,
   safeStyleMap,
   setCustomEnumState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { M3eDirectionality, SupportsDirectionality } from "@m3e/web/core/bidi";
+import { M3eDirectionality, SupportsDirectionality } from "@pulse/web/core/bidi";
 
 import { M3eSliderThumbElement } from "./SliderThumbElement";
 import { isSliderOrientation, SliderOrientation } from "./SliderOrientation";

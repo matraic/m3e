@@ -9,7 +9,7 @@ import {
   Role,
   setCustomState,
   ReconnectedCallback,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
 import type { M3eListElement } from "./ListElement";
 import { ListItemContentType } from "./ListItemContentType";

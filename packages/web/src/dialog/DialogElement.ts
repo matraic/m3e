@@ -10,10 +10,10 @@ import {
   focusWhenReady,
   ScrollLockController,
   setCustomState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import "@m3e/web/core/a11y";
-import "@m3e/web/icon-button";
+import "@pulse/web/core/a11y";
+import "@pulse/web/icon-button";
 
 /**
  * A dialog that provides important prompts in a user flow.

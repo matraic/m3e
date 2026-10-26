@@ -20,9 +20,9 @@ import {
   PressedController,
   Role,
   Touched,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { selectionManager } from "@m3e/web/core/a11y";
+import { selectionManager } from "@pulse/web/core/a11y";
 
 /**
  * A radio button that allows a user to select one option from a set of options.

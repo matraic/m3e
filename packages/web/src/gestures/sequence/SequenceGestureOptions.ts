@@ -1,4 +1,4 @@
-import { DefaultGestureOptions, GestureOptions } from "@m3e/web/gestures";
+import { DefaultGestureOptions, GestureOptions } from "@pulse/web/gestures";
 
 /** Encapsulates options used to detect and interpret a sequence of gestures. */
 export interface SequenceGestureOptions extends GestureOptions {

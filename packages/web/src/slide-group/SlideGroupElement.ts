@@ -1,10 +1,10 @@
 import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues } from "lit";
 import { property, query, state } from "lit/decorators.js";
 
-import { customElement, debounce, ReconnectedCallback, ResizeController } from "@m3e/web/core";
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { customElement, debounce, ReconnectedCallback, ResizeController } from "@pulse/web/core";
+import { M3eDirectionality } from "@pulse/web/core/bidi";
 
-import "@m3e/web/icon-button";
+import "@pulse/web/icon-button";
 
 /**
  * Presents pagination controls used to scroll overflowing content.

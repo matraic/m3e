@@ -16,7 +16,7 @@ import {
   PressedController,
   renderPseudoLink,
   Role,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
 import { M3eListItemElement } from "./ListItemElement";
 

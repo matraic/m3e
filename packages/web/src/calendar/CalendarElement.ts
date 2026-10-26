@@ -12,12 +12,12 @@ import { property, query, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
-import { customElement, dateConverter, DesignToken, prefersReducedMotion, waitForUpdate } from "@m3e/web/core";
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { customElement, dateConverter, DesignToken, prefersReducedMotion, waitForUpdate } from "@pulse/web/core";
+import { M3eDirectionality } from "@pulse/web/core/bidi";
 
-import "@m3e/web/button";
-import "@m3e/web/icon-button";
-import "@m3e/web/tooltip";
+import "@pulse/web/button";
+import "@pulse/web/icon-button";
+import "@pulse/web/tooltip";
 
 import { CalendarView, isCalendarView } from "./CalendarView";
 import { CalendarViewElementBase } from "./CalendarViewElementBase";

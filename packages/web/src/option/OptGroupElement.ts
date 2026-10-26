@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 
-import { customElement, DesignToken, Role } from "@m3e/web/core";
-import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y";
+import { customElement, DesignToken, Role } from "@pulse/web/core";
+import { addAriaReferencedId, removeAriaReferencedId } from "@pulse/web/core/a11y";
 
 /**
  * Groups options under a subheading.

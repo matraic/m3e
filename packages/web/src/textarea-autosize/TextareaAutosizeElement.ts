@@ -10,7 +10,7 @@
 import { css, CSSResultGroup, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, debounce, HtmlFor, Role } from "@m3e/web/core";
+import { customElement, debounce, HtmlFor, Role } from "@pulse/web/core";
 
 /**
  * A non-visual element used to automatically resize a `textarea` to fit its content.

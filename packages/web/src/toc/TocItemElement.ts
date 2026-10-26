@@ -9,7 +9,7 @@ import {
   M3eStateLayerElement,
   Role,
   Selected,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
 import { TocNode } from "./TocGenerator";
 

@@ -8,7 +8,7 @@ import {
   GestureRecognizerBase,
   PointerInput,
   WheelInput,
-} from "@m3e/web/gestures";
+} from "@pulse/web/gestures";
 
 import { SequenceGestureDetail } from "./SequenceGestureDetail";
 import { DefaultSequenceGestureOptions, SequenceGestureOptions } from "./SequenceGestureOptions";

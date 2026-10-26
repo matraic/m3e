@@ -19,16 +19,16 @@ import {
   registerStyleSheet,
   InertController,
   hasAssignedNodes,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { isModifierAllowed, M3eInteractivityChecker } from "@m3e/web/core/a11y";
-import { GestureInput } from "@m3e/web/gestures";
-import { TapGestureDetail } from "@m3e/web/gestures/tap";
-import { M3eSwipeGestureElement, SwipeGestureDetail } from "@m3e/web/gestures/swipe";
+import { isModifierAllowed, M3eInteractivityChecker } from "@pulse/web/core/a11y";
+import { GestureInput } from "@pulse/web/gestures";
+import { TapGestureDetail } from "@pulse/web/gestures/tap";
+import { M3eSwipeGestureElement, SwipeGestureDetail } from "@pulse/web/gestures/swipe";
 
-import "@m3e/web/core/a11y";
-import "@m3e/web/gestures/swipe";
-import "@m3e/web/gestures/tap";
+import "@pulse/web/core/a11y";
+import "@pulse/web/gestures/swipe";
+import "@pulse/web/gestures/tap";
 
 /**
  * A sheet used to show secondary content anchored to the bottom of the screen.

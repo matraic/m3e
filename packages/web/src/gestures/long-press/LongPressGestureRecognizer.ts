@@ -1,4 +1,4 @@
-import { GesturePhase, GestureRecognizerBase, PointerInput, PointerTracker } from "@m3e/web/gestures";
+import { GesturePhase, GestureRecognizerBase, PointerInput, PointerTracker } from "@pulse/web/gestures";
 
 import { LongPressGestureDetail } from "./LongPressGestureDetail";
 import { DefaultLongPressGestureOptions, LongPressGestureOptions } from "./LongPressGestureOptions";

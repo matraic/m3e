@@ -1,4 +1,4 @@
-import { ActionElementBase, customElement } from "@m3e/web/core";
+import { ActionElementBase, customElement } from "@pulse/web/core";
 
 /**
  * An element, nested within a clickable element, used to close a parenting bottom sheet.

@@ -7,7 +7,7 @@
  * See LICENSE file in the project root for full license text.
  */
 
-import { hasKeys } from "@m3e/web/core";
+import { hasKeys } from "@pulse/web/core";
 
 import { getKeyCode, KeyCode } from "../keycodes";
 

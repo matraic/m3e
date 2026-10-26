@@ -1,6 +1,6 @@
 import { property } from "lit/decorators.js";
 
-import { ActionElementBase, customElement } from "@m3e/web/core";
+import { ActionElementBase, customElement } from "@pulse/web/core";
 
 /**
  * An element, nested within a clickable element, used to dismiss a parenting rich tooltip.

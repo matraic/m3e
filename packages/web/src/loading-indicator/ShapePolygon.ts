@@ -1,6 +1,6 @@
 import { CSSResult, unsafeCSS } from "lit";
 
-import { generateClipPaths } from "@m3e/web/core";
+import { generateClipPaths } from "@pulse/web/core";
 
 const SHAPE_PATHS: Record<string, string> = {
   "4-sided-cookie":

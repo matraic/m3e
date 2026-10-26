@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement } from "lit";
 import { query } from "lit/decorators.js";
 
-import { customElement, Disabled } from "@m3e/web/core";
+import { customElement, Disabled } from "@pulse/web/core";
 
 import { M3eInteractivityChecker } from "./InteractivityChecker";
 

@@ -1,4 +1,4 @@
-import { GestureListener } from "@m3e/web/gestures";
+import { GestureListener } from "@pulse/web/gestures";
 
 import { LongPressGestureDetail } from "./LongPressGestureDetail";
 import { LongPressGestureOptions } from "./LongPressGestureOptions";

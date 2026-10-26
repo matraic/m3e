@@ -10,9 +10,9 @@ import {
   hasAssignedNodes,
   ReconnectedCallback,
   setCustomState,
-} from "@m3e/web/core";
+} from "@pulse/web/core";
 
-import { M3eDirectionality } from "@m3e/web/core/bidi";
+import { M3eDirectionality } from "@pulse/web/core/bidi";
 
 import { ExpansionTogglePosition, isExpansionTogglePosition } from "./ExpansionTogglePosition";
 import { ExpansionToggleDirection, isExpansionToggleDirection } from "./ExpansionToggleDirection";

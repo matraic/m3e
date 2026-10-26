@@ -9,8 +9,8 @@ import {
   registerStyleSheet,
   setCustomState,
   waitForUpgrade,
-} from "@m3e/web/core";
-import { positionAnchor } from "@m3e/web/core/anchoring";
+} from "@pulse/web/core";
+import { positionAnchor } from "@pulse/web/core/anchoring";
 
 import { isSkeletonShape, SkeletonShape } from "./SkeletonShape";
 import { isSkeletonAnimation, SkeletonAnimation } from "./SkeletonAnimation";
