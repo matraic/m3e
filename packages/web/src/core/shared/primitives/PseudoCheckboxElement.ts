@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, LitElement, nothing } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing, unsafeCSS } from "lit";
 
 import { CheckedIndeterminate, Disabled, Role } from "../mixins";
 import { DesignToken } from "../tokens";
@@ -50,6 +50,10 @@ export class M3ePseudoCheckboxElement extends CheckedIndeterminate(Disabled(Role
       flex: none;
       contain: layout style paint;
       line-height: 0;
+      transition: ${unsafeCSS(
+        `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard},
+        color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
+      )};
     }
     :host([hidden]) {
       display: none;
@@ -92,6 +96,31 @@ export class M3ePseudoCheckboxElement extends CheckedIndeterminate(Disabled(Role
     svg {
       pointer-events: none;
     }
+    .check-icon {
+      clip-path: inset(0 100% 0 0);
+    }
+    :host([checked]:not([indeterminate])) .check-icon {
+      clip-path: inset(0);
+      animation: draw ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standardDecelerate} both;
+    }
+    @keyframes draw {
+      from {
+        clip-path: inset(0 100% 0 0);
+        opacity: 0.8;
+      }
+      to {
+        clip-path: inset(0);
+        opacity: 1;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      :host {
+        transition: none;
+      }
+      :host([checked]:not([indeterminate])) .check-icon {
+        animation: none;
+      }
+    }
     @media (forced-colors: active) {
       :host(:not([disabled])[checked]),
       :host(:not([disabled])[indeterminate]) {
@@ -130,7 +159,7 @@ export class M3ePseudoCheckboxElement extends CheckedIndeterminate(Disabled(Role
     }
     if (this.checked) {
       return html`<svg viewBox="0 -960 960 960" fill="currentColor">
-        <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
+        <path class="check-icon" d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
       </svg>`;
     }
     return nothing;
