@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eSlideElement } from "@m3e/web/core";
-export type { M3eSlideElement } from "@m3e/web/core";
+import { M3eSlideElement } from "@pulse/web/core";
+export type { M3eSlideElement } from "@pulse/web/core";
 
 /**
- * React binding for the `m3e-slide` Web Component from `@m3e/web/core`.
+ * React binding for the `m3e-slide` Web Component from `@pulse/web/core`.
  *
  * This component renders the underlying `<m3e-slide>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

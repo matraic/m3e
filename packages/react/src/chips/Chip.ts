@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eChipElement } from "@m3e/web/chips";
-export type { ChipVariant, M3eChipElement } from "@m3e/web/chips";
+import { M3eChipElement } from "@pulse/web/chips";
+export type { ChipVariant, M3eChipElement } from "@pulse/web/chips";
 
 /**
- * React binding for the `m3e-chip` Web Component from `@m3e/web/chips`.
+ * React binding for the `m3e-chip` Web Component from `@pulse/web/chips`.
  *
  * This component renders the underlying `<m3e-chip>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

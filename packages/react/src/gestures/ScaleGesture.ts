@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent, EventName } from "@lit/react";
 
-import { M3eScaleGestureElement, ScaleGestureDetail } from "@m3e/web/gestures/scale";
-export type { ScaleGestureDetail, ScaleGestureOptions } from "@m3e/web/gestures/scale";
+import { M3eScaleGestureElement, ScaleGestureDetail } from "@pulse/web/gestures/scale";
+export type { ScaleGestureDetail, ScaleGestureOptions } from "@pulse/web/gestures/scale";
 
 /**
- * React binding for the `m3e-scale-gesture` Web Component from `@m3e/web/gestures/scale`.
+ * React binding for the `m3e-scale-gesture` Web Component from `@pulse/web/gestures/scale`.
  *
  * This component renders the underlying `<m3e-scale-gesture>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

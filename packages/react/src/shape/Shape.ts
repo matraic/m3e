@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eShapeElement } from "@m3e/web/shape";
-export type { M3eShapeElement, ShapeName } from "@m3e/web/shape";
+import { M3eShapeElement } from "@pulse/web/shape";
+export type { M3eShapeElement, ShapeName } from "@pulse/web/shape";
 
 /**
- * React binding for the `m3e-shape` Web Component from `@m3e/web/shape`.
+ * React binding for the `m3e-shape` Web Component from `@pulse/web/shape`.
  *
  * This component renders the underlying `<m3e-shape>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

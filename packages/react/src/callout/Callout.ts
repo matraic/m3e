@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eCalloutElement } from "@m3e/web/callout";
-export type { M3eCalloutElement, CalloutVariant, CalloutShape } from "@m3e/web/callout";
+import { M3eCalloutElement } from "@pulse/web/callout";
+export type { M3eCalloutElement, CalloutVariant, CalloutShape } from "@pulse/web/callout";
 
 /**
- * React binding for the `m3e-callout` Web Component from `@m3e/web/callout`.
+ * React binding for the `m3e-callout` Web Component from `@pulse/web/callout`.
  *
  * This component renders the underlying `<m3e-callout>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eRadioGroupElement } from "@m3e/web/radio-group";
-export type { M3eRadioGroupElement } from "@m3e/web/radio-group";
+import { M3eRadioGroupElement } from "@pulse/web/radio-group";
+export type { M3eRadioGroupElement } from "@pulse/web/radio-group";
 
 /**
- * React binding for the `m3e-radio-group` Web Component from `@m3e/web/radio-group`.
+ * React binding for the `m3e-radio-group` Web Component from `@pulse/web/radio-group`.
  *
  * This component renders the underlying `<m3e-radio-group>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

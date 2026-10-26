@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eBottomSheetActionElement } from "@m3e/web/bottom-sheet";
-export type { M3eBottomSheetActionElement } from "@m3e/web/bottom-sheet";
+import { M3eBottomSheetActionElement } from "@pulse/web/bottom-sheet";
+export type { M3eBottomSheetActionElement } from "@pulse/web/bottom-sheet";
 
 /**
- * React binding for the `m3e-bottom-sheet-action` Web Component from `@m3e/web/bottom-sheet`.
+ * React binding for the `m3e-bottom-sheet-action` Web Component from `@pulse/web/bottom-sheet`.
  *
  * This component renders the underlying `<m3e-bottom-sheet-action>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eDrawerContainerElement } from "@m3e/web/drawer-container";
-export type { DrawerMode, M3eDrawerContainerElement } from "@m3e/web/drawer-container";
+import { M3eDrawerContainerElement } from "@pulse/web/drawer-container";
+export type { DrawerMode, M3eDrawerContainerElement } from "@pulse/web/drawer-container";
 
 /**
- * React binding for the `m3e-drawer-container` Web Component from `@m3e/web/drawer-container`.
+ * React binding for the `m3e-drawer-container` Web Component from `@pulse/web/drawer-container`.
  *
  * This component renders the underlying `<m3e-drawer-container>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

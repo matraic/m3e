@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eHeadingElement } from "@m3e/web/heading";
-export type { HeadingLevel, HeadingSize, HeadingVariant, M3eHeadingElement } from "@m3e/web/heading";
+import { M3eHeadingElement } from "@pulse/web/heading";
+export type { HeadingLevel, HeadingSize, HeadingVariant, M3eHeadingElement } from "@pulse/web/heading";
 
 /**
- * React binding for the `m3e-heading` Web Component from `@m3e/web/heading`.
+ * React binding for the `m3e-heading` Web Component from `@pulse/web/heading`.
  *
  * This component renders the underlying `<m3e-heading>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

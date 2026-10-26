@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eOptGroupElement } from "@m3e/web/option";
-export type { M3eOptGroupElement } from "@m3e/web/option";
+import { M3eOptGroupElement } from "@pulse/web/option";
+export type { M3eOptGroupElement } from "@pulse/web/option";
 
 /**
- * React binding for the `m3e-optgroup` Web Component from `@m3e/web/option`.
+ * React binding for the `m3e-optgroup` Web Component from `@pulse/web/option`.
  *
  * This component renders the underlying `<m3e-optgroup>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

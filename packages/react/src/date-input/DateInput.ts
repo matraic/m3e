@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eDateInputElement } from "@m3e/web/date-input";
-export type { M3eDateInputElement, DateInputTimeFormat, DateInputType } from "@m3e/web/date-input";
+import { M3eDateInputElement } from "@pulse/web/date-input";
+export type { M3eDateInputElement, DateInputTimeFormat, DateInputType } from "@pulse/web/date-input";
 
 /**
- * React binding for the `m3e-date-input` Web Component from `@m3e/web/datepicker`.
+ * React binding for the `m3e-date-input` Web Component from `@pulse/web/datepicker`.
  *
  * This component renders the underlying `<m3e-date-input>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eTreeItemElement } from "@m3e/web/tree";
-export type { M3eTreeItemElement } from "@m3e/web/tree";
+import { M3eTreeItemElement } from "@pulse/web/tree";
+export type { M3eTreeItemElement } from "@pulse/web/tree";
 
 /**
- * React binding for the `m3e-tree-item` Web Component from `@m3e/web/tree`.
+ * React binding for the `m3e-tree-item` Web Component from `@pulse/web/tree`.
  *
  * This component renders the underlying `<m3e-tree-item>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

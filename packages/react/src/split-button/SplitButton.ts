@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eSplitButtonElement } from "@m3e/web/split-button";
-export type { M3eSplitButtonElement, SplitButtonVariant } from "@m3e/web/split-button";
+import { M3eSplitButtonElement } from "@pulse/web/split-button";
+export type { M3eSplitButtonElement, SplitButtonVariant } from "@pulse/web/split-button";
 
 /**
- * React binding for the `m3e-split-button` Web Component from `@m3e/web/split-button`.
+ * React binding for the `m3e-split-button` Web Component from `@pulse/web/split-button`.
  *
  * This component renders the underlying `<m3e-split-button>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

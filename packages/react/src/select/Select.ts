@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eSelectElement } from "@m3e/web/select";
-export type { M3eSelectElement } from "@m3e/web/select";
+import { M3eSelectElement } from "@pulse/web/select";
+export type { M3eSelectElement } from "@pulse/web/select";
 
 /**
- * React binding for the `m3e-select` Web Component from `@m3e/web/select`.
+ * React binding for the `m3e-select` Web Component from `@pulse/web/select`.
  *
  * This component renders the underlying `<m3e-select>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

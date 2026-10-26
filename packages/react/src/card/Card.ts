@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eCardElement } from "@m3e/web/card";
-export type { CardOrientation, CardVariant, M3eCardElement } from "@m3e/web/card";
+import { M3eCardElement } from "@pulse/web/card";
+export type { CardOrientation, CardVariant, M3eCardElement } from "@pulse/web/card";
 
 /**
- * React binding for the `m3e-card` Web Component from `@m3e/web/card`.
+ * React binding for the `m3e-card` Web Component from `@pulse/web/card`.
  *
  * This component renders the underlying `<m3e-card>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

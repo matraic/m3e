@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eToolbarElement } from "@m3e/web/toolbar";
-export type { M3eToolbarElement, ToolbarVariant, ToolbarShape } from "@m3e/web/toolbar";
+import { M3eToolbarElement } from "@pulse/web/toolbar";
+export type { M3eToolbarElement, ToolbarVariant, ToolbarShape } from "@pulse/web/toolbar";
 
 /**
- * React binding for the `m3e-toolbar` Web Component from `@m3e/web/toolbar`.
+ * React binding for the `m3e-toolbar` Web Component from `@pulse/web/toolbar`.
  *
  * This component renders the underlying `<m3e-toolbar>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

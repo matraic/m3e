@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent, EventName } from "@lit/react";
 
-import { M3eSearchViewElement, SearchViewQueryEventDetail } from "@m3e/web/search";
-export type { M3eSearchViewElement, SearchViewMode, SearchViewQueryEventDetail } from "@m3e/web/search";
+import { M3eSearchViewElement, SearchViewQueryEventDetail } from "@pulse/web/search";
+export type { M3eSearchViewElement, SearchViewMode, SearchViewQueryEventDetail } from "@pulse/web/search";
 
 /**
- * React binding for the `m3e-search-view` Web Component from `@m3e/web/search`.
+ * React binding for the `m3e-search-view` Web Component from `@pulse/web/search`.
  *
  * This component renders the underlying `<m3e-search-view>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

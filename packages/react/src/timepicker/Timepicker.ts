@@ -1,7 +1,7 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eTimepickerElement } from "@m3e/web/timepicker";
+import { M3eTimepickerElement } from "@pulse/web/timepicker";
 export type {
   M3eTimepickerElement,
   TimepickerFormat,
@@ -10,10 +10,10 @@ export type {
   TimepickerPeriod,
   TimepickerView,
   TimepickerVariant,
-} from "@m3e/web/timepicker";
+} from "@pulse/web/timepicker";
 
 /**
- * React binding for the `m3e-timepicker` Web Component from `@m3e/web/timepicker`.
+ * React binding for the `m3e-timepicker` Web Component from `@pulse/web/timepicker`.
  *
  * This component renders the underlying `<m3e-timepicker>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

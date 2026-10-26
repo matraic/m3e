@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eSkeletonElement } from "@m3e/web/skeleton";
-export type { M3eSkeletonElement, SkeletonAnimation, SkeletonShape } from "@m3e/web/skeleton";
+import { M3eSkeletonElement } from "@pulse/web/skeleton";
+export type { M3eSkeletonElement, SkeletonAnimation, SkeletonShape } from "@pulse/web/skeleton";
 
 /**
- * React binding for the `m3e-skeleton` Web Component from `@m3e/web/skeleton`.
+ * React binding for the `m3e-skeleton` Web Component from `@pulse/web/skeleton`.
  *
  * This component renders the underlying `<m3e-skeleton>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

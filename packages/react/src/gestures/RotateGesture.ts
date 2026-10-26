@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent, EventName } from "@lit/react";
 
-import { M3eRotateGestureElement, RotateGestureDetail } from "@m3e/web/gestures/rotate";
-export type { RotateGestureDetail, RotateGestureOptions } from "@m3e/web/gestures/rotate";
+import { M3eRotateGestureElement, RotateGestureDetail } from "@pulse/web/gestures/rotate";
+export type { RotateGestureDetail, RotateGestureOptions } from "@pulse/web/gestures/rotate";
 
 /**
- * React binding for the `m3e-rotate-gesture` Web Component from `@m3e/web/gestures/rotate`.
+ * React binding for the `m3e-rotate-gesture` Web Component from `@pulse/web/gestures/rotate`.
  *
  * This component renders the underlying `<m3e-rotate-gesture>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

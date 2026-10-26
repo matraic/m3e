@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eBreadcrumbItemElement } from "@m3e/web/breadcrumb";
-export type { BreadcrumbItemCurrent, M3eBreadcrumbItemElement } from "@m3e/web/breadcrumb";
+import { M3eBreadcrumbItemElement } from "@pulse/web/breadcrumb";
+export type { BreadcrumbItemCurrent, M3eBreadcrumbItemElement } from "@pulse/web/breadcrumb";
 
 /**
- * React binding for the `m3e-breadcrumb-item` Web Component from `@m3e/web/breadcrumb`.
+ * React binding for the `m3e-breadcrumb-item` Web Component from `@pulse/web/breadcrumb`.
  *
  * This component renders the underlying `<m3e-breadcrumb-item>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

@@ -1,10 +1,10 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eThemeIconElement } from "@m3e/web/theme";
+import { M3eThemeIconElement } from "@pulse/web/theme";
 
 /**
- * React binding for the `m3e-theme-icon` Web Component from `@m3e/web/theme`.
+ * React binding for the `m3e-theme-icon` Web Component from `@pulse/web/theme`.
  *
  * This component renders the underlying `<m3e-theme-icon>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

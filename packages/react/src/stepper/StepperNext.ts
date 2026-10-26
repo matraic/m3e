@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eStepperNextElement } from "@m3e/web/stepper";
-export type { M3eStepperNextElement } from "@m3e/web/stepper";
+import { M3eStepperNextElement } from "@pulse/web/stepper";
+export type { M3eStepperNextElement } from "@pulse/web/stepper";
 
 /**
- * React binding for the `m3e-stepper-next` Web Component from `@m3e/web/stepper`.
+ * React binding for the `m3e-stepper-next` Web Component from `@pulse/web/stepper`.
  *
  * This component renders the underlying `<m3e-stepper-next>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

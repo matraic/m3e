@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eIconElement } from "@m3e/web/icon";
-export type { IconGrade, IconVariant, M3eIconElement } from "@m3e/web/icon";
+import { M3eIconElement } from "@pulse/web/icon";
+export type { IconGrade, IconVariant, M3eIconElement } from "@pulse/web/icon";
 
 /**
- * React binding for the `m3e-icon` Web Component from `@m3e/web/icon`.
+ * React binding for the `m3e-icon` Web Component from `@pulse/web/icon`.
  *
  * This component renders the underlying `<m3e-icon>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

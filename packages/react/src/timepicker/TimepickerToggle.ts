@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eTimepickerToggleElement } from "@m3e/web/timepicker";
-export type { M3eTimepickerToggleElement } from "@m3e/web/timepicker";
+import { M3eTimepickerToggleElement } from "@pulse/web/timepicker";
+export type { M3eTimepickerToggleElement } from "@pulse/web/timepicker";
 
 /**
- * React binding for the `m3e-timepicker-toggle` Web Component from `@m3e/web/timepicker`.
+ * React binding for the `m3e-timepicker-toggle` Web Component from `@pulse/web/timepicker`.
  *
  * This component renders the underlying `<m3e-timepicker-toggle>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

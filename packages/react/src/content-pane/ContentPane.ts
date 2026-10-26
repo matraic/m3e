@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eContentPaneElement } from "@m3e/web/content-pane";
-export type { M3eContentPaneElement } from "@m3e/web/content-pane";
+import { M3eContentPaneElement } from "@pulse/web/content-pane";
+export type { M3eContentPaneElement } from "@pulse/web/content-pane";
 
 /**
- * React binding for the `m3e-content-pane` Web Component from `@m3e/web/content-pane`.
+ * React binding for the `m3e-content-pane` Web Component from `@pulse/web/content-pane`.
  *
  * This component renders the underlying `<m3e-content-pane>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent, EventName } from "@lit/react";
 
-import { M3eRepeatGestureElement, RepeatGestureDetail } from "@m3e/web/gestures/repeat";
-export type { RepeatGestureDetail, RepeatGestureOptions } from "@m3e/web/gestures/repeat";
+import { M3eRepeatGestureElement, RepeatGestureDetail } from "@pulse/web/gestures/repeat";
+export type { RepeatGestureDetail, RepeatGestureOptions } from "@pulse/web/gestures/repeat";
 
 /**
- * React binding for the `m3e-repeat-gesture` Web Component from `@m3e/web/gestures/repeat`.
+ * React binding for the `m3e-repeat-gesture` Web Component from `@pulse/web/gestures/repeat`.
  *
  * This component renders the underlying `<m3e-repeat-gesture>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

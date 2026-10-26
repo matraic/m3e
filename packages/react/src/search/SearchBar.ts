@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eSearchBarElement } from "@m3e/web/search";
-export type { M3eSearchBarElement } from "@m3e/web/search";
+import { M3eSearchBarElement } from "@pulse/web/search";
+export type { M3eSearchBarElement } from "@pulse/web/search";
 
 /**
- * React binding for the `m3e-search-bar` Web Component from `@m3e/web/search`.
+ * React binding for the `m3e-search-bar` Web Component from `@pulse/web/search`.
  *
  * This component renders the underlying `<m3e-search-bar>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

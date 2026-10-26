@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent, EventName } from "@lit/react";
 
-import { M3eTapGestureElement, TapGestureDetail } from "@m3e/web/gestures/tap";
-export type { TapGestureDetail, TapGestureOptions } from "@m3e/web/gestures/tap";
+import { M3eTapGestureElement, TapGestureDetail } from "@pulse/web/gestures/tap";
+export type { TapGestureDetail, TapGestureOptions } from "@pulse/web/gestures/tap";
 
 /**
- * React binding for the `m3e-tap-gesture` Web Component from `@m3e/web/gestures/tap`.
+ * React binding for the `m3e-tap-gesture` Web Component from `@pulse/web/gestures/tap`.
  *
  * This component renders the underlying `<m3e-tap-gesture>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

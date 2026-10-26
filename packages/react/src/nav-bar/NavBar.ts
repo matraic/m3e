@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eNavBarElement } from "@m3e/web/nav-bar";
-export type { NavBarMode, NavItemOrientation, M3eNavBarElement } from "@m3e/web/nav-bar";
+import { M3eNavBarElement } from "@pulse/web/nav-bar";
+export type { NavBarMode, NavItemOrientation, M3eNavBarElement } from "@pulse/web/nav-bar";
 
 /**
- * React binding for the `m3e-nav-bar` Web Component from `@m3e/web/nav-bar`.
+ * React binding for the `m3e-nav-bar` Web Component from `@pulse/web/nav-bar`.
  *
  * This component renders the underlying `<m3e-nav-bar>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

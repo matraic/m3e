@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eNavMenuItemElement } from "@m3e/web/nav-menu";
-export type { M3eNavMenuItemElement } from "@m3e/web/nav-menu";
+import { M3eNavMenuItemElement } from "@pulse/web/nav-menu";
+export type { M3eNavMenuItemElement } from "@pulse/web/nav-menu";
 
 /**
- * React binding for the `m3e-nav-menu-item` Web Component from `@m3e/web/nav-menu`.
+ * React binding for the `m3e-nav-menu-item` Web Component from `@pulse/web/nav-menu`.
  *
  * This component renders the underlying `<m3e-nav-menu-item>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

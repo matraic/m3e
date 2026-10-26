@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eLoadingIndicatorElement } from "@m3e/web/loading-indicator";
-export type { LoadingIndicatorVariant, M3eLoadingIndicatorElement } from "@m3e/web/loading-indicator";
+import { M3eLoadingIndicatorElement } from "@pulse/web/loading-indicator";
+export type { LoadingIndicatorVariant, M3eLoadingIndicatorElement } from "@pulse/web/loading-indicator";
 
 /**
- * React binding for the `m3e-loading-indicator` Web Component from `@m3e/web/loading-indicator`.
+ * React binding for the `m3e-loading-indicator` Web Component from `@pulse/web/loading-indicator`.
  *
  * This component renders the underlying `<m3e-loading-indicator>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

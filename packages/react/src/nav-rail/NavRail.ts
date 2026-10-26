@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eNavRailElement } from "@m3e/web/nav-rail";
-export type { M3eNavRailElement } from "@m3e/web/nav-rail";
+import { M3eNavRailElement } from "@pulse/web/nav-rail";
+export type { M3eNavRailElement } from "@pulse/web/nav-rail";
 
 /**
- * React binding for the `m3e-nav-rail` Web Component from `@m3e/web/nav-rail`.
+ * React binding for the `m3e-nav-rail` Web Component from `@pulse/web/nav-rail`.
  *
  * This component renders the underlying `<m3e-nav-rail>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eSplitPaneElement } from "@m3e/web/split-pane";
-export type { M3eSplitPaneElement, SplitPaneOrientation } from "@m3e/web/split-pane";
+import { M3eSplitPaneElement } from "@pulse/web/split-pane";
+export type { M3eSplitPaneElement, SplitPaneOrientation } from "@pulse/web/split-pane";
 
 /**
- * React binding for the `m3e-split-pane` Web Component from `@m3e/web/split-pane`.
+ * React binding for the `m3e-split-pane` Web Component from `@pulse/web/split-pane`.
  *
  * This component renders the underlying `<m3e-split-pane>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.

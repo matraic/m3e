@@ -1,11 +1,11 @@
 import React from "react";
 import { createComponent } from "@lit/react";
 
-import { M3eCalendarElement } from "@m3e/web/calendar";
-export type { M3eCalendarElement, CalendarView } from "@m3e/web/calendar";
+import { M3eCalendarElement } from "@pulse/web/calendar";
+export type { M3eCalendarElement, CalendarView } from "@pulse/web/calendar";
 
 /**
- * React binding for the `m3e-calendar` Web Component from `@m3e/web/calendar`.
+ * React binding for the `m3e-calendar` Web Component from `@pulse/web/calendar`.
  *
  * This component renders the underlying `<m3e-calendar>` element and exposes its
  * properties, attributes, and events through an idiomatic React interface.
