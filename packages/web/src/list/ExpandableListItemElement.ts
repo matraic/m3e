@@ -192,7 +192,7 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
     }
     .items {
       --m3e-collapsible-animation: var(--_expandable-list-item-animation);
-      --m3e-collapsible-slide-animation: var(--_expandable-list-item-slide-animation);
+      --m3e-collapsible-slide-dock: var(--_expandable-list-item-slide-dock, flex-end);
     }
     @media (forced-colors: active) {
       .header {

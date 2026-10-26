@@ -26,7 +26,7 @@ import { CollapsibleOrientation, isCollapsibleOrientation } from "./CollapsibleO
  * @attr open - Whether content is visible.
  * @attr orientation - Orientation of collapsible content.
  * @attr no-animate - Whether to disable animation.
- * @attr slide - Whether content slides into view.
+ * @attr slide - Whether content is docked to the trailing edge so it slides into view as the size animates.
  *
  * @fires opening - Dispatched when the collapsible begins to open.
  * @fires opened - Dispatched when the collapsible has opened.
@@ -36,7 +36,6 @@ import { CollapsibleOrientation, isCollapsibleOrientation } from "./CollapsibleO
  * @cssprop --m3e-collapsible-animation - The animation shorthand for expanding and collapsing content.
  * @cssprop --m3e-collapsible-animation-duration - The duration of the expand / collapse animation.
  * @cssprop --m3e-collapsible-animation-function - The timing function of the expand / collapse animation.
- * @cssprop --m3e-collapsible-slide-animation - The animation shorthand for the slide transform when `slide` is enabled.
  */
 @customElement("m3e-collapsible")
 export class M3eCollapsibleElement extends AttachInternals(LitElement) {
@@ -66,7 +65,6 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
     :host(:is(:state(--vertical), :--vertical)[slide]) {
       transition: ${unsafeCSS(`visibility var(--_collapsible-animation),
         height var(--_collapsible-animation),
-        transform var(--m3e-collapsible-slide-animation, var(--_collapsible-animation)),
         padding-top var(--_collapsible-animation),
         padding-bottom var(--_collapsible-animation)`)};
     }
@@ -82,7 +80,6 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
     :host(:is(:state(--horizontal), :--horizontal)[slide]) {
       transition: ${unsafeCSS(`visibility var(--_collapsible-animation),
         width var(--_collapsible-animation),
-        transform var(--m3e-collapsible-slide-animation, var(--_collapsible-animation)),
         padding-left var(--_collapsible-animation),
         padding-right var(--_collapsible-animation)`)};
     }
@@ -100,7 +97,6 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
       transition: ${unsafeCSS(`visibility var(--_collapsible-animation),
         width var(--_collapsible-animation),
         height var(--_collapsible-animation),
-        transform var(--m3e-collapsible-slide-animation, var(--_collapsible-animation)),
         padding var(--_collapsible-animation)`)};
     }
     :host(:not(:is(:state(--closing), :--closing)):not([open])) {
@@ -141,24 +137,35 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
     :host(:is(:state(--overflows), :--overflows)) {
       scrollbar-gutter: stable;
     }
-    :host(:is(:state(--vertical), :--vertical)[slide]:not([open])) {
-      transform: translateY(var(--_collapsible-vertical-offset, 0px));
+    .content {
+      display: flow-root;
+      flex: none;
     }
-    :host(:is(:state(--vertical), :--vertical)[slide][open]) {
-      transform: translateY(0px);
+    :host([slide]:not([hidden]):is(:not([open]), :state(--opening), :state(--closing), :--opening, :--closing)) {
+      display: flex;
+      justify-content: var(--m3e-collapsible-slide-dock, flex-end);
     }
-    :host(:is(:state(--horizontal), :--horizontal)[slide]:not([open])) {
-      transform: translateX(var(--_collapsible-horizontal-offset, 0px));
+    :host(
+      :is(:state(--vertical), :--vertical)[slide]:not([hidden]):is(
+          :not([open]),
+          :state(--opening),
+          :state(--closing),
+          :--opening,
+          :--closing
+        )
+    ) {
+      flex-direction: column;
     }
-    :host(:is(:state(--horizontal), :--horizontal)[slide][open]) {
-      transform: translateX(0px);
-    }
-    :host(:is(:state(--both), :--both)[slide]:not([open])) {
-      transform: translateX(var(--_collapsible-horizontal-offset, 0px))
-        translateY(var(--_collapsible-vertical-offset, 0px));
-    }
-    :host(:is(:state(--both), :--both)[slide][open]) {
-      transform: translateX(0px) translateY(0px);
+    :host(
+      :is(:state(--both), :--both)[slide]:not([hidden]):is(
+          :not([open]),
+          :state(--opening),
+          :state(--closing),
+          :--opening,
+          :--closing
+        )
+    ) {
+      align-items: flex-end;
     }
     ::slotted(*) {
       --m3e-collapsible-animation: initial;
@@ -203,6 +210,20 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
    * @default false
    */
   @property({ type: Boolean, reflect: true }) slide = false;
+
+  /** @private */
+  get #contentHeight(): number {
+    const style = getComputedStyle(this);
+    const content = this.shadowRoot?.querySelector<HTMLElement>(".content");
+    return (content?.scrollHeight ?? 0) + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+  }
+
+  /** @private */
+  get #contentWidth(): number {
+    const style = getComputedStyle(this);
+    const content = this.shadowRoot?.querySelector<HTMLElement>(".content");
+    return (content?.scrollWidth ?? 0) + parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+  }
 
   /** @inheritdoc */
   override connectedCallback(): void {
@@ -249,10 +270,10 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
           this,
           "--overflows",
           this.orientation === "vertical"
-            ? this.clientHeight < this.scrollHeight
+            ? this.clientHeight < this.#contentHeight
             : this.orientation === "horizontal"
-              ? this.clientWidth < this.scrollWidth
-              : this.clientHeight < this.scrollHeight || this.clientWidth < this.scrollWidth,
+              ? this.clientWidth < this.#contentWidth
+              : this.clientHeight < this.#contentHeight || this.clientWidth < this.#contentWidth,
         );
         this.#clearSize();
       }
@@ -299,26 +320,24 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
       } else {
         // Commit the explicit size so the collapse transitions from it rather than from `auto`.
         void this.offsetHeight;
-        requestAnimationFrame(() => {
-          this.#clearSize();
-          this.addEventListener(
-            "transitionend",
-            () => {
-              if (!this.open) {
-                deleteCustomState(this, "--closing");
-                this.dispatchEvent(new Event("closed"));
-              }
-            },
-            { once: true },
-          );
-        });
+        this.#clearSize();
+        this.addEventListener(
+          "transitionend",
+          () => {
+            if (!this.open) {
+              deleteCustomState(this, "--closing");
+              this.dispatchEvent(new Event("closed"));
+            }
+          },
+          { once: true },
+        );
       }
     }
   }
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<slot @slotchange=${this.#handleSlotChange}></slot>`;
+    return html`<div class="content"><slot @slotchange=${this.#handleSlotChange}></slot></div>`;
   }
 
   /** @private */
@@ -332,7 +351,6 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
   /** @private */
   #handleSlotChange() {
     this.#slotChanged = true;
-    this.#updateSlideState();
   }
 
   /** @private */
@@ -369,33 +387,14 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
   #actualSize(): void {
     switch (this.orientation) {
       case "vertical":
-        this.style.height = `${this.scrollHeight}px`;
+        this.style.height = `${this.#contentHeight}px`;
         break;
       case "horizontal":
-        this.style.width = `${this.scrollWidth}px`;
+        this.style.width = `${this.#contentWidth}px`;
         break;
       case "both":
-        this.style.height = `${this.scrollHeight}px`;
-        this.style.width = `${this.scrollWidth}px`;
-        break;
-    }
-
-    this.#updateSlideState();
-  }
-
-  /** @private */
-  #updateSlideState(): void {
-    if (!this.slide) return;
-    switch (this.orientation) {
-      case "vertical":
-        this.style.setProperty("--_collapsible-vertical-offset", `${-this.scrollHeight}px`);
-        break;
-      case "horizontal":
-        this.style.setProperty("--_collapsible-horizontal-offset", `${-this.scrollWidth}px`);
-        break;
-      case "both":
-        this.style.setProperty("--_collapsible-vertical-offset", `${-this.scrollHeight}px`);
-        this.style.setProperty("--_collapsible-horizontal-offset", `${-this.scrollWidth}px`);
+        this.style.height = `${this.#contentHeight}px`;
+        this.style.width = `${this.#contentWidth}px`;
         break;
     }
   }

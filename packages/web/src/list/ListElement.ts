@@ -73,7 +73,7 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
       --_list-item-trailing-video-outset: var(--m3e-list-item-trailing-space, ${DesignToken.measurement.space200});
       --_expandable-list-item-expanded-toggle-icon-container-color: transparent;
       --_expandable-list-item-animation: ${DesignToken.motion.spring.fastEffects};
-      --_expandable-list-item-slide-animation: 0s linear;
+      --_expandable-list-item-slide-dock: flex-start;
     }
     :host(:is(:state(--segmented), :--segmented)) {
       row-gap: var(--m3e-segmented-list-segment-gap, ${DesignToken.measurement.space25});
