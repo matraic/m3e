@@ -167,6 +167,7 @@ export class M3eToolbarElement extends Vertical(Role(AttachInternals(LitElement)
   /** @private */ #directionalitySubscription?: () => void;
   /** @private */ #focusKeyManager = new RovingTabIndexManager()
     .withHomeAndEnd()
+    .withWrap()
     .withDirectionality(M3eDirectionality.current);
 
   /**

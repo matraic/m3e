@@ -164,6 +164,7 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
     .handle {
       position: absolute;
       touch-action: inherit;
+      user-select: none;
       left: calc(50% - calc(var(--m3e-timepicker-dial-handle-size, 2px) / 2));
       width: var(--m3e-timepicker-dial-handle-size, 2px);
       transform: rotate(calc(var(--_hand-angle, 0) * 1deg));

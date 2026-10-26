@@ -552,12 +552,13 @@
           define how components animate across the system, using spring-based physics to guide spatial and effect
           transitions. Use the <code>motion</code> attribute to control the motion scheme.
         </p>
-        <p>
+        <m3e-callout>
+          <span slot="label">Damped spring motion</span>
           Where the CSS <code>linear()</code> easing function is supported, each
           <code>--md-sys-motion-spring-*</code> token is sampled from its spring's damping ratio and stiffness;
           otherwise, a <code>cubic-bezier()</code>
           approximation is used.
-        </p>
+        </m3e-callout>
         <p>
           The following example illustrates how the <code>m3e-switch</code> adapts to the motion scheme. Note the spring
           effect when clicking the expressive example.

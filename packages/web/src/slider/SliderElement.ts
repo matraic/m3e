@@ -1085,7 +1085,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
     if (this.#activeThumb === this.upperThumb) {
       min = Math.max(min, this.lowerThumb?.value ?? 0);
     } else if (this.upperThumb) {
-      max = Math.max(max, this.upperThumb.value ?? this.max);
+      max = Math.min(max, this.upperThumb.value ?? this.max);
     }
 
     // A vertical slider runs bottom-to-top, so ArrowUp always increases and

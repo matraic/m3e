@@ -77,3 +77,141 @@ test.describe("m3e-theme color", () => {
     expect(await primary()).not.toBe(before);
   });
 });
+
+const VARIANTS = [
+  "monochrome",
+  "neutral",
+  "tonal-spot",
+  "vibrant",
+  "expressive",
+  "fidelity",
+  "content",
+  "rainbow",
+  "fruit-salad",
+] as const;
+
+/** Reads a computed custom property from the element matching `selector`. */
+function readToken(page: Page, selector: string, token: string): Promise<string> {
+  return page.$eval(selector, (element, name) => getComputedStyle(element).getPropertyValue(name).trim(), token);
+}
+
+test.describe("m3e-theme options", () => {
+  for (const variant of VARIANTS) {
+    test(`derives a primary color for the ${variant} variant`, async ({ page, render }) => {
+      await render(`<m3e-theme color="#6750A4" scheme="light" variant="${variant}"><div id="probe"></div></m3e-theme>`);
+
+      expect(await readToken(page, "#probe", "--md-sys-color-primary")).toMatch(/^#[0-9a-f]{6}$/i);
+    });
+  }
+
+  const changesPrimary = async (
+    page: Page,
+    render: (html: string) => Promise<void>,
+    attr: string,
+    from: string,
+    to: string,
+  ) => {
+    await render(`<m3e-theme color="#6750A4" ${attr}="${from}"><div id="probe"></div></m3e-theme>`);
+    const before = await readToken(page, "#probe", "--md-sys-color-primary");
+    await page.locator("m3e-theme").evaluate((el, [name, value]) => el.setAttribute(name, value), [attr, to]);
+    await expect.poll(() => readToken(page, "#probe", "--md-sys-color-primary")).not.toBe(before);
+  };
+
+  test("changing the variant changes the palette", async ({ page, render }) => {
+    await changesPrimary(page, render, "variant", "tonal-spot", "monochrome");
+  });
+
+  test("changing the contrast to high changes the palette", async ({ page, render }) => {
+    await changesPrimary(page, render, "contrast", "standard", "high");
+  });
+
+  test("changing the contrast to medium changes the palette", async ({ page, render }) => {
+    await changesPrimary(page, render, "contrast", "standard", "medium");
+  });
+
+  test("changing the scheme from light to dark changes the palette", async ({ page, render }) => {
+    await changesPrimary(page, render, "scheme", "light", "dark");
+  });
+  test("an unknown variant still yields a valid palette", async ({ page, render }) => {
+    await render(`<m3e-theme color="#6750A4" scheme="light" variant="bogus"><div id="probe"></div></m3e-theme>`);
+
+    expect(await readToken(page, "#probe", "--md-sys-color-primary")).toMatch(/^#[0-9a-f]{6}$/i);
+  });
+
+  test("auto scheme follows prefers-color-scheme", async ({ page, render }) => {
+    await page.emulateMedia({ colorScheme: "dark" });
+    await render(`
+      <m3e-theme scheme="auto"><div id="auto"></div></m3e-theme>
+      <m3e-theme scheme="dark"><div id="dark"></div></m3e-theme>
+    `);
+
+    await expect
+      .poll(() => readToken(page, "#auto", "--md-sys-color-surface"))
+      .toBe(await readToken(page, "#dark", "--md-sys-color-surface"));
+  });
+
+  test("auto scheme follows a light preference", async ({ page, render }) => {
+    await page.emulateMedia({ colorScheme: "light" });
+    await render(`
+      <m3e-theme scheme="auto"><div id="auto"></div></m3e-theme>
+      <m3e-theme scheme="light"><div id="light"></div></m3e-theme>
+    `);
+
+    await expect
+      .poll(() => readToken(page, "#auto", "--md-sys-color-surface"))
+      .toBe(await readToken(page, "#light", "--md-sys-color-surface"));
+  });
+
+  for (const density of [0, -1, -2]) {
+    test(`applies density scale ${density}`, async ({ page, render }) => {
+      await render(`<m3e-theme density="${density}"><div id="probe"></div></m3e-theme>`);
+
+      expect(Number.parseFloat(await readToken(page, "#probe", "--md-sys-density-scale"))).toBe(density);
+    });
+  }
+
+  test("strong-focus makes focus rings visible", async ({ page, render }) => {
+    await render(`<m3e-theme strong-focus><div id="probe"></div></m3e-theme>`);
+
+    expect(await readToken(page, "#probe", "--m3e-focus-ring-visibility")).toBe("visible");
+  });
+
+  test("focus rings are hidden without strong-focus", async ({ page, render }) => {
+    await render(`<m3e-theme><div id="probe"></div></m3e-theme>`);
+
+    expect(await readToken(page, "#probe", "--m3e-focus-ring-visibility")).toBe("hidden");
+  });
+
+  test("updating the color re-derives tokens", async ({ page, render }) => {
+    await render(`<m3e-theme color="#6750A4" scheme="light"><div id="probe"></div></m3e-theme>`);
+    const before = await readToken(page, "#probe", "--md-sys-color-primary");
+
+    await page.locator("m3e-theme").evaluate((el) => {
+      (el as HTMLElement & { color: string }).color = "#00897B";
+    });
+
+    await expect.poll(() => readToken(page, "#probe", "--md-sys-color-primary")).not.toBe(before);
+  });
+
+  test("updating density at runtime changes the scale", async ({ page, render }) => {
+    await render(`<m3e-theme density="0"><div id="probe"></div></m3e-theme>`);
+
+    await page.locator("m3e-theme").evaluate((el) => {
+      (el as HTMLElement & { density: number }).density = -2;
+    });
+
+    await expect
+      .poll(async () => Number.parseFloat(await readToken(page, "#probe", "--md-sys-density-scale")))
+      .toBe(-2);
+  });
+
+  test("toggling strong-focus at runtime updates the token", async ({ page, render }) => {
+    await render(`<m3e-theme><div id="probe"></div></m3e-theme>`);
+
+    await page.locator("m3e-theme").evaluate((el) => {
+      (el as HTMLElement & { strongFocus: boolean }).strongFocus = true;
+    });
+
+    await expect.poll(() => readToken(page, "#probe", "--m3e-focus-ring-visibility")).toBe("visible");
+  });
+});

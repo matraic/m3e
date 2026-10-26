@@ -57,6 +57,8 @@ export class M3eTextareaAutosizeElement extends HtmlFor(Role(LitElement, "none")
   /** @private */ #previousMinRows?: number;
   /** @private */ #previousValue?: string;
   /** @private */ #hasFocus = false;
+  /** @private */ #appliedMinHeight = false;
+  /** @private */ #appliedMaxHeight = false;
 
   /** @private */ readonly #windowResizeHandler = () => this._handleWindowResize();
   /** @private */ readonly #focusHandler = (e: FocusEvent) => (this.#hasFocus = e.type === "focus");
@@ -117,12 +119,15 @@ export class M3eTextareaAutosizeElement extends HtmlFor(Role(LitElement, "none")
   protected override updated(_changedProperties: PropertyValues<this>): void {
     super.updated(_changedProperties);
 
-    if (_changedProperties.has("disabled")) {
-      if (this.disabled) {
-        this.reset();
-      } else {
-        this.resizeToFitContent(true);
-      }
+    if (_changedProperties.has("disabled") && this.disabled) {
+      this.reset();
+    } else if (
+      !this.disabled &&
+      (_changedProperties.has("disabled") || _changedProperties.has("minRows") || _changedProperties.has("maxRows"))
+    ) {
+      this.#setMinHeight();
+      this.#setMaxHeight();
+      this.resizeToFitContent(true);
     }
   }
 
@@ -159,8 +164,18 @@ export class M3eTextareaAutosizeElement extends HtmlFor(Role(LitElement, "none")
 
   /** Resets the `textarea` to its original size. */
   reset() {
-    if (this.#initialHeight !== undefined && this.control instanceof HTMLTextAreaElement) {
-      this.control.style.height = this.#initialHeight;
+    if (this.control instanceof HTMLTextAreaElement) {
+      if (this.#initialHeight !== undefined) {
+        this.control.style.height = this.#initialHeight;
+      }
+      if (this.#appliedMinHeight) {
+        this.control.style.removeProperty("min-height");
+        this.#appliedMinHeight = false;
+      }
+      if (this.#appliedMaxHeight) {
+        this.control.style.removeProperty("max-height");
+        this.#appliedMaxHeight = false;
+      }
     }
   }
 
@@ -209,17 +224,25 @@ export class M3eTextareaAutosizeElement extends HtmlFor(Role(LitElement, "none")
 
   /** @private */
   #setMinHeight(): void {
-    const minHeight = this.minRows && this.#cachedLineHeight ? `${this.minRows * this.#cachedLineHeight}px` : null;
-    if (minHeight && this.control) {
-      this.control.style.minHeight = minHeight;
+    if (!this.control || !this.#cachedLineHeight) return;
+    if (this.minRows) {
+      this.control.style.minHeight = `${this.minRows * this.#cachedLineHeight}px`;
+      this.#appliedMinHeight = true;
+    } else if (this.#appliedMinHeight) {
+      this.control.style.removeProperty("min-height");
+      this.#appliedMinHeight = false;
     }
   }
 
   /** @private */
   #setMaxHeight(): void {
-    const maxHeight = this.maxRows && this.#cachedLineHeight ? `${this.maxRows * this.#cachedLineHeight}px` : null;
-    if (maxHeight && this.control) {
-      this.control.style.maxHeight = maxHeight;
+    if (!this.control || !this.#cachedLineHeight) return;
+    if (this.maxRows) {
+      this.control.style.maxHeight = `${this.maxRows * this.#cachedLineHeight}px`;
+      this.#appliedMaxHeight = true;
+    } else if (this.#appliedMaxHeight) {
+      this.control.style.removeProperty("max-height");
+      this.#appliedMaxHeight = false;
     }
   }
 

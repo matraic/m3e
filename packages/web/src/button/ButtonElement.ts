@@ -604,6 +604,7 @@ export class M3eButtonElement extends KeyboardClick(
     this._base?.style.removeProperty("--_button-shape");
     this.style.removeProperty("--_button-width");
     this.style.removeProperty("--_adjacent-shrink");
+    this.style.removeProperty("--_pressed-growth");
     deleteCustomState(this, "--adjacent-pressed");
 
     this.removeEventListener("click", this.#clickHandler);
@@ -754,6 +755,12 @@ export class M3eButtonElement extends KeyboardClick(
           adjacentShrink /= 2;
         }
 
+        // As in Compose, a neighbor shrinks by at most its end padding (its compression limit), and the
+        // pressed button grows by what its neighbors give up.
+        const adjacent = [buttons[index - 1], buttons[index + 1]].filter((x) => x !== undefined);
+        adjacentShrink = Math.min(adjacentShrink, ...adjacent.map((x) => this.#compressionLimit(x)));
+        this.style.setProperty("--_pressed-growth", `${adjacentShrink * Math.max(1, adjacent.length)}px`);
+
         for (let i = 0; i < buttons.length; i++) {
           if (i == index - 1 || i == index + 1) {
             addCustomState(buttons[i], "--no-resize");
@@ -809,7 +816,17 @@ export class M3eButtonElement extends KeyboardClick(
       deleteCustomState(button, "--adjacent-pressed");
       deleteCustomState(button, "--no-resize");
       button.style.removeProperty("--_adjacent-shrink");
+      button.style.removeProperty("--_pressed-growth");
     }
+  }
+
+  /** @private */
+  #compressionLimit(button: HTMLElement): number {
+    // The end padding at rest: the current padding plus what an ongoing shrink has taken from it.
+    const wrapper = button.shadowRoot?.querySelector(".wrapper");
+    if (!wrapper) return Infinity;
+    const shrink = parseFloat(button.style.getPropertyValue("--_adjacent-shrink")) || 0;
+    return parseFloat(getComputedStyle(wrapper).paddingInlineEnd) + shrink / 2;
   }
 }
 

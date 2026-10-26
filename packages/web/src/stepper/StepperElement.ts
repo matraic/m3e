@@ -281,12 +281,8 @@ export class M3eStepperElement extends SupportsDirectionality(ReconnectedCallbac
       this._selectedIndex = index;
       this[selectionManager].select(this.selectedStep);
       return true;
-    } else {
-      if (selectedStep) {
-        this[selectionManager].deselect(selectedStep);
-      }
-      return false;
     }
+    return false;
   }
 
   /** Resets the stepper to its initial state, clearing any form data. */

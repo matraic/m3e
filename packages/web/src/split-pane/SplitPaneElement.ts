@@ -892,7 +892,8 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
 
   /** @private */
   #computeDetent(detent: string): number | undefined {
-    const value = detent.endsWith("px") ? this.clientWidth / parseFloat(detent) : parseFloat(detent);
+    const size = this.currentOrientation === "vertical" ? this.clientHeight : this.clientWidth;
+    const value = detent.endsWith("px") ? (size > 0 ? (parseFloat(detent) / size) * 100 : NaN) : parseFloat(detent);
     return !isNaN(value) ? value : undefined;
   }
 

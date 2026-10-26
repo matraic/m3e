@@ -42,5 +42,37 @@ test.describe("m3e-app-bar", () => {
       .poll(() => page.locator("m3e-app-bar").evaluate((element) => (element as HTMLElement & { size: string }).size))
       .toBe("small");
   });
+});
 
+test.describe("m3e-app-bar centered", () => {
+  const content = `
+    <span slot="leading">Back</span>
+    <span slot="title">Inbox</span>
+    <span slot="trailing">More</span>
+  `;
+  const titleOffset = (page: import("@playwright/test").Page) =>
+    page.getByText("Inbox", { exact: true }).evaluate((el) => {
+      const bar = el.closest("m3e-app-bar")!.getBoundingClientRect();
+      const rect = el.getBoundingClientRect();
+      return Math.abs(rect.left + rect.width / 2 - (bar.left + bar.width / 2));
+    });
+
+  test("reflects the centered attribute", async ({ page, render }) => {
+    await render(`<m3e-app-bar centered>${content}</m3e-app-bar>`);
+
+    await expect(page.locator("m3e-app-bar")).toHaveAttribute("centered", "");
+  });
+
+  test("is not centered by default", async ({ page, render }) => {
+    await render(`<m3e-app-bar style="width: 600px">${content}</m3e-app-bar>`);
+
+    await expect(page.locator("m3e-app-bar")).not.toHaveAttribute("centered");
+    expect(await titleOffset(page)).toBeGreaterThan(20);
+  });
+
+  test("centers the title in a small bar", async ({ page, render }) => {
+    await render(`<m3e-app-bar centered style="width: 600px">${content}</m3e-app-bar>`);
+
+    await expect.poll(() => titleOffset(page)).toBeLessThan(10);
+  });
 });
