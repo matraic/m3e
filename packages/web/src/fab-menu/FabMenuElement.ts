@@ -25,6 +25,9 @@ import { M3eFabElement } from "@m3e/web/fab";
 
 import { FabMenuVariant, isFabMenuVariant } from "./FabMenuVariant";
 
+/** The minimum space, in pixels, kept between the menu and the top and bottom of the viewport. */
+const viewportMargin = 8;
+
 /**
  * Returns when each item of a menu appears or disappears, as in Compose's `FloatingActionButtonMenu`: a counter animates
  * between 0 and the number of items with the slow effects spring (damping ratio 1, stiffness 800 in both motion
@@ -123,10 +126,12 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       margin: unset;
       border: unset;
       overflow: visible;
+      scrollbar-width: none;
       width: var(--_fab-menu-width, fit-content);
       max-width: var(--m3e-fab-menu-max-width, 280px);
       background-color: transparent;
       display: none;
+      will-change: clip-path;
     }
     :host([hidden]) {
       display: none;
@@ -221,6 +226,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   /** @private */ #fabTabIndex?: number;
   /** @private */ #trigger?: HTMLElement;
   /** @private */ #anchoringCleanup?: () => void;
+  /** @private */ #clipFrame?: number;
 
   /** @private */
   readonly #listManager = new RovingTabIndexManager<LitElement & DisabledMixin>()
@@ -254,6 +260,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
         this.#clickOutsideController.unobserveAll();
         this.#anchoringCleanup?.();
         this.#anchoringCleanup = undefined;
+        this.#stopClipping();
         break;
     }
   };
@@ -300,9 +307,18 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
           this.style.left = `${x}px`;
           this.style.right = "";
         }
-        this.style.top = `${y}px`;
+
+        // The menu never flips. When it is too tall to fit above the trigger, it slides down behind the trigger
+        // (staying inside the viewport) and scrolls once it is taller than the viewport.
+        const maxHeight = Math.max(0, window.innerHeight - 2 * viewportMargin);
+        this.style.maxHeight = `${maxHeight}px`;
+        this.style.overflowY = this.scrollHeight > maxHeight ? "auto" : "";
+        this.style.top = `${Math.max(y, viewportMargin)}px`;
+
+        this.#clipTrigger(trigger);
       },
     );
+    this.#startClipping(trigger);
 
     const items = this.#items();
     const animate = this.#animates();
@@ -401,6 +417,83 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   /** @inheritdoc */
   protected override render(): unknown {
     return html`<div class="base"><slot @slotchange=${this.#handleSlotChange}></slot></div>`;
+  }
+
+  /**
+   * Clips the menu where it overlaps its trigger, so the trigger appears above the menu even though the menu
+   * is in the top layer.
+   * @private
+   */
+  #startClipping(trigger: HTMLElement): void {
+    this.#stopClipping();
+    const tick = () => {
+      this.#clipTrigger(trigger);
+      this.#clipFrame = requestAnimationFrame(tick);
+    };
+    this.#clipFrame = requestAnimationFrame(tick);
+  }
+
+  /** @private */
+  #stopClipping(): void {
+    if (this.#clipFrame !== undefined) {
+      cancelAnimationFrame(this.#clipFrame);
+      this.#clipFrame = undefined;
+    }
+    this.style.clipPath = "";
+  }
+
+  /** @private */
+  #clipTrigger(trigger: HTMLElement): void {
+    const fab = trigger.closest<HTMLElement>("m3e-fab") ?? trigger;
+    const menu = this.getBoundingClientRect();
+    const fabRect = fab.getBoundingClientRect();
+
+    // The strong focus indicator is drawn outside the fab, so the cut-out grows to include it.
+    const outline = fab.shadowRoot?.querySelector("m3e-focus-ring")?.shadowRoot?.querySelector(".outline");
+    const outlineStyle = outline ? getComputedStyle(outline) : undefined;
+    const ring =
+      outlineStyle && outlineStyle.outlineStyle !== "none" && outlineStyle.visibility !== "hidden"
+        ? Math.max(0, (parseFloat(outlineStyle.outlineOffset) || 0) + (parseFloat(outlineStyle.outlineWidth) || 0))
+        : 0;
+
+    const rect = {
+      left: fabRect.left - ring,
+      top: fabRect.top - ring,
+      right: fabRect.right + ring,
+      bottom: fabRect.bottom + ring,
+      width: fabRect.width + 2 * ring,
+      height: fabRect.height + 2 * ring,
+    };
+
+    const overlaps =
+      rect.left < menu.right && rect.right > menu.left && rect.top < menu.bottom && rect.bottom > menu.top;
+    if (!overlaps) {
+      this.style.clipPath = "";
+      return;
+    }
+
+    const base = fab.shadowRoot?.querySelector(".base") ?? fab;
+    const radius = Math.min(
+      (parseFloat(getComputedStyle(base).borderTopLeftRadius) || 0) + ring,
+      rect.width / 2,
+      rect.height / 2,
+    );
+
+    const l = rect.left - menu.left;
+    const t = rect.top - menu.top;
+    const r = l + rect.width;
+    const b = t + rect.height;
+    const c = radius;
+    const pad = 1000; // keeps anything that overflows the menu, like shadows, visible
+
+    const clipPath =
+      `path(evenodd, "M ${-pad} ${-pad} H ${menu.width + pad} V ${menu.height + pad} H ${-pad} Z ` +
+      `M ${l + c} ${t} H ${r - c} A ${c} ${c} 0 0 1 ${r} ${t + c} V ${b - c} A ${c} ${c} 0 0 1 ${r - c} ${b} ` +
+      `H ${l + c} A ${c} ${c} 0 0 1 ${l} ${b - c} V ${t + c} A ${c} ${c} 0 0 1 ${l + c} ${t} Z")`;
+
+    if (this.style.clipPath !== clipPath) {
+      this.style.clipPath = clipPath;
+    }
   }
 
   /** @private */
