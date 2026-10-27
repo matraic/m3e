@@ -8,6 +8,7 @@ import {
   customElement,
   DesignToken,
   DisabledMixin,
+  forcedColorsActive,
   hasCustomState,
   prefersReducedMotion,
   Role,
@@ -215,6 +216,10 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       }
     }
     @media (forced-colors: active) {
+      :host(:not(:is(:state(--no-animate), :--no-animate))),
+      :host(:not(:is(:state(--no-animate), :--no-animate))) ::slotted(m3e-fab-menu-item) {
+        transition: none;
+      }
       :host {
         border-radius: ${DesignToken.shape.corner.medium};
         outline: 1px solid MenuText;
@@ -533,7 +538,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
 
   /** @private */
   #animates(): boolean {
-    return !hasCustomState(this, "--no-animate") && !prefersReducedMotion();
+    return !hasCustomState(this, "--no-animate") && !prefersReducedMotion() && !forcedColorsActive();
   }
 
   /** @private */
