@@ -318,10 +318,11 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
         this.style.overflowY = this.scrollHeight > maxHeight ? "auto" : "";
         this.style.top = `${Math.max(y, viewportMargin)}px`;
 
-        this.#clipTrigger(trigger);
+        if (this.#clipTrigger(trigger) && this.#clipFrame === undefined && this.#trigger) {
+          this.#startClipping(trigger);
+        }
       },
     );
-    this.#startClipping(trigger);
 
     const items = this.#items();
     const animate = this.#animates();
@@ -343,6 +344,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     this.#trigger = trigger;
     this.#trigger.ariaExpanded = "true";
     this.#scrollController.observe(this.#trigger);
+    this.#startClipping(trigger);
 
     this.#attachFab();
   }
@@ -429,13 +431,16 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
    */
   #startClipping(trigger: HTMLElement): void {
     this.#stopClipping();
+    if (!this.#clipTrigger(trigger)) return;
+
     const tick = () => {
-      // Clipping continues while the items close, and ends once the menu is no longer displayed.
-      if (!this.#trigger && !this.matches(":popover-open") && getComputedStyle(this).display === "none") {
+      // Clipping continues while the items close, and ends once the menu is no longer displayed or no longer
+      // overlaps the trigger. It resumes when repositioning finds the two overlapping again.
+      const hidden = !this.#trigger && !this.matches(":popover-open") && getComputedStyle(this).display === "none";
+      if (hidden || !this.#clipTrigger(trigger)) {
         this.#stopClipping();
         return;
       }
-      this.#clipTrigger(trigger);
       this.#clipFrame = requestAnimationFrame(tick);
     };
     this.#clipFrame = requestAnimationFrame(tick);
@@ -451,7 +456,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   }
 
   /** @private */
-  #clipTrigger(trigger: HTMLElement): void {
+  #clipTrigger(trigger: HTMLElement): boolean {
     const fab = trigger.closest<HTMLElement>("m3e-fab") ?? trigger;
     const menu = this.getBoundingClientRect();
     const fabRect = fab.getBoundingClientRect();
@@ -477,7 +482,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       rect.left < menu.right && rect.right > menu.left && rect.top < menu.bottom && rect.bottom > menu.top;
     if (!overlaps) {
       this.style.clipPath = "";
-      return;
+      return false;
     }
 
     const base = fab.shadowRoot?.querySelector(".base") ?? fab;
@@ -502,6 +507,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     if (this.style.clipPath !== clipPath) {
       this.style.clipPath = clipPath;
     }
+    return true;
   }
 
   /** @private */
