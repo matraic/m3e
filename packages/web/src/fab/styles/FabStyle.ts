@@ -160,6 +160,8 @@ export const FabStyle: CSSResultGroup = css`
     .base,
     .base.resting,
     .base.pressed,
+    .base.with-menu,
+    .base.with-menu .wrapper,
     .label,
     .icon {
       transition: none;
