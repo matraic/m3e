@@ -23,7 +23,7 @@ The following components are planned for future release (in no particular order)
 
 ## 🏛️ Past Milestones
 
-- **2.10.0 – 2.10.2 — Feature release + patch releases**
+- **2.10.0 – 2.10.3 — Feature release + patch releases**
   Added `@m3e/web/callout`, switch improvements, loading-indicator pull-to-refresh support, bug fixes.
 
 - **2.9.0 – 2.9.2 — Feature release + patch releases**

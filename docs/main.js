@@ -30,7 +30,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   drawerContainer?.addEventListener("change", () => updateBodyMargin());
   updateBodyMargin();
 
-  const cem = await (await fetch("https://cdn.jsdelivr.net/npm/@m3e/web@2.10.2/dist/custom-elements.json")).json();
+  const cem = await (await fetch("https://cdn.jsdelivr.net/npm/@m3e/web@2.10.3/dist/custom-elements.json")).json();
   mergeParsedTypes(cem);
 
   const promises = [];
