@@ -260,7 +260,10 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
         this.#clickOutsideController.unobserveAll();
         this.#anchoringCleanup?.();
         this.#anchoringCleanup = undefined;
-        this.#stopClipping();
+        // Clipping stops itself once the closing transition has finished.
+        if (getComputedStyle(this).display === "none") {
+          this.#stopClipping();
+        }
         break;
     }
   };
@@ -427,6 +430,11 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   #startClipping(trigger: HTMLElement): void {
     this.#stopClipping();
     const tick = () => {
+      // Clipping continues while the items close, and ends once the menu is no longer displayed.
+      if (!this.#trigger && !this.matches(":popover-open") && getComputedStyle(this).display === "none") {
+        this.#stopClipping();
+        return;
+      }
       this.#clipTrigger(trigger);
       this.#clipFrame = requestAnimationFrame(tick);
     };
