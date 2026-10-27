@@ -124,14 +124,30 @@ export class M3eFilterChipElement extends Selected(
       :host(:not(:disabled):not([disabled-interactive])) .check {
         color: var(--m3e-chip-selected-leading-icon-color, ${DesignToken.color.onSecondaryContainer});
       }
+      :host([selected]:not(:is(:state(--no-animate), :--no-animate))) .check {
+        animation: draw ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standardDecelerate} both;
+        animation-delay: ${DesignToken.motion.duration.short1};
+      }
+      @keyframes draw {
+        from {
+          clip-path: inset(0 100% 0 0);
+          opacity: 0.8;
+        }
+        to {
+          clip-path: inset(0);
+          opacity: 1;
+        }
+      }
       :host(:not([selected])) .check,
       :host(:is(:state(--hide-selection), :--hide-selection)) .check,
       :host(:is(:state(--hide-selection), :--hide-selection):not(:is(:state(--with-icon), :--with-icon))) .icon {
         display: none;
       }
+      :host(:not(:is(:state(--with-icon), :--with-icon)):not(:is(:state(--no-animate), :--no-animate))) .icon {
+        transition: margin-inline-start ${DesignToken.motion.spring.fastEffects};
+      }
       :host(:not(:is(:state(--with-icon), :--with-icon))) .icon {
         margin-inline-start: calc(0px - var(--m3e-chip-with-icon-padding-start, ${DesignToken.measurement.space100}));
-        transition: margin-inline-start ${DesignToken.motion.spring.fastEffects};
       }
       :host([selected]) .icon {
         margin-inline-start: 0;
@@ -188,9 +204,11 @@ export class M3eFilterChipElement extends Selected(
         color: var(--m3e-chip-selected-trailing-icon-color, ${DesignToken.color.onSecondaryContainer});
       }
       @media (prefers-reduced-motion) {
-        .base,
-        :host(:not(:is(:state(--with-icon), :--with-icon))) .icon {
+        :host(:not(:is(:state(--with-icon), :--with-icon)):not(:is(:state(--no-animate), :--no-animate))) .icon {
           transition: none;
+        }
+        :host([selected]:not(:is(:state(--no-animate), :--no-animate))) .check {
+          animation: none;
         }
       }
       @media (forced-colors: active) {
