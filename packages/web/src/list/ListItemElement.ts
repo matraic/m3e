@@ -198,6 +198,7 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
     }
     .content {
       flex: 1 1 auto;
+      min-width: 0;
       display: flex;
       flex-direction: column;
       align-items: unset;
@@ -233,6 +234,7 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
     :host(:is(:state(--has-leading), :--has-leading)) slot[name="leading"],
     :host(:is(:state(--has-trailing), :--has-trailing)) slot[name="trailing"] {
       display: flex;
+      flex: none;
       justify-content: center;
     }
     :host(:not(:is(:state(--has-leading), :--has-leading))) slot[name="leading"] {
