@@ -1,0 +1,1 @@
+Use Custom Elements Manifest as the metadata source for generated thin framework bindings, with a small framework-specific conventions layer. Do not hand-maintain repetitive wrapper structure where it can be generated reliably. Retain explicit handling for framework event naming, public type exports, documentation, and exceptional component semantics.
