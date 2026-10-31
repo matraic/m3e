@@ -149,7 +149,7 @@ test.describe("m3e-app-bar scroll behavior", () => {
     await scrollTo(page, 100);
     await expect.poll(() => barHeight(page)).toBe(64);
     await expect.poll(() => background(page)).not.toBe(flatBackground);
-    expect(await shadow(page)).toMatch(/^(?:[^,]*? 0px 0px 0px 0px(?:, )?)+$/);
+    expect((await shadow(page)).split(",").every((part) => part.includes(" 0px 0px 0px 0px"))).toBe(true);
   });
 
   test("elevate applies the on-scroll elevation token", async ({ page, render }) => {
