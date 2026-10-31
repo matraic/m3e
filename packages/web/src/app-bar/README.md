@@ -29,12 +29,24 @@ The following example illustrates a medium size `m3e-app-bar` consisting of a le
 </m3e-app-bar>
 ```
 
-The next example illustrates how to attach an app bar to a parent scroll container to produce elevation on scroll. In this example, the `for` attribute is used to attach a sticky-positioned `m3e-app-bar` to a parenting container styled to overflow vertically. When scrolled, the app bar will automatically transition to an elevated state.
+The next example illustrates how to attach an app bar to a parent scroll container to produce a color change on scroll. In this example, the `for` attribute is used to attach a sticky-positioned `m3e-app-bar` to a parenting container styled to overflow vertically. When scrolled, the app bar will automatically transition to its on-scroll state.
 
 ```html
 <div style="overflow-y: auto; height: 300px" id="scrollContainer">
   <m3e-app-bar for="scrollContainer" style="position: sticky; top: 0">
     <span slot="title">Title</span>
+  </m3e-app-bar>
+  <div style="height: 400px; display: flex; align-items: center; justify-content: center">I am scrolling content</div>
+</div>
+```
+
+The `scroll-behavior` attribute selects the behavior applied on scroll. The default, `elevate`, is shown above. When set to `compress`, medium and large app bars collapse to a small app bar in step with the scroll position, instead of elevating. The title and subtitle slide and fade out as the bar collapses, and back in as it expands. The container color and elevation blend toward their on-scroll values (`--m3e-app-bar-container-color-on-scroll` and `--m3e-app-bar-container-elevation-on-scroll`) as the bar collapses. By default the on-scroll elevation is flat, so only the color changes; set the elevation token to add a shadow. Once scrolling goes idle mid-collapse, the bar finishes the collapse in the direction of the last scroll, moving the scroll position by the same amount so the content stays in step. The host keeps its expanded height so the layout does not shift. Small app bars have nothing to collapse, so `compress` has no effect on them.
+
+```html
+<div style="overflow-y: auto; height: 300px" id="scrollContainer">
+  <m3e-app-bar for="scrollContainer" size="large" scroll-behavior="compress" style="position: sticky; top: 0">
+    <span slot="title">Title</span>
+    <span slot="subtitle">Subtitle</span>
   </m3e-app-bar>
   <div style="height: 400px; display: flex; align-items: center; justify-content: center">I am scrolling content</div>
 </div>
@@ -46,11 +58,12 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### ⚙️ Attributes
 
-| Attribute  | Type                             | Default   | Description                                                                  |
-| ---------- | -------------------------------- | --------- | ---------------------------------------------------------------------------- |
-| `centered` | `boolean`                        | `false`   | Whether the title and subtitle are centered.                                 |
-| `size`     | `"small" \| "medium" \| "large"` | `"small"` | The size of the bar.                                                         |
-| `for`      | `string`                         |           | The identifier of the interactive control to which this element is attached. |
+| Attribute         | Type                             | Default     | Description                                                                  |
+| ----------------- | -------------------------------- | ----------- | ---------------------------------------------------------------------------- |
+| `centered`        | `boolean`                        | `false`     | Whether the title and subtitle are centered.                                 |
+| `size`            | `"small" \| "medium" \| "large"` | `"small"`   | The size of the bar.                                                         |
+| `for`             | `string`                         |             | The identifier of the interactive control to which this element is attached. |
+| `scroll-behavior` | `"elevate" \| "compress"`        | `"elevate"` | The behavior applied when the attached scroll container is scrolled.         |
 
 ### 🧩 Slots
 

@@ -13,7 +13,7 @@ export const AppBarToken = {
   ),
   containerElevation: unsafeCSS(`var(--m3e-app-bar-container-elevation, ${DesignToken.elevation.level0})`),
   containerElevationOnScroll: unsafeCSS(
-    `var(--m3e-app-bar-container-elevation-on-scroll, ${DesignToken.elevation.level1})`,
+    `var(--m3e-app-bar-container-elevation-on-scroll, ${DesignToken.elevation.level0})`,
   ),
   titleTextColor: unsafeCSS(`var(--m3e-app-bar-title-text-color, ${DesignToken.color.onSurface})`),
   subtitleTextColor: unsafeCSS(`var(--m3e-app-bar-subtitle-text-color, ${DesignToken.color.onSurfaceVariant})`),

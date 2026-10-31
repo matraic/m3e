@@ -3,14 +3,15 @@ import { property, query } from "lit/decorators.js";
 
 import {
   customElement,
-  debounce,
   hasAssignedNodes,
   HtmlFor,
   Role,
   AttachInternals,
   setCustomEnumState,
+  prefersReducedMotion,
 } from "@m3e/web/core";
 
+import { AppBarScrollBehavior, isAppBarScrollBehavior } from "./AppBarScrollBehavior";
 import { AppBarSize, isAppBarSize } from "./AppBarSize";
 
 import { AppBarSizeStyle, AppBarStyle } from "./styles";
@@ -64,6 +65,7 @@ import { AppBarSizeStyle, AppBarStyle } from "./styles";
  *
  * @attr centered - Whether the title and subtitle are centered.
  * @attr for - The identifier of the interactive control to which this element is attached.
+ * @attr scroll-behavior - The behavior applied when the attached scroll container is scrolled.
  * @attr size - The size of the bar.
  *
  * @cssprop --m3e-app-bar-container-color - Background color of the app bar container.
@@ -124,8 +126,24 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
   static override styles: CSSResultGroup = [AppBarStyle, AppBarSizeStyle];
 
   /** @private */ readonly #scrollHandler = (e: Event) => this._updateScroll(e);
+  /** @private */ readonly #touchStartHandler = () => this.#handleTouchStart();
+  /** @private */ readonly #touchEndHandler = () => this.#handleTouchEnd();
+  /** @private */ readonly #interruptHandler = () => this.#cancelSnap();
   /** @private */ readonly #frameLoadHandler = () => this.#handleFrameLoad();
+
+  /** @private */ #snapTimer?: ReturnType<typeof setTimeout>;
+  /** @private */ #snapFrame = 0;
+  /** @private */ #snapping = false;
+  /** @private */ #touching = false;
+  /** @private */ #direction = 0;
+  /** @private */ #collapse = 0;
+  /** @private */ #lastScrollTop = 0;
+  /** @private */ #scrollTop = 0;
+  /** @private */ #expanded = 0;
+  /** @private */ #range = 0;
+
   /** @private */ @query(".base") private readonly _base?: HTMLElement;
+  /** @private */ @query(".wrapper") private readonly _wrapper?: HTMLElement;
   /** @private */ @query(".leading-icon") private readonly _leadingIcon?: HTMLElement;
   /** @private */ @query(".trailing-icon") private readonly _trailingIcon?: HTMLElement;
 
@@ -134,6 +152,13 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
    * @default false
    */
   @property({ type: Boolean, reflect: true }) centered = false;
+
+  /**
+   * The behavior applied when the attached scroll container is scrolled.
+   * @default "elevate"
+   */
+  @property({ attribute: "scroll-behavior", reflect: true, useDefault: true })
+  scrollBehavior: AppBarScrollBehavior = "elevate";
 
   /**
    * The size of the bar.
@@ -149,7 +174,7 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
       control.addEventListener("load", this.#frameLoadHandler);
       this.#handleFrameLoad();
     } else {
-      control.addEventListener("scroll", this.#scrollHandler, { passive: true });
+      this.#listen(control);
     }
   }
 
@@ -157,11 +182,12 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
   override detach(): void {
     if (this.control instanceof HTMLIFrameElement) {
       this.control.removeEventListener("load", this.#frameLoadHandler);
-      this.control.contentDocument?.removeEventListener("scroll", this.#scrollHandler);
+      this.#unlisten(this.control.contentDocument);
     }
     if (this.control) {
-      this.control.removeEventListener("scroll", this.#scrollHandler);
+      this.#unlisten(this.control);
     }
+    this.#cancelSnap();
     super.detach();
   }
 
@@ -187,18 +213,32 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
     if (_changedProperties.has("size")) {
       this.#applySize();
     }
+
+    if (_changedProperties.has("scrollBehavior") && !isAppBarScrollBehavior(this.scrollBehavior)) {
+      this.scrollBehavior = "elevate";
+    }
   }
 
   /** @inheritdoc */
   protected override updated(_changedProperties: PropertyValues<this>): void {
     super.updated(_changedProperties);
 
+    if (_changedProperties.has("size") || _changedProperties.has("scrollBehavior")) {
+      this.#syncScroll();
+    }
+
     if (_changedProperties.has("centered") || _changedProperties.has("size")) {
-      if (this.centered && this.size === "small") {
-        this.#computeCentered();
-      } else {
-        this.#clearCentered();
-      }
+      this.#syncCentered();
+    }
+  }
+
+  /** @private */
+  #syncCentered(): void {
+    // Centering balances the icon widths, which applies to a small bar and to a compressed (compact) row.
+    if (this.centered && (this.size === "small" || this._wrapper?.classList.contains("compact"))) {
+      this.#computeCentered();
+    } else {
+      this.#clearCentered();
     }
   }
 
@@ -207,12 +247,47 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
     switch (this.size) {
       case "small":
         return html`<div class="base">
-          <div class="leading-icon">
-            <slot name="leading" @slotchange=${this.#handleLeadingIconSlotChange}>
-              <slot name="leading-icon" @slotchange=${this.#handleDeprecatedSlotChange}></slot>
-            </slot>
+          <div class="wrapper">
+            <div class="leading-icon">
+              <slot name="leading" @slotchange=${this.#handleLeadingIconSlotChange}>
+                <slot name="leading-icon" @slotchange=${this.#handleDeprecatedSlotChange}></slot>
+              </slot>
+            </div>
+            <div class="heading">
+              <div class="label">
+                <div class="title">
+                  <slot name="title" @slotchange=${this.#handleTitleSlotChange}></slot>
+                </div>
+                <div class="subtitle">
+                  <slot name="subtitle" @slotchange=${this.#handleSubtitleSlotChange}></slot>
+                </div>
+              </div>
+            </div>
+            <div class="trailing-icon">
+              <slot name="trailing" @slotchange=${this.#handleTrailingIconsSlotChange}>
+                <slot name="trailing-icon" @slotchange=${this.#handleDeprecatedSlotChange}></slot>
+              </slot>
+            </div>
           </div>
-          <div class="heading">
+        </div>`;
+
+      default:
+        return html`<div class="base">
+          <div class="wrapper">
+            <div class="heading">
+              <div class="leading-icon">
+                <slot name="leading" @slotchange=${this.#handleLeadingIconSlotChange}>
+                  <slot name="leading-icon" @slotchange=${this.#handleDeprecatedSlotChange}></slot>
+                </slot>
+              </div>
+              <div class="spacer"></div>
+              <div class="trailing-icon">
+                <slot name="trailing" @slotchange=${this.#handleTrailingIconsSlotChange}>
+                  <slot name="trailing-icon" @slotchange=${this.#handleDeprecatedSlotChange}></slot>
+                </slot>
+              </div>
+            </div>
+            <div class="spacer"></div>
             <div class="label">
               <div class="title">
                 <slot name="title" @slotchange=${this.#handleTitleSlotChange}></slot>
@@ -220,37 +295,6 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
               <div class="subtitle">
                 <slot name="subtitle" @slotchange=${this.#handleSubtitleSlotChange}></slot>
               </div>
-            </div>
-          </div>
-          <div class="trailing-icon">
-            <slot name="trailing" @slotchange=${this.#handleTrailingIconsSlotChange}>
-              <slot name="trailing-icon" @slotchange=${this.#handleDeprecatedSlotChange}></slot>
-            </slot>
-          </div>
-        </div>`;
-
-      default:
-        return html`<div class="base">
-          <div class="heading">
-            <div class="leading-icon">
-              <slot name="leading" @slotchange=${this.#handleLeadingIconSlotChange}>
-                <slot name="leading-icon" @slotchange=${this.#handleDeprecatedSlotChange}></slot>
-              </slot>
-            </div>
-            <div class="spacer"></div>
-            <div class="trailing-icon">
-              <slot name="trailing" @slotchange=${this.#handleTrailingIconsSlotChange}>
-                <slot name="trailing-icon" @slotchange=${this.#handleDeprecatedSlotChange}></slot>
-              </slot>
-            </div>
-          </div>
-          <div class="spacer"></div>
-          <div class="label">
-            <div class="title">
-              <slot name="title" @slotchange=${this.#handleTitleSlotChange}></slot>
-            </div>
-            <div class="subtitle">
-              <slot name="subtitle" @slotchange=${this.#handleSubtitleSlotChange}></slot>
             </div>
           </div>
         </div>`;
@@ -268,28 +312,24 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
 
   /** @private */
   #handleTitleSlotChange(e: Event): void {
-    this._base?.classList.toggle("with-title", hasAssignedNodes(<HTMLSlotElement>e.target));
+    this._wrapper?.classList.toggle("with-title", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
   #handleSubtitleSlotChange(e: Event): void {
-    this._base?.classList.toggle("with-subtitle", hasAssignedNodes(<HTMLSlotElement>e.target));
+    this._wrapper?.classList.toggle("with-subtitle", hasAssignedNodes(<HTMLSlotElement>e.target));
   }
 
   /** @private */
   #handleLeadingIconSlotChange(e: Event): void {
-    this._base?.classList.toggle("with-leading-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
-    if (this.centered && this.size === "small") {
-      setTimeout(() => this.#computeCentered(), 40);
-    }
+    this._wrapper?.classList.toggle("with-leading-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setTimeout(() => this.#syncCentered(), 40);
   }
 
   /** @private */
   #handleTrailingIconsSlotChange(e: Event): void {
-    this._base?.classList.toggle("with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
-    if (this.centered && this.size === "small") {
-      setTimeout(() => this.#computeCentered(), 40);
-    }
+    this._wrapper?.classList.toggle("with-trailing-icon", hasAssignedNodes(<HTMLSlotElement>e.target));
+    setTimeout(() => this.#syncCentered(), 40);
   }
 
   /** @private */
@@ -304,8 +344,8 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
 
   /** @private */
   #clearCentered() {
-    this._base?.style.removeProperty("--_leading-icon-min-width");
-    this._base?.style.removeProperty("--_trailing-icon-min-width");
+    this._wrapper?.style.removeProperty("--_leading-icon-min-width");
+    this._wrapper?.style.removeProperty("--_trailing-icon-min-width");
   }
 
   /** @private */
@@ -316,14 +356,13 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
     const trailingWidth = this._trailingIcon?.getBoundingClientRect().width ?? 0;
 
     if (leadingWidth < trailingWidth) {
-      this._base?.style.setProperty("--_leading-icon-min-width", `${trailingWidth}px`);
+      this._wrapper?.style.setProperty("--_leading-icon-min-width", `${trailingWidth}px`);
     } else if (leadingWidth > trailingWidth) {
-      this._base?.style.setProperty("--_trailing-icon-min-width", `${leadingWidth}px`);
+      this._wrapper?.style.setProperty("--_trailing-icon-min-width", `${leadingWidth}px`);
     }
   }
 
   /** @private */
-  @debounce(40)
   private _updateScroll(e: Event): void {
     let scrollTop = 0;
 
@@ -333,15 +372,225 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
       scrollTop = e.target.scrollTop;
     }
 
-    this._base?.classList.toggle("on-scroll", scrollTop > 0);
+    this.#scrollTop = scrollTop;
+
+    // Scroll events caused by the snap itself must not feed back into the collapse.
+    if (this.#snapping) return;
+    this.#syncScroll();
+    this.#scheduleSnap();
+  }
+
+  /** @private */
+  #listen(target: EventTarget | null): void {
+    target?.addEventListener("scroll", this.#scrollHandler, { passive: true });
+    target?.addEventListener("wheel", this.#interruptHandler, { passive: true });
+    target?.addEventListener("touchstart", this.#touchStartHandler, { passive: true });
+    target?.addEventListener("touchend", this.#touchEndHandler, { passive: true });
+    target?.addEventListener("touchcancel", this.#touchEndHandler, { passive: true });
+  }
+
+  /** @private */
+  #unlisten(target: EventTarget | null): void {
+    target?.removeEventListener("scroll", this.#scrollHandler);
+    target?.removeEventListener("wheel", this.#interruptHandler);
+    target?.removeEventListener("touchstart", this.#touchStartHandler);
+    target?.removeEventListener("touchend", this.#touchEndHandler);
+    target?.removeEventListener("touchcancel", this.#touchEndHandler);
+  }
+
+  /** @private */
+  #handleTouchStart(): void {
+    this.#touching = true;
+    this.#cancelSnap();
+  }
+
+  /** @private */
+  #handleTouchEnd(): void {
+    this.#touching = false;
+    this.#scheduleSnap();
+  }
+
+  /** @private*/
+  #scheduleSnap(): void {
+    // Snaps once scrolling has been idle (no scroll events and no finger down) for a short period.
+
+    clearTimeout(this.#snapTimer);
+    if (this.#touching) return;
+    this.#snapTimer = setTimeout(() => this.#snap(), 150);
+  }
+
+  /** @private */
+  #cancelSnap(): void {
+    clearTimeout(this.#snapTimer);
+    cancelAnimationFrame(this.#snapFrame);
+    this.#snapping = false;
+  }
+
+  /** @private */
+  #snap(): void {
+    // Once scrolling is idle part way through a collapse, finishes the collapse in the direction of the last scroll.
+    // The scroll position moves by the same amount, so the content stays in step with the bar.
+
+    if (this.scrollBehavior !== "compress" || this.size === "small" || this.#touching) return;
+    if (this.#range <= 0 || this.#scrollTop <= 0) return;
+    if (this.#collapse <= 0 || this.#collapse >= this.#range) return;
+
+    const scroller =
+      this.control instanceof HTMLIFrameElement ? this.control.contentDocument?.scrollingElement : this.control;
+    if (!scroller) return;
+
+    const fromCollapse = this.#collapse;
+    const toCollapse = this.#direction >= 0 ? this.#range : 0;
+    const fromTop = scroller.scrollTop;
+    const maxTop = scroller.scrollHeight - scroller.clientHeight;
+    const toTop = Math.min(maxTop, Math.max(0, fromTop + (toCollapse - fromCollapse)));
+    const distance = toTop - fromTop;
+
+    if (distance === 0) return;
+
+    const duration = prefersReducedMotion() ? 0 : 200;
+    const start = performance.now();
+    this.#snapping = true;
+
+    const step = (now: number) => {
+      const t = duration === 0 ? 1 : Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+
+      scroller.scrollTop = fromTop + distance * eased;
+      this.#scrollTop = scroller.scrollTop;
+      this.#lastScrollTop = this.#scrollTop;
+      this.#collapse = Math.min(this.#range, Math.max(0, fromCollapse + distance * eased));
+      this.#applyCollapse();
+
+      if (t < 1) {
+        this.#snapFrame = requestAnimationFrame(step);
+      } else {
+        this.#snapping = false;
+      }
+    };
+
+    this.#snapFrame = requestAnimationFrame(step);
   }
 
   /** @private */
   #handleFrameLoad(): void {
     if (this.control instanceof HTMLIFrameElement) {
-      this.control.contentDocument?.addEventListener("scroll", this.#scrollHandler, { passive: true });
-      this._base?.classList.toggle("on-scroll", this.#getFrameScrollTop(this.control) > 0);
+      this.#listen(this.control.contentDocument);
+      this.#scrollTop = this.#getFrameScrollTop(this.control);
+      this.#syncScroll();
     }
+  }
+
+  /** @private */
+  #releaseCompress(): void {
+    this.#cancelSnap();
+
+    this.#direction = 0;
+    this._base?.style.removeProperty("--_app-bar-reserved-height");
+    this._wrapper?.style.removeProperty("height");
+    this._wrapper?.style.removeProperty("--_progress");
+
+    const label = this._wrapper?.querySelector<HTMLElement>(".label");
+    label?.style.removeProperty("opacity");
+    label?.style.removeProperty("transform");
+
+    this._wrapper?.classList.remove("compressed");
+
+    this.#range = 0;
+    this.#collapse = 0;
+    this.#lastScrollTop = 0;
+  }
+
+  /** @private */
+  #syncScroll(): void {
+    const base = this._base;
+    const wrapper = this._wrapper;
+    if (!wrapper || !base) return;
+
+    const scrolled = this.#scrollTop > 0;
+    const compress = this.scrollBehavior === "compress";
+    const collapses = compress && this.size !== "small";
+
+    // A small bar with the compress behavior has nothing to collapse, so it does not react to scrolling.
+    wrapper.classList.toggle("on-scroll", scrolled && (!compress || collapses));
+    wrapper.classList.toggle("compress", collapses);
+
+    if (!collapses || !scrolled) {
+      this.#releaseCompress();
+      this.#setCompact(wrapper, false);
+      return;
+    }
+
+    // The expanded height is reserved so the shrinking bar never shifts the scrolling content. It is
+    // measured only while the bar is unconstrained (before collapsing begins).
+
+    if (!base.style.getPropertyValue("--_app-bar-reserved-height")) {
+      this.#expanded = wrapper.offsetHeight;
+      base.style.setProperty("--_app-bar-reserved-height", `${this.#expanded}px`);
+      wrapper.style.height = "var(--_target)";
+
+      const target = wrapper.offsetHeight;
+      wrapper.style.removeProperty("height");
+      this.#range = Math.max(0, this.#expanded - target);
+    }
+
+    // The collapse amount follows scroll deltas rather than the scroll position. Scrolling up releases it
+    // proportionally, so it is fully expanded again exactly at the top.
+
+    const delta = this.#scrollTop - this.#lastScrollTop;
+    if (delta !== 0) {
+      this.#direction = Math.sign(delta);
+      if (delta > 0) {
+        this.#collapse += delta;
+      } else {
+        const ratio = this.#lastScrollTop > 0 ? this.#collapse / this.#lastScrollTop : 0;
+        this.#collapse += delta * Math.max(1, ratio);
+      }
+
+      this.#collapse = Math.min(this.#range, Math.max(0, this.#collapse));
+    }
+
+    this.#lastScrollTop = this.#scrollTop;
+    this.#applyCollapse();
+  }
+
+  /** @private */
+  #applyCollapse(): void {
+    const wrapper = this._wrapper;
+    if (!wrapper) return;
+
+    const progress = this.#range > 0 ? this.#collapse / this.#range : 0;
+
+    wrapper.style.setProperty("--_progress", `${progress}`);
+    wrapper.style.height = `${this.#expanded - this.#collapse}px`;
+    wrapper.classList.add("compressed");
+
+    // The title and subtitle fade out while the bar is still expanded, the layout switches while
+    // they are invisible, and they fade back in as the bar reaches the small size. They also move in
+    // lockstep with the collapse (up while collapsing and down while expanding). Before the switch the
+    // label stays attached to the rising bottom edge. After it, the label rises into its resting place.
+
+    const label = wrapper.querySelector<HTMLElement>(".label");
+    if (label) {
+      // The label is fully hidden before it travels far enough to overlap the icon buttons.
+
+      const fadeOut = Math.max(0, 1 - progress / 0.4);
+      const fadeIn = Math.max(0, (progress - 0.6) / 0.4);
+      label.style.opacity = `${progress < 0.5 ? fadeOut : fadeIn}`;
+
+      const offset = progress < 0.5 ? -this.#collapse : this.#range - this.#collapse;
+      label.style.transform = `translateY(${offset}px)`;
+    }
+
+    this.#setCompact(wrapper, progress >= 0.5);
+  }
+
+  /** @private */
+  #setCompact(wrapper: HTMLElement, compact: boolean): void {
+    if (wrapper.classList.contains("compact") === compact) return;
+
+    wrapper.classList.toggle("compact", compact);
+    this.#syncCentered();
   }
 
   /** @private */

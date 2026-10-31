@@ -16,26 +16,58 @@ export const AppBarStyle: CSSResult = css`
   :host([hidden]) {
     display: none;
   }
-  :host(:is(:state(--small), :--small)) .base,
-  :host(:not(:is(:state(--small), :--small)):not([centered])) .heading {
+  .base {
+    min-height: var(--_app-bar-reserved-height, 0);
+    overflow-anchor: none;
+  }
+  .base:has(.wrapper.compress) {
+    pointer-events: none;
+  }
+  .base > .wrapper.compress {
+    pointer-events: auto;
+  }
+  :host(:is(:state(--small), :--small)) .wrapper,
+  :host(:not(:is(:state(--small), :--small))) .heading {
     padding-inline-start: ${AppBarToken.paddingLeft};
     padding-inline-end: ${AppBarToken.paddingRight};
   }
-  .base {
+  .wrapper {
     box-sizing: border-box;
     display: flex;
     transition: ${unsafeCSS(
       `background-color ${DesignToken.motion.duration.medium1} ${DesignToken.motion.easing.standard},
-      box-shadow ${DesignToken.motion.duration.medium1} ${DesignToken.motion.easing.standard}`,
+      box-shadow ${DesignToken.motion.duration.medium1} ${DesignToken.motion.easing.standard},
+      min-height ${DesignToken.motion.spring.fastSpatial}`,
     )};
   }
-  .base:not(.on-scroll) {
+  .wrapper:not(.on-scroll) {
     background-color: ${AppBarToken.containerColor};
     box-shadow: ${AppBarToken.containerElevation};
   }
-  .base.on-scroll {
+  .wrapper.on-scroll {
     background-color: ${AppBarToken.containerColorOnScroll};
     box-shadow: ${AppBarToken.containerElevationOnScroll};
+  }
+  .wrapper.compress.on-scroll {
+    background-color: color-mix(
+      in srgb,
+      ${AppBarToken.containerColorOnScroll} calc(var(--_progress, 0) * 100%),
+      ${AppBarToken.containerColor}
+    );
+    animation: shadow 1s linear paused both;
+    animation-delay: calc(var(--_progress, 0) * -1s);
+    transition-property: min-height;
+  }
+  @keyframes shadow {
+    from {
+      box-shadow: ${AppBarToken.containerElevation};
+    }
+    to {
+      box-shadow: ${AppBarToken.containerElevationOnScroll};
+    }
+  }
+  .wrapper.compressed {
+    overflow: hidden;
   }
   .leading-icon,
   .trailing-icon {
@@ -72,13 +104,13 @@ export const AppBarStyle: CSSResult = css`
   .subtitle {
     color: ${AppBarToken.subtitleTextColor};
   }
-  .base:not(.with-title) .title,
-  .base:not(.with-subtitle) .subtitle,
-  .base:not(.with-title):not(.with-subtitle) .label,
-  .base:not(.with-trailing-icon) .trailing-icon {
+  .wrapper:not(.with-title) .title,
+  .wrapper:not(.with-subtitle) .subtitle,
+  .wrapper:not(.with-title):not(.with-subtitle) .label,
+  .wrapper:not(.with-trailing-icon) .trailing-icon {
     display: none;
   }
-  :host(:is(:state(--small), :--small)) .base {
+  :host(:is(:state(--small), :--small)) .wrapper {
     align-items: center;
   }
   :host(:is(:state(--small), :--small)) .heading {
@@ -95,7 +127,7 @@ export const AppBarStyle: CSSResult = css`
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  :host(:not(:is(:state(--small), :--small))) .base {
+  :host(:not(:is(:state(--small), :--small))) .wrapper {
     flex-direction: column;
   }
   :host([centered]) .title,
@@ -103,18 +135,22 @@ export const AppBarStyle: CSSResult = css`
     text-align: center;
   }
   @media (prefers-reduced-motion) {
-    .base {
+    .wrapper,
+    .label {
       transition: none;
     }
   }
   @media (forced-colors: active) {
-    .base {
+    .wrapper,
+    .label {
       transition: none;
     }
-    .base:not(.on-scroll),
-    .base.on-scroll {
+    .wrapper:not(.on-scroll),
+    .wrapper.on-scroll,
+    .wrapper.compress.on-scroll {
       background-color: Canvas;
       box-shadow: unset;
+      animation: none;
     }
     .title {
       color: CanvasText;
