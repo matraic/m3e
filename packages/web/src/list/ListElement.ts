@@ -1,7 +1,15 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { AttachInternals, customElement, DesignToken, Role, setCustomEnumState, setCustomState } from "@m3e/web/core";
+import {
+  AttachInternals,
+  customElement,
+  DesignToken,
+  registerStyleSheet,
+  Role,
+  setCustomEnumState,
+  setCustomState,
+} from "@m3e/web/core";
 
 import { isListVariant, ListVariant } from "./ListVariant";
 import { M3eListItemElement } from "./ListItemElement";
@@ -53,12 +61,37 @@ import { ListItemContentType } from "./ListItemContentType";
  */
 @customElement("m3e-list")
 export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
+  static {
+    registerStyleSheet(css`
+      :is(m3e-list, m3e-action-list, m3e-selection-list):is(:state(--segmented), :--segmented)
+        :is(m3e-list-item, m3e-list-action, m3e-list-option, m3e-expandable-list-item):is(
+          :state(--first),
+          :--first,
+          :is(:state(--has-previous-open), :--has-previous-open):not([open])
+        ) {
+        --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
+      }
+      :is(m3e-list, m3e-action-list, m3e-selection-list):is(:state(--segmented), :--segmented)
+        :is(m3e-list-item, m3e-list-action, m3e-list-option, m3e-expandable-list-item):is(
+          :state(--last),
+          :--last,
+          :is(:state(--has-next-open), :--has-next-open):not([open])
+        ) {
+        --_list-item-bottom-container-shape: var(
+          --m3e-segmented-list-container-shape,
+          ${DesignToken.shape.corner.large}
+        );
+      }
+    `);
+  }
+
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+      overflow-x: clip;
       box-sizing: border-box;
       padding-block: var(--m3e-list-block-padding, 0px);
 
@@ -116,15 +149,6 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
         --m3e-segmented-list-container-shape,
         ${DesignToken.shape.corner.large}
       );
-    }
-    :host(:is(:state(--segmented), :--segmented)) ::slotted(:is(:state(--first), :--first)),
-    :host(:is(:state(--segmented), :--segmented))
-      ::slotted(:is(:state(--has-previous-open), :--has-previous-open):not([open])) {
-      --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
-    }
-    :host(:is(:state(--segmented), :--segmented)) ::slotted(:is(:state(--has-next-open), :--has-next-open):not([open])),
-    :host(:is(:state(--segmented), :--segmented)) ::slotted(:is(:state(--last), :--last)) {
-      --_list-item-bottom-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
     }
     :host(:is(:state(--segmented), :--segmented)) ::slotted(m3e-divider) {
       display: none;
@@ -224,17 +248,35 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
   }
 
   /** @private */
-  #handleSlotChange(e: Event): void {
-    this.#items = (e.target as HTMLSlotElement)
-      .assignedElements({ flatten: true })
-      .filter((x) => x instanceof M3eListItemElement);
+  #handleSlotChange(): void {
+    this.#items = [
+      ...this.querySelectorAll<M3eListItemElement>(
+        "m3e-list-item, m3e-list-action, m3e-list-option, m3e-expandable-list-item",
+      ),
+    ].filter(
+      (x) =>
+        x.parentElement?.closest("m3e-list, m3e-action-list, m3e-selection-list, m3e-expandable-list-item") === this,
+    );
 
     this.#items.forEach((x, i) => {
       setCustomState(x, "--first", i === 0);
       setCustomState(x, "--last", i === this.#items.length - 1);
     });
 
+    this.notifyOpenChange();
     this.notifyItemsChange();
+  }
+
+  /**
+   * @internal
+   * Notifies the list that an item was expanded or collapsed.
+   */
+  notifyOpenChange(): void {
+    const isOpen = (x: M3eListItemElement | undefined) => (x as { open?: boolean } | undefined)?.open === true;
+    this.#items.forEach((x, i) => {
+      setCustomState(x, "--has-previous-open", isOpen(this.#items[i - 1]));
+      setCustomState(x, "--has-next-open", isOpen(this.#items[i + 1]));
+    });
   }
 
   /**
@@ -269,7 +311,7 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
       this.#trailingContentTypes[oldType]--;
     }
     if (newType) {
-      this.#trailingContentTypes[newType]--;
+      this.#trailingContentTypes[newType]++;
     }
 
     ["video", "image", "avatar", "icon"].forEach((x) => {

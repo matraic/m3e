@@ -132,6 +132,11 @@ export const IconButtonStyle: CSSResultGroup = css`
     /* Padding grows with the width, so the icon keeps its box while the spring overshoots on release. */
     --_adjacent-shrink: calc(var(--_pressed-growth, 0px) * -1);
   }
+  :host(:is(:state(--squished), :--squished)) {
+    --_adjacent-shrink: calc(var(--_button-width) * (1 - var(--_squish-progress, 1)));
+    width: calc(var(--_button-width) - var(--_adjacent-shrink));
+    flex-shrink: 0;
+  }
   @media (forced-colors: active) {
     .base,
     .icon {

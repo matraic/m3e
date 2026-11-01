@@ -134,6 +134,14 @@ export const ButtonStyle: CSSResultGroup = css`
     .label {
     text-overflow: clip;
   }
+  :host(:is(:state(--squished), :--squished)) {
+    --_adjacent-shrink: calc(var(--_button-width) * (1 - var(--_squish-progress, 1)));
+    width: calc(var(--_button-width) - var(--_adjacent-shrink));
+    flex-shrink: 0;
+  }
+  :host(:is(:state(--squished), :--squished)) .label {
+    text-overflow: clip;
+  }
   @media (forced-colors: active) {
     .base,
     .label,

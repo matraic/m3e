@@ -63,6 +63,7 @@
     "split-button",
     "split-pane",
     "stepper",
+    "swipe-reveal",
     "switch",
     "tabs",
     "textarea-autosize",
@@ -322,6 +323,10 @@
     "./stepper": {
       "types": "./dist/src/stepper/index.d.ts",
       "default": "./dist/stepper.js"
+    },
+    "./swipe-reveal": {
+      "types": "./dist/src/swipe-reveal/index.d.ts",
+      "default": "./dist/swipe-reveal.js"
     },
     "./switch": {
       "types": "./dist/src/switch/index.d.ts",

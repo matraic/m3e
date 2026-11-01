@@ -50,6 +50,7 @@ const inputs = [
   "split-button",
   "split-pane",
   "stepper",
+  "swipe-reveal",
   "switch",
   "tabs",
   "textarea-autosize",

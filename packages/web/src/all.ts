@@ -55,6 +55,7 @@ export * from "./snackbar";
 export * from "./split-button";
 export * from "./split-pane";
 export * from "./stepper";
+export * from "./swipe-reveal";
 export * from "./switch";
 export * from "./tabs";
 export * from "./textarea-autosize";

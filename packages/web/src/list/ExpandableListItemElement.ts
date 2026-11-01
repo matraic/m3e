@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, PropertyValues, unsafeCSS } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { customElement, DesignToken, setCustomState } from "@m3e/web/core";
+import { customElement, DesignToken } from "@m3e/web/core";
 
 import type { M3eListElement } from "./ListElement";
 import { M3eListItemButtonElement } from "./ListItemButtonElement";
@@ -257,18 +257,7 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
     super.updated(_changedProperties);
 
     if (_changedProperties.has("open")) {
-      for (let sibling = this.previousElementSibling; sibling; sibling = sibling.previousElementSibling) {
-        if (sibling instanceof M3eListItemElement) {
-          setCustomState(sibling, "--has-next-open", this.open);
-          break;
-        }
-      }
-      for (let sibling = this.nextElementSibling; sibling; sibling = sibling.nextElementSibling) {
-        if (sibling instanceof M3eListItemElement) {
-          setCustomState(sibling, "--has-previous-open", this.open);
-          break;
-        }
-      }
+      this.closest<M3eListElement>("m3e-list, m3e-action-list, m3e-selection-list")?.notifyOpenChange();
     }
   }
 
