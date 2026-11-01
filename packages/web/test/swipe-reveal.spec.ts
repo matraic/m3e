@@ -542,26 +542,33 @@ test.describe("m3e-swipe-reveal overshoot", () => {
       .locator(`#${id}`)
       .evaluate((el) => el.shadowRoot!.querySelector(".content")!.getBoundingClientRect().left));
 
+  const actionsWidth = (page: Page, id: string) =>
+    page
+      .locator(`#${id}`)
+      .evaluate((el) => el.shadowRoot!.querySelector<HTMLElement>(".trailing")!.getBoundingClientRect().width);
+
   test("content cannot be dragged far past the actions", async ({ page, render }) => {
     await render(item("a"));
     const from = await left(page, "a");
+    // The actions include their padding; the default overshoot is 8px.
+    const width = await actionsWidth(page, "a");
 
     await press(page, "a", -300);
 
-    // The actions are 80px wide and the default overshoot is 8px.
-    await expect.poll(() => shift(page, "a", from)).toBeGreaterThan(84);
-    expect(await shift(page, "a", from)).toBeLessThan(88.5);
+    await expect.poll(() => shift(page, "a", from)).toBeGreaterThan(width + 4);
+    expect(await shift(page, "a", from)).toBeLessThan(width + 8.5);
     await page.mouse.up();
   });
 
   test("overshoot of 0 stops the content at the actions", async ({ page, render }) => {
     await render(item("a", 'overshoot="0"'));
     const from = await left(page, "a");
+    const width = await actionsWidth(page, "a");
 
     await press(page, "a", -300);
 
-    await expect.poll(() => shift(page, "a", from)).toBeGreaterThan(78);
-    expect(await shift(page, "a", from)).toBeLessThan(80.5);
+    await expect.poll(() => shift(page, "a", from)).toBeGreaterThan(width - 2);
+    expect(await shift(page, "a", from)).toBeLessThan(width + 0.5);
     await page.mouse.up();
   });
 });
