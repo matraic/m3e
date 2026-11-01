@@ -37,6 +37,7 @@ export const AppBarStyle: CSSResult = css`
     transition: ${unsafeCSS(
       `background-color ${DesignToken.motion.duration.medium1} ${DesignToken.motion.easing.standard},
       box-shadow ${DesignToken.motion.duration.medium1} ${DesignToken.motion.easing.standard},
+      transform ${DesignToken.motion.duration.medium1} ${DesignToken.motion.easing.standard},
       min-height ${DesignToken.motion.spring.fastSpatial}`,
     )};
   }
@@ -47,6 +48,32 @@ export const AppBarStyle: CSSResult = css`
   .wrapper.on-scroll {
     background-color: ${AppBarToken.containerColorOnScroll};
     box-shadow: ${AppBarToken.containerElevationOnScroll};
+  }
+  .wrapper.transparent {
+    --_button-container: color-mix(
+      in srgb,
+      ${unsafeCSS(DesignToken.color.surfaceContainer)} calc(var(--_transparent-progress, 0) * 100%),
+      transparent
+    );
+    --m3e-standard-icon-button-container-color: var(--_button-container);
+    --m3e-standard-icon-button-unselected-container-color: var(--_button-container);
+    --m3e-text-button-container-color: var(--_button-container);
+    --m3e-text-button-unselected-container-color: var(--_button-container);
+    background-color: color-mix(
+      in srgb,
+      ${AppBarToken.containerColor} calc((1 - var(--_transparent-progress, 0)) * 100%),
+      transparent
+    );
+    box-shadow: none;
+    transition-property: min-height, transform;
+  }
+  .wrapper.transparent .label {
+    opacity: calc(1 - var(--_transparent-progress, 0));
+  }
+  .wrapper.hide {
+    will-change: transform;
+    transform: translateY(calc(var(--_hide-offset, 0px) * -1));
+    transition-property: background-color, box-shadow, min-height;
   }
   .wrapper.compress.on-scroll {
     background-color: color-mix(
@@ -146,6 +173,7 @@ export const AppBarStyle: CSSResult = css`
       transition: none;
     }
     .wrapper:not(.on-scroll),
+    .wrapper.transparent,
     .wrapper.on-scroll,
     .wrapper.compress.on-scroll {
       background-color: Canvas;

@@ -282,6 +282,144 @@ test.describe("m3e-app-bar scroll behavior", () => {
       await expect.poll(() => barHeight(page)).toBe(expanded);
     }
   });
+
+  const wrapperTop = (page: import("@playwright/test").Page) =>
+    page.locator("m3e-app-bar").evaluate((el) => el.shadowRoot!.querySelector(".wrapper")!.getBoundingClientRect().top);
+
+  test("hide moves the bar by the amount scrolled and only returns near the top", async ({ page, render }) => {
+    await render(scroller("small", "hide"));
+    const height = await barHeight(page);
+    const containerTop = await page.locator("#sc").evaluate((el) => el.getBoundingClientRect().top);
+
+    await scrollTo(page, 10);
+    await expect.poll(async () => (await wrapperTop(page)) - containerTop).toBe(-10);
+
+    await scrollTo(page, 500);
+    await expect.poll(async () => (await wrapperTop(page)) - containerTop).toBe(-height);
+
+    await scrollTo(page, 400);
+    await page.waitForTimeout(100);
+    expect((await wrapperTop(page)) - containerTop).toBe(-height);
+
+    await scrollTo(page, 20);
+    await expect.poll(async () => (await wrapperTop(page)) - containerTop).toBe(-20);
+  });
+
+  test("hide is fully visible at the top and keeps the normal container", async ({ page, render }) => {
+    await render(scroller("small", "hide"));
+    const containerTop = await page.locator("#sc").evaluate((el) => el.getBoundingClientRect().top);
+    const initialBackground = await background(page);
+
+    expect((await wrapperTop(page)) - containerTop).toBe(0);
+
+    await scrollTo(page, 30);
+    await expect.poll(async () => (await wrapperTop(page)) - containerTop).toBe(-30);
+    expect(await wrapperClasses(page)).not.toContain("on-scroll");
+    expect(await background(page)).toBe(initialBackground);
+
+    await scrollTo(page, 0);
+    await expect.poll(async () => (await wrapperTop(page)) - containerTop).toBe(0);
+  });
+
+  test("hide does not apply to other behaviors", async ({ page, render }) => {
+    await render(scroller("small", "elevate"));
+    const containerTop = await page.locator("#sc").evaluate((el) => el.getBoundingClientRect().top);
+
+    await scrollTo(page, 30);
+    await page.waitForTimeout(100);
+    expect(await wrapperClasses(page)).not.toContain("hide");
+    expect((await wrapperTop(page)) - containerTop).toBe(0);
+  });
+
+  const background = (page: import("@playwright/test").Page) =>
+    page
+      .locator("m3e-app-bar")
+      .evaluate((el) => getComputedStyle(el.shadowRoot!.querySelector(".wrapper")!).backgroundColor);
+  const labelOpacity = (page: import("@playwright/test").Page) =>
+    page
+      .locator("m3e-app-bar")
+      .evaluate((el) => Number(getComputedStyle(el.shadowRoot!.querySelector(".label")!).opacity));
+  // Computed colors are `rgb()`/`rgba()` or `color(srgb r g b / a)`; the alpha follows a `/` or is the fourth channel.
+  const alpha = (color: string) => {
+    const slash = /\/\s*([\d.]+)/.exec(color);
+    if (slash) return Number(slash[1]);
+    const legacy = /rgba\([^,]+,[^,]+,[^,]+,\s*([\d.]+)\)/.exec(color);
+    return legacy ? Number(legacy[1]) : 1;
+  };
+  // The transparent behavior suppresses color transitions via `transition-property`, so values settle immediately.
+
+  test("transparent looks normal at the top", async ({ page, render }) => {
+    await render(scroller("small"));
+    const normal = alpha(await background(page));
+
+    await page
+      .locator("m3e-app-bar")
+      .evaluate((el) => ((el as HTMLElement & { scrollBehavior: string }).scrollBehavior = "transparent"));
+    await expect.poll(() => wrapperClasses(page)).toContain("transparent");
+    expect(alpha(await background(page))).toBe(normal);
+    expect(await labelOpacity(page)).toBe(1);
+  });
+
+  test("transparent fades the background and label with the scroll position", async ({ page, render }) => {
+    await render(scroller("small", "transparent"));
+
+    await scrollTo(page, 32);
+    await expect.poll(async () => alpha(await background(page))).toBeCloseTo(0.5, 1);
+    await expect.poll(() => labelOpacity(page)).toBeCloseTo(0.5, 1);
+
+    await scrollTo(page, 200);
+    await expect.poll(async () => alpha(await background(page))).toBe(0);
+    await expect.poll(() => labelOpacity(page)).toBe(0);
+
+    await scrollTo(page, 0);
+    await expect.poll(() => labelOpacity(page)).toBe(1);
+    await expect.poll(async () => alpha(await background(page))).toBe(1);
+  });
+
+  test("transparent does not fade leading and trailing content", async ({ page, render }) => {
+    await render(scroller("small", "transparent"));
+    await scrollTo(page, 200);
+    await expect.poll(() => labelOpacity(page)).toBe(0);
+
+    const opacity = await page.locator("m3e-app-bar").evaluate((el) => {
+      const icons = el.shadowRoot!.querySelector(".leading-icon")!;
+      return Number(getComputedStyle(icons).opacity);
+    });
+    expect(opacity).toBe(1);
+  });
+
+  test("transparent fades in a button container with the scroll position", async ({ page, render }) => {
+    await render(scroller("small", "transparent"));
+    const buttonColor = () =>
+      page
+        .locator("m3e-app-bar")
+        .evaluate((el) =>
+          getComputedStyle(el.shadowRoot!.querySelector(".wrapper")!).getPropertyValue("--_button-container").trim(),
+        );
+
+    await expect.poll(async () => buttonColor()).toContain("0 * 100%");
+    await scrollTo(page, 200);
+    await expect.poll(async () => buttonColor()).toContain("1 * 100%");
+  });
+
+  test("transparent does not elevate the bar", async ({ page, render }) => {
+    await render(scroller("small", "transparent"));
+    await scrollTo(page, 200);
+    await page.waitForTimeout(100);
+    expect(await shadow(page)).toBe("none");
+  });
+
+  test("transparent is removed when the behavior changes", async ({ page, render }) => {
+    await render(scroller("small", "transparent"));
+    await scrollTo(page, 200);
+    await expect.poll(() => labelOpacity(page)).toBe(0);
+
+    await page
+      .locator("m3e-app-bar")
+      .evaluate((el) => ((el as HTMLElement & { scrollBehavior: string }).scrollBehavior = "elevate"));
+    await expect.poll(() => wrapperClasses(page)).not.toContain("transparent");
+    expect(await labelOpacity(page)).toBe(1);
+  });
 });
 
 test.describe("m3e-app-bar centered", () => {

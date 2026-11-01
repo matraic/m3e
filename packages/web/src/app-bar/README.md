@@ -52,18 +52,34 @@ The `scroll-behavior` attribute selects the behavior applied on scroll. The defa
 </div>
 ```
 
+When `scroll-behavior` is set to `transparent`, the app bar looks normal at the top. As the user scrolls, the container color and the title and subtitle fade out, while leading and trailing content stays fully opaque. Buttons and icon buttons inside the app bar gain a container color, matching how a toolbar styles its buttons, that fades in with the scroll position.
+
+```html
+<m3e-app-bar for="scrollContainer" scroll-behavior="transparent" style="position: sticky; top: 0">
+  <span slot="title">Title</span>
+</m3e-app-bar>
+```
+
+When set to `hide`, the app bar slides out of view by the amount scrolled down, up to its own height. It only slides back in as the scroll position nears the top.
+
+```html
+<m3e-app-bar for="scrollContainer" scroll-behavior="hide" style="position: sticky; top: 0">
+  <span slot="title">Title</span>
+</m3e-app-bar>
+```
+
 ## 📖 API Reference
 
 This section details the attributes, slots and CSS custom properties available for the `m3e-app-bar` component.
 
 ### ⚙️ Attributes
 
-| Attribute         | Type                             | Default     | Description                                                                  |
-| ----------------- | -------------------------------- | ----------- | ---------------------------------------------------------------------------- |
-| `centered`        | `boolean`                        | `false`     | Whether the title and subtitle are centered.                                 |
-| `size`            | `"small" \| "medium" \| "large"` | `"small"`   | The size of the bar.                                                         |
-| `for`             | `string`                         |             | The identifier of the interactive control to which this element is attached. |
-| `scroll-behavior` | `"elevate" \| "compress"`        | `"elevate"` | The behavior applied when the attached scroll container is scrolled.         |
+| Attribute         | Type                                                 | Default     | Description                                                                  |
+| ----------------- | ---------------------------------------------------- | ----------- | ---------------------------------------------------------------------------- |
+| `centered`        | `boolean`                                            | `false`     | Whether the title and subtitle are centered.                                 |
+| `size`            | `"small" \| "medium" \| "large"`                     | `"small"`   | The size of the bar.                                                         |
+| `for`             | `string`                                             |             | The identifier of the interactive control to which this element is attached. |
+| `scroll-behavior` | `"elevate" \| "compress" \| "hide" \| "transparent"` | `"elevate"` | The behavior applied when the attached scroll container is scrolled.         |
 
 ### 🧩 Slots
 

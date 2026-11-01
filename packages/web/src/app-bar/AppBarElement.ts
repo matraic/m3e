@@ -139,6 +139,8 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
   /** @private */ #collapse = 0;
   /** @private */ #lastScrollTop = 0;
   /** @private */ #scrollTop = 0;
+  /** @private */ #hideLastScrollTop = 0;
+  /** @private */ #hideOffset = 0;
   /** @private */ #expanded = 0;
   /** @private */ #range = 0;
 
@@ -512,11 +514,36 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
     const collapses = compress && this.size !== "small";
 
     // A small bar with the compress behavior has nothing to collapse, so it does not react to scrolling.
-    wrapper.classList.toggle("on-scroll", scrolled && (!compress || collapses));
+    wrapper.classList.toggle("on-scroll", scrolled && this.scrollBehavior !== "hide" && (!compress || collapses));
     wrapper.classList.toggle("compress", collapses);
 
+    const transparent = this.scrollBehavior === "transparent";
+    wrapper.classList.toggle("transparent", transparent);
+
+    if (transparent) {
+      wrapper.style.setProperty("--_transparent-progress", `${Math.min(1, this.#scrollTop / 64)}`);
+    } else {
+      wrapper.style.removeProperty("--_transparent-progress");
+    }
+
+    // The bar slides out of view by the distance scrolled down, up to its own height. It only slides
+    // back in once the scroll position is within its height of the top.
+
+    const hideDelta = this.#scrollTop - this.#hideLastScrollTop;
+    this.#hideLastScrollTop = this.#scrollTop;
+    if (this.scrollBehavior !== "hide" || !scrolled) {
+      this.#hideOffset = 0;
+      wrapper.style.removeProperty("--_hide-offset");
+    } else if (hideDelta !== 0) {
+      this.#hideOffset = Math.min(wrapper.offsetHeight, this.#scrollTop, this.#hideOffset + Math.max(0, hideDelta));
+      wrapper.style.setProperty("--_hide-offset", `${this.#hideOffset}px`);
+    }
+    wrapper.classList.toggle("hide", this.scrollBehavior === "hide");
+
     if (!collapses || !scrolled) {
-      this.#releaseCompress();
+      if (this.#range > 0 || base.style.getPropertyValue("--_app-bar-reserved-height")) {
+        this.#releaseCompress();
+      }
       this.#setCompact(wrapper, false);
       return;
     }
