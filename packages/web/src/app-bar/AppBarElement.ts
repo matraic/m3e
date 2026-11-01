@@ -16,6 +16,9 @@ import { AppBarSize, isAppBarSize } from "./AppBarSize";
 
 import { AppBarSizeStyle, AppBarStyle } from "./styles";
 
+/** The keys that scroll a container, which hold the snap off for as long as they are pressed. */
+const SCROLL_KEYS = new Set(["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "]);
+
 /**
  * A bar, placed a the top of a screen, used to help users navigate through an application.
  *
@@ -125,9 +128,14 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
   /** The styles of the element. */
   static override styles: CSSResultGroup = [AppBarStyle, AppBarSizeStyle];
 
-  /** @private */ readonly #scrollHandler = (e: Event) => this._updateScroll(e);
+  /** @private */ readonly #scrollHandler = (e: Event) => this.#handleScroll(e);
+  /** @private */ readonly #scrollEndHandler = () => this.#handleScrollEnd();
   /** @private */ readonly #touchStartHandler = () => this.#handleTouchStart();
   /** @private */ readonly #touchEndHandler = () => this.#handleTouchEnd();
+  /** @private */ readonly #pointerDownHandler = (e: PointerEvent) => this.#handlePointerDown(e);
+  /** @private */ readonly #pointerUpHandler = (e: PointerEvent) => this.#handlePointerUp(e);
+  /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);
+  /** @private */ readonly #keyUpHandler = (e: KeyboardEvent) => this.#handleKeyUp(e);
   /** @private */ readonly #interruptHandler = () => this.#cancelSnap();
   /** @private */ readonly #frameLoadHandler = () => this.#handleFrameLoad();
 
@@ -234,16 +242,6 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
     }
   }
 
-  /** @private */
-  #syncCentered(): void {
-    // Centering balances the icon widths, which applies to a small bar and to a compressed (compact) row.
-    if (this.centered && (this.size === "small" || this._wrapper?.classList.contains("compact"))) {
-      this.#computeCentered();
-    } else {
-      this.#clearCentered();
-    }
-  }
-
   /** @inheritdoc */
   protected override render(): unknown {
     switch (this.size) {
@@ -345,6 +343,98 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
   }
 
   /** @private */
+  #handleScroll(e: Event): void {
+    let scrollTop = 0;
+
+    if (this.control instanceof HTMLIFrameElement) {
+      scrollTop = this.#getFrameScrollTop(this.control);
+    } else if (e.target instanceof HTMLElement) {
+      scrollTop = e.target.scrollTop;
+    }
+
+    this.#scrollTop = scrollTop;
+
+    // Scroll events caused by the snap itself must not feed back into the collapse.
+    if (this.#snapping) return;
+    this.#syncScroll();
+
+    // If the browser reports when scrolling has finished, no need to guess with a timer.
+    // A pending release timer must not snap while momentum or a drag is still scrolling; `scrollend` will.
+
+    if ("onscrollend" in window) {
+      clearTimeout(this.#snapTimer);
+    } else {
+      this.#scheduleSnap();
+    }
+  }
+
+  /** @private */
+  #handleScrollEnd(): void {
+    if (this.#snapping || this.#touching) return;
+    clearTimeout(this.#snapTimer);
+    this.#snap();
+  }
+
+  /** @private */
+  #handleTouchStart(): void {
+    this.#touching = true;
+    this.#cancelSnap();
+  }
+
+  /** @private */
+  #handleTouchEnd(): void {
+    this.#touching = false;
+    this.#scheduleSnap();
+  }
+
+  /** @private */
+  #handlePointerDown(e: PointerEvent): void {
+    if (e.pointerType !== "touch") {
+      this.#handleTouchStart();
+    }
+  }
+
+  /** @private */
+  #handlePointerUp(e: PointerEvent): void {
+    if (e.pointerType !== "touch") {
+      this.#handleTouchEnd();
+    }
+  }
+
+  /** @private */
+  #handleKeyDown(e: KeyboardEvent): void {
+    if (SCROLL_KEYS.has(e.key)) {
+      this.#handleTouchStart();
+    }
+  }
+
+  /** @private */
+  #handleKeyUp(e: KeyboardEvent): void {
+    if (SCROLL_KEYS.has(e.key)) {
+      this.#handleTouchEnd();
+    }
+  }
+
+  /** @private */
+  #handleFrameLoad(): void {
+    if (this.control instanceof HTMLIFrameElement) {
+      this.#listen(this.control.contentDocument);
+      this.#scrollTop = this.#getFrameScrollTop(this.control);
+      this.#syncScroll();
+    }
+  }
+
+  /** @private */
+  #syncCentered(): void {
+    // Centering balances the icon widths, which applies to a small bar and to a compressed (compact) row.
+    if (this.centered && (this.size === "small" || this._wrapper?.classList.contains("compact"))) {
+      this.#computeCentered();
+    } else {
+      this.#clearCentered();
+    }
+  }
+
+  /** @private */
   #clearCentered() {
     this._wrapper?.style.removeProperty("--_leading-icon-min-width");
     this._wrapper?.style.removeProperty("--_trailing-icon-min-width");
@@ -365,51 +455,45 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
   }
 
   /** @private */
-  private _updateScroll(e: Event): void {
-    let scrollTop = 0;
-
-    if (this.control instanceof HTMLIFrameElement) {
-      scrollTop = this.#getFrameScrollTop(this.control);
-    } else if (e.target instanceof HTMLElement) {
-      scrollTop = e.target.scrollTop;
-    }
-
-    this.#scrollTop = scrollTop;
-
-    // Scroll events caused by the snap itself must not feed back into the collapse.
-    if (this.#snapping) return;
-    this.#syncScroll();
-    this.#scheduleSnap();
+  #getReleaseView(target: EventTarget | null): EventTarget | null {
+    if (target instanceof Document) return target.defaultView;
+    return target instanceof Node ? (target.ownerDocument?.defaultView ?? null) : null;
   }
 
   /** @private */
   #listen(target: EventTarget | null): void {
-    target?.addEventListener("scroll", this.#scrollHandler, { passive: true });
-    target?.addEventListener("wheel", this.#interruptHandler, { passive: true });
-    target?.addEventListener("touchstart", this.#touchStartHandler, { passive: true });
-    target?.addEventListener("touchend", this.#touchEndHandler, { passive: true });
-    target?.addEventListener("touchcancel", this.#touchEndHandler, { passive: true });
+    const passiveOptions: AddEventListenerOptions = { passive: true };
+    target?.addEventListener("scroll", this.#scrollHandler, passiveOptions);
+    target?.addEventListener("scrollend", this.#scrollEndHandler, passiveOptions);
+    target?.addEventListener("wheel", this.#interruptHandler, passiveOptions);
+    target?.addEventListener("touchstart", this.#touchStartHandler, passiveOptions);
+    target?.addEventListener("touchend", this.#touchEndHandler, passiveOptions);
+    target?.addEventListener("touchcancel", this.#touchEndHandler, passiveOptions);
+    target?.addEventListener("pointerdown", this.#pointerDownHandler as EventListener, passiveOptions);
+    target?.addEventListener("keydown", this.#keyDownHandler as EventListener, passiveOptions);
+
+    // A drag that began on the scroll container (such as on its scrollbar) can be released anywhere.
+    const view = this.#getReleaseView(target);
+    view?.addEventListener("keyup", this.#keyUpHandler as EventListener, passiveOptions);
+    view?.addEventListener("pointerup", this.#pointerUpHandler as EventListener, passiveOptions);
+    view?.addEventListener("pointercancel", this.#pointerUpHandler as EventListener, passiveOptions);
   }
 
   /** @private */
   #unlisten(target: EventTarget | null): void {
     target?.removeEventListener("scroll", this.#scrollHandler);
+    target?.removeEventListener("scrollend", this.#scrollEndHandler);
     target?.removeEventListener("wheel", this.#interruptHandler);
     target?.removeEventListener("touchstart", this.#touchStartHandler);
     target?.removeEventListener("touchend", this.#touchEndHandler);
     target?.removeEventListener("touchcancel", this.#touchEndHandler);
-  }
+    target?.removeEventListener("pointerdown", this.#pointerDownHandler as EventListener);
+    target?.removeEventListener("keydown", this.#keyDownHandler as EventListener);
 
-  /** @private */
-  #handleTouchStart(): void {
-    this.#touching = true;
-    this.#cancelSnap();
-  }
-
-  /** @private */
-  #handleTouchEnd(): void {
-    this.#touching = false;
-    this.#scheduleSnap();
+    const view = this.#getReleaseView(target);
+    view?.removeEventListener("keyup", this.#keyUpHandler as EventListener);
+    view?.removeEventListener("pointerup", this.#pointerUpHandler as EventListener);
+    view?.removeEventListener("pointercancel", this.#pointerUpHandler as EventListener);
   }
 
   /** @private*/
@@ -472,15 +556,6 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
     };
 
     this.#snapFrame = requestAnimationFrame(step);
-  }
-
-  /** @private */
-  #handleFrameLoad(): void {
-    if (this.control instanceof HTMLIFrameElement) {
-      this.#listen(this.control.contentDocument);
-      this.#scrollTop = this.#getFrameScrollTop(this.control);
-      this.#syncScroll();
-    }
   }
 
   /** @private */

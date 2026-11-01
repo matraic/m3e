@@ -66,6 +66,11 @@ test.describe("m3e-app-bar scroll behavior", () => {
       const set = window.setTimeout;
       window.setTimeout = ((fn: TimerHandler, ms?: number, ...args: unknown[]) =>
         ms === 150 ? 0 : set(fn, ms, ...args)) as typeof set;
+      // Ignoring `scrollend` listeners keeps the bar from snapping when scrolling finishes.
+      const add = EventTarget.prototype.addEventListener;
+      EventTarget.prototype.addEventListener = function (this: EventTarget, ...args: Parameters<typeof add>) {
+        if (args[0] !== "scrollend") add.apply(this, args);
+      };
     });
   const wrapperClasses = (page: import("@playwright/test").Page) =>
     page.locator("m3e-app-bar").evaluate((el) => el.shadowRoot!.querySelector(".wrapper")!.className);
@@ -257,6 +262,67 @@ test.describe("m3e-app-bar scroll behavior", () => {
     await scrollTo(page, range);
     await expect.poll(opacity).toBe(1);
     expect(await wrapperClasses(page)).toContain("compact");
+  });
+
+  test("compress does not snap while the mouse is held down, then snaps on release", async ({ page, render }) => {
+    await render(scroller("large", "compress"));
+    const expanded = await barHeight(page);
+    const range = expanded - 64;
+    const top = () => page.locator("#sc").evaluate((el) => el.scrollTop);
+    const partial = Math.round(range / 2);
+
+    // Stands in for dragging the scrollbar thumb, which presses the pointer on the scroll container.
+    await page
+      .locator("#sc")
+      .evaluate((el) => el.dispatchEvent(new PointerEvent("pointerdown", { pointerType: "mouse" })));
+    await scrollTo(page, partial);
+    await page.waitForTimeout(500);
+    expect(await top()).toBe(partial);
+    expect(await barHeight(page)).toBeGreaterThan(64);
+
+    await page.evaluate(() => window.dispatchEvent(new PointerEvent("pointerup", { pointerType: "mouse" })));
+    await expect.poll(() => barHeight(page)).toBe(64);
+  });
+
+  test("compress does not snap while a scroll key is held, then snaps on release", async ({ page, render }) => {
+    await render(scroller("large", "compress"));
+    const expanded = await barHeight(page);
+    const partial = Math.round((expanded - 64) / 2);
+    const top = () => page.locator("#sc").evaluate((el) => el.scrollTop);
+
+    await page.locator("#sc").evaluate((el) => el.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" })));
+    await scrollTo(page, partial);
+    await page.waitForTimeout(500);
+    expect(await top()).toBe(partial);
+
+    await page.evaluate(() => window.dispatchEvent(new KeyboardEvent("keyup", { key: "ArrowDown" })));
+    await expect.poll(() => barHeight(page)).toBe(64);
+  });
+
+  test("compress waits for scrollend when it is supported", async ({ page, render }) => {
+    await render(scroller("large", "compress"));
+    test.skip(!(await page.evaluate(() => "onscrollend" in window)), "scrollend is not supported");
+    const expanded = await barHeight(page);
+    const partial = Math.round((expanded - 64) / 4);
+    const top = () => page.locator("#sc").evaluate((el) => el.scrollTop);
+
+    // Gaps between scroll events longer than the old idle delay must not be treated as the end of scrolling.
+    const scroller$ = page.locator("#sc");
+    await page.evaluate(() => window.addEventListener("scrollend", (e) => e.stopImmediatePropagation(), true));
+    await scroller$.evaluate((el, t) => (el.scrollTop = t), partial);
+    await page.waitForTimeout(400);
+    await scroller$.evaluate((el, t) => (el.scrollTop = t), partial + 2);
+    await page.waitForTimeout(400);
+    expect(await top()).toBe(partial + 2);
+    expect(await barHeight(page)).toBeGreaterThan(64);
+  });
+
+  test("compress snaps when scrollend fires", async ({ page, render }) => {
+    await render(scroller("large", "compress"));
+    test.skip(!(await page.evaluate(() => "onscrollend" in window)), "scrollend is not supported");
+
+    await scrollTo(page, 10);
+    await expect.poll(() => barHeight(page)).toBe(64);
   });
 
   test("compress has no effect on a small bar", async ({ page, render }) => {
