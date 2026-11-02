@@ -26,10 +26,39 @@ import "@m3e/web/swipe-reveal";
 - The following example illustrates a group which allows only one item to be revealed at a time, and staggers neighbors as an item is dragged.
 
 ```html
-<m3e-swipe-reveal-group stagger="0.2" dismissible="trailing">
+<m3e-swipe-reveal-group stagger="0.05" dismissible="trailing">
   <m3e-swipe-reveal>…</m3e-swipe-reveal>
   <m3e-swipe-reveal>…</m3e-swipe-reveal>
 </m3e-swipe-reveal-group>
+```
+
+- The following example reveals an action behind a card. The icon button fills the card's height and only the corners facing the card are rounded, using the logical corner properties of `m3e-icon-button`.
+
+```html
+<m3e-swipe-reveal class="card-reveal" elastic="none">
+  <m3e-icon-button slot="leading" aria-label="Favorite" toggle variant="filled">…</m3e-icon-button>
+  <m3e-card>…</m3e-card>
+</m3e-swipe-reveal>
+```
+
+```css
+.card-reveal {
+  --m3e-swipe-reveal-actions-padding: 0px;
+  --m3e-swipe-reveal-actions-underlap: var(--md-sys-shape-corner-value-medium);
+  --m3e-icon-button-container-height: 100%;
+  --m3e-icon-button-start-start-shape: var(--md-sys-shape-corner-value-medium);
+  --m3e-icon-button-end-start-shape: var(--md-sys-shape-corner-value-medium);
+  --m3e-icon-button-start-end-shape: 0px;
+  --m3e-icon-button-end-end-shape: 0px;
+}
+.card-reveal m3e-icon-button[slot="leading"] {
+  width: 64px;
+}
+.card-reveal m3e-icon-button[slot="leading"] m3e-icon {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
 ```
 
 ## 📖 API Reference

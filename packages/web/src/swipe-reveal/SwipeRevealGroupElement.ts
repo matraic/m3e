@@ -20,7 +20,7 @@ import type { M3eSwipeRevealElement } from "./SwipeRevealElement";
  * @example
  * The following example illustrates a group whose items stagger their neighbors and can be dismissed.
  * ```html
- * <m3e-swipe-reveal-group stagger="0.2" dismissible="trailing">
+ * <m3e-swipe-reveal-group stagger="0.05" dismissible="trailing">
  *   <m3e-swipe-reveal>…</m3e-swipe-reveal>
  *   <m3e-swipe-reveal>…</m3e-swipe-reveal>
  * </m3e-swipe-reveal-group>
