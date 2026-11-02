@@ -4,7 +4,8 @@ import { property } from "lit/decorators.js";
 import { customElement, Role, spaceSeparatedStringConverter } from "@m3e/web/core";
 
 import { SwipeRevealTrigger } from "./SwipeRevealTrigger";
-import type { SwipeRevealDismiss } from "./SwipeRevealDismiss";
+import { SwipeRevealDismiss } from "./SwipeRevealDismiss";
+import { SwipeRevealElastic } from "./SwipeRevealElastic";
 import { SwipeRevealDefaults } from "./SwipeRevealDefaults";
 import type { M3eSwipeRevealElement } from "./SwipeRevealElement";
 
@@ -31,6 +32,7 @@ import type { M3eSwipeRevealElement } from "./SwipeRevealElement";
  *
  * @attr dismissible - The default side, if any, on which items can be dismissed.
  * @attr dismiss-threshold - The default fraction of an item's width at which a slow release dismisses.
+ * @attr elastic - The default sides whose actions squish and grow as content is dragged.
  * @attr overshoot - The default distance, in pixels, content can be dragged past the actions.
  * @attr stagger - The default fraction (0 to 1) the nearest sibling follows a dragged item.
  * @attr stagger-count - The default number of siblings on each side that are staggered.
@@ -82,9 +84,15 @@ export class M3eSwipeRevealGroupElement extends Role(LitElement, "none") {
 
   /**
    * The sides whose swipe can continue past the actions to dismiss the item.
-   * @default null
+   * @default "none"
    */
   @property() dismissible: SwipeRevealDismiss = SwipeRevealDefaults.dismissible;
+
+  /**
+   * The sides whose actions squish and grow as content is dragged.
+   * @default "both"
+   */
+  @property() elastic: SwipeRevealElastic = SwipeRevealDefaults.elastic;
 
   /**
    * The fraction (0 to 1) of the item's width it must be dragged to dismiss it on release.

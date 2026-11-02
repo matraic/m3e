@@ -42,7 +42,8 @@ This section details the attributes, slots, events, methods and properties avail
 
 | Attribute           | Type                                              | Default   | Description                                                                                             |
 | ------------------- | ------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------- |
-| `dismissible`       | `leading \| trailing \| both \| null`             | `null`    | Which side, if any, can be swiped past its actions to dismiss the item.                                 |
+| `dismissible`       | `leading \| trailing \| both \| none`             | `none`    | Which side, if any, can be swiped past its actions to dismiss the item.                                 |
+| `elastic`           | `leading \| trailing \| both \| none`             | `both`    | Which sides' actions squish and grow as the content is dragged.                                         |
 | `dismiss-threshold` | `number`                                          | `0.6`     | The fraction of the content's width at which a slow release dismisses.                                  |
 | `overshoot`         | `number`                                          | `8`       | The distance, in pixels, content can be dragged past the actions.                                       |
 | `stagger`           | `number`                                          | `0`       | How far (0 to 1) the nearest sibling follows a dragged item; each further sibling follows half as much. |
@@ -85,20 +86,23 @@ All events are `CustomEvent<SwipeRevealEventDetail>`, where `detail.side` is `"l
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                              | Description                                                 |
-| ----------------------------------------------------- | ----------------------------------------------------------- |
-| `--m3e-swipe-reveal-actions-padding`                  | The inline padding around the leading and trailing actions. |
-| `--m3e-swipe-reveal-actions-gap`                      | The gap between adjacent actions.                           |
-| `--m3e-swipe-reveal-actions-container-color`          | The background color of the leading and trailing actions.   |
-| `--m3e-swipe-reveal-actions-container-shape`          | The corner shape of the leading and trailing actions.       |
-| `--m3e-swipe-reveal-leading-actions-padding`          | The inline padding around the leading actions.              |
-| `--m3e-swipe-reveal-leading-actions-gap`              | The gap between adjacent leading actions.                   |
-| `--m3e-swipe-reveal-leading-actions-container-color`  | The background color of the leading actions.                |
-| `--m3e-swipe-reveal-leading-actions-container-shape`  | The corner shape of the leading actions.                    |
-| `--m3e-swipe-reveal-trailing-actions-padding`         | The inline padding around the trailing actions.             |
-| `--m3e-swipe-reveal-trailing-actions-gap`             | The gap between adjacent trailing actions.                  |
-| `--m3e-swipe-reveal-trailing-actions-container-color` | The background color of the trailing actions.               |
-| `--m3e-swipe-reveal-trailing-actions-container-shape` | The corner shape of the trailing actions.                   |
+| Property                                              | Description                                                          |
+| ----------------------------------------------------- | -------------------------------------------------------------------- |
+| `--m3e-swipe-reveal-actions-padding`                  | The inline padding around the leading and trailing actions.          |
+| `--m3e-swipe-reveal-actions-gap`                      | The gap between adjacent actions.                                    |
+| `--m3e-swipe-reveal-actions-container-color`          | The background color of the leading and trailing actions.            |
+| `--m3e-swipe-reveal-actions-container-shape`          | The corner shape of the leading and trailing actions.                |
+| `--m3e-swipe-reveal-leading-actions-padding`          | The inline padding around the leading actions.                       |
+| `--m3e-swipe-reveal-leading-actions-gap`              | The gap between adjacent leading actions.                            |
+| `--m3e-swipe-reveal-leading-actions-container-color`  | The background color of the leading actions.                         |
+| `--m3e-swipe-reveal-leading-actions-container-shape`  | The corner shape of the leading actions.                             |
+| `--m3e-swipe-reveal-trailing-actions-padding`         | The inline padding around the trailing actions.                      |
+| `--m3e-swipe-reveal-trailing-actions-gap`             | The gap between adjacent trailing actions.                           |
+| `--m3e-swipe-reveal-trailing-actions-container-color` | The background color of the trailing actions.                        |
+| `--m3e-swipe-reveal-trailing-actions-container-shape` | The corner shape of the trailing actions.                            |
+| `--m3e-swipe-reveal-actions-underlap`                 | How far the actions' container extends beneath the content.          |
+| `--m3e-swipe-reveal-leading-actions-underlap`         | How far the leading actions' container extends beneath the content.  |
+| `--m3e-swipe-reveal-trailing-actions-underlap`        | How far the trailing actions' container extends beneath the content. |
 
 ### m3e-swipe-reveal-group
 
@@ -106,7 +110,8 @@ All events are `CustomEvent<SwipeRevealEventDetail>`, where `detail.side` is `"l
 
 | Attribute           | Type                                              | Default   | Description                                                                      |
 | ------------------- | ------------------------------------------------- | --------- | -------------------------------------------------------------------------------- |
-| `dismissible`       | `leading \| trailing \| both \| null`             | `null`    | The default side, if any, on which items can be dismissed.                       |
+| `dismissible`       | `leading \| trailing \| both \| none`             | `none`    | The default side, if any, on which items can be dismissed.                       |
+| `elastic`           | `leading \| trailing \| both \| none`             | `both`    | The default sides whose actions squish and grow as content is dragged.           |
 | `dismiss-threshold` | `number`                                          | `0.6`     | The default fraction of an item's width at which a slow release dismisses.       |
 | `overshoot`         | `number`                                          | `8`       | The default distance, in pixels, content can be dragged past the actions.        |
 | `stagger`           | `number`                                          | `0`       | The default fraction (0 to 1) the nearest sibling follows a dragged item.        |

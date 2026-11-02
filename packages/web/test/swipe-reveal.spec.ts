@@ -572,3 +572,83 @@ test.describe("m3e-swipe-reveal overshoot", () => {
     await page.mouse.up();
   });
 });
+
+test.describe("m3e-swipe-reveal elastic", () => {
+  const trailingWidth = (page: Page, id: string) =>
+    page
+      .locator(`#${id}`)
+      .evaluate((el) => el.shadowRoot!.querySelector<HTMLElement>(".trailing")!.getBoundingClientRect().width);
+
+  const buttonWidth = (page: Page, id: string, slot: Side) =>
+    page.locator(`#${id} [slot=${slot}]`).evaluate((el) => el.getBoundingClientRect().width);
+
+  test("defaults to both and inherits from the group", async ({ page, render }) => {
+    await render(
+      `<m3e-swipe-reveal-group elastic="leading">${item("a")}${item("b", 'elastic="none"')}</m3e-swipe-reveal-group>${item("c")}`,
+    );
+    const read = (id: string) => page.locator(`#${id}`).evaluate((el) => (el as M3eSwipeRevealElement).elastic);
+    expect(await read("a")).toBe("leading");
+    expect(await read("b")).toBe("none");
+    expect(await read("c")).toBe("both");
+  });
+
+  test("dismissible defaults to none", async ({ page, render }) => {
+    await render(item("a"));
+    expect(await page.locator("#a").evaluate((el) => (el as M3eSwipeRevealElement).dismissible)).toBe("none");
+  });
+
+  test("elastic buttons squish while partially revealed", async ({ page, render }) => {
+    await render(`
+      <m3e-swipe-reveal id="a" style="display: block; width: 400px">
+        <m3e-icon-button slot="trailing" id="b"><m3e-icon name="delete"></m3e-icon></m3e-icon-button>
+        <div style="height: 56px; background: white">Content</div>
+      </m3e-swipe-reveal>
+    `);
+    const natural = await buttonWidth(page, "a", "trailing");
+    await press(page, "a", -20);
+    await expect.poll(() => buttonWidth(page, "a", "trailing")).toBeLessThan(natural - 4);
+    await page.mouse.up();
+  });
+
+  test("buttons keep their size when elastic is none", async ({ page, render }) => {
+    await render(item("a", 'elastic="none"'));
+    await press(page, "a", -40);
+    await page.waitForTimeout(200);
+    expect(await buttonWidth(page, "a", "trailing")).toBe(80);
+    await page.mouse.up();
+  });
+
+  test("the container does not grow with overshoot when elastic is none", async ({ page, render }) => {
+    await render(item("a", 'elastic="none"'));
+    const rest = await trailingWidth(page, "a");
+    await press(page, "a", -300);
+    await page.waitForTimeout(200);
+    expect(await trailingWidth(page, "a")).toBe(rest);
+    await page.mouse.up();
+  });
+
+  test("elastic applies per side", async ({ page, render }) => {
+    await render(item("a", 'elastic="leading"'));
+    await press(page, "a", -40);
+    await page.waitForTimeout(200);
+    expect(await buttonWidth(page, "a", "trailing")).toBe(80);
+    await page.mouse.up();
+  });
+});
+
+test.describe("m3e-swipe-reveal underlap", () => {
+  test("extends the container background beneath the content without changing its width", async ({ page, render }) => {
+    await render(item("a", 'style="--m3e-swipe-reveal-actions-underlap: 12px; width: 400px"'));
+    await call(page, "a", "reveal", "trailing");
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+
+    const info = await page.locator("#a").evaluate((el) => {
+      const trailing = el.shadowRoot!.querySelector<HTMLElement>(".trailing")!;
+      return {
+        width: trailing.getBoundingClientRect().width,
+        before: getComputedStyle(trailing, "::before").width,
+      };
+    });
+    expect(parseFloat(info.before)).toBeCloseTo(info.width + 12, 0);
+  });
+});

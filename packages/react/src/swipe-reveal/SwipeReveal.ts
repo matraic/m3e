@@ -5,6 +5,7 @@ import { M3eSwipeRevealElement, SwipeRevealEventDetail } from "@m3e/web/swipe-re
 
 export type {
   M3eSwipeRevealElement,
+  SwipeRevealElastic,
   SwipeRevealDismiss,
   SwipeRevealEventDetail,
   SwipeRevealSide,

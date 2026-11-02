@@ -33,6 +33,7 @@ import { SwipeRevealSide } from "./SwipeRevealSide";
 import { SwipeRevealState } from "./SwipeRevealState";
 import { SwipeRevealDefaults } from "./SwipeRevealDefaults";
 import { SwipeRevealDismiss } from "./SwipeRevealDismiss";
+import { SwipeRevealElastic } from "./SwipeRevealElastic";
 import { SwipeRevealEventDetail } from "./SwipeRevealEventDetail";
 
 type StaggerItem = {
@@ -95,6 +96,7 @@ const PROMOTED_STYLES = [
  * @slot trailing - Renders the actions revealed at the trailing edge.
  *
  * @attr dismissible - Which side, if any, can be swiped past its actions to dismiss the item.
+ * @attr elastic - Which sides' actions squish and grow as the content is dragged.
  * @attr dismiss-threshold - The fraction of the content's width at which a slow release dismisses.
  * @attr overshoot - The distance, in pixels, content can be dragged past the actions.
  * @attr stagger - How far (0 to 1) the nearest sibling follows a dragged item.
@@ -112,6 +114,9 @@ const PROMOTED_STYLES = [
  * @cssprop --m3e-swipe-reveal-actions-gap - The gap between adjacent actions.
  * @cssprop --m3e-swipe-reveal-actions-container-color - The background color of the leading and trailing actions.
  * @cssprop --m3e-swipe-reveal-actions-container-shape - The corner shape of the leading and trailing actions.
+ * @cssprop --m3e-swipe-reveal-actions-underlap - How far the actions' container extends beneath the content.
+ * @cssprop --m3e-swipe-reveal-leading-actions-underlap - How far the leading actions' container extends beneath the content.
+ * @cssprop --m3e-swipe-reveal-trailing-actions-underlap - How far the trailing actions' container extends beneath the content.
  * @cssprop --m3e-swipe-reveal-leading-actions-padding - The inline padding around the leading actions.
  * @cssprop --m3e-swipe-reveal-leading-actions-gap - The gap between adjacent leading actions.
  * @cssprop --m3e-swipe-reveal-leading-actions-container-color - The background color of the leading actions.
@@ -161,6 +166,8 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       --_actions-gap: var(--m3e-swipe-reveal-actions-gap, ${DesignToken.measurement.space50});
       --_actions-container-color: var(--m3e-swipe-reveal-actions-container-color, transparent);
       --_actions-container-shape: var(--m3e-swipe-reveal-actions-container-shape, ${DesignToken.shape.corner.none});
+      --_actions-underlap: var(--m3e-swipe-reveal-actions-underlap, 0px);
+      isolation: isolate;
       inset-block: 0;
       inset-inline: 0 auto;
       visibility: var(--_swipe-reveal-actions-visibility, hidden);
@@ -170,27 +177,53 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
         width var(--_swipe-reveal-motion, 0s),
         clip-path var(--_swipe-reveal-motion, 0s);
     }
+    .leading::before,
+    .trailing::before {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-color: var(--_container-color);
+      border-radius: var(--_container-shape);
+    }
+    .leading::before {
+      inset-inline: 0 calc(-1 * var(--_underlap));
+    }
+    .trailing::before {
+      inset-inline: calc(-1 * var(--_underlap)) 0;
+    }
     .leading {
       padding-inline: var(--m3e-swipe-reveal-leading-actions-padding, var(--_actions-padding));
       gap: var(--m3e-swipe-reveal-leading-actions-gap, var(--_actions-gap));
-      background-color: var(--m3e-swipe-reveal-leading-actions-container-color, var(--_actions-container-color));
-      border-radius: var(--m3e-swipe-reveal-leading-actions-container-shape, var(--_actions-container-shape));
-      clip-path: inset(0 calc((1 - var(--_swipe-reveal-progress, 0)) * 100%) 0 0);
+      --_container-color: var(--m3e-swipe-reveal-leading-actions-container-color, var(--_actions-container-color));
+      --_container-shape: var(--m3e-swipe-reveal-leading-actions-container-shape, var(--_actions-container-shape));
+      --_underlap: var(--m3e-swipe-reveal-leading-actions-underlap, var(--_actions-underlap));
+      clip-path: inset(
+        0 calc((1 - var(--_swipe-reveal-progress, 0)) * 100% - var(--_swipe-reveal-progress, 0) * var(--_underlap)) 0 0
+      );
     }
     .trailing {
       padding-inline: var(--m3e-swipe-reveal-trailing-actions-padding, var(--_actions-padding));
       gap: var(--m3e-swipe-reveal-trailing-actions-gap, var(--_actions-gap));
-      background-color: var(--m3e-swipe-reveal-trailing-actions-container-color, var(--_actions-container-color));
-      border-radius: var(--m3e-swipe-reveal-trailing-actions-container-shape, var(--_actions-container-shape));
+      --_container-color: var(--m3e-swipe-reveal-trailing-actions-container-color, var(--_actions-container-color));
+      --_container-shape: var(--m3e-swipe-reveal-trailing-actions-container-shape, var(--_actions-container-shape));
+      --_underlap: var(--m3e-swipe-reveal-trailing-actions-underlap, var(--_actions-underlap));
       inset-inline: auto 0;
       justify-content: flex-end;
-      clip-path: inset(0 0 0 calc((1 - var(--_swipe-reveal-progress, 0)) * 100%));
+      clip-path: inset(
+        0 0 0 calc((1 - var(--_swipe-reveal-progress, 0)) * 100% - var(--_swipe-reveal-progress, 0) * var(--_underlap))
+      );
     }
     :host(:is(:state(--rtl), :--rtl)) .leading {
-      clip-path: inset(0 0 0 calc((1 - var(--_swipe-reveal-progress, 0)) * 100%));
+      clip-path: inset(
+        0 0 0 calc((1 - var(--_swipe-reveal-progress, 0)) * 100% - var(--_swipe-reveal-progress, 0) * var(--_underlap))
+      );
     }
     :host(:is(:state(--rtl), :--rtl)) .trailing {
-      clip-path: inset(0 calc((1 - var(--_swipe-reveal-progress, 0)) * 100%) 0 0);
+      clip-path: inset(
+        0 calc((1 - var(--_swipe-reveal-progress, 0)) * 100% - var(--_swipe-reveal-progress, 0) * var(--_underlap)) 0 0
+      );
     }
     :host(:is(:state(--revealing), :--revealing, :state(--revealed), :--revealed, :state(--dismissing), :--dismissing))
       .leading,
@@ -217,6 +250,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   /** @private */ #overshoot?: number;
   /** @private */ #triggers?: readonly SwipeRevealTrigger[];
   /** @private */ #dismissible?: SwipeRevealDismiss;
+  /** @private */ #elastic?: SwipeRevealElastic;
   /** @private */ #dismissThreshold?: number;
   /** @private */ #armed = false;
   /** @private */ #outermost = new Map<SwipeRevealSide, { el: HTMLElement; width: number }>();
@@ -309,13 +343,25 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   /**
    * The sides whose swipe can continue past the actions to dismiss the item. The outermost
    * action on a side grows to fill the space as the item is dragged toward dismissal.
-   * @default null
+   * @default "none"
    */
   @property() get dismissible(): SwipeRevealDismiss {
     return this.#dismissible ?? this.#group?.dismissible ?? SwipeRevealDefaults.dismissible;
   }
   set dismissible(value: SwipeRevealDismiss) {
     this.#dismissible = value;
+  }
+
+  /**
+   * The sides whose actions squish and grow as the content is dragged. When a side is not
+   * elastic, its actions keep their size and its container does not grow with overshoot.
+   * @default "both"
+   */
+  @property() get elastic(): SwipeRevealElastic {
+    return this.#elastic ?? this.#group?.elastic ?? SwipeRevealDefaults.elastic;
+  }
+  set elastic(value: SwipeRevealElastic) {
+    this.#elastic = value;
   }
 
   /**
@@ -410,6 +456,11 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   /** @private */
   get #isGone(): boolean {
     return this._state === "dismissing" || this._state === "dismissed";
+  }
+
+  /** @private */
+  #isElastic(side: SwipeRevealSide): boolean {
+    return this.elastic === "both" || this.elastic === side;
   }
 
   /** @private */
@@ -1167,6 +1218,8 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
         this.#actionWidths.set(name, width);
       }
 
+      if (!this.#isElastic(name)) continue;
+
       const buttons = assigned.flatMap((x) => [x, ...x.querySelectorAll("m3e-button, m3e-icon-button")]);
 
       for (const button of buttons) {
@@ -1228,7 +1281,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       const progress = Math.max(0, Math.min(1, ratio));
 
       // Past 1, buttons grow with the overshoot, and the container grows to hold them.
-      const squish = Math.max(0, ratio);
+      const squish = this.#isElastic(name) ? Math.max(0, ratio) : progress;
       // On a dismissible side only the outermost action grows past full reveal, to fill the freed space.
       const outer = this.#canDismiss(name) ? this.#outermost.get(name) : undefined;
       el.style.setProperty("--_swipe-reveal-progress", String(progress));
