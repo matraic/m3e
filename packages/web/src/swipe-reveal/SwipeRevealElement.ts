@@ -138,9 +138,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       position: relative;
       touch-action: pan-y;
       z-index: 1;
-      transition:
-        transform ${DesignToken.motion.spring.fastSpatial},
-        translate var(--_nudge-motion, 0s);
+      transition: transform ${DesignToken.motion.spring.fastSpatial};
       transform: translateX(0px);
       will-change: transform;
     }
@@ -167,63 +165,35 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       --_actions-container-color: var(--m3e-swipe-reveal-actions-container-color, transparent);
       --_actions-container-shape: var(--m3e-swipe-reveal-actions-container-shape, ${DesignToken.shape.corner.none});
       --_actions-underlap: var(--m3e-swipe-reveal-actions-underlap, 0px);
-      isolation: isolate;
       inset-block: 0;
-      inset-inline: 0 auto;
-      visibility: var(--_swipe-reveal-actions-visibility, hidden);
-      opacity: var(--_swipe-reveal-progress, 0);
-      transition:
-        opacity var(--_swipe-reveal-motion, 0s),
-        width var(--_swipe-reveal-motion, 0s),
-        clip-path var(--_swipe-reveal-motion, 0s);
-    }
-    .leading::before,
-    .trailing::before {
-      content: "";
-      position: absolute;
-      inset-block: 0;
-      z-index: -1;
-      pointer-events: none;
       background-color: var(--_container-color);
       border-radius: var(--_container-shape);
-    }
-    .leading::before {
-      inset-inline: 0 calc(-1 * var(--_underlap));
-    }
-    .trailing::before {
-      inset-inline: calc(-1 * var(--_underlap)) 0;
+      inset-inline: 0 auto;
+      visibility: var(--_swipe-reveal-actions-visibility, hidden);
+      opacity: var(--_swipe-reveal-opacity, 0);
+      transition:
+        opacity var(--_swipe-reveal-motion, 0s),
+        width var(--_swipe-reveal-motion, 0s);
     }
     .leading {
-      padding-inline: var(--m3e-swipe-reveal-leading-actions-padding, var(--_actions-padding));
+      --_padding: var(--m3e-swipe-reveal-leading-actions-padding, var(--_actions-padding));
+      padding-inline: var(--_padding);
       gap: var(--m3e-swipe-reveal-leading-actions-gap, var(--_actions-gap));
       --_container-color: var(--m3e-swipe-reveal-leading-actions-container-color, var(--_actions-container-color));
       --_container-shape: var(--m3e-swipe-reveal-leading-actions-container-shape, var(--_actions-container-shape));
       --_underlap: var(--m3e-swipe-reveal-leading-actions-underlap, var(--_actions-underlap));
-      clip-path: inset(
-        0 calc((1 - var(--_swipe-reveal-progress, 0)) * 100% - var(--_swipe-reveal-progress, 0) * var(--_underlap)) 0 0
-      );
+      margin-inline-end: var(--_underlap);
     }
     .trailing {
-      padding-inline: var(--m3e-swipe-reveal-trailing-actions-padding, var(--_actions-padding));
+      --_padding: var(--m3e-swipe-reveal-trailing-actions-padding, var(--_actions-padding));
+      padding-inline: var(--_padding);
       gap: var(--m3e-swipe-reveal-trailing-actions-gap, var(--_actions-gap));
       --_container-color: var(--m3e-swipe-reveal-trailing-actions-container-color, var(--_actions-container-color));
       --_container-shape: var(--m3e-swipe-reveal-trailing-actions-container-shape, var(--_actions-container-shape));
       --_underlap: var(--m3e-swipe-reveal-trailing-actions-underlap, var(--_actions-underlap));
       inset-inline: auto 0;
       justify-content: flex-end;
-      clip-path: inset(
-        0 0 0 calc((1 - var(--_swipe-reveal-progress, 0)) * 100% - var(--_swipe-reveal-progress, 0) * var(--_underlap))
-      );
-    }
-    :host(:is(:state(--rtl), :--rtl)) .leading {
-      clip-path: inset(
-        0 0 0 calc((1 - var(--_swipe-reveal-progress, 0)) * 100% - var(--_swipe-reveal-progress, 0) * var(--_underlap))
-      );
-    }
-    :host(:is(:state(--rtl), :--rtl)) .trailing {
-      clip-path: inset(
-        0 calc((1 - var(--_swipe-reveal-progress, 0)) * 100% - var(--_swipe-reveal-progress, 0) * var(--_underlap)) 0 0
-      );
+      margin-inline-start: var(--_underlap);
     }
     :host(:is(:state(--revealing), :--revealing, :state(--revealed), :--revealed, :state(--dismissing), :--dismissing))
       .leading,
@@ -1163,29 +1133,32 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
 
   /** @private */
   #nudge(px: number | null, animate: boolean): void {
-    const content = this._content;
+    // The host's translate carries its content too, since a promoted content tracks the placeholder inside the host.
     if (px === null) {
       this.style.removeProperty("translate");
       this.style.removeProperty("transition");
-      content?.style.removeProperty("translate");
-      content?.style.removeProperty("--_nudge-motion");
       return;
     }
 
     const motion = `${DesignToken.motion.spring.fastSpatial}`;
     this.style.transition = animate ? `translate ${motion}` : "none";
     this.style.translate = `${px}px`;
-
-    if (content) {
-      content.style.setProperty("--_nudge-motion", animate ? motion : "0s");
-      content.style.translate = `${px}px`;
-    }
   }
 
   /** @private */
   #actionWidth(name: SwipeRevealSide): number {
     // The actions' natural width, which stays stable while buttons grow or shrink during a drag.
-    return this.#actionWidths.get(name) ?? this.shadowRoot?.querySelector<HTMLElement>(`.${name}`)?.clientWidth ?? 0;
+    const container = this.shadowRoot?.querySelector<HTMLElement>(`.${name}`);
+    return Math.max(0, (this.#actionWidths.get(name) ?? container?.offsetWidth ?? 0) - this.#underlap(name));
+  }
+
+  /** @private */
+  #underlap(name: SwipeRevealSide): number {
+    // The underlap is an inner-edge margin, so it resolves to pixels and marks how much of the container lies
+    // beneath the content, which is not part of the reveal distance.
+    const container = this.shadowRoot?.querySelector<HTMLElement>(`.${name}`);
+    if (!container) return 0;
+    return parseFloat(getComputedStyle(container)[name === "leading" ? "marginInlineEnd" : "marginInlineStart"]) || 0;
   }
 
   /** @private */
@@ -1285,6 +1258,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       // On a dismissible side only the outermost action grows past full reveal, to fill the freed space.
       const outer = this.#canDismiss(name) ? this.#outermost.get(name) : undefined;
       el.style.setProperty("--_swipe-reveal-progress", String(progress));
+      el.style.setProperty("--_swipe-reveal-opacity", this.#isElastic(name) ? String(progress) : "1");
       el.style.setProperty("--_squish-progress", String(outer ? Math.min(squish, 1) : squish));
       if (outer) {
         if (ratio > 1) {
@@ -1293,7 +1267,10 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
           outer.el.style.removeProperty("--_squish-progress");
         }
       }
-      if (el.style.width) el.style.width = `${natural * Math.max(1, squish)}px`;
+      // Overshoot extends the container on elastic sides, adding to the underlap beneath the content.
+      if (el.style.width) {
+        el.style.width = `${natural * Math.max(1, squish) + this.#underlap(name)}px`;
+      }
       el.style.setProperty("--_swipe-reveal-motion", motion);
     }
   }
@@ -1333,8 +1310,8 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
         if (!spacer) {
           const host = el as M3eSwipeRevealElement;
           host.#nudge(null, false);
-          const content = this._content;
-          const placeholder = this._placeholder;
+          const content = host._content;
+          const placeholder = host._placeholder;
 
           // An item that finished closing while staggered was kept in the top layer. Release it now.
           if (host._state === "covered" && content && placeholder && content.matches(":popover-open")) {

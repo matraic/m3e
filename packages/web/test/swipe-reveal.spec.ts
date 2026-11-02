@@ -523,6 +523,27 @@ test.describe("m3e-swipe-reveal stagger", () => {
     expect(await page.locator("#b").evaluate((el) => el.hasAttribute("popover"))).toBe(false);
   });
 
+  test("an item dragged open beside a revealed sibling stays open on release", async ({ page, render }) => {
+    await render(list('stagger="0.5"'));
+    await press(page, "a", -120);
+    await page.mouse.up();
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+
+    const rest = await left(page, "b");
+    await press(page, "b", -200);
+    await page.mouse.up();
+    await expect.poll(() => state(page, "a")).toBe("covered");
+    await expect.poll(() => state(page, "b")).toBe("revealed");
+    await page.waitForTimeout(800);
+    expect(await state(page, "b")).toBe("revealed");
+    expect(
+      rest -
+        (await page
+          .locator("#b")
+          .evaluate((el) => el.shadowRoot!.querySelector(".content")!.getBoundingClientRect().left)),
+    ).toBeGreaterThan(40);
+  });
+
   test("siblings do not move when stagger is 0", async ({ page, render }) => {
     await render(list(""));
     const before = await left(page, "b");
@@ -637,18 +658,21 @@ test.describe("m3e-swipe-reveal elastic", () => {
 });
 
 test.describe("m3e-swipe-reveal underlap", () => {
-  test("extends the container background beneath the content without changing its width", async ({ page, render }) => {
+  test("reserves the underlap beneath the content without adding to the reveal distance", async ({ page, render }) => {
     await render(item("a", 'style="--m3e-swipe-reveal-actions-underlap: 12px; width: 400px"'));
     await call(page, "a", "reveal", "trailing");
     await expect.poll(() => state(page, "a")).toBe("revealed");
 
     const info = await page.locator("#a").evaluate((el) => {
       const trailing = el.shadowRoot!.querySelector<HTMLElement>(".trailing")!;
+      const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
       return {
         width: trailing.getBoundingClientRect().width,
-        before: getComputedStyle(trailing, "::before").width,
+        margin: getComputedStyle(trailing).marginInlineStart,
+        offset: content.getBoundingClientRect().left - el.getBoundingClientRect().left,
       };
     });
-    expect(parseFloat(info.before)).toBeCloseTo(info.width + 12, 0);
+    expect(parseFloat(info.margin)).toBe(12);
+    expect(Math.abs(info.offset)).toBeCloseTo(info.width - 12, 0);
   });
 });
