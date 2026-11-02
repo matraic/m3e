@@ -45,7 +45,22 @@ function iconButtonStyle(size: IconButtonSize): CSSResult {
           )
       )
       .base {
-      border-radius: var(--_button-shape, ${IconButtonSizeToken[size].shapeRound});
+      border-start-start-radius: var(
+        --m3e-icon-button-start-start-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].shapeRound})
+      );
+      border-end-start-radius: var(
+        --m3e-icon-button-end-start-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].shapeRound})
+      );
+      border-start-end-radius: var(
+        --m3e-icon-button-start-end-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].shapeRound})
+      );
+      border-end-end-radius: var(
+        --m3e-icon-button-end-end-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].shapeRound})
+      );
     }
     :host(
         :is(:state(--connected), :--connected)${selector}:is(:state(--rounded), :--rounded)[toggle][selected]:not(
@@ -53,10 +68,28 @@ function iconButtonStyle(size: IconButtonSize): CSSResult {
           )
       )
       .base {
-      border-radius: var(--_button-shape, ${IconButtonSizeToken[size].shapeRound});
+      border-start-start-radius: var(
+        --m3e-icon-button-start-start-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].shapeRound})
+      );
+      border-end-start-radius: var(
+        --m3e-icon-button-end-start-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].shapeRound})
+      );
+      border-start-end-radius: var(
+        --m3e-icon-button-start-end-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].shapeRound})
+      );
+      border-end-end-radius: var(
+        --m3e-icon-button-end-end-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].shapeRound})
+      );
     }
     :host(:not(:is(:state(--connected), :--connected))${selector}:is(:state(--square), :--square)) .base {
-      border-radius: ${IconButtonSizeToken[size].shapeSquare};
+      border-start-start-radius: var(--m3e-icon-button-start-start-shape, ${IconButtonSizeToken[size].shapeSquare});
+      border-end-start-radius: var(--m3e-icon-button-end-start-shape, ${IconButtonSizeToken[size].shapeSquare});
+      border-start-end-radius: var(--m3e-icon-button-start-end-shape, ${IconButtonSizeToken[size].shapeSquare});
+      border-end-end-radius: var(--m3e-icon-button-end-end-shape, ${IconButtonSizeToken[size].shapeSquare});
     }
     :host(
         :not(:is(:state(--connected), :--connected))${selector}:is(:state(--rounded), :--rounded)[toggle][selected]:not(
@@ -64,7 +97,13 @@ function iconButtonStyle(size: IconButtonSize): CSSResult {
           )
       )
       .base {
-      border-radius: ${IconButtonSizeToken[size].selectedShapeRound};
+      border-start-start-radius: var(
+        --m3e-icon-button-start-start-shape,
+        ${IconButtonSizeToken[size].selectedShapeRound}
+      );
+      border-end-start-radius: var(--m3e-icon-button-end-start-shape, ${IconButtonSizeToken[size].selectedShapeRound});
+      border-start-end-radius: var(--m3e-icon-button-start-end-shape, ${IconButtonSizeToken[size].selectedShapeRound});
+      border-end-end-radius: var(--m3e-icon-button-end-end-shape, ${IconButtonSizeToken[size].selectedShapeRound});
     }
     :host(
         :not(:is(:state(--connected), :--connected))${selector}:is(:state(--square), :--square)[toggle][selected]:not(
@@ -72,35 +111,68 @@ function iconButtonStyle(size: IconButtonSize): CSSResult {
           )
       )
       .base {
-      border-radius: var(--_button-shape, ${IconButtonSizeToken[size].selectedShapeSquare});
+      border-start-start-radius: var(
+        --m3e-icon-button-start-start-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].selectedShapeSquare})
+      );
+      border-end-start-radius: var(
+        --m3e-icon-button-end-start-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].selectedShapeSquare})
+      );
+      border-start-end-radius: var(
+        --m3e-icon-button-start-end-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].selectedShapeSquare})
+      );
+      border-end-end-radius: var(
+        --m3e-icon-button-end-end-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].selectedShapeSquare})
+      );
     }
     :host(:not(:is(:state(--connected), :--connected))${selector}:is(:state(--pressed), :--pressed)) .base {
-      border-radius: ${IconButtonSizeToken[size].shapePressedMorph};
+      border-start-start-radius: var(
+        --m3e-icon-button-start-start-shape,
+        ${IconButtonSizeToken[size].shapePressedMorph}
+      );
+      border-end-start-radius: var(--m3e-icon-button-end-start-shape, ${IconButtonSizeToken[size].shapePressedMorph});
+      border-start-end-radius: var(--m3e-icon-button-start-end-shape, ${IconButtonSizeToken[size].shapePressedMorph});
+      border-end-end-radius: var(--m3e-icon-button-end-end-shape, ${IconButtonSizeToken[size].shapePressedMorph});
     }
     :host(:is(:state(--connected), :--connected)${selector}:is(:state(--rounded), :--rounded):not([toggle][selected]))
       .base {
       border-start-start-radius: var(
-        --_button-rounded-start-shape,
-        var(--_button-shape, ${IconButtonSizeToken[size].shapeRound})
+        --m3e-icon-button-start-start-shape,
+        var(--_button-rounded-start-shape, var(--_button-shape, ${IconButtonSizeToken[size].shapeRound}))
       );
       border-end-start-radius: var(
-        --_button-rounded-start-shape,
-        var(--_button-shape, ${IconButtonSizeToken[size].shapeRound})
+        --m3e-icon-button-end-start-shape,
+        var(--_button-rounded-start-shape, var(--_button-shape, ${IconButtonSizeToken[size].shapeRound}))
       );
       border-start-end-radius: var(
-        --_button-rounded-end-shape,
-        var(--_button-shape, ${IconButtonSizeToken[size].shapeRound})
+        --m3e-icon-button-start-end-shape,
+        var(--_button-rounded-end-shape, var(--_button-shape, ${IconButtonSizeToken[size].shapeRound}))
       );
       border-end-end-radius: var(
-        --_button-rounded-end-shape,
-        var(--_button-shape, ${IconButtonSizeToken[size].shapeRound})
+        --m3e-icon-button-end-end-shape,
+        var(--_button-rounded-end-shape, var(--_button-shape, ${IconButtonSizeToken[size].shapeRound}))
       );
     }
     :host(:is(:state(--connected), :--connected)${selector}:is(:state(--square), :--square)) .base {
-      border-start-start-radius: var(--_button-square-start-shape, ${IconButtonSizeToken[size].shapeSquare});
-      border-end-start-radius: var(--_button-square-start-shape, ${IconButtonSizeToken[size].shapeSquare});
-      border-start-end-radius: var(--_button-square-end-shape, ${IconButtonSizeToken[size].shapeSquare});
-      border-end-end-radius: var(--_button-square-end-shape, ${IconButtonSizeToken[size].shapeSquare});
+      border-start-start-radius: var(
+        --m3e-icon-button-start-start-shape,
+        var(--_button-square-start-shape, ${IconButtonSizeToken[size].shapeSquare})
+      );
+      border-end-start-radius: var(
+        --m3e-icon-button-end-start-shape,
+        var(--_button-square-start-shape, ${IconButtonSizeToken[size].shapeSquare})
+      );
+      border-start-end-radius: var(
+        --m3e-icon-button-start-end-shape,
+        var(--_button-square-end-shape, ${IconButtonSizeToken[size].shapeSquare})
+      );
+      border-end-end-radius: var(
+        --m3e-icon-button-end-end-shape,
+        var(--_button-square-end-shape, ${IconButtonSizeToken[size].shapeSquare})
+      );
     }
     :host(
         :is(:state(--connected), :--connected)${selector}:is(:state(--square), :--square)[toggle][selected]:not(
@@ -108,16 +180,40 @@ function iconButtonStyle(size: IconButtonSize): CSSResult {
           )
       )
       .base {
-      border-radius: var(--_button-shape, ${IconButtonSizeToken[size].selectedShapeSquare});
+      border-start-start-radius: var(
+        --m3e-icon-button-start-start-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].selectedShapeSquare})
+      );
+      border-end-start-radius: var(
+        --m3e-icon-button-end-start-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].selectedShapeSquare})
+      );
+      border-start-end-radius: var(
+        --m3e-icon-button-start-end-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].selectedShapeSquare})
+      );
+      border-end-end-radius: var(
+        --m3e-icon-button-end-end-shape,
+        var(--_button-shape, ${IconButtonSizeToken[size].selectedShapeSquare})
+      );
     }
     :host(:is(:state(--connected), :--connected)${selector}:is(:state(--pressed), :--pressed)) .base {
       border-start-start-radius: var(
-        --_button-start-shape-pressed-morph,
-        ${IconButtonSizeToken[size].shapePressedMorph}
+        --m3e-icon-button-start-start-shape,
+        var(--_button-start-shape-pressed-morph, ${IconButtonSizeToken[size].shapePressedMorph})
       );
-      border-end-start-radius: var(--_button-start-shape-pressed-morph, ${IconButtonSizeToken[size].shapePressedMorph});
-      border-start-end-radius: var(--_button-end-shape-pressed-morph, ${IconButtonSizeToken[size].shapePressedMorph});
-      border-end-end-radius: var(--_button-end-shape-pressed-morph, ${IconButtonSizeToken[size].shapePressedMorph});
+      border-end-start-radius: var(
+        --m3e-icon-button-end-start-shape,
+        var(--_button-start-shape-pressed-morph, ${IconButtonSizeToken[size].shapePressedMorph})
+      );
+      border-start-end-radius: var(
+        --m3e-icon-button-start-end-shape,
+        var(--_button-end-shape-pressed-morph, ${IconButtonSizeToken[size].shapePressedMorph})
+      );
+      border-end-end-radius: var(
+        --m3e-icon-button-end-end-shape,
+        var(--_button-end-shape-pressed-morph, ${IconButtonSizeToken[size].shapePressedMorph})
+      );
     }
   `;
 }

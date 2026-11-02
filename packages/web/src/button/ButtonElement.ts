@@ -100,6 +100,10 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * @cssprop --m3e-button-selected-shape-round - Corner radius when selected (round), for all size variants.
  * @cssprop --m3e-button-selected-shape-square - Corner radius when selected (square), for all size variants.
  * @cssprop --m3e-button-shape-pressed-morph - Corner radius when pressed, for all size variants.
+ * @cssprop --m3e-button-start-start-shape - Overrides the start-start logical corner radius in all states.
+ * @cssprop --m3e-button-start-end-shape - Overrides the start-end logical corner radius in all states.
+ * @cssprop --m3e-button-end-start-shape - Overrides the end-start logical corner radius in all states.
+ * @cssprop --m3e-button-end-end-shape - Overrides the end-end logical corner radius in all states.
  * @cssprop --m3e-button-leading-space - Space before icon or label, for all size variants.
  * @cssprop --m3e-button-trailing-space - Space after icon or label, for all size variants.
  * @cssprop --m3e-button-icon-label-space - Space between icon and label, for all size variants.

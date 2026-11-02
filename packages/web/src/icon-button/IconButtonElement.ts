@@ -99,6 +99,10 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
  * @cssprop --m3e-icon-button-selected-shape-round - Corner radius for all selected round size variants.
  * @cssprop --m3e-icon-button-selected-shape-square - Corner radius for all selected square size variants.
  * @cssprop --m3e-icon-button-shape-pressed-morph - Corner radius for all pressed size variants.
+ * @cssprop --m3e-icon-button-start-start-shape - Overrides the start-start logical corner radius in all states.
+ * @cssprop --m3e-icon-button-start-end-shape - Overrides the start-end logical corner radius in all states.
+ * @cssprop --m3e-icon-button-end-start-shape - Overrides the end-start logical corner radius in all states.
+ * @cssprop --m3e-icon-button-end-end-shape - Overrides the end-end logical corner radius in all states.
  * @cssprop --m3e-icon-button-narrow-leading-space - Leading space for all size variants (narrow).
  * @cssprop --m3e-icon-button-narrow-trailing-space - Trailing space for all size variants (narrow).
  * @cssprop --m3e-icon-button-default-leading-space - Leading space for all size variants (default).

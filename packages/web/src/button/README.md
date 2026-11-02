@@ -87,6 +87,17 @@ All size variants (`extra-small`, `small`, `medium`, `large`, `extra-large`) sup
 | `--m3e-button-[size]-trailing-space`         | Space after icon/label               |
 | `--m3e-button-[size]-icon-label-space`       | Space between icon and label         |
 
+#### 📐 Logical Corner Properties
+
+These override an individual logical corner in every state and size.
+
+| Property                         | Description                    |
+| -------------------------------- | ------------------------------ |
+| `--m3e-button-start-start-shape` | Start-start (top-left in LTR)  |
+| `--m3e-button-start-end-shape`   | Start-end (top-right in LTR)   |
+| `--m3e-button-end-start-shape`   | End-start (bottom-left in LTR) |
+| `--m3e-button-end-end-shape`     | End-end (bottom-right in LTR)  |
+
 #### 🎨 Appearance Variant Properties
 
 All appearance variants (`filled`, `tonal`, `elevated`, `outlined`, `text`) support the following properties (replace `[variant]` with the variant name). Omitting the `[variant]-` prefix overrides the value for all variants.

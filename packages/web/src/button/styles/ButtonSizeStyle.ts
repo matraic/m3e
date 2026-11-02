@@ -30,7 +30,19 @@ function buttonStyle(size: ButtonSize): CSSResult {
       outline-width: ${ButtonSizeToken[size].outlineThickness};
     }
     :host(:not(:is(:state(--connected), :--connected))${selector}:is(:state(--rounded), :--rounded)) .base {
-      border-radius: var(--_button-shape, ${ButtonSizeToken[size].shapeRound});
+      border-start-start-radius: var(
+        --m3e-button-start-start-shape,
+        var(--_button-shape, ${ButtonSizeToken[size].shapeRound})
+      );
+      border-end-start-radius: var(
+        --m3e-button-end-start-shape,
+        var(--_button-shape, ${ButtonSizeToken[size].shapeRound})
+      );
+      border-start-end-radius: var(
+        --m3e-button-start-end-shape,
+        var(--_button-shape, ${ButtonSizeToken[size].shapeRound})
+      );
+      border-end-end-radius: var(--m3e-button-end-end-shape, var(--_button-shape, ${ButtonSizeToken[size].shapeRound}));
     }
     :host(
         :is(:state(--connected), :--connected)${selector}:is(:state(--rounded), :--rounded)[toggle][selected]:not(
@@ -38,7 +50,19 @@ function buttonStyle(size: ButtonSize): CSSResult {
           )
       )
       .base {
-      border-radius: var(--_button-shape, ${ButtonSizeToken[size].shapeRound});
+      border-start-start-radius: var(
+        --m3e-button-start-start-shape,
+        var(--_button-shape, ${ButtonSizeToken[size].shapeRound})
+      );
+      border-end-start-radius: var(
+        --m3e-button-end-start-shape,
+        var(--_button-shape, ${ButtonSizeToken[size].shapeRound})
+      );
+      border-start-end-radius: var(
+        --m3e-button-start-end-shape,
+        var(--_button-shape, ${ButtonSizeToken[size].shapeRound})
+      );
+      border-end-end-radius: var(--m3e-button-end-end-shape, var(--_button-shape, ${ButtonSizeToken[size].shapeRound}));
     }
     :host(
         :not(:is(:state(--connected), :--connected))${selector}:is(:state(--rounded), :--rounded)[toggle][selected]:not(
@@ -46,10 +70,16 @@ function buttonStyle(size: ButtonSize): CSSResult {
           )
       )
       .base {
-      border-radius: ${ButtonSizeToken[size].selectedShapeRound};
+      border-start-start-radius: var(--m3e-button-start-start-shape, ${ButtonSizeToken[size].selectedShapeRound});
+      border-end-start-radius: var(--m3e-button-end-start-shape, ${ButtonSizeToken[size].selectedShapeRound});
+      border-start-end-radius: var(--m3e-button-start-end-shape, ${ButtonSizeToken[size].selectedShapeRound});
+      border-end-end-radius: var(--m3e-button-end-end-shape, ${ButtonSizeToken[size].selectedShapeRound});
     }
     :host(:not(:is(:state(--connected), :--connected))${selector}:is(:state(--square), :--square)) .base {
-      border-radius: ${ButtonSizeToken[size].shapeSquare};
+      border-start-start-radius: var(--m3e-button-start-start-shape, ${ButtonSizeToken[size].shapeSquare});
+      border-end-start-radius: var(--m3e-button-end-start-shape, ${ButtonSizeToken[size].shapeSquare});
+      border-start-end-radius: var(--m3e-button-start-end-shape, ${ButtonSizeToken[size].shapeSquare});
+      border-end-end-radius: var(--m3e-button-end-end-shape, ${ButtonSizeToken[size].shapeSquare});
     }
     :host(
         :not(:is(:state(--connected), :--connected))${selector}:is(:state(--square), :--square)[toggle][selected]:not(
@@ -57,35 +87,65 @@ function buttonStyle(size: ButtonSize): CSSResult {
           )
       )
       .base {
-      border-radius: var(--_button-shape, ${ButtonSizeToken[size].selectedShapeSquare});
+      border-start-start-radius: var(
+        --m3e-button-start-start-shape,
+        var(--_button-shape, ${ButtonSizeToken[size].selectedShapeSquare})
+      );
+      border-end-start-radius: var(
+        --m3e-button-end-start-shape,
+        var(--_button-shape, ${ButtonSizeToken[size].selectedShapeSquare})
+      );
+      border-start-end-radius: var(
+        --m3e-button-start-end-shape,
+        var(--_button-shape, ${ButtonSizeToken[size].selectedShapeSquare})
+      );
+      border-end-end-radius: var(
+        --m3e-button-end-end-shape,
+        var(--_button-shape, ${ButtonSizeToken[size].selectedShapeSquare})
+      );
     }
     :host(:not(:is(:state(--connected), :--connected))${selector}:is(:state(--pressed), :--pressed)) .base {
-      border-radius: ${ButtonSizeToken[size].shapePressedMorph};
+      border-start-start-radius: var(--m3e-button-start-start-shape, ${ButtonSizeToken[size].shapePressedMorph});
+      border-end-start-radius: var(--m3e-button-end-start-shape, ${ButtonSizeToken[size].shapePressedMorph});
+      border-start-end-radius: var(--m3e-button-start-end-shape, ${ButtonSizeToken[size].shapePressedMorph});
+      border-end-end-radius: var(--m3e-button-end-end-shape, ${ButtonSizeToken[size].shapePressedMorph});
     }
     :host(:is(:state(--connected), :--connected)${selector}:is(:state(--rounded), :--rounded):not([toggle][selected]))
       .base {
       border-start-start-radius: var(
-        --_button-rounded-start-shape,
-        var(--_button-shape, ${ButtonSizeToken[size].shapeRound})
+        --m3e-button-start-start-shape,
+        var(--_button-rounded-start-shape, var(--_button-shape, ${ButtonSizeToken[size].shapeRound}))
       );
       border-end-start-radius: var(
-        --_button-rounded-start-shape,
-        var(--_button-shape, ${ButtonSizeToken[size].shapeRound})
+        --m3e-button-end-start-shape,
+        var(--_button-rounded-start-shape, var(--_button-shape, ${ButtonSizeToken[size].shapeRound}))
       );
       border-start-end-radius: var(
-        --_button-rounded-end-shape,
-        var(--_button-shape, ${ButtonSizeToken[size].shapeRound})
+        --m3e-button-start-end-shape,
+        var(--_button-rounded-end-shape, var(--_button-shape, ${ButtonSizeToken[size].shapeRound}))
       );
       border-end-end-radius: var(
-        --_button-rounded-end-shape,
-        var(--_button-shape, ${ButtonSizeToken[size].shapeRound})
+        --m3e-button-end-end-shape,
+        var(--_button-rounded-end-shape, var(--_button-shape, ${ButtonSizeToken[size].shapeRound}))
       );
     }
     :host(:is(:state(--connected), :--connected)${selector}:is(:state(--square), :--square)) .base {
-      border-start-start-radius: var(--_button-square-start-shape, ${ButtonSizeToken[size].shapeSquare});
-      border-end-start-radius: var(--_button-square-start-shape, ${ButtonSizeToken[size].shapeSquare});
-      border-start-end-radius: var(--_button-square-end-shape, ${ButtonSizeToken[size].shapeSquare});
-      border-end-end-radius: var(--_button-square-end-shape, ${ButtonSizeToken[size].shapeSquare});
+      border-start-start-radius: var(
+        --m3e-button-start-start-shape,
+        var(--_button-square-start-shape, ${ButtonSizeToken[size].shapeSquare})
+      );
+      border-end-start-radius: var(
+        --m3e-button-end-start-shape,
+        var(--_button-square-start-shape, ${ButtonSizeToken[size].shapeSquare})
+      );
+      border-start-end-radius: var(
+        --m3e-button-start-end-shape,
+        var(--_button-square-end-shape, ${ButtonSizeToken[size].shapeSquare})
+      );
+      border-end-end-radius: var(
+        --m3e-button-end-end-shape,
+        var(--_button-square-end-shape, ${ButtonSizeToken[size].shapeSquare})
+      );
     }
     :host(
         :is(:state(--connected), :--connected)${selector}:is(:state(--square), :--square)[toggle][selected]:not(
@@ -93,13 +153,40 @@ function buttonStyle(size: ButtonSize): CSSResult {
           )
       )
       .base {
-      border-radius: var(--_button-shape, ${ButtonSizeToken[size].selectedShapeSquare});
+      border-start-start-radius: var(
+        --m3e-button-start-start-shape,
+        var(--_button-shape, ${ButtonSizeToken[size].selectedShapeSquare})
+      );
+      border-end-start-radius: var(
+        --m3e-button-end-start-shape,
+        var(--_button-shape, ${ButtonSizeToken[size].selectedShapeSquare})
+      );
+      border-start-end-radius: var(
+        --m3e-button-start-end-shape,
+        var(--_button-shape, ${ButtonSizeToken[size].selectedShapeSquare})
+      );
+      border-end-end-radius: var(
+        --m3e-button-end-end-shape,
+        var(--_button-shape, ${ButtonSizeToken[size].selectedShapeSquare})
+      );
     }
     :host(:is(:state(--connected), :--connected)${selector}:is(:state(--pressed), :--pressed)) .base {
-      border-start-start-radius: var(--_button-start-shape-pressed-morph, ${ButtonSizeToken[size].shapePressedMorph});
-      border-end-start-radius: var(--_button-start-shape-pressed-morph, ${ButtonSizeToken[size].shapePressedMorph});
-      border-start-end-radius: var(--_button-end-shape-pressed-morph, ${ButtonSizeToken[size].shapePressedMorph});
-      border-end-end-radius: var(--_button-end-shape-pressed-morph, ${ButtonSizeToken[size].shapePressedMorph});
+      border-start-start-radius: var(
+        --m3e-button-start-start-shape,
+        var(--_button-start-shape-pressed-morph, ${ButtonSizeToken[size].shapePressedMorph})
+      );
+      border-end-start-radius: var(
+        --m3e-button-end-start-shape,
+        var(--_button-start-shape-pressed-morph, ${ButtonSizeToken[size].shapePressedMorph})
+      );
+      border-start-end-radius: var(
+        --m3e-button-start-end-shape,
+        var(--_button-end-shape-pressed-morph, ${ButtonSizeToken[size].shapePressedMorph})
+      );
+      border-end-end-radius: var(
+        --m3e-button-end-end-shape,
+        var(--_button-end-shape-pressed-morph, ${ButtonSizeToken[size].shapePressedMorph})
+      );
     }
   `;
 }
