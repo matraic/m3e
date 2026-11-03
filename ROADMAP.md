@@ -23,8 +23,8 @@ The following components are planned for future release (in no particular order)
 
 ## 🏛️ Past Milestones
 
-- **2.11.0 — Feature release**
-  Added `@m3e/web/swipe-reveal`, app-bar scroll behaviors.
+- **2.11.0– 2.11.1 — Feature release + patch releases**
+  Added `@m3e/web/swipe-reveal`, app-bar scroll behaviors, bug fixes.
 
 - **2.10.0 – 2.10.3 — Feature release + patch releases**
   Added `@m3e/web/callout`, switch improvements, loading-indicator pull-to-refresh support, bug fixes.
