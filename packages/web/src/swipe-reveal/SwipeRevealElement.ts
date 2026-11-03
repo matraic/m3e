@@ -572,14 +572,14 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="leading">
+    return html`<div class="leading" role="none">
         <slot name="leading" @slotchange=${this.#handleSlotChange}></slot>
       </div>
-      <div class="content" id="content" @click=${{ handleEvent: this.#handleContentClick, capture: true }}>
+      <div class="content" role="none" id="content" @click=${{ handleEvent: this.#handleContentClick, capture: true }}>
         <slot></slot>
       </div>
-      <div class="placeholder"></div>
-      <div class="trailing">
+      <div class="placeholder" aria-hidden="true"></div>
+      <div class="trailing" role="none">
         <slot name="trailing" @slotchange=${this.#handleSlotChange}></slot>
       </div>
       ${this.#renderTriggers()}`;
