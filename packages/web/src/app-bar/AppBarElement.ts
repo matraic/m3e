@@ -637,7 +637,7 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
     }
 
     // The collapse amount follows scroll deltas rather than the scroll position. Scrolling up releases it
-    // proportionally, so it is fully expanded again exactly at the top.
+    // only once within the collapse range of the top, so it is fully expanded exactly at the top.
 
     const delta = this.#scrollTop - this.#lastScrollTop;
     if (delta !== 0) {
@@ -645,8 +645,8 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
       if (delta > 0) {
         this.#collapse += delta;
       } else {
-        const ratio = this.#lastScrollTop > 0 ? this.#collapse / this.#lastScrollTop : 0;
-        this.#collapse += delta * Math.max(1, ratio);
+        // Stays collapsed until the scroll position comes within the collapsed amount of the top.
+        this.#collapse = Math.min(this.#collapse, this.#scrollTop);
       }
 
       this.#collapse = Math.min(this.#range, Math.max(0, this.#collapse));

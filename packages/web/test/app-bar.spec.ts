@@ -198,6 +198,24 @@ test.describe("m3e-app-bar scroll behavior", () => {
     await expect.poll(() => barHeight(page)).toBe(expanded - 10);
   });
 
+  test("compress stays collapsed when scrolling up from far down until near the top", async ({ page, render }) => {
+    await disableSnap(page);
+    await render(scroller("large", "compress"));
+    const expanded = await barHeight(page);
+    const range = expanded - 64;
+
+    await scrollTo(page, 5000);
+    await expect.poll(() => barHeight(page)).toBe(64);
+    const bottom = await page.locator("#sc").evaluate((el) => el.scrollTop);
+
+    await scrollTo(page, bottom - 20);
+    await expect.poll(() => page.locator("#sc").evaluate((el) => el.scrollTop)).toBe(bottom - 20);
+    expect(await barHeight(page)).toBe(64);
+
+    await scrollTo(page, range / 2);
+    await expect.poll(() => barHeight(page)).toBeCloseTo(expanded - range / 2, 0);
+  });
+
   test("compress snaps when scrolling goes idle and moves the scroll position", async ({ page, render }) => {
     await render(scroller("large", "compress"));
     const expanded = await barHeight(page);
