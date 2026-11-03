@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>React for M3E</title>
+    <title>Frameworks for M3E</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="React for M3E" />
+    <meta name="description" content="Frameworks for M3E" />
     <base href="./" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,7 +24,9 @@
     <m3e-theme strong-focus></m3e-theme>
     <div class="panes">
       <m3e-content-pane id="body">
-        <m3e-heading variant="display" size="large" level="1">React</m3e-heading>
+        <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Frameworks</m3e-heading>
+
+        <m3e-heading variant="headline" size="medium" level="2">React</m3e-heading>
         <p>
           The <strong>@m3e/react</strong> package provides idiomatic React bindings for all M3E Web Components. Each
           component is exposed as its own React module, offering typed props, event mappings, and seamless integration
@@ -73,7 +75,46 @@
           across both ecosystems. Use individual modules for tree-shaking and minimal bundles, or the aggregated module
           for rapid prototyping and full-suite development.
         </p>
+
+        <m3e-heading variant="headline" size="medium" level="2">Angular</m3e-heading>
+        <p>
+          M3E does not provide a dedicated Angular bindings package. Angular provides first-class support for Web
+          Components, allowing all M3E components to be used directly in Angular templates without additional wrappers.
+        </p>
+
+        <p>
+          However, Angular requires the <code>CUSTOM_ELEMENTS_SCHEMA</code> to recognize custom elements. Add it to your
+          module definition:
+        </p>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+
+@NgModule({
+  declarations: [...],
+  imports: [...],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class AppModule {}</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Vue</m3e-heading>
+        <p>
+          M3E does not provide a dedicated Vue bindings package. Vue provides first-class support for Web Components,
+          allowing all M3E components to be used directly in Vue templates without additional wrappers.
+        </p>
+        <p>
+          See
+          <a target="_blank" href="https://vuejs.org/guide/extras/web-components.html">Vue and Web Components</a> for
+          more information.
+        </p>
       </m3e-content-pane>
+      <m3e-toc for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Frameworks</span>
+      </m3e-toc>
     </div>
   </body>
 </html>
