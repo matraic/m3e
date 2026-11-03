@@ -91,6 +91,29 @@ test.describe("m3e-swipe-reveal", () => {
     expect(await log(page)).toEqual(["revealing", "revealed"]);
   });
 
+  test("only the revealed side's actions are focusable", async ({ page, render }) => {
+    await render(item("a"));
+
+    const canFocus = (slot: Side) =>
+      page.locator(`#a button[slot="${slot}"]`).evaluate((button) => {
+        button.focus();
+        return document.activeElement === button;
+      });
+
+    await call(page, "a", "reveal", "leading");
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+
+    expect(await canFocus("leading")).toBe(true);
+    expect(await canFocus("trailing")).toBe(false);
+
+    await call(page, "a", "reveal", "trailing");
+    await expect.poll(() => side(page, "a")).toBe("trailing");
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+
+    expect(await canFocus("leading")).toBe(false);
+    expect(await canFocus("trailing")).toBe(true);
+  });
+
   test("revealing, revealed and covered events carry the side", async ({ page, render }) => {
     await render(item("a"));
     await page.locator("#a").evaluate((el) => {

@@ -1252,6 +1252,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       const natural = this.#actionWidth(name);
       const ratio = (sign * this.#dir * x) / (natural || Infinity);
       const progress = Math.max(0, Math.min(1, ratio));
+      el.inert = ratio <= 0;
 
       // Past 1, buttons grow with the overshoot, and the container grows to hold them.
       const squish = this.#isElastic(name) ? Math.max(0, ratio) : progress;
