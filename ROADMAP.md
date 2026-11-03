@@ -4,7 +4,7 @@ This roadmap presents the ongoing development, future direction, and past accomp
 
 ## 🟡 Current
 
-- 2.10.x Release
+- 2.11.x Release
 
 ## 🔮 Future
 
@@ -22,6 +22,9 @@ The following components are planned for future release (in no particular order)
 - MCP Server enabling IDEs and AI tools to query local knowledge about components and documentation
 
 ## 🏛️ Past Milestones
+
+- **2.11.0 — Feature release**
+  Added `@m3e/web/swipe-reveal`, app-bar scroll behaviors.
 
 - **2.10.0 – 2.10.3 — Feature release + patch releases**
   Added `@m3e/web/callout`, switch improvements, loading-indicator pull-to-refresh support, bug fixes.

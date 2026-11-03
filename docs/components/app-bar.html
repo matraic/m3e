@@ -20,7 +20,7 @@
     <link href="api-viewer.css" rel="stylesheet" />
     <link href="app-bar.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.10.3/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.11.0/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -169,16 +169,23 @@
           >
         </m3e-card>
 
-        <m3e-heading variant="headline" size="small" level="3">Scroll effects</m3e-heading>
+        <m3e-heading variant="headline" size="small" level="3">Scroll behavior</m3e-heading>
         <p>
           An <code>m3e-app-bar</code> can be attached to a scrollable container using the <code>for</code> attribute,
           which references the container's id. This establishes a scroll contract between the app bar and its content
-          region. As the user scrolls:
+          region: the app bar listens to the container's scroll position and reacts as the user scrolls. For the app bar
+          to stay in view, give the container a bounded height with <code>overflow-y: auto</code> and make the app bar
+          <code>position: sticky</code> with <code>top: 0</code>. The <code>scroll-behavior</code> attribute selects how
+          the app bar reacts: <code>elevate</code> (the default), <code>transparent</code>, <code>hide</code>, or
+          <code>compress</code>.
         </p>
+
+        <m3e-heading variant="headline" size="small" level="4">Elevate</m3e-heading>
+        <p>With the default <code>elevate</code> behavior, as the user scrolls:</p>
         <ul>
           <li>
-            The app bar's background becomes elevated — typically via a shadow or surface tone — to signal separation
-            from the content.
+            The app bar's background becomes elevated, typically via a surface tone, to signal separation from the
+            content.
           </li>
           <li>
             When the scroll position returns to the top, the elevation is removed, restoring a flat visual hierarchy.
@@ -186,7 +193,9 @@
         </ul>
         <p>
           This behavior enhances contextual clarity, signaling that content is in motion while preserving the app bar's
-          role as a stable anchor.
+          role as a stable anchor. The on-scroll appearance is controlled by
+          <code>--m3e-app-bar-container-color-on-scroll</code> and
+          <code>--m3e-app-bar-container-elevation-on-scroll</code>.
         </p>
 
         <m3e-card variant="outlined" class="showcase">
@@ -202,7 +211,7 @@
                   <m3e-icon name="bookmark" filled></m3e-icon>
                 </m3e-icon-button>
               </m3e-app-bar>
-              <div class="scroll-item">Scroll down to see the elevation effect</div>
+              <div class="scroll-item">Scroll down to see the elevation behavior</div>
             </div>
           </div>
         </m3e-card>
@@ -213,9 +222,8 @@
   &lt;m3e-app-bar for=&quot;scrollContainer&quot;&gt;
     &lt;!-- Content omitted for brevity --&gt;
   &lt;/m3e-app-bar&gt;
-  &lt;div class=&quot;scroll-item&quot;&gt;Scroll down to see the elevation effect&lt;/div&gt;
+  &lt;div class=&quot;scroll-item&quot;&gt;Scroll down to see the elevation behavior&lt;/div&gt;
 &lt;/div&gt;
-&lt;m3e-app-bar centered&gt;
 &lt;style&gt;
   #scrollContainer {
     overflow-y: auto;
@@ -232,6 +240,138 @@
     justify-content: center;
   }
 &lt;/style&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="4">Transparent</m3e-heading>
+        <p>
+          When <code>scroll-behavior</code> is set to <code>transparent</code>, the app bar looks normal at the top of
+          the container. As the user scrolls, the container color and the title and subtitle fade out, while leading and
+          trailing content stays fully opaque. Buttons and icon buttons inside the app bar gain a container color,
+          matching how a toolbar styles its buttons, that fades in with the scroll position.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <div id="transparentContainer">
+              <m3e-app-bar for="transparentContainer" scroll-behavior="transparent">
+                <m3e-icon-button slot="leading" aria-label="Back">
+                  <m3e-icon name="arrow_back"></m3e-icon>
+                </m3e-icon-button>
+                <span slot="title">Top 10 hiking trails</span>
+                <span slot="subtitle">Discover popular trails</span>
+                <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal">
+                  <m3e-icon name="bookmark" filled></m3e-icon>
+                </m3e-icon-button>
+              </m3e-app-bar>
+              <div class="scroll-item">Scroll down to see the transparent behavior</div>
+            </div>
+          </div>
+        </m3e-card>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;div id=&quot;scrollContainer&quot;&gt;
+  &lt;m3e-app-bar for=&quot;scrollContainer&quot; scroll-behavior=&quot;transparent&quot;&gt;
+    &lt;!-- Content omitted for brevity --&gt;
+  &lt;/m3e-app-bar&gt;
+  &lt;div class=&quot;scroll-item&quot;&gt;Scroll down to see the transparent behavior&lt;/div&gt;
+&lt;/div&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="4">Hide</m3e-heading>
+        <p>
+          When <code>scroll-behavior</code> is set to <code>hide</code>, the app bar slides out of view by the amount
+          scrolled down, up to its own height. It only slides back in as the scroll position nears the top, where it is
+          fully visible.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <div id="hideContainer">
+              <m3e-app-bar for="hideContainer" scroll-behavior="hide">
+                <m3e-icon-button slot="leading" aria-label="Back">
+                  <m3e-icon name="arrow_back"></m3e-icon>
+                </m3e-icon-button>
+                <span slot="title">Top 10 hiking trails</span>
+                <span slot="subtitle">Discover popular trails</span>
+                <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal">
+                  <m3e-icon name="bookmark" filled></m3e-icon>
+                </m3e-icon-button>
+              </m3e-app-bar>
+              <div class="scroll-item">Scroll down to hide, up to reveal</div>
+              <div class="scroll-item">Keep scrolling</div>
+            </div>
+          </div>
+        </m3e-card>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;div id=&quot;scrollContainer&quot;&gt;
+  &lt;m3e-app-bar for=&quot;scrollContainer&quot; scroll-behavior=&quot;hide&quot;&gt;
+    &lt;!-- Content omitted for brevity --&gt;
+  &lt;/m3e-app-bar&gt;
+  &lt;div class=&quot;scroll-item&quot;&gt;Scroll down to hide, up to reveal&lt;/div&gt;
+&lt;/div&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="4">Compress</m3e-heading>
+        <p>
+          When <code>scroll-behavior</code> is set to <code>compress</code>, medium and large app bars collapse to a
+          small app bar in step with the scroll position, instead of elevating. The title and subtitle slide and fade
+          out as the bar collapses, and back in as it expands. The container color and elevation blend toward their
+          on-scroll values as the bar collapses. The on-scroll elevation is flat by default, so only the color changes
+          unless you set <code>--m3e-app-bar-container-elevation-on-scroll</code>. Once scrolling goes idle
+          mid-collapse, the bar finishes the collapse in the direction of the last scroll, moving the scroll position
+          with it. Small app bars have nothing to collapse, so <code>compress</code> has no effect on them.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <div id="compressMediumContainer">
+              <m3e-app-bar for="compressMediumContainer" size="medium" scroll-behavior="compress">
+                <m3e-icon-button slot="leading" aria-label="Back">
+                  <m3e-icon name="arrow_back"></m3e-icon>
+                </m3e-icon-button>
+                <span slot="title">Top 10 hiking trails</span>
+                <span slot="subtitle">Discover popular trails</span>
+                <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal">
+                  <m3e-icon name="bookmark" filled></m3e-icon>
+                </m3e-icon-button>
+              </m3e-app-bar>
+              <div class="scroll-item">Scroll down to compress the medium app bar</div>
+            </div>
+          </div>
+        </m3e-card>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <div id="compressLargeContainer">
+              <m3e-app-bar for="compressLargeContainer" size="large" scroll-behavior="compress">
+                <m3e-icon-button slot="leading" aria-label="Back">
+                  <m3e-icon name="arrow_back"></m3e-icon>
+                </m3e-icon-button>
+                <span slot="title">Top 10 hiking trails</span>
+                <span slot="subtitle">Discover popular trails</span>
+                <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal">
+                  <m3e-icon name="bookmark" filled></m3e-icon>
+                </m3e-icon-button>
+              </m3e-app-bar>
+              <div class="scroll-item">Scroll down to compress the large app bar</div>
+            </div>
+          </div>
+        </m3e-card>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;div id=&quot;scrollContainer&quot;&gt;
+  &lt;m3e-app-bar for=&quot;scrollContainer&quot; size=&quot;large&quot; scroll-behavior=&quot;compress&quot;&gt;
+    &lt;!-- Content omitted for brevity --&gt;
+  &lt;/m3e-app-bar&gt;
+  &lt;div class=&quot;scroll-item&quot;&gt;Scroll down to compress the app bar&lt;/div&gt;
+&lt;/div&gt;</pre
           >
         </m3e-card>
 
@@ -308,7 +448,7 @@
         <m3e-heading variant="headline" size="small" level="3">m3e-app-bar</m3e-heading>
         <api-viewer only="m3e-app-bar"> </api-viewer>
       </m3e-content-pane>
-      <m3e-toc for="body">
+      <m3e-toc for="body" max-depth="4">
         <span slot="overline">On this page</span>
         <span slot="title">App Bar</span>
       </m3e-toc>

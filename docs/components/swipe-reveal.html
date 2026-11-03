@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Swipe Reveal for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Swipe Reveal for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="./swipe-reveal.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.11.0/dist/all.min.js"></script>
+    <script src="../main.js"></script>
+  </head>
+  <body>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Swipe Reveal</m3e-heading>
+        <p>
+          The <code>m3e-swipe-reveal</code> component reveals contextual actions behind content when swiped, and
+          optionally dismisses the item.
+        </p>
+
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">import "@m3e/web/swipe-reveal";</pre>
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+        <p>This section outlines usage examples and configuration guidance for the components in this module.</p>
+
+        <m3e-heading variant="headline" size="small" level="3">Basic usage</m3e-heading>
+        <p>
+          Use <code>m3e-swipe-reveal</code> to reveal contextual actions through a swipe gesture. Place the content to
+          be swiped in the default slot and actions in the <code>leading</code> and <code>trailing</code> slots. Actions
+          in the <code>leading</code> slot are revealed by swiping toward the trailing edge, while actions in the
+          <code>trailing</code> slot are revealed by swiping toward the leading edge.
+        </p>
+
+        <p>
+          Revealed actions can be hidden by tapping or dragging the content. As actions are revealed and hidden,
+          <code>revealing</code>, <code>revealed</code>, and <code>covered</code> events are emitted. Actions can also
+          be revealed and hidden programmatically using the <code>reveal()</code> and <code>close()</code> methods.
+        </p>
+        <p>
+          The following example illustrates use of <code>m3e-swipe-reveal</code> with items in a segmented
+          <code>m3e-list</code>. See <a href="../components/list.html">List</a> for more information.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-list variant="segmented">
+              <m3e-swipe-reveal>
+                <m3e-icon-button slot="leading" aria-label="Pin" variant="tonal">
+                  <m3e-icon name="keep" filled></m3e-icon>
+                </m3e-icon-button>
+                <m3e-list-item>Item 1</m3e-list-item>
+                <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal">
+                  <m3e-icon name="bookmark" filled></m3e-icon>
+                </m3e-icon-button>
+              </m3e-swipe-reveal>
+              <m3e-swipe-reveal>
+                <m3e-icon-button slot="leading" aria-label="Pin" variant="tonal">
+                  <m3e-icon name="keep" filled></m3e-icon>
+                </m3e-icon-button>
+                <m3e-list-item>Item 2</m3e-list-item>
+                <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal">
+                  <m3e-icon name="bookmark" filled></m3e-icon>
+                </m3e-icon-button>
+              </m3e-swipe-reveal>
+              <m3e-swipe-reveal>
+                <m3e-icon-button slot="leading" aria-label="Pin" variant="tonal">
+                  <m3e-icon name="keep" filled></m3e-icon>
+                </m3e-icon-button>
+                <m3e-list-item>Item 3</m3e-list-item>
+                <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal">
+                  <m3e-icon name="bookmark" filled></m3e-icon>
+                </m3e-icon-button>
+              </m3e-swipe-reveal>
+            </m3e-list>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-list variant=&quot;segmented&quot;&gt;
+  &lt;m3e-swipe-reveal&gt;
+    &lt;m3e-icon-button slot=&quot;leading&quot; aria-label=&quot;Pin&quot; variant=&quot;tonal&quot;&gt;
+      &lt;m3e-icon name=&quot;keep&quot; filled&gt;&lt;/m3e-icon&gt;
+    &lt;/m3e-icon-button&gt;
+    &lt;m3e-list-item&gt;Item 1&lt;/m3e-list-item&gt;
+    &lt;m3e-icon-button slot=&quot;trailing&quot; aria-label=&quot;Bookmark&quot; variant=&quot;tonal&quot;&gt;
+      &lt;m3e-icon name=&quot;bookmark&quot; filled&gt;&lt;/m3e-icon&gt;
+    &lt;/m3e-icon-button&gt;
+  &lt;/m3e-swipe-reveal&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-list&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Groups</m3e-heading>
+        <p>
+          Swipe reveals coordinate with sibling swipe reveals by default. Opening one swipe reveal automatically covers
+          other revealed sibling swipe reveals.
+        </p>
+        <p>
+          Use an <code>m3e-swipe-reveal-group</code> to define an explicit coordination scope and configure shared
+          behavior for multiple swipe reveals. Settings applied to the group are automatically propagated to nested
+          <code>m3e-swipe-reveal</code> instances, allowing common behavior to be configured once and applied
+          consistently throughout the group.
+        </p>
+
+        <m3e-heading variant="headline" size="small" level="3">Triggers</m3e-heading>
+        <p>
+          By default, actions are revealed by swiping. Use the <code>triggers</code> attribute to specify a
+          space-separated list of interactions: <code>swipe</code>, <code>tap</code>, <code>double-tap</code>, and
+          <code>long-press</code>. Non-swipe triggers reveal actions in the <code>leading</code> slot when present;
+          otherwise, they reveal actions in the <code>trailing</code> slot. Swipe gestures reveal actions on the side
+          indicated by the swipe direction.
+        </p>
+        <p>
+          The following illustrates triggering reveals for <code>swipe</code> and <code>long-press</code>. A
+          <code>m3e-swipe-reveal-group</code> is used to simply configuration.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-swipe-reveal-group triggers="swipe long-press">
+              <m3e-list variant="segmented">
+                <m3e-swipe-reveal>
+                  <m3e-list-item>Item 1</m3e-list-item>
+                  <m3e-icon-button slot="trailing" aria-label="Share" variant="tonal">
+                    <m3e-icon name="share" filled></m3e-icon>
+                  </m3e-icon-button>
+                </m3e-swipe-reveal>
+                <m3e-swipe-reveal>
+                  <m3e-list-item>Item 2</m3e-list-item>
+                  <m3e-icon-button slot="trailing" aria-label="Share" variant="tonal">
+                    <m3e-icon name="share" filled></m3e-icon>
+                  </m3e-icon-button>
+                </m3e-swipe-reveal>
+              </m3e-list>
+            </m3e-swipe-reveal-group>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-swipe-reveal-group triggers=&quot;swipe long-press&quot;&gt;
+  &lt;m3e-list variant=&quot;segmented&quot;&gt;
+    &lt;m3e-swipe-reveal&gt;
+      &lt;m3e-list-item&gt;Item 1&lt;/m3e-list-item&gt;
+      &lt;m3e-icon-button slot=&quot;trailing&quot; aria-label=&quot;Share&quot; variant=&quot;tonal&quot;&gt;
+        &lt;m3e-icon name=&quot;share&quot; filled&gt;&lt;/m3e-icon&gt;
+      &lt;/m3e-icon-button&gt;
+    &lt;/m3e-swipe-reveal&gt;
+    &lt;!-- Additional items omitted for brevity --&gt;
+  &lt;/m3e-list&gt;
+&lt;/m3e-swipe-reveal-group&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Thresholds and overshoot</m3e-heading>
+        <p>
+          Use the <code>threshold</code> attribute to control how far content must be dragged, as a fraction (
+          <code>0</code> to <code>1</code>) of the revealed actions' width, before the actions remain revealed when
+          released. The default value is <code>0.5</code>. The same threshold is used in reverse when covering revealed
+          actions.
+        </p>
+        <p>
+          Use the <code>overshoot</code> attribute to control the maximum distance, in pixels, that content can be
+          dragged beyond fully revealing its actions. Actions expand with the overshoot. The default value is
+          <code>8</code>; set it to <code>0</code> to disable overshoot.
+        </p>
+
+        <m3e-heading variant="headline" size="small" level="3">Stagger</m3e-heading>
+        <p>
+          Use the <code>stagger</code> attribute (0 to 1) to make neighboring items follow a dragged item. The value is
+          a fraction of the dragged item's current offset, not a fixed distance, so the effect scales with the drag. A
+          value of <code>0</code> (default) disables staggering, and a small value such as <code>0.05</code> gives a
+          subtle effect.
+        </p>
+        <p>
+          Use the <code>stagger-count</code> attribute to control the maximum number of sibling items, on each side,
+          that participate in staggering. The default value is <code>3</code>.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-swipe-reveal-group stagger="0.05">
+              <m3e-list variant="segmented">
+                <m3e-swipe-reveal>
+                  <m3e-list-item>Item 1</m3e-list-item>
+                  <m3e-icon-button slot="trailing" aria-label="Archive" variant="tonal">
+                    <m3e-icon name="archive" filled></m3e-icon>
+                  </m3e-icon-button>
+                </m3e-swipe-reveal>
+                <m3e-swipe-reveal>
+                  <m3e-list-item>Item 2</m3e-list-item>
+                  <m3e-icon-button slot="trailing" aria-label="Archive" variant="tonal">
+                    <m3e-icon name="archive" filled></m3e-icon>
+                  </m3e-icon-button>
+                </m3e-swipe-reveal>
+                <m3e-swipe-reveal>
+                  <m3e-list-item>Item 3</m3e-list-item>
+                  <m3e-icon-button slot="trailing" aria-label="Archive" variant="tonal">
+                    <m3e-icon name="archive" filled></m3e-icon>
+                  </m3e-icon-button>
+                </m3e-swipe-reveal>
+              </m3e-list>
+            </m3e-swipe-reveal-group>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-swipe-reveal-group stagger=&quot;0.05&quot;&gt;
+  &lt;m3e-list variant=&quot;segmented&quot;&gt;
+    &lt;m3e-swipe-reveal&gt;
+      &lt;m3e-list-item&gt;Item 1&lt;/m3e-list-item&gt;
+      &lt;m3e-icon-button slot=&quot;trailing&quot; aria-label=&quot;Archive&quot; variant=&quot;tonal&quot;&gt;
+        &lt;m3e-icon name=&quot;archive&quot; filled&gt;&lt;/m3e-icon&gt;
+      &lt;/m3e-icon-button&gt;
+    &lt;/m3e-swipe-reveal&gt;
+    &lt;!-- Additional items omitted for brevity --&gt;
+  &lt;/m3e-list&gt;
+&lt;/m3e-swipe-reveal-group&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Dismissible</m3e-heading>
+        <p>
+          Use the <code>dismissible</code> attribute to allow an item to be dismissed by continuing a swipe past its
+          actions. Valid values are <code>leading</code>, <code>trailing</code>, <code>both</code> and
+          <code>none</code> (default). The outermost action serves as the dismiss action. Listen for the
+          <code>dismiss</code> event, which is cancelable, and the <code>dismissed</code> event to respond.
+        </p>
+        <p>
+          Use the <code>dismiss-threshold</code> attribute to control the fraction of an item's width, from
+          <code>0</code> to <code>1</code>, that must be dragged before the item is dismissed when released.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-swipe-reveal-group dismissible="trailing">
+              <m3e-list variant="segmented">
+                <m3e-swipe-reveal>
+                  <m3e-list-item>Item 1</m3e-list-item>
+                  <m3e-icon-button slot="trailing" aria-label="Delete" variant="tonal">
+                    <m3e-icon name="delete" filled></m3e-icon>
+                  </m3e-icon-button>
+                </m3e-swipe-reveal>
+                <m3e-swipe-reveal>
+                  <m3e-list-item>Item 2</m3e-list-item>
+                  <m3e-icon-button slot="trailing" aria-label="Delete" variant="tonal">
+                    <m3e-icon name="delete" filled></m3e-icon>
+                  </m3e-icon-button>
+                </m3e-swipe-reveal>
+                <m3e-swipe-reveal>
+                  <m3e-list-item>Item 3</m3e-list-item>
+                  <m3e-icon-button slot="trailing" aria-label="Delete" variant="tonal">
+                    <m3e-icon name="delete" filled></m3e-icon>
+                  </m3e-icon-button>
+                </m3e-swipe-reveal>
+              </m3e-list>
+            </m3e-swipe-reveal-group>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-swipe-reveal-group dismissible=&quot;trailing&quot;&gt;
+  &lt;m3e-list variant=&quot;segmented&quot;&gt;
+    &lt;m3e-swipe-reveal&gt;
+      &lt;m3e-list-item&gt;Item 1&lt;/m3e-list-item&gt;
+      &lt;m3e-icon-button slot=&quot;trailing&quot; aria-label=&quot;Delete&quot; variant=&quot;tonal&quot;&gt;
+        &lt;m3e-icon name=&quot;delete&quot; filled&gt;&lt;/m3e-icon&gt;
+      &lt;/m3e-icon-button&gt;
+    &lt;/m3e-swipe-reveal&gt;
+    &lt;!-- Additional items omitted for brevity --&gt;
+  &lt;/m3e-list&gt;
+&lt;/m3e-swipe-reveal-group&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Elastic</m3e-heading>
+        <p>
+          By default, actions on both sides are elastic: they compress as they are revealed and expand as additional
+          space becomes available. If content is dragged beyond fully revealing its actions, both the actions and their
+          container continue expanding to occupy the overshoot. Set <code>elastic</code> to <code>leading</code>,
+          <code>trailing</code>, <code>both</code> (default), or <code>none</code> to control which sides behave this
+          way.
+        </p>
+        <p>
+          The card example below disables elasticity with <code>elastic="none"</code>. This allows the revealed action
+          to behave like a fixed panel behind the card rather than stretching and resizing during interaction.
+        </p>
+
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-swipe-reveal class="card-reveal" elastic="none">
+              <m3e-icon-button slot="leading" aria-label="Favorite" toggle variant="filled">
+                <m3e-icon name="favorite"></m3e-icon>
+              </m3e-icon-button>
+              <m3e-card>
+                <m3e-heading slot="header" variant="display" size="small">Card Header</m3e-heading>
+                <div slot="content">Card Content</div>
+                <div slot="footer">Card Footer</div>
+              </m3e-card>
+            </m3e-swipe-reveal>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-swipe-reveal class=&quot;card-reveal&quot; elastic=&quot;none&quot;&gt;
+  &lt;m3e-icon-button slot=&quot;leading&quot; aria-label=&quot;Favorite&quot; toggle variant=&quot;filled&quot;&gt;
+    &lt;m3e-icon name=&quot;favorite&quot;&gt;&lt;/m3e-icon&gt;
+  &lt;/m3e-icon-button&gt;
+  &lt;m3e-card&gt;…&lt;/m3e-card&gt;
+&lt;/m3e-swipe-reveal&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.card-reveal {
+  --m3e-swipe-reveal-actions-padding: 0px;
+  --m3e-swipe-reveal-actions-underlap: var(--md-sys-shape-corner-value-medium);
+  --m3e-icon-button-container-height: 100%;
+  --m3e-icon-button-start-start-shape: var(--md-sys-shape-corner-value-medium);
+  --m3e-icon-button-end-start-shape: var(--md-sys-shape-corner-value-medium);
+  --m3e-icon-button-start-end-shape: 0px;
+  --m3e-icon-button-end-end-shape: 0px;
+}
+.card-reveal m3e-icon-button[slot=&quot;leading&quot;] {
+  width: 64px;
+}
+.card-reveal m3e-icon-button[slot=&quot;leading&quot;] m3e-icon {
+  position: absolute;
+  top: 16px;
+  margin-inline-start: -8px;
+}</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+        <p>
+          The <code>m3e-swipe-reveal</code> and <code>m3e-swipe-reveal-group</code> elements have the ARIA role
+          <code>none</code>, so they are purely presentational and add no semantics of their own. This allows them to
+          wrap items of a list, such as <code>m3e-list-item</code>, without breaking the relationship between the list
+          and its items in the accessibility tree.
+        </p>
+        <m3e-callout>
+          Do not make swiping the only way to access an action. Provide an equivalent keyboard-operable way to reveal or
+          invoke each action, and make sure controls are reachable in a logical focus order.
+        </m3e-callout>
+
+        <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package uses
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+            target="_blank"
+            >JavaScript Modules</a
+          >. To use it directly in a browser without a bundler, use a module script similar to the following.
+        </p>
+
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/swipe-reveal.js&quot;&gt;&lt;/script&gt;</pre
+          >
+        </m3e-card>
+        <p>
+          In addition, you must use an
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+            target="_blank"
+            >import map</a
+          >
+          to include dependencies.
+        </p>
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;tslib&quot;: &quot;https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm&quot;,
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;lit/&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/&quot;,
+      &quot;lit-html&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/+esm&quot;,
+      &quot;lit-html/directive.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directive.js&quot;,
+      &quot;lit-html/directives/if-defined.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/if-defined.js&quot;,
+      &quot;lit-html/directives/class-map.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js&quot;,
+      &quot;@lit/reactive-element&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm&quot;,
+      &quot;@lit/reactive-element/&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/&quot;,
+      &quot;@m3e/web/core&quot;: &quot;/node_modules/@m3e/web/dist/core.js&quot;,
+      &quot;@m3e/web/core/bidi&quot;: &quot;/node_modules/@m3e/web/dist/core-bidi.js&quot;,
+      &quot;@m3e/web/gestures&quot;: &quot;/node_modules/@m3e/web/dist/gestures.js&quot;,
+      &quot;@m3e/web/gestures/swipe&quot;: &quot;/node_modules/@m3e/web/dist/gestures-swipe.js&quot;,
+      &quot;@m3e/web/gestures/tap&quot;: &quot;/node_modules/@m3e/web/dist/gestures-tap.js&quot;,
+      &quot;@m3e/web/gestures/repeat&quot;: &quot;/node_modules/@m3e/web/dist/gestures-repeat.js&quot;,
+      &quot;@m3e/web/gestures/long-press&quot;: &quot;/node_modules/@m3e/web/dist/gestures-long-press.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+          >
+        </m3e-card>
+        <p>For production builds, use the minified files to ensure optimal load performance.</p>
+
+        <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package includes a
+          <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank"
+            >Custom Elements Manifest</a
+          >
+          (<code>custom-elements.json</code>), which documents the properties, attributes, slots, events and CSS custom
+          properties of each component.
+        </p>
+        <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+        <m3e-heading variant="headline" size="small" level="3">m3e-swipe-reveal</m3e-heading>
+        <api-viewer only="m3e-swipe-reveal"></api-viewer>
+        <m3e-heading variant="headline" size="small" level="3">m3e-swipe-reveal-group</m3e-heading>
+        <api-viewer only="m3e-swipe-reveal-group"></api-viewer>
+      </m3e-content-pane>
+
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Swipe Reveal</span>
+      </m3e-toc>
+    </div>
+  </body>
+</html>

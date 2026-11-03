@@ -1,8 +1,16 @@
-#scrollContainer {
+#scrollContainer,
+#transparentContainer,
+#hideContainer,
+#compressMediumContainer,
+#compressLargeContainer {
   overflow-y: auto;
   height: 300px;
 }
-m3e-app-bar[for="scrollContainer"] {
+m3e-app-bar[for="scrollContainer"],
+m3e-app-bar[for="transparentContainer"],
+m3e-app-bar[for="hideContainer"],
+m3e-app-bar[for="compressMediumContainer"],
+m3e-app-bar[for="compressLargeContainer"] {
   position: sticky;
   top: 0;
 }

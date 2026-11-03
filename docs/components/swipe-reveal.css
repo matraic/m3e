@@ -1,0 +1,18 @@
+.card-reveal {
+  --m3e-swipe-reveal-actions-padding: 0px;
+  --m3e-icon-button-container-height: 100%;
+  --m3e-icon-button-start-start-shape: var(--md-sys-shape-corner-value-medium);
+  --m3e-icon-button-end-start-shape: var(--md-sys-shape-corner-value-medium);
+  --m3e-icon-button-start-end-shape: 0px;
+  --m3e-icon-button-end-end-shape: 0px;
+  --m3e-swipe-reveal-actions-padding: 0px;
+  --m3e-swipe-reveal-actions-underlap: var(--md-sys-shape-corner-value-medium);
+}
+.card-reveal m3e-icon-button[slot="leading"] {
+  width: 64px;
+}
+.card-reveal m3e-icon-button[slot="leading"] m3e-icon {
+  position: absolute;
+  top: 16px;
+  margin-inline-start: -8px;
+}
