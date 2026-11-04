@@ -96,7 +96,7 @@ export class M3eSwipeRevealGroupElement extends Role(LitElement, "none") {
 
   /**
    * The fraction (0 to 1) of the item's width it must be dragged to dismiss it on release.
-   * @default 0.6
+   * @default 0.5
    */
   @property({ type: Number, attribute: "dismiss-threshold" })
   dismissThreshold: number = SwipeRevealDefaults.dismissThreshold;

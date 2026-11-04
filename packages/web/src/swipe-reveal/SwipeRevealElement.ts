@@ -36,6 +36,10 @@ import { SwipeRevealDismiss } from "./SwipeRevealDismiss";
 import { SwipeRevealElastic } from "./SwipeRevealElastic";
 import { SwipeRevealEventDetail } from "./SwipeRevealEventDetail";
 
+const SHAPE_GROWTH = "--m3e-swipe-reveal-shape-growth";
+const SNAP_DURATION = 150; // ms, matching the fast effects motion token
+const SNAP_ZONE = 0.1; // fraction of the content's width before the dismiss threshold at which the content snaps onto it
+
 type StaggerItem = {
   el: HTMLElement;
   distance: number;
@@ -125,6 +129,7 @@ const PROMOTED_STYLES = [
  * @cssprop --m3e-swipe-reveal-trailing-actions-gap - The gap between adjacent trailing actions.
  * @cssprop --m3e-swipe-reveal-trailing-actions-container-color - The background color of the trailing actions.
  * @cssprop --m3e-swipe-reveal-trailing-actions-container-shape - The corner shape of the trailing actions.
+ * @cssprop --m3e-swipe-reveal-shape-growth - Set while dragging on the active item and any staggered siblings, indicates the amount by which content may increase its border radius.
  */
 @customElement("m3e-swipe-reveal")
 export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternals(Role(LitElement, "none"))) {
@@ -223,6 +228,12 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   /** @private */ #elastic?: SwipeRevealElastic;
   /** @private */ #dismissThreshold?: number;
   /** @private */ #armed = false;
+  /** @private */ #released = false;
+  /** @private */ #snapOffset = 0;
+  /** @private */ #snapStart = 0;
+  /** @private */ #snapFrame = 0;
+  /** @private */ #shown = 0;
+  /** @private */ #reached = false;
   /** @private */ #outermost = new Map<SwipeRevealSide, { el: HTMLElement; width: number }>();
 
   /** @private */ #squished = new Set<HTMLElement>();
@@ -336,7 +347,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
 
   /**
    * The fraction (0 to 1) of the item's width it must be dragged to dismiss it on release.
-   * @default 0.6
+   * @default 0.5
    */
   @property({ type: Number, attribute: "dismiss-threshold" })
   get dismissThreshold(): number {
@@ -708,6 +719,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     switch (e.detail.phase) {
       case "start":
         this.#cancelSettle?.();
+        this.#released = false;
         this.#setDragging(false);
         // Resume from wherever the content visually is, including mid-transition.
         this.#base = this.#x = new DOMMatrixReadOnly(getComputedStyle(content).transform).m41;
@@ -715,6 +727,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
 
       case "update":
         {
+          const wasArmed = this.#armed;
           // Computed in logical space (positive reveals leading), then mapped back to physical.
           const raw = (this.#base + e.detail.translationX) * this.#dir;
           const x =
@@ -728,11 +741,15 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
                 : 0);
           this.#x = x;
 
+          const logicalX = x * this.#dir;
+          if (logicalX === 0 || !this.#canDismiss(logicalX > 0 ? "leading" : "trailing")) this.#setArmed(false);
+
           const begin = !this.#dragging;
           let displaced = 0;
 
           if (begin) {
             this.#setDragging(true);
+            this.#snapOffset = 0;
             // Must precede measuring: the other item's stagger may have promoted this element.
             displaced = this.#closeSiblings();
           }
@@ -746,6 +763,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
             void content.offsetWidth; // force reflow
           }
 
+          // The content's transform is not eased by CSS, so it stays in lockstep with the actions, whose growth tracks it.
           content.style.transition = `translate ${DesignToken.motion.spring.fastSpatial}`;
           content.style.translate = "0px";
 
@@ -753,21 +771,21 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
             this.#setState("revealing", x * this.#dir > 0 ? "leading" : "trailing");
             this.#lockActions();
             this.#beginStagger();
+          } else if (wasArmed !== this.#armed) {
+            // Ease the snap by animating the jump away, so content and actions animate together.
+            this.#snapOffset = this.#shown - x;
+            this.#snapStart = performance.now();
+            this.#animateSnap();
           }
 
-          content.style.transform = `translateX(${x}px)`;
-          this.#setProgress(x, false);
-          this.#applyStagger(x);
-
-          const logical = x * this.#dir;
-          const dragSide: SwipeRevealSide | null = logical > 0 ? "leading" : logical < 0 ? "trailing" : null;
-          this.#setArmed(!!dragSide && this.#canDismiss(dragSide) && Math.abs(x) >= this.#dismissAt(dragSide));
+          this.#renderDrag();
         }
         break;
 
       default: {
         if (!this.#dragging) break;
 
+        this.#stopSnap();
         this.#setDragging(false);
 
         // A swipe that is too slow to be recognized is cancelled, so position decides in that case.
@@ -791,7 +809,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
             const progress = Math.abs(x) / ((side === "leading" ? leadingWidth : trailingWidth) || Infinity);
             const threshold = this.#side === side ? 1 - this.threshold : this.threshold;
             target = progress >= threshold ? side : null;
-            dismiss = this.#canDismiss(side) && Math.abs(x) >= this.#dismissAt(side);
+            dismiss = this.#canDismiss(side) && this.#armed;
           }
         }
 
@@ -817,10 +835,36 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
 
   /** @private */
   #drag(distance: number, side: SwipeRevealSide, actionWidth: number): number {
-    // A dismissible side moves freely up to the full width, while others resist past the actions' width.
-    return this.#canDismiss(side)
-      ? Math.min(distance, this._content?.offsetWidth ?? distance)
-      : this.#rubberBand(distance, actionWidth);
+    if (!this.#canDismiss(side)) {
+      return this.#rubberBand(distance, actionWidth);
+    }
+
+    // The snap zone [zone, at) lies before the threshold. Entering it from below snaps the content to the threshold.
+    // Once the pointer has reached the threshold, the snap holds until it crosses back below it, and the content
+    // then snaps back to the zone's edge. If the pointer never reached the threshold, the snap holds until the
+    // pointer retreats below the zone's entry. It cannot re-snap until the pointer leaves the zone below.
+    const at = this.#dismissAt(side);
+    const zone = at - SNAP_ZONE * (this._content?.offsetWidth ?? 0);
+
+    if (distance < zone) this.#released = false;
+
+    if (this.#armed) {
+      this.#reached ||= distance >= at;
+      if (distance < (this.#reached ? at : zone)) {
+        this.#setArmed(false);
+        this.#released = true;
+      }
+    } else if (distance >= at || (!this.#released && distance >= zone)) {
+      this.#setArmed(true);
+      this.#released = false;
+      this.#reached = distance >= at;
+    }
+
+    let visual = distance;
+    if (this.#armed) visual = Math.max(at, distance);
+    else if (this.#released) visual = Math.min(distance, zone);
+
+    return Math.min(visual, this._content?.offsetWidth ?? visual);
   }
 
   /** @private */
@@ -1241,6 +1285,9 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   #setProgress(x: number, animate: boolean): void {
     // Drive the actions' fade, clip and scale from how far the content has uncovered them.
     const motion = animate ? `${DesignToken.motion.spring.fastSpatial}` : "0s";
+    // Shape growth only applies while dragging.
+    if (animate || !this.#dragging) this.style.removeProperty(SHAPE_GROWTH);
+    else this.style.setProperty(SHAPE_GROWTH, this.#shapeGrowth(this.#progressOf(x)));
 
     for (const [name, sign] of [
       ["leading", 1],
@@ -1277,10 +1324,72 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   }
 
   /** @private */
-  #applyStagger(x: number): void {
+  #progressOf(x: number): number {
+    // Growth reaches its maximum at half the item's width, or at the dismiss threshold when dismissible.
+    const side: SwipeRevealSide = x * this.#dir > 0 ? "leading" : "trailing";
+    const reach = this.#canDismiss(side) ? this.#dismissAt(side) : (this._content?.offsetWidth ?? 0) * 0.5;
+    return Math.min(1, Math.abs(x) / (reach || Infinity));
+  }
+
+  /** @private */
+  #shapeGrowth(progress: number): string {
+    return `calc(${DesignToken.shape.corner.value.large} * ${progress})`;
+  }
+
+  /** @private */
+  #renderDrag(): void {
+    const content = this._content;
+    if (!content) return;
+
+    const t = Math.min(1, (performance.now() - this.#snapStart) / SNAP_DURATION);
+    const x = this.#x + this.#snapOffset * Math.pow(1 - t, 3);
+    this.#shown = x;
+
+    content.style.transform = `translateX(${x}px)`;
+    this.#setProgress(x, false);
+    // Stagger is removed while armed for dismissal and restored when the drag leaves the threshold.
+    this.#applyStagger(this.#armed ? 0 : x, this.#armed || this.#inSnapZone(x));
+  }
+
+  /** @private */
+  #animateSnap(): void {
+    cancelAnimationFrame(this.#snapFrame);
+
+    const step = () => {
+      this.#renderDrag();
+      if (performance.now() - this.#snapStart < SNAP_DURATION) {
+        this.#snapFrame = requestAnimationFrame(step);
+      } else {
+        this.#snapOffset = 0;
+      }
+    };
+
+    this.#snapFrame = requestAnimationFrame(step);
+  }
+
+  /** @private */
+  #stopSnap(): void {
+    cancelAnimationFrame(this.#snapFrame);
+    this.#snapOffset = 0;
+  }
+
+  /** @private */
+  #inSnapZone(x: number): boolean {
+    const side: SwipeRevealSide = x * this.#dir > 0 ? "leading" : "trailing";
+    return (
+      x !== 0 &&
+      this.#canDismiss(side) &&
+      Math.abs(x) > this.#dismissAt(side) - SNAP_ZONE * 1.5 * (this._content?.offsetWidth ?? 0)
+    );
+  }
+
+  /** @private */
+  #applyStagger(x: number, animate = false): void {
     for (const { el, distance, spacer } of this.#staggered) {
       const offset = this.#staggerOffset(x, distance);
+      el.style.setProperty(SHAPE_GROWTH, this.#shapeGrowth(this.#staggerOffset(this.#progressOf(x), distance)));
       if (spacer) {
+        el.style.transition = animate ? `transform ${DesignToken.motion.spring.fastEffects}` : "none";
         el.style.transform = `translateX(${offset}px)`;
       } else {
         (el as M3eSwipeRevealElement).#nudge(offset, true);
@@ -1298,6 +1407,9 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     // Spring staggered siblings back to rest and releases them (only lasts while dragging).
     const staggered = this.#staggered;
     if (staggered.length === 0) return;
+
+    // Growth ends with the drag, so corners relax as siblings spring back.
+    for (const { el } of staggered) el.style.removeProperty(SHAPE_GROWTH);
 
     let timer = 0;
 

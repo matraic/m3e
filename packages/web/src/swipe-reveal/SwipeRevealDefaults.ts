@@ -9,6 +9,6 @@ export const SwipeRevealDefaults = {
   overshoot: 8,
   triggers: ["swipe"],
   dismissible: "none" as SwipeRevealDismiss,
-  dismissThreshold: 0.6,
+  dismissThreshold: 0.5,
   elastic: "both" as SwipeRevealElastic,
 } as const;

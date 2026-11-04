@@ -112,21 +112,30 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       column-gap: var(--m3e-list-item-between-space, ${DesignToken.measurement.space200});
       padding-inline-start: var(--m3e-list-item-leading-space, ${DesignToken.measurement.space200});
       padding-inline-end: var(--m3e-list-item-trailing-space, ${DesignToken.measurement.space200});
-      border-top-left-radius: var(
+      --_shape-top: var(
         --_list-item-top-container-shape,
         var(--m3e-list-item-container-shape, ${DesignToken.shape.corner.none})
       );
-      border-top-right-radius: var(
-        --_list-item-top-container-shape,
-        var(--m3e-list-item-container-shape, ${DesignToken.shape.corner.none})
-      );
-      border-bottom-left-radius: var(
+      --_shape-bottom: var(
         --_list-item-bottom-container-shape,
         var(--m3e-list-item-container-shape, ${DesignToken.shape.corner.none})
       );
-      border-bottom-right-radius: var(
-        --_list-item-bottom-container-shape,
-        var(--m3e-list-item-container-shape, ${DesignToken.shape.corner.none})
+      --_growth: var(--m3e-swipe-reveal-shape-growth, 0px);
+      border-top-left-radius: min(
+        max(var(--_shape-top), calc(var(--_shape-top) + var(--_growth))),
+        max(var(--_shape-top), ${DesignToken.shape.corner.large})
+      );
+      border-top-right-radius: min(
+        max(var(--_shape-top), calc(var(--_shape-top) + var(--_growth))),
+        max(var(--_shape-top), ${DesignToken.shape.corner.large})
+      );
+      border-bottom-left-radius: min(
+        max(var(--_shape-bottom), calc(var(--_shape-bottom) + var(--_growth))),
+        max(var(--_shape-bottom), ${DesignToken.shape.corner.large})
+      );
+      border-bottom-right-radius: min(
+        max(var(--_shape-bottom), calc(var(--_shape-bottom) + var(--_growth))),
+        max(var(--_shape-bottom), ${DesignToken.shape.corner.large})
       );
       transition: ${unsafeCSS(
         `border-radius ${DesignToken.motion.spring.fastEffects}, background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
@@ -160,38 +169,22 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       align-items: flex-start;
     }
     :host(:not(:disabled):not([selected])) .base:not(.hover).focus-visible:not(.pressed) {
-      border-top-left-radius: var(
+      --_shape-top: var(
         --_list-item-top-container-shape,
         var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
       );
-      border-top-right-radius: var(
-        --_list-item-top-container-shape,
-        var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
-      );
-      border-bottom-left-radius: var(
-        --_list-item-bottom-container-shape,
-        var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
-      );
-      border-bottom-right-radius: var(
+      --_shape-bottom: var(
         --_list-item-bottom-container-shape,
         var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
       );
     }
     :host(:not(:disabled):not([selected])) .base.hover,
     :host(:not(:disabled):not([selected])) .base.pressed {
-      border-top-left-radius: var(
+      --_shape-top: var(
         --_list-item-top-container-shape,
         var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.medium})
       );
-      border-top-right-radius: var(
-        --_list-item-top-container-shape,
-        var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.medium})
-      );
-      border-bottom-left-radius: var(
-        --_list-item-bottom-container-shape,
-        var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.medium})
-      );
-      border-bottom-right-radius: var(
+      --_shape-bottom: var(
         --_list-item-bottom-container-shape,
         var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.medium})
       );
