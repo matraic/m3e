@@ -34,7 +34,8 @@ export class PanGestureRecognizer extends GestureRecognizerBase<PanGestureOption
 
   /** @inheritdoc */
   override shouldCapturePointer(input: PointerInput): boolean {
-    return this.#state.has(input.inputId);
+    // Capturing before the pan starts would retarget the click of a simple tap away from its element.
+    return this.#started && this.#state.has(input.inputId);
   }
 
   /** @inheritdoc */

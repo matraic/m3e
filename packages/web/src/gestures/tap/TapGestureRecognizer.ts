@@ -21,11 +21,6 @@ export class TapGestureRecognizer extends GestureRecognizerBase<TapGestureOption
   }
 
   /** @inheritdoc */
-  override shouldCapturePointer(input: PointerInput): boolean {
-    return this.#state.has(input.inputId);
-  }
-
-  /** @inheritdoc */
   override _onPointerDown(input: PointerInput): void {
     // Reject duplicate input or too many pointers.
     if (this.#state.has(input.inputId) || this.#state.size >= this.options.pointers) {

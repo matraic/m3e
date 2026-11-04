@@ -462,6 +462,99 @@ test.describe("gesture elements", () => {
   });
 });
 
+test.describe("gesture pointer capture", () => {
+  const markup = (gesture: string) => `
+    <div id="target" style="width: 200px; height: 100px">
+      <button id="child" style="width: 100px; height: 50px">Child</button>
+    </div>
+    ${gesture}
+  `;
+
+  const spy = (page: import("@playwright/test").Page) =>
+    page.evaluate(() => {
+      const w = window as typeof window & { captures: number; clicks: string[] };
+      w.captures = 0;
+      w.clicks = [];
+      const original = HTMLElement.prototype.setPointerCapture;
+      HTMLElement.prototype.setPointerCapture = function (id: number) {
+        w.captures++;
+        return original.call(this, id);
+      };
+      document.addEventListener("click", (e) => w.clicks.push((e.composedPath()[0] as Element).id), true);
+    });
+
+  const result = (page: import("@playwright/test").Page) =>
+    page.evaluate(() => {
+      const w = window as typeof window & { captures: number; clicks: string[] };
+      return { captures: w.captures, clicks: w.clicks };
+    });
+
+  const center = async (page: import("@playwright/test").Page) => {
+    const box = (await page.locator("#child").boundingBox())!;
+    return { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+  };
+
+  test("a tap does not capture the pointer and the click reaches the child", async ({ page, render }) => {
+    await render(markup('<m3e-tap-gesture for="target"></m3e-tap-gesture>'));
+    await spy(page);
+
+    await page.locator("#child").click();
+
+    expect(await result(page)).toEqual({ captures: 0, clicks: ["child"] });
+  });
+
+  test("a press shorter than the long press duration does not capture the pointer", async ({ page, render }) => {
+    await render(markup('<m3e-long-press-gesture for="target" min-duration="500"></m3e-long-press-gesture>'));
+    await spy(page);
+
+    await page.locator("#child").click();
+
+    expect(await result(page)).toEqual({ captures: 0, clicks: ["child"] });
+  });
+
+  test("a discrete long press captures the pointer once the duration has elapsed", async ({ page, render }) => {
+    await render(markup('<m3e-long-press-gesture for="target" min-duration="100" discrete></m3e-long-press-gesture>'));
+    await spy(page);
+    const { x, y } = await center(page);
+
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.waitForTimeout(200);
+    await page.mouse.move(x + 1, y);
+    await page.mouse.up();
+
+    expect((await result(page)).captures).toBeGreaterThan(0);
+  });
+
+  test("a click does not capture the pointer for a pan or swipe", async ({ page, render }) => {
+    await render(
+      markup(`
+        <m3e-pan-gesture for="target"></m3e-pan-gesture>
+        <m3e-swipe-gesture for="target" directions="left right"></m3e-swipe-gesture>
+      `),
+    );
+    await spy(page);
+
+    await page.locator("#child").click();
+
+    expect(await result(page)).toEqual({ captures: 0, clicks: ["child"] });
+  });
+
+  test("a pan captures the pointer once it has started", async ({ page, render }) => {
+    await render(markup('<m3e-pan-gesture for="target"></m3e-pan-gesture>'));
+    await spy(page);
+    const { x, y } = await center(page);
+
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.mouse.move(x + 60, y, { steps: 6 });
+    const captured = (await result(page)).captures;
+    await page.mouse.up();
+
+    expect(captured).toBeGreaterThan(0);
+  });
+});
+
 test.describe("gesture resolver", () => {
   test.beforeEach(async ({ page }) => {
     await disablePointerCapture(page);

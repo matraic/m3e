@@ -28,7 +28,8 @@ export class LongPressGestureRecognizer extends GestureRecognizerBase<LongPressG
 
   /** @inheritdoc */
   override shouldCapturePointer(input: PointerInput): boolean {
-    return this.#state.has(input.inputId);
+    // Capturing before the hold duration elapses would retarget the click of a simple tap.
+    return this.#timeout === undefined && this.#state.has(input.inputId);
   }
 
   /** @inheritdoc */
