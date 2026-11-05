@@ -107,6 +107,10 @@ export class GestureBinding {
         return;
       }
 
+      // Touch input is implicitly captured by the touched descendant. Capturing the pointer on this element
+      // mid-gesture hands that capture over, which reports a loss on the old target; it is a transfer, not a cancel.
+      if (this.element.hasPointerCapture(input.inputId)) return;
+
       // Convert lostpointercapture to a pointercancel to inform recognizers they should cancel gestures.
       input = { ...input, kind: "pointercancel" };
     }
