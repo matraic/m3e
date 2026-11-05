@@ -172,7 +172,7 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
     :host([open]) .items {
       --_list-item-container-color: var(
         --m3e-expandable-list-item-expanded-container-color,
-        var(--m3e-list-item-container-color, ${DesignToken.color.surface})
+        var(--m3e-list-item-container-color, transparent)
       );
     }
     .base {
