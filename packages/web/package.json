@@ -76,6 +76,9 @@
   ],
   "type": "module",
   "exports": {
+    "./custom-elements.json": "./dist/custom-elements.json",
+    "./css-custom-data.json": "./dist/css-custom-data.json",
+    "./html-custom-data.json": "./dist/html-custom-data.json",
     "./core": {
       "types": "./dist/src/core/index.d.ts",
       "default": "./dist/core.js"
