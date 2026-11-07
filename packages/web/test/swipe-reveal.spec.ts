@@ -80,6 +80,28 @@ test.describe("m3e-swipe-reveal", () => {
     expect(await side(page, "a")).toBeNull();
   });
 
+  test("suppresses the content tap highlight without disabling selection or focus", async ({ page, render }) => {
+    await render(`<m3e-swipe-reveal id="a">
+      <button slot="leading">Action</button>
+      <a href="#target">Selectable content</a>
+    </m3e-swipe-reveal>`);
+
+    const styles = await page.locator("#a").evaluate((el) => {
+      const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+      const link = el.querySelector("a")!;
+      return {
+        contentHighlight: getComputedStyle(content).getPropertyValue("-webkit-tap-highlight-color"),
+        linkHighlight: getComputedStyle(link).getPropertyValue("-webkit-tap-highlight-color"),
+        selection: getComputedStyle(link).userSelect,
+      };
+    });
+    expect(styles.contentHighlight).toBe("rgba(0, 0, 0, 0)");
+    expect(styles.linkHighlight).toBe("rgba(0, 0, 0, 0)");
+    expect(styles.selection).not.toBe("none");
+    await page.keyboard.press("Tab");
+    await expect(page.locator("#a a")).toBeFocused();
+  });
+
   test("reveal() reveals the requested side", async ({ page, render }) => {
     await render(item("a"));
     await events(page, "a", ["revealing", "revealed"]);

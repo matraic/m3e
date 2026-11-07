@@ -147,6 +147,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     .content {
       position: relative;
       touch-action: pan-y;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       z-index: 1;
       transition: transform ${DesignToken.motion.spring.fastSpatial};
       transform: translateX(0px);
