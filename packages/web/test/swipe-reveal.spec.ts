@@ -782,6 +782,37 @@ test.describe("m3e-swipe-reveal dismiss", () => {
     await expect.poll(() => state(page, "a")).toBe("revealed");
   });
 
+  test("a paused drag below the dismiss threshold does not dismiss after a fast final movement", async ({
+    page,
+    render,
+  }) => {
+    await render(item("a", 'dismissible="trailing"'));
+    await page.locator("#a").evaluate((el) => {
+      const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+      content.setPointerCapture = () => {};
+      content.hasPointerCapture = () => false;
+      const dispatch = (type: string, x: number, timestamp: number) => {
+        const event = new PointerEvent(type, {
+          bubbles: true,
+          pointerId: 1,
+          pointerType: "touch",
+          button: 0,
+          buttons: type === "pointerup" ? 0 : 1,
+          clientX: x,
+          clientY: 28,
+        });
+        Object.defineProperty(event, "timeStamp", { value: timestamp });
+        content.dispatchEvent(event);
+      };
+      dispatch("pointerdown", 200, 1000);
+      dispatch("pointermove", 80, 1040);
+      dispatch("pointermove", 50, 1080);
+      dispatch("pointerup", 50, 1330);
+    });
+
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+  });
+
   test("dismissed items are skipped when staggering neighbors", async ({ page, render }) => {
     await render(`
       <m3e-swipe-reveal-group stagger="0.5">

@@ -24,7 +24,7 @@ import { SwipeGestureDirection, SwipeGestureOptions } from "./SwipeGestureOption
  * @attr pointers - Number of pointers required for the gesture to be recognized.
  * @attr start-threshold - Minimum distance (px) a pointer must move before the gesture starts.
  * @attr min-displacement - * Minimum distance (px) a pointer must move before the gesture can be recognized.
- * @attr min-velocity - Minimum velocity (px/ms) required to recognize a swipe.
+ * @attr min-velocity - Minimum release velocity (px/ms) required before the gesture fails.
  * @attr direction-threshold - Minimum displacement (px) required before direction is considered valid.
  * @attr direction-grace-period - Maximum amount of time (ms) a pointer can move in an uncommitted or
  * disallowed direction before the gesture is rejected.
@@ -59,7 +59,7 @@ export class M3eSwipeGestureElement extends GestureElementBase<SwipeGestureOptio
     this.recognizer.defaultOptions.minDisplacement;
 
   /**
-   * Minimum velocity (px/ms) required before the gesture fails.
+   * Minimum release velocity (px/ms) required before the gesture fails.
    * @default 0.3
    */
   @property({ attribute: "min-velocity", type: Number, reflect: false }) minVelocity =

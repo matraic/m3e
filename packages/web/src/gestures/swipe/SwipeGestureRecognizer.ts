@@ -126,6 +126,10 @@ export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
       }
 
       case "end": {
+        // Include any pause after the last movement when evaluating release velocity.
+        const lastMovement = this.#state?.detail.timestamp ?? detail.timestamp;
+        const elapsed = detail.deltaTime + Math.max(0, detail.timestamp - lastMovement);
+        const releaseSpeed = elapsed > 0 ? (detail.speed * detail.deltaTime) / elapsed : 0;
         this.#state = { detail, direction: this.#computeDirection(detail), axis: detail.axis };
         // Cancel if there is not enough displacement.
         if (detail.totalDisplacement < this.options.minDisplacement) {
@@ -135,7 +139,7 @@ export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
         }
 
         // Cancel if not enough velocity.
-        if (detail.speed < this.options.minVelocity) {
+        if (releaseSpeed < this.options.minVelocity) {
           this._emit(this.#createDetail("cancel", this.#state));
           this.#releaseAndReset(detail.inputId);
           break;

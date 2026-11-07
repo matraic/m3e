@@ -23,7 +23,7 @@ export interface SwipeGestureOptions extends GestureOptions {
    */
   readonly startThreshold: number;
   /**
-   * Minimum velocity (px/ms) required to recognize a swipe.
+   * Minimum release velocity (px/ms) required to recognize a swipe.
    * @default 0.3
    */
   readonly minVelocity: number;
