@@ -280,6 +280,226 @@ test.describe("m3e-swipe-reveal", () => {
     await expect.poll(() => open()).toBe(false);
   });
 
+  for (const scroller of ["window", "element", "shadow"] as const) {
+    for (const positioning of ["anchor", "fallback"] as const) {
+      test(`syncs promoted content during ${scroller} scrolling while revealing and revealed (${positioning})`, async ({
+        page,
+        render,
+      }) => {
+        if (positioning === "fallback") {
+          await page.evaluate(() => {
+            const supports = CSS.supports.bind(CSS);
+            Object.defineProperty(CSS, "supports", {
+              value: (property: string, value: string) =>
+                property === "position-anchor" ? false : supports(property, value),
+            });
+          });
+        }
+        const contents = `<div style="width: 900px; height: 900px; padding: 80px; box-sizing: border-box">${item("a")}</div>`;
+        await render(
+          scroller === "window"
+            ? contents
+            : `<div id="host"><div id="scroller" style="width: 300px; height: 200px; overflow: auto">${contents}</div></div>`,
+        );
+
+        if (scroller === "shadow") {
+          await page.locator("#host").evaluate((host) => {
+            const root = host.attachShadow({ mode: "open" });
+            root.append(...host.childNodes);
+          });
+        }
+
+        const scroll = (offset: number, reveal = false) =>
+          page.evaluate(
+            async ({ kind, offset, reveal }) => {
+              const root = kind === "shadow" ? document.querySelector("#host")!.shadowRoot! : document;
+              const item = root.querySelector("#a") as M3eSwipeRevealElement;
+              const content = item.shadowRoot!.querySelector<HTMLElement>(".content")!;
+              const placeholder = item.shadowRoot!.querySelector<HTMLElement>(".placeholder")!;
+              const element = root.querySelector<HTMLElement>("#scroller");
+              const target = kind === "window" ? document : element!;
+
+              const sample = new Promise<{
+                state: string;
+                top: number;
+                left: number;
+                scrollTop: number;
+                anchor: string;
+                eventTop: number;
+              }>((resolve) => {
+                target.addEventListener(
+                  "scroll",
+                  async () => {
+                    const state = item.state;
+                    const eventTop = content.getBoundingClientRect().top - placeholder.getBoundingClientRect().top;
+                    await new Promise(requestAnimationFrame);
+                    await new Promise(requestAnimationFrame);
+                    const bounds = placeholder.getBoundingClientRect();
+                    resolve({
+                      state,
+                      top: content.getBoundingClientRect().top - bounds.top,
+                      left:
+                        content.getBoundingClientRect().left -
+                        bounds.left -
+                        new DOMMatrixReadOnly(getComputedStyle(content).transform).m41,
+                      scrollTop: kind === "window" ? window.scrollY : element!.scrollTop,
+                      anchor: content.style.getPropertyValue("position-anchor"),
+                      eventTop,
+                    });
+                  },
+                  { once: true },
+                );
+              });
+
+              if (reveal) {
+                item.reveal("leading");
+                await new Promise(requestAnimationFrame);
+              }
+              if (kind === "window") window.scrollTo(offset, offset);
+              else element!.scrollTo(offset, offset);
+              return sample;
+            },
+            { kind: scroller, offset, reveal },
+          );
+
+        const revealing = await scroll(40, true);
+        expect(revealing.state).toBe("revealing");
+        if (positioning === "anchor") expect(revealing.anchor).toMatch(/^--m3e-placeholder-\d+$/);
+        else expect(revealing.anchor).toBe("");
+        expect(revealing.scrollTop).toBe(40);
+        expect(Math.abs(revealing.top)).toBeLessThan(0.5);
+        expect(Math.abs(revealing.left)).toBeLessThan(0.5);
+        if (positioning === "fallback") expect(Math.abs(revealing.eventTop)).toBeLessThan(0.5);
+
+        await expect.poll(() => state(page, "a")).toBe("revealed");
+        const revealed = await scroll(70);
+        expect(revealed.state).toBe("revealed");
+        expect(revealed.scrollTop).toBe(70);
+        expect(Math.abs(revealed.top)).toBeLessThan(0.5);
+        expect(Math.abs(revealed.left)).toBeLessThan(0.5);
+        if (positioning === "fallback") expect(Math.abs(revealed.eventTop)).toBeLessThan(0.5);
+      });
+    }
+  }
+
+  test("anchors independently revealed items to their own placeholders", async ({ page, render }) => {
+    await render(`<div id="one" style="height: 150px; overflow: auto">
+      <div style="height: 500px; padding-top: 40px">${item("a")}</div></div>
+      <div id="two" style="height: 150px; overflow: auto">
+      <div style="height: 500px; padding-top: 60px">${item("b")}</div></div>`);
+    await call(page, "a", "reveal", "leading");
+    await call(page, "b", "reveal", "trailing");
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+    await expect.poll(() => state(page, "b")).toBe("revealed");
+    await page.locator("#one").evaluate((el) => (el.scrollTop = 25));
+    await page.locator("#two").evaluate((el) => (el.scrollTop = 45));
+    await page.evaluate(async () => {
+      await new Promise(requestAnimationFrame);
+      await new Promise(requestAnimationFrame);
+    });
+
+    for (const id of ["a", "b"]) {
+      const offset = await page.locator(`#${id}`).evaluate((el) => {
+        const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+        const placeholder = el.shadowRoot!.querySelector<HTMLElement>(".placeholder")!;
+        return content.getBoundingClientRect().top - placeholder.getBoundingClientRect().top;
+      });
+      expect(Math.abs(offset)).toBeLessThan(0.5);
+    }
+  });
+
+  test("anchors content when revealed after scrolling", async ({ page, render }) => {
+    await render(`<div id="scroller" style="height: 150px; overflow: auto">
+      <div style="height: 500px; padding-top: 100px">${item("a")}</div></div>`);
+    await page.locator("#scroller").evaluate((el) => (el.scrollTop = 40));
+    await call(page, "a", "reveal", "leading");
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+    const offset = await page.locator("#a").evaluate((el) => {
+      const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+      const placeholder = el.shadowRoot!.querySelector<HTMLElement>(".placeholder")!;
+      return content.getBoundingClientRect().top - placeholder.getBoundingClientRect().top;
+    });
+    expect(Math.abs(offset)).toBeLessThan(0.5);
+  });
+
+  for (const positioning of ["anchor", "fallback"] as const) {
+    test(`syncs promoted content and staggered siblings when scrolling a shadow root during a drag (${positioning})`, async ({
+      page,
+      render,
+    }) => {
+      if (positioning === "fallback") {
+        await page.evaluate(() => {
+          const supports = CSS.supports.bind(CSS);
+          Object.defineProperty(CSS, "supports", {
+            value: (property: string, value: string) =>
+              property === "position-anchor" ? false : supports(property, value),
+          });
+        });
+      }
+      await render(`<div id="host"><div id="scroller" style="width: 500px; height: 200px; overflow: auto">
+      <div style="height: 800px; padding-top: 40px">
+        <m3e-swipe-reveal-group stagger="0.5">${item("a")}${item("b")}</m3e-swipe-reveal-group>
+      </div>
+    </div></div>`);
+      await page.locator("#host").evaluate((host) => {
+        const root = host.attachShadow({ mode: "open" });
+        root.append(...host.childNodes);
+      });
+
+      await press(page, "a", 100);
+      await page.evaluate(() => new Promise(requestAnimationFrame));
+      const offsets = await page.locator("#host").evaluate(async (host) => {
+        const root = host.shadowRoot!;
+        const scroller = root.querySelector<HTMLElement>("#scroller")!;
+        const item = root.querySelector("#a")!;
+        const sibling = root.querySelector<HTMLElement>("#b")!;
+        const content = item.shadowRoot!.querySelector<HTMLElement>(".content")!;
+        const placeholder = item.shadowRoot!.querySelector<HTMLElement>(".placeholder")!;
+        const spacer = sibling.previousElementSibling!;
+
+        const sample = new Promise<{
+          content: number;
+          sibling: number;
+          promoted: boolean;
+        }>((resolve) => {
+          scroller.addEventListener(
+            "scroll",
+            async () => {
+              await new Promise(requestAnimationFrame);
+              await new Promise(requestAnimationFrame);
+              resolve({
+                content: content.getBoundingClientRect().top - placeholder.getBoundingClientRect().top,
+                sibling: sibling.getBoundingClientRect().top - spacer.getBoundingClientRect().top,
+                promoted: sibling.matches(":popover-open"),
+              });
+            },
+            { once: true },
+          );
+        });
+        scroller.scrollTop = 30;
+        return sample;
+      });
+      expect(offsets.promoted).toBe(true);
+      expect(Math.abs(offsets.content)).toBeLessThan(0.5);
+      expect(Math.abs(offsets.sibling)).toBeLessThan(0.5);
+      await page.mouse.up();
+    });
+  }
+
+  test("releases staggered siblings when the dragged item is removed", async ({ page, render }) => {
+    await render(`<m3e-swipe-reveal-group stagger="0.5">${item("a")}${item("b")}</m3e-swipe-reveal-group>`);
+    await press(page, "a", 100);
+    expect(await page.locator("#b").evaluate((el) => el.matches(":popover-open"))).toBe(true);
+
+    await page.locator("#a").evaluate((el) => el.remove());
+
+    const sibling = page.locator("#b");
+    expect(await sibling.evaluate((el) => el.matches(":popover-open"))).toBe(false);
+    expect(await sibling.evaluate((el) => el.previousElementSibling)).toBeNull();
+    expect(await sibling.getAttribute("style")).toBe("display: block; width: 400px");
+    await page.mouse.up();
+  });
+
   test("mirrors directions in right-to-left", async ({ page, render }) => {
     await render(item("a"));
     // Directionality is observed on the document, not on ancestors.

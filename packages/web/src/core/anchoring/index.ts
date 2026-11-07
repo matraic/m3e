@@ -3,3 +3,4 @@ export * from "./AnchorPosition";
 export * from "./FloatingPanelElement";
 export * from "./FloatingPanelScrollStrategy";
 export * from "./positionAnchor";
+export * from "./trackPlaceholder";
