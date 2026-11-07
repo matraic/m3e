@@ -73,7 +73,7 @@ This section details the attributes, slots, events, methods and properties avail
 | ------------------- | ------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------- |
 | `dismissible`       | `leading \| trailing \| both \| none`             | `none`    | Which side, if any, can be swiped past its actions to dismiss the item.                                 |
 | `elastic`           | `leading \| trailing \| both \| none`             | `both`    | Which sides' actions squish and grow as the content is dragged.                                         |
-| `dismiss-threshold` | `number`                                          | `0.5`     | The fraction of the content's width at which a slow release dismisses.                                  |
+| `dismiss-threshold` | `number`                                          | `0.5`     | The baseline fraction of content width for dismissal; the snap zone starts after full reveal.           |
 | `overshoot`         | `number`                                          | `8`       | The distance, in pixels, content can be dragged past the actions.                                       |
 | `stagger`           | `number`                                          | `0`       | How far (0 to 1) the nearest sibling follows a dragged item; each further sibling follows half as much. |
 | `stagger-count`     | `number`                                          | `3`       | The number of siblings on each side that are staggered.                                                 |
@@ -91,6 +91,8 @@ Values set on an `m3e-swipe-reveal-group` are inherited by its items unless an i
 | `trailing`  | Renders the actions revealed at the trailing edge.      |
 
 When a side is `dismissible`, it must have slotted actions. The outermost action (first in `leading`, last in `trailing`) is the dismiss action, and grows to fill the space as the item is dragged toward dismissal.
+
+**Avoid overcrowding actions.** Swipe dismiss is designed for a small number of actions. When actions consume most of the item's width, the actions must be fully revealed before dismissal becomes available. If the actions exceed the available item or viewport width, they are not automatically wrapped or made scrollable.
 
 #### 🛠️ Methods
 
@@ -142,7 +144,7 @@ All events are `CustomEvent<SwipeRevealEventDetail>`, where `detail.side` is `"l
 | ------------------- | ------------------------------------------------- | --------- | -------------------------------------------------------------------------------- |
 | `dismissible`       | `leading \| trailing \| both \| none`             | `none`    | The default side, if any, on which items can be dismissed.                       |
 | `elastic`           | `leading \| trailing \| both \| none`             | `both`    | The default sides whose actions squish and grow as content is dragged.           |
-| `dismiss-threshold` | `number`                                          | `0.5`     | The default fraction of an item's width at which a slow release dismisses.       |
+| `dismiss-threshold` | `number`                                          | `0.5`     | The default baseline fraction of item width for dismissal.                       |
 | `overshoot`         | `number`                                          | `8`       | The default distance, in pixels, content can be dragged past the actions.        |
 | `stagger`           | `number`                                          | `0`       | The default fraction (0 to 1) the nearest sibling follows a dragged item.        |
 | `stagger-count`     | `number`                                          | `3`       | The default number of siblings on each side that are staggered.                  |

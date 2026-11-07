@@ -106,7 +106,7 @@ const PROMOTED_STYLES = [
  *
  * @attr dismissible - Which side, if any, can be swiped past its actions to dismiss the item.
  * @attr elastic - Which sides' actions squish and grow as the content is dragged.
- * @attr dismiss-threshold - The fraction of the content's width at which a slow release dismisses.
+ * @attr dismiss-threshold - The baseline fraction of content width for dismissal; the snap zone starts after full reveal.
  * @attr overshoot - The distance, in pixels, content can be dragged past the actions.
  * @attr stagger - How far (0 to 1) the nearest sibling follows a dragged item.
  * @attr stagger-count - The number of siblings on each side that are staggered.
@@ -359,7 +359,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   }
 
   /**
-   * The fraction (0 to 1) of the item's width it must be dragged to dismiss it on release.
+   * The baseline fraction (0 to 1) of the item's width for dismissal. The snap zone starts after full reveal.
    * @default 0.5
    */
   @property({ type: Number, attribute: "dismiss-threshold" })
@@ -887,12 +887,12 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       return this.#rubberBand(distance, actionWidth);
     }
 
-    // The snap zone [zone, at) lies before the threshold. Entering it from below snaps the content to the threshold.
+    // The snap zone (zone, at) lies beyond full reveal and before the threshold.
     // Once the pointer has reached the threshold, the snap holds until it crosses back below it, and the content
     // then snaps back to the zone's edge. If the pointer never reached the threshold, the snap holds until the
     // pointer retreats below the zone's entry. It cannot re-snap until the pointer leaves the zone below.
     const at = this.#dismissAt(side);
-    const zone = at - SNAP_ZONE * this.#getContentWidth();
+    const zone = Math.max(actionWidth, at - SNAP_ZONE * this.#getContentWidth());
 
     if (distance < zone) this.#released = false;
 
@@ -902,7 +902,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
         this.#setArmed(false);
         this.#released = true;
       }
-    } else if (distance >= at || (!this.#released && distance >= zone)) {
+    } else if (distance >= at || (!this.#released && distance > zone)) {
       this.#setArmed(true);
       this.#released = false;
       this.#reached = distance >= at;
@@ -1443,7 +1443,8 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     return (
       x !== 0 &&
       this.#canDismiss(side) &&
-      Math.abs(x) > this.#dismissAt(side) - SNAP_ZONE * 1.5 * this.#getContentWidth()
+      Math.abs(x) >
+        Math.max(this.#actionWidth(side), this.#dismissAt(side) - SNAP_ZONE * 1.5 * this.#getContentWidth())
     );
   }
 

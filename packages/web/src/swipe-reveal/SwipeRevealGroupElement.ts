@@ -31,7 +31,7 @@ import type { M3eSwipeRevealElement } from "./SwipeRevealElement";
  * @slot - Renders the swipe-reveal elements to coordinate.
  *
  * @attr dismissible - The default side, if any, on which items can be dismissed.
- * @attr dismiss-threshold - The default fraction of an item's width at which a slow release dismisses.
+ * @attr dismiss-threshold - The default baseline fraction of an item's width for dismissal.
  * @attr elastic - The default sides whose actions squish and grow as content is dragged.
  * @attr overshoot - The default distance, in pixels, content can be dragged past the actions.
  * @attr stagger - The default fraction (0 to 1) the nearest sibling follows a dragged item.
@@ -95,7 +95,7 @@ export class M3eSwipeRevealGroupElement extends Role(LitElement, "none") {
   @property() elastic: SwipeRevealElastic = SwipeRevealDefaults.elastic;
 
   /**
-   * The fraction (0 to 1) of the item's width it must be dragged to dismiss it on release.
+   * The baseline fraction (0 to 1) of an item's width for dismissal. The snap zone starts after full reveal.
    * @default 0.5
    */
   @property({ type: Number, attribute: "dismiss-threshold" })

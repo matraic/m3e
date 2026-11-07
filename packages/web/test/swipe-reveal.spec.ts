@@ -650,6 +650,64 @@ test.describe("m3e-swipe-reveal dismiss", () => {
     expect(await log(page)).toEqual([]);
   });
 
+  for (const [actionSide, direction] of [
+    ["leading", 1],
+    ["trailing", -1],
+  ] as const) {
+    test(`the ${actionSide} dismissal snap starts after the actions are fully revealed`, async ({ page, render }) => {
+      await render(`<m3e-swipe-reveal id="a" dismissible="${actionSide}"
+        style="width: 400px; --m3e-swipe-reveal-actions-padding: 0px">
+        <button slot="${actionSide}" style="width: 160px; height: 56px">Action</button>
+        <div style="height: 56px">Content</div>
+      </m3e-swipe-reveal>`);
+      await events(page, "a", ["dismiss"]);
+      await press(page, "a", direction * 155);
+
+      const armed = () => page.locator("#a").evaluate((el) => el.matches(":state(--armed)"));
+      expect(await armed()).toBe(false);
+      const box = (await page.locator("#a").boundingBox())!;
+      await page.mouse.move(box.x + box.width / 2 + direction * 160, box.y + box.height / 2);
+      expect(await armed()).toBe(false);
+      await page.mouse.move(box.x + box.width / 2 + direction * 161, box.y + box.height / 2);
+      expect(await armed()).toBe(true);
+      await page.mouse.move(box.x + box.width / 2 + direction * 159, box.y + box.height / 2);
+      expect(await armed()).toBe(false);
+      await page.waitForTimeout(250);
+      await page.mouse.up();
+
+      await expect.poll(() => state(page, "a")).toBe("revealed");
+      expect(await log(page)).toEqual([]);
+    });
+  }
+
+  test("wide actions can be revealed before a second touch swipe dismisses", async ({ page, render }) => {
+    await page.setViewportSize({ width: 320, height: 500 });
+    await render(`<m3e-swipe-reveal id="a" dismissible="trailing"
+      style="width: 300px; --m3e-swipe-reveal-actions-padding: 0px; --m3e-swipe-reveal-actions-gap: 0px">
+      <button slot="trailing" style="width: 80px; height: 56px">One</button>
+      <button slot="trailing" style="width: 80px; height: 56px">Two</button>
+      <button slot="trailing" style="width: 80px; height: 56px">Three</button>
+      <div style="height: 56px">Content</div>
+    </m3e-swipe-reveal>`);
+    const box = (await page.locator("#a").boundingBox())!;
+    const y = box.y + box.height / 2;
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true });
+
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: box.x + 292, y }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: box.x + 45, y }] });
+    await page.waitForTimeout(1000);
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: box.x + 30, y }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: box.x + 2, y }] });
+    await page.waitForTimeout(250);
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await expect.poll(() => state(page, "a")).toBe("dismissed");
+    await cdp.detach();
+  });
+
   test("a fling from rest only reveals", async ({ page, render }) => {
     await render(item("a", 'dismissible="trailing"'));
 
