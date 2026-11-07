@@ -652,7 +652,6 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     return html` <m3e-swipe-gesture
         for="content"
         .directions=${swipeDirections}
-        direction-grace-period="1"
         ?disabled="${!this.triggers.includes("swipe") || swipeDirections.length == 0}"
         @gesture=${this.#handleSwipeGesture}
       ></m3e-swipe-gesture>
@@ -741,86 +740,95 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
 
     switch (e.detail.phase) {
       case "start":
-        // Measure everything the drag will need now, before any of its style writes, so no later read forces layout.
-        this.#startBounds = content.matches(":popover-open") ? null : content.getBoundingClientRect();
-        this.#measuredActions = this.#measureActions();
-        this.#snapshots.clear();
-        if (this.stagger > 0) {
-          const reveals = this.#resolveReveals();
-          const index = reveals.indexOf(this);
-          for (const step of [-1, 1]) {
-            for (let i = 1; index >= 0 && i <= this.staggerCount; i++) {
-              const sibling = reveals[index + step * i];
-              if (!sibling) break;
-              if (sibling._state === "covered" && !sibling.hasAttribute("popover")) {
-                this.#snapshots.set(sibling, this.#measure(sibling));
+      case "update": {
+        if (e.detail.phase === "start") {
+          // Measure everything the drag will need now, before any of its style writes, so no later read forces layout.
+          this.#startBounds = content.matches(":popover-open") ? null : content.getBoundingClientRect();
+          this.#measuredActions = this.#measureActions();
+          this.#snapshots.clear();
+          if (this.stagger > 0) {
+            const reveals = this.#resolveReveals();
+            const index = reveals.indexOf(this);
+            for (const step of [-1, 1]) {
+              for (let i = 1; index >= 0 && i <= this.staggerCount; i++) {
+                const sibling = reveals[index + step * i];
+                if (!sibling) break;
+                if (sibling._state === "covered" && !sibling.hasAttribute("popover")) {
+                  this.#snapshots.set(sibling, this.#measure(sibling));
+                }
               }
             }
           }
+          this.#cancelSettle?.();
+          this.#released = false;
+          this.#setDragging(false);
+          // Resume from wherever the content visually is, including mid-transition.
+          this.#base = this.#x = new DOMMatrixReadOnly(getComputedStyle(content).transform).m41;
         }
-        this.#cancelSettle?.();
-        this.#released = false;
-        this.#setDragging(false);
-        // Resume from wherever the content visually is, including mid-transition.
-        this.#base = this.#x = new DOMMatrixReadOnly(getComputedStyle(content).transform).m41;
-        break;
-
-      case "update":
-        {
-          const wasArmed = this.#armed;
-          // Computed in logical space (positive reveals leading), then mapped back to physical.
-          const raw = (this.#base + e.detail.translationX) * this.#dir;
-          const x =
-            this.#dir *
-            (raw >= 0
-              ? this._hasLeading
-                ? this.#drag(raw, "leading", leadingWidth)
-                : 0
-              : this._hasTrailing
-                ? -this.#drag(-raw, "trailing", trailingWidth)
-                : 0);
-          this.#x = x;
-
-          const logicalX = x * this.#dir;
-          if (logicalX === 0 || !this.#canDismiss(logicalX > 0 ? "leading" : "trailing")) this.#setArmed(false);
-
-          const begin = !this.#dragging;
-          let displaced = 0;
-
-          if (begin) {
-            this.#setDragging(true);
-            this.#snapOffset = 0;
-            // Must precede measuring: the other item's stagger may have promoted this element.
-            displaced = this.#closeSiblings();
-          }
-
-          this.#promote(content, placeholder);
-
-          if (begin && displaced !== 0) {
-            // Start visually where the stagger left this element, then ease onto the pointer.
-            content.style.transition = "none";
-            content.style.translate = `${displaced}px`;
-            void content.offsetWidth; // force reflow
-          }
-
-          // The content's transform is not eased by CSS, so it stays in lockstep with the actions, whose growth tracks it.
-          content.style.transition = `translate ${DesignToken.motion.spring.fastSpatial}`;
-          content.style.translate = "0px";
-
-          if (begin) {
-            this.#setState("revealing", x * this.#dir > 0 ? "leading" : "trailing");
-            this.#lockActions();
-            this.#beginStagger();
-          } else if (wasArmed !== this.#armed) {
-            // Ease the snap by animating the jump away, so content and actions animate together.
-            this.#snapOffset = this.#shown - x;
-            this.#snapStart = performance.now();
-            this.#animateSnap();
-          }
-
-          this.#renderDrag();
+        if (
+          !this.#dragging &&
+          (e.detail.axis !== "x" ||
+            !(e.detail.direction === this.#leadingDirection
+              ? this._hasLeading || this.#base !== 0
+              : this._hasTrailing || this.#base !== 0))
+        ) {
+          break;
         }
+        // The first movement can be the only touchmove in a quick swipe.
+        const wasArmed = this.#armed;
+        // Computed in logical space (positive reveals leading), then mapped back to physical.
+        const raw = (this.#base + e.detail.translationX) * this.#dir;
+        const x =
+          this.#dir *
+          (raw >= 0
+            ? this._hasLeading
+              ? this.#drag(raw, "leading", leadingWidth)
+              : 0
+            : this._hasTrailing
+              ? -this.#drag(-raw, "trailing", trailingWidth)
+              : 0);
+        this.#x = x;
+
+        const logicalX = x * this.#dir;
+        if (logicalX === 0 || !this.#canDismiss(logicalX > 0 ? "leading" : "trailing")) this.#setArmed(false);
+
+        const begin = !this.#dragging;
+        let displaced = 0;
+
+        if (begin) {
+          this.#setDragging(true);
+          this.#snapOffset = 0;
+          // Must precede measuring: the other item's stagger may have promoted this element.
+          displaced = this.#closeSiblings();
+        }
+
+        this.#promote(content, placeholder);
+
+        if (begin && displaced !== 0) {
+          // Start visually where the stagger left this element, then ease onto the pointer.
+          content.style.transition = "none";
+          content.style.translate = `${displaced}px`;
+          void content.offsetWidth; // force reflow
+        }
+
+        // The content's transform is not eased by CSS, so it stays in lockstep with the actions, whose growth tracks it.
+        content.style.transition = `translate ${DesignToken.motion.spring.fastSpatial}`;
+        content.style.translate = "0px";
+
+        if (begin) {
+          this.#setState("revealing", x * this.#dir > 0 ? "leading" : "trailing");
+          this.#lockActions();
+          this.#beginStagger();
+        } else if (wasArmed !== this.#armed) {
+          // Ease the snap by animating the jump away, so content and actions animate together.
+          this.#snapOffset = this.#shown - x;
+          this.#snapStart = performance.now();
+          this.#animateSnap();
+        }
+
+        this.#renderDrag();
         break;
+      }
 
       default: {
         if (!this.#dragging) break;

@@ -80,6 +80,89 @@ test.describe("m3e-swipe-reveal", () => {
     expect(await side(page, "a")).toBeNull();
   });
 
+  test("a single touch movement begins and completes a swipe", async ({ page, render }) => {
+    await render(`<m3e-swipe-reveal id="a" style="width: 400px">
+      <button slot="leading" style="width: 80px; height: 56px">Pin</button>
+      <button id="child" style="width: 400px; height: 56px">Content</button>
+    </m3e-swipe-reveal>`);
+    await page.locator("#child").evaluate((el) => {
+      el.addEventListener("pointerdown", (event) => {
+        el.setAttribute("data-pointer-id", String((event as PointerEvent).pointerId));
+      });
+    });
+    const box = (await page.locator("#a").boundingBox())!;
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true });
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x + 100, y }] });
+    await expect.poll(() => state(page, "a")).toBe("revealing");
+    const pointerId = Number(await page.locator("#child").getAttribute("data-pointer-id"));
+    expect(
+      await page.locator("#a").evaluate((el, id) => el.shadowRoot!.querySelector(".content")!.hasPointerCapture(id), pointerId),
+    ).toBe(true);
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+    await cdp.detach();
+  });
+
+  test("a horizontal touch drag continues when reversed with slight vertical movement", async ({ page, render }) => {
+    await render(item("a"));
+    const box = (await page.locator("#a").boundingBox())!;
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true });
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x + 40, y }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x + 50, y }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x + 15, y: y + 20 }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x + 65, y: y + 20 }] });
+    expect(await state(page, "a")).toBe("revealing");
+    await expect
+      .poll(() =>
+        page.locator("#a").evaluate((el) => {
+          const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+          return new DOMMatrixReadOnly(getComputedStyle(content).transform).m41;
+        }),
+      )
+      .toBeGreaterThan(50);
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+    await cdp.detach();
+  });
+
+  test("touch taps reach content and vertical gestures scroll without revealing", async ({ page, render }) => {
+    await render(`<div id="scroller" style="height: 150px; overflow: auto">
+      <div style="height: 700px">
+        <m3e-swipe-reveal id="a" style="width: 300px">
+          <button slot="leading">Action</button>
+          <button id="child" style="width: 200px; height: 56px">Content</button>
+        </m3e-swipe-reveal>
+      </div>
+    </div>`);
+    await page.locator("#child").evaluate((el) => {
+      el.addEventListener("click", () => el.setAttribute("data-clicked", "true"));
+    });
+    const box = (await page.locator("#child").boundingBox())!;
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true });
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await expect(page.locator("#child")).toHaveAttribute("data-clicked", "true");
+
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x, y: y - 45 }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x, y: y - 75 }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await expect.poll(() => page.locator("#scroller").evaluate((el) => el.scrollTop)).toBeGreaterThan(0);
+    expect(await state(page, "a")).toBe("covered");
+    await cdp.detach();
+  });
+
   test("suppresses the content tap highlight without disabling selection or focus", async ({ page, render }) => {
     await render(`<m3e-swipe-reveal id="a">
       <button slot="leading">Action</button>
