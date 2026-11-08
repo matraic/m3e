@@ -22,6 +22,7 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.11.3/dist/all.min.js"></script>
     <script src="../main.js"></script>
+    <script src="./swipe-reveal.js"></script>
   </head>
   <body>
     <m3e-theme strong-focus></m3e-theme>
@@ -238,15 +239,22 @@
           Use the <code>dismissible</code> attribute to allow an item to be dismissed by continuing a swipe past its
           actions. Valid values are <code>leading</code>, <code>trailing</code>, <code>both</code> and
           <code>none</code> (default). The outermost action serves as the dismiss action. Listen for the
-          <code>dismiss</code> event, which is cancelable, and the <code>dismissed</code> event to respond.
+          <code>dismiss</code> event, which is cancelable, and the <code>dismissed</code> event to respond. Call
+          <code>restore()</code> to bring a dismissed item back.
         </p>
         <p>
           Use the <code>dismiss-threshold</code> attribute to control the fraction of an item's width, from
           <code>0</code> to <code>1</code>, that must be dragged before the item is dismissed when released.
         </p>
+        <m3e-callout>
+          <span slot="label">Avoid overcrowding actions</span>
+          Dismiss is designed for a small number of actions. When actions consume most of the item's width, the actions
+          must be fully revealed before dismissal becomes available. If the actions exceed the available item or
+          viewport width, they are not automatically wrapped or made scrollable.
+        </m3e-callout>
         <m3e-card variant="outlined" class="showcase">
           <div slot="content">
-            <m3e-swipe-reveal-group dismissible="trailing">
+            <m3e-swipe-reveal-group id="dismissible-example" dismissible="trailing">
               <m3e-list variant="segmented">
                 <m3e-swipe-reveal>
                   <m3e-list-item>Item 1</m3e-list-item>
@@ -268,6 +276,8 @@
                 </m3e-swipe-reveal>
               </m3e-list>
             </m3e-swipe-reveal-group>
+            <br />
+            <m3e-button id="reset-dismissed" variant="tonal">Reset dismissed items</m3e-button>
           </div>
         </m3e-card>
         <m3e-card variant="outlined" class="example">
