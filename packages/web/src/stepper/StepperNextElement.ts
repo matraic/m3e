@@ -4,7 +4,7 @@ import { StepperButtonElementBase } from "./StepperButtonElementBase";
 
 /**
  * An element, nested within a clickable element, used to move a stepper to the next step.
- * @tag m3e-stepper-previous
+ * @tag m3e-stepper-next
  *
  * @slot - Renders the content of the action.
  */
