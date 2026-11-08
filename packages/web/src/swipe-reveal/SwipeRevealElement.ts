@@ -227,6 +227,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   /** @private */ #side: SwipeRevealSide | null = null;
   /** @private */ #restSide: SwipeRevealSide | null = null;
   /** @private */ #suppressedClick?: { pointerId: number; released: boolean; abort: AbortController };
+  /** @private */ #touch?: { id: number; dragging: boolean };
   /** @private */ #cancelSettle?: () => void;
   /** @private */ @state() private _state: SwipeRevealState = "covered";
   /** @private */ @state() private _hasLeading: boolean = false;
@@ -537,6 +538,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     super.disconnectedCallback();
 
     this.#clearSuppressedClick();
+    this.#touch = undefined;
     this.#directionalitySubscription?.();
     this.#directionalitySubscription = undefined;
 
@@ -570,6 +572,10 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
         role="none"
         id="content"
         @click=${{ handleEvent: this.#handleContentClick, capture: true }}
+        @touchstart=${this.#handleTouchStart}
+        @touchmove=${{ handleEvent: this.#handleTouchMove, passive: false }}
+        @touchend=${this.#handleTouchEnd}
+        @touchcancel=${this.#handleTouchEnd}
       >
         <slot></slot>
       </div>
@@ -642,6 +648,36 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   }
 
   /** @private */
+  #handleTouchStart(e: TouchEvent): void {
+    if (!this.#touch && e.touches.length === 1) {
+      this.#touch = { id: e.changedTouches[0].identifier, dragging: false };
+    }
+  }
+
+  /** @private */
+  readonly #handleTouchMove = (e: TouchEvent): void => {
+    const touch = this.#touch;
+    if (!touch || e.touches.length !== 1 || ![...e.changedTouches].some((x) => x.identifier === touch.id)) {
+      return;
+    }
+
+    // Keep ownership through the touch sequence, even if the pointer gesture is subsequently cancelled.
+    touch.dragging ||= this.#dragging;
+
+    if (touch.dragging && e.cancelable) {
+      e.preventDefault();
+    }
+  };
+
+  /** @private */
+  #handleTouchEnd(e: TouchEvent): void {
+    const touch = this.#touch;
+    if (touch && [...e.changedTouches].some((x) => x.identifier === touch.id)) {
+      this.#touch = undefined;
+    }
+  }
+
+  /** @private */
   #handleTriggerGesture(e: CustomEvent<GestureDetail>): void {
     if (e.detail.phase !== "end") return;
 
@@ -672,15 +708,27 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     };
     this.#suppressedClick = suppression;
     const options = { capture: true, signal: suppression.abort.signal };
-    window.addEventListener("pointerup", (event) => {
-      if (event.pointerId === pointerId) suppression.released = true;
-    }, options);
-    window.addEventListener("pointercancel", (event) => {
-      if (event.pointerId === pointerId) this.#clearSuppressedClick();
-    }, options);
-    window.addEventListener("pointerdown", () => {
-      if (suppression.released) this.#clearSuppressedClick();
-    }, options);
+    window.addEventListener(
+      "pointerup",
+      (event) => {
+        if (event.pointerId === pointerId) suppression.released = true;
+      },
+      options,
+    );
+    window.addEventListener(
+      "pointercancel",
+      (event) => {
+        if (event.pointerId === pointerId) this.#clearSuppressedClick();
+      },
+      options,
+    );
+    window.addEventListener(
+      "pointerdown",
+      () => {
+        if (suppression.released) this.#clearSuppressedClick();
+      },
+      options,
+    );
   }
 
   /** @private */

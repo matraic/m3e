@@ -135,6 +135,91 @@ test.describe("m3e-swipe-reveal", () => {
     await cdp.detach();
   });
 
+  test("a horizontal touch drag owns the touch through vertical movement and reversal", async ({ page, render }) => {
+    await render(`<div id="scroller" style="height: 150px; overflow: auto">
+      <div style="height: 100px"></div>
+      ${item("a")}
+      <div style="height: 700px"></div>
+    </div>`);
+    await page.locator("#scroller").evaluate((el) => (el.scrollTop = 50));
+    await page.locator("#a").evaluate((el) => {
+      (window as typeof window & { touchMoves: boolean[] }).touchMoves = [];
+      el.addEventListener("touchmove", (event) => {
+        (window as typeof window & { touchMoves: boolean[] }).touchMoves.push(event.defaultPrevented);
+      });
+    });
+    const box = (await page.locator("#a").boundingBox())!;
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true });
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x - 40, y }] });
+    await expect.poll(() => state(page, "a")).toBe("revealing");
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x - 60, y: y - 60 }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x + 65, y: y - 60 }] });
+    await expect
+      .poll(() =>
+        page.locator("#a").evaluate((el) => {
+          const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+          return new DOMMatrixReadOnly(getComputedStyle(content).transform).m41;
+        }),
+      )
+      .toBeGreaterThan(50);
+    expect(await page.locator("#scroller").evaluate((el) => el.scrollTop)).toBe(50);
+    expect(await page.evaluate(() => (window as typeof window & { touchMoves: boolean[] }).touchMoves)).toEqual([
+      true,
+      true,
+      true,
+    ]);
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await cdp.detach();
+  });
+
+  test("touch ownership survives pointer cancellation and resets on release", async ({ page, render }) => {
+    await render(`<div id="scroller" style="height: 150px; overflow: auto">
+      <div style="height: 100px"></div>
+      ${item("a")}
+      <div style="height: 700px"></div>
+    </div>`);
+    await page.locator("#scroller").evaluate((el) => (el.scrollTop = 50));
+    await page.locator("#a").evaluate((el) => {
+      el.addEventListener("pointerdown", (event) => {
+        el.setAttribute("data-pointer-id", String((event as PointerEvent).pointerId));
+      });
+      el.addEventListener("touchmove", (event) => el.setAttribute("data-prevented", String(event.defaultPrevented)));
+    });
+    const box = (await page.locator("#a").boundingBox())!;
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true });
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x + 40, y }] });
+    await expect.poll(() => state(page, "a")).toBe("revealing");
+    await page.locator("#a").evaluate((el) => {
+      el.shadowRoot!.querySelector(".content")!.dispatchEvent(
+        new PointerEvent("pointercancel", {
+          bubbles: true,
+          pointerId: Number(el.getAttribute("data-pointer-id")),
+          pointerType: "touch",
+        }),
+      );
+    });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x + 40, y: y - 40 }] });
+    await expect(page.locator("#a")).toHaveAttribute("data-prevented", "true");
+    expect(await page.locator("#scroller").evaluate((el) => el.scrollTop)).toBe(50);
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x, y: y - 40 }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x, y: y - 65 }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await expect.poll(() => page.locator("#scroller").evaluate((el) => el.scrollTop)).toBeGreaterThan(50);
+    await expect(page.locator("#a")).toHaveAttribute("data-prevented", "false");
+    await cdp.detach();
+  });
+
   test("touch taps reach content and vertical gestures scroll without revealing", async ({ page, render }) => {
     await render(`<div id="scroller" style="height: 150px; overflow: auto">
       <div style="height: 700px">
@@ -146,6 +231,11 @@ test.describe("m3e-swipe-reveal", () => {
     </div>`);
     await page.locator("#child").evaluate((el) => {
       el.addEventListener("click", () => el.setAttribute("data-clicked", "true"));
+    });
+    await page.locator("#a").evaluate((el) => {
+      el.addEventListener("touchmove", (event) => {
+        if (event.defaultPrevented) el.setAttribute("data-touch-prevented", "true");
+      });
     });
     const box = (await page.locator("#child").boundingBox())!;
     const cdp = await page.context().newCDPSession(page);
@@ -162,6 +252,7 @@ test.describe("m3e-swipe-reveal", () => {
     await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
     await expect.poll(() => page.locator("#scroller").evaluate((el) => el.scrollTop)).toBeGreaterThan(0);
     expect(await state(page, "a")).toBe("covered");
+    await expect(page.locator("#a")).not.toHaveAttribute("data-touch-prevented");
     await cdp.detach();
   });
 
