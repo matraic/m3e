@@ -814,6 +814,31 @@ test.describe("m3e-swipe-reveal dismiss", () => {
     await expect.poll(async () => (await page.locator("#b").boundingBox())!.y).toBeLessThan(before);
   });
 
+  test("dismissing the last list item does not leave vertical overflow and can be restored", async ({ page, render }) => {
+    await render(`<m3e-list id="list" variant="segmented">${item("a", 'dismissible="trailing"')}</m3e-list>`);
+
+    await call(page, "a", "dismiss", "trailing");
+    await expect.poll(() => state(page, "a")).toBe("dismissed");
+    expect(await page.locator("#list").evaluate((el) => el.scrollHeight - el.clientHeight)).toBe(0);
+
+    await call(page, "a", "restore");
+    await expect.poll(() => state(page, "a")).toBe("covered");
+    expect((await page.locator("#a").boundingBox())!.height).toBeGreaterThan(0);
+    expect(await page.locator("#list").evaluate((el) => el.scrollHeight - el.clientHeight)).toBe(0);
+  });
+
+  test("a list remains scrollable when other items remain after dismissal", async ({ page, render }) => {
+    await render(`<m3e-list id="list" variant="segmented" style="height: 70px">
+      ${item("a", 'dismissible="trailing"')}${item("b")}${item("c")}
+    </m3e-list>`);
+
+    await call(page, "a", "dismiss", "trailing");
+    await expect.poll(() => state(page, "a")).toBe("dismissed");
+    expect(await page.locator("#list").evaluate((el) => el.scrollHeight)).toBeGreaterThan(70);
+    await page.locator("#list").evaluate((el) => (el.scrollTop = el.scrollHeight));
+    expect(await page.locator("#list").evaluate((el) => el.scrollTop)).toBeGreaterThan(0);
+  });
+
   test("a slow drag toward either side dismisses when dismissible is both", async ({ page, render }) => {
     await render(item("a", 'dismissible="both"') + item("b", 'dismissible="both"'));
 

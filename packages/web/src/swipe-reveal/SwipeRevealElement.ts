@@ -144,6 +144,9 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       display: block;
       position: relative;
     }
+    :host(:is(:state(--dismissing), :--dismissing, :state(--dismissed), :--dismissed)) {
+      overflow: clip;
+    }
     .content {
       position: relative;
       touch-action: pan-y;
