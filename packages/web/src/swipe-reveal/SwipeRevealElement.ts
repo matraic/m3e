@@ -35,12 +35,15 @@ import { SwipeRevealDismiss } from "./SwipeRevealDismiss";
 import { SwipeRevealElastic } from "./SwipeRevealElastic";
 import { SwipeRevealEventDetail } from "./SwipeRevealEventDetail";
 
-const SHAPE_GROWTH = "--m3e-swipe-reveal-shape-growth";
-const SNAP_DURATION = 150; // ms, matching the fast effects motion token
-const SNAP_ZONE = 0.1; // fraction of the content's width before the dismiss threshold at which the content snaps onto it
+/** @private */ const SHAPE_GROWTH = "--m3e-swipe-reveal-shape-growth";
+/** @private */ const SNAP_DURATION = 150; // ms, matching the fast effects motion token
+/** @private */ const SNAP_ZONE = 0.1; // fraction of the content's width before the dismiss threshold at which the content snaps onto it
 
+/** @private */
 type ActionMeasure = { width: number; assigned: Element[]; widths: Map<HTMLElement, number> };
-type StaggerItem = {
+
+/** @private */
+interface StaggerItem {
   el: M3eSwipeRevealElement;
   distance: number;
   transform: string;
@@ -48,7 +51,7 @@ type StaggerItem = {
   baseTransform: string;
   transition: string;
   transitionPriority: string;
-};
+}
 
 /**
  * Reveals contextual actions behind content when swiped, and optionally dismisses the item.
@@ -1270,8 +1273,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     return (
       x !== 0 &&
       this.#canDismiss(side) &&
-      Math.abs(x) >
-        Math.max(this.#actionWidth(side), this.#dismissAt(side) - SNAP_ZONE * 1.5 * this.#getContentWidth())
+      Math.abs(x) > Math.max(this.#actionWidth(side), this.#dismissAt(side) - SNAP_ZONE * 1.5 * this.#getContentWidth())
     );
   }
 
