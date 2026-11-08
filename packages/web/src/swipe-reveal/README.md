@@ -1,6 +1,6 @@
 # @m3e/web/swipe-reveal
 
-The `m3e-swipe-reveal` component uncovers leading and trailing actions as its content is dragged, following the Material 3 swipe to reveal pattern. Content is promoted to the top layer while dragging so it is never clipped by the item or by a scrolling ancestor such as a list. Siblings can be staggered to follow the drag, actions fade, clip and squish as they are uncovered, and a swipe can continue past the actions to dismiss the item. Direction is mirrored for right-to-left layouts.
+The `m3e-swipe-reveal` component uncovers leading and trailing actions as its content is dragged, following the Material 3 swipe to reveal pattern. Content and staggered siblings stay in the scrolling container, so they may be clipped by an ancestor's overflow. Add padding to the scrolling container if more room is needed for displaced content or shadows. Actions fade, clip and squish as they are uncovered, and a swipe can continue past the actions to dismiss the item. Direction is mirrored for right-to-left layouts.
 
 ```ts
 import "@m3e/web/swipe-reveal";

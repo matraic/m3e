@@ -11,14 +11,12 @@ import {
   deleteCustomState,
   DesignToken,
   hasAssignedNodes,
-  ResizeController,
   Role,
   setCustomState,
   spaceSeparatedStringConverter,
 } from "@m3e/web/core";
 
 import { M3eDirectionality, SupportsDirectionality } from "@m3e/web/core/bidi";
-import { trackPlaceholder } from "@m3e/web/core/anchoring";
 
 import { GestureDetail } from "@m3e/web/gestures";
 import { SwipeGestureDetail, SwipeGestureDirection } from "@m3e/web/gestures/swipe";
@@ -42,47 +40,22 @@ const SNAP_DURATION = 150; // ms, matching the fast effects motion token
 const SNAP_ZONE = 0.1; // fraction of the content's width before the dismiss threshold at which the content snaps onto it
 
 type ActionMeasure = { width: number; assigned: Element[]; widths: Map<HTMLElement, number> };
-type SiblingSnapshot = { rect: DOMRect; margin: string; styles: Record<string, string> };
-
 type StaggerItem = {
-  el: HTMLElement;
+  el: M3eSwipeRevealElement;
   distance: number;
-  spacer: HTMLElement | null;
-  original: string | null;
-  cleanup?: () => void;
+  transform: string;
+  transformPriority: string;
+  baseTransform: string;
+  transition: string;
+  transitionPriority: string;
 };
-
-/** Properties the UA popover stylesheet overrides, which must be pinned to keep a promoted sibling's appearance. */
-const PROMOTED_STYLES = [
-  "padding-top",
-  "padding-right",
-  "padding-bottom",
-  "padding-left",
-  "border-top-width",
-  "border-right-width",
-  "border-bottom-width",
-  "border-left-width",
-  "border-top-style",
-  "border-right-style",
-  "border-bottom-style",
-  "border-left-style",
-  "border-top-color",
-  "border-right-color",
-  "border-bottom-color",
-  "border-left-color",
-  "background-color",
-  "color",
-  "overflow-x",
-  "overflow-y",
-];
 
 /**
  * Reveals contextual actions behind content when swiped, and optionally dismisses the item.
  *
  * @description
- * The `m3e-swipe-reveal` component uncovers leading and trailing actions as its content is dragged. While
- * dragging, the content is promoted to the top layer so it is never clipped by the item or by a scrolling
- * ancestor, and siblings can be staggered to follow the drag. Actions fade, clip and squish as they are
+ * The `m3e-swipe-reveal` component uncovers leading and trailing actions as its content is dragged.
+ * Content and staggered siblings stay in the scrolling container, which may clip them. Actions fade, clip and squish as they are
  * uncovered. Reveal can also be triggered by tap, double tap or long press. When `dismissible`, continuing a swipe
  * past the actions dismisses the item, using the outermost action as the dismiss action. Direction is
  * mirrored for right-to-left layouts. Wrap items in an `m3e-swipe-reveal-group` to coordinate them.
@@ -144,9 +117,6 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       display: block;
       position: relative;
     }
-    :host(:is(:state(--dismissing), :--dismissing, :state(--dismissed), :--dismissed)) {
-      overflow: clip;
-    }
     .content {
       position: relative;
       touch-action: pan-y;
@@ -163,15 +133,6 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     :host(:state(--dragging)) .content {
       user-select: none;
       -webkit-user-select: none;
-    }
-    .content[popover] {
-      margin: 0;
-      padding: 0;
-      border: 0;
-      inset: auto;
-      overflow: visible;
-      background: none;
-      color: inherit;
     }
     .leading,
     .trailing {
@@ -254,8 +215,6 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   /** @private */ #underlaps = new Map<SwipeRevealSide, number>();
   /** @private */ #fallbackWidths = new Map<SwipeRevealSide, number>();
   /** @private */ #measuredActions: Map<SwipeRevealSide, ActionMeasure> | null = null;
-  /** @private */ #startBounds: DOMRect | null = null;
-  /** @private */ #snapshots = new Map<HTMLElement, SiblingSnapshot>();
   /** @private */ #contentWidth: number | undefined;
   /** @private */ #staggered: StaggerItem[] = [];
   /** @private */ #finishStagger?: () => void;
@@ -266,14 +225,6 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   /** @private */ #restSide: SwipeRevealSide | null = null;
   /** @private */ #suppressClick = false;
   /** @private */ #cancelSettle?: () => void;
-  /** @private */ #contentTracking?: () => void;
-
-  /** @private */ readonly #placeholderResizeController = new ResizeController(this, {
-    target: null,
-    skipInitial: true,
-    callback: () => this.#handlePlaceholderResize(),
-  });
-
   /** @private */ @state() private _state: SwipeRevealState = "covered";
   /** @private */ @state() private _hasLeading: boolean = false;
   /** @private */ @state() private _hasTrailing: boolean = false;
@@ -393,17 +344,14 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
    */
   reveal(side?: SwipeRevealSide): void {
     const content = this._content;
-    const placeholder = this._placeholder;
-    if (!content || !placeholder || this.#dragging || this.#isGone) return;
+    if (!content || this.#dragging || this.#isGone) return;
 
     side ??= this._hasLeading ? "leading" : "trailing";
     if (!(side === "leading" ? this._hasLeading : this._hasTrailing) || this.#side === side) return;
 
     this.#cancelSettle?.();
 
-    // Close other open items first and release this element if it was promoted by their stagger.
     this.#closeSiblings();
-    this.#promote(content, placeholder);
     this.#lockActions();
     this.#setProgress(0, false);
     void content.offsetWidth; // force reflow
@@ -445,8 +393,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     const content = this._content;
     const placeholder = this._placeholder;
     if (content && placeholder) {
-      this.#demote(content, placeholder);
-      placeholder.style.removeProperty("transition");
+      this.#resetContent(content, placeholder);
     }
 
     this.#x = 0;
@@ -534,13 +481,12 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     this.#cancelSettle?.();
     this.#setArmed(false);
     this.#closeSiblings();
-    this.#promote(content, placeholder);
     this.#lockActions();
     this.#setState("dismissing");
 
-    // Slide fully out of view (the content is in the top layer, so it isn't clipped by the container).
+    // Slide fully out of the viewport, or until a scrolling ancestor clips the content.
     const width = content.offsetWidth;
-    const bounds = placeholder.getBoundingClientRect();
+    const bounds = this.getBoundingClientRect();
     const sign = this.#dir * (side === "leading" ? 1 : -1);
     const to = sign > 0 ? window.innerWidth - bounds.left : -(bounds.left + width);
 
@@ -552,14 +498,17 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
 
     this.#whenTransitioned(content, "transform", 600, () => {
       // Collapse the space so siblings close the gap.
+      placeholder.style.height = `${content.offsetHeight}px`;
+      content.style.display = "none";
+      for (const side of ["leading", "trailing"]) {
+        this.shadowRoot?.querySelector<HTMLElement>(`.${side}`)?.style.setProperty("display", "none");
+      }
       placeholder.style.transition = "height 250ms cubic-bezier(0.2, 0, 0, 1)";
       void placeholder.offsetHeight; // force reflow
       placeholder.style.height = "0px";
 
       this.#whenTransitioned(placeholder, "height", 400, () => {
         this.#setState("dismissed");
-        this.#contentTracking?.();
-        this.#contentTracking = undefined;
         this.dispatchEvent(
           this.#createEvent("dismissed", side, {
             bubbles: true,
@@ -597,7 +546,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     const content = this._content;
     const placeholder = this._placeholder;
     if (content && placeholder) {
-      this.#demote(content, placeholder);
+      this.#resetContent(content, placeholder);
     }
 
     this.#side = this.#restSide = null;
@@ -727,20 +676,9 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   }
 
   /** @private */
-  #handlePlaceholderResize(): void {
-    const content = this._content;
-    const placeholder = this._placeholder;
-    if (!content || !placeholder || !content.matches(":popover-open")) return;
-
-    const { width } = placeholder.getBoundingClientRect();
-    if (width > 0) content.style.width = `${width}px`;
-  }
-
-  /** @private */
   #handleSwipeGesture(e: CustomEvent<SwipeGestureDetail>): void {
     const content = this._content;
-    const placeholder = this._placeholder;
-    if (!content || !placeholder || this.#isGone) return;
+    if (!content || this.#isGone) return;
 
     if (e.detail.phase === "start") {
       // Drop cached measurements so each drag starts from current layout, before any drag writes.
@@ -757,22 +695,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       case "update": {
         if (e.detail.phase === "start") {
           // Measure everything the drag will need now, before any of its style writes, so no later read forces layout.
-          this.#startBounds = content.matches(":popover-open") ? null : content.getBoundingClientRect();
           this.#measuredActions = this.#measureActions();
-          this.#snapshots.clear();
-          if (this.stagger > 0) {
-            const reveals = this.#resolveReveals();
-            const index = reveals.indexOf(this);
-            for (const step of [-1, 1]) {
-              for (let i = 1; index >= 0 && i <= this.staggerCount; i++) {
-                const sibling = reveals[index + step * i];
-                if (!sibling) break;
-                if (sibling._state === "covered" && !sibling.hasAttribute("popover")) {
-                  this.#snapshots.set(sibling, this.#measure(sibling));
-                }
-              }
-            }
-          }
           this.#cancelSettle?.();
           this.#released = false;
           this.#setDragging(false);
@@ -812,11 +735,8 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
         if (begin) {
           this.#setDragging(true);
           this.#snapOffset = 0;
-          // Must precede measuring: the other item's stagger may have promoted this element.
           displaced = this.#closeSiblings();
         }
-
-        this.#promote(content, placeholder);
 
         if (begin && displaced !== 0) {
           // Start visually where the stagger left this element, then ease onto the pointer.
@@ -938,23 +858,18 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
 
     const siblings = this.#resolveReveals().filter((x) => x !== this);
 
-    // Release any sibling still springing back from its own stagger, so it is back in flow before measuring.
     siblings.forEach((x) => x.#finishStagger?.());
 
     for (const sibling of siblings) {
       if (sibling._state === "covered" || sibling.#dragging) continue;
 
-      // Take this element out of the other's stagger first, so it is back in flow before it measures itself.
       const index = sibling.#staggered.findIndex((item) => item.el === this);
       if (index >= 0) {
         const [item] = sibling.#staggered.splice(index, 1);
-        displaced = new DOMMatrixReadOnly(getComputedStyle(this).transform).m41;
-        item.cleanup?.();
-        if (this.matches(":popover-open")) this.hidePopover();
-        this.removeAttribute("popover");
-        if (item.original === null) this.removeAttribute("style");
-        else this.setAttribute("style", item.original);
-        item.spacer?.remove();
+        displaced =
+          new DOMMatrixReadOnly(getComputedStyle(this).transform).m41 -
+          (item.baseTransform === "none" ? 0 : new DOMMatrixReadOnly(item.baseTransform).m41);
+        this.#restoreStagger(item);
       }
 
       sibling.close();
@@ -992,11 +907,8 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       content.style.removeProperty("transition");
       this.#unlockActions();
 
-      // A revealed item stays in the top layer so it is never clipped. A closing item that is still being
-      // staggered by a sibling's drag stays there too, until that stagger ends.
-
-      if (!target && !this.style.translate) {
-        this.#demote(content, placeholder);
+      if (!target) {
+        this.#resetContent(content, placeholder);
       }
 
       const state = target ? "revealed" : "covered";
@@ -1077,55 +989,15 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   };
 
   /** @private */
-  #promote(content: HTMLElement, placeholder: HTMLElement): void {
-    if (content.matches(":popover-open")) return;
-
-    // Promote the content to the top layer so that it is not clipped by ancestor overflow.
-    const bounds = this.#startBounds ?? content.getBoundingClientRect();
-    this.#startBounds = null;
-    placeholder.style.height = `${bounds.height}px`;
-    content.style.width = `${bounds.width}px`;
-    content.style.height = `${bounds.height}px`;
-    content.style.position = "fixed";
-    this.#contentTracking = trackPlaceholder(content, placeholder, {
-      initialBounds: bounds,
-      shouldUpdate: () => !this.#dragging,
-    });
-    content.setAttribute("popover", "manual");
-    content.showPopover();
-
-    // The placeholder's width is left unpinned so it follows layout; observing it keeps the content in step.
-    this.#placeholderResizeController.observe(placeholder);
-  }
-
-  /** @private */
-  #demote(content: HTMLElement, placeholder: HTMLElement): void {
-    this.#placeholderResizeController.unobserve(placeholder);
-    this.#contentTracking?.();
-    this.#contentTracking = undefined;
-
-    if (content.matches(":popover-open")) {
-      content.hidePopover();
-    }
-
-    content.removeAttribute("popover");
-
-    for (const p of [
-      "transition",
-      "transform",
-      "translate",
-      "position",
-      "position-anchor",
-      "width",
-      "height",
-      "top",
-      "left",
-    ]) {
+  #resetContent(content: HTMLElement, placeholder: HTMLElement): void {
+    for (const p of ["transition", "transform", "translate", "display"]) {
       content.style.removeProperty(p);
     }
-
-    placeholder.style.width = "";
+    for (const side of ["leading", "trailing"]) {
+      this.shadowRoot?.querySelector<HTMLElement>(`.${side}`)?.style.removeProperty("display");
+    }
     placeholder.style.height = "";
+    placeholder.style.removeProperty("transition");
   }
 
   /** @private */
@@ -1139,90 +1011,31 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     const index = reveals.indexOf(this);
     if (index < 0) return;
 
-    const targets: { el: HTMLElement; distance: number }[] = [];
-
     for (const step of [-1, 1]) {
       for (let i = 1; i <= this.staggerCount; i++) {
         const sibling = reveals[index + step * i];
         if (!sibling) break;
-        if (sibling.hasAttribute("popover")) continue;
-
-        if (sibling._state !== "covered") {
-          // An open or closing host keeps its content in the top layer, so it is nudged in place
-          // using `translate` (which composes with its content's own transform) and not promoted.
-
-          list.push({ el: sibling, distance: i, spacer: null, original: null });
-          sibling.#nudge(this.#staggerOffset(this.#x, i), true);
-          continue;
-        }
-
-        targets.push({ el: sibling, distance: i });
+        list.push({
+          el: sibling,
+          distance: i,
+          transform: sibling.style.getPropertyValue("transform"),
+          transformPriority: sibling.style.getPropertyPriority("transform"),
+          baseTransform: getComputedStyle(sibling).transform,
+          transition: sibling.style.getPropertyValue("transition"),
+          transitionPriority: sibling.style.getPropertyPriority("transition"),
+        });
       }
     }
-
-    // Measure everything before promoting anything (promotion changes layout).
-    const snapshots = targets.map(({ el }) => this.#snapshots.get(el) ?? this.#measure(el));
-    this.#snapshots.clear();
-    targets.forEach(({ el, distance }, i) => this.#promoteSibling(el, distance, list, this.#x, snapshots[i]));
   }
 
   /** @private */
-  #measure(el: HTMLElement): SiblingSnapshot {
-    const cs = getComputedStyle(el);
-    const styles: Record<string, string> = {};
-
-    for (const p of PROMOTED_STYLES) {
-      styles[p] = cs.getPropertyValue(p);
-    }
-
-    // Longhands are read because some browsers return an empty string for the `margin` shorthand.
-    const margin = ["top", "right", "bottom", "left"].map((x) => cs.getPropertyValue(`margin-${x}`) || "0px").join(" ");
-
-    return { rect: el.getBoundingClientRect(), margin, styles };
-  }
-
-  /** @private */
-  #promoteSibling(
-    sibling: HTMLElement,
-    distance: number,
-    list: StaggerItem[],
-    x: number,
-    snapshot = this.#measure(sibling),
-  ): void {
-    const { rect, margin, styles } = snapshot;
-    const spacer = document.createElement("div");
-
-    spacer.style.cssText = `width:${rect.width}px;height:${rect.height}px;margin:${margin};flex:none;pointer-events:none`;
-    spacer.setAttribute("aria-hidden", "true");
-    sibling.before(spacer);
-
-    const original = sibling.getAttribute("style");
-
-    // The UA popover stylesheet would otherwise override the element's own appearance.
-    for (const p of PROMOTED_STYLES) sibling.style.setProperty(p, styles[p]);
-    sibling.style.cssText += `;margin:0;inset:auto;position:fixed;box-sizing:border-box;width:${rect.width}px;height:${rect.height}px;top:${rect.top}px;left:${rect.left}px;transition:none;will-change:transform;transform:translateX(${this.#staggerOffset(x, distance)}px)`;
-    const cleanup = trackPlaceholder(sibling, spacer, {
-      initialBounds: rect,
-      shouldUpdate: () => !this.#dragging,
-    });
-    sibling.setAttribute("popover", "manual");
-    sibling.showPopover();
-
-    list.push({ el: sibling, distance, spacer, original, cleanup });
-  }
-
-  /** @private */
-  #nudge(px: number | null, animate: boolean): void {
-    // The host's translate carries its content too, since a promoted content tracks the placeholder inside the host.
-    if (px === null) {
-      this.style.removeProperty("translate");
-      this.style.removeProperty("transition");
-      return;
-    }
-
-    const motion = `${DesignToken.motion.spring.fastSpatial}`;
-    this.style.transition = animate ? `translate ${motion}` : "none";
-    this.style.translate = `${px}px`;
+  #restoreStagger(item: StaggerItem): void {
+    const { el, transform, transformPriority, transition, transitionPriority } = item;
+    el.style.removeProperty(SHAPE_GROWTH);
+    if (transform) el.style.setProperty("transform", transform, transformPriority);
+    else el.style.removeProperty("transform");
+    if (transition) el.style.setProperty("transition", transition, transitionPriority);
+    else el.style.removeProperty("transition");
   }
 
   /** @private */
@@ -1464,15 +1277,11 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
 
   /** @private */
   #applyStagger(x: number, animate = false): void {
-    for (const { el, distance, spacer } of this.#staggered) {
+    for (const { el, distance, baseTransform } of this.#staggered) {
       const offset = this.#staggerOffset(x, distance);
       el.style.setProperty(SHAPE_GROWTH, this.#shapeGrowth(this.#staggerOffset(this.#progressOf(x), distance)));
-      if (spacer) {
-        el.style.transition = animate ? `transform ${DesignToken.motion.spring.fastEffects}` : "none";
-        el.style.transform = `translateX(${offset}px)`;
-      } else {
-        (el as M3eSwipeRevealElement).#nudge(offset, true);
-      }
+      el.style.transition = animate ? `transform ${DesignToken.motion.spring.fastEffects}` : "none";
+      el.style.transform = `translateX(${offset}px) ${baseTransform === "none" ? "" : baseTransform}`;
     }
   }
 
@@ -1496,34 +1305,10 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       clearTimeout(timer);
       this.#finishStagger = undefined;
 
-      for (const { el, spacer, original, cleanup } of staggered) {
+      for (const item of staggered) {
+        const { el } = item;
         el.removeEventListener("transitionend", onEnd);
-
-        if (!spacer) {
-          const host = el as M3eSwipeRevealElement;
-          host.#nudge(null, false);
-          const content = host._content;
-          const placeholder = host._placeholder;
-
-          // An item that finished closing while staggered was kept in the top layer. Release it now.
-          if (host._state === "covered" && content && placeholder && content.matches(":popover-open")) {
-            host.#demote(content, placeholder);
-          }
-
-          continue;
-        }
-
-        cleanup?.();
-        if (el.matches(":popover-open")) el.hidePopover();
-        el.removeAttribute("popover");
-
-        if (original === null) {
-          el.removeAttribute("style");
-        } else {
-          el.setAttribute("style", original);
-        }
-
-        spacer.remove();
+        this.#restoreStagger(item);
       }
 
       if (this.#staggered === staggered) {
@@ -1532,18 +1317,13 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     };
 
     const onEnd = (e: TransitionEvent) => {
-      if (e.propertyName === "transform" || e.propertyName === "translate") finish();
+      if (e.target === e.currentTarget && e.propertyName === "transform") finish();
     };
 
-    for (const { el, spacer } of staggered) {
+    for (const { el, baseTransform } of staggered) {
       el.addEventListener("transitionend", onEnd);
-
-      if (spacer) {
-        el.style.transition = `transform ${DesignToken.motion.spring.fastSpatial}`;
-        el.style.transform = "translateX(0px)";
-      } else {
-        (el as M3eSwipeRevealElement).#nudge(0, true);
-      }
+      el.style.transition = `transform ${DesignToken.motion.spring.fastSpatial}`;
+      el.style.transform = `translateX(0px) ${baseTransform === "none" ? "" : baseTransform}`;
     }
 
     timer = window.setTimeout(finish, 600);
