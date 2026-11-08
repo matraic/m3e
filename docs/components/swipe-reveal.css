@@ -16,3 +16,6 @@
   top: 16px;
   margin-inline-start: -8px;
 }
+m3e-list {
+  overflow: visible;
+}

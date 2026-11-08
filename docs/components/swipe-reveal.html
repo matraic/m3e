@@ -20,7 +20,7 @@
     <link href="./swipe-reveal.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.11.4/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.11.5/dist/all.min.js"></script>
     <script src="../main.js"></script>
     <script src="./swipe-reveal.js"></script>
   </head>
@@ -53,6 +53,10 @@
           Revealed actions can be hidden by tapping or dragging the content. As actions are revealed and hidden,
           <code>revealing</code>, <code>revealed</code>, and <code>covered</code> events are emitted. Actions can also
           be revealed and hidden programmatically using the <code>reveal()</code> and <code>close()</code> methods.
+        </p>
+        <p>
+          Content and staggered items remain in their scrolling container and may be clipped by an ancestor's overflow.
+          Add padding to the scrolling container to make room for displaced content or shadows.
         </p>
         <p>
           The following example illustrates use of <code>m3e-swipe-reveal</code> with items in a segmented
@@ -105,6 +109,17 @@
   &lt;/m3e-swipe-reveal&gt;
   &lt;!-- Additional items omitted for brevity --&gt;
 &lt;/m3e-list&gt;</pre
+          >
+        </m3e-card>
+        <p>
+          By default, <code>m3e-list</code> clips overflowing content. Use the following CSS to allow content to extend
+          beyond the list bounds.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+m3e-list {
+  overflow: visible;
+}</pre
           >
         </m3e-card>
 
