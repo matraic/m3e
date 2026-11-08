@@ -156,6 +156,10 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       transform: translateX(0px);
       will-change: transform;
     }
+    .content.long-press-enabled {
+      user-select: none;
+      -webkit-user-select: none;
+    }
     :host(:state(--dragging)) .content {
       user-select: none;
       -webkit-user-select: none;
@@ -608,7 +612,12 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     return html`<div class="leading" role="none">
         <slot name="leading" @slotchange=${this.#handleSlotChange}></slot>
       </div>
-      <div class="content" role="none" id="content" @click=${{ handleEvent: this.#handleContentClick, capture: true }}>
+      <div
+        class="content ${this.triggers.includes("long-press") ? "long-press-enabled" : ""}"
+        role="none"
+        id="content"
+        @click=${{ handleEvent: this.#handleContentClick, capture: true }}
+      >
         <slot></slot>
       </div>
       <div class="placeholder" aria-hidden="true"></div>

@@ -959,6 +959,11 @@ test.describe("m3e-swipe-reveal triggers", () => {
 
   test("a long press reveals while still pressed and the release does not close it", async ({ page, render }) => {
     await render(item("a", 'triggers="long-press tap"'));
+    const selection = await page.locator("#a").evaluate((el) => {
+      const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+      return [getComputedStyle(content).userSelect, getComputedStyle(content).getPropertyValue("-webkit-user-select")];
+    });
+    expect(selection).toEqual(["none", "none"]);
     const box = (await page.locator("#a").boundingBox())!;
 
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
