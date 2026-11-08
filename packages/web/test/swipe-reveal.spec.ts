@@ -873,6 +873,44 @@ test.describe("m3e-swipe-reveal triggers", () => {
     expect(await state(page, "a")).toBe("revealed");
   });
 
+  test("a touch long press stays revealed after release", async ({ page, render }) => {
+    await render(item("a", 'triggers="long-press tap"'));
+    await page.getByText("Content a").evaluate((el) => {
+      el.addEventListener("click", () => el.setAttribute("data-clicked", "true"));
+    });
+    const box = (await page.locator("#a").boundingBox())!;
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true });
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await page.waitForTimeout(500);
+    expect(await state(page, "a")).toBe("revealed");
+    await expect(page.getByText("Content a")).not.toHaveAttribute("data-clicked");
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await expect.poll(() => state(page, "a")).toBe("covered");
+    await cdp.detach();
+  });
+
+  test("a canceled touch long press does not suppress the next click", async ({ page, render }) => {
+    await render(item("a", 'triggers="long-press"'));
+    const box = (await page.locator("#a").boundingBox())!;
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true });
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchCancel", touchPoints: [] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await expect.poll(() => state(page, "a")).toBe("covered");
+    await cdp.detach();
+  });
+
   test("a short press does not long-press reveal", async ({ page, render }) => {
     await render(item("a", 'triggers="long-press"'));
 

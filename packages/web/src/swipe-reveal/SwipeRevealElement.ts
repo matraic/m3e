@@ -226,7 +226,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   /** @private */ #base = 0;
   /** @private */ #side: SwipeRevealSide | null = null;
   /** @private */ #restSide: SwipeRevealSide | null = null;
-  /** @private */ #suppressClick = false;
+  /** @private */ #suppressedClick?: { pointerId: number; released: boolean; abort: AbortController };
   /** @private */ #cancelSettle?: () => void;
   /** @private */ @state() private _state: SwipeRevealState = "covered";
   /** @private */ @state() private _hasLeading: boolean = false;
@@ -536,6 +536,7 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
+    this.#clearSuppressedClick();
     this.#directionalitySubscription?.();
     this.#directionalitySubscription = undefined;
 
@@ -653,12 +654,39 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
         this.reveal();
 
         if (e.detail.gestureName === "long-press") {
-          // The release that follows a long press would otherwise click the content and close it again.
-          this.#suppressClick = true;
-          window.addEventListener("pointerup", () => setTimeout(() => (this.#suppressClick = false)), { once: true });
+          const inputId = e.detail.inputId;
+          this.#suppressReleaseClick(typeof inputId === "number" ? inputId : inputId[0]);
         }
         break;
     }
+  }
+
+  /** @private */
+  #suppressReleaseClick(pointerId: number): void {
+    this.#clearSuppressedClick();
+    // Touch compatibility clicks can arrive after pointerup, so keep suppression until the click or the next press.
+    const suppression: { pointerId: number; released: boolean; abort: AbortController } = {
+      pointerId,
+      released: false,
+      abort: new AbortController(),
+    };
+    this.#suppressedClick = suppression;
+    const options = { capture: true, signal: suppression.abort.signal };
+    window.addEventListener("pointerup", (event) => {
+      if (event.pointerId === pointerId) suppression.released = true;
+    }, options);
+    window.addEventListener("pointercancel", (event) => {
+      if (event.pointerId === pointerId) this.#clearSuppressedClick();
+    }, options);
+    window.addEventListener("pointerdown", () => {
+      if (suppression.released) this.#clearSuppressedClick();
+    }, options);
+  }
+
+  /** @private */
+  #clearSuppressedClick(): void {
+    this.#suppressedClick?.abort.abort();
+    this.#suppressedClick = undefined;
   }
 
   /** @private */
@@ -977,7 +1005,14 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
 
   /** @private */
   readonly #handleContentClick = (e: Event): void => {
-    if (this.#suppressClick) {
+    const suppression = this.#suppressedClick;
+    if (
+      suppression &&
+      e instanceof MouseEvent &&
+      e.detail > 0 &&
+      (!(e instanceof PointerEvent) || e.pointerId === suppression.pointerId)
+    ) {
+      this.#clearSuppressedClick();
       e.preventDefault();
       e.stopImmediatePropagation();
       return;
