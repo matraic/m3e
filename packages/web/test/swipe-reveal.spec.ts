@@ -766,6 +766,37 @@ test.describe("m3e-swipe-reveal dismiss", () => {
     expect(await log(page)).toEqual([]);
   });
 
+  for (const cancel of [false, true]) {
+    test(`removal during ${cancel ? "a canceled" : "the"} dismiss event stops dismissal`, async ({ page, render }) => {
+      await render(item("a", 'dismissible="trailing"'));
+      await call(page, "a", "reveal", "trailing");
+      await expect.poll(() => state(page, "a")).toBe("revealed");
+
+      const result = await page.locator("#a").evaluate((el, shouldCancel) => {
+        const reveal = el as M3eSwipeRevealElement;
+        const parent = reveal.parentElement!;
+        let dismissed = false;
+        reveal.addEventListener("dismissed", () => (dismissed = true));
+        reveal.addEventListener(
+          "dismiss",
+          (event) => {
+            if (shouldCancel) event.preventDefault();
+            reveal.remove();
+          },
+          { once: true },
+        );
+        reveal.dismiss("trailing");
+        const disconnectedState = reveal.state;
+        parent.append(reveal);
+        return { disconnectedState, dismissed };
+      }, cancel);
+
+      expect(result).toEqual({ disconnectedState: "covered", dismissed: false });
+      await call(page, "a", "reveal", "trailing");
+      await expect.poll(() => state(page, "a")).toBe("revealed");
+    });
+  }
+
   test("dismiss events bubble and carry the side", async ({ page, render }) => {
     await render(`<m3e-swipe-reveal-group id="g" dismissible="trailing">${item("a")}</m3e-swipe-reveal-group>`);
     await page.locator("#g").evaluate((g) => {

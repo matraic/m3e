@@ -518,7 +518,9 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       composed: true,
       cancelable: true,
     });
-    if (!this.dispatchEvent(event)) {
+    const accepted = this.dispatchEvent(event);
+    if (!this.isConnected) return;
+    if (!accepted) {
       // The consumer declined, so spring back to where the item was resting.
       this.#setArmed(false);
       if (this.#x !== 0 || this.#side) this.#settle(this.#side);
