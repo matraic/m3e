@@ -360,6 +360,98 @@ test.describe("m3e-swipe-reveal", () => {
     expect(await log(page)).toEqual(["covered"]);
   });
 
+  for (const target of ["revealed", "covered"] as const) {
+    test(`vertical movement does not interrupt settling to ${target}`, async ({ page, render }) => {
+      await render(item("a"));
+      if (target === "covered") {
+        await call(page, "a", "reveal", "leading");
+        await expect.poll(() => state(page, "a")).toBe("revealed");
+      }
+
+      await events(page, "a", [target]);
+      const box = (await page.locator("#a").boundingBox())!;
+      const x = box.x + box.width / 2;
+      const y = box.y + box.height / 2;
+      await page.mouse.move(x, y);
+      await page.locator("#a").evaluate((el) => {
+        const style = document.createElement("style");
+        style.textContent = ".content { transition: transform 2s linear !important; }";
+        el.shadowRoot!.append(style);
+      });
+      await call(page, "a", target === "revealed" ? "reveal" : "close", "leading");
+      expect(await state(page, "a")).toBe("revealing");
+      await page.mouse.down();
+      await page.mouse.move(x, y + 20);
+      await page.mouse.up();
+
+      await expect.poll(() => state(page, "a")).toBe(target);
+      expect(await log(page)).toEqual([target]);
+      expect(
+        await page.locator("#a").evaluate((el) =>
+          ["leading", "trailing"].map((side) => el.shadowRoot!.querySelector<HTMLElement>(`.${side}`)!.style.width),
+        ),
+      ).toEqual(["", ""]);
+    });
+  }
+
+  test("a gesture can begin vertically and drag horizontally after settling", async ({ page, render }) => {
+    await render(item("a"));
+    await call(page, "a", "reveal", "leading");
+    const box = (await page.locator("#a").boundingBox())!;
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.mouse.move(x, y + 20);
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+    await page.mouse.move(x - 50, y + 20);
+    expect(await state(page, "a")).toBe("revealing");
+    const offset = await page.locator("#a").evaluate((el) => {
+      const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+      return new DOMMatrixReadOnly(getComputedStyle(content).transform).m41;
+    });
+    expect(offset).toBeGreaterThan(30);
+    expect(offset).toBeLessThan(60);
+    await page.mouse.up();
+    await expect.poll(() => state(page, "a")).not.toBe("revealing");
+  });
+
+  test("a horizontal drag takes over from the current position after an initial vertical movement", async ({
+    page,
+    render,
+  }) => {
+    await render(item("a"));
+    const box = (await page.locator("#a").boundingBox())!;
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    const offset = () =>
+      page.locator("#a").evaluate((el) => {
+        const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+        return new DOMMatrixReadOnly(getComputedStyle(content).transform).m41;
+      });
+    await page.mouse.move(x, y);
+    await call(page, "a", "reveal", "leading");
+    await page.locator("#a").evaluate((el) => {
+      const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+      content.style.transition = "none";
+      content.style.transform = "translateX(0px)";
+      void content.offsetWidth;
+      content.style.transition = "transform 2s linear";
+      content.style.transform = "translateX(96px)";
+    });
+    await page.mouse.down();
+    await page.mouse.move(x, y + 20);
+    await page.waitForTimeout(150);
+    const before = await offset();
+    expect(await state(page, "a")).toBe("revealing");
+    await page.mouse.move(x + 40, y + 20);
+    await expect.poll(async () => (await offset()) - before).toBeGreaterThan(38);
+    const after = await offset();
+    expect(after - before).toBeLessThan(45);
+    await page.mouse.up();
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+  });
+
   test("a fling toward the trailing side reveals the trailing actions", async ({ page, render }) => {
     await render(item("a"));
 
@@ -402,6 +494,65 @@ test.describe("m3e-swipe-reveal", () => {
     await drag(page, "a", 70);
 
     await expect.poll(() => state(page, "a")).toBe("covered");
+  });
+
+  test("repeatedly reversing a drag continues to track the pointer on both sides", async ({ page, render }) => {
+    await render(`<m3e-list variant="segmented">
+      <m3e-swipe-reveal id="a" style="width: 400px">
+        <m3e-icon-button slot="leading" aria-label="Pin">P</m3e-icon-button>
+        <m3e-list-item>Content</m3e-list-item>
+        <m3e-icon-button slot="trailing" aria-label="Bookmark">B</m3e-icon-button>
+      </m3e-swipe-reveal>
+    </m3e-list>`);
+    const box = (await page.locator("#a").boundingBox())!;
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    const offset = () =>
+      page.locator("#a").evaluate((el) => {
+        const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+        return new DOMMatrixReadOnly(getComputedStyle(content).transform).m41;
+      });
+
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    for (let i = 0; i < 20; i++) {
+      await page.mouse.move(x + 75, y, { steps: 4 });
+      await expect.poll(offset).toBeGreaterThan(40);
+      await page.mouse.move(x - 75, y, { steps: 4 });
+      await expect.poll(offset).toBeLessThan(-40);
+    }
+    await page.mouse.up();
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+    expect(await side(page, "a")).toBe("trailing");
+  });
+
+  test("repeated touch reversals with vertical drift continue tracking both sides", async ({ page, render }) => {
+    await render(`<m3e-list variant="segmented">
+      <m3e-swipe-reveal id="a" style="width: 400px">
+        <m3e-icon-button slot="leading" aria-label="Pin">P</m3e-icon-button>
+        <m3e-list-item>Content</m3e-list-item>
+        <m3e-icon-button slot="trailing" aria-label="Bookmark">B</m3e-icon-button>
+      </m3e-swipe-reveal>
+    </m3e-list>`);
+    const box = (await page.locator("#a").boundingBox())!;
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true });
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+    for (let i = 0; i < 20; i++) {
+      for (const dx of [75, 0, -75, 0]) {
+        await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x + dx, y: y + 10 }] });
+        const offset = await page.locator("#a").evaluate((el) => {
+          const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+          return new DOMMatrixReadOnly(getComputedStyle(content).transform).m41;
+        });
+        if (dx) expect(offset * Math.sign(dx)).toBeGreaterThan(40);
+      }
+    }
+    await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+    await expect.poll(() => state(page, "a")).toBe("covered");
+    await cdp.detach();
   });
 
   test("only one item is revealed at a time in a group", async ({ page, render }) => {

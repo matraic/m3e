@@ -868,23 +868,24 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     switch (e.detail.phase) {
       case "start":
       case "update": {
-        if (e.detail.phase === "start") {
-          // Measure everything the drag will need now, before any of its style writes, so no later read forces layout.
+        if (!this.#dragging) {
+          if (e.detail.axis !== "x") break;
+
+          // Resume from wherever the content visually is, including mid-transition.
+          const base = new DOMMatrixReadOnly(getComputedStyle(content).transform).m41;
+          if (
+            !(e.detail.direction === this.#leadingDirection
+              ? this._hasLeading || base !== 0
+              : this._hasTrailing || base !== 0)
+          ) {
+            break;
+          }
+
+          // Only interrupt settling after the gesture can actually drag the content.
           this.#measuredActions = this.#measureActions();
           this.#cancelSettle?.();
           this.#released = false;
-          this.#setDragging(false);
-          // Resume from wherever the content visually is, including mid-transition.
-          this.#base = this.#x = new DOMMatrixReadOnly(getComputedStyle(content).transform).m41;
-        }
-        if (
-          !this.#dragging &&
-          (e.detail.axis !== "x" ||
-            !(e.detail.direction === this.#leadingDirection
-              ? this._hasLeading || this.#base !== 0
-              : this._hasTrailing || this.#base !== 0))
-        ) {
-          break;
+          this.#base = this.#x = base;
         }
         // The first movement can be the only touchmove in a quick swipe.
         const wasArmed = this.#armed;
