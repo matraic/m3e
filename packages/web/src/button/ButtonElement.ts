@@ -115,7 +115,7 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * Use `href` to make the button a link; `target`, `rel`, and `download` are also supported. Import `@m3e/web/icon` and load the Material Symbols font to use `m3e-icon`.
  * ```html
  * <m3e-button variant="tonal" href="https://www.google.com" target="_blank">
- *   Google<m3e-icon slot="trailing-icon" name="open_in_new_window"></m3e-icon>
+ *   Google<m3e-icon slot="trailing-icon" name="open_in_new_window"></m3e-icon>
  * </m3e-button>
  * ```
  *
