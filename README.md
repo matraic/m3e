@@ -46,11 +46,12 @@ This monorepo uses npm scripts for building, analyzing, linting, and cleaning pa
 
 Below is a list of all packages in this monorepo, with a short summary and installation instructions for each:
 
-| Package                                      | Summary                                | Installation             |
-| -------------------------------------------- | -------------------------------------- | ------------------------ |
-| [**@m3e/web**](./packages/web/README.md)     | Platform‑native Web Components for M3E | `npm install @m3e/web`   |
-| [**@m3e/react**](./packages/react/README.md) | React bindings for M3E Web Components  | `npm install @m3e/react` |
-| [**@m3e/icons**](./packages/icons/README.md) | Icons for M3E Web Components           | `npm install @m3e/icons` |
+| Package                                      | Summary                                    | Installation             |
+| -------------------------------------------- | ------------------------------------------ | ------------------------ |
+| [**@m3e/web**](./packages/web/README.md)     | Platform‑native Web Components for M3E     | `npm install @m3e/web`   |
+| [**@m3e/react**](./packages/react/README.md) | React bindings for M3E Web Components      | `npm install @m3e/react` |
+| [**@m3e/icons**](./packages/icons/README.md) | Icons for M3E Web Components               | `npm install @m3e/icons` |
+| [**@m3e/mcp**](./packages/mcp/README.md)     | MCP server for AI-assisted M3E development | `npm install @m3e/mcp`   |
 
 ## 📍 Roadmap
 

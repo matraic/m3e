@@ -3,6 +3,7 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist/src",
+    "types": [],
     "paths": {
       "@m3e/web": ["./src"],
       "@m3e/web/*": ["./src/*"]

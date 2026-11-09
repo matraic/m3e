@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "..",
+    "outDir": "../test-results",
+    "declaration": false,
+    "declarationMap": false
+  },
+  "include": ["../src/**/*.ts", "**/*.ts"]
+}

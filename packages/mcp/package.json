@@ -1,0 +1,45 @@
+{
+  "name": "@m3e/mcp",
+  "version": "2.12.0",
+  "description": "Model Context Protocol server exposing the M3E component library to AI assistants",
+  "author": "matraic <matraic@yahoo.com>",
+  "license": "MIT",
+  "homepage": "https://matraic.github.io/m3e/#/getting-started/mcp.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matraic/m3e.git"
+  },
+  "keywords": [
+    "material design",
+    "mcp",
+    "model context protocol",
+    "web components",
+    "custom elements manifest"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "main": "./dist/index.js",
+  "bin": {
+    "m3e-mcp": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rimraf dist && tsc -p tsconfig.json",
+    "cem": "echo \"@m3e/mcp: using @m3e/web manifest\"",
+    "lint": "echo \"@m3e/mcp: skipping lint\"",
+    "test": "rimraf test-results && tsc -p test/tsconfig.json && node --test test-results/test/*.test.js",
+    "clean": "rimraf dist test-results"
+  },
+  "dependencies": {
+    "@m3e/web": "^2.12.0",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0"
+  }
+}

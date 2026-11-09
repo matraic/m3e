@@ -2,7 +2,8 @@
   "workspaces": [
     "packages/web",
     "packages/react",
-    "packages/icons"
+    "packages/icons",
+    "packages/mcp"
   ],
   "scripts": {
     "build": "npm run build --workspaces",
@@ -11,7 +12,7 @@
     "test": "npm run test --workspaces --if-present",
     "all": "npm run build && npm run cem && npm run lint",
     "clean": "npm run clean --workspaces",
-    "release": "npm publish --access public --workspace=@m3e/web --workspace=@m3e/react",
+    "release": "npm publish --access public --workspace=@m3e/web --workspace=@m3e/react --workspace=@m3e/mcp",
     "release:icons": "npm publish --access public --workspace=@m3e/icons"
   },
   "type": "module",

@@ -14,6 +14,30 @@ export default {
   },
   plugins: [
     typeParserPlugin(),
+    {
+      name: "collect-class-documentation",
+      analyzePhase({ ts, node, moduleDoc }) {
+        if (!ts.isClassDeclaration(node) || !node.name) return;
+
+        const declaration = moduleDoc.declarations.find((item) => item.name === node.name.text);
+        if (!declaration) return;
+
+        const tags = (node.jsDoc ?? []).flatMap((doc) => doc.tags ?? []);
+        const tagText = (tag) => {
+          const comment = tag.comment;
+          return (typeof comment === "string" ? comment : (comment ?? []).map((part) => part.text).join("")).trim();
+        };
+        const descriptions = tags.filter((tag) => tag.tagName.text === "description").map(tagText).filter(Boolean);
+        const examples = tags.filter((tag) => tag.tagName.text === "example").map(tagText).filter(Boolean);
+
+        if (descriptions.length) {
+          declaration.remarks = descriptions.join("\n\n");
+        }
+        if (examples.length) {
+          declaration.examples = examples;
+        }
+      },
+    },
     customElementVsCodePlugin({
       outdir: "dist",
       htmlFileName: "html-custom-data.json",

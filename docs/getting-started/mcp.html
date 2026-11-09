@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>MCP Server for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="MCP server for the M3E component catalog" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.12.0/dist/all.min.js"></script>
+    <script src="../main.js"></script>
+  </head>
+  <body>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">MCP Server</m3e-heading>
+        <p>
+          The <code>@m3e/mcp</code> package provides a
+          <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener noreferrer"
+            >Model Context Protocol (MCP)</a
+          >
+          server that gives AI assistants access to the M3E Web Components catalog, API details, and documented
+          examples.
+        </p>
+
+        <m3e-heading variant="headline" size="medium" level="2">Installation</m3e-heading>
+        <p>Requires Node.js 22 or later.</p>
+        <p>Install the package in your project, or use <code>npx</code> to run it without a separate installation.</p>
+        <m3e-card variant="outlined" class="install"><pre slot="content">npm install @m3e/mcp</pre></m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Configure a client</m3e-heading>
+        <p>
+          The default transport is standard input/output (stdio). Add the following to a portable
+          <code>.mcp.json</code> file in your workspace root. The <code>m3e</code> key is the server name in your client
+          configuration and can be changed.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+{
+  &quot;mcpServers&quot;: {
+    &quot;m3e&quot;: {
+      &quot;type&quot;: &quot;stdio&quot;,
+      &quot;command&quot;: &quot;npx&quot;,
+      &quot;args&quot;: [&quot;-y&quot;, &quot;@m3e/mcp&quot;]
+    }
+  }
+}</pre
+          >
+        </m3e-card>
+        <p>
+          In VS Code, the guided setup offers workspace-root configuration when the experimental
+          <code>chat.mcp.workspaceRootConfig.enabled</code> setting is enabled. For use across workspaces, use
+          <code>$COPILOT_HOME/mcp-config.json</code>, or <code>~/.copilot/mcp-config.json</code> if
+          <code>COPILOT_HOME</code> is unset.
+        </p>
+        <p>
+          The legacy VS Code configuration uses <code>.vscode/mcp.json</code> and a top-level
+          <code>servers</code> object instead. See the
+          <a
+            href="https://code.visualstudio.com/docs/agents/reference/mcp-configuration"
+            target="_blank"
+            rel="noopener noreferrer"
+            >VS Code MCP configuration reference</a
+          >
+          for differences between formats.
+        </p>
+
+        <m3e-heading variant="headline" size="medium" level="2">Streamable HTTP</m3e-heading>
+        <p>Alternatively, start the HTTP server in a terminal:</p>
+        <m3e-card variant="outlined" class="example"><pre slot="content">npx -y @m3e/mcp --http</pre></m3e-card>
+        <p>Then configure a client to connect to the default local URL:</p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+{
+  &quot;mcpServers&quot;: {
+    &quot;m3e&quot;: {
+      &quot;type&quot;: &quot;http&quot;,
+      &quot;url&quot;: &quot;http://127.0.0.1:3333/mcp&quot;
+    }
+  }
+}</pre
+          >
+        </m3e-card>
+        <br />
+        <m3e-callout>
+          <m3e-icon slot="icon" name="info"></m3e-icon>
+          <span slot="label">Network access</span>
+          The HTTP transport is stateless and has no authentication. It listens on loopback by default; only bind it to
+          a network interface you trust.
+        </m3e-callout>
+
+        <m3e-heading variant="headline" size="medium" level="2">Available tools</m3e-heading>
+        <ul>
+          <li><code>list_components</code> lists custom elements and their short descriptions.</li>
+          <li><code>search_components</code> searches component names and documentation.</li>
+          <li><code>get_component</code> returns a component's API and detailed description.</li>
+          <li><code>get_usage_example</code> returns documented examples for a component.</li>
+          <li><code>get_react_wrapper</code> provides React import, wrapper, and event prop information.</li>
+          <li><code>list_css_properties</code> lists CSS custom properties with optional filters.</li>
+        </ul>
+        <p>
+          These tools provide catalog information and snippets; they do not execute or modify your project. You can ask
+          your assistant to find a component, explain its API, or show an example.
+        </p>
+
+        <m3e-callout>
+          <m3e-icon slot="icon" name="info"></m3e-icon>
+          <span slot="label">Component catalog</span>
+          The server reads the Custom Elements Manifest from its resolved <code>@m3e/web</code> dependency when it
+          starts. This is not necessarily the version installed in your project. Restart the server after updating that
+          manifest to load the changes.
+        </m3e-callout>
+
+        <m3e-heading variant="headline" size="medium" level="2">CLI options</m3e-heading>
+        <p>
+          The <code>m3e-mcp</code> command accepts options to select a transport and configure its HTTP address. Pass
+          these options when starting the server directly or through an MCP client's command arguments.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">m3e-mcp [--http] [--port 3333] [--host 127.0.0.1]</pre>
+        </m3e-card>
+        <p>
+          Use <code>--port</code> and <code>--host</code> to configure HTTP, or <code>--help</code> to show usage.
+          Without <code>--http</code>, the server uses stdio.
+        </p>
+      </m3e-content-pane>
+      <m3e-toc for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">MCP Server</span>
+      </m3e-toc>
+    </div>
+  </body>
+</html>

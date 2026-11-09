@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "m3e": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["./packages/mcp/dist/cli.js"],
+      "tools": ["*"]
+    }
+  }
+}
