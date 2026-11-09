@@ -4,6 +4,19 @@ import { M3eDialogElement } from "./DialogElement";
 
 /**
  * An element, nested within a clickable element, used to open a dialog.
+ *
+ * @example
+ * Nest a trigger inside a clickable element and connect it to the dialog by id.
+ * Import `@m3e/web/button` for the button.
+ * ```html
+ * <m3e-button variant="filled">
+ *   <m3e-dialog-trigger for="dlg">Open Dialog</m3e-dialog-trigger>
+ * </m3e-button>
+ * <m3e-dialog id="dlg" dismissible>
+ *   <!-- Content omitted for brevity -->
+ * </m3e-dialog>
+ * ```
+ *
  * @tag m3e-dialog-trigger
  */
 @customElement("m3e-dialog-trigger")

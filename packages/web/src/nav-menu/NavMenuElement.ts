@@ -26,7 +26,29 @@ import { M3eNavMenuItemElement } from "./NavMenuItemElement";
  * and complex menu structures.
  *
  * @example
- * The following example illustrates a navigation menu with a top-level group of menu items.
+ * Showcase: Multilevel menus. Import `@m3e/web/nav-menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ *
+ * ```html
+ * <m3e-nav-menu>
+ *   <m3e-nav-menu-item open>
+ *     <m3e-icon slot="icon" name="rocket_launch" aria-hidden="true"></m3e-icon>
+ *     <span slot="label">Getting Started</span>
+ *     <m3e-nav-menu-item>
+ *       <m3e-icon slot="icon" name="widgets" aria-hidden="true"></m3e-icon>
+ *       <span slot="label">Overview</span>
+ *     </m3e-nav-menu-item>
+ *     <!-- Additional items omitted for brevity -->;
+ *   </m3e-nav-menu-item>
+ *   <m3e-nav-menu-item>
+ *     <span slot="label">Actions</span>
+ *     <!-- Items omitted for brevity -->;
+ *   </m3e-nav-menu-item>
+ * </m3e-nav-menu>
+ * ```
+ *
+ * @example
+ * Showcase: Personal folders. Import `@m3e/web/nav-menu`. Also import `@m3e/web/heading`, `@m3e/web/icon`, `@m3e/web/divider`. Load a matching Material Symbols font or register the icons.
+ *
  * ```html
  * <m3e-nav-menu>
  *   <m3e-nav-menu-item-group>
@@ -36,45 +58,51 @@ import { M3eNavMenuItemElement } from "./NavMenuItemElement";
  *       <span slot="label">Inbox</span>
  *       <span slot="badge">24</span>
  *     </m3e-nav-menu-item>
- *     <m3e-nav-menu-item>
- *       <m3e-icon slot="icon" name="send"></m3e-icon>
- *       <span slot="label">Outbox</span>
- *     </m3e-nav-menu-item>
- *     <m3e-nav-menu-item>
- *       <m3e-icon slot="icon" name="favorite"></m3e-icon>
- *       <span slot="label">Favorites</span>
- *     </m3e-nav-menu-item>
- *     <m3e-nav-menu-item>
- *       <m3e-icon slot="icon" name="delete"></m3e-icon>
- *       <span slot="label">Trash</span>
- *     </m3e-nav-menu-item>
+ *     <!-- Additional items omitted for brevity -->
+ *   </m3e-nav-menu-item-group>
+ *   <m3e-divider></m3e-divider>
+ *   <m3e-nav-menu-item-group>
+ *     <m3e-heading slot="label" variant="label" size="large">Personal folders</m3e-heading>
+ *     <!-- Items omitted for brevity -->;
  *   </m3e-nav-menu-item-group>
  * </m3e-nav-menu>
  * ```
  *
  * @example
- * The next example illustrates a multilevel navigation menu.
+ * Showcase: Disabling. Import `@m3e/web/nav-menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ *
  * ```html
  * <m3e-nav-menu>
- *   <m3e-nav-menu-item open>
- *     <m3e-icon slot="icon" name="rocket_launch"></m3e-icon>
+ *   <m3e-nav-menu-item open disabled>
+ *     <m3e-icon slot="icon" name="rocket_launch" aria-hidden="true"></m3e-icon>
  *     <span slot="label">Getting Started</span>
  *     <m3e-nav-menu-item>
- *       <m3e-icon slot="icon" name="widgets"></m3e-icon>
+ *       <m3e-icon slot="icon" name="widgets" aria-hidden="true"></m3e-icon>
  *       <span slot="label">Overview</span>
  *     </m3e-nav-menu-item>
- *     <m3e-nav-menu-item>
- *       <m3e-icon slot="icon" name="package_2"></m3e-icon>
- *       <span slot="label">Installation</span>
- *     </m3e-nav-menu-item>
+ *     <!-- Additional items omitted for brevity -->;
  *   </m3e-nav-menu-item>
- *   <m3e-nav-menu-item>
+ *   <m3e-nav-menu-item open>
  *     <span slot="label">Actions</span>
- *     <m3e-nav-menu-item><span slot="label">Button</span></m3e-nav-menu-item>
- *     <m3e-nav-menu-item><span slot="label">Icon</span></m3e-nav-menu-item>
- *     <m3e-nav-menu-item><span slot="label">Icon Button</span></m3e-nav-menu-item>
+ *     <m3e-nav-menu-item disabled><span slot="label">Button</span></m3e-nav-menu-item>
+ *     <!-- Additional items omitted for brevity -->;
  *   </m3e-nav-menu-item>
  * </m3e-nav-menu>
+ * ```
+ *
+ * @example
+ * Showcase: Personal folders. Import `@m3e/web/nav-menu`. Apply the required styling for the illustrated classes in your application.
+ *
+ * ```html
+ * <m3e-nav-menu class="density-3">
+ *   <!-- Items omitted for brevity -->;
+ * </m3e-nav-menu>
+ * ```
+ *
+ * ```css
+ * .density-3 {
+ *   --md-sys-density-scale: -3;
+ * }
  * ```
  *
  * @tag m3e-nav-menu

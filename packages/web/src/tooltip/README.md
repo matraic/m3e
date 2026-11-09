@@ -14,22 +14,52 @@ import "@m3e/web/tooltip";
 
 ## 🧪 Examples
 
-The following example illustrates connecting a tooltip to a button using the `for` attribute.
+Showcase: Plain tooltip. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
 
 ```html
-<m3e-icon-button id="button" aria-label="Back">
+<m3e-icon-button id="button">
   <m3e-icon name="arrow_back"></m3e-icon>
 </m3e-icon-button>
 <m3e-tooltip for="button">Go Back</m3e-tooltip>
 ```
 
-The next example illustrates connecting an interactive rich tooltip to a button using the `for` attribute.
+Showcase: Delays. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
 
 ```html
-<m3e-icon-button id="btnSettings">
+<m3e-icon-button id="button">
+  <m3e-icon name="arrow_back"></m3e-icon>
+</m3e-icon-button>
+<m3e-tooltip for="button" show-delay="0" hide-delay="200">Go Back</m3e-tooltip>
+```
+
+Showcase: Disabling. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+
+```html
+<m3e-icon-button id="button">
+  <m3e-icon name="arrow_back"></m3e-icon>
+</m3e-icon-button>
+<m3e-tooltip for="button" disabled>Go Back</m3e-tooltip>
+```
+
+Showcase: Rich tooltip. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+
+```html
+<m3e-icon-button id="button">
   <m3e-icon name="settings"></m3e-icon>
 </m3e-icon-button>
-<m3e-rich-tooltip for="btnSettings">
+<m3e-rich-tooltip for="button">
+  <span slot="subhead">New settings available</span>
+  Now you can adjust the uploaded image quality, and upgrade your available storage space.
+</m3e-rich-tooltip>
+```
+
+Showcase: Actions. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`, `@m3e/web/button`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+
+```html
+<m3e-icon-button id="button">
+  <m3e-icon name="settings"></m3e-icon>
+</m3e-icon-button>
+<m3e-rich-tooltip for="button">
   <span slot="subhead">New settings available</span>
   Now you can adjust the uploaded image quality, and upgrade your available storage space.
   <div slot="actions">

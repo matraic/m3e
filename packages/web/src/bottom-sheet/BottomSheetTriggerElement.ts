@@ -7,6 +7,44 @@ import { M3eBottomSheetElement } from "./BottomSheetElement";
 
 /**
  * An element, nested within a clickable element, used to trigger a bottom sheet.
+ *
+ * @example
+ * Nest the trigger inside a clickable element and use `for` to reference the sheet.
+ * Import `@m3e/web/button` and `@m3e/web/list` for the other components.
+ * ```html
+ * <m3e-button>
+ *   <m3e-bottom-sheet-trigger for="bottomSheet">
+ *     Open bottom sheet
+ *   </m3e-bottom-sheet-trigger>
+ * </m3e-button>
+ * <m3e-bottom-sheet id="bottomSheet">
+ *   <m3e-action-list>
+ *     <m3e-list-action>
+ *       <m3e-bottom-sheet-action>Google Keep</m3e-bottom-sheet-action>
+ *       <span slot="supporting-text">Add to a note</span>
+ *     </m3e-list-action>
+ *     <m3e-list-action>
+ *       <m3e-bottom-sheet-action>Google Docs</m3e-bottom-sheet-action>
+ *       <span slot="supporting-text">Embed in a document</span>
+ *     </m3e-list-action>
+ *   </m3e-action-list>
+ * </m3e-bottom-sheet>
+ * ```
+ *
+ * @example
+ * Set `detent` on the trigger to select the initial height. Supply the sheet content
+ * from the basic example and import `@m3e/web/button`.
+ * ```html
+ * <m3e-button>
+ *   <m3e-bottom-sheet-trigger for="bottomSheet" detent="1">
+ *     Open draggable modal bottom sheet with detents at half via trigger
+ *   </m3e-bottom-sheet-trigger>
+ * </m3e-button>
+ * <m3e-bottom-sheet id="bottomSheet" modal handle detents="fit half full">
+ *   <!-- Content omitted for brevity -->
+ * </m3e-bottom-sheet>
+ * ```
+ *
  * @tag m3e-bottom-sheet-trigger
  *
  * @slot - Renders the content of the trigger.

@@ -29,6 +29,21 @@ import { typeaheadLabel } from "@m3e/web/core/a11y";
  * keyboard navigation and focus management. The component automatically manages its visual appearance based on
  * selection and disabled states, with configurable styling for interactive and non-interactive variants.
  *
+ * @example
+ * Use options inside a select. Import `@m3e/web/select` and `@m3e/web/form-field`.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="select">Favorite fruit</label>
+ *   <m3e-select id="select">
+ *     <m3e-option>Apples</m3e-option>
+ *     <m3e-option>Oranges</m3e-option>
+ *     <m3e-option>Bananas</m3e-option>
+ *     <m3e-option>Grapes</m3e-option>
+ *   </m3e-select>
+ * </m3e-form-field>
+ * ```
+ *
  * @tag m3e-option
  *
  * @slot - Renders the label of the option.

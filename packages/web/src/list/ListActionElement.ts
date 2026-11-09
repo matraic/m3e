@@ -17,6 +17,26 @@ import "./ListItemButtonElement";
  * user-initiated action. It combines the semantic structure of a list item with
  * button-like interactions, supporting ripple effects, and state layers.
  *
+ * @example
+ * Showcase: Action lists. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-action-list>
+ *   <m3e-list-action>Action 1</m3e-list-action>
+ *   <!-- Additional actions omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Showcase: Action lists. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-action-list variant="segmented">
+ *   <m3e-list-action>Action 1</m3e-list-action>
+ *   <!-- Additional actions omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
  * @tag m3e-list-action
  *
  * @slot - Renders the content of the list item.

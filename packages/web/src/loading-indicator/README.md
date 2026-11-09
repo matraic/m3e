@@ -2,6 +2,8 @@
 
 The `m3e-loading-indicator` component uses animation to grab attention, mitigate perceived latency, and indicate that an activity is in progress. Use the `variant` attribute to switch between `uncontained` (default) and `contained` appearances for contrast and context.
 
+For pull-to-refresh, each increment of 1 in `pull-progress` rotates the indicator counterclockwise by one full turn. Progress can exceed 1, negative values are clamped to 0, and the indicator stops when progress stops changing. Remove the attribute or set `pullProgress` to `null` when no pull gesture is active.
+
 ```ts
 import "@m3e/web/loading-indicator";
 ```
@@ -12,16 +14,42 @@ import "@m3e/web/loading-indicator";
 
 ## 🧪 Examples
 
-The following example illustrates an uncontained loading indicator.
+Showcase: Variants. Import `@m3e/web/loading-indicator`.
 
 ```html
 <m3e-loading-indicator></m3e-loading-indicator>
+<m3e-loading-indicator variant="contained"></m3e-loading-indicator>
 ```
 
-For pull-to-refresh, update `pull-progress` as the gesture changes. Each increment of `1` rotates the indicator counterclockwise by one full turn, so progress can exceed `1` for longer pulls. Negative values are clamped to `0`. The indicator stops when progress stops changing. Remove the attribute (or set `pullProgress` to `null`) to indicate that no pull gesture is active.
+Showcase: Pull to refresh. Import `@m3e/web/loading-indicator`. Also import `@m3e/web/gestures/pan`.
 
 ```html
-<m3e-loading-indicator pull-progress="1"></m3e-loading-indicator>
+<div id="pull-target">
+  <m3e-loading-indicator id="indicator" variant="contained"></m3e-loading-indicator>
+</div>
+<m3e-pan-gesture id="pull-gesture" for="pull-target" lock-axis="y"></m3e-pan-gesture>
+
+<script>
+  const target = document.getElementById("pull-target");
+  const indicator = document.getElementById("indicator");
+  const gesture = document.getElementById("pull-gesture");
+  const pullDistancePerTurn = 120;
+
+  gesture.addEventListener("gesture", ({ detail }) => {
+    switch (detail.phase) {
+      case "start":
+        indicator.pullProgress = 0;
+        break;
+      case "update":
+        indicator.pullProgress = Math.max(0, detail.totalDeltaY / pullDistancePerTurn);
+        break;
+      case "cancel":
+      case "end":
+        indicator.pullProgress = null;
+        break;
+    }
+  });
+</script>
 ```
 
 ## 📖 API Reference

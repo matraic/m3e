@@ -14,6 +14,9 @@ import "@m3e/web/option";
 
 ## 🧪 Example
 
+Populate an option panel with options and groups. A host control must manage its anchoring and opening; the
+panel is not opened by this markup alone.
+
 ```html
 <m3e-option-panel>
   <m3e-option value="apple">Apple</m3e-option>

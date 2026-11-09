@@ -15,30 +15,84 @@ import "@m3e/web/swipe-reveal";
 
 ## 🧪 Examples
 
-- The following example illustrates an item with a leading and a trailing action which can be dismissed by swiping toward the trailing side.
+Showcase: Basic usage. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/list`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
 
 ```html
-<m3e-swipe-reveal dismissible="trailing">
-  <m3e-icon-button slot="leading" aria-label="Pin">…</m3e-icon-button>
-  <m3e-icon-button slot="trailing" aria-label="Delete">…</m3e-icon-button>
-  Content
-</m3e-swipe-reveal>
+<m3e-list variant="segmented">
+  <m3e-swipe-reveal>
+    <m3e-icon-button slot="leading" aria-label="Pin" variant="tonal">
+      <m3e-icon name="keep" filled></m3e-icon>
+    </m3e-icon-button>
+    <m3e-list-item>Item 1</m3e-list-item>
+    <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal">
+      <m3e-icon name="bookmark" filled></m3e-icon>
+    </m3e-icon-button>
+  </m3e-swipe-reveal>
+  <!-- Additional items omitted for brevity -->
+</m3e-list>
 ```
 
-- The following example illustrates a group which allows only one item to be revealed at a time, and staggers neighbors as an item is dragged.
+```css
+m3e-list {
+  overflow: visible;
+}
+```
+
+Showcase: Triggers. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/list`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
 
 ```html
-<m3e-swipe-reveal-group stagger="0.05" dismissible="trailing">
-  <m3e-swipe-reveal>…</m3e-swipe-reveal>
-  <m3e-swipe-reveal>…</m3e-swipe-reveal>
+<m3e-swipe-reveal-group triggers="swipe long-press">
+  <m3e-list variant="segmented">
+    <m3e-swipe-reveal>
+      <m3e-list-item>Item 1</m3e-list-item>
+      <m3e-icon-button slot="trailing" aria-label="Share" variant="tonal">
+        <m3e-icon name="share" filled></m3e-icon>
+      </m3e-icon-button>
+    </m3e-swipe-reveal>
+    <!-- Additional items omitted for brevity -->
+  </m3e-list>
 </m3e-swipe-reveal-group>
 ```
 
-- The following example reveals an action behind a card. The icon button fills the card's height and only the corners facing the card are rounded, using the logical corner properties of `m3e-icon-button`.
+Showcase: Stagger. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/list`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+
+```html
+<m3e-swipe-reveal-group stagger="0.05">
+  <m3e-list variant="segmented">
+    <m3e-swipe-reveal>
+      <m3e-list-item>Item 1</m3e-list-item>
+      <m3e-icon-button slot="trailing" aria-label="Archive" variant="tonal">
+        <m3e-icon name="archive" filled></m3e-icon>
+      </m3e-icon-button>
+    </m3e-swipe-reveal>
+    <!-- Additional items omitted for brevity -->
+  </m3e-list>
+</m3e-swipe-reveal-group>
+```
+
+Showcase: Dismissible. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/list`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+
+```html
+<m3e-swipe-reveal-group dismissible="trailing">
+  <m3e-list variant="segmented">
+    <m3e-swipe-reveal>
+      <m3e-list-item>Item 1</m3e-list-item>
+      <m3e-icon-button slot="trailing" aria-label="Delete" variant="tonal">
+        <m3e-icon name="delete" filled></m3e-icon>
+      </m3e-icon-button>
+    </m3e-swipe-reveal>
+    <!-- Additional items omitted for brevity -->
+  </m3e-list>
+</m3e-swipe-reveal-group>
+```
+
+Showcase: Card Header. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`, `@m3e/web/card`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names. Apply the required styling for the illustrated classes in your application.
 
 ```html
 <m3e-swipe-reveal class="card-reveal" elastic="none">
-  <m3e-icon-button slot="leading" aria-label="Favorite" toggle variant="filled">…</m3e-icon-button>
+  <m3e-icon-button slot="leading" aria-label="Favorite" toggle variant="filled">
+    <m3e-icon name="favorite"></m3e-icon>
+  </m3e-icon-button>
   <m3e-card>…</m3e-card>
 </m3e-swipe-reveal>
 ```
@@ -59,7 +113,7 @@ import "@m3e/web/swipe-reveal";
 .card-reveal m3e-icon-button[slot="leading"] m3e-icon {
   position: absolute;
   top: 16px;
-  left: 16px;
+  margin-inline-start: -8px;
 }
 ```
 

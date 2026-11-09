@@ -22,6 +22,38 @@ import "@m3e/web/gestures/scale";
 
 The element dispatches a `gesture` event with `ScaleGestureDetail` as its detail.
 
+## Showcase examples
+
+Detect scale declaratively by importing `@m3e/web/gestures/scale` and binding the gesture element to the target with `for`. Listen for its `gesture` event. Give the target a visible size and an appropriate `touch-action` (the showcase uses `touch-action: none`); provide an accessible alternative for gesture-only interactions.
+
+```html
+<div id="item"></div>
+<m3e-scale-gesture for="item"></m3e-scale-gesture>
+```
+
+Alternatively, use the same target with `detectGesture` and `phase`. Replace the handler placeholders and retain the returned controller to call `destroy()` when no longer needed. The showcase's rotate comments are placeholders for scale handling.
+
+```js
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { scale } from "@m3e/web/gestures/scale";
+
+const item = document.getElementById("item");
+detectGesture(item, scale(phase({
+  onStart: (detail) => {
+    // Begin tracking
+  },
+  onUpdate: (detail) => {
+    // Continuous movement
+  },
+  onEnd: (detail) => {
+    // Finalize rotate
+  },
+  onCancel: (detail) => {
+    // Abort rotate
+  }
+})));
+```
+
 ## Options
 
 | Attribute            | Type                            | Default                     | Description                                                          |

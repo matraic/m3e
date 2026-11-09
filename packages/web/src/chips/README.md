@@ -21,33 +21,164 @@ import "@m3e/web/chips";
 
 ### 🗂️ Chip
 
-The following example illustrates use of the `m3e-chip` and `m3e-chip-set` components to present non-interactive chips.
+Group non-interactive chips in a chip set.
 
 ```html
 <m3e-chip-set>
-  <m3e-chip><m3e-icon slot="icon" name="palette"></m3e-icon>Design</m3e-chip>
-  <m3e-chip><m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility</m3e-chip>
-  <m3e-chip><m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion</m3e-chip>
-  <m3e-chip><m3e-icon slot="icon" name="description"></m3e-icon>Documentation</m3e-chip>
+  <m3e-chip>Confidential</m3e-chip>
+  <m3e-chip>Draft</m3e-chip>
+  <m3e-chip>Finance</m3e-chip>
+  <m3e-chip>Presentation</m3e-chip>
 </m3e-chip-set>
+```
+
+Choose the `outlined` (default) or `elevated` variant.
+
+```html
+<m3e-chip>Outlined</m3e-chip>
+<m3e-chip variant="elevated">Elevated</m3e-chip>
+```
+
+Use `vertical` to stack chips in a set.
+
+```html
+<m3e-chip-set vertical>
+  <m3e-chip>Confidential</m3e-chip>
+  <m3e-chip>Draft</m3e-chip>
+  <m3e-chip>Finance</m3e-chip>
+  <m3e-chip>Presentation</m3e-chip>
+</m3e-chip-set>
+```
+
+Use the `icon` slot for a leading icon. Import `@m3e/web/icon` for the icons.
+
+```html
+<m3e-chip>
+  <m3e-icon slot="icon" name="finance"></m3e-icon>
+  Finance
+</m3e-chip>
 ```
 
 ### 🗂️ Assist Chip
 
-The following example illustrates use of the `m3e-assist-chip`. In this example, multiple chips are nested inside a `m3e-chip-set` container to create a cohesive set of chips. The container is given the ARIA `role="group"` to convey to assistive technologies that the chips are part of a related set of element.
+Use assist chips for actions; select the `outlined` or `elevated` variant.
 
 ```html
-<m3e-chip-set role="group" aria-label="Quick actions">
-  <m3e-assist-chip><m3e-icon slot="icon" name="edit"></m3e-icon>Edit</m3e-assist-chip>
-  <m3e-assist-chip><m3e-icon slot="icon" name="delete"></m3e-icon>Delete</m3e-assist-chip>
-  <m3e-assist-chip><m3e-icon slot="icon" name="content_copy"></m3e-icon>Copy</m3e-assist-chip>
-  <m3e-assist-chip><m3e-icon slot="icon" name="share"></m3e-icon>Share</m3e-assist-chip>
-</m3e-chip-set>
+<m3e-assist-chip>Outlined Assist</m3e-assist-chip>
+<m3e-assist-chip variant="elevated">Elevated Assist</m3e-assist-chip>
+```
+
+Use the `icon` slot for a leading icon on an assist chip. Import `@m3e/web/icon` for the icons.
+
+```html
+<m3e-assist-chip>
+  <m3e-icon slot="icon" name="finance"></m3e-icon>
+  Finance
+</m3e-assist-chip>
+```
+
+Disable an assist chip, or use `disabled-interactive` to retain keyboard focusability.
+
+```html
+<m3e-assist-chip disabled>Disabled</m3e-assist-chip>
+<m3e-assist-chip disabled-interactive>Disabled Interactive</m3e-assist-chip>
+```
+
+Use `href` to make an assist chip a link.
+
+```html
+<m3e-assist-chip href="https://www.google.com" target="_blank">
+  Google
+</m3e-assist-chip>
+```
+
+Apply a density scale with CSS custom properties. Additional classes are omitted for brevity. Import `@m3e/web/icon` for the icons.
+
+```html
+<m3e-assist-chip class="density-3">
+  <m3e-icon slot="icon" name="stars"></m3e-icon>
+  Density -3
+</m3e-assist-chip>
+<!-- Additional chips omitted for brevity -->
+```
+```css
+.density-3 {
+  --md-sys-density-scale: -3;
+}
+```
+
+### 🗂️ Filter Chip
+
+Use a filter chip set to select a filter; chips support `outlined` and `elevated` variants.
+
+```html
+<m3e-filter-chip-set>
+  <m3e-filter-chip>Outlined</m3e-filter-chip>
+  <m3e-filter-chip variant="elevated">Elevated</m3e-filter-chip>
+</m3e-filter-chip-set>
+```
+
+Use `selected` to select a filter chip and `icon` to add a leading icon. Import `@m3e/web/icon` for the icons.
+
+```html
+<m3e-filter-chip-set aria-label="Filter by topic">
+  <m3e-filter-chip selected>
+    <m3e-icon slot="icon" name="palette"></m3e-icon>Design
+  </m3e-filter-chip>
+  <!-- Additional chips omitted for brevity -->
+</m3e-filter-chip-set>
+```
+
+Use `multi` on the set to allow multiple selected filter chips. Import `@m3e/web/icon` for the icons.
+
+```html
+<m3e-filter-chip-set aria-label="Filter by topic" multi>
+  <m3e-filter-chip selected>
+    <m3e-icon slot="icon" name="palette"></m3e-icon>Design
+  </m3e-filter-chip>
+  <m3e-filter-chip selected>
+    <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility
+  </m3e-filter-chip>
+  <!-- Additional chips omitted for brevity -->
+</m3e-filter-chip-set>
+```
+
+Disable individual filter chips, or use `disabled-interactive` to retain keyboard focusability. Import `@m3e/web/icon` for the icons.
+
+```html
+<m3e-filter-chip-set aria-label="Filter by topic">
+  <m3e-filter-chip disabled>
+    <m3e-icon slot="icon" name="palette"></m3e-icon>Design
+  </m3e-filter-chip>
+  <m3e-filter-chip disabled-interactive>
+    <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility
+  </m3e-filter-chip>
+  <!-- Additional chips omitted for brevity -->
+</m3e-filter-chip-set>
+```
+
+Use `disabled` to disable the whole filter chip set.
+
+```html
+<m3e-filter-chip-set aria-label="Filter by topic" multi disabled>
+  <!-- Chips omitted for brevity -->
+</m3e-filter-chip-set>
+```
+
+Use `hide-selection-indicator` to hide the selected indicator while retaining leading icons. Import `@m3e/web/icon` for the icons.
+
+```html
+<m3e-filter-chip-set aria-label="Filter by topic" hide-selection-indicator>
+  <m3e-filter-chip>Design </m3e-filter-chip>
+  <m3e-filter-chip>Accessibility </m3e-filter-chip>
+  <m3e-filter-chip><m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion </m3e-filter-chip>
+  <m3e-filter-chip><m3e-icon slot="icon" name="description"></m3e-icon>Documentation </m3e-filter-chip>
+</m3e-filter-chip-set>
 ```
 
 ### 🗂️ Input Chip
 
-The following example illustrates the use of the `m3e-input-chip-set` inside a `m3e-form-field`. In this example, the `input` slot specifies the `input` element used to add input chips and the field label's `for` attribute targets the `input` element to provide an accessible label.
+Place an input chip set in a form field and provide an input through its `input` slot. Import `@m3e/web/form-field` for the form field.
 
 ```html
 <m3e-form-field>
@@ -58,30 +189,79 @@ The following example illustrates the use of the `m3e-input-chip-set` inside a `
 </m3e-form-field>
 ```
 
-### 🗂️ Filter Chip
-
-- The following example illustrates a single-select `m3e-filter-chip-set` containing multiple `m3e-filter-chip` components that allow a user to choose an option. You can use the `multi` attribute to enable multiselect.
+Prepopulate an input chip set with removable input chips. Import `@m3e/web/form-field` for the form field.
 
 ```html
-<m3e-filter-chip-set aria-label="Filter by topic">
-  <m3e-filter-chip><m3e-icon slot="icon" name="palette"></m3e-icon>Design</m3e-filter-chip>
-  <m3e-filter-chip><m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility</m3e-filter-chip>
-  <m3e-filter-chip><m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion</m3e-filter-chip>
-  <m3e-filter-chip><m3e-icon slot="icon" name="description"></m3e-icon>Documentation</m3e-filter-chip>
-</m3e-filter-chip-set>
+<m3e-form-field>
+  <label slot="label" for="keywords">Keywords</label>
+  <m3e-input-chip-set aria-label="Enter keywords">
+    <m3e-input-chip removable>Design</m3e-input-chip>
+    <m3e-input-chip removable>Accessibility</m3e-input-chip>
+    <m3e-input-chip removable>Motion</m3e-input-chip>
+    <input id="keywords" slot="input" placeholder="New keyword..." />
+  </m3e-input-chip-set>
+</m3e-form-field>
+```
+
+Use `max-chips` to limit the chips shown while the input is not focused. Import `@m3e/web/form-field` for the form field.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="keywords">Keywords</label>
+  <m3e-input-chip-set aria-label="Enter keywords" max-chips="1">
+    <m3e-input-chip removable>Design</m3e-input-chip>
+    <m3e-input-chip removable>Accessibility</m3e-input-chip>
+    <m3e-input-chip removable>Motion</m3e-input-chip>
+    <input id="keywords" slot="input" placeholder="New keyword..." />
+  </m3e-input-chip-set>
+</m3e-form-field>
+```
+
+Use `disabled` to disable the input chip set, its input, and its chips. Import `@m3e/web/form-field` for the form field.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="keywords">Keywords</label>
+  <m3e-input-chip-set aria-label="Enter keywords" disabled>
+    <m3e-input-chip removable>Design</m3e-input-chip>
+    <m3e-input-chip removable>Accessibility</m3e-input-chip>
+    <m3e-input-chip removable>Motion</m3e-input-chip>
+    <input id="keywords" slot="input" placeholder="New keyword..." />
+  </m3e-input-chip-set>
+</m3e-form-field>
 ```
 
 ### 🗂️ Suggestion Chip
 
-The following example illustrates use of the `m3e-suggestion-chip`. In this example, multiple chips are nested inside a `m3e-chip-set` container to create a cohesive set of chips. The container is given the ARIA `role="group"` to convey to assistive technologies that the chips are part of a related set of element.
+Use suggestion chips to offer actions; select the `outlined` or `elevated` variant.
 
 ```html
-<m3e-chip-set role="group" aria-label="Suggested replies">
-  <m3e-suggestion-chip>Sounds good!</m3e-suggestion-chip>
-  <m3e-suggestion-chip>Can you clarify?</m3e-suggestion-chip>
-  <m3e-suggestion-chip>Let's do it.</m3e-suggestion-chip>
-  <m3e-suggestion-chip>Maybe later.</m3e-suggestion-chip>
-</m3e-chip-set>
+<m3e-suggestion-chip>Outlined Suggestion</m3e-suggestion-chip>
+<m3e-suggestion-chip variant="elevated">Elevated Suggestion</m3e-suggestion-chip>
+```
+
+Use the `icon` slot for a leading icon on a suggestion chip. Import `@m3e/web/icon` for the icons.
+
+```html
+<m3e-suggestion-chip>
+  <m3e-icon slot="icon" name="lightbulb"></m3e-icon>
+  Try budget planner
+</m3e-suggestion-chip>
+```
+
+Disable a suggestion chip, or use `disabled-interactive` to retain keyboard focusability.
+
+```html
+<m3e-suggestion-chip disabled>Disabled</m3e-suggestion-chip>
+<m3e-suggestion-chip disabled-interactive>Disabled Interactive</m3e-suggestion-chip>
+```
+
+Use `href` to make a suggestion chip a link.
+
+```html
+<m3e-suggestion-chip href="https://www.google.com" target="_blank">
+  Google
+</m3e-suggestion-chip>
 ```
 
 ## 📖 API Reference

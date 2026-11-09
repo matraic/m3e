@@ -12,10 +12,34 @@ import "@m3e/web/divider";
 
 ## 🧪 Examples
 
-The following example illustrates a basic horizontal divider.
+Separate list items with dividers. Import `@m3e/web/list` for the list elements.
+
+```html
+<m3e-list>
+  <m3e-list-item>Item 1</m3e-list-item>
+  <m3e-divider></m3e-divider>
+  <m3e-list-item>Item 2</m3e-list-item>
+  <m3e-divider></m3e-divider>
+  <m3e-list-item>Item 3</m3e-list-item>
+</m3e-list>
+```
+
+Use `inset`, `inset-start`, or `inset-end` to indent a horizontal divider.
 
 ```html
 <m3e-divider></m3e-divider>
+<m3e-divider inset></m3e-divider>
+<m3e-divider inset-start></m3e-divider>
+<m3e-divider inset-end></m3e-divider>
+```
+
+Use `vertical` for vertical dividers. Give their container a definite height.
+
+```html
+<m3e-divider vertical></m3e-divider>
+<m3e-divider vertical inset></m3e-divider>
+<m3e-divider vertical inset-start></m3e-divider>
+<m3e-divider vertical inset-end></m3e-divider>
 ```
 
 ## 📖 API Reference

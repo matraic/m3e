@@ -14,17 +14,75 @@ import "@m3e/web/tabs";
 
 ## 🧪 Examples
 
-The following example illustrates using the `m3e-tabs`, `m3e-tab`, and `m3e-tab-panel` components to present secondary tabs.
+Showcase: Basic usage. Import `@m3e/web/tabs`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
 
 ```html
 <m3e-tabs>
-  <m3e-tab selected for="videos"><m3e-icon slot="icon" name="videocam"></m3e-icon>Video</m3e-tab>
-  <m3e-tab for="photos"><m3e-icon slot="icon" name="photo"></m3e-icon>Photos</m3e-tab>
-  <m3e-tab for="audio"><m3e-icon slot="icon" name="music_note"></m3e-icon>Audio</m3e-tab>
+  <m3e-tab selected for="videos">
+    <m3e-icon slot="icon" name="videocam"></m3e-icon>Video
+  </m3e-tab>
+  <m3e-tab for="photos">
+    <m3e-icon slot="icon" name="photo"></m3e-icon>Photos
+  </m3e-tab>
+  <m3e-tab for="audio">
+    <m3e-icon slot="icon" name="music_note"></m3e-icon>Audio
+  </m3e-tab>
   <m3e-tab-panel id="videos">Videos</m3e-tab-panel>
   <m3e-tab-panel id="photos">Photos</m3e-tab-panel>
   <m3e-tab-panel id="audio">Audio</m3e-tab-panel>
 </m3e-tabs>
+```
+
+Showcase: Variants. Import `@m3e/web/tabs`.
+
+```html
+<m3e-tabs variant="primary"&gt
+  <!-- Content omitted for brevity -->
+</m3e-tabs>
+```
+
+Showcase: Stretching. Import `@m3e/web/tabs`.
+
+```html
+<m3e-tabs stretch&gt
+  <!-- Content omitted for brevity -->
+</m3e-tabs>
+```
+
+Showcase: Header positions. Import `@m3e/web/tabs`.
+
+```html
+<m3e-tabs header-position="after"&gt
+  <!-- Content omitted for brevity -->
+</m3e-tabs>
+```
+
+Showcase: Disabling. Import `@m3e/web/tabs`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+
+```html
+<m3e-tabs>
+  <m3e-tab selected for="videos">
+    <m3e-icon slot="icon" name="videocam"></m3e-icon>Video
+  </m3e-tab>
+  <m3e-tab disabled for="photos">
+    <m3e-icon slot="icon" name="photo"></m3e-icon>Photos
+  </m3e-tab>
+  <!-- Additional content omitted for brevity -->
+</m3e-tabs>
+```
+
+Showcase: Density. Import `@m3e/web/tabs`. Apply the required styling for the illustrated classes in your application.
+
+```html
+<m3e-tabs class="density-3">
+  <!-- Tabs omitted for brevity -->
+</m3e-tabs>
+```
+
+```css
+.density-3 {
+  --md-sys-density-scale: -3;
+}
 ```
 
 ## 📖 API Reference

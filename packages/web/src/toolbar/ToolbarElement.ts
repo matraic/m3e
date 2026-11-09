@@ -19,26 +19,71 @@ import { ToolbarShapeStyle, ToolbarStyle, ToolbarVariantStyle } from "./styles";
  * and adaptive layout via CSS custom properties.
  *
  * @example
- * The following example illustrates a `vibrant`, `rounded` toolbar containing icon buttons.
+ * Showcase: Variants. Import `@m3e/web/toolbar`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ *
+ * ```html
+ * <m3e-toolbar variant="standard">
+ *   <m3e-icon-button>
+ *     <m3e-icon name="arrow_back"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button>
+ *     <m3e-icon name="arrow_forward"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button width="wide" variant="filled">
+ *     <m3e-icon name="add"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button>
+ *     <m3e-icon name="picture_in_picture"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button>
+ *     <m3e-icon name="more_vert"></m3e-icon>
+ *   </m3e-icon-button>
+ * </m3e-toolbar>
+ * <m3e-toolbar variant="vibrant">
+ *   <!-- Content omitted for brevity -->
+ * </m3e-toolbar>
+ * ```
+ *
+ * @example
+ * Showcase: Shapes. Import `@m3e/web/toolbar`.
  *
  * ```html
  * <m3e-toolbar variant="vibrant" shape="rounded">
- *  <m3e-icon-button>
- *    <m3e-icon name="arrow_back"></m3e-icon>
- *  </m3e-icon-button>
- *  <m3e-icon-button>
- *    <m3e-icon name="arrow_forward"></m3e-icon>
- *  </m3e-icon-button>
- *  <m3e-icon-button width="wide" variant="filled">
- *    <m3e-icon name="add"></m3e-icon>
- *  </m3e-icon-button>
- *  <m3e-icon-button>
- *    <m3e-icon name="picture_in_picture"></m3e-icon>
- *  </m3e-icon-button>
- *  <m3e-icon-button>
- *    <m3e-icon name="more_vert"></m3e-icon>
- *  </m3e-icon-button>
+ *   <!-- Content omitted for brevity -->
  * </m3e-toolbar>
+ * ```
+ *
+ * @example
+ * Showcase: Elevation. Import `@m3e/web/toolbar`.
+ *
+ * ```html
+ * <m3e-toolbar variant="vibrant" shape="rounded" elevated>
+ *   <!-- Content omitted for brevity -->
+ * </m3e-toolbar>
+ * ```
+ *
+ * @example
+ * Showcase: Orientation. Import `@m3e/web/toolbar`.
+ *
+ * ```html
+ * <m3e-toolbar variant="vibrant" shape="rounded" vertical>
+ *   <!-- Content omitted for brevity -->
+ * </m3e-toolbar>
+ * ```
+ *
+ * @example
+ * Showcase: Density. Import `@m3e/web/toolbar`. Apply the required styling for the illustrated classes in your application.
+ *
+ * ```html
+ * <m3e-toolbar class="density-3">
+ *   <!-- Content omitted for brevity -->
+ * </m3e-toolbar>
+ * ```
+ *
+ * ```css
+ * .density-3 {
+ *   --md-sys-density-scale: -3;
+ * }
  * ```
  *
  * @tag m3e-toolbar

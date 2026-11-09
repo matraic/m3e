@@ -13,9 +13,33 @@ import { customElement, DesignToken, Role } from "@m3e/web/core";
  * It is designed to reinforce spatial relationships without drawing attention, preserving focus on primary content.
  *
  * @example
- * The following example illustrates a basic horizontal divider.
+ * Separate list items with dividers. Import `@m3e/web/list` for the list elements.
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>Item 1</m3e-list-item>
+ *   <m3e-divider></m3e-divider>
+ *   <m3e-list-item>Item 2</m3e-list-item>
+ *   <m3e-divider></m3e-divider>
+ *   <m3e-list-item>Item 3</m3e-list-item>
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Use `inset`, `inset-start`, or `inset-end` to indent a horizontal divider.
  * ```html
  * <m3e-divider></m3e-divider>
+ * <m3e-divider inset></m3e-divider>
+ * <m3e-divider inset-start></m3e-divider>
+ * <m3e-divider inset-end></m3e-divider>
+ * ```
+ *
+ * @example
+ * Use `vertical` for vertical dividers. Give their container a definite height.
+ * ```html
+ * <m3e-divider vertical></m3e-divider>
+ * <m3e-divider vertical inset></m3e-divider>
+ * <m3e-divider vertical inset-start></m3e-divider>
+ * <m3e-divider vertical inset-end></m3e-divider>
  * ```
  *
  * @tag m3e-divider

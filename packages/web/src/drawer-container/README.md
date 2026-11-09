@@ -13,36 +13,73 @@ import "@m3e/web/drawer-container";
 
 ## 🧪 Examples
 
-The following example illustrates a typical drawer layout.
+Use the `start` and `end` slots for drawers and the default slot for main content.
 
 ```html
-<m3e-drawer-container>
-  <nav slot="start">
-    <!-- Start drawer content -->
-  </nav>
-  <main>
-    <!-- Main content -->
-  </main>
-  <aside slot="end">
-    <!-- End drawer content -->
-  </aside>
+<m3e-drawer-container start end>
+  <div slot="start">Start drawer</div>
+  <div>Main content</div>
+  <div slot="end">End drawer</div>
 </m3e-drawer-container>
 ```
 
-The next example illustrates the use of a `m3e-drawer-toggle`, nested inside a `m3e-icon-button` component, which toggles the open state of the start drawer.
+Set the width of a drawer on its slotted element.
 
 ```html
-<m3e-icon-button slot="leading-icon" aria-label="Menu" toggle selected>
-  <m3e-drawer-toggle for="startDrawer"></m3e-drawer-toggle>
+<m3e-drawer-container start>
+  <div slot="start" style="width: 200px;">Start drawer</div>
+  <div>Main content</div>
+</m3e-drawer-container>
+```
+
+Use `start-mode="push"` to move content when the drawer opens.
+
+```html
+<m3e-drawer-container start start-mode="push">
+  <div slot="start">Start drawer</div>
+  <div>Main content</div>
+</m3e-drawer-container>
+```
+
+Use `start-mode="over"` to overlay the main content.
+
+```html
+<m3e-drawer-container start start-mode="over">
+  <div slot="start">Start drawer</div>
+  <div>Main content</div>
+</m3e-drawer-container>
+```
+
+Use `end-divider` to show a divider for a side-mode drawer.
+
+```html
+<m3e-drawer-container end end-mode="side" end-divider>
+  <div>Main content</div>
+  <div slot="end">End drawer</div>
+</m3e-drawer-container>
+```
+
+Nest a drawer toggle in a clickable element and connect `for` to the drawer's id. Import `@m3e/web/icon-button` and `@m3e/web/icon` for the button and icons; place the button in an element that supports its `leading-icon` slot.
+
+```html
+<m3e-icon-button slot="leading-icon" aria-label="Menu" toggle>
   <m3e-icon name="menu"></m3e-icon>
   <m3e-icon slot="selected" name="menu_open"></m3e-icon>
+  <m3e-drawer-toggle for="nav-drawer"></m3e-drawer-toggle>
 </m3e-icon-button>
+<m3e-drawer-container start-mode="over">
+  <div slot="start" id="nav-drawer">Start drawer</div>
+  <div>Main content</div>
+</m3e-drawer-container>
+```
 
-<m3e-drawer-container start>
-  <nav slot="start" id="startDrawer" aria-label="Navigation">
-    <!-- Start drawer content -->
-  </nav>
-  <!-- Container content -->
+Use semantic elements for drawer and main content as appropriate.
+
+```html
+<m3e-drawer-container>
+  <nav slot="start"></nav>
+  <main></main>
+  <aside slot="end"></aside>
 </m3e-drawer-container>
 ```
 

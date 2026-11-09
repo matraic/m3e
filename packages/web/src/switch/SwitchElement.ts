@@ -39,18 +39,50 @@ import { isSwitchIcons, SwitchIcons } from "./SwitchIcons";
  * and integrates with form-associated behavior, emitting `input` and `change` events when toggled.
  *
  * @example
- * The following example illustrates a switch wrapped by a `label`.
+ * Showcase: Basic usage. Import `@m3e/web/switch`.
  *
  * ```html
- * <label>Switch label&nbsp;<m3e-switch></m3e-switch></label>
+ * <m3e-switch checked></m3e-switch>
  * ```
  *
  * @example
- * By default, icons are not presented. Use the `icons` attribute to control which icons to show. The next
- * example illustrates showing both the unselected and selected icons.
+ * Showcase: Labels. Import `@m3e/web/switch`.
  *
  * ```html
- * <label>Switch label&nbsp;<m3e-switch icons="both"></m3e-switch></label>
+ * <label><m3e-switch></m3e-switch>&nbsp;Switch 1</label>
+ * <m3e-switch id="switch2"></m3e-switch>
+ * <label for="switch2">&nbsp;Switch 2</label>
+ * ```
+ *
+ * @example
+ * Showcase: Icons. Import `@m3e/web/switch`.
+ *
+ * ```html
+ * <m3e-switch icons="selected" checked></m3e-switch>
+ * <m3e-switch icons="both"></m3e-switch>
+ * ```
+ *
+ * @example
+ * Showcase: Disabling. Import `@m3e/web/switch`.
+ *
+ * ```html
+ * <label><m3e-switch disabled></m3e-switch>Disabled Switch 1</label>
+ * <m3e-switch id="chk3" disabled></m3e-switch>
+ * <label for="chk3">Disabled Switch 2</label>
+ * ```
+ *
+ * @example
+ * Showcase: Density. Import `@m3e/web/switch`. Apply the required styling for the illustrated classes in your application. Additional styles are omitted for brevity.
+ *
+ * ```html
+ * <m3e-switch class="density-3"></m3e-switch>
+ * <!-- Additional switches omitted for brevity -->
+ * ```
+ *
+ * ```css
+ * .density-3 {
+ *   --md-sys-density-scale: -3;
+ * }
  * ```
  *
  * @tag m3e-switch

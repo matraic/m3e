@@ -38,15 +38,59 @@ import { InputChipSetChangeEventDetail } from "./InputChipSetChangeEventDetail";
  * keywords, or selections in a visually consistent and interactive manner.
  *
  * @example
- * The following example illustrates the use of the `m3e-input-chip-set` inside a `m3e-form-field`.
- * In this example, the `input` slot specifies the `input` element used to add input chips and the
- * field label's `for` attribute targets the `input` element to provide an accessible label.
+ * Place an input chip set in a form field and provide an input through its `input` slot. Import `@m3e/web/form-field` for the form field.
+ *
  * ```html
  * <m3e-form-field>
- *  <label slot="label" for="keywords">Keywords</label>
- *  <m3e-input-chip-set aria-label="Enter keywords">
- *    <input id="keywords" slot="input" placeholder="New keyword..." />
- *  </m3e-input-chip-set>
+ *   <label slot="label" for="keywords">Keywords</label>
+ *   <m3e-input-chip-set aria-label="Enter keywords">
+ *     <input id="keywords" slot="input" placeholder="New keyword..." />
+ *   </m3e-input-chip-set>
+ * </m3e-form-field>
+ * ```
+ *
+ * @example
+ * Prepopulate an input chip set with removable input chips. Import `@m3e/web/form-field` for the form field.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="keywords">Keywords</label>
+ *   <m3e-input-chip-set aria-label="Enter keywords">
+ *     <m3e-input-chip removable>Design</m3e-input-chip>
+ *     <m3e-input-chip removable>Accessibility</m3e-input-chip>
+ *     <m3e-input-chip removable>Motion</m3e-input-chip>
+ *     <input id="keywords" slot="input" placeholder="New keyword..." />
+ *   </m3e-input-chip-set>
+ * </m3e-form-field>
+ * ```
+ *
+ * @example
+ * Use `max-chips` to limit the chips shown while the input is not focused. Import `@m3e/web/form-field` for the form field.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="keywords">Keywords</label>
+ *   <m3e-input-chip-set aria-label="Enter keywords" max-chips="1">
+ *     <m3e-input-chip removable>Design</m3e-input-chip>
+ *     <m3e-input-chip removable>Accessibility</m3e-input-chip>
+ *     <m3e-input-chip removable>Motion</m3e-input-chip>
+ *     <input id="keywords" slot="input" placeholder="New keyword..." />
+ *   </m3e-input-chip-set>
+ * </m3e-form-field>
+ * ```
+ *
+ * @example
+ * Use `disabled` to disable the input chip set, its input, and its chips. Import `@m3e/web/form-field` for the form field.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="keywords">Keywords</label>
+ *   <m3e-input-chip-set aria-label="Enter keywords" disabled>
+ *     <m3e-input-chip removable>Design</m3e-input-chip>
+ *     <m3e-input-chip removable>Accessibility</m3e-input-chip>
+ *     <m3e-input-chip removable>Motion</m3e-input-chip>
+ *     <input id="keywords" slot="input" placeholder="New keyword..." />
+ *   </m3e-input-chip-set>
  * </m3e-form-field>
  * ```
  *

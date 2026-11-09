@@ -33,6 +33,26 @@ import { M3eListItemElement } from "./ListItemElement";
  * and supports rich content through multiple slots, comprehensive styling via CSS custom properties,
  * and accessible interactions following Material 3 design principles.
  *
+ * @example
+ * Showcase: Selection lists. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-selection-list>
+ *   <m3e-list-option>Option 1</m3e-list-option>
+ *   <!-- Additional options omitted for brevity -->
+ * </m3e-selection-list>
+ * ```
+ *
+ * @example
+ * Showcase: Selection lists. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-selection-list variant="segmented">
+ *   <m3e-list-option>Option 1</m3e-list-option>
+ *   <!-- Additional options omitted for brevity -->
+ * </m3e-selection-list>
+ * ```
+ *
  * @tag m3e-list-option
  *
  * @slot - Renders the content of the list item.

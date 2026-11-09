@@ -10,24 +10,45 @@ import "@m3e/web/callout";
 
 - `m3e-callout` — A supporting container used to present content with visual emphasis.
 
-## 🧪 Example
+## 🧪 Examples
 
-The following example illustrates a callout with an icon, label, and text-based content.
+Compose a callout with content, an optional label, and an optional icon.
+Import `@m3e/web/icon` when using `m3e-icon`.
 
 ```html
 <m3e-callout>
+  <!-- Content omitted for brevity -->
+</m3e-callout>
+
+<m3e-callout>
+  <span slot="label">Lorem ipsum dolor sit amet</span>
+  <!-- Context omitted for brevity -->
+</m3e-callout>
+
+<m3e-callout>
   <m3e-icon slot="icon" name="info"></m3e-icon>
-  <span slot="label">Important information</span>
-  Supporting details go here.
+  <span slot="label">Lorem ipsum dolor sit amet</span>
+  <!-- Context omitted for brevity -->
 </m3e-callout>
 ```
 
-Set the appearance with the `variant` attribute (`primary`, `secondary`, `tertiary`, `error`, or `surface`) and the shape with `shape` (`rounded` or `square`).
+Use `variant` to select `primary`, `secondary` (default), `tertiary`, `error`, or `surface`.
+Import `@m3e/web/icon` when using `m3e-icon`.
 
 ```html
-<m3e-callout variant="error" shape="square">
-  <span slot="label">Action required</span>
-  Review the details before continuing.
+<m3e-callout variant="primary">
+  <m3e-icon slot="icon" name="info"></m3e-icon>
+  <span slot="label">Lorem ipsum dolor sit amet</span>
+  <!-- Content omitted for brevity -->
+</m3e-callout>
+<!-- Additional variants omitted for brevity -->
+```
+
+Use `shape` to select `rounded` (default) or `square`.
+
+```html
+<m3e-callout shape="square">
+  <!-- Content omitted for brevity -->
 </m3e-callout>
 ```
 

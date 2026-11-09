@@ -24,16 +24,54 @@ import { M3eChipElement } from "./ChipElement";
  * differentiation and contextual emphasis.
  *
  * @example
- * The following example illustrates use of the `m3e-assist-chip`.  In this example, multiple chips are nested inside
- * a `m3e-chip-set` container to create a cohesive set of chips. The container is given the ARIA `role="group"` to convey
- * to assistive technologies that the chips are part of a related set of element.
+ * Use assist chips for actions; select the `outlined` or `elevated` variant.
+ *
  * ```html
- * <m3e-chip-set role="group" aria-label="Quick actions">
- *  <m3e-assist-chip><m3e-icon slot="icon" name="edit"></m3e-icon>Edit</m3e-assist-chip>
- *  <m3e-assist-chip><m3e-icon slot="icon" name="delete"></m3e-icon>Delete</m3e-assist-chip>
- *  <m3e-assist-chip><m3e-icon slot="icon" name="content_copy"></m3e-icon>Copy</m3e-assist-chip>
- *  <m3e-assist-chip><m3e-icon slot="icon" name="share"></m3e-icon>Share</m3e-assist-chip>
- * </m3e-chip-set>
+ * <m3e-assist-chip>Outlined Assist</m3e-assist-chip>
+ * <m3e-assist-chip variant="elevated">Elevated Assist</m3e-assist-chip>
+ * ```
+ *
+ * @example
+ * Use the `icon` slot for a leading icon on an assist chip. Import `@m3e/web/icon` for the icons.
+ *
+ * ```html
+ * <m3e-assist-chip>
+ *   <m3e-icon slot="icon" name="finance"></m3e-icon>
+ *   Finance
+ * </m3e-assist-chip>
+ * ```
+ *
+ * @example
+ * Disable an assist chip, or use `disabled-interactive` to retain keyboard focusability.
+ *
+ * ```html
+ * <m3e-assist-chip disabled>Disabled</m3e-assist-chip>
+ * <m3e-assist-chip disabled-interactive>Disabled Interactive</m3e-assist-chip>
+ * ```
+ *
+ * @example
+ * Use `href` to make an assist chip a link.
+ *
+ * ```html
+ * <m3e-assist-chip href="https://www.google.com" target="_blank">
+ *   Google
+ * </m3e-assist-chip>
+ * ```
+ *
+ * @example
+ * Apply a density scale with CSS custom properties. Additional classes are omitted for brevity. Import `@m3e/web/icon` for the icons.
+ *
+ * ```html
+ * <m3e-assist-chip class="density-3">
+ *   <m3e-icon slot="icon" name="stars"></m3e-icon>
+ *   Density -3
+ * </m3e-assist-chip>
+ * <!-- Additional chips omitted for brevity -->
+ * ```
+ * ```css
+ * .density-3 {
+ *   --md-sys-density-scale: -3;
+ * }
  * ```
  *
  * @tag m3e-assist-chip

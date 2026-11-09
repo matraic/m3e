@@ -40,15 +40,56 @@ import "./SearchBarElement";
  * screen configurations.
  *
  * @example
- * The following example shows a contained view in docked mode with a simple set of search results.
+ * Showcase: Modes. Import `@m3e/web/search`. Also import `@m3e/web/list`.
+ *
  * ```html
- * <m3e-search-view mode="docked" contained>
+ * <m3e-search-view>
  *   <input slot="input" placeholder="Search..." />
  *   <m3e-list>
  *     <m3e-list-item>Result One</m3e-list-item>
  *     <m3e-list-item>Result Two</m3e-list-item>
  *     <m3e-list-item>Result Three</m3e-list-item>
  *   </m3e-list>
+ * </m3e-search-view>
+ * ```
+ *
+ * @example
+ * Showcase: Modes. Import `@m3e/web/search`.
+ *
+ * ```html
+ * <m3e-search-view mode="fullscreen">
+ *   <input slot="input" placeholder="Search..." />
+ *   <!-- Results omitted for brevity -->
+ * </m3e-search-view>
+ * ```
+ *
+ * @example
+ * Showcase: Appearance variants. Import `@m3e/web/search`.
+ *
+ * ```html
+ * <m3e-search-view mode="docked" contained>
+ *   <input slot="input" placeholder="Search..." />
+ *   <!-- Results omitted for brevity -->
+ * </m3e-search-view>
+ * ```
+ *
+ * @example
+ * Showcase: Appearance variants. Import `@m3e/web/search`.
+ *
+ * ```html
+ * <m3e-search-view mode="fullscreen" contained>
+ *   <input slot="input" placeholder="Search..." />
+ *   <!-- Results omitted for brevity -->
+ * </m3e-search-view>
+ * ```
+ *
+ * @example
+ * Showcase: Hiding the search icon. Import `@m3e/web/search`.
+ *
+ * ```html
+ * <m3e-search-view mode="docked" hide-search-icon>
+ *   <input slot="input" placeholder="Search..." />
+ *   <!-- Results omitted for brevity -->
  * </m3e-search-view>
  * ```
  *

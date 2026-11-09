@@ -22,21 +22,58 @@ import type { M3eFabMenuElement } from "./FabMenuElement";
  * An item of a floating action button (FAB) menu.
  *
  * @example
- * The following example illustrates triggering a `m3e-fab-menu` from an `m3e-fab` using a `m3e-fab-menu-trigger`.
+ * Nest a menu trigger in a FAB and associate it with the menu by id. Import `@m3e/web/fab` and `@m3e/web/icon` for the FAB and icons. Give the icon-only FAB an accessible label.
+ *
  * ```html
  * <m3e-fab variant="primary" size="large">
- *  <m3e-fab-menu-trigger for="fabmenu">
- *    <m3e-icon name="edit"></m3e-icon>
- *  </m3e-fab-menu-trigger>
+ *   <m3e-fab-menu-trigger for="fabmenu">
+ *     <m3e-icon name="edit"></m3e-icon>
+ *   </m3e-fab-menu-trigger>
  * </m3e-fab>
- * <m3e-fab-menu id="fabmenu" variant="secondary">
- *  <m3e-fab-menu-item>First</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Second</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Third</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Forth</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Fifth</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Sixth</m3e-fab-menu-item>
+ * <m3e-fab-menu id="fabmenu">
+ *   <m3e-fab-menu-item>
+ *     <m3e-icon slot="icon" name="email" filled></m3e-icon>
+ *     Email
+ *   </m3e-fab-menu-item>
+ *   <m3e-fab-menu-item>
+ *     <m3e-icon slot="icon" name="chat" filled></m3e-icon>
+ *     Message
+ *   </m3e-fab-menu-item>
+ *   <m3e-fab-menu-item>
+ *     <m3e-icon slot="icon" name="folder" filled></m3e-icon>
+ *     Folder
+ *   </m3e-fab-menu-item>
  * </m3e-fab-menu>
+ * ```
+ *
+ * @example
+ * Use the `icon` slot to provide a leading icon for a menu item. Place the item inside an `m3e-fab-menu`. Import `@m3e/web/icon` for the icon.
+ *
+ * ```html
+ * <m3e-fab-menu-item>
+ *   <m3e-icon slot="icon" name="email" filled></m3e-icon>
+ *   Email
+ * </m3e-fab-menu-item>
+ * ```
+ *
+ * @example
+ * Use `disabled` to disable a menu item. Place the item inside an `m3e-fab-menu`. Import `@m3e/web/icon` for the icon.
+ *
+ * ```html
+ * <m3e-fab-menu-item disabled>
+ *   <m3e-icon slot="icon" name="email" filled></m3e-icon>
+ *   Email
+ * </m3e-fab-menu-item>
+ * ```
+ *
+ * @example
+ * Use `href` to make a menu item a link. Place the item inside an `m3e-fab-menu`. Import `@m3e/web/icon` for the icon.
+ *
+ * ```html
+ * <m3e-fab-menu-item href="https://www.google.com" target="_blank">
+ *   <m3e-icon slot="icon" name="open_in_new_window" filled></m3e-icon>
+ *   Google
+ * </m3e-fab-menu-item>
  * ```
  *
  * @tag m3e-fab-menu-item

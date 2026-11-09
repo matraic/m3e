@@ -24,21 +24,137 @@ import { ListItemContentType } from "./ListItemContentType";
  * via CSS custom properties.
  *
  * @example
- * The following example illustrates a list with a single item using all supported slots.
- *
- * Note: This example uses the `@m3e/icon` package to present Material Design symbols, but any icon package can be
- * substituted depending on your design system or preferences
+ * Showcase: Anatomy. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
  *
  * ```html
  * <m3e-list>
- *  <m3e-list-item>
- *    <m3e-icon slot="leading-icon" name="person"></m3e-icon>
- *    <span slot="overline">Overline</span>
- *    Headline
- *    <span slot="supporting-text">Supporting text</span>
- *    <span slot="trailing-text">100+</span>
- *    <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
- *  </m3e-list-item>
+ *   <m3e-list-item>
+ *     <m3e-icon slot="leading" name="person"></m3e-icon>
+ *     <span slot="overline">Overline</span>
+ *     Headline
+ *     <span slot="supporting-text">Supporting text</span>
+ *     <span slot="trailing">100+</span>
+ *   </m3e-list-item>
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Showcase: Variants. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>Item 1</m3e-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Showcase: Variants. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-list variant="segmented">
+ *   <m3e-list-item>Item 1</m3e-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Showcase: Multiline items. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>Label text</m3e-list-item>
+ *   <m3e-list-item>
+ *     Label text
+ *     <span slot="supporting-text">Supporting text</span>
+ *   </m3e-list-item>
+ *   <m3e-list-item>
+ *     <span slot="overline">Overline</span>
+ *     Label text
+ *     <span slot="supporting-text">Supporting text</span>
+ *   </m3e-list-item>
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>
+ *     <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *     Label text
+ *     <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+ *   </m3e-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/avatar`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>
+ *     <m3e-avatar slot="leading">AB</m3e-avatar>
+ *     Label text
+ *     <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+ *   </m3e-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>
+ *     <img slot="leading" src="[YOUR IMAGE URL HERE]" />
+ *     Label text
+ *     <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+ *   </m3e-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>
+ *     <video slot="leading" autoplay loop poster="[YOUR IMAGE URL HERE]" preload="auto">
+ *       <source src="[YOUR VIDEO URL HERE]" type="video/mp4"/>
+ *     </video>
+ *     Label text
+ *     <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+ *   </m3e-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Showcase: Dividers. Import `@m3e/web/list`. Also import `@m3e/web/divider`.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>Item 1</m3e-list-item>
+ *   <m3e-divider></m3e-divider>
+ *   <m3e-list-item>Item 2</m3e-list-item>
+ *   <m3e-divider></m3e-divider>
+ *   <m3e-list-item>Item 3</m3e-list-item>
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Showcase: Dividers. Import `@m3e/web/list`. Also import `@m3e/web/divider`.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>Item 1</m3e-list-item>
+ *   <m3e-divider inset></m3e-divider>
+ *   <!-- Additional items omitted for brevity -->
  * </m3e-list>
  * ```
  *

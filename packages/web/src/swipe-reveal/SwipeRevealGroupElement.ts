@@ -18,11 +18,53 @@ import type { M3eSwipeRevealElement } from "./SwipeRevealElement";
  * Items may override any setting.
  *
  * @example
- * The following example illustrates a group whose items stagger their neighbors and can be dismissed.
+ * Showcase: Triggers. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/list`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ *
  * ```html
- * <m3e-swipe-reveal-group stagger="0.05" dismissible="trailing">
- *   <m3e-swipe-reveal>…</m3e-swipe-reveal>
- *   <m3e-swipe-reveal>…</m3e-swipe-reveal>
+ * <m3e-swipe-reveal-group triggers="swipe long-press">
+ *   <m3e-list variant="segmented">
+ *     <m3e-swipe-reveal>
+ *       <m3e-list-item>Item 1</m3e-list-item>
+ *       <m3e-icon-button slot="trailing" aria-label="Share" variant="tonal">
+ *         <m3e-icon name="share" filled></m3e-icon>
+ *       </m3e-icon-button>
+ *     </m3e-swipe-reveal>
+ *     <!-- Additional items omitted for brevity -->
+ *   </m3e-list>
+ * </m3e-swipe-reveal-group>
+ * ```
+ *
+ * @example
+ * Showcase: Stagger. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/list`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ *
+ * ```html
+ * <m3e-swipe-reveal-group stagger="0.05">
+ *   <m3e-list variant="segmented">
+ *     <m3e-swipe-reveal>
+ *       <m3e-list-item>Item 1</m3e-list-item>
+ *       <m3e-icon-button slot="trailing" aria-label="Archive" variant="tonal">
+ *         <m3e-icon name="archive" filled></m3e-icon>
+ *       </m3e-icon-button>
+ *     </m3e-swipe-reveal>
+ *     <!-- Additional items omitted for brevity -->
+ *   </m3e-list>
+ * </m3e-swipe-reveal-group>
+ * ```
+ *
+ * @example
+ * Showcase: Dismissible. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/list`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ *
+ * ```html
+ * <m3e-swipe-reveal-group dismissible="trailing">
+ *   <m3e-list variant="segmented">
+ *     <m3e-swipe-reveal>
+ *       <m3e-list-item>Item 1</m3e-list-item>
+ *       <m3e-icon-button slot="trailing" aria-label="Delete" variant="tonal">
+ *         <m3e-icon name="delete" filled></m3e-icon>
+ *       </m3e-icon-button>
+ *     </m3e-swipe-reveal>
+ *     <!-- Additional items omitted for brevity -->
+ *   </m3e-list>
  * </m3e-swipe-reveal-group>
  * ```
  *

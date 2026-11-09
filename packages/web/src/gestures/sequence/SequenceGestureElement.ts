@@ -14,6 +14,52 @@ import { SequenceGestureDetail } from "./SequenceGestureDetail";
  * A non-visual element used to detect and interpret a sequence of gestures from an input stream
  * produced from an attached element.
  *
+ * @example
+ * Detect a long press followed by a pan declaratively by importing `@m3e/web/gestures/sequence`, `@m3e/web/gestures/long-press`, `@m3e/web/gestures/pan` and binding the gesture element to the target with `for`. Listen for its `gesture` event. Give the target a visible size and an appropriate `touch-action` (the showcase uses `touch-action: none`); provide an accessible alternative for gesture-only interactions.
+ *
+ * ```html
+ * <div id="item" class="target"></div>
+ * <m3e-sequence-gesture for="item" max-interval="0">
+ *   <m3e-long-press-gesture></m3e-long-press-gesture>
+ *   <m3e-pan-gesture activation-mode="move"></m3e-pan-gesture>
+ * </m3e-sequence-gesture>
+ * ```
+ *
+ * @example
+ * Alternatively, use the same target with `detectGesture` and `phase`. Replace the handler placeholders and retain the returned controller to call `destroy()` when no longer needed.
+ *
+ * ```js
+ * import { detectGesture, phase } from "@m3e/web/gestures";
+ * import { longPress } from "@m3e/web/gestures/long-press";
+ * import { pan } from "@m3e/web/gestures/pan";
+ * import { sequence } from "@m3e/web/gestures/sequence";
+ *
+ * const item = document.getElementById("item");
+ * detectGesture(
+ *   item,
+ *   sequence(
+ *     { maxInterval: 0 },
+ *     longPress(
+ *       phase({
+ *         onEnd: (detail) => {
+ *           // Handle pick up
+ *         },
+ *       }),
+ *     ),
+ *     pan(
+ *       {
+ *         activationMode: "move",
+ *       },
+ *       phase({
+ *         onUpdate: (detail) => {
+ *           // Handle move
+ *         },
+ *       }),
+ *     ),
+ *   ),
+ * );
+ * ```
+ *
  * @tag m3e-sequence-gesture
  *
  * @slot - The gestures that make up the sequence.

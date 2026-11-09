@@ -30,6 +30,94 @@ import { M3eListOptionElement } from "./ListOptionElement";
  * including aria roles, roving tabindex management, and semantic event handling following Material 3
  * design principles.
  *
+ * @example
+ * Showcase: Selection lists. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-selection-list>
+ *   <m3e-list-option>Option 1</m3e-list-option>
+ *   <!-- Additional options omitted for brevity -->
+ * </m3e-selection-list>
+ * ```
+ *
+ * @example
+ * Showcase: Selection lists. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-selection-list variant="segmented">
+ *   <m3e-list-option>Option 1</m3e-list-option>
+ *   <!-- Additional options omitted for brevity -->
+ * </m3e-selection-list>
+ * ```
+ *
+ * @example
+ * Showcase: Multiple selection. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-selection-list multi>
+ *   <m3e-list-option>Option 1</m3e-list-option>
+ *   <!-- Additional options omitted for brevity -->
+ * </m3e-selection-list>
+ * ```
+ *
+ * @example
+ * Showcase: Multiple selection. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-selection-list variant="segmented" multi>
+ *   <m3e-list-option>Option 1</m3e-list-option>
+ *   <!-- Additional options omitted for brevity -->
+ * </m3e-selection-list>
+ * ```
+ *
+ * @example
+ * Showcase: Hiding the selection indicator. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ *
+ * ```html
+ * <m3e-selection-list multi hide-selection-indicator>
+ *   <m3e-list-option selected>Option 1<m3e-icon slot="trailing" name="bookmark"></m3e-icon></m3e-list-option>
+ *   <m3e-list-option>Option 2<m3e-icon slot="trailing" name="bookmark"></m3e-icon></m3e-list-option>
+ *   <m3e-list-option>Option 3<m3e-icon slot="trailing" name="bookmark"></m3e-icon></m3e-list-option>
+ * </m3e-selection-list>
+ * ```
+ *
+ * @example
+ * Showcase: Disabling. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-selection-list multi>
+ *   <m3e-list-option disabled>Option 1</m3e-list-option>
+ *   <m3e-list-option selected disabled>Option 1</m3e-list-option>
+ *   <!-- Additional options omitted for brevity -->
+ * </m3e-selection-list>
+ * ```
+ *
+ * @example
+ * Showcase: Disabling. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-selection-list variant="segmented" multi>
+ *   <m3e-list-option disabled>Option 1</m3e-list-option>
+ *   <m3e-list-option selected disabled>Option 1</m3e-list-option>
+ *   <!-- Additional options omitted for brevity -->
+ * </m3e-selection-list>
+ * ```
+ *
+ * @example
+ * Showcase: Density. Import `@m3e/web/list`. Apply the required styling for the illustrated classes in your application.
+ *
+ * ```html
+ * <m3e-selection-list class="density-3" variant="segmented" multi>
+ *   <!-- Options omitted for brevity -->
+ * </m3e-selection-list>
+ * ```
+ *
+ * ```css
+ * .density-3 {
+ *   --md-sys-density-scale: -3;
+ * }
+ * ```
+ *
  * @tag m3e-selection-list
  *
  * @slot - Renders the items of the list.

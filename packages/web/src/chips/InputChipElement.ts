@@ -26,15 +26,17 @@ import { M3eChipElement } from "./ChipElement";
  * keyboard interaction, and appearance variants including `elevated` and `outlined`.
  *
  * @example
- * The following example illustrates the use of the `m3e-input-chip-set` inside a `m3e-form-field`.
- * In this example, the `input` slot specifies the `input` element used to add input chips and the
- * field label's `for` attribute targets the `input` element to provide an accessible label.
+ * Prepopulate an input chip set with removable input chips. Import `@m3e/web/form-field` for the form field.
+ *
  * ```html
  * <m3e-form-field>
- *  <label slot="label" for="keywords">Keywords</label>
- *  <m3e-input-chip-set aria-label="Enter keywords">
- *    <input id="keywords" slot="input" placeholder="New keyword..." />
- *  </m3e-input-chip-set>
+ *   <label slot="label" for="keywords">Keywords</label>
+ *   <m3e-input-chip-set aria-label="Enter keywords">
+ *     <m3e-input-chip removable>Design</m3e-input-chip>
+ *     <m3e-input-chip removable>Accessibility</m3e-input-chip>
+ *     <m3e-input-chip removable>Motion</m3e-input-chip>
+ *     <input id="keywords" slot="input" placeholder="New keyword..." />
+ *   </m3e-input-chip-set>
  * </m3e-form-field>
  * ```
  *

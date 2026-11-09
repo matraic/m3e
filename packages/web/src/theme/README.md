@@ -17,20 +17,48 @@ import "@m3e/web/theme";
 
 ## 🧪 Examples
 
-The following example adds a top-level `m3e-theme` directly beneath a document's `<body>` element to apply application-level theming. In this example, `color` and `scheme` are used to create a dynamic color palette which automatically adjusts to a user's light or dark color preference. In addition, expressive motion and strong focus indicators are enabled.
+Showcase: Color. Import `@m3e/web/theme`.
 
 ```html
-<body>
-  <m3e-theme color="#6750A4" scheme="auto" motion="expressive" strong-focus>
-    <!-- App content here -->
-  </m3e-theme>
-</body>
+<m3e-theme color="#4285F4">
+  <!-- Swatches omitted for brevity -->
+</m3e-theme>
 ```
 
-The next example presents a preview of a teal light theme using a `m3e-theme-icon`.
+Showcase: Schemes. Import `@m3e/web/theme`.
 
 ```html
-<m3e-theme-icon color="#004f4f" scheme="light"></m3e-theme-icon>
+<m3e-theme color="#4285F4" scheme="dark">
+  <!-- Swatches omitted for brevity -->
+</m3e-theme>
+```
+
+Showcase: Contrast. Import `@m3e/web/theme`.
+
+```html
+<m3e-theme color="#4285F4" contrast="high">
+  <!-- Swatches omitted for brevity -->
+</m3e-theme>
+```
+
+Showcase: Density. Import `@m3e/web/theme`.
+
+```html
+<m3e-theme density="-3">
+  <!-- Buttons omitted for brevity -->
+</m3e-theme>
+<!-- Additional densities omitted for brevity -->
+```
+
+Showcase: Motion. Import `@m3e/web/theme`.
+
+```html
+<m3e-theme motion="standard">
+  <!-- Switch omitted for brevity -->
+</m3e-theme>
+<m3e-theme motion="expressive">
+  <!-- Switch omitted for brevity -->
+</m3e-theme>
 ```
 
 ## 📖 API Reference

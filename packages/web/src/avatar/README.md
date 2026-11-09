@@ -12,27 +12,15 @@ import "@m3e/web/avatar";
 
 ## 🧪 Examples
 
-The following example illustrates use of the `m3e-avatar` to present textual initials.
+An avatar can display initials, an image, or an icon. Replace the image URL placeholder and import `@m3e/web/icon` when using `m3e-icon`. Provide appropriate alternative text or an accessible name when the image or icon conveys identity.
 
 ```html
 <m3e-avatar>AB</m3e-avatar>
-```
-
-The next example illustrates use of the `m3e-avatar` to present an icon.
-
-> This example uses the `@m3e/icon` package to present Material Design symbols, but any icon package can be substituted depending on your design system or preferences
-
-```html
+<m3e-avatar>
+  <img src="[YOUR IMAGE URL HERE]" />
+</m3e-avatar>
 <m3e-avatar>
   <m3e-icon name="person"></m3e-icon>
-</m3e-avatar>
-```
-
-The last example illustrates use of the `m3e-avatar` to present an image.
-
-```html
-<m3e-avatar>
-  <img src="https://avatars.githubusercontent.com/u/224686995?s=48&v=4" />
 </m3e-avatar>
 ```
 

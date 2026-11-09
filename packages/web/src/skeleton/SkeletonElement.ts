@@ -26,11 +26,60 @@ import { isSkeletonAnimation, SkeletonAnimation } from "./SkeletonAnimation";
  * content is loaded, the skeleton fades out with a smooth transition.
  *
  * @example
- * The following example illustrates a skeleton shaped and sized by the slotted `m3e-card`.
+ * Showcase: Card Header. Import `@m3e/web/skeleton`. Also import `@m3e/web/card`, `@m3e/web/heading`, `@m3e/web/button`.
+ *
  * ```html
  * <m3e-skeleton>
- *  <m3e-card></m3e-card>
+ *   <m3e-card>
+ *     <m3e-heading slot="header" variant="display" size="small">Card Header</m3e-heading>
+ *     <div slot="content">Card Content</div>
+ *     <div slot="actions">
+ *       <m3e-button variant="filled">Action</m3e-button>
+ *     </div>
+ *     <div slot="footer">Card Footer</div>
+ *   </m3e-card>
  * </m3e-skeleton>
+ * ```
+ *
+ * @example
+ * Showcase: Shape. Import `@m3e/web/skeleton`.
+ *
+ * ```html
+ * <m3e-skeleton shape="circular">
+ *   <div style="width: 100px; height: 100px"></div>
+ * </m3e-skeleton>
+ * <br />
+ * <m3e-skeleton shape="rounded">
+ *   <div style="width: 100px; height: 100px"></div>
+ * </m3e-skeleton>
+ * <br />
+ * <m3e-skeleton shape="square">
+ *   <div style="width: 100px; height: 100px"></div>
+ * </m3e-skeleton>
+ * <br />
+ * <m3e-skeleton shape="auto">
+ *   <div style="width: 100px; height: 100px; border-radius: 16px"></div>
+ * </m3e-skeleton>
+ * ```
+ *
+ * @example
+ * Showcase: Animation. Import `@m3e/web/skeleton`.
+ *
+ * ```html
+ * <m3e-skeleton shape="circular" animation="pulse">
+ *   <div style="width: 100px; height: 100px"></div>
+ * </m3e-skeleton>
+ * <!-- Additional skeletons omitted for brevity -->
+ * ```
+ *
+ * @example
+ * Showcase: Animation. Import `@m3e/web/skeleton`.
+ *
+ * ```html
+ * <m3e-skeleton shape="circular" animation="none">
+ *   <div style="width: 100px; height: 100px"></div>
+ * </m3e-skeleton>
+ * <!-- Additional skeletons omitted for brevity -->
  * ```
  *
  * @tag m3e-skeleton

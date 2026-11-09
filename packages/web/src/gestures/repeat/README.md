@@ -28,6 +28,39 @@ import "@m3e/web/gestures/tap";
 
 The element dispatches a `gesture` event with `RepeatGestureDetail` as its detail. The first assigned child gesture is used as the repeated recognizer.
 
+## Showcase examples
+
+Detect a triple tap declaratively by importing `@m3e/web/gestures/repeat`, `@m3e/web/gestures/tap` and binding the gesture element to the target with `for`. Listen for its `gesture` event. Give the target a visible size and an appropriate `touch-action` (the showcase uses `touch-action: none`); provide an accessible alternative for gesture-only interactions.
+
+```html
+<div id="item" class="target"></div>
+<m3e-repeat-gesture for="item" count="3" max-interval="350">
+  <m3e-tap-gesture></m3e-tap-gesture>
+</m3e-repeat-gesture>
+```
+
+Alternatively, use the same target with `detectGesture` and `phase`. Replace the handler placeholders and retain the returned controller to call `destroy()` when no longer needed.
+
+```js
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { tap } from "@m3e/web/gestures/tap";
+import { repeat } from "@m3e/web/gestures/repeat";
+
+const item = document.getElementById("item");
+detectGesture(item, repeat(
+  phase({
+    onEnd: (detail) => {
+      // Handle triple tap
+    },
+  }),
+  {
+    count: 3,
+    maxInterval: 350
+  },
+  tap(),
+));
+```
+
 ## Options
 
 | Attribute       | Type                            | Default                     | Description                                                        |

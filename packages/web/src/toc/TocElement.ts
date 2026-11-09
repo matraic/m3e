@@ -36,18 +36,32 @@ import { TocGenerator, TocNode } from "./TocGenerator";
  * to that heading element.
  *
  * @example
+ * Showcase: Generating a TOC. Import `@m3e/web/toc`.
+ *
  * ```html
- * <m3e-toc for="content" max-depth="3">
- *   <span slot="overline">Contents</span>
- *   <span slot="title">Documentation</span>
- * </m3e-toc>
- * <div id="content">
- *   <h2>Introduction</h2>
- *   <h2>Getting Started</h2>
- *   <h3>Installation</h3>
- *   <h3>Usage</h3>
- *   <h2>API Reference</h2>
+ * <div id="d1">
+ *   <m3e-toc for="d1">
+ *     <span slot="overline">Overline</span>
+ *     <span slot="title">Title</span>
+ *   </m3e-toc>
+ *   <div>
+ *     <h2 id="h1">Heading 1</h2>
+ *     <h3 id="h1.1">Heading 1.1</h3>
+ *     <h4 id="h1.1.1">Heading 1.1.1</h4>
+ *     <h3 id="h2">Heading 1.2</h3>
+ *     <h2 id="h2.1">Heading 2</h2>
+ *   </div>
  * </div>
+ * ```
+ *
+ * @example
+ * Showcase: Heading. Import `@m3e/web/toc`.
+ *
+ * ```html
+ * <m3e-toc for="d1">
+ *     <span slot="overline">Overline</span>
+ *     <span slot="title">Title</span>
+ *   </m3e-toc>
  * ```
  *
  * @tag m3e-toc

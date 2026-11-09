@@ -10,7 +10,9 @@ import "@m3e/web/autocomplete";
 
 - `m3e-autocomplete` — An input enhancement that displays a filtered menu of suggestions, providing real-time filtering and keyboard navigation.
 
-## 🧪 Example
+## 🧪 Examples
+
+Pair autocomplete with a form field.
 
 ```html
 <m3e-form-field>
@@ -25,15 +27,210 @@ import "@m3e/web/autocomplete";
 </m3e-autocomplete>
 ```
 
-With auto-activation and required selection:
+Use `filter` and `case-sensitive` for a case-sensitive prefix match. Supply options as in the basic example.
 
 ```html
-<m3e-autocomplete for="fruit" auto-activate required>
-  <m3e-option>Apples</m3e-option>
-  <m3e-option>Oranges</m3e-option>
-  <m3e-option>Bananas</m3e-option>
-  <m3e-option>Grapes</m3e-option>
+<m3e-form-field>
+  <label slot="label" for="fruit">Choose your favorite fruit</label>
+  <input id="fruit" value="Apple" />
+</m3e-form-field>
+<m3e-autocomplete for="fruit" filter="starts-with" case-sensitive>
+  <!-- Options omitted for brevity -->
 </m3e-autocomplete>
+```
+
+Set the `filter` property for custom matching. Supply options as in the basic example. Load the script before `DOMContentLoaded`.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="fruit">Choose your favorite fruit</label>
+  <input id="fruit" value="Apple" />
+</m3e-form-field>
+<m3e-autocomplete class="custom-filter" for="fruit">
+  <!-- Options omitted for brevity -->
+</m3e-autocomplete>
+```
+
+```js
+window.addEventListener("DOMContentLoaded", () => {
+  for (const autocomplete of document.querySelectorAll("m3e-autocomplete.custom-filter")) {
+    autocomplete.filter = (option, term) =>
+      option.value.toLocaleLowerCase().startsWith(term.toLocaleLowerCase());
+  }
+});
+```
+
+Use `no-data-label` to set the empty-state text. Supply options as in the basic example.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="fruit">Choose your favorite fruit</label>
+  <input id="fruit" value="Pear" />
+</m3e-form-field>
+<m3e-autocomplete for="fruit" no-data-label="No data">
+  <!-- Options omitted for brevity -->
+</m3e-autocomplete>
+```
+
+Load initial options when the input is focused. Define `usStates` and run the listener after the markup is available.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="state">State</label>
+  <input id="state" />
+</m3e-form-field>
+<m3e-autocomplete for="state" class="lazy">
+  <m3e-loading-indicator slot="loading"></m3e-loading-indicator>
+</m3e-autocomplete>
+```
+
+```js
+const lazy = document.querySelector("m3e-autocomplete.lazy");
+lazy.addEventListener("query", () => {
+  if (!lazy.querySelector("m3e-option")) {
+    lazy.loading = true;
+    setTimeout(() => {
+      usStates.forEach((state) => {
+        const option = document.createElement("m3e-option");
+        option.innerText = state;
+        lazy.appendChild(option);
+      });
+      lazy.loading = false;
+    }, 2000);
+  }
+});
+```
+
+Search as the user types with debouncing and cancellation. Define `usStates` and run the listener after the markup is available.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="state">State</label>
+  <input id="state" />
+</m3e-form-field>
+<m3e-autocomplete for="state" filter="none" class="search">
+  <m3e-loading-indicator slot="loading"></m3e-loading-indicator>
+</m3e-autocomplete>
+```
+
+```js
+const search = document.querySelector("m3e-autocomplete.search");
+
+let debounceTimer = -1;
+let activeRequest = null;
+
+search.addEventListener("query", (e) => {
+  const term = e.detail.term?.trim().toLowerCase();
+
+  // User is typing → reset debounce, but do NOT show loading yet
+  clearTimeout(debounceTimer);
+
+  // If user cleared the field
+  if (!term) {
+    // Cancel any in‑flight request
+    if (activeRequest) activeRequest.abort();
+
+    // Reset UI
+    search.querySelectorAll("m3e-option").forEach((x) => x.remove());
+    search.hideNoData = true;
+    search.loading = false;
+    return;
+  }
+
+  // Now a real search is happening → show loading
+  search.loading = true;
+  search.hideNoData = false;
+
+  // If a request is already loading, keep showing loading
+  // but cancel the old request
+  if (activeRequest) activeRequest.abort();
+
+  // Start debounce
+  debounceTimer = setTimeout(() => {
+    // Clear old results (so we don't show stale data)
+    search.querySelectorAll("m3e-option").forEach((x) => x.remove());
+
+    // Create a cancellable "request"
+    const controller = new AbortController();
+    activeRequest = controller;
+
+    // Simulate async search
+    setTimeout(() => {
+      // If canceled, do nothing
+      if (controller.signal.aborted) return;
+
+      // Populate results
+      usStates
+        .filter((x) => x.toLowerCase().includes(term))
+        .forEach((state) => {
+          const option = document.createElement("m3e-option");
+          option.innerText = state;
+          search.appendChild(option);
+        });
+
+      search.loading = false;
+
+      activeRequest = null;
+    }, 2000);
+  }, 300); // debounce delay
+});
+```
+
+Use `required` to require an option selection. Supply options as in the basic example.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="fruit">Choose your favorite fruit</label>
+  <input id="fruit" value="Apple" />
+</m3e-form-field>
+<m3e-autocomplete for="fruit" required>
+  <!-- Options omitted for brevity -->
+</m3e-autocomplete>
+```
+
+Use `auto-activate` to activate the first option. Supply options as in the basic example.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="fruit">Choose your favorite fruit</label>
+  <input id="fruit" />
+</m3e-form-field>
+<m3e-autocomplete for="fruit" auto-activate>
+  <!-- Options omitted for brevity -->
+</m3e-autocomplete>
+```
+
+Pair autocomplete with an input chip set. Supply options as in the basic example.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="fruit">Choose your favorite fruits</label>
+  <m3e-input-chip-set aria-label="Enter favorite fruits">
+    <input id="fruit" slot="input" placeholder="Add fruit..." />
+  </m3e-input-chip-set>
+</m3e-form-field>
+<m3e-autocomplete for="fruit">
+  <!-- Options omitted for brevity -->
+</m3e-autocomplete>
+```
+
+Apply density to the form field and panel using `panel-class`. Supply options as in the basic example. The showcase omits additional density classes.
+
+```html
+<m3e-form-field class="density-3">
+  <label slot="label" for="fld">Density -3</label>
+  <input id="fld" />
+</m3e-form-field>
+<m3e-autocomplete for="fld" panel-class="density-3">
+  <!-- Options omitted for brevity -->
+</m3e-autocomplete>
+<!-- Additional fields omitted for brevity -->
+```
+
+```css
+.density-3 {
+  --md-sys-density-scale: -3;
+}
 ```
 
 ## 📖 API Reference

@@ -34,22 +34,129 @@ import { ButtonGroupSize, isButtonGroupSize } from "./ButtonGroupSize";
  * in a visually harmonious and intuitive way.
  *
  * @example
- * The following example illustrates a standard button group.
- * ``` html
+ * A standard group arranges icon buttons and adds interaction between adjacent buttons. Import `@m3e/web/icon-button`. Import `@m3e/web/icon` and load the Material Symbols font. Give each icon-only button an accessible name using `aria-label`.
+ * ```html
  * <m3e-button-group>
- *  <m3e-icon-button variant="tonal" toggle><m3e-icon name="format_bold"></m3e-icon></m3e-icon-button>
- *  <m3e-icon-button variant="tonal" toggle><m3e-icon name="format_italic"></m3e-icon></m3e-icon-button>
- *  <m3e-icon-button variant="tonal" toggle><m3e-icon name="format_underlined"></m3e-icon></m3e-icon-button>
+ *   <m3e-icon-button>
+ *     <m3e-icon name="arrow_back"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button>
+ *     <m3e-icon name="arrow_forward"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button width="wide" variant="filled">
+ *     <m3e-icon name="add"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button>
+ *     <m3e-icon name="picture_in_picture"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button>
+ *     <m3e-icon name="more_vert"></m3e-icon>
+ *   </m3e-icon-button>
  * </m3e-button-group>
  * ```
+ *
  * @example
- * The next example illustrates a connected button group.
+ * A standard group can contain text buttons. Import `@m3e/web/button`. Import `@m3e/web/icon` and load the Material Symbols font.
+ * ```html
+ * <m3e-button-group>
+ *   <m3e-button variant="tonal">
+ *     <m3e-icon slot="icon" name="play_arrow"></m3e-icon>Start
+ *   </m3e-button>
+ *   <m3e-button variant="tonal">
+ *     <m3e-icon slot="icon" name="directions_car"></m3e-icon>Directions
+ *   </m3e-button>
+ *   <m3e-button variant="tonal">
+ *     <m3e-icon slot="icon" name="share"></m3e-icon>Share
+ *   </m3e-button>
+ * </m3e-button-group>
+ * ```
+ *
+ * @example
+ * A standard group can mix text and icon buttons, including wide icon buttons. Import `@m3e/web/button`. Import `@m3e/web/icon-button`. Import `@m3e/web/icon` and load the Material Symbols font. Give each icon-only button an accessible name using `aria-label`.
+ * ```html
+ * <m3e-button-group>
+ *   <m3e-icon-button variant="filled" width="wide">
+ *     <m3e-icon name="fast_rewind"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-button variant="filled">
+ *     <m3e-icon slot="icon" name="play_arrow"></m3e-icon>Play
+ *   </m3e-button>
+ *   <m3e-icon-button variant="filled" width="wide">
+ *     <m3e-icon name="fast_forward"></m3e-icon>
+ *   </m3e-icon-button>
+ * </m3e-button-group>
+ * ```
+ *
+ * @example
+ * Use `variant="connected"` to create a connected group. Import `@m3e/web/button`.
  * ```html
  * <m3e-button-group variant="connected">
- *  <m3e-button variant="tonal" shape="square" toggle>Start</m3e-button>
- *  <m3e-button variant="tonal" shape="square" toggle>Directions</m3e-button>
- *  <m3e-button variant="tonal" shape="square" toggle>Share</m3e-button>
+ *   <m3e-button variant="tonal" toggle>Start</m3e-button>
+ *   <m3e-button variant="tonal" toggle>Directions</m3e-button>
+ *   <m3e-button variant="tonal" toggle>Share</m3e-button>
  * </m3e-button-group>
+ * ```
+ *
+ * @example
+ * Use `size` to control standard group spacing. Set the same size on each button for uniform sizing. Import `@m3e/web/icon-button`. Import `@m3e/web/icon` and load the Material Symbols font. Give each icon-only button an accessible name using `aria-label`.
+ * ```html
+ * <m3e-button-group size="large">
+ *   <m3e-icon-button size="large">
+ *     <m3e-icon name="arrow_back"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button size="large">
+ *     <m3e-icon name="arrow_forward"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button size="large" width="wide" variant="filled">
+ *     <m3e-icon name="add"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button size="large">
+ *     <m3e-icon name="picture_in_picture"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button size="large">
+ *     <m3e-icon name="more_vert"></m3e-icon>
+ *   </m3e-icon-button>
+ * </m3e-button-group>
+ * ```
+ *
+ * @example
+ * Connected groups have the same spacing regardless of size. Set the group and button sizes to match for uniform sizing. Import `@m3e/web/button`.
+ * ```html
+ * <m3e-button-group size="large" variant="connected">
+ *   <m3e-button variant="tonal" size="large" toggle>Start</m3e-button>
+ *   <m3e-button variant="tonal" size="large" toggle>Directions</m3e-button>
+ *   <m3e-button variant="tonal" size="large" toggle>Share</m3e-button>
+ * </m3e-button-group>
+ * ```
+ *
+ * @example
+ * Use `multi` to allow multiple toggle buttons to be selected; without it the group is single-select. Import `@m3e/web/icon-button`. Import `@m3e/web/icon` and load the Material Symbols font. Give each icon-only button an accessible name using `aria-label`.
+ * ```html
+ * <m3e-button-group multi>
+ *   <m3e-icon-button variant="tonal" toggle>
+ *     <m3e-icon name="format_bold"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button variant="tonal" toggle>
+ *     <m3e-icon name="format_italic"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button variant="tonal" toggle>
+ *     <m3e-icon name="format_underlined"></m3e-icon>
+ *   </m3e-icon-button>
+ * </m3e-button-group>
+ * ```
+ *
+ * @example
+ * Apply `--md-sys-density-scale` to the group to adjust its buttons. Supply buttons as in the standard or connected examples. The showcase omits additional groups and density classes.
+ * ```html
+ * <m3e-button-group class="density-3">
+ *   <!-- Buttons omitted for brevity -->
+ * </m3e-button-group>
+ * <!-- Additional groups and variants omitted for brevity -->
+ * ```
+ * ```css
+ * .density-3 {
+ *   --md-sys-density-scale: -3;
+ * }
  * ```
  *
  * @tag m3e-button-group

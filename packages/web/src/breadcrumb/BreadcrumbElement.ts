@@ -15,13 +15,70 @@ import type { M3eBreadcrumbItemElement } from "./BreadcrumbItemElement";
  * supports a custom separator slot for alternate divider content.
  *
  * @example
- * The following example illustrates a simple breadcrumb with three items.
+ * Place breadcrumb items in order from the broadest level to the current location. The last item is automatically treated as the current page.
  * ```html
  * <m3e-breadcrumb>
- *   <m3e-breadcrumb-item href="/dashboard">Dashboard</m3e-breadcrumb-item>
- *   <m3e-breadcrumb-item href="/dashboard/reports">Reports</m3e-breadcrumb-item>
- *   <m3e-breadcrumb-item href="/dashboard/reports/annual">Annual</m3e-breadcrumb-item>
+ *   <m3e-breadcrumb-item>Dashboard</m3e-breadcrumb-item>
+ *   <m3e-breadcrumb-item>Reports</m3e-breadcrumb-item>
+ *   <m3e-breadcrumb-item>Annual</m3e-breadcrumb-item>
  * </m3e-breadcrumb>
+ * ```
+ *
+ * @example
+ * Use `href` for links on earlier items. The last item is the current location and is not interactive; supply additional items as in the basic example.
+ * ```html
+ * <m3e-breadcrumb>
+ *   <m3e-breadcrumb-item href="https://developer.mozilla.org/en-US/docs/Web" target="_blank">Web</m3e-breadcrumb-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-breadcrumb>
+ * ```
+ *
+ * @example
+ * Use the `icon` slot for an icon before a label, or place an icon in the default slot and use `item-label` for an icon-only item. Import `@m3e/web/icon` when using `m3e-icon`.
+ * ```html
+ * <m3e-breadcrumb>
+ *   <m3e-breadcrumb-item item-label="Dashboard">
+ *     <m3e-icon name="dashboard"></m3e-icon>
+ *   </m3e-breadcrumb-item>
+ *   <m3e-breadcrumb-item>
+ *     <m3e-icon slot="icon" name="analytics"></m3e-icon>Reports
+ *   </m3e-breadcrumb-item>
+ *   <m3e-breadcrumb-item>
+ *     <m3e-icon slot="icon" name="calendar_month"></m3e-icon>Annual
+ *   </m3e-breadcrumb-item>
+ * </m3e-breadcrumb>
+ * ```
+ *
+ * @example
+ * Use the `separator` slot for a custom separator. Supply the additional items shown in the basic example.
+ * ```html
+ * <m3e-breadcrumb>
+ *   <span slot="separator">/</span>
+ *   <m3e-breadcrumb-item>Dashboard</m3e-breadcrumb-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-breadcrumb>
+ * ```
+ *
+ * @example
+ * Use `wrap` to allow breadcrumb items to wrap. Supply the items shown in the basic example.
+ * ```html
+ * <m3e-breadcrumb wrap>
+ *   <!-- Items omitted for brevity -->
+ * </m3e-breadcrumb>
+ * ```
+ *
+ * @example
+ * Use `--md-sys-density-scale` to adjust the breadcrumb density. Supply the items shown in the basic example. The showcase omits additional breadcrumbs and density classes.
+ * ```html
+ * <m3e-breadcrumb class="density-3">
+ *   <!-- Items omitted for brevity -->
+ * </m3e-breadcrumb>
+ * <!-- Additional breadcrumbs omitted for brevity -->
+ * ```
+ * ```css
+ * .density-3 {
+ *   --md-sys-density-scale: -3;
+ * }
  * ```
  *
  * @tag m3e-breadcrumb

@@ -26,14 +26,19 @@ const WAVY_INDETERMINATE_DURATION = 1.575;
  * loading and activity indication.
  *
  * @example
- * The following example illustrates a determinate circular progress indicator.
+ * Showcase: Determinate. Import `@m3e/web/progress-indicator`.
+ *
  * ```html
- * <m3e-circular-progress-indicator value="30"></m3e-circular-progress-indicator>
+ * <m3e-circular-progress-indicator value="25">25</m3e-circular-progress-indicator>
+ * <m3e-circular-progress-indicator variant="wavy" value="25">25</m3e-circular-progress-indicator>
  * ```
+ *
  * @example
- * The next example illustrates an indeterminate circular progress indicator using the `indeterminate` attribute.
+ * Showcase: Indeterminate. Import `@m3e/web/progress-indicator`.
+ *
  * ```html
  * <m3e-circular-progress-indicator indeterminate></m3e-circular-progress-indicator>
+ * <m3e-circular-progress-indicator variant="wavy" indeterminate></m3e-circular-progress-indicator>
  * ```
  *
  * @tag m3e-circular-progress-indicator

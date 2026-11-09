@@ -23,16 +23,23 @@ import { MenuItemElementBase } from "./MenuItemElementBase";
  * selection contract and can coexist with other checkbox or radio items within the same menu.
  *
  * @example
- * The following example illustrates use of the `m3e-menu-item-checkbox` to present multiple independent checkable
- * items in a menu.
+ * Showcase: Checkboxes. Import `@m3e/web/menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ *
  * ```html
- * <m3e-button>
- *   <m3e-menu-trigger for="menu">Format</m3e-menu-trigger>
- * </m3e-button>
+ * <!-- Trigger omitted for brevity -->
  * <m3e-menu id="menu">
- *   <m3e-menu-item-checkbox>Bold</m3e-menu-item-checkbox>
- *   <m3e-menu-item-checkbox>Italic</m3e-menu-item-checkbox>
- *   <m3e-menu-item-checkbox>Underline</m3e-menu-item-checkbox>
+ *   <m3e-menu-item-checkbox checked>
+ *     <m3e-icon slot="icon" name="format_bold"></m3e-icon>
+ *     Bold
+ *   </m3e-menu-item-checkbox>
+ *   <m3e-menu-item-checkbox>
+ *     <m3e-icon slot="icon" name="format_italic"></m3e-icon>
+ *     Italic
+ *   </m3e-menu-item-checkbox>
+ *   <m3e-menu-item-checkbox>
+ *     <m3e-icon slot="icon" name="format_underlined"></m3e-icon>
+ *     Underline
+ *   </m3e-menu-item-checkbox>
  * </m3e-menu>
  * ```
  *

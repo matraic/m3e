@@ -10,6 +10,24 @@ import { customElement, Role } from "@m3e/web/core";
  * context for interaction and selection. It enables separation of concerns—such as organizing radio
  * items into mutually exclusive sets.
  *
+ * @example
+ * Showcase: Radios. Import `@m3e/web/menu`. Also import `@m3e/web/divider`.
+ *
+ * ```html
+ * <!-- Trigger omitted for brevity -->
+ * <m3e-menu id="menu">
+ *   <m3e-menu-item-group>
+ *     <m3e-menu-item-radio checked>Ascending</m3e-menu-item-radio>
+ *     <m3e-menu-item-radio>Descending</m3e-menu-item-radio>
+ *   </m3e-menu-item-group>
+ *   <m3e-divider></m3e-divider>
+ *   <m3e-menu-item-group>
+ *     <m3e-menu-item-radio checked>Alphabetical</m3e-menu-item-radio>
+ *     <m3e-menu-item-radio>By Date</m3e-menu-item-radio>
+ *   </m3e-menu-item-group>
+ * </m3e-menu>
+ * ```
+ *
  * @tag m3e-menu-item-group
  *
  * @slot - Renders the contents of the group.

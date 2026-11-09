@@ -12,13 +12,104 @@ import "@m3e/web/form-field";
 
 ## 🧪 Examples
 
-The following example illustrates a basic usage of the `m3e-form-field`.
+Set `variant` to `outlined` (the default) or `filled`.
+
+```html
+<m3e-form-field variant="outlined">
+  <label slot="label" for="fld">Outlined</label>
+  <input id="fld" />
+</m3e-form-field>
+<!-- Additional variants omitted for brevity -->
+```
+
+Use `float-label="always"` to keep the label floated above the control.
+
+```html
+<m3e-form-field float-label="always">
+  <label slot="label" for="fld">Always float label</label>
+  <input id="fld" />
+</m3e-form-field>
+```
+
+Place hint text in the `hint` slot. Use `hide-subscript="never"` to keep the subscript visible.
+
+```html
+<m3e-form-field hide-subscript="never">
+  <label slot="label" for="fld">Field w/ hint</label>
+  <input id="fld" />
+  <span slot="hint">Hint text</span>
+</m3e-form-field>
+```
+
+A required control displays its validation message after interaction or form submission, replacing the hint.
 
 ```html
 <m3e-form-field>
-  <label slot="label" for="field">Text field</label>
-  <input id="field" />
+  <label slot="label" for="fld5">Required field</label>
+  <input id="fld5" required />
+  <span slot="hint">Hint text</span>
 </m3e-form-field>
+```
+
+Use the `error` slot to provide a custom error message for an invalid control.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="fld">Required field</label>
+  <input id="fld" required />
+  <span slot="hint">Hint text</span>
+  <span slot="error">Custom error message</span>
+</m3e-form-field>
+```
+
+Set `error` to manually apply the error slot text as the control's custom validity. Removing it clears the error state.
+
+```html
+<m3e-form-field error>
+  <label slot="label" for="fld">Manually validated field</label>
+  <input id="fld" />
+  <span slot="hint">Hint text</span>
+  <span slot="error">Custom error message</span>
+</m3e-form-field>
+```
+
+Use `hide-required-marker` to hide the required marker without removing the control's required constraint.
+
+```html
+<m3e-form-field hide-required-marker>
+  <label slot="label" for="fld">Required field</label>
+  <input id="fld" required />
+</m3e-form-field>
+```
+
+Use `prefix` and `suffix` for icons or buttons, and `prefix-text` and `suffix-text` for text. Import `@m3e/web/icon-button` and `@m3e/web/icon`. Give the icon-only button an accessible label and implement its clear action.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="fld">Amount</label>
+  <span slot="prefix-text">$</span>
+  <input id="fld" type="number" placeholder="0" />
+  <span slot="suffix-text">.00</span>
+  <m3e-icon-button slot="suffix">
+    <m3e-icon name="clear"></m3e-icon>
+  </m3e-icon-button>
+</m3e-form-field>
+```
+
+Set `--md-sys-density-scale` to adjust the field's density. Negative scales down to -3 are supported; additional classes are omitted.
+
+```html
+<m3e-form-field variant="outlined" class="density-3">
+  <label slot="label" for="fld">Density -3</label>
+  <input id="fld" />
+</m3e-form-field>
+<!-- Additional fields and variants omitted for brevity -->
+```
+
+```css
+.density-3 {
+  --md-sys-density-scale: -3;
+}
 ```
 
 ## 📖 API Reference

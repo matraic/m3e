@@ -54,18 +54,54 @@ function omitKeys<T extends object, K extends keyof T>(obj: T, ...keys: readonly
  * when supported, cascades to all viewport scrollbars.
  *
  * @example
- * The following example adds a top-level `m3e-theme` directly beneath a document's `<body>` element to
- * apply application-level theming.  In this example, `color` and `scheme` are used to create a dynamic color
- * palette which automatically adjusts to a user's light or dark color preference. In addition, expressive motion
- * and strong focus indicators are enabled.
+ * Showcase: Color. Import `@m3e/web/theme`.
  *
  * ```html
- * <body>
- *  <m3e-theme color="#6750A4" scheme="auto" motion="expressive" strong-focus>
- *      <!-- Normal body content here. -->
- *  </m3e-theme>
- * <body/>
+ * <m3e-theme color="#4285F4">
+ *   <!-- Swatches omitted for brevity -->
+ * </m3e-theme>
  * ```
+ *
+ * @example
+ * Showcase: Schemes. Import `@m3e/web/theme`.
+ *
+ * ```html
+ * <m3e-theme color="#4285F4" scheme="dark">
+ *   <!-- Swatches omitted for brevity -->
+ * </m3e-theme>
+ * ```
+ *
+ * @example
+ * Showcase: Contrast. Import `@m3e/web/theme`.
+ *
+ * ```html
+ * <m3e-theme color="#4285F4" contrast="high">
+ *   <!-- Swatches omitted for brevity -->
+ * </m3e-theme>
+ * ```
+ *
+ * @example
+ * Showcase: Density. Import `@m3e/web/theme`.
+ *
+ * ```html
+ * <m3e-theme density="-3">
+ *   <!-- Buttons omitted for brevity -->
+ * </m3e-theme>
+ * <!-- Additional densities omitted for brevity -->
+ * ```
+ *
+ * @example
+ * Showcase: Motion. Import `@m3e/web/theme`.
+ *
+ * ```html
+ * <m3e-theme motion="standard">
+ *   <!-- Switch omitted for brevity -->
+ * </m3e-theme>
+ * <m3e-theme motion="expressive">
+ *   <!-- Switch omitted for brevity -->
+ * </m3e-theme>
+ * ```
+ *
  * @tag m3e-theme
  *
  * @slot - Renders content styled by the theme.

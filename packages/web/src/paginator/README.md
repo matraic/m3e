@@ -12,10 +12,34 @@ import "@m3e/web/paginator";
 
 ## 🧪 Example
 
-The following example illustrates use of the `m3e-paginator`. In this example, there are 300 total records and the first/last navigation controls are shown.
+Showcase: Basic usage. Import `@m3e/web/paginator`.
 
 ```html
-<m3e-paginator show-first-last-buttons length="300"></m3e-paginator>
+<m3e-paginator length="100"></m3e-paginator>
+```
+
+Showcase: Page sizes. Import `@m3e/web/paginator`.
+
+```html
+<m3e-paginator length="100" page-sizes="10,50,all" page-size="all"></m3e-paginator>
+```
+
+Showcase: Navigation actions. Import `@m3e/web/paginator`.
+
+```html
+<m3e-paginator length="100" show-first-last-buttons></m3e-paginator>
+```
+
+Showcase: Density. Import `@m3e/web/paginator`. Apply the required styling for the illustrated classes in your application.
+
+```html
+<m3e-paginator class="density-3" length="100" show-first-last-buttons></m3e-paginator>
+```
+
+```css
+.density-3 {
+  --md-sys-density-scale: -3;
+}
 ```
 
 ## 📖 API Reference

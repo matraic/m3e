@@ -5,6 +5,8 @@ The `m3e-icon` component makes it easy to use Material Symbols in your applicati
 The Material Symbols font is the easiest way to incorporate Material Symbols into your application. Using the [Fonts CSS API](https://developers.google.com/fonts/docs/css2#forming_api_urls), you can use variable fonts to optimize icon
 usage within your application. See [Can I Use's Variable Fonts](https://caniuse.com/variable-fonts) to determine whether your user's browser support variable fonts.
 
+Alternatively, import SVG icons from `@m3e/icons`. A registered icon renders as SVG; otherwise, the component falls back to the Material Symbols font. Icons are hidden from assistive technology by default unless given `aria-label`, `aria-labelledby`, or `aria-hidden`.
+
 ```ts
 import "@m3e/web/icon";
 ```
@@ -15,19 +17,37 @@ import "@m3e/web/icon";
 
 ## 🧪 Examples
 
-The following example illustrates showing the `home` icon. The `name` attribute specifies the icon to present.
+Use `name` to select an icon. Load the appropriate Material Symbols font or register a matching SVG icon.
 
 ```html
 <m3e-icon name="home"></m3e-icon>
 ```
 
-The next example illustrates a link used to download a variable font for outlined icons with fill support.
+Load the outlined variable font with fill support.
 
 ```html
 <link
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
   rel="stylesheet"
 />
+```
+
+Import individual SVG icon modules from `@m3e/icons` to register them. The icon name and variant must match the registration.
+
+```js
+import "@m3e/icons/outlined/search";
+import "@m3e/icons/outlined/home";
+import "@m3e/icons/outlined/settings";
+import "@m3e/icons/outlined/favorite";
+import "@m3e/icons/outlined/notifications";
+```
+
+```html
+<m3e-icon variant="outlined" name="search"></m3e-icon>
+<m3e-icon variant="outlined" name="home"></m3e-icon>
+<m3e-icon variant="outlined" name="settings"></m3e-icon>
+<m3e-icon variant="outlined" name="favorite"></m3e-icon>
+<m3e-icon variant="outlined" name="notifications"></m3e-icon>
 ```
 
 ## 📖 API Reference

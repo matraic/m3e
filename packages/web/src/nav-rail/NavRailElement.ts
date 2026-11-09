@@ -20,12 +20,10 @@ import { M3eNavBarElement, NavItemOrientation } from "@m3e/web/nav-bar";
  * items, and theming via CSS custom properties.
  *
  * @example
- * The following example illustrates a nav rail whose expanded state is automatically determined by the
- * current screen size.  In addition, a toggle button is used to allow the user to manually toggle the
- * expanded state.
+ * Showcase: Modes. Import `@m3e/web/nav-rail`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`, `@m3e/web/fab`, `@m3e/web/nav-bar`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
  *
  * ```html
- * <m3e-nav-rail id="nav-rail" mode="auto">
+ * <m3e-nav-rail id="nav-rail">
  *   <m3e-icon-button toggle>
  *     <m3e-icon name="menu"></m3e-icon>
  *     <m3e-icon slot="selected" name="menu_open"></m3e-icon>

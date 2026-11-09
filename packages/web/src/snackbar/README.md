@@ -8,13 +8,13 @@ import "@m3e/web/snackbar";
 
 ## 🧪 Examples
 
-The following example illustrates basic usage.
+Showcase: Snackbar service. Import `@m3e/web/snackbar` to install the global `M3eSnackbar` service.
 
 ```js
 M3eSnackbar.open("File deleted");
 ```
 
-The next example illustrates presenting a snackbar with an action and callback.
+Showcase: Actions. Import `@m3e/web/snackbar` to install the global `M3eSnackbar` service.
 
 ```js
 M3eSnackbar.open("File deleted", "Undo", {
@@ -24,7 +24,13 @@ M3eSnackbar.open("File deleted", "Undo", {
 });
 ```
 
-The following example illustrates declarative usage via the `open` attribute, suitable for attribute-driven renderers such as Elm or hypermedia frameworks. Setting the attribute shows the snackbar; removing it hides it. The attribute is automatically cleared when the snackbar is dismissed (by auto-dismiss timeout, action click, or close button), so the DOM stays truthful.
+Showcase: Dismissal. Import `@m3e/web/snackbar` to install the global `M3eSnackbar` service.
+
+```js
+M3eSnackbar.open("File deleted", true);
+```
+
+Use the `open` attribute for declarative usage. It is cleared when the snackbar is dismissed.
 
 ```html
 <!-- Show the snackbar declaratively -->

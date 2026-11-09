@@ -40,32 +40,85 @@ import { isSplitPaneOrientation, SplitPaneOrientation } from "./SplitPaneOrienta
  * for consistent, accessible content distribution.
  *
  * @example
- * The following example illustrates the basic use of the `m3e-split-pane` with start and end content.
- * In this example, the start pane occupies 25% of the available width.
+ * Showcase: Basic usage. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+ *
  * ```html
- * <m3e-split-pane value="25">
- *  <m3e-card slot="start"></m3e-card>
- *  <m3e-card slot="end"></m3e-card>
+ * <m3e-split-pane value="50">
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-card slot="end"></m3e-card>
  * </m3e-split-pane>
  * ```
  *
  * @example
- * The next example demonstrates minimum and maximum constraints, where the start pane
- * may shrink to 25% but cannot grow beyond 50% of the available space.
+ * Showcase: Orientation. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+ *
  * ```html
- * <m3e-split-pane value="25" min="25" max="50">
- *  <m3e-card slot="start"></m3e-card>
- *  <m3e-card slot="end"></m3e-card>
+ * <m3e-split-pane value="50" orientation="vertical">
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-card slot="end"></m3e-card>
  * </m3e-split-pane>
  * ```
  *
  * @example
- * The next example demonstrates percentage‑based detents, allowing the drag handle to snap at
- * 0%, 25%, 50%, 75%, and 100% of the available space.
+ * Showcase: Min and max sizes. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+ *
  * ```html
- * <m3e-split-pane value="50" detents="0 25 50 75 100">
- *  <m3e-card slot="start"></m3e-card>
- *  <m3e-card slot="end"></m3e-card>
+ * <m3e-split-pane value="50" min="25" max="75">
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-card slot="end"></m3e-card>
+ * </m3e-split-pane>
+ * ```
+ *
+ * @example
+ * Showcase: Step size. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+ *
+ * ```html
+ * <m3e-split-pane value="50" step="10">
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-card slot="end"></m3e-card>
+ * </m3e-split-pane>
+ * ```
+ *
+ * @example
+ * Showcase: Detents. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+ *
+ * ```html
+ * <m3e-split-pane value="50" detents="0 25 50 75 100"  wrap-detents>
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-card slot="end"></m3e-card>
+ * </m3e-split-pane>
+ * ```
+ *
+ * @example
+ * Showcase: Disabling. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+ *
+ * ```html
+ * <m3e-split-pane value="50" disabled>
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-card slot="end"></m3e-card>
+ * </m3e-split-pane>
+ * ```
+ *
+ * @example
+ * Showcase: Conditional rendering. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+ *
+ * ```html
+ * <m3e-split-pane value="50">
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-card slot="end" hidden></m3e-card>
+ * </m3e-split-pane>
+ * ```
+ *
+ * @example
+ * Showcase: Nested panes. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`. Apply the required styling for the illustrated classes in your application.
+ *
+ * ```html
+ * <m3e-split-pane value="25" class="complex">
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-split-pane slot="end" value="50" orientation="vertical">
+ *     <m3e-card slot="start"></m3e-card>
+ *     <m3e-card slot="end"></m3e-card>
+ *   </m3e-split-pane>
  * </m3e-split-pane>
  * ```
  *

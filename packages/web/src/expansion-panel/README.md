@@ -17,18 +17,63 @@ import "@m3e/web/expansion-panel";
 
 ## 🧪 Examples
 
-The following example illustrates the basic use of the `m3e-accordion` and `m3e-expansion-panel` components.
+Use a header slot and default content for a standalone expansion panel.
+
+```html
+<m3e-expansion-panel>
+  <span slot="header">Panel header</span>
+  Panel contents
+</m3e-expansion-panel>
+```
+
+Use `open` to display a panel initially expanded.
+
+```html
+<m3e-expansion-panel open>
+  <span slot="header">Panel header</span>
+  Panel contents
+</m3e-expansion-panel>
+```
+
+Use `toggle-position` and `toggle-direction` to configure the expansion toggle.
+
+```html
+<m3e-expansion-panel toggle-position="before" toggle-direction="horizontal">
+  <span slot="header">Panel header</span>
+  Panel contents
+</m3e-expansion-panel>
+```
+
+Use `hide-toggle` to hide the expansion indicator.
+
+```html
+<m3e-expansion-panel hide-toggle>
+  <span slot="header">Panel header</span>
+  Panel contents
+</m3e-expansion-panel>
+```
+
+Group panels in an accordion. By default only one panel can be open at a time.
 
 ```html
 <m3e-accordion>
-  <m3e-expansion-panel>
+  <m3e-expansion-panel open>
     <span slot="header">Panel 1</span>
-    I am content for the first expansion panel
+    I am content for the first panel
   </m3e-expansion-panel>
-  <m3e-expansion-panel>
-    <span slot="header">Panel 2</span>
-    I am content for the second expansion panel
+  <!-- Additional panels omitted for brevity -->
+</m3e-accordion>
+```
+
+Use `multi` to allow multiple panels to be open in an accordion.
+
+```html
+<m3e-accordion multi>
+  <m3e-expansion-panel open>
+    <span slot="header">Panel 1</span>
+    I am content for the first panel
   </m3e-expansion-panel>
+  <!-- Additional panels omitted for brevity -->
 </m3e-accordion>
 ```
 

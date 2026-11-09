@@ -13,28 +13,86 @@ import "@m3e/web/slider";
 
 ## 🧪 Examples
 
-The following example illustrates a labelled slider with thumb used to select a single numeric value.
+Showcase: Basic usage. Import `@m3e/web/slider`.
 
 ```html
-<m3e-slider labelled>
+<m3e-slider>
+  <m3e-slider-thumb></m3e-slider-thumb>
+</m3e-slider>
+```
+
+Showcase: Selecting a value. Import `@m3e/web/slider`.
+
+```html
+<m3e-slider min="1" max="5" step="0.5">
+  <m3e-slider-thumb value="1.5"></m3e-slider-thumb>
+</m3e-slider>
+```
+
+Showcase: Selecting a range. Import `@m3e/web/slider`.
+
+```html
+<m3e-slider>
+  <m3e-slider-thumb value="20"></m3e-slider-thumb>
+  <m3e-slider-thumb value="80"></m3e-slider-thumb>
+</m3e-slider>
+```
+
+Showcase: Negative value ranges. Import `@m3e/web/slider`.
+
+```html
+<m3e-slider min="-50">
+  <m3e-slider-thumb value="-20"></m3e-slider-thumb>
+</m3e-slider>
+```
+
+Showcase: Orientation. Import `@m3e/web/slider`.
+
+```html
+<m3e-slider orientation="vertical">
   <m3e-slider-thumb value="50"></m3e-slider-thumb>
 </m3e-slider>
 ```
 
-The next example illustrates a labelled range slider with two thumbs used to select a minimum and maximum numeric value.
+Showcase: Sizes. Import `@m3e/web/slider`.
+
+```html
+<m3e-slider size="extra-small">
+  <m3e-slider-thumb value="20"></m3e-slider-thumb>
+</m3e-slider>
+<!-- Additional sizes omitted for brevity -->
+```
+
+Showcase: Labels. Import `@m3e/web/slider`.
 
 ```html
 <m3e-slider labelled>
-  <m3e-slider-thumb value="25"></m3e-slider-thumb>
-  <m3e-slider-thumb value="75"></m3e-slider-thumb>
+  <m3e-slider-thumb value="20"></m3e-slider-thumb>
 </m3e-slider>
 ```
 
-The last example illustrates a vertical slider. Values run bottom-to-top, and `size` continues to control track thickness.
+Showcase: Tick marks. Import `@m3e/web/slider`.
 
 ```html
-<m3e-slider orientation="vertical" labelled discrete step="10">
-  <m3e-slider-thumb value="40"></m3e-slider-thumb>
+<m3e-slider discrete step="10">
+  <m3e-slider-thumb value="20"></m3e-slider-thumb>
+</m3e-slider>
+```
+
+Showcase: Disabling. Import `@m3e/web/slider`.
+
+```html
+<m3e-slider labelled disabled>
+  <m3e-slider-thumb value="20"></m3e-slider-thumb>
+</m3e-slider>
+```
+
+Showcase: Disabling. Import `@m3e/web/slider`.
+
+```html
+<m3e-slider labelled>
+  <m3e-slider-thumb value="20"></m3e-slider-thumb>
+  <m3e-slider-thumb disabled value="80"></m3e-slider-thumb>
 </m3e-slider>
 ```
 

@@ -31,14 +31,33 @@ import { ChipVariant, isChipVariant } from "./ChipVariant";
  * variants include `elevated` and `outlined`, enabling visual differentiation and contextual emphasis.
  *
  * @example
- * The following example illustrates use of the `m3e-chip` and `m3e-chip-set` components to present non-interactive chips.
+ * Group non-interactive chips in a chip set.
+ *
  * ```html
  * <m3e-chip-set>
- *  <m3e-chip><m3e-icon slot="icon" name="palette"></m3e-icon>Design</m3e-chip>
- *  <m3e-chip><m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility</m3e-chip>
- *  <m3e-chip><m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion</m3e-chip>
- *  <m3e-chip><m3e-icon slot="icon" name="description"></m3e-icon>Documentation</m3e-chip>
+ *   <m3e-chip>Confidential</m3e-chip>
+ *   <m3e-chip>Draft</m3e-chip>
+ *   <m3e-chip>Finance</m3e-chip>
+ *   <m3e-chip>Presentation</m3e-chip>
  * </m3e-chip-set>
+ * ```
+ *
+ * @example
+ * Choose the `outlined` (default) or `elevated` variant.
+ *
+ * ```html
+ * <m3e-chip>Outlined</m3e-chip>
+ * <m3e-chip variant="elevated">Elevated</m3e-chip>
+ * ```
+ *
+ * @example
+ * Use the `icon` slot for a leading icon. Import `@m3e/web/icon` for the icons.
+ *
+ * ```html
+ * <m3e-chip>
+ *   <m3e-icon slot="icon" name="finance"></m3e-icon>
+ *   Finance
+ * </m3e-chip>
  * ```
  *
  * @tag m3e-chip

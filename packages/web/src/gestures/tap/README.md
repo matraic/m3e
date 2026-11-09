@@ -22,6 +22,29 @@ import "@m3e/web/gestures/tap";
 
 The element dispatches a `gesture` event with `TapGestureDetail` as its detail.
 
+## Showcase examples
+
+Detect tap declaratively by importing `@m3e/web/gestures/tap` and binding the gesture element to the target with `for`. Listen for its `gesture` event. Give the target a visible size and an appropriate `touch-action` (the showcase uses `touch-action: none`); provide an accessible alternative for gesture-only interactions.
+
+```html
+<div id="item"></div>
+<m3e-tap-gesture for="item"></m3e-tap-gesture>
+```
+
+Alternatively, use the same target with `detectGesture` and `phase`. Replace the handler placeholders and retain the returned controller to call `destroy()` when no longer needed.
+
+```js
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { tap } from "@m3e/web/gestures/tap";
+
+const item = document.getElementById("item");
+detectGesture(item, tap(phase({
+  onEnd: (detail) => {
+    // Handle tap
+  }
+})));
+```
+
 ## Options
 
 | Attribute              | Type                            | Default                     | Description                                                        |

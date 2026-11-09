@@ -16,15 +16,22 @@ import "@m3e/web/icon-button";
  * encodes accessibility through customizable labels and interaction states.
  *
  * @example
- * The following example illustrates a horizontally scrollable group of items with directional pagination buttons.
- * The scroll controls appear when content exceeds the `48px` threshold.
+ * Showcase: Basic usage. Import `@m3e/web/slide-group`.
+ *
  * ```html
- * <m3e-slide-group threshold="48">
- *  <div>Item 1</div>
- *  <div>Item 2</div>
- *  <div>Item 3</div>
- *  <div>Item 4</div>
- *  <div>Item 5</div>
+ * <m3e-slide-group>
+ *   <div>Item 1</div>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-slide-group>
+ * ```
+ *
+ * @example
+ * Showcase: Orientation. Import `@m3e/web/slide-group`.
+ *
+ * ```html
+ * <m3e-slide-group vertical>
+ *   <div>Item 1</div>
+ *   <!-- Additional items omitted for brevity -->
  * </m3e-slide-group>
  * ```
  *

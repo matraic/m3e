@@ -21,6 +21,30 @@ import { TimepickerInputElementBase } from "./TimepickerInputElementBase";
  * for selecting hours and minutes. It supports both 12- and 24-hour formats,
  * and exposes view changes through accessible events.
  *
+ * @example
+ * Showcase: Blackout times. Import `@m3e/web/timepicker`. Apply this to a timepicker with the matching id.
+ *
+ * ```js
+ * document.querySelector("#blackout-times").blackoutTimes = (t) => t.hour < 8 || t.hour > 18;
+ * ```
+ *
+ * @example
+ * Showcase: À-la-carte usage. Import `@m3e/web/timepicker`. Provide an element with id `inputValue` for the output.
+ *
+ * ```html
+ * <m3e-timepicker-input id="input" for="dial"></m3e-timepicker-input>
+ * <m3e-timepicker-dial id="dial"></m3e-timepicker-dial>
+ * <span id="inputValue"></span>
+ * ```
+ *
+ * ```js
+ * document.querySelector("#input").addEventListener("change", (e) => {
+ *   const picker = e.target;
+ *   document.querySelector("#inputValue").innerText =
+ *     `hour = ${picker.hour ?? ""}, minute = ${picker.minute ?? ""}`;
+ * });
+ * ```
+ *
  * @tag m3e-timepicker-dial
  *
  * @attr format - Whether to use a 12‑hour or 24‑hour clock.

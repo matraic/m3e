@@ -13,6 +13,29 @@ import { LongPressGestureRecognizer } from "./LongPressGestureRecognizer";
  * A non-visual element used to detect and interpret long-press gestures from an input stream
  * produced from an attached element.
  *
+ * @example
+ * Detect long press declaratively by importing `@m3e/web/gestures/long-press` and binding the gesture element to the target with `for`. Listen for its `gesture` event. Give the target a visible size and an appropriate `touch-action` (the showcase uses `touch-action: none`); provide an accessible alternative for gesture-only interactions.
+ *
+ * ```html
+ * <div id="item"></div>
+ * <m3e-long-press-gesture for="item"></m3e-long-press-gesture>
+ * ```
+ *
+ * @example
+ * Alternatively, use the same target with `detectGesture` and `phase`. Replace the handler placeholders and retain the returned controller to call `destroy()` when no longer needed.
+ *
+ * ```js
+ * import { detectGesture, phase } from "@m3e/web/gestures";
+ * import { longPress } from "@m3e/web/gestures/long-press";
+ *
+ * const item = document.getElementById("item");
+ * detectGesture(item, longPress(phase({
+ *   onEnd: (detail) => {
+ *     // Handle long-press
+ *   }
+ * })));
+ * ```
+ *
  * @tag m3e-long-press-gesture
  *
  * @attr for - The identifier of the interactive control to which this element is attached.

@@ -9,6 +9,95 @@ import { M3eListElement } from "./ListElement";
  * The `m3e-action-list` component provides a specialized list container for action-based
  * interactions following Material 3 design principles.
  *
+ * @example
+ * Showcase: Action lists. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-action-list>
+ *   <m3e-list-action>Action 1</m3e-list-action>
+ *   <!-- Additional actions omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Showcase: Action lists. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-action-list variant="segmented">
+ *   <m3e-list-action>Action 1</m3e-list-action>
+ *   <!-- Additional actions omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Showcase: Disabling. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-action-list>
+ *   <m3e-list-action disabled>Disabled action 1</m3e-list-action>
+ *   <!-- Additional actions omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Showcase: Disabling. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-action-list variant="segmented">
+ *   <m3e-list-action disabled>Disabled action 1</m3e-list-action>
+ *   <!-- Additional actions omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Showcase: Links. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-action-list>
+ *   <m3e-list-action href="https://www.google.com" target="_blank">Google</m3e-list-action>
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Showcase: Nested lists. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ *
+ * ```html
+ * <m3e-action-list>
+ *   <m3e-expandable-list-item open>
+ *     <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *     List item
+ *     <div slot="items">
+ *       <m3e-list-action>
+ *         <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *         List item
+ *       </m3e-list-action>
+ *       <!-- Additional actions omitted for brevity -->
+ *     </div>
+ *   </m3e-expandable-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Showcase: Nested lists. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ *
+ * ```html
+ * <m3e-action-list variant="segmented">
+ *   <m3e-expandable-list-item open>
+ *     <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *     List item
+ *     <div slot="items">
+ *       <m3e-list-action>
+ *         <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *         List item
+ *       </m3e-list-action>
+ *       <!-- Additional actions omitted for brevity -->
+ *     </div>
+ *   </m3e-expandable-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
  * @tag m3e-action-list
  *
  * @slot - Renders the items of the list.

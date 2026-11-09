@@ -15,18 +15,28 @@ import { M3eExpansionPanelElement } from "./ExpansionPanelElement";
  * enabling interactive disclosure patterns for complex content.
  *
  * @example
- * The following example illustrates the basic use of the `m3e-accordion` and `m3e-expansion-panel` components.
+ * Group panels in an accordion. By default only one panel can be open at a time.
  *
  * ```html
  * <m3e-accordion>
- *   <m3e-expansion-panel>
+ *   <m3e-expansion-panel open>
  *     <span slot="header">Panel 1</span>
- *     I am content for the first expansion panel
+ *     I am content for the first panel
  *   </m3e-expansion-panel>
- *   <m3e-expansion-panel>
- *     <span slot="header">Panel 2</span>
- *     I am content for the second expansion panel
+ *   <!-- Additional panels omitted for brevity -->
+ * </m3e-accordion>
+ * ```
+ *
+ * @example
+ * Use `multi` to allow multiple panels to be open in an accordion.
+ *
+ * ```html
+ * <m3e-accordion multi>
+ *   <m3e-expansion-panel open>
+ *     <span slot="header">Panel 1</span>
+ *     I am content for the first panel
  *   </m3e-expansion-panel>
+ *   <!-- Additional panels omitted for brevity -->
  * </m3e-accordion>
  * ```
  *

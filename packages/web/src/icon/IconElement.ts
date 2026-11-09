@@ -22,15 +22,44 @@ import { IconWeight, isIconWeight } from "./IconWeight";
  * usage within your application. See {@link https://caniuse.com/variable-fonts|Can I Use's Variable Fonts} to determine whether
  * your user's browser support variable fonts.
  *
+ * Alternatively, import SVG icons from `@m3e/icons`. A registered icon renders as SVG; otherwise, the component
+ * falls back to the Material Symbols font. Icons are hidden from assistive technology by default unless given
+ * `aria-label`, `aria-labelledby`, or `aria-hidden`.
+ *
  * @example
- * The following example illustrates showing the `home` icon. The `name` attribute specifies the icon to present.
+ * Use `name` to select an icon. Load the appropriate Material Symbols font or register a matching SVG icon.
+ *
  * ```html
  * <m3e-icon name="home"></m3e-icon>
  * ```
+ *
  * @example
- * The next example illustrates a link used to download a variable font for outlined icons with fill support.
+ * Load the outlined variable font with fill support.
+ *
  * ```html
- * <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0" rel="stylesheet"/>
+ * <link
+ *   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+ *   rel="stylesheet"
+ * />
+ * ```
+ *
+ * @example
+ * Import individual SVG icon modules from `@m3e/icons` to register them. The icon name and variant must match the registration.
+ *
+ * ```js
+ * import "@m3e/icons/outlined/search";
+ * import "@m3e/icons/outlined/home";
+ * import "@m3e/icons/outlined/settings";
+ * import "@m3e/icons/outlined/favorite";
+ * import "@m3e/icons/outlined/notifications";
+ * ```
+ *
+ * ```html
+ * <m3e-icon variant="outlined" name="search"></m3e-icon>
+ * <m3e-icon variant="outlined" name="home"></m3e-icon>
+ * <m3e-icon variant="outlined" name="settings"></m3e-icon>
+ * <m3e-icon variant="outlined" name="favorite"></m3e-icon>
+ * <m3e-icon variant="outlined" name="notifications"></m3e-icon>
  * ```
  *
  * @tag m3e-icon

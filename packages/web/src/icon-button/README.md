@@ -16,13 +16,94 @@ import "@m3e/web/icon-button";
 
 ## 🧪 Examples
 
-The following example illustrates changing the appearance from `standard` (default) to `filled` using the `variant` attribute,
-changing the size using the `size` attribute, and enabling toggle behavior using the `toggle` attribute.
+Showcase: Variants. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
 
 ```html
-<m3e-icon-button variant="filled" size="large" toggle selected>
-  <m3e-icon name="favorite"></m3e-icon>
+<m3e-icon-button variant="filled">
+    <m3e-icon name="check"></m3e-icon>
 </m3e-icon-button>
+<!-- Additional variants omitted for brevity -->
+```
+
+Showcase: Shapes. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+
+```html
+<m3e-icon-button variant="filled" shape="square">
+    <m3e-icon name="check"></m3e-icon>
+</m3e-icon-button>
+<!-- Additional variants omitted for brevity -->
+```
+
+Showcase: Sizes. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+
+```html
+<m3e-icon-button variant="tonal" size="extra-small">
+    <m3e-icon name="add"></m3e-icon>
+</m3e-icon-button>
+<!-- Additional sizes omitted for brevity -->
+```
+
+Showcase: Widths. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+
+```html
+<m3e-icon-button variant="tonal" width="narrow">
+  <m3e-icon name="add"></m3e-icon>
+</m3e-icon-button>
+<m3e-icon-button variant="tonal" width="wide">
+  <m3e-icon name="add"></m3e-icon>
+</m3e-icon-button>
+```
+
+Showcase: Toggle. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+
+```html
+<m3e-icon-button variant="filled" toggle>
+    <m3e-icon name="check"></m3e-icon>
+</m3e-icon-button>
+<!-- Additional variants omitted for brevity -->
+```
+
+Showcase: Toggle. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+
+```html
+<m3e-icon-button variant="tonal" toggle>
+  <m3e-icon name="close"></m3e-icon>
+  <m3e-icon slot="selected" name="check"></m3e-icon>
+</m3e-icon-button>
+```
+
+Showcase: Disabling. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+
+```html
+<m3e-icon-button variant="filled" disabled>
+  <m3e-icon name="check"></m3e-icon>
+</m3e-icon-button>
+<m3e-icon-button variant="filled" disabled-interactive>
+  <m3e-icon name="check"></m3e-icon>
+</m3e-icon-button>
+```
+
+Showcase: Links. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+
+```html
+<m3e-icon-button variant="tonal" href="https://www.google.com" target="_blank">
+  <m3e-icon name="open_in_new_window"></m3e-icon>
+</m3e-icon-button>
+```
+
+Showcase: Density. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names. Apply the required styling for the illustrated classes in your application. Additional styles are omitted for brevity.
+
+```html
+<m3e-icon-button class="density-3" variant="filled" size="extra-small">
+  <m3e-icon name="check"></m3e-icon>
+</m3e-icon-button>
+<!-- Additional buttons omitted for brevity -->
+```
+
+```css
+.density-3 {
+  --md-sys-density-scale: -3;
+}
 ```
 
 ## 📖 API Reference

@@ -29,32 +29,154 @@ const SCROLL_KEYS = new Set(["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home
  * dynamic color, elevation, and shape, and adapts to scrolling behavior.
  *
  * @example
+ * Use the `leading`, `title`, `subtitle`, and `trailing` slots to arrange navigation and actions.
+ * ```html
+ * <m3e-app-bar>
+ *   <m3e-icon-button slot="leading" aria-label="Back">
+ *     <m3e-icon name="arrow_back"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <span slot="title">Top 10 hiking trails</span>
+ *   <span slot="subtitle">Discover popular trails</span>
+ *   <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal">
+ *     <m3e-icon name="bookmark" filled></m3e-icon>
+ *   </m3e-icon-button>
+ * </m3e-app-bar>
+ * ```
+ *
+ * @example
+ * Use `size` to choose a medium or large app bar. The default size is `small`.
  * ```html
  * <m3e-app-bar size="medium">
- *  <m3e-icon-button slot="leading-icon" aria-label="Back">
- *    <m3e-icon name="arrow_back"></m3e-icon>
- *  </m3e-icon-button>
- *  <span slot="title">Top 10 hiking trails</span>
- *  <span slot="subtitle">Discover popular trails</span>
- *  <m3e-icon-button slot="trailing-icon" aria-label="Bookmark" variant="tonal">
- *    <m3e-icon name="bookmark" filled></m3e-icon>
- *  </m3e-icon-button>
- * <m3e-app-bar>
+ *   <!-- Content omitted for brevity -->
+ * </m3e-app-bar>
+ * <m3e-app-bar size="large">
+ *   <!-- Content omitted for brevity -->
+ * </m3e-app-bar>
  * ```
+ *
  * @example
- * The next example illustrates how to attach an app bar to a parenting scroll container
- * to produce elevation on scroll. In this example, the `for` attribute is used to attach a
- * sticky positioned `m3e-app-bar` to a parenting container styled to overflow vertically.
- * When scrolled, the app bar will automatically transition to an elevated state.
+ * Use `centered` to keep the title and subtitle centered even when the leading and trailing content
+ * differ in width.
  * ```html
- * <div style="overflow-y: auto; height: 300px" id="scrollContainer">
- *  <m3e-app-bar for="scrollContainer" style="position: sticky; top: 0">
- *    <span slot="title">Title</span>
- *  </m3e-app-bar>
- *  <div style="height: 400px; display: flex; align-items: center; justify-content: center">
- *    I am scrolling content
- *  </div>
+ * <m3e-app-bar centered>
+ *   <!-- Content omitted for brevity -->
+ * </m3e-app-bar>
+ * ```
+ *
+ * @example
+ * Attach a sticky app bar to a scroll container with `for`. The default `elevate` behavior changes
+ * its appearance when the container is scrolled. Supply the app bar content shown in the first
+ * example where the placeholder appears.
+ * ```html
+ * <div id="scrollContainer">
+ *   <m3e-app-bar for="scrollContainer">
+ *     <!-- Content omitted for brevity -->
+ *   </m3e-app-bar>
+ *   <div class="scroll-item">Scroll down to see the elevation behavior</div>
  * </div>
+ * <style>
+ *   #scrollContainer {
+ *     overflow-y: auto;
+ *     height: 300px;
+ *   }
+ *   m3e-app-bar[for="scrollContainer"] {
+ *     position: sticky;
+ *     top: 0;
+ *   }
+ *   .scroll-item {
+ *     height: 400px;
+ *     display: flex;
+ *     align-items: center;
+ *     justify-content: center;
+ *   }
+ * </style>
+ * ```
+ *
+ * @example
+ * Use `scroll-behavior="transparent"` to fade the container color, title, and subtitle as the
+ * container scrolls, while the leading and trailing content remains visible. Supply the app bar
+ * content shown in the first example and use the CSS below.
+ * ```html
+ * <div id="scrollContainer">
+ *   <m3e-app-bar for="scrollContainer" scroll-behavior="transparent">
+ *     <!-- Content omitted for brevity -->
+ *   </m3e-app-bar>
+ *   <div class="scroll-item">Scroll down to see the transparent behavior</div>
+ * </div>
+ * ```
+ * ```css
+ * #scrollContainer {
+ *   overflow-y: auto;
+ *   height: 300px;
+ * }
+ * m3e-app-bar[for="scrollContainer"] {
+ *   position: sticky;
+ *   top: 0;
+ * }
+ * .scroll-item {
+ *   height: 400px;
+ *   display: flex;
+ *   align-items: center;
+ *   justify-content: center;
+ * }
+ * ```
+ *
+ * @example
+ * Use `scroll-behavior="hide"` to slide the app bar out of view as the container scrolls down;
+ * it returns as the scroll position nears the top. Supply the app bar content shown in the first
+ * example and use the CSS below.
+ * ```html
+ * <div id="scrollContainer">
+ *   <m3e-app-bar for="scrollContainer" scroll-behavior="hide">
+ *     <!-- Content omitted for brevity -->
+ *   </m3e-app-bar>
+ *   <div class="scroll-item">Scroll down to hide, up to reveal</div>
+ * </div>
+ * ```
+ * ```css
+ * #scrollContainer {
+ *   overflow-y: auto;
+ *   height: 300px;
+ * }
+ * m3e-app-bar[for="scrollContainer"] {
+ *   position: sticky;
+ *   top: 0;
+ * }
+ * .scroll-item {
+ *   height: 400px;
+ *   display: flex;
+ *   align-items: center;
+ *   justify-content: center;
+ * }
+ * ```
+ *
+ * @example
+ * Use `scroll-behavior="compress"` with a medium or large app bar to collapse it to a small bar
+ * as its attached container scrolls. Supply the app bar content shown in the first example and use
+ * the CSS below.
+ * ```html
+ * <div id="scrollContainer">
+ *   <m3e-app-bar for="scrollContainer" size="large" scroll-behavior="compress">
+ *     <!-- Content omitted for brevity -->
+ *   </m3e-app-bar>
+ *   <div class="scroll-item">Scroll down to compress the app bar</div>
+ * </div>
+ * ```
+ * ```css
+ * #scrollContainer {
+ *   overflow-y: auto;
+ *   height: 300px;
+ * }
+ * m3e-app-bar[for="scrollContainer"] {
+ *   position: sticky;
+ *   top: 0;
+ * }
+ * .scroll-item {
+ *   height: 400px;
+ *   display: flex;
+ *   align-items: center;
+ *   justify-content: center;
+ * }
  * ```
  *
  * @tag m3e-app-bar

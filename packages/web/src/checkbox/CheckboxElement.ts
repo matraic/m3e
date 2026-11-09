@@ -36,18 +36,65 @@ import {
  * submission via `name` and `value`.
  *
  * @example
- * The following example illustrates wrapping a `m3e-checkbox` within a `label`.
+ * Checkboxes can be unchecked, checked, or indeterminate.
+ * ```html
+ * <m3e-checkbox></m3e-checkbox>
+ * <m3e-checkbox checked></m3e-checkbox>
+ * <m3e-checkbox indeterminate></m3e-checkbox>
+ * ```
+ *
+ * @example
+ * Associate labels by wrapping the checkbox or using `for`.
+ * ```html
+ * <label><m3e-checkbox></m3e-checkbox> Checkbox 1</label>
+ * <m3e-checkbox id="chk2"></m3e-checkbox>
+ * <label for="chk2">Checkbox 2</label>
+ * ```
+ *
+ * @example
+ * Use `disabled` to disable a checkbox and its associated label.
+ * ```html
+ * <label><m3e-checkbox disabled></m3e-checkbox>Disabled Checkbox 1</label>
+ * <m3e-checkbox id="chk3" disabled></m3e-checkbox>
+ * <label for="chk3">Disabled Checkbox 2</label>
+ * ```
+ *
+ * @example
+ * Use `required` to require a checked value on form submission. Import `@m3e/web/button`
+ * for the submit button. The showcase script prevents navigation and checks validity;
+ * load it before `DOMContentLoaded`.
+ * ```html
+ * <form>
+ *   <label>
+ *     <m3e-checkbox name="accepted" required></m3e-checkbox>I accept the Terms and Conditions
+ *   </label>
+ *   <br />
+ *   <m3e-button variant="filled" type="submit">Submit</m3e-button>
+ * </form>
+ * ```
+ * ```js
+ * window.addEventListener("DOMContentLoaded", () => {
+ *   const form = document.querySelector("form");
+ *   form.addEventListener("submit", (e) => {
+ *     e.preventDefault();
+ *     form.checkValidity();
+ *   });
+ * });
+ * ```
+ *
+ * @example
+ * Apply a density scale with CSS custom properties. Additional classes are omitted for brevity.
  * ```html
  * <label>
- *  <m3e-checkbox></m3e-checkbox>
- *  Checkbox label
+ *   <m3e-checkbox class="density-3"></m3e-checkbox>
+ *   Density -3
  * </label>
+ * <!-- Additional checkboxes omitted for brevity -->
  * ```
- * @example
- * The next example illustrates use of the `for` attribute to label a checkbox.
- * ```html
- * <m3e-checkbox id="chk"></m3e-checkbox>
- * <label for="chk">Checkbox label </label>
+ * ```css
+ * .density-3 {
+ *   --md-sys-density-scale: -3;
+ * }
  * ```
  *
  * @tag m3e-checkbox

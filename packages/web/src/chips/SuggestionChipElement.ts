@@ -25,16 +25,38 @@ import { M3eChipElement } from "./ChipElement";
  * differentiation and contextual emphasis.
  *
  * @example
- * The following example illustrates use of the `m3e-suggestion-chip`.  In this example, multiple chips are nested inside
- * a `m3e-chip-set` container to create a cohesive set of chips. The container is given the ARIA `role="group"` to convey
- * to assistive technologies that the chips are part of a related set of element.
+ * Use suggestion chips to offer actions; select the `outlined` or `elevated` variant.
+ *
  * ```html
- * <m3e-chip-set role="group" aria-label="Suggested replies">
- *  <m3e-suggestion-chip>Sounds good!</m3e-suggestion-chip>
- *  <m3e-suggestion-chip>Can you clarify?</m3e-suggestion-chip>
- *  <m3e-suggestion-chip>Let's do it.</m3e-suggestion-chip>
- *  <m3e-suggestion-chip>Maybe later.</m3e-suggestion-chip>
- * </m3e-chip-set>
+ * <m3e-suggestion-chip>Outlined Suggestion</m3e-suggestion-chip>
+ * <m3e-suggestion-chip variant="elevated">Elevated Suggestion</m3e-suggestion-chip>
+ * ```
+ *
+ * @example
+ * Use the `icon` slot for a leading icon on a suggestion chip. Import `@m3e/web/icon` for the icons.
+ *
+ * ```html
+ * <m3e-suggestion-chip>
+ *   <m3e-icon slot="icon" name="lightbulb"></m3e-icon>
+ *   Try budget planner
+ * </m3e-suggestion-chip>
+ * ```
+ *
+ * @example
+ * Disable a suggestion chip, or use `disabled-interactive` to retain keyboard focusability.
+ *
+ * ```html
+ * <m3e-suggestion-chip disabled>Disabled</m3e-suggestion-chip>
+ * <m3e-suggestion-chip disabled-interactive>Disabled Interactive</m3e-suggestion-chip>
+ * ```
+ *
+ * @example
+ * Use `href` to make a suggestion chip a link.
+ *
+ * ```html
+ * <m3e-suggestion-chip href="https://www.google.com" target="_blank">
+ *   Google
+ * </m3e-suggestion-chip>
  * ```
  *
  * @tag m3e-suggestion-chip

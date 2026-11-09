@@ -57,6 +57,104 @@ import "./TimepickerInputElement";
  * It accepts and emits plain `Date` values, allowing applications to apply their
  * own formatting, parsing, and localization.
  *
+ * @example
+ * Showcase: Basic usage. Import `@m3e/web/timepicker`. Also import `@m3e/web/form-field`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names. The native input is not automatically bound: handle the picker's `change` event to format and update its value.
+ *
+ * ```html
+ * <m3e-form-field variant="outlined">
+ *   <label slot="label" for="field">Time Field</label>
+ *   <input autocomplete="off" id="field" />
+ *   <m3e-icon-button slot="suffix">
+ *     <m3e-icon name="schedule"></m3e-icon>
+ *     <m3e-timepicker-toggle for="timepicker"></m3e-timepicker-toggle>
+ *   </m3e-icon-button>
+ *   <span slot="hint">HH:MM</span>
+ * </m3e-form-field>
+ * <m3e-timepicker id="timepicker" variant="auto"></m3e-timepicker>
+ * ```
+ *
+ * @example
+ * Showcase: Time input. Import `@m3e/web/timepicker`. Also import `@m3e/web/form-field`, `@m3e/web/date-input`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ *
+ * ```html
+ * <m3e-form-field variant="outlined">
+ *   <label slot="label" for="field">Time Picker</label>
+ *   <m3e-date-input id="field" type="time"></m3e-date-input>
+ *   <m3e-icon-button aria-label="Open time picker" slot="suffix">
+ *     <m3e-icon name="schedule"></m3e-icon>
+ *     <m3e-timepicker-toggle for="timepicker"></m3e-timepicker-toggle>
+ *   </m3e-icon-button>
+ *   <span slot="hint">HH:MM</span>
+ * </m3e-form-field>
+ * <m3e-timepicker id="timepicker" for="field"></m3e-timepicker>
+ * ```
+ *
+ * @example
+ * Showcase: Variants. Import `@m3e/web/timepicker`.
+ *
+ * ```html
+ * <m3e-timepicker variant="auto"></m3e-timepicker>
+ * ```
+ *
+ * @example
+ * Showcase: Orientation. Import `@m3e/web/timepicker`.
+ *
+ * ```html
+ * <m3e-timepicker variant="auto" orientation="horizontal"></m3e-timepicker>
+ * ```
+ *
+ * @example
+ * Showcase: Modes. Import `@m3e/web/timepicker`.
+ *
+ * ```html
+ * <m3e-timepicker mode="input" hide-mode-toggle></m3e-timepicker>
+ * ```
+ *
+ * @example
+ * Showcase: Time selection. Import `@m3e/web/timepicker`. Provide the showcase's `toLocaleTimeString` helper and the referenced field and picker elements.
+ *
+ * ```html
+ * <!-- Form field omitted for brevity -->
+ * <m3e-timepicker id="timepicker" date="2026-07-13T23:30:00Z"></m3e-timepicker>
+ * ```
+ *
+ * ```js
+ * const picker = document.querySelector("#timepicker");
+ * const field = document.querySelector("#field");
+ * field.value = toLocaleTimeString(picker.date);
+ * picker.addEventListener("change", () => {
+ *   field.value = toLocaleTimeString(picker.date);
+ * });
+ * ```
+ *
+ * @example
+ * Showcase: Hour format. Import `@m3e/web/timepicker`.
+ *
+ * ```html
+ * <m3e-timepicker format="24"></m3e-timepicker>
+ * ```
+ *
+ * @example
+ * Showcase: Min and max times. Import `@m3e/web/timepicker`.
+ *
+ * ```html
+ * <m3e-timepicker min-time="8:15 AM"  max-time="5:30 PM"></m3e-timepicker>
+ * ```
+ *
+ * @example
+ * Showcase: Blackout times. Import `@m3e/web/timepicker`. Apply this to a timepicker with the matching id.
+ *
+ * ```js
+ * document.querySelector("#blackout-times").blackoutTimes = (t) => t.hour < 8 || t.hour > 18;
+ * ```
+ *
+ * @example
+ * Showcase: Seconds. Import `@m3e/web/timepicker`.
+ *
+ * ```html
+ * <m3e-timepicker show-seconds></m3e-timepicker>
+ * ```
+ *
  * @tag m3e-timepicker
  *
  * @attr variant - The appearance variant of the picker.

@@ -18,23 +18,42 @@ import { M3eListItemElement } from "./ListItemElement";
  * content support.
  *
  * @example
- * The following example illustrates an expandable list item.
+ * Showcase: Nested lists. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ *
  * ```html
  * <m3e-action-list>
- *  <m3e-expandable-list-item>
- *    Pick up supplies
- *    <span slot="supporting-text">Due monday</span>
- *    <div slot="items">
- *      <m3e-list-action>
- *        Dry-erase board
- *        <span slot="supporting-text">$35.99</span>
- *      </m3e-list-action>
- *      <m3e-list-action>
- *        Markers
- *        <span slot="supporting-text">$8.99</span>
- *      </m3e-list-action>
- *    </div>
- *  </m3e-expandable-list-item>
+ *   <m3e-expandable-list-item open>
+ *     <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *     List item
+ *     <div slot="items">
+ *       <m3e-list-action>
+ *         <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *         List item
+ *       </m3e-list-action>
+ *       <!-- Additional actions omitted for brevity -->
+ *     </div>
+ *   </m3e-expandable-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Showcase: Nested lists. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ *
+ * ```html
+ * <m3e-action-list variant="segmented">
+ *   <m3e-expandable-list-item open>
+ *     <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *     List item
+ *     <div slot="items">
+ *       <m3e-list-action>
+ *         <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *         List item
+ *       </m3e-list-action>
+ *       <!-- Additional actions omitted for brevity -->
+ *     </div>
+ *   </m3e-expandable-list-item>
+ *   <!-- Additional items omitted for brevity -->
  * </m3e-action-list>
  * ```
  *

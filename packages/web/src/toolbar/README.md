@@ -12,10 +12,10 @@ import "@m3e/web/toolbar";
 
 ## 🧪 Examples
 
-The following example illustrates a vibrant, rounded toolbar containing icon buttons:
+Showcase: Variants. Import `@m3e/web/toolbar`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
 
 ```html
-<m3e-toolbar variant="vibrant" shape="rounded">
+<m3e-toolbar variant="standard">
   <m3e-icon-button>
     <m3e-icon name="arrow_back"></m3e-icon>
   </m3e-icon-button>
@@ -32,6 +32,47 @@ The following example illustrates a vibrant, rounded toolbar containing icon but
     <m3e-icon name="more_vert"></m3e-icon>
   </m3e-icon-button>
 </m3e-toolbar>
+<m3e-toolbar variant="vibrant">
+  <!-- Content omitted for brevity -->
+</m3e-toolbar>
+```
+
+Showcase: Shapes. Import `@m3e/web/toolbar`.
+
+```html
+<m3e-toolbar variant="vibrant" shape="rounded">
+  <!-- Content omitted for brevity -->
+</m3e-toolbar>
+```
+
+Showcase: Elevation. Import `@m3e/web/toolbar`.
+
+```html
+<m3e-toolbar variant="vibrant" shape="rounded" elevated>
+  <!-- Content omitted for brevity -->
+</m3e-toolbar>
+```
+
+Showcase: Orientation. Import `@m3e/web/toolbar`.
+
+```html
+<m3e-toolbar variant="vibrant" shape="rounded" vertical>
+  <!-- Content omitted for brevity -->
+</m3e-toolbar>
+```
+
+Showcase: Density. Import `@m3e/web/toolbar`. Apply the required styling for the illustrated classes in your application.
+
+```html
+<m3e-toolbar class="density-3">
+  <!-- Content omitted for brevity -->
+</m3e-toolbar>
+```
+
+```css
+.density-3 {
+  --md-sys-density-scale: -3;
+}
 ```
 
 ## 📖 API Reference

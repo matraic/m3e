@@ -19,12 +19,33 @@ import { TooltipElementBase } from "./TooltipElementBase";
  * icon-driven interfaces. Use the `for` attribute to designate the element for which to provide a tooltip.
  *
  * @example
- * The following example illustrates connecting a tooltip to a button using the `for` attribute.
+ * Showcase: Plain tooltip. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ *
  * ```html
- * <m3e-icon-button id="button" aria-label="Back">
- *  <m3e-icon name="arrow_back"></m3e-icon>
+ * <m3e-icon-button id="button">
+ *   <m3e-icon name="arrow_back"></m3e-icon>
  * </m3e-icon-button>
  * <m3e-tooltip for="button">Go Back</m3e-tooltip>
+ * ```
+ *
+ * @example
+ * Showcase: Delays. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ *
+ * ```html
+ * <m3e-icon-button id="button">
+ *   <m3e-icon name="arrow_back"></m3e-icon>
+ * </m3e-icon-button>
+ * <m3e-tooltip for="button" show-delay="0" hide-delay="200">Go Back</m3e-tooltip>
+ * ```
+ *
+ * @example
+ * Showcase: Disabling. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ *
+ * ```html
+ * <m3e-icon-button id="button">
+ *   <m3e-icon name="arrow_back"></m3e-icon>
+ * </m3e-icon-button>
+ * <m3e-tooltip for="button" disabled>Go Back</m3e-tooltip>
  * ```
  *
  * @tag m3e-tooltip

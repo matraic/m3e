@@ -12,25 +12,25 @@ import "@m3e/web/heading";
 
 ## 🧪 Examples
 
-The following example illustrates use of the `m3e-heading` to present each variant and size.
+Use `variant` and `size` to select the typescale. Set `level` from 1 to 6 when the heading should have heading semantics.
 
 ```html
 <m3e-heading variant="display" size="large">Display Large</m3e-heading>
 <m3e-heading variant="display" size="medium">Display Medium</m3e-heading>
 <m3e-heading variant="display" size="small">Display Small</m3e-heading>
-<m3e-heading variant="headline" size="large">Headline Large</m3e-heading>
-<m3e-heading variant="headline" size="medium">Headline Medium</m3e-heading>
-<m3e-heading variant="headline" size="small">Headline Small</m3e-heading>
-<m3e-heading variant="title" size="large">Title Large</m3e-heading>
-<m3e-heading variant="title" size="medium">Title Medium</m3e-heading>
-<m3e-heading variant="title" size="small">Title Small</m3e-heading>
-<m3e-heading variant="label" size="large">Label Large</m3e-heading>
-<m3e-heading variant="label" size="medium">Label Medium</m3e-heading>
-<m3e-heading variant="label" size="small">Label Small</m3e-heading>
+<!-- Additional variants omitted for brevity -->
 ```
 
-The next example illustrates use of the `level` attribute to designate the accessibility level of a heading.
-When specified, ARIA `role="heading"` is applied and the `level` is propagated to `aria-level`.
+Use `emphasized` to apply the emphasized typescale.
+
+```html
+<m3e-heading variant="display" size="large" emphasized>Display Large</m3e-heading>
+<m3e-heading variant="display" size="medium" emphasized>Display Medium</m3e-heading>
+<m3e-heading variant="display" size="small" emphasized>Display Small</m3e-heading>
+<!-- Additional variants omitted for brevity -->
+```
+
+Set `level` to apply `role="heading"` and the corresponding `aria-level`. Without `level`, the component has no heading role by default.
 
 ```html
 <m3e-heading variant="headline" size="large" level="1">Page title</m3e-heading>

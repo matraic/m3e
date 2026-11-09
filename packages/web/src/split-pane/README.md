@@ -12,21 +12,78 @@ import "@m3e/web/split-pane";
 
 ## 🧪 Examples
 
-The following example illustrates a basic horizontal split pane with start and end content.
+Showcase: Basic usage. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
 
 ```html
-<m3e-split-pane>
-  <div slot="start">Start content</div>
-  <div slot="end">End content</div>
+<m3e-split-pane value="50">
+  <m3e-card slot="start"></m3e-card>
+  <m3e-card slot="end"></m3e-card>
 </m3e-split-pane>
 ```
 
-This example shows a vertical split pane with detents for snapping to specific sizes.
+Showcase: Orientation. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
 
 ```html
-<m3e-split-pane orientation="vertical" detents="25 50 75">
-  <div slot="start">Top content</div>
-  <div slot="end">Bottom content</div>
+<m3e-split-pane value="50" orientation="vertical">
+  <m3e-card slot="start"></m3e-card>
+  <m3e-card slot="end"></m3e-card>
+</m3e-split-pane>
+```
+
+Showcase: Min and max sizes. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+
+```html
+<m3e-split-pane value="50" min="25" max="75">
+  <m3e-card slot="start"></m3e-card>
+  <m3e-card slot="end"></m3e-card>
+</m3e-split-pane>
+```
+
+Showcase: Step size. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+
+```html
+<m3e-split-pane value="50" step="10">
+  <m3e-card slot="start"></m3e-card>
+  <m3e-card slot="end"></m3e-card>
+</m3e-split-pane>
+```
+
+Showcase: Detents. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+
+```html
+<m3e-split-pane value="50" detents="0 25 50 75 100"  wrap-detents>
+  <m3e-card slot="start"></m3e-card>
+  <m3e-card slot="end"></m3e-card>
+</m3e-split-pane>
+```
+
+Showcase: Disabling. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+
+```html
+<m3e-split-pane value="50" disabled>
+  <m3e-card slot="start"></m3e-card>
+  <m3e-card slot="end"></m3e-card>
+</m3e-split-pane>
+```
+
+Showcase: Conditional rendering. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+
+```html
+<m3e-split-pane value="50">
+  <m3e-card slot="start"></m3e-card>
+  <m3e-card slot="end" hidden></m3e-card>
+</m3e-split-pane>
+```
+
+Showcase: Nested panes. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`. Apply the required styling for the illustrated classes in your application.
+
+```html
+<m3e-split-pane value="25" class="complex">
+  <m3e-card slot="start"></m3e-card>
+  <m3e-split-pane slot="end" value="50" orientation="vertical">
+    <m3e-card slot="start"></m3e-card>
+    <m3e-card slot="end"></m3e-card>
+  </m3e-split-pane>
 </m3e-split-pane>
 ```
 

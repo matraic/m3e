@@ -18,13 +18,13 @@ import { SearchBarLightDomStyle, SearchBarStyle } from "./styles";
  * properties for container, icons, and text styling.
  *
  * @example
- * The following example illustrates typical usage with a leading icon and the
- * ability to clear the current search text.
+ * Showcase: Typical usage. Import `@m3e/web/search`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ *
  * ```html
  * <m3e-search-bar clearable>
- *  <m3e-icon name="search" slot="leading"></m3e-icon>
- *  <input slot="input" placeholder="Search..." />
- *  </m3e-search-bar>
+ *   <m3e-icon name="search" slot="leading"></m3e-icon>
+ *   <input slot="input" placeholder="Search..." />
+ * </m3e-search-bar>
  * ```
  *
  * @tag m3e-search-bar

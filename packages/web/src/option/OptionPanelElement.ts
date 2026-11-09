@@ -25,6 +25,38 @@ import { M3eOptionElement } from "./OptionElement";
  * as a Material Design 3 menu surface. It provides dynamic positioning and anchoring to trigger elements,
  * automatic viewport boundary detection with intelligent repositioning, and smooth enter/exit animations.
  *
+ * @example
+ * Populate an option panel with options and groups. A host control must manage its anchoring and opening; the
+ * panel is not opened by this markup alone.
+ *
+ * ```html
+ * <m3e-option-panel>
+ *   <m3e-option value="apple">Apple</m3e-option>
+ *   <m3e-option value="banana">Banana</m3e-option>
+ *   <m3e-optgroup>
+ *     <span slot="label">Citrus</span>
+ *     <m3e-option value="lemon">Lemon</m3e-option>
+ *     <m3e-option value="orange">Orange</m3e-option>
+ *   </m3e-optgroup>
+ * </m3e-option-panel>
+ * ```
+ *
+ * @example
+ * The option panel is used by controls such as `m3e-select` to present their options. Import
+ * `@m3e/web/select` and `@m3e/web/form-field`; the select creates and manages its panel.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="select">Favorite fruit</label>
+ *   <m3e-select id="select">
+ *     <m3e-option>Apples</m3e-option>
+ *     <m3e-option>Oranges</m3e-option>
+ *     <m3e-option>Bananas</m3e-option>
+ *     <m3e-option>Grapes</m3e-option>
+ *   </m3e-select>
+ * </m3e-form-field>
+ * ```
+ *
  * @tag m3e-option-panel
  *
  * @slot - Renders the contents of the list.

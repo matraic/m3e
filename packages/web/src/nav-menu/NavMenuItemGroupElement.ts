@@ -10,7 +10,8 @@ import { AttachInternals, customElement, deleteCustomState, DesignToken, Role, s
  * It encapsulates related items under a shared heading or label, supporting visual hierarchy and accessibility.
  *
  * @example
- * The following example illustrates a navigation menu with a top-level group of menu items.
+ * Showcase: Personal folders. Import `@m3e/web/nav-menu`. Also import `@m3e/web/heading`, `@m3e/web/icon`, `@m3e/web/divider`. Load a matching Material Symbols font or register the icons.
+ *
  * ```html
  * <m3e-nav-menu>
  *   <m3e-nav-menu-item-group>
@@ -20,18 +21,12 @@ import { AttachInternals, customElement, deleteCustomState, DesignToken, Role, s
  *       <span slot="label">Inbox</span>
  *       <span slot="badge">24</span>
  *     </m3e-nav-menu-item>
- *     <m3e-nav-menu-item>
- *       <m3e-icon slot="icon" name="send"></m3e-icon>
- *       <span slot="label">Outbox</span>
- *     </m3e-nav-menu-item>
- *     <m3e-nav-menu-item>
- *       <m3e-icon slot="icon" name="favorite"></m3e-icon>
- *       <span slot="label">Favorites</span>
- *     </m3e-nav-menu-item>
- *     <m3e-nav-menu-item>
- *       <m3e-icon slot="icon" name="delete"></m3e-icon>
- *       <span slot="label">Trash</span>
- *     </m3e-nav-menu-item>
+ *     <!-- Additional items omitted for brevity -->
+ *   </m3e-nav-menu-item-group>
+ *   <m3e-divider></m3e-divider>
+ *   <m3e-nav-menu-item-group>
+ *     <m3e-heading slot="label" variant="label" size="large">Personal folders</m3e-heading>
+ *     <!-- Items omitted for brevity -->;
  *   </m3e-nav-menu-item-group>
  * </m3e-nav-menu>
  * ```

@@ -10,11 +10,15 @@ import { customElement, DesignToken, getScrollbarWidth, ReconnectedCallback } fr
  * scrolling for document‑like content.
  *
  * @example
- * The following example illustrates basic usage of the content pane.
+ * Use a content pane for padded, vertically scrollable document content. Give the
+ * pane a constrained height to enable scrolling and import `@m3e/web/heading`
+ * for the heading shown here.
  * ```html
  * <m3e-content-pane>
- *   <p>This is some scrollable content.</p>
- *   <p>More content here...</p>
+ *   <m3e-heading variant="display" size="large">Content header</m3e-heading>
+ *   <p>
+ *     <!-- Content omitted for brevity -->
+ *   </p>
  * </m3e-content-pane>
  * ```
  *

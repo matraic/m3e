@@ -31,14 +31,75 @@ import { M3eFilterChipElement } from "./FilterChipElement";
  * interactive filtering experiences in line with Material 3 guidelines.
  *
  * @example
- * The following example illustrates a single-select `m3e-filter-chip-set` containing multiple `m3e-filter-chip` components that
- * allow a user to choose an option. You can use the `multi` attribute to enable multiselect.
+ * Use a filter chip set to select a filter; chips support `outlined` and `elevated` variants.
+ *
+ * ```html
+ * <m3e-filter-chip-set>
+ *   <m3e-filter-chip>Outlined</m3e-filter-chip>
+ *   <m3e-filter-chip variant="elevated">Elevated</m3e-filter-chip>
+ * </m3e-filter-chip-set>
+ * ```
+ *
+ * @example
+ * Use `selected` to select a filter chip and `icon` to add a leading icon. Import `@m3e/web/icon` for the icons.
+ *
  * ```html
  * <m3e-filter-chip-set aria-label="Filter by topic">
- *  <m3e-filter-chip><m3e-icon slot="icon" name="palette"></m3e-icon>Design</m3e-filter-chip>
- *  <m3e-filter-chip><m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility</m3e-filter-chip>
- *  <m3e-filter-chip><m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion</m3e-filter-chip>
- *  <m3e-filter-chip><m3e-icon slot="icon" name="description"></m3e-icon>Documentation</m3e-filter-chip>
+ *   <m3e-filter-chip selected>
+ *     <m3e-icon slot="icon" name="palette"></m3e-icon>Design
+ *   </m3e-filter-chip>
+ *   <!-- Additional chips omitted for brevity -->
+ * </m3e-filter-chip-set>
+ * ```
+ *
+ * @example
+ * Use `multi` on the set to allow multiple selected filter chips. Import `@m3e/web/icon` for the icons.
+ *
+ * ```html
+ * <m3e-filter-chip-set aria-label="Filter by topic" multi>
+ *   <m3e-filter-chip selected>
+ *     <m3e-icon slot="icon" name="palette"></m3e-icon>Design
+ *   </m3e-filter-chip>
+ *   <m3e-filter-chip selected>
+ *     <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility
+ *   </m3e-filter-chip>
+ *   <!-- Additional chips omitted for brevity -->
+ * </m3e-filter-chip-set>
+ * ```
+ *
+ * @example
+ * Disable individual filter chips, or use `disabled-interactive` to retain keyboard focusability. Import `@m3e/web/icon` for the icons.
+ *
+ * ```html
+ * <m3e-filter-chip-set aria-label="Filter by topic">
+ *   <m3e-filter-chip disabled>
+ *     <m3e-icon slot="icon" name="palette"></m3e-icon>Design
+ *   </m3e-filter-chip>
+ *   <m3e-filter-chip disabled-interactive>
+ *     <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility
+ *   </m3e-filter-chip>
+ *   <!-- Additional chips omitted for brevity -->
+ * </m3e-filter-chip-set>
+ * ```
+ *
+ * @example
+ * Use `disabled` to disable the whole filter chip set.
+ *
+ * ```html
+ * <m3e-filter-chip-set aria-label="Filter by topic" multi disabled>
+ *   <!-- Chips omitted for brevity -->
+ * </m3e-filter-chip-set>
+ * ```
+ *
+ * @example
+ * Use `hide-selection-indicator` to hide the selected indicator while retaining leading icons. Import `@m3e/web/icon` for the icons.
+ *
+ * ```html
+ * <m3e-filter-chip-set aria-label="Filter by topic" hide-selection-indicator>
+ *   <m3e-filter-chip>Design </m3e-filter-chip>
+ *   <m3e-filter-chip>Accessibility </m3e-filter-chip>
+ *   <m3e-filter-chip><m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion </m3e-filter-chip>
+ *   <m3e-filter-chip><m3e-icon slot="icon" name="description"></m3e-icon>Documentation </m3e-filter-chip>
  * </m3e-filter-chip-set>
  * ```
  *

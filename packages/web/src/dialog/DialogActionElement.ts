@@ -4,6 +4,16 @@ import { ActionElementBase, customElement } from "@m3e/web/core";
 
 /**
  * An element, nested within a clickable element, used to close a parenting dialog.
+ *
+ * @example
+ * Place an action inside a clickable element within a dialog to close it and set its
+ * `returnValue`. Import `@m3e/web/button` for the button.
+ * ```html
+ * <m3e-button>
+ *     <m3e-dialog-action return-value="ok">Close</m3e-dialog-action>
+ * </m3e-button>
+ * ```
+ *
  * @tag m3e-dialog-action
  *
  * @slot - Renders the content of the action.

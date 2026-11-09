@@ -18,48 +18,26 @@ import { M3eMenuTriggerElement } from "./MenuTriggerElement";
  * when a nested `m3e-menu-trigger` is present—enabling hierarchical flows.
  *
  * @example
- * The following example illustrates a basic menu.  The `m3e-menu-trigger` is used to trigger a `m3e-menu` specified
- * by the `for` attribute when its parenting element is activated.
+ * Showcase: Basic usage. Import `@m3e/web/menu`. Also import `@m3e/web/button`.
+ *
  * ```html
  * <m3e-button>
- *   <m3e-menu-trigger for="menu1">Basic menu</m3e-menu-trigger>
+ *   <m3e-menu-trigger for="menu">Menu</m3e-menu-trigger>
  * </m3e-button>
- * <m3e-menu id="menu1">
- *   <m3e-menu-item>Apple</m3e-menu-item>
- *   <m3e-menu-item>Apricot</m3e-menu-item>
- *   <m3e-menu-item>Avocado</m3e-menu-item>
- *   <m3e-menu-item>Green Apple</m3e-menu-item>
- *   <m3e-menu-item>Green Grapes</m3e-menu-item>
- *   <m3e-menu-item>Olive</m3e-menu-item>
- *   <m3e-menu-item>Orange</m3e-menu-item>
+ * <m3e-menu id="menu">
+ *   <m3e-menu-item>Item 1</m3e-menu-item>
+ *   <m3e-menu-item>Item 2</m3e-menu-item>
  * </m3e-menu>
  * ```
  *
  * @example
- * The next example illustrates nested menus.  Submenus are triggered by placing a `m3e-menu-trigger` inside a `m3e-menu-item`.
+ * Showcase: Variants. Import `@m3e/web/menu`.
+ *
  * ```html
- * <m3e-button>
- *   <m3e-menu-trigger for="menu2">Nested menus</m3e-menu-trigger>
- * </m3e-button>
- * <m3e-menu id="menu2">
- *   <m3e-menu-item>
- *     <m3e-menu-trigger for="menu3">Fruits with A</m3e-menu-trigger>
- *   </m3e-menu-item>
- *   <m3e-menu-item>Grapes</m3e-menu-item>
- *   <m3e-menu-item>Olive</m3e-menu-item>
- *   <m3e-menu-item>Orange</m3e-menu-item>
- * </m3e-menu>
- * <m3e-menu id="menu3">
- *   <m3e-menu-item>Apricot</m3e-menu-item>
- *   <m3e-menu-item>Avocado</m3e-menu-item>
- *   <m3e-menu-item>
- *     <m3e-menu-trigger for="menu4">Apples</m3e-menu-trigger>
- *   </m3e-menu-item>
- * </m3e-menu>
- * <m3e-menu id="menu4">
- *   <m3e-menu-item>Fuji</m3e-menu-item>
- *   <m3e-menu-item>Granny Smith</m3e-menu-item>
- *   <m3e-menu-item>Red Delicious</m3e-menu-item>
+ * <!-- Trigger omitted for brevity -->
+ * <m3e-menu id="menu" variant="vibrant">
+ *   <m3e-menu-item>Item 1</m3e-menu-item>
+ *   <m3e-menu-item>Item 2</m3e-menu-item>
  * </m3e-menu>
  * ```
  *

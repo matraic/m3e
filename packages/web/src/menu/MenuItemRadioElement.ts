@@ -16,15 +16,31 @@ import { MenuItemElementBase } from "./MenuItemElementBase";
  * groups to coexist within a single menu.
  *
  * @example
- * The following example illustrates use of the `m3e-menu-item-radio` in a `m3e-menu` to allow a user to select a sort order.
- * The `m3e-menu-trigger` is used to trigger a `m3e-menu` specified by the `for` attribute when its parenting element is activated.
+ * Showcase: Radios. Import `@m3e/web/menu`.
+ *
  * ```html
- * <m3e-button>
- *  <m3e-menu-trigger for="menu">Sort order</m3e-menu-trigger>
- * </m3e-button>
+ * <!-- Trigger omitted for brevity -->
  * <m3e-menu id="menu">
- *  <m3e-menu-item-radio>Ascending</m3e-menu-item-radio>
- *  <m3e-menu-item-radio>Descending</m3e-menu-item-radio>
+ *   <m3e-menu-item-radio checked>Ascending</m3e-menu-item-radio>
+ *   <m3e-menu-item-radio>Descending</m3e-menu-item-radio>
+ * </m3e-menu>
+ * ```
+ *
+ * @example
+ * Showcase: Radios. Import `@m3e/web/menu`. Also import `@m3e/web/divider`.
+ *
+ * ```html
+ * <!-- Trigger omitted for brevity -->
+ * <m3e-menu id="menu">
+ *   <m3e-menu-item-group>
+ *     <m3e-menu-item-radio checked>Ascending</m3e-menu-item-radio>
+ *     <m3e-menu-item-radio>Descending</m3e-menu-item-radio>
+ *   </m3e-menu-item-group>
+ *   <m3e-divider></m3e-divider>
+ *   <m3e-menu-item-group>
+ *     <m3e-menu-item-radio checked>Alphabetical</m3e-menu-item-radio>
+ *     <m3e-menu-item-radio>By Date</m3e-menu-item-radio>
+ *   </m3e-menu-item-group>
  * </m3e-menu>
  * ```
  *

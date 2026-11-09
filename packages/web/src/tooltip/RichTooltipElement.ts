@@ -22,19 +22,33 @@ import { TooltipElementBase } from "./TooltipElementBase";
  * click‑outside light‑dismiss.
  *
  * @example
- * The following example illustrates connecting an interactive rich tooltip to a button using the `for` attribute.
+ * Showcase: Rich tooltip. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ *
  * ```html
- * <m3e-icon-button id="btnSettings">
- *  <m3e-icon name="settings"></m3e-icon>
+ * <m3e-icon-button id="button">
+ *   <m3e-icon name="settings"></m3e-icon>
  * </m3e-icon-button>
- * <m3e-rich-tooltip for="btnSettings">
- *  <span slot="subhead">New settings available</span>
- *  Now you can adjust the uploaded image quality, and upgrade your available storage space.
- *  <div slot="actions">
- *    <m3e-button>
- *      <m3e-rich-tooltip-action>Learn more</m3e-rich-tooltip-action>
- *    </m3e-button>
- *  </div>
+ * <m3e-rich-tooltip for="button">
+ *   <span slot="subhead">New settings available</span>
+ *   Now you can adjust the uploaded image quality, and upgrade your available storage space.
+ * </m3e-rich-tooltip>
+ * ```
+ *
+ * @example
+ * Showcase: Actions. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`, `@m3e/web/button`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ *
+ * ```html
+ * <m3e-icon-button id="button">
+ *   <m3e-icon name="settings"></m3e-icon>
+ * </m3e-icon-button>
+ * <m3e-rich-tooltip for="button">
+ *   <span slot="subhead">New settings available</span>
+ *   Now you can adjust the uploaded image quality, and upgrade your available storage space.
+ *   <div slot="actions">
+ *     <m3e-button>
+ *       <m3e-rich-tooltip-action>Learn more</m3e-rich-tooltip-action>
+ *     </m3e-button>
+ *   </div>
  * </m3e-rich-tooltip>
  * ```
  *

@@ -12,11 +12,11 @@ import "@m3e/web/select";
 
 ## 🧪 Example
 
-The following demonstrates a `m3e-select` component wrapped in a `m3e-form-field` with a slotted label. The label is associated with the select via the `for` and `id` attributes, ensuring accessible form semantics. Each `m3e-option` defines an option within the dropdown.
+Showcase: Basic usage. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
 
 ```html
 <m3e-form-field>
-  <label slot="label" for="select">Choose your favorite fruit</label>
+  <label slot="label" for="select">Favorite fruit</label>
   <m3e-select id="select">
     <m3e-option>Apples</m3e-option>
     <m3e-option>Oranges</m3e-option>
@@ -26,14 +26,117 @@ The following demonstrates a `m3e-select` component wrapped in a `m3e-form-field
 </m3e-form-field>
 ```
 
-Multiple selection:
+Showcase: Empty options. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
 
 ```html
-<m3e-select multi>
-  <m3e-option value="javascript">JavaScript</m3e-option>
-  <m3e-option value="typescript">TypeScript</m3e-option>
-  <m3e-option value="python">Python</m3e-option>
-</m3e-select>
+<m3e-form-field>
+  <label slot="label" for="select">Favorite fruit</label>
+  <m3e-select id="select">
+    <m3e-option value="">None</m3e-option>
+    <m3e-option>Apples</m3e-option>
+    <m3e-option>Oranges</m3e-option>
+    <m3e-option>Bananas</m3e-option>
+    <m3e-option>Grapes</m3e-option>
+  </m3e-select>
+</m3e-form-field>
+```
+
+Showcase: Option groups. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="select">Pokemon</label>
+  <m3e-select id="select">
+    <m3e-optgroup>
+      <span slot="label">Grass</span>
+      <m3e-option>Bulbasaur</m3e-option>
+      <m3e-option>Oddish</m3e-option>
+      <m3e-option>Bellsprout</m3e-option>
+    </m3e-optgroup>
+    <!-- Additional option groups omitted for brevity -->
+  </m3e-select>
+</m3e-form-field>
+```
+
+Showcase: Selection. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="select">Toppings</label>
+  <m3e-select id="select" multi>
+    <m3e-option selected>Extra cheese</m3e-option>
+    <m3e-option selected>Mushroom</m3e-option>
+    <!-- Additional option groups omitted for brevity -->
+  </m3e-select>
+</m3e-form-field>
+```
+
+Showcase: Selection. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="select">Toppings</label>
+  <m3e-select id="select" multi value="extra-cheese,mushroom">
+    <m3e-option value="extra-cheese">Extra cheese</m3e-option>
+    <m3e-option value="mushroom">Mushroom</m3e-option>
+    <!-- Additional option groups omitted for brevity -->
+  </m3e-select>
+</m3e-form-field>
+```
+
+Showcase: Disabling. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="select">Favorite fruit</label>
+  <m3e-select id="select" disabled>
+    <m3e-option selected>Apples</m3e-option>
+    <!-- Additional option groups omitted for brevity -->
+  </m3e-select>
+</m3e-form-field>
+```
+
+Showcase: Disabling. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="select">Favorite fruit</label>
+  <m3e-select id="select">
+    <m3e-option disabled>Apples</m3e-option>
+    <!-- Additional option groups omitted for brevity -->
+  </m3e-select>
+</m3e-form-field>
+```
+
+Showcase: Required. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
+
+```html
+<m3e-form-field>
+  <label slot="label" for="select">Favorite fruit</label>
+  <m3e-select id="select" required>
+    <m3e-option value="">None</m3e-option>
+    <m3e-option>Apples</m3e-option>
+    <!-- Additional option groups omitted for brevity -->
+  </m3e-select>
+</m3e-form-field>
+```
+
+Showcase: Density. Import `@m3e/web/select`. Also import `@m3e/web/form-field`. Apply the required styling for the illustrated classes in your application. Additional styles are omitted for brevity.
+
+```html
+<m3e-form-field class="density-3">
+  <label slot="label" for="select">Density -3</label>
+  <m3e-select id="select" panel-class="density-3">
+    <!-- Options omitted for brevity -->
+  </m3e-select>
+</m3e-form-field>
+<!-- Additional fields omitted for brevity -->
+```
+
+```css
+.density-3 {
+  --md-sys-density-scale: -3;
+}
 ```
 
 ## 📖 API Reference

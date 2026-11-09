@@ -15,6 +15,26 @@ import { TocNode } from "./TocGenerator";
 
 /**
  * An item in a table of contents.
+ *
+ * @example
+ * A table of contents generates its items from headings in the target; items are not authored manually.
+ *
+ * ```html
+ * <div id="d1">
+ *   <m3e-toc for="d1">
+ *     <span slot="overline">Overline</span>
+ *     <span slot="title">Title</span>
+ *   </m3e-toc>
+ *   <div>
+ *     <h2 id="h1">Heading 1</h2>
+ *     <h3 id="h1.1">Heading 1.1</h3>
+ *     <h4 id="h1.1.1">Heading 1.1.1</h4>
+ *     <h3 id="h2">Heading 1.2</h3>
+ *     <h2 id="h2.1">Heading 2</h2>
+ *   </div>
+ * </div>
+ * ```
+ *
  * @tag m3e-toc-item
  *
  * @slot - Renders the label of the item.

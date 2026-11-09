@@ -24,19 +24,20 @@ import {
  * It emits `input` and `change` events to reflect value updates.
  *
  * @example
- * The following example illustrates a labelled slider with thumb used to select a single numeric value.
+ * Showcase: Basic usage. Import `@m3e/web/slider`.
+ *
  * ```html
- * <m3e-slider labelled>
- *  <m3e-slider-thumb value="50"></m3e-slider-thumb>
+ * <m3e-slider>
+ *   <m3e-slider-thumb></m3e-slider-thumb>
  * </m3e-slider>
  * ```
  *
  * @example
- * The next example illustrates a labelled range slider with two thumbs used to select a minimum and maximum numeric value.
+ * Showcase: Selecting a value. Import `@m3e/web/slider`.
+ *
  * ```html
- * <m3e-slider labelled>
- *  <m3e-slider-thumb value="25"></m3e-slider-thumb>
- *  <m3e-slider-thumb value="75"></m3e-slider-thumb>
+ * <m3e-slider min="1" max="5" step="0.5">
+ *   <m3e-slider-thumb value="1.5"></m3e-slider-thumb>
  * </m3e-slider>
  * ```
  *

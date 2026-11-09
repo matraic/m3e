@@ -24,20 +24,27 @@ import { ListItemContentType } from "./ListItemContentType";
  * is designed for accessibility and flexible layout.
  *
  * @example
- * The following example illustrates a list with a single item using all supported slots.
- *
- * Note: This example uses the `@m3e/icon` package to present Material Design symbols, but any icon package can be
- * substituted depending on your design system or preferences
+ * Showcase: Anatomy. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
  *
  * ```html
  * <m3e-list>
- *  <m3e-list-item>
- *    <m3e-icon slot="leading" name="person"></m3e-icon>
- *    <span slot="overline">Overline</span>
- *    Headline
- *    <span slot="supporting-text">Supporting text</span>
- *    <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
- *  </m3e-list-item>
+ *   <m3e-list-item>
+ *     <m3e-icon slot="leading" name="person"></m3e-icon>
+ *     <span slot="overline">Overline</span>
+ *     Headline
+ *     <span slot="supporting-text">Supporting text</span>
+ *     <span slot="trailing">100+</span>
+ *   </m3e-list-item>
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Showcase: Variants. Import `@m3e/web/list`.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>Item 1</m3e-list-item>
+ *   <!-- Additional items omitted for brevity -->
  * </m3e-list>
  * ```
  *

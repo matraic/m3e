@@ -32,6 +32,42 @@ import type { M3eTreeElement } from "./TreeElement";
  * disabled state, and interaction styling. Items may contain a child group
  * that hosts additional `m3e-tree-item` elements.
  *
+ * @example
+ * Showcase: Basic usage. Import `@m3e/web/tree`.
+ *
+ * ```html
+ * <m3e-tree>
+ *   <m3e-tree-item open>
+ *     <span slot="label">Getting Started</span>
+ *     <m3e-tree-item>
+ *       <span slot="label">Overview</span>
+ *     </m3e-tree-item>
+ *     <m3e-tree-item>
+ *       <span slot="label">Installation</span>
+ *     </m3e-tree-item>
+ *   </m3e-tree-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-tree>
+ * ```
+ *
+ * @example
+ * Showcase: Selection. Import `@m3e/web/tree`.
+ *
+ * ```html
+ * <m3e-tree>
+ *   <m3e-tree-item open>
+ *     <span slot="label">Getting Started</span>
+ *     <m3e-tree-item selected>
+ *       <span slot="label">Overview</span>
+ *     </m3e-tree-item>
+ *     <m3e-tree-item>
+ *       <span slot="label">Installation</span>
+ *     </m3e-tree-item>
+ *   </m3e-tree-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-tree>
+ * ```
+ *
  * @tag m3e-tree-item
  *
  * @slot - Renders the nested child items.

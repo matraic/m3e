@@ -14,6 +14,24 @@ import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y"
  * ensuring that assistive technologies correctly interpret the hierarchical relationship between the label
  * and contained options.
  *
+ * @example
+ * Group options inside a select. Import `@m3e/web/select` and `@m3e/web/form-field`.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="select">Pokemon</label>
+ *   <m3e-select id="select">
+ *     <m3e-optgroup>
+ *       <span slot="label">Grass</span>
+ *       <m3e-option>Bulbasaur</m3e-option>
+ *       <m3e-option>Oddish</m3e-option>
+ *       <m3e-option>Bellsprout</m3e-option>
+ *     </m3e-optgroup>
+ *     <!-- Additional option groups omitted for brevity -->
+ *   </m3e-select>
+ * </m3e-form-field>
+ * ```
+ *
  * @tag m3e-optgroup
  *
  * @slot - Renders the options of the group.

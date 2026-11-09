@@ -17,49 +17,154 @@ import "@m3e/web/menu";
 
 ## 🧪 Examples
 
-The following example illustrates a basic menu. The `m3e-menu-trigger` is used to trigger a `m3e-menu` specified by the `for` attribute when its parenting element is activated.
+Showcase: Basic usage. Import `@m3e/web/menu`. Also import `@m3e/web/button`.
 
 ```html
 <m3e-button>
-  <m3e-menu-trigger for="menu1">Basic menu</m3e-menu-trigger>
+  <m3e-menu-trigger for="menu">Menu</m3e-menu-trigger>
 </m3e-button>
-<m3e-menu id="menu1">
-  <m3e-menu-item>Apple</m3e-menu-item>
-  <m3e-menu-item>Apricot</m3e-menu-item>
-  <m3e-menu-item>Avocado</m3e-menu-item>
-  <m3e-menu-item>Green Apple</m3e-menu-item>
-  <m3e-menu-item>Green Grapes</m3e-menu-item>
-  <m3e-menu-item>Olive</m3e-menu-item>
-  <m3e-menu-item>Orange</m3e-menu-item>
+<m3e-menu id="menu">
+  <m3e-menu-item>Item 1</m3e-menu-item>
+  <m3e-menu-item>Item 2</m3e-menu-item>
 </m3e-menu>
 ```
 
-The next example illustrates nested menus. Submenus are triggered by placing a `m3e-menu-trigger` inside a `m3e-menu-item`.
+Showcase: Variants. Import `@m3e/web/menu`.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-menu id="menu" variant="vibrant">
+  <m3e-menu-item>Item 1</m3e-menu-item>
+  <m3e-menu-item>Item 2</m3e-menu-item>
+</m3e-menu>
+```
+
+Showcase: Icons. Import `@m3e/web/menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-menu id="menu">
+  <m3e-menu-item>
+    <m3e-icon slot="icon" name="dialpad"></m3e-icon>
+    Redial
+  </m3e-menu-item>
+  <m3e-menu-item>
+    <m3e-icon slot="icon" name="voicemail"></m3e-icon>
+    Check voice mail
+  </m3e-menu-item>
+  <m3e-menu-item>
+    <m3e-icon slot="icon" name="notifications_off"></m3e-icon>
+    Disable alerts
+  </m3e-menu-item>
+</m3e-menu>
+```
+
+Showcase: Disabling. Import `@m3e/web/menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-menu id="menu">
+  <m3e-menu-item disabled>
+    <m3e-icon slot="icon" name="dialpad"></m3e-icon>
+    Redial
+  </m3e-menu-item>
+  <!-- Additional items omitted for brevity -->
+</m3e-menu>
+```
+
+Showcase: Checkboxes. Import `@m3e/web/menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-menu id="menu">
+  <m3e-menu-item-checkbox checked>
+    <m3e-icon slot="icon" name="format_bold"></m3e-icon>
+    Bold
+  </m3e-menu-item-checkbox>
+  <m3e-menu-item-checkbox>
+    <m3e-icon slot="icon" name="format_italic"></m3e-icon>
+    Italic
+  </m3e-menu-item-checkbox>
+  <m3e-menu-item-checkbox>
+    <m3e-icon slot="icon" name="format_underlined"></m3e-icon>
+    Underline
+  </m3e-menu-item-checkbox>
+</m3e-menu>
+```
+
+Showcase: Radios. Import `@m3e/web/menu`.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-menu id="menu">
+  <m3e-menu-item-radio checked>Ascending</m3e-menu-item-radio>
+  <m3e-menu-item-radio>Descending</m3e-menu-item-radio>
+</m3e-menu>
+```
+
+Showcase: Radios. Import `@m3e/web/menu`. Also import `@m3e/web/divider`.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-menu id="menu">
+  <m3e-menu-item-group>
+    <m3e-menu-item-radio checked>Ascending</m3e-menu-item-radio>
+    <m3e-menu-item-radio>Descending</m3e-menu-item-radio>
+  </m3e-menu-item-group>
+  <m3e-divider></m3e-divider>
+  <m3e-menu-item-group>
+    <m3e-menu-item-radio checked>Alphabetical</m3e-menu-item-radio>
+    <m3e-menu-item-radio>By Date</m3e-menu-item-radio>
+  </m3e-menu-item-group>
+</m3e-menu>
+```
+
+Showcase: Submenus. Import `@m3e/web/menu`. Also import `@m3e/web/button`.
 
 ```html
 <m3e-button>
-  <m3e-menu-trigger for="menu2">Nested menus</m3e-menu-trigger>
+  <m3e-menu-trigger for="menu1">Menu with submenus</m3e-menu-trigger>
 </m3e-button>
-<m3e-menu id="menu2">
+<m3e-menu id="menu1">
   <m3e-menu-item>
-    <m3e-menu-trigger for="menu3">Fruits with A</m3e-menu-trigger>
+    <m3e-menu-trigger for="submenu1">Fruits with A</m3e-menu-trigger>
   </m3e-menu-item>
   <m3e-menu-item>Grapes</m3e-menu-item>
   <m3e-menu-item>Olive</m3e-menu-item>
   <m3e-menu-item>Orange</m3e-menu-item>
 </m3e-menu>
-<m3e-menu id="menu3">
+<m3e-menu id="submenu1">
   <m3e-menu-item>Apricot</m3e-menu-item>
   <m3e-menu-item>Avocado</m3e-menu-item>
   <m3e-menu-item>
-    <m3e-menu-trigger for="menu4">Apples</m3e-menu-trigger>
+    <m3e-menu-trigger for="submenu2">Apples</m3e-menu-trigger>
   </m3e-menu-item>
 </m3e-menu>
-<m3e-menu id="menu4">
+<m3e-menu id="submenu2">
   <m3e-menu-item>Fuji</m3e-menu-item>
   <m3e-menu-item>Granny Smith</m3e-menu-item>
   <m3e-menu-item>Red Delicious</m3e-menu-item>
 </m3e-menu>
+```
+
+Showcase: Density. Import `@m3e/web/menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Apply the required styling for the illustrated classes in your application. Additional styles are omitted for brevity.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-menu id="menu" class="density-3">
+  <m3e-menu-item>
+    <m3e-icon slot="icon" name="stars"></m3e-icon>
+    Item 1
+  </m3e-menu-item>
+  <!-- Additional items omitted for brevity -->
+</m3e-menu>
+<!-- Additional menus omitted for brevity -->
+```
+
+```css
+.density-3 {
+  --md-sys-density-scale: -3;
+}
 ```
 
 ## 📖 API Reference

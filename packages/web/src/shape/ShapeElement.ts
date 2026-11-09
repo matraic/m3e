@@ -21,9 +21,70 @@ import { ShapeNameStyle } from "./ShapeNameStyle";
  * `triangle`, and `very-sunny`. Refer to the Material Shape library for visual references and details.
  *
  * @example
- * The following example illustrates using the `m3e-shape` component to present the `sunny` shape.
+ * Showcase: Shapes. Import `@m3e/web/shape`.
+ *
  * ```html
- * <m3e-shape name="sunny"></m3e-shape>
+ * <m3e-shape name="12-sided-cookie"></m3e-shape>
+ * <m3e-shape name="9-sided-cookie"></m3e-shape>
+ * <m3e-shape name="8-leaf-clover"></m3e-shape>
+ * <m3e-shape name="7-sided-cookie"></m3e-shape>
+ * <m3e-shape name="6-sided-cookie"></m3e-shape>
+ * <m3e-shape name="4-sided-cookie"></m3e-shape>
+ * <m3e-shape name="4-leaf-clover"></m3e-shape>
+ * <br />
+ * <m3e-shape name="arch"></m3e-shape>
+ * <m3e-shape name="arrow"></m3e-shape>
+ * <m3e-shape name="boom"></m3e-shape>
+ * <m3e-shape name="bun"></m3e-shape>
+ * <m3e-shape name="diamond"></m3e-shape>
+ * <m3e-shape name="fan"></m3e-shape>
+ * <m3e-shape name="flower"></m3e-shape>
+ * <br />
+ * <m3e-shape name="gem"></m3e-shape>
+ * <m3e-shape name="ghost-ish"></m3e-shape>
+ * <m3e-shape name="heart"></m3e-shape>
+ * <m3e-shape name="hexagon"></m3e-shape>
+ * <m3e-shape name="pentagon"></m3e-shape>
+ * <m3e-shape name="pill"></m3e-shape>
+ * <m3e-shape name="pixel-circle"></m3e-shape>
+ * <br />
+ * <m3e-shape name="pixel-triangle"></m3e-shape>
+ * <m3e-shape name="puffy"></m3e-shape>
+ * <m3e-shape name="puffy-diamond"></m3e-shape>
+ * <m3e-shape name="semicircle"></m3e-shape>
+ * <m3e-shape name="slanted"></m3e-shape>
+ * <m3e-shape name="soft-boom"></m3e-shape>
+ * <m3e-shape name="soft-burst"></m3e-shape>
+ * <br />
+ * <m3e-shape name="square"></m3e-shape>
+ * <m3e-shape name="circle"></m3e-shape>
+ * <m3e-shape name="triangle"></m3e-shape>
+ * ```
+ *
+ * @example
+ * Showcase: Images and video. Import `@m3e/web/shape`.
+ *
+ * ```html
+ * <m3e-shape name="sunny">
+ *   <img src="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480" />
+ * </m3e-shape>
+ * <m3e-shape name="sunny">
+ *   <video
+ *     autoplay
+ *     loop
+ *     poster="https://www.shutterstock.com/shutterstock/videos/1006393/thumb/1.jpg?ip=x480"
+ *     preload="auto"
+ *   >
+ *     <source
+ *       src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.webm"
+ *       type="video/webm"
+ *     />
+ *     <source
+ *       src="https://www.shutterstock.com/shutterstock/videos/1006393/preview/stock-footage-business-people-working-in-office.mp4"
+ *       type="video/mp4"
+ *     />
+ *   </video>
+ * </m3e-shape>
  * ```
  *
  * @tag m3e-shape

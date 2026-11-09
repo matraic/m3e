@@ -13,18 +13,46 @@ import "@m3e/web/progress-indicator";
 
 ## 🧪 Example
 
-The following example illustrates determinate progress indicators.
+Showcase: Determinate. Import `@m3e/web/progress-indicator`.
 
 ```html
-<m3e-linear-progress-indicator value="30"></m3e-linear-progress-indicator>
-<m3e-circular-progress-indicator value="30"></m3e-circular-progress-indicator>
+<m3e-circular-progress-indicator value="25">25</m3e-circular-progress-indicator>
+<m3e-circular-progress-indicator variant="wavy" value="25">25</m3e-circular-progress-indicator>
 ```
 
-The next example illustrates indeterminate progress indicators.
+Showcase: Indeterminate. Import `@m3e/web/progress-indicator`.
+
+```html
+<m3e-circular-progress-indicator indeterminate></m3e-circular-progress-indicator>
+<m3e-circular-progress-indicator variant="wavy" indeterminate></m3e-circular-progress-indicator>
+```
+
+Showcase: Determinate. Import `@m3e/web/progress-indicator`.
+
+```html
+<m3e-linear-progress-indicator value="25"></m3e-linear-progress-indicator>
+<m3e-linear-progress-indicator variant="wavy" value="25"></m3e-linear-progress-indicator>
+```
+
+Showcase: Indeterminate. Import `@m3e/web/progress-indicator`.
 
 ```html
 <m3e-linear-progress-indicator mode="indeterminate"></m3e-linear-progress-indicator>
-<m3e-circular-progress-indicator indeterminate></m3e-circular-progress-indicator>
+<m3e-linear-progress-indicator variant="wavy" mode="indeterminate"></m3e-linear-progress-indicator>
+```
+
+Showcase: Buffer. Import `@m3e/web/progress-indicator`.
+
+```html
+<m3e-linear-progress-indicator mode="buffer" value="10" buffer-value="25"></m3e-linear-progress-indicator>
+<m3e-linear-progress-indicator variant="wavy" mode="buffer" value="10" buffer-value="25"></m3e-linear-progress-indicator>
+```
+
+Showcase: Query. Import `@m3e/web/progress-indicator`.
+
+```html
+<m3e-linear-progress-indicator mode="query"></m3e-linear-progress-indicator>
+<m3e-linear-progress-indicator variant="wavy" mode="query"></m3e-linear-progress-indicator>
 ```
 
 ## 📖 API Reference

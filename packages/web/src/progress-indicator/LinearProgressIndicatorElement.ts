@@ -25,14 +25,35 @@ import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
  * buffering, and activity indication.
  *
  * @example
- * The following example illustrates a determinate linear progress indicator.
+ * Showcase: Determinate. Import `@m3e/web/progress-indicator`.
+ *
  * ```html
- * <m3e-linear-progress-indicator value="30"></m3e-linear-progress-indicator>
+ * <m3e-linear-progress-indicator value="25"></m3e-linear-progress-indicator>
+ * <m3e-linear-progress-indicator variant="wavy" value="25"></m3e-linear-progress-indicator>
  * ```
+ *
  * @example
- * The next example illustrates an indeterminate linear progress indicator using the `mode` attribute.
+ * Showcase: Indeterminate. Import `@m3e/web/progress-indicator`.
+ *
  * ```html
  * <m3e-linear-progress-indicator mode="indeterminate"></m3e-linear-progress-indicator>
+ * <m3e-linear-progress-indicator variant="wavy" mode="indeterminate"></m3e-linear-progress-indicator>
+ * ```
+ *
+ * @example
+ * Showcase: Buffer. Import `@m3e/web/progress-indicator`.
+ *
+ * ```html
+ * <m3e-linear-progress-indicator mode="buffer" value="10" buffer-value="25"></m3e-linear-progress-indicator>
+ * <m3e-linear-progress-indicator variant="wavy" mode="buffer" value="10" buffer-value="25"></m3e-linear-progress-indicator>
+ * ```
+ *
+ * @example
+ * Showcase: Query. Import `@m3e/web/progress-indicator`.
+ *
+ * ```html
+ * <m3e-linear-progress-indicator mode="query"></m3e-linear-progress-indicator>
+ * <m3e-linear-progress-indicator variant="wavy" mode="query"></m3e-linear-progress-indicator>
  * ```
  *
  * @tag m3e-linear-progress-indicator
