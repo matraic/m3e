@@ -161,15 +161,15 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     }
     :host(:not(:is(:state(--no-animate), :--no-animate))) {
       transition: ${unsafeCSS(
-        `overlay ${DesignToken.motion.spring.fastSpatial} allow-discrete var(--_fab-menu-delay, 0ms),
-        display ${DesignToken.motion.spring.fastSpatial} allow-discrete var(--_fab-menu-delay, 0ms)`,
+        `overlay ${DesignToken.motion.spring.fastSpatial} allow-discrete,
+        display ${DesignToken.motion.spring.fastSpatial} allow-discrete`,
       )};
     }
     ::slotted(m3e-fab-menu-item) {
       width: 0;
       opacity: 0;
     }
-    :host(:popover-open) ::slotted(m3e-fab-menu-item) {
+    :host(:popover-open:not(:is(:state(--closing), :--closing))) ::slotted(m3e-fab-menu-item) {
       width: var(--_fab-menu-item-width, auto);
       opacity: 1;
     }
@@ -254,6 +254,8 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   /** @private */ #trigger?: HTMLElement;
   /** @private */ #anchoringCleanup?: () => void;
   /** @private */ #clipFrame?: number;
+  /** @private */ #closing = false;
+  /** @private */ #closeId = 0;
 
   /** @private */
   readonly #listManager = new RovingTabIndexManager<LitElement & DisabledMixin>()
@@ -285,11 +287,8 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
 
       case "closed":
         this.#clickOutsideController.unobserveAll();
-        this.#anchoringCleanup?.();
-        this.#anchoringCleanup = undefined;
-        // Clipping stops itself once the closing transition has finished.
-        if (getComputedStyle(this).display === "none") {
-          this.#stopClipping();
+        if (!this.#trigger && !this.#closing && getComputedStyle(this).display === "none") {
+          this.#finishClose();
         }
         break;
     }
@@ -316,6 +315,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       this.hide();
     }
 
+    this.#cancelClose();
     this.#anchoringCleanup?.();
     this.#anchoringCleanup = await positionAnchor(
       this,
@@ -362,7 +362,10 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       this.#unpin(items);
     }
 
-    this.showPopover();
+    // A menu still closing is still open, so it has nothing to show.
+    if (!this.matches(":popover-open")) {
+      this.showPopover();
+    }
 
     if (animate && !closing) {
       this.#grow(items);
@@ -381,8 +384,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
    * @param {boolean} [restoreFocus=false] Whether to restore focus to the menu's trigger.
    */
   hide(restoreFocus: boolean = false): void {
-    this.#anchoringCleanup?.();
-    this.#anchoringCleanup = undefined;
+    if (this.#closing) return;
 
     if (this.#trigger) {
       this.#trigger.ariaExpanded = "false";
@@ -397,11 +399,15 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     }
 
     const items = this.#items();
+    this.#stagger(items, false);
+
     if (this.#animates() && this.matches(":popover-open")) {
       this.#pin(items);
+      this.#beginClose(items);
+    } else {
+      this.hidePopover();
+      this.#finishClose();
     }
-    this.#stagger(items, false);
-    this.hidePopover();
   }
 
   /**
@@ -464,13 +470,53 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       // Clipping continues while the items close, and ends once the menu is no longer displayed or no longer
       // overlaps the trigger. It resumes when repositioning finds the two overlapping again.
       const hidden = !this.#trigger && !this.matches(":popover-open") && getComputedStyle(this).display === "none";
-      if (hidden || !this.#clipTrigger(trigger)) {
+      if (hidden) {
+        this.#finishClose();
+        return;
+      }
+      if (!this.#clipTrigger(trigger)) {
         this.#stopClipping();
         return;
       }
       this.#clipFrame = requestAnimationFrame(tick);
     };
     this.#clipFrame = requestAnimationFrame(tick);
+  }
+
+  /** @private */
+  #finishClose(): void {
+    this.#anchoringCleanup?.();
+    this.#anchoringCleanup = undefined;
+    this.#stopClipping();
+  }
+
+  /**
+   * Closes the items while the menu stays open. Not every browser keeps a menu displayed, and in the top layer, while
+   * it transitions out, so the menu is hidden only once its items have closed. Until then it stays anchored to its
+   * trigger, which resizes as the menu closes.
+   * @private
+   */
+  #beginClose(items: HTMLElement[]): void {
+    const id = ++this.#closeId;
+    this.#closing = true;
+    setCustomState(this, "--closing", true);
+    void this.offsetWidth;
+
+    const animations = items.flatMap((x) => x.getAnimations());
+    Promise.allSettled(animations.map((x) => x.finished)).then(() => {
+      if (id !== this.#closeId) return;
+      this.#closing = false;
+      this.hidePopover();
+      setCustomState(this, "--closing", false);
+      this.#finishClose();
+    });
+  }
+
+  /** @private */
+  #cancelClose(): void {
+    this.#closeId++;
+    this.#closing = false;
+    setCustomState(this, "--closing", false);
   }
 
   /** @private */
@@ -567,9 +613,6 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   #stagger(items: HTMLElement[], open: boolean): void {
     const delays = staggerDelays(items.length, open);
     items.forEach((x, i) => x.style.setProperty("--_fab-menu-item-delay", `${delays[i]}ms`));
-
-    // The menu stays displayed until its last item has closed.
-    this.style.setProperty("--_fab-menu-delay", `${open ? 0 : Math.max(0, ...delays)}ms`);
   }
 
   /** @private */
@@ -611,7 +654,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   /** @private */
   #handleTransitionEnd(e: TransitionEvent): void {
     // Once grown, an item returns to its natural width, so that it follows later changes to its content.
-    if (e.propertyName !== "width" || !this.matches(":popover-open")) return;
+    if (e.propertyName !== "width" || !this.matches(":popover-open") || this.#closing) return;
     const items = this.#items();
     const item = items.find((x) => x === e.target);
     if (!item) return;
