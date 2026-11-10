@@ -372,6 +372,7 @@ export class M3eDateInputElement
   /** @private */ #format: Intl.DateTimeFormatPart[] = [];
   /** @private */ #timeFormat: Exclude<DateInputTimeFormat, "auto"> = "12";
   /** @private */ #changed = false;
+  /** @private */ #pendingFocus?: () => void;
   /** @private */ #ignoreValueUpdate = false;
 
   /** @private */ @state() private _activeField: DateInputFieldSegment = "month";
@@ -759,6 +760,7 @@ export class M3eDateInputElement
       class="base"
       tabindex="-1"
       @pointerdown=${this.#handlePointerDown}
+      @click=${this.#handleClick}
       @focusout=${this.#handleFocusOut}
     >
       ${this.#format.map((part) => {
@@ -917,10 +919,32 @@ export class M3eDateInputElement
 
   /** @private */
   #handlePointerDown(e: PointerEvent): void {
+    this.#pendingFocus = undefined;
     if (this.disabled) return;
     if (!e.defaultPrevented) {
       e.preventDefault();
-      queueMicrotask(() => this.focus());
+      this.#focusAfterPointer(e, () => this.focus());
+    }
+  }
+
+  /** @private */
+  #handleClick(): void {
+    const focus = this.#pendingFocus;
+    this.#pendingFocus = undefined;
+    focus?.();
+  }
+
+  /**
+   * Focuses on pointer down, except for touch. Focusing at touch start makes the form field move its label, so the
+   * compatibility `mousedown` iOS dispatches afterward lands on a different, unfocusable element and blurs the input.
+   * Touch focus is deferred to `click`, which has no such side effect.
+   * @private
+   */
+  #focusAfterPointer(e: PointerEvent, focus: () => void): void {
+    if (e.pointerType === "touch") {
+      this.#pendingFocus = focus;
+    } else {
+      queueMicrotask(focus);
     }
   }
 
@@ -1370,7 +1394,7 @@ export class M3eDateInputElement
     if (this.disabled) return;
     e.preventDefault();
     const field = <HTMLSpanElement>e.target;
-    queueMicrotask(() => field.focus());
+    this.#focusAfterPointer(e, () => field.focus());
   }
 
   /** @private */
@@ -1394,7 +1418,8 @@ export class M3eDateInputElement
     let element: Element | null = <Element>e.target;
     while (element) {
       if (element.classList.contains("field")) {
-        (<HTMLElement>element).focus();
+        const field = <HTMLElement>element;
+        this.#focusAfterPointer(e, () => field.focus());
         return;
       }
       element = element.previousElementSibling;
@@ -1403,7 +1428,8 @@ export class M3eDateInputElement
     element = <Element>e.target;
     while (element) {
       if (element.classList.contains("field")) {
-        (<HTMLElement>element).focus();
+        const field = <HTMLElement>element;
+        this.#focusAfterPointer(e, () => field.focus());
         return;
       }
       element = element.nextElementSibling;
