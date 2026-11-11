@@ -2,6 +2,9 @@
 
 The `m3e-fab-menu` component presents a dynamic menu of related actions, elegantly revealed from a floating action button (FAB). Designed using expressive, adaptive surfaces, it enables seamless access to contextual actions in modern, visually rich interfaces.
 
+When the items do not fit above the FAB, they scroll behind it and can be revealed below it up to the viewport edge.
+On devices with a touch-capable pointer, the scrollable menu also receives touches in its empty space.
+
 ```ts
 import "@m3e/web/fab-menu";
 ```

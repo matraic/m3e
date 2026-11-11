@@ -1,4 +1,6 @@
 import { expect, test } from "./fixtures";
+import type { M3eFabMenuElement } from "../src/fab-menu/FabMenuElement";
+import type { M3eFabMenuItemElement } from "../src/fab-menu/FabMenuItemElement";
 
 /** The items of the menus that check motion. */
 const ITEMS = ["Share", "Edit details", "Duplicate", "Move to folder", "Download", "Delete permanently"];
@@ -112,6 +114,192 @@ test.describe("m3e-fab-menu", () => {
     await expect(first).toBeFocused();
   });
 
+  for (const direction of ["ltr", "rtl"] as const) {
+    test(`keeps focus rings visible in a scrollable menu (${direction})`, async ({ page, render }) => {
+      await page.setViewportSize({ width: 390, height: 300 });
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      await render(`
+        <m3e-fab aria-label="More actions" style="position: fixed; ${direction === "ltr" ? "right" : "left"}: 16px; bottom: 16px">
+          <m3e-fab-menu-trigger for="actions"></m3e-fab-menu-trigger>
+        </m3e-fab>
+        <m3e-fab-menu id="actions" style="--m3e-focus-ring-thickness: 4px; --m3e-focus-ring-outward-offset: 3px">
+          ${ITEMS.map((item) => `<m3e-fab-menu-item>${item}</m3e-fab-menu-item>`).join("")}
+        </m3e-fab-menu>
+      `);
+      await page.evaluate((dir) => (document.documentElement.dir = dir), direction);
+      await page.getByRole("button", { name: "More actions" }).click();
+      const menu = page.locator("m3e-fab-menu");
+      await expect.poll(() => menu.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeGreaterThan(0);
+      await expect(menu.locator("m3e-fab-menu-item").first()).toBeFocused();
+      await menu.evaluate((el) => el.dispatchEvent(new WheelEvent("wheel")));
+      await page.keyboard.press("ArrowDown");
+
+      for (const index of [ITEMS.length - 1, 0, ITEMS.length - 1]) {
+        const item = menu.locator("m3e-fab-menu-item").nth(index);
+        await item.focus();
+        await expect(item).toBeFocused();
+        await expect
+          .poll(() =>
+            item.evaluate((el) =>
+              el.shadowRoot
+                ?.querySelector("m3e-focus-ring")
+                ?.shadowRoot?.querySelector(".outline")
+                ?.classList.contains("visible"),
+            ),
+          )
+          .toBe(true);
+        const geometry = await item.evaluate((el) => {
+          const menuRect = el.parentElement!.getBoundingClientRect();
+          const itemRect = el.getBoundingClientRect();
+          const fabRect = document.querySelector("m3e-fab")!.getBoundingClientRect();
+          return {
+            left: itemRect.left - menuRect.left,
+            right: menuRect.right - itemRect.right,
+            top: itemRect.top - menuRect.top,
+            bottom: menuRect.bottom - itemRect.bottom,
+            fabGap: fabRect.top - itemRect.bottom,
+            alignment:
+              document.documentElement.dir === "rtl" ? itemRect.left - fabRect.left : fabRect.right - itemRect.right,
+          };
+        });
+        // The animated ring grows to 3px offset + 4px * 2 in every direction.
+        expect(geometry.left).toBeGreaterThanOrEqual(10.9);
+        expect(geometry.right).toBeGreaterThanOrEqual(10.9);
+        expect(geometry.top).toBeGreaterThanOrEqual(10.9);
+        expect(geometry.bottom).toBeGreaterThanOrEqual(10.9);
+        expect(geometry.fabGap).toBeGreaterThanOrEqual(10.9);
+        expect(Math.abs(geometry.alignment)).toBeLessThan(1);
+      }
+    });
+  }
+
+  test("scrolls items below a raised FAB until the viewport edge without blocking the page", async ({
+    page,
+    render,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 600 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await render(`
+      <button id="under" style="position: fixed; right: 20px; bottom: 20px">Page action</button>
+      <m3e-fab aria-label="More actions" style="position: fixed; right: 16px; bottom: 60vh">
+        <m3e-fab-menu-trigger for="actions"></m3e-fab-menu-trigger>
+      </m3e-fab>
+      <m3e-fab-menu id="actions">
+        ${ITEMS.map((item) => `<m3e-fab-menu-item>${item}</m3e-fab-menu-item>`).join("")}
+      </m3e-fab-menu>
+    `);
+    const fab = page.getByRole("button", { name: "More actions" });
+    const menu = page.locator("m3e-fab-menu");
+    const first = menu.locator("m3e-fab-menu-item").first();
+    const last = menu.locator("m3e-fab-menu-item").last();
+    await fab.click();
+    await expect(first).toBeFocused();
+    await expect.poll(() => menu.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeGreaterThan(0);
+    await expect
+      .poll(() =>
+        last.evaluate((el) => {
+          const fabRect = document.querySelector("m3e-fab")!.getBoundingClientRect();
+          return fabRect.top - el.getBoundingClientRect().bottom;
+        }),
+      )
+      .toBeCloseTo(8, 0);
+
+    const lastBox = (await last.boundingBox())!;
+    await page.mouse.move(lastBox.x + lastBox.width / 2, lastBox.y + lastBox.height / 2);
+    await page.mouse.wheel(0, -1000);
+    await expect.poll(() => menu.evaluate((el) => el.scrollTop)).toBe(0);
+    const bounds = await last.evaluate((el) => ({
+      item: el.getBoundingClientRect().toJSON(),
+      menu: el.parentElement!.getBoundingClientRect().toJSON(),
+      fab: document.querySelector("m3e-fab")!.getBoundingClientRect().toJSON(),
+      pageScroll: window.scrollY,
+    }));
+    expect(bounds.item.top).toBeGreaterThan(bounds.fab.bottom);
+    expect(bounds.item.bottom).toBeLessThan(bounds.menu.bottom);
+    expect(bounds.menu.bottom).toBeCloseTo(600, 0);
+    expect(bounds.pageScroll).toBe(0);
+
+    await last.focus();
+    await expect
+      .poll(() =>
+        last.evaluate(
+          (el) => document.querySelector("m3e-fab")!.getBoundingClientRect().top - el.getBoundingClientRect().bottom,
+        ),
+      )
+      .toBeGreaterThanOrEqual(7.9);
+
+    await menu.evaluate((el) => (el.scrollTop = 0));
+    await expect(last).toBeVisible();
+    const belowFab = (await last.boundingBox())!;
+    expect(
+      await page.evaluate(
+        ({ x, y }) => document.elementFromPoint(x, y)?.closest("m3e-fab-menu-item")?.textContent?.trim(),
+        {
+          x: belowFab.x + belowFab.width / 2,
+          y: belowFab.y + belowFab.height / 2,
+        },
+      ),
+    ).toBe(ITEMS[ITEMS.length - 1]);
+
+    await page.getByRole("button", { name: "Page action" }).click();
+    await expect(menu).toBeHidden();
+  });
+
+  test.describe("touch input", () => {
+    test.use({ hasTouch: true });
+
+    test("makes the scrollable menu itself a touch target", async ({ page, render }) => {
+      await page.setViewportSize({ width: 390, height: 600 });
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      await render(`
+        <m3e-fab aria-label="More actions" style="position: fixed; right: 16px; bottom: 60vh">
+          <m3e-fab-menu-trigger for="actions"></m3e-fab-menu-trigger>
+        </m3e-fab>
+        <m3e-fab-menu id="actions">
+          ${ITEMS.map((item) => `<m3e-fab-menu-item>${item}</m3e-fab-menu-item>`).join("")}
+        </m3e-fab-menu>
+      `);
+      await page.getByRole("button", { name: "More actions" }).tap();
+      const menu = page.locator("m3e-fab-menu");
+      await expect.poll(() => menu.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeGreaterThan(0);
+      await expect(menu).toHaveCSS("pointer-events", "auto");
+      const hit = await menu.evaluate((el) => {
+        const rect = el.getBoundingClientRect();
+        return document.elementFromPoint(rect.right - 2, rect.bottom - 2) === el;
+      });
+      expect(hit).toBe(true);
+    });
+  });
+
+  test("preserves the maximum menu width and its width when closing a scrollable menu", async ({ page, render }) => {
+    await page.setViewportSize({ width: 390, height: 300 });
+    await render(`
+      <m3e-fab aria-label="More actions" style="position: fixed; right: 16px; bottom: 16px">
+        <m3e-fab-menu-trigger for="actions"></m3e-fab-menu-trigger>
+      </m3e-fab>
+      <m3e-fab-menu id="actions" style="--m3e-fab-menu-max-width: 200px">
+        ${ITEMS.map((item) => `<m3e-fab-menu-item>${item} with a long label</m3e-fab-menu-item>`).join("")}
+      </m3e-fab-menu>
+    `);
+    await page.getByRole("button", { name: "More actions" }).click();
+    const menu = page.locator("m3e-fab-menu");
+    await expect.poll(() => menu.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeGreaterThan(0);
+    await expect
+      .poll(() =>
+        menu.evaluate((el) =>
+          [...el.querySelectorAll("m3e-fab-menu-item")].some((item) => item.getAnimations().length > 0),
+        ),
+      )
+      .toBe(false);
+    const widths = await menu.evaluate((el: M3eFabMenuElement) => {
+      const before = el.getBoundingClientRect().width;
+      el.hide();
+      return { before, after: el.getBoundingClientRect().width };
+    });
+    expect(widths.before).toBeLessThanOrEqual(200);
+    expect(widths.after).toBeCloseTo(widths.before, 1);
+  });
+
   test("accepts supported variants and falls back for an unsupported variant", async ({ page, render }) => {
     await render(`
       <m3e-fab-menu variant="primary"></m3e-fab-menu>
@@ -134,7 +322,7 @@ test.describe("m3e-fab-menu", () => {
 
     const delays = await page.evaluate(async () => {
       const menu = document.querySelector("m3e-fab-menu")!;
-      const items = [...menu.querySelectorAll("m3e-fab-menu-item")];
+      const items = [...menu.querySelectorAll<M3eFabMenuItemElement>("m3e-fab-menu-item")];
       const widthDelays = () =>
         items.map((x) => {
           const delay = x.style.getPropertyValue("--_fab-menu-item-delay");

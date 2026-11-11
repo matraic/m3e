@@ -104,7 +104,8 @@ export class ScrollController extends MonitorControllerBase {
       if (this.#isScrollable(ancestor)) {
         ancestors.push(ancestor);
       }
-      ancestor = ancestor.parentElement;
+      // Cross shadow boundaries, so scrollers of ancestors hosting the element in their shadow tree are observed.
+      ancestor = ancestor.assignedSlot ?? ancestor.parentElement ?? (ancestor.getRootNode() as ShadowRoot).host ?? null;
     }
     return ancestors;
   }
