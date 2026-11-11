@@ -298,6 +298,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   /** @private */ #trigger?: HTMLElement;
   /** @private */ #anchoringCleanup?: () => void;
   /** @private */ #clipFrame?: number;
+  /** @private */ #focusTimer?: number;
   /** @private */ #closing = false;
   /** @private */ #scrollToEnd = false;
   /** @private */ #lastY = 0;
@@ -331,7 +332,9 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
         if (this.#trigger) {
           this.#clickOutsideController.observe(this.#trigger);
         }
-        setTimeout(() => {
+        this.#focusTimer = setTimeout(() => {
+          this.#focusTimer = undefined;
+          if (!this.#trigger) return;
           const item = this.#listManager.items.find((x) => !x.disabled);
           this.#listManager.updateActiveItem(item);
           // Focusing must not scroll the menu away from its items nearest the trigger, unless the keyboard opened it.
@@ -447,6 +450,8 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
 
   /** @private */
   #hide(restoreFocus: boolean, animate: boolean): void {
+    clearTimeout(this.#focusTimer);
+    this.#focusTimer = undefined;
     if (this.#closing) {
       // The page is moving, so the menu must not keep animating against a trigger that is moving with it.
       if (!animate) {
@@ -514,6 +519,8 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
+    clearTimeout(this.#focusTimer);
+    this.#focusTimer = undefined;
     this.removeEventListener("keydown", this.#keyDownHandler);
     this.removeEventListener("wheel", this.#userScrollHandler);
     this.removeEventListener("touchstart", this.#userScrollHandler);

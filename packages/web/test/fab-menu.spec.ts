@@ -91,6 +91,55 @@ test.describe("m3e-fab-menu", () => {
     await expect(fab).toBeFocused();
   });
 
+  for (const reducedMotion of [false, true]) {
+    test(`does not focus a menu item after an immediate Escape (reduced motion: ${reducedMotion})`, async ({
+      page,
+      render,
+    }) => {
+      await page.emulateMedia({ reducedMotion: reducedMotion ? "reduce" : "no-preference" });
+      await render(`
+        <m3e-fab style="margin-top: 50%;" aria-label="More actions">
+          <m3e-fab-menu-trigger for="actions"></m3e-fab-menu-trigger>
+        </m3e-fab>
+        <m3e-fab-menu id="actions"><m3e-fab-menu-item>First action</m3e-fab-menu-item></m3e-fab-menu>
+      `);
+      const fab = page.getByRole("button", { name: "More actions" });
+      const menu = page.locator("m3e-fab-menu");
+      await menu.evaluate((el) => {
+        const fab = document.querySelector("m3e-fab")!;
+        const item = el.querySelector("m3e-fab-menu-item")!;
+        item.addEventListener("focus", () => item.setAttribute("data-focused", ""));
+        el.addEventListener("toggle", (event) => {
+          if ((event as ToggleEvent).newState === "open") {
+            fab.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+          }
+        });
+      });
+
+      await fab.click();
+      await expect(fab).toHaveAttribute("aria-expanded", "false");
+      await expect(menu).toBeHidden();
+      await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 100)));
+      await expect(menu.locator("m3e-fab-menu-item")).not.toHaveAttribute("data-focused", "");
+      await expect(fab).toBeFocused();
+    });
+  }
+
+  test("restores focus on Escape after an item has received focus", async ({ page, render }) => {
+    await render(`
+      <m3e-fab style="margin-top: 50%;" aria-label="More actions">
+        <m3e-fab-menu-trigger for="actions"></m3e-fab-menu-trigger>
+      </m3e-fab>
+      <m3e-fab-menu id="actions"><m3e-fab-menu-item>First action</m3e-fab-menu-item></m3e-fab-menu>
+    `);
+    const fab = page.getByRole("button", { name: "More actions" });
+    await fab.click();
+    await expect(page.getByRole("menuitem", { name: "First action" })).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(page.locator("m3e-fab-menu")).toBeHidden();
+    await expect(fab).toBeFocused();
+  });
+
   test("moves focus through menu items with arrow keys", async ({ page, render }) => {
     await render(`
       <m3e-fab style="margin-top: 50%;" aria-label="More actions">
