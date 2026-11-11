@@ -4,7 +4,6 @@ import { property } from "lit/decorators.js";
 
 import {
   DesignToken,
-  ScrollController,
   Role,
   AttachInternals,
   addCustomState,
@@ -394,14 +393,6 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this.#handleKeyDown(e);
   /** @private */ readonly #mouseEnterHandler = () => this.#handleMouseEnter();
 
-  /** @private */ readonly #scrollController = new ScrollController(this, {
-    target: null,
-    callback: (target) =>
-      target instanceof M3eMenuElement
-        ? target.items.filter((x) => x instanceof M3eMenuItemElement).forEach((x) => x.submenu?.hide())
-        : this.hideAll(),
-  });
-
   /** @private */ readonly #clickOutsideController = new ClickOutsideController(this, {
     target: null,
     callback: (composedPath) => {
@@ -560,7 +551,6 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
 
     this.#trigger = trigger;
     this.#trigger.ariaExpanded = "true";
-    this.#scrollController.observe(this.#trigger);
   }
 
   /**
@@ -583,7 +573,6 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
       if (restoreFocus) {
         this.#trigger.focus();
       }
-      this.#scrollController.unobserve(this.#trigger);
       this.#trigger = undefined;
     }
   }

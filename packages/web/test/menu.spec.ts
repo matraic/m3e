@@ -178,6 +178,72 @@ test.describe("m3e-menu", () => {
     await expect(page.locator("m3e-button")).toHaveAttribute("aria-expanded", "false");
   });
 
+  test("repositions open menus when an ancestor or parent menu scrolls", async ({ page, render }) => {
+    await render(`
+      <div id="scroller" style="height: 400px; overflow: auto">
+        <div style="height: 100px"></div>
+        <m3e-button><m3e-menu-trigger for="menu">Open</m3e-menu-trigger></m3e-button>
+        <div style="height: 600px"></div>
+      </div>
+      <m3e-menu id="menu" style="--m3e-menu-container-max-height: 180px">
+        <m3e-menu-item>First</m3e-menu-item>
+        <m3e-menu-item><m3e-menu-trigger for="sub">Fruits</m3e-menu-trigger></m3e-menu-item>
+        <m3e-menu-item>Third</m3e-menu-item>
+        <m3e-menu-item>Fourth</m3e-menu-item>
+        <m3e-menu-item>Fifth</m3e-menu-item>
+        <m3e-menu-item>Sixth</m3e-menu-item>
+      </m3e-menu>
+      <m3e-menu id="sub"><m3e-menu-item>Apricot</m3e-menu-item></m3e-menu>
+    `);
+    const menu = page.locator("#menu");
+    const submenu = page.locator("#sub");
+    const fruits = page.getByRole("menuitem", { name: "Fruits" });
+    await openMenu(page, menu);
+    await fruits.click();
+    await expect(submenu).toBeVisible();
+    await page.mouse.move(0, 0);
+
+    const menuBefore = await menu.boundingBox();
+    const submenuBefore = await submenu.boundingBox();
+    expect(menuBefore).not.toBeNull();
+    expect(submenuBefore).not.toBeNull();
+
+    await page.locator("#scroller").evaluate((el) => (el.scrollTop = 40));
+    await expect.poll(() => page.locator("#scroller").evaluate((el) => el.scrollTop)).toBe(40);
+    await expect
+      .poll(async () => {
+        const box = await menu.boundingBox();
+        return box ? Math.round(menuBefore!.y - box.y) : null;
+      })
+      .toBe(40);
+    await expect
+      .poll(async () => {
+        const box = await submenu.boundingBox();
+        return box ? Math.abs(submenuBefore!.y - box.y - 40) : null;
+      })
+      .toBeLessThanOrEqual(8);
+    await expect(page.locator("m3e-button")).toHaveAttribute("aria-expanded", "true");
+    await expect(fruits).toHaveAttribute("aria-expanded", "true");
+
+    const submenuAfterAncestorScroll = await submenu.boundingBox();
+    expect(submenuAfterAncestorScroll).not.toBeNull();
+    await menu.evaluate((el) => (el.scrollTop = 25));
+    await expect.poll(() => menu.evaluate((el) => el.scrollTop)).toBe(25);
+    await expect
+      .poll(async () => {
+        const box = await submenu.boundingBox();
+        return box ? Math.abs(submenuAfterAncestorScroll!.y - box.y - 25) : null;
+      })
+      .toBeLessThanOrEqual(8);
+    await expect(menu).toBeVisible();
+    await expect(submenu).toBeVisible();
+    await expect(fruits).toHaveAttribute("aria-expanded", "true");
+
+    await submenu.getByRole("menuitem", { name: "Apricot" }).click();
+    await expect(menu).toBeHidden();
+    await expect(submenu).toBeHidden();
+  });
+
   test("opens a submenu with ArrowRight and closes only the submenu with ArrowLeft", async ({ page, render }) => {
     await render(`
       <m3e-button><m3e-menu-trigger for="menu">Open</m3e-menu-trigger></m3e-button>
