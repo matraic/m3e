@@ -821,6 +821,7 @@ export class M3eSelectElement
     }
 
     this.#menu.style.overflowX = "hidden";
+    this.#menu.scrollStrategy = "reposition";
     this.#menu.fitAnchorWidth = true;
     this.#menu.addEventListener("toggle", this.#menuToggleHandler);
     this.#menu.addEventListener("pointerdown", this.#menuPointerDownHandler);

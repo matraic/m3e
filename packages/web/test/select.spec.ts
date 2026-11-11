@@ -52,6 +52,41 @@ test.describe("m3e-select", () => {
     await expect(page.getByRole("option")).toHaveCount(3);
   });
 
+  for (const [name, markup, option] of [
+    ["Fruit", single(), "Apples"],
+    ["Language", multi(), "JavaScript"],
+  ] as const) {
+    test(`repositions the ${name} listbox when its scroll container moves`, async ({ page, render }) => {
+      await render(`
+        <div id="scroller" style="height: 300px; overflow: auto">
+          <div style="height: 100px"></div>
+          ${markup}
+          <div style="height: 600px"></div>
+        </div>
+      `);
+
+      await openSelect(page, name);
+      const select = page.getByRole("combobox", { name });
+      const listbox = page.getByRole("listbox");
+      const before = await listbox.boundingBox();
+      expect(before).not.toBeNull();
+
+      await page.locator("#scroller").evaluate((el) => (el.scrollTop = 50));
+      await expect.poll(() => page.locator("#scroller").evaluate((el) => el.scrollTop)).toBe(50);
+      await expect(listbox).toBeVisible();
+      await expect(select).toHaveAttribute("aria-expanded", "true");
+      await expect
+        .poll(async () => {
+          const box = await listbox.boundingBox();
+          return box ? Math.round(before!.y - box.y) : null;
+        })
+        .toBe(50);
+
+      await page.getByRole("option", { name: option }).click();
+      expect(await valueOf(page)).toEqual(name === "Fruit" ? "apple" : "js");
+    });
+  }
+
   test("selects an option, closes, and dispatches beforeinput, input and change", async ({ page, render }) => {
     await render(single());
     await page.locator("m3e-select").evaluate((el) => {
