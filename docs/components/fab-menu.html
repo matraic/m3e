@@ -20,7 +20,7 @@
     <link href="api-viewer.css" rel="stylesheet" />
     <link href="fab-menu.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.12.0/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.12.1/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -243,6 +243,52 @@
   Google
 &lt;/m3e-fab-menu-item&gt;</pre
           >
+        </m3e-card>
+        <m3e-heading variant="headline" size="small" level="3">Scrolling</m3e-heading>
+        <p>
+          When the menu contains more items than can fit above the FAB, it becomes scrollable. It opens with the item
+          nearest the FAB in view, allowing the remaining items to be reached by scrolling. Items are clipped at the
+          viewport edge, and no scrollbar is shown.
+        </p>
+        <p>
+          To try it, scroll this page until the FAB is near the top of the viewport, then open the menu. Drag the menu
+          on a touchscreen, use a mouse wheel or trackpad over its items, or navigate with the arrow keys. Scrolling the
+          page closes the menu.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content" class="fab-example">
+            <m3e-fab variant="primary" size="large" aria-label="Open scrolling actions">
+              <m3e-fab-menu-trigger for="fabmenu-scroll">
+                <m3e-icon name="edit"></m3e-icon>
+              </m3e-fab-menu-trigger>
+            </m3e-fab>
+            <m3e-fab-menu id="fabmenu-scroll">
+              <m3e-fab-menu-item>
+                <m3e-icon slot="icon" name="email" filled></m3e-icon>
+                Email
+              </m3e-fab-menu-item>
+              <m3e-fab-menu-item>
+                <m3e-icon slot="icon" name="chat" filled></m3e-icon>
+                Message
+              </m3e-fab-menu-item>
+              <m3e-fab-menu-item>
+                <m3e-icon slot="icon" name="folder" filled></m3e-icon>
+                Folder
+              </m3e-fab-menu-item>
+              <m3e-fab-menu-item>
+                <m3e-icon slot="icon" name="edit" filled></m3e-icon>
+                Note
+              </m3e-fab-menu-item>
+              <m3e-fab-menu-item>
+                <m3e-icon slot="icon" name="event" filled></m3e-icon>
+                Event
+              </m3e-fab-menu-item>
+              <m3e-fab-menu-item>
+                <m3e-icon slot="icon" name="person" filled></m3e-icon>
+                Contact
+              </m3e-fab-menu-item>
+            </m3e-fab-menu>
+          </div>
         </m3e-card>
 
         <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>

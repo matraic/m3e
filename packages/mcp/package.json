@@ -1,6 +1,6 @@
 {
   "name": "@m3e/mcp",
-  "version": "2.12.0",
+  "version": "2.12.1",
   "description": "Model Context Protocol server exposing the M3E component library to AI assistants",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
@@ -35,7 +35,7 @@
     "clean": "rimraf dist test-results"
   },
   "dependencies": {
-    "@m3e/web": "^2.12.0",
+    "@m3e/web": "^2.12.1",
     "@modelcontextprotocol/sdk": "^1.32.2",
     "zod": "^4.6.7"
   },
