@@ -1340,11 +1340,11 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
     this.#outermost.clear();
 
     for (const button of this.#squished) {
+      button.style.setProperty("--_swipe-reveal-sizing-transition", "none");
       button.style.removeProperty("--_button-width");
       deleteCustomState(button as HTMLElement & AttachInternalsMixin, "--squished");
     }
 
-    this.#squished.clear();
     this.#actionWidths.clear();
     this.#underlaps.clear();
     this.#fallbackWidths.clear();
@@ -1352,6 +1352,15 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
 
     for (const name of ["leading", "trailing"]) {
       this.shadowRoot?.querySelector<HTMLElement>(`.${name}`)?.style.removeProperty("width");
+    }
+
+    if (this.#squished.size > 0) {
+      // Restore natural padding before a subsequent gesture can measure the actions.
+      void this.offsetWidth;
+      for (const button of this.#squished) {
+        button.style.removeProperty("--_swipe-reveal-sizing-transition");
+      }
+      this.#squished.clear();
     }
   }
 

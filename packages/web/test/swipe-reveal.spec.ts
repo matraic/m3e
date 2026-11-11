@@ -387,9 +387,11 @@ test.describe("m3e-swipe-reveal", () => {
       await expect.poll(() => state(page, "a")).toBe(target);
       expect(await log(page)).toEqual([target]);
       expect(
-        await page.locator("#a").evaluate((el) =>
-          ["leading", "trailing"].map((side) => el.shadowRoot!.querySelector<HTMLElement>(`.${side}`)!.style.width),
-        ),
+        await page
+          .locator("#a")
+          .evaluate((el) =>
+            ["leading", "trailing"].map((side) => el.shadowRoot!.querySelector<HTMLElement>(`.${side}`)!.style.width),
+          ),
       ).toEqual(["", ""]);
     });
   }
@@ -552,6 +554,128 @@ test.describe("m3e-swipe-reveal", () => {
     }
     await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
     await expect.poll(() => state(page, "a")).toBe("covered");
+    await cdp.detach();
+  });
+
+  for (const tag of ["m3e-icon-button", "m3e-button"] as const) {
+    for (const first of ["leading", "trailing"] as const) {
+      test(`${tag} actions retain their natural width when switching from ${first}`, async ({ page, render }) => {
+        await render(`<m3e-swipe-reveal id="a" style="width: 360px">
+          <${tag} slot="leading" aria-label="Pin"><span style="display: inline-block; width: 24px; height: 24px"></span></${tag}>
+          <div style="height: 56px">Content</div>
+          <${tag} slot="trailing" aria-label="Bookmark"><span style="display: inline-block; width: 24px; height: 24px"></span></${tag}>
+        </m3e-swipe-reveal>`);
+        const next: Side = first === "leading" ? "trailing" : "leading";
+        const natural = await page
+          .locator("#a")
+          .evaluate(
+            (el, name) => el.shadowRoot!.querySelector<HTMLElement>(`.${name}`)!.getBoundingClientRect().width,
+            next,
+          );
+        await page.locator("#a").evaluate((el, target) => {
+          el.addEventListener("revealed", () => (el as M3eSwipeRevealElement).reveal(target), { once: true });
+        }, next);
+        await drag(page, "a", first === "leading" ? 120 : -120);
+        await expect.poll(() => side(page, "a")).toBe(next);
+        await expect.poll(() => state(page, "a")).toBe("revealed");
+        const result = await page.locator("#a").evaluate((el, name) => {
+          const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+          return {
+            offset: new DOMMatrixReadOnly(getComputedStyle(content).transform).m41,
+            width: el.shadowRoot!.querySelector<HTMLElement>(`.${name}`)!.getBoundingClientRect().width,
+            buttons: [...el.querySelectorAll<HTMLElement>("[slot]")].map((button) =>
+              button.style.getPropertyValue("--_swipe-reveal-sizing-transition"),
+            ),
+          };
+        }, next);
+        expect(Math.abs(result.offset)).toBeCloseTo(natural, 0);
+        expect(result.width).toBeCloseTo(natural, 0);
+        expect(result.buttons).toEqual(["", ""]);
+      });
+    }
+  }
+
+  test("a fast reversal before release settles with the action fully revealed", async ({ page, render }) => {
+    await page.setViewportSize({ width: 360, height: 640 });
+    await render(`<m3e-list variant="segmented">
+      <m3e-swipe-reveal id="a">
+        <m3e-icon-button slot="leading" aria-label="Pin" variant="tonal"><m3e-icon name="keep"></m3e-icon></m3e-icon-button>
+        <m3e-list-item>Content</m3e-list-item>
+        <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal"><m3e-icon name="bookmark"></m3e-icon></m3e-icon-button>
+      </m3e-swipe-reveal>
+    </m3e-list>`);
+    const natural = await page
+      .locator("#a")
+      .evaluate((el) => el.shadowRoot!.querySelector<HTMLElement>(".trailing")!.getBoundingClientRect().width);
+    const box = (await page.locator("#a").boundingBox())!;
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true });
+    for (let i = 0; i < 10; i++) {
+      await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+      for (const dx of [-60, -35, -60]) {
+        await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x + dx, y }] });
+      }
+      await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+      await expect.poll(() => state(page, "a")).toBe("revealed");
+      const offset = await page.locator("#a").evaluate((el) => {
+        const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+        return new DOMMatrixReadOnly(getComputedStyle(content).transform).m41;
+      });
+      expect(offset).toBeCloseTo(-natural, 0);
+      await call(page, "a", "close");
+      await expect.poll(() => state(page, "a")).toBe("covered");
+    }
+    await cdp.detach();
+  });
+
+  test("rapid alternating touch swipes settle at the natural action width", async ({ page, render }) => {
+    await page.setViewportSize({ width: 360, height: 640 });
+    await render(`<m3e-list variant="segmented">
+      <m3e-swipe-reveal id="a">
+        <m3e-icon-button slot="leading" aria-label="Pin" variant="tonal"><m3e-icon name="keep"></m3e-icon></m3e-icon-button>
+        <m3e-list-item>Content</m3e-list-item>
+        <m3e-icon-button slot="trailing" aria-label="Bookmark" variant="tonal"><m3e-icon name="bookmark"></m3e-icon></m3e-icon-button>
+      </m3e-swipe-reveal>
+    </m3e-list>`);
+    const natural = await page.locator("#a").evaluate((el) =>
+      ["leading", "trailing"].map((name) => ({
+        container: el.shadowRoot!.querySelector<HTMLElement>(`.${name}`)!.getBoundingClientRect().width,
+        button: el.querySelector<HTMLElement>(`[slot="${name}"]`)!.getBoundingClientRect().width,
+      })),
+    );
+    const box = (await page.locator("#a").boundingBox())!;
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true });
+    for (let i = 0; i < 12; i++) {
+      for (const dx of [25 + (i % 5) * 20, -110, 30, -130, 120]) {
+        await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+        await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x + dx, y }] });
+        await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+      }
+      await expect.poll(() => state(page, "a")).not.toBe("revealing");
+    }
+    await page.waitForTimeout(800);
+    const result = await page.locator("#a").evaluate((el) => {
+      const content = el.shadowRoot!.querySelector<HTMLElement>(".content")!;
+      return {
+        side: (el as M3eSwipeRevealElement).side,
+        offset: new DOMMatrixReadOnly(getComputedStyle(content).transform).m41,
+        widths: ["leading", "trailing"].map((name) => ({
+          container: el.shadowRoot!.querySelector<HTMLElement>(`.${name}`)!.getBoundingClientRect().width,
+          button: el.querySelector<HTMLElement>(`[slot="${name}"]`)!.getBoundingClientRect().width,
+        })),
+      };
+    });
+    expect(result.side).toBe("leading");
+    expect(result.offset).toBeCloseTo(natural[0].container, 0);
+    for (let j = 0; j < 2; j++) {
+      expect(result.widths[j].container).toBeCloseTo(natural[j].container, 0);
+      expect(result.widths[j].button).toBeCloseTo(natural[j].button, 0);
+    }
     await cdp.detach();
   });
 
