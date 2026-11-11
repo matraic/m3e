@@ -41,7 +41,7 @@ export class PressedController extends MonitorControllerBase {
   /** @private */ readonly #filter?: PressedControllerFilterCallback;
   /** @private */ readonly #isPressedKey?: (key: string) => boolean;
   /** @private */ readonly #pressedTargets = new Map<HTMLElement, number>();
-  /** @private */ readonly #releaseTimeouts = new Map<HTMLElement, ReturnType<typeof setTimeout>>();
+  /** @private */ readonly #releaseTimeouts = new Map<HTMLElement, number>();
   /** @private */ readonly #minPressedDuration: number;
 
   /** @private */ readonly #pointerDownHandler = (e: PointerEvent) => this.#handlePointerDown(e);

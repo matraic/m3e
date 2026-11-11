@@ -261,7 +261,7 @@ export class M3eAppBarElement extends HtmlFor(Role(AttachInternals(LitElement), 
   /** @private */ readonly #interruptHandler = () => this.#cancelSnap();
   /** @private */ readonly #frameLoadHandler = () => this.#handleFrameLoad();
 
-  /** @private */ #snapTimer?: ReturnType<typeof setTimeout>;
+  /** @private */ #snapTimer?: number;
   /** @private */ #snapFrame = 0;
   /** @private */ #snapping = false;
   /** @private */ #touching = false;

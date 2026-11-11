@@ -24,7 +24,7 @@ export abstract class TooltipElementBase extends HtmlFor(ReconnectedCallback(Att
   /** @private */ #anchorCleanup?: () => void;
   /** @private */ #tooltipHovering = false;
   /** @private */ #controlFocused = false;
-  /** @private */ #focusDelay?: ReturnType<typeof setTimeout>;
+  /** @private */ #focusDelay?: number;
 
   /** @private */ readonly #controlClickHandler = () => this.#handleControlClick();
   /** @private */ readonly #controlFocusInHandler = (e: FocusEvent) => this.#handleControlFocusIn(e);
