@@ -39,9 +39,13 @@
                 web goes.
               </p>
               <div class="hero-actions">
-                <m3e-button href="installation.html" target="content-frame" variant="filled" size="large">
+                <m3e-button href="installation.html" target="content-frame" variant="filled" size="medium">
                   <m3e-icon slot="trailing-icon" name="arrow_forward"></m3e-icon>
                   Get started
+                </m3e-button>
+                <m3e-button class="hero-browse" href="overview.html#gallery-intro" variant="outlined" size="medium">
+                  <span>Browse components</span>
+                  <m3e-icon slot="trailing-icon" name="arrow_downward"></m3e-icon>
                 </m3e-button>
               </div>
               <p class="hero-footnote">
@@ -99,90 +103,121 @@
             </div>
           </section>
 
-          <section class="highlights" aria-label="M3E highlights">
-            <div class="highlight">
-              <span class="highlight-number">01</span>
-              <div><strong>Web Component first</strong><span>Works across frameworks</span></div>
-            </div>
-            <div class="highlight">
-              <span class="highlight-number">02</span>
-              <div><strong>Material 3 expressive</strong><span>Color, shape & motion</span></div>
-            </div>
-            <div class="highlight">
-              <span class="highlight-number">03</span>
-              <div><strong>Made for everyone</strong><span>Accessibility at the core</span></div>
-            </div>
-          </section>
-
-          <section class="feature-section" aria-labelledby="features-title">
+          <section class="capabilities" aria-labelledby="capabilities-title">
             <div class="section-heading">
               <div>
-                <p class="eyebrow">THE GOOD STUFF</p>
-                <h2 id="features-title">Everything clicks into place.</h2>
+                <p class="eyebrow">MORE THAN COMPONENTS</p>
+                <h2 id="capabilities-title">Thoughtful by design.</h2>
               </div>
-              <p>One cohesive design language, ready to make your own.</p>
+              <p>Personalize the experience and build for more people, with less work.</p>
             </div>
-            <div class="feature-grid">
-              <m3e-card variant="outlined" class="feature-card">
-                <div slot="content">
-                  <div class="feature-icon"><m3e-icon name="widgets"></m3e-icon></div>
-                  <h3>A component for that</h3>
-                  <p>Explore a growing set of thoughtfully crafted elements for everyday interfaces.</p>
-                  <a href="overview.html#gallery-intro" class="feature-link">
-                    Browse components <m3e-icon name="arrow_downward"></m3e-icon>
-                  </a>
-                </div>
-              </m3e-card>
-              <m3e-card variant="outlined" class="feature-card">
-                <div slot="content">
-                  <div class="feature-icon feature-icon-secondary"><m3e-icon name="tune"></m3e-icon></div>
-                  <h3>Your theme, your rules</h3>
-                  <p>Shape the look and feel with Material 3 color, density, contrast, motion, and directionality.</p>
-                  <a href="../components/theme.html" target="content-frame" class="feature-link">
-                    See theming in action <m3e-icon name="arrow_forward"></m3e-icon>
-                  </a>
-                </div>
-              </m3e-card>
-              <m3e-card variant="outlined" class="feature-card">
-                <div slot="content">
-                  <div class="feature-icon feature-icon-tertiary">
-                    <m3e-icon name="integration_instructions"></m3e-icon>
-                  </div>
-                  <h3>Fits your workflow</h3>
-                  <p>Start with native custom elements, or bring M3E into React with the companion package.</p>
-                  <a href="frameworks.html" target="content-frame" class="feature-link">
-                    Find your framework <m3e-icon name="arrow_forward"></m3e-icon>
-                  </a>
-                </div>
-              </m3e-card>
+            <div class="capabilities-grid">
+              <div class="capability-group">
+                <div class="feature-icon"><m3e-icon name="palette"></m3e-icon></div>
+                <h3>Make it yours</h3>
+                <ul>
+                  <li>
+                    <strong>Dynamic color</strong>
+                    <span>Create a palette from a single color, with light, dark, and contrast options.</span>
+                  </li>
+                  <li>
+                    <strong>Expressive design</strong>
+                    <span>Bring interfaces to life with Material 3 typography, shapes, and motion.</span>
+                  </li>
+                  <li>
+                    <strong>Adjustable density</strong>
+                    <span>Make supported components spacious or compact while preserving touch targets.</span>
+                  </li>
+                </ul>
+                <a href="../components/theme.html" target="content-frame" class="feature-link">
+                  Explore theming <m3e-icon name="arrow_forward"></m3e-icon>
+                </a>
+              </div>
+              <div class="capability-group">
+                <div class="feature-icon feature-icon-secondary"><m3e-icon name="accessibility_new"></m3e-icon></div>
+                <h3>Designed for people</h3>
+                <ul>
+                  <li>
+                    <strong>Accessible interactions</strong>
+                    <span>Keyboard navigation, focus management, and screen reader semantics.</span>
+                  </li>
+                  <li>
+                    <strong>Text scaling &amp; direction</strong>
+                    <span>Support larger text and left-to-right or right-to-left layouts.</span>
+                  </li>
+                  <li>
+                    <strong>Reduced motion</strong>
+                    <span>Honor the user's system preference for less motion.</span>
+                  </li>
+                  <li><strong>Forced colors</strong><span>Adapt to high-contrast environments.</span></li>
+                </ul>
+                <a href="../styles/color.html" target="content-frame" class="feature-link">
+                  Explore color accessibility <m3e-icon name="arrow_forward"></m3e-icon>
+                </a>
+              </div>
+              <div class="capability-group">
+                <div class="feature-icon feature-icon-tertiary"><m3e-icon name="code"></m3e-icon></div>
+                <h3>Ready to build</h3>
+                <ul>
+                  <li>
+                    <strong>Web-native</strong>
+                    <span>Use custom elements across frameworks, with dedicated React bindings.</span>
+                  </li>
+                  <li>
+                    <strong>Native forms</strong>
+                    <span>Form-associated controls integrate with submission and validation.</span>
+                  </li>
+                  <li><strong>Modular imports</strong><span>Import individual components or the full library.</span></li>
+                  <li>
+                    <strong>Helpful tooling</strong>
+                    <span>Explore live examples, API documentation, and editor support.</span>
+                  </li>
+                </ul>
+                <a href="installation.html" target="content-frame" class="feature-link">
+                  Explore developer setup <m3e-icon name="arrow_forward"></m3e-icon>
+                </a>
+              </div>
+            </div>
+            <div class="capabilities-try">
+              <div>
+                <h3>See it for yourself.</h3>
+                <p>Try color, contrast, text size, direction, and motion settings across the showcase.</p>
+                <p>Reduced motion and forced colors follow your system settings.</p>
+              </div>
+              <button id="open-showcase-settings" class="callout-action callout-action-outlined" type="button">
+                <m3e-icon name="settings" aria-hidden="true"></m3e-icon>
+                <span>Open settings</span>
+              </button>
             </div>
           </section>
 
-          <section class="mcp-callout" aria-labelledby="mcp-title">
-            <div class="mcp-icon"><m3e-icon name="smart_toy"></m3e-icon></div>
-            <div>
-              <p class="eyebrow">BUILT FOR AI ASSISTANTS</p>
-              <h2 id="mcp-title">Meet the M3E MCP server.</h2>
-              <p>Give your AI assistant access to component documentation and usage examples.</p>
-            </div>
-            <m3e-button href="mcp.html" target="content-frame" variant="tonal">
-              Explore MCP <m3e-icon slot="trailing-icon" name="arrow_forward"></m3e-icon>
-            </m3e-button>
-          </section>
+          <div class="getting-started-grid">
+            <section class="quick-start" aria-labelledby="quick-start-title">
+              <div>
+                <p class="eyebrow">YOUR NEXT PROJECT, SORTED</p>
+                <h2 id="quick-start-title">Start with one command.</h2>
+                <p>Install the Web Components package and build from there.</p>
+              </div>
+              <m3e-card variant="outlined" class="install">
+                <pre slot="content">npm i @m3e/web</pre>
+              </m3e-card>
+              <a class="callout-action" href="installation.html" target="content-frame">
+                <span>Read the quick start</span><m3e-icon name="arrow_forward" aria-hidden="true"></m3e-icon>
+              </a>
+            </section>
 
-          <section class="quick-start" aria-labelledby="quick-start-title">
-            <div>
-              <p class="eyebrow">YOUR NEXT PROJECT, SORTED</p>
-              <h2 id="quick-start-title">Start with one command.</h2>
-              <p>Install the Web Components package and build from there.</p>
-            </div>
-            <m3e-card variant="outlined" class="install">
-              <pre slot="content">npm i @m3e/web</pre>
-            </m3e-card>
-            <m3e-button href="installation.html" target="content-frame" variant="tonal">
-              Read the quick start <m3e-icon slot="trailing-icon" name="arrow_forward"></m3e-icon>
-            </m3e-button>
-          </section>
+            <section class="mcp-callout" aria-labelledby="mcp-title">
+              <div class="mcp-icon"><m3e-icon name="smart_toy"></m3e-icon></div>
+              <div>
+                <p class="eyebrow">BUILT FOR AI ASSISTANTS</p>
+                <h2 id="mcp-title">Meet the M3E MCP server.</h2>
+                <p>Give your AI assistant access to component documentation and usage examples.</p>
+              </div>
+              <a class="callout-action" href="mcp.html" target="content-frame">
+                <span>Explore MCP</span><m3e-icon name="arrow_forward" aria-hidden="true"></m3e-icon>
+              </a>
+            </section>
+          </div>
 
           <section class="component-gallery" aria-labelledby="gallery-title">
             <div class="section-heading">

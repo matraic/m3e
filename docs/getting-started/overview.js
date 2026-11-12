@@ -7,6 +7,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.querySelector("#gallery-swipe-delete").addEventListener("click", () => swipeDismiss.dismiss("trailing"));
   document.querySelector("#gallery-swipe-reset").addEventListener("click", () => swipeDismiss.restore());
 
+  document.querySelector("#open-showcase-settings").addEventListener("click", async () => {
+    const drawer = window.parent.document.querySelector(".docs-drawer-container");
+    if (!drawer.end) {
+      window.parent.document.querySelector("#settings-button").click();
+      await drawer.updateComplete;
+    }
+    window.parent.document.querySelector("#color").focus();
+  });
+
   let taps = 0;
   document.querySelector('m3e-tap-gesture[for="gallery-tap"]').addEventListener("gesture", (event) => {
     if (event.detail.phase === "end") {
