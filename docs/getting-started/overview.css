@@ -305,6 +305,7 @@
   border-block-start: 1px solid var(--md-sys-color-outline-variant);
   --m3e-expansion-header-collapsed-height: max(64px, 6rem - 8px);
   --m3e-expansion-header-expanded-height: max(64px, 6rem - 8px);
+  --m3e-expansion-panel-content-padding: 0;
 }
 
 .gallery-category:last-child {
@@ -791,7 +792,7 @@
 
 @media (max-width: 700px) {
   .landing {
-    padding: 28px 20px;
+    padding: 28px 16px;
   }
 
   .hero {
@@ -869,7 +870,7 @@
 
 @media (max-width: 420px) {
   .landing {
-    padding-inline: 16px;
+    padding-inline: 12px;
   }
 
   .hero-actions {
