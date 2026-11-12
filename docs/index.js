@@ -8,6 +8,12 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   const frame = document.querySelector("#content-frame");
+  const drawer = document.querySelector(".docs-drawer-container");
+  const homePath = "getting-started/overview.html";
+  const wideScreen = window.matchMedia("(min-width: 960px)");
+  let currentPath;
+  let docsDrawerOpen;
+
   frame.addEventListener("load", () => {
     const scheme = document.querySelector("m3e-theme").scheme;
     switch (document.querySelector("m3e-theme").scheme) {
@@ -20,7 +26,26 @@ window.addEventListener("DOMContentLoaded", () => {
     const currentUrl = frame.contentWindow?.location.href.substring(document.baseURI.length);
     history.replaceState({}, "", "#/" + currentUrl);
 
-    const menuItem = document.querySelector(`a[href='${currentUrl}']`)?.closest("m3e-nav-menu-item");
+    const path = currentUrl.split("#")[0];
+    if (path !== currentPath) {
+      if (currentPath && currentPath !== homePath && path === homePath && wideScreen.matches) {
+        docsDrawerOpen = drawer.start;
+      }
+
+      let open = drawer.start;
+      if (path === homePath || !wideScreen.matches) {
+        open = false;
+      } else if (!currentPath || currentPath === homePath) {
+        open = docsDrawerOpen ?? true;
+      }
+      if (drawer.start !== open) {
+        drawer.start = open;
+        drawer.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+      currentPath = path;
+    }
+
+    const menuItem = document.querySelector(`a[href='${path}']`)?.closest("m3e-nav-menu-item");
     if (menuItem) {
       menuItem.selected = true;
     }

@@ -1,10 +1,13 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Overview for M3E</title>
+    <title>M3E — Material 3 Expressive for the web</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Overview for M3E" />
+    <meta
+      name="description"
+      content="Build expressive, accessible interfaces with M3E, a Material 3 Web Component library for the modern web."
+    />
     <base href="./" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,60 +21,972 @@
     />
     <link href="../main.css" rel="stylesheet" />
     <link href="overview.css" rel="stylesheet" />
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.12.1/dist/all.min.js"></script>
+    <script type="module" src="../../packages/web/dist/all.min.js"></script>
     <script src="../main.js"></script>
+    <script src="overview.js"></script>
   </head>
   <body>
     <m3e-theme strong-focus></m3e-theme>
     <div class="panes">
       <m3e-content-pane id="body">
-        <m3e-heading variant="display" size="large" level="1">Overview</m3e-heading>
-        <p>
-          Welcome to M3E, a modern, from-scratch implementation of
-          <a href="https://m3.material.io/" target="_blank">Material Design 3</a>, built entirely with
-          <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components" target="_blank">Web Components</a>. It
-          provides a complete, spec-aligned component suite with dynamic color, expressive motion, and full
-          accessibility.
-        </p>
+        <main class="landing">
+          <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-copy">
+              <p class="eyebrow"><span class="eyebrow-mark"></span> MATERIAL 3, MADE FOR THE WEB</p>
+              <h1 id="hero-title">A little more <span>expressive.</span></h1>
+              <p class="hero-description">
+                Build thoughtful, beautiful interfaces with Material 3 Expressive Web Components. Framework-agnostic,
+                standards-based, and ready anywhere the web runs.
+              </p>
+              <div class="hero-actions">
+                <m3e-button href="installation.html" target="content-frame" variant="filled" size="large">
+                  <m3e-icon slot="trailing-icon" name="arrow_forward"></m3e-icon>
+                  Get started
+                </m3e-button>
+              </div>
+              <p class="hero-footnote">
+                <m3e-icon name="code"></m3e-icon>
+                Open source <span aria-hidden="true">·</span> MIT licensed
+              </p>
+            </div>
 
-        <div class="card-grid">
-          <m3e-card variant="outlined" class="callout">
-            <m3e-heading slot="header" variant="title" size="large">Expressive Components</m3e-heading>
-            <p slot="content">
-              Leverages Material 3's design tokens, dynamic color, shape and motion systems for highly customizable UI
-              elements.
-            </p>
-          </m3e-card>
-          <m3e-card variant="outlined" class="callout">
-            <m3e-heading slot="header" variant="title" size="large">Unified Architecture</m3e-heading>
-            <p slot="content">ESM-first with modular entry points and tree-shaking for minimal bundles.</p>
-          </m3e-card>
-          <m3e-card variant="outlined" class="callout">
-            <m3e-heading slot="header" variant="title" size="large">Accessibility First</m3e-heading>
-            <p slot="content">
-              Built-in support for accessibility standards, ensuring inclusive experiences for all users.
-            </p>
-          </m3e-card>
-          <m3e-card variant="outlined" class="callout">
-            <m3e-heading slot="header" variant="title" size="large">Theming & Personalization</m3e-heading>
-            <p slot="content">
-              Effortlessly adapt components to your brand or user preferences with Material 3's advanced theming
-              capabilities.
-            </p>
-          </m3e-card>
-          <m3e-card variant="outlined" class="callout">
-            <m3e-heading slot="header" variant="title" size="large">Performance Optimized</m3e-heading>
-            <p slot="content">Lightweight, fast-loading components designed for modern web platforms.</p>
-          </m3e-card>
-          <m3e-card variant="outlined" class="callout">
-            <m3e-heading slot="header" variant="title" size="large">Security Conscious</m3e-heading>
-            <p slot="content">
-              Built with secure-by-default patterns, including XSS-safe templating, Trusted Types compatibility, and
-              support for strong Content Security Policies (CSP).
-            </p>
-          </m3e-card>
-        </div>
+            <div class="hero-art" role="region" aria-label="Live preview of M3E components">
+              <div class="art-orbit orbit-one"></div>
+              <div class="art-orbit orbit-two"></div>
+              <m3e-card variant="outlined" class="component-preview">
+                <div slot="content">
+                  <div class="preview-heading">
+                    <div>
+                      <p class="preview-overline">A small preview</p>
+                      <h2>Make it yours</h2>
+                    </div>
+                    <m3e-icon-button aria-label="More options">
+                      <m3e-icon name="more_horiz"></m3e-icon>
+                    </m3e-icon-button>
+                  </div>
+                  <div class="preview-setting">
+                    <div class="setting-icon"><m3e-icon name="dark_mode"></m3e-icon></div>
+                    <div class="setting-copy">
+                      <strong>Expressive theme</strong>
+                      <span>Color, shape & motion</span>
+                    </div>
+                    <m3e-switch checked aria-label="Expressive theme"></m3e-switch>
+                  </div>
+                  <div class="preview-divider"></div>
+                  <p class="preview-overline">Choose your style</p>
+                  <m3e-filter-chip-set class="preview-chips" aria-label="Theme options">
+                    <m3e-filter-chip selected>Expressive</m3e-filter-chip>
+                    <m3e-filter-chip>Minimal</m3e-filter-chip>
+                    <m3e-filter-chip>Playful</m3e-filter-chip>
+                  </m3e-filter-chip-set>
+                  <div class="preview-actions">
+                    <m3e-button variant="text">Preview</m3e-button>
+                    <m3e-button variant="tonal">
+                      <m3e-icon slot="trailing-icon" name="arrow_forward"></m3e-icon>
+                      Apply theme
+                    </m3e-button>
+                  </div>
+                </div>
+              </m3e-card>
+              <div class="floating-note note-top">
+                <m3e-icon name="palette"></m3e-icon>
+                <span>Made to be themed</span>
+              </div>
+              <div class="floating-note note-bottom">
+                <span class="live-dot"></span>
+                <span>Real components, right here</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="highlights" aria-label="M3E highlights">
+            <div class="highlight">
+              <span class="highlight-number">01</span>
+              <div><strong>Web Component first</strong><span>Works across frameworks</span></div>
+            </div>
+            <div class="highlight">
+              <span class="highlight-number">02</span>
+              <div><strong>Material 3 expressive</strong><span>Color, shape & motion</span></div>
+            </div>
+            <div class="highlight">
+              <span class="highlight-number">03</span>
+              <div><strong>Made for everyone</strong><span>Accessibility at the core</span></div>
+            </div>
+          </section>
+
+          <section class="feature-section" aria-labelledby="features-title">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">THE GOOD STUFF</p>
+                <h2 id="features-title">Everything clicks into place.</h2>
+              </div>
+              <p>One cohesive design language, ready to make your own.</p>
+            </div>
+            <div class="feature-grid">
+              <m3e-card variant="outlined" class="feature-card">
+                <div slot="content">
+                  <div class="feature-icon"><m3e-icon name="widgets"></m3e-icon></div>
+                  <h3>A component for that</h3>
+                  <p>Explore a growing set of thoughtfully crafted elements for everyday interfaces.</p>
+                  <a href="overview.html#gallery-intro" class="feature-link">
+                    Browse components <m3e-icon name="arrow_downward"></m3e-icon>
+                  </a>
+                </div>
+              </m3e-card>
+              <m3e-card variant="outlined" class="feature-card">
+                <div slot="content">
+                  <div class="feature-icon feature-icon-secondary"><m3e-icon name="tune"></m3e-icon></div>
+                  <h3>Your theme, your rules</h3>
+                  <p>Shape the look and feel with Material 3 color, density, contrast, motion, and directionality.</p>
+                  <a href="../components/theme.html" target="content-frame" class="feature-link">
+                    See theming in action <m3e-icon name="arrow_forward"></m3e-icon>
+                  </a>
+                </div>
+              </m3e-card>
+              <m3e-card variant="outlined" class="feature-card">
+                <div slot="content">
+                  <div class="feature-icon feature-icon-tertiary">
+                    <m3e-icon name="integration_instructions"></m3e-icon>
+                  </div>
+                  <h3>Fits your workflow</h3>
+                  <p>Start with native custom elements, or bring M3E into React with the companion package.</p>
+                  <a href="frameworks.html" target="content-frame" class="feature-link">
+                    Find your framework <m3e-icon name="arrow_forward"></m3e-icon>
+                  </a>
+                </div>
+              </m3e-card>
+            </div>
+          </section>
+
+          <section class="mcp-callout" aria-labelledby="mcp-title">
+            <div class="mcp-icon"><m3e-icon name="smart_toy"></m3e-icon></div>
+            <div>
+              <p class="eyebrow">BUILT FOR AI ASSISTANTS</p>
+              <h2 id="mcp-title">Meet the M3E MCP server.</h2>
+              <p>Give your AI assistant access to component documentation and usage examples.</p>
+            </div>
+            <m3e-button href="mcp.html" target="content-frame" variant="tonal">
+              Explore MCP <m3e-icon slot="trailing-icon" name="arrow_forward"></m3e-icon>
+            </m3e-button>
+          </section>
+
+          <section class="quick-start" aria-labelledby="quick-start-title">
+            <div>
+              <p class="eyebrow">YOUR NEXT PROJECT, SORTED</p>
+              <h2 id="quick-start-title">Start with one command.</h2>
+              <p>Install the Web Components package and build from there.</p>
+            </div>
+            <m3e-card variant="outlined" class="install">
+              <pre slot="content">npm i @m3e/web</pre>
+            </m3e-card>
+            <m3e-button href="installation.html" target="content-frame" variant="tonal">
+              Read the quick start <m3e-icon slot="trailing-icon" name="arrow_forward"></m3e-icon>
+            </m3e-button>
+          </section>
+
+          <section class="component-gallery" aria-labelledby="gallery-title">
+            <div class="section-heading">
+              <div>
+                <p id="gallery-intro" class="eyebrow">EXPLORE THE LIBRARY</p>
+                <h2 id="gallery-title">See the components in action.</h2>
+              </div>
+              <p>Try a component here, then open its showcase for examples and API details.</p>
+            </div>
+
+            <m3e-expansion-panel class="gallery-category" open>
+              <span slot="header" class="gallery-category-header"
+                ><span>Actions</span><span>Buttons, menus &amp; more</span></span
+              >
+              <div class="gallery-grid">
+                <article class="gallery-item">
+                  <div class="gallery-demo"><m3e-button variant="filled">Hello, M3E</m3e-button></div>
+                  <a href="../components/button.html" target="content-frame"
+                    >Button <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo gallery-button-groups">
+                    <m3e-button-group>
+                      <m3e-icon-button aria-label="Previous" variant="tonal"
+                        ><m3e-icon name="arrow_back"></m3e-icon
+                      ></m3e-icon-button>
+                      <m3e-icon-button aria-label="Next" variant="tonal"
+                        ><m3e-icon name="arrow_forward"></m3e-icon
+                      ></m3e-icon-button>
+                      <m3e-icon-button aria-label="Add" variant="filled"
+                        ><m3e-icon name="add"></m3e-icon
+                      ></m3e-icon-button>
+                    </m3e-button-group>
+                    <m3e-button-group variant="connected">
+                      <m3e-icon-button aria-label="Bold" variant="tonal" toggle
+                        ><m3e-icon name="format_bold"></m3e-icon
+                      ></m3e-icon-button>
+                      <m3e-icon-button aria-label="Italic" variant="tonal" toggle
+                        ><m3e-icon name="format_italic"></m3e-icon
+                      ></m3e-icon-button>
+                      <m3e-icon-button aria-label="Underline" variant="tonal" toggle
+                        ><m3e-icon name="format_underlined"></m3e-icon
+                      ></m3e-icon-button>
+                    </m3e-button-group>
+                  </div>
+                  <a href="../components/button-group.html" target="content-frame"
+                    >Button Group <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-fab aria-label="Add"><m3e-icon name="add"></m3e-icon></m3e-fab>
+                  </div>
+                  <a href="../components/fab.html" target="content-frame"
+                    >FAB <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-fab aria-label="Create"
+                      ><m3e-fab-menu-trigger for="gallery-fab-menu"
+                        ><m3e-icon name="edit"></m3e-icon></m3e-fab-menu-trigger
+                    ></m3e-fab>
+                    <m3e-fab-menu id="gallery-fab-menu">
+                      <m3e-fab-menu-item><m3e-icon slot="icon" name="mail"></m3e-icon>Email</m3e-fab-menu-item>
+                      <m3e-fab-menu-item><m3e-icon slot="icon" name="chat"></m3e-icon>Message</m3e-fab-menu-item>
+                    </m3e-fab-menu>
+                  </div>
+                  <a href="../components/fab-menu.html" target="content-frame"
+                    >FAB Menu <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-icon-button aria-label="Favorite" variant="tonal" toggle
+                      ><m3e-icon name="favorite"></m3e-icon><m3e-icon slot="selected" name="favorite" filled></m3e-icon
+                    ></m3e-icon-button>
+                  </div>
+                  <a href="../components/icon-button.html" target="content-frame"
+                    >Icon Button <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-button variant="tonal"
+                      ><m3e-menu-trigger for="gallery-menu">Open menu</m3e-menu-trigger></m3e-button
+                    >
+                    <m3e-menu id="gallery-menu"
+                      ><m3e-menu-item>First option</m3e-menu-item><m3e-menu-item>Second option</m3e-menu-item></m3e-menu
+                    >
+                  </div>
+                  <a href="../components/menu.html" target="content-frame"
+                    >Menu <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-split-button>
+                      <m3e-button slot="leading-button" variant="filled">Edit</m3e-button>
+                      <m3e-icon-button slot="trailing-button" aria-label="More edit options" variant="filled"
+                        ><m3e-icon name="keyboard_arrow_down"></m3e-icon
+                        ><m3e-menu-trigger for="gallery-split-menu"></m3e-menu-trigger
+                      ></m3e-icon-button>
+                    </m3e-split-button>
+                    <m3e-menu id="gallery-split-menu"
+                      ><m3e-menu-item>Rename</m3e-menu-item><m3e-menu-item>Duplicate</m3e-menu-item></m3e-menu
+                    >
+                  </div>
+                  <a href="../components/split-button.html" target="content-frame"
+                    >Split Button <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-toolbar variant="standard">
+                      <m3e-icon-button aria-label="Bold" toggle
+                        ><m3e-icon name="format_bold"></m3e-icon
+                      ></m3e-icon-button>
+                      <m3e-icon-button aria-label="Italic" toggle
+                        ><m3e-icon name="format_italic"></m3e-icon
+                      ></m3e-icon-button>
+                      <m3e-icon-button aria-label="Underline" toggle
+                        ><m3e-icon name="format_underlined"></m3e-icon
+                      ></m3e-icon-button>
+                    </m3e-toolbar>
+                  </div>
+                  <a href="../components/toolbar.html" target="content-frame"
+                    >Toolbar <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+              </div>
+            </m3e-expansion-panel>
+
+            <m3e-expansion-panel class="gallery-category">
+              <span slot="header" class="gallery-category-header"
+                ><span>Inputs &amp; selection</span><span>Forms, choices &amp; controls</span></span
+              >
+              <div class="gallery-grid">
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-form-field variant="outlined"
+                      ><label slot="label" for="gallery-fruit">Fruit</label><input id="gallery-fruit"
+                    /></m3e-form-field>
+                    <m3e-autocomplete for="gallery-fruit"
+                      ><m3e-option>Apple</m3e-option><m3e-option>Orange</m3e-option
+                      ><m3e-option>Banana</m3e-option></m3e-autocomplete
+                    >
+                  </div>
+                  <a href="../components/autocomplete.html" target="content-frame"
+                    >Autocomplete <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <label class="gallery-label"
+                      ><m3e-checkbox aria-label="Keep me updated" checked></m3e-checkbox> Keep me updated</label
+                    >
+                  </div>
+                  <a href="../components/checkbox.html" target="content-frame"
+                    >Checkbox <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-filter-chip-set aria-label="Interests"
+                      ><m3e-filter-chip selected>Design</m3e-filter-chip
+                      ><m3e-filter-chip>Code</m3e-filter-chip></m3e-filter-chip-set
+                    >
+                  </div>
+                  <a href="../components/chips.html" target="content-frame"
+                    >Chips <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-form-field variant="outlined"
+                      ><label slot="label" for="gallery-date">Date</label
+                      ><m3e-date-input id="gallery-date"></m3e-date-input
+                    ></m3e-form-field>
+                  </div>
+                  <a href="../components/date-input.html" target="content-frame"
+                    >Date Input <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-form-field variant="outlined">
+                      <label slot="label" for="gallery-datepicker-input">Choose a date</label>
+                      <m3e-date-input id="gallery-datepicker-input"></m3e-date-input>
+                      <m3e-icon-button slot="suffix" aria-label="Open calendar"
+                        ><m3e-icon name="calendar_today"></m3e-icon
+                        ><m3e-datepicker-toggle for="gallery-datepicker"></m3e-datepicker-toggle
+                      ></m3e-icon-button>
+                    </m3e-form-field>
+                    <m3e-datepicker
+                      id="gallery-datepicker"
+                      for="gallery-datepicker-input"
+                      variant="auto"
+                    ></m3e-datepicker>
+                  </div>
+                  <a href="../components/datepicker.html" target="content-frame"
+                    >Datepicker <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-form-field variant="outlined"
+                      ><label slot="label" for="gallery-name">Your name</label
+                      ><input id="gallery-name" placeholder="Type here"
+                    /></m3e-form-field>
+                  </div>
+                  <a href="../components/form-field.html" target="content-frame"
+                    >Form Field <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-radio-group aria-label="Pick a view"
+                      ><label class="gallery-label"
+                        ><m3e-radio value="list" aria-label="List" checked></m3e-radio> List</label
+                      ><label class="gallery-label"
+                        ><m3e-radio value="grid" aria-label="Grid"></m3e-radio> Grid</label
+                      ></m3e-radio-group
+                    >
+                  </div>
+                  <a href="../components/radio-group.html" target="content-frame"
+                    >Radio Group <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-search-bar clearable
+                      ><m3e-icon name="search" slot="leading"></m3e-icon
+                      ><input slot="input" aria-label="Search" placeholder="Search..."
+                    /></m3e-search-bar>
+                  </div>
+                  <a href="../components/search.html" target="content-frame"
+                    >Search <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo gallery-horizontal">
+                    <m3e-segmented-button aria-label="View"
+                      ><m3e-button-segment checked>Day</m3e-button-segment><m3e-button-segment>Week</m3e-button-segment
+                      ><m3e-button-segment>Month</m3e-button-segment></m3e-segmented-button
+                    >
+                  </div>
+                  <a href="../components/segmented-button.html" target="content-frame"
+                    >Segmented Button <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-form-field variant="outlined"
+                      ><label slot="label" for="gallery-select">Favorite fruit</label
+                      ><m3e-select id="gallery-select" aria-label="Favorite fruit"
+                        ><m3e-option>Apple</m3e-option><m3e-option>Orange</m3e-option
+                        ><m3e-option>Banana</m3e-option></m3e-select
+                      ></m3e-form-field
+                    >
+                  </div>
+                  <a href="../components/select.html" target="content-frame"
+                    >Select <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-slider><m3e-slider-thumb value="40" aria-label="Volume"></m3e-slider-thumb></m3e-slider>
+                  </div>
+                  <a href="../components/slider.html" target="content-frame"
+                    >Slider <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <label class="gallery-label"
+                      ><m3e-switch aria-label="Notifications" checked></m3e-switch> Notifications</label
+                    >
+                  </div>
+                  <a href="../components/switch.html" target="content-frame"
+                    >Switch <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-form-field variant="outlined"
+                      ><label slot="label" for="gallery-textarea">Notes</label
+                      ><textarea
+                        id="gallery-textarea"
+                        rows="2"
+                        placeholder="Write something"
+                      ></textarea></m3e-form-field
+                    ><m3e-textarea-autosize for="gallery-textarea"></m3e-textarea-autosize>
+                  </div>
+                  <a href="../components/textarea-autosize.html" target="content-frame"
+                    >Textarea Autosize <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-form-field variant="outlined">
+                      <label slot="label" for="gallery-time">Choose a time</label>
+                      <m3e-date-input id="gallery-time" type="time"></m3e-date-input>
+                      <m3e-icon-button slot="suffix" aria-label="Open time picker"
+                        ><m3e-icon name="schedule"></m3e-icon
+                        ><m3e-timepicker-toggle for="gallery-timepicker"></m3e-timepicker-toggle
+                      ></m3e-icon-button>
+                    </m3e-form-field>
+                    <m3e-timepicker id="gallery-timepicker" for="gallery-time" variant="auto"></m3e-timepicker>
+                  </div>
+                  <a href="../components/timepicker.html" target="content-frame"
+                    >Timepicker <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+              </div>
+            </m3e-expansion-panel>
+
+            <m3e-expansion-panel class="gallery-category">
+              <span slot="header" class="gallery-category-header"
+                ><span>Navigation</span><span>Find your way around</span></span
+              >
+              <div class="gallery-grid">
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-app-bar
+                      ><m3e-icon-button slot="leading" aria-label="Menu"
+                        ><m3e-icon name="menu"></m3e-icon></m3e-icon-button
+                      ><span slot="title">My app</span></m3e-app-bar
+                    >
+                  </div>
+                  <a href="../components/app-bar.html" target="content-frame"
+                    >App Bar <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo gallery-horizontal">
+                    <m3e-breadcrumb
+                      ><m3e-breadcrumb-item>Home</m3e-breadcrumb-item><m3e-breadcrumb-item>Projects</m3e-breadcrumb-item
+                      ><m3e-breadcrumb-item>Design</m3e-breadcrumb-item></m3e-breadcrumb
+                    >
+                  </div>
+                  <a href="../components/breadcrumb.html" target="content-frame"
+                    >Breadcrumb <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-nav-bar mode="compact"
+                      ><m3e-nav-item selected><m3e-icon slot="icon" name="home"></m3e-icon>Home</m3e-nav-item
+                      ><m3e-nav-item><m3e-icon slot="icon" name="search"></m3e-icon>Search</m3e-nav-item></m3e-nav-bar
+                    >
+                  </div>
+                  <a href="../components/nav-bar.html" target="content-frame"
+                    >Nav Bar <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-nav-menu
+                      ><m3e-nav-menu-item selected
+                        ><m3e-icon slot="icon" name="home"></m3e-icon><span slot="label">Home</span></m3e-nav-menu-item
+                      ><m3e-nav-menu-item
+                        ><m3e-icon slot="icon" name="favorite"></m3e-icon
+                        ><span slot="label">Favorites</span></m3e-nav-menu-item
+                      ></m3e-nav-menu
+                    >
+                  </div>
+                  <a href="../components/nav-menu.html" target="content-frame"
+                    >Nav Menu <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-nav-rail
+                      ><m3e-nav-item selected><m3e-icon slot="icon" name="home"></m3e-icon>Home</m3e-nav-item
+                      ><m3e-nav-item
+                        ><m3e-icon slot="icon" name="favorite"></m3e-icon>Favorites</m3e-nav-item
+                      ></m3e-nav-rail
+                    >
+                  </div>
+                  <a href="../components/nav-rail.html" target="content-frame"
+                    >Nav Rail <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item gallery-item-wide">
+                  <div class="gallery-demo gallery-horizontal">
+                    <m3e-paginator length="100" aria-label="Example pages"></m3e-paginator>
+                  </div>
+                  <a href="../components/paginator.html" target="content-frame"
+                    >Paginator <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item gallery-item-wide">
+                  <div class="gallery-demo">
+                    <m3e-stepper>
+                      <m3e-step for="gallery-step-one">Choose</m3e-step><m3e-step for="gallery-step-two">Done</m3e-step>
+                      <m3e-step-panel id="gallery-step-one"
+                        >Start here.
+                        <div slot="actions">
+                          <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
+                        </div></m3e-step-panel
+                      >
+                      <m3e-step-panel id="gallery-step-two"
+                        >All set!
+                        <div slot="actions">
+                          <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
+                        </div></m3e-step-panel
+                      >
+                    </m3e-stepper>
+                  </div>
+                  <a href="../components/stepper.html" target="content-frame"
+                    >Stepper <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-tabs variant="primary">
+                      <m3e-tab selected for="gallery-tab-photos"
+                        ><m3e-icon slot="icon" name="photo"></m3e-icon>Photos</m3e-tab
+                      >
+                      <m3e-tab for="gallery-tab-video"><m3e-icon slot="icon" name="videocam"></m3e-icon>Video</m3e-tab>
+                      <m3e-tab-panel id="gallery-tab-photos">Photos</m3e-tab-panel>
+                      <m3e-tab-panel id="gallery-tab-video">Videos</m3e-tab-panel>
+                    </m3e-tabs>
+                  </div>
+                  <a href="../components/tabs.html" target="content-frame"
+                    >Tabs <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo gallery-toc">
+                    <m3e-toc for="gallery-toc-content"><span slot="title">On this page</span></m3e-toc>
+                    <div
+                      id="gallery-toc-content"
+                      class="gallery-toc-content"
+                      role="region"
+                      aria-label="Example content"
+                      tabindex="0"
+                    >
+                      <section>
+                        <h4 id="gallery-toc-first">Overview</h4>
+                        <p>Start here for a quick introduction.</p>
+                      </section>
+                      <section>
+                        <h4 id="gallery-toc-second">Details</h4>
+                        <p>Find more information in this section.</p>
+                      </section>
+                      <section>
+                        <h4 id="gallery-toc-third">Next steps</h4>
+                        <p>Keep exploring to learn more.</p>
+                      </section>
+                    </div>
+                  </div>
+                  <a href="../components/toc.html" target="content-frame"
+                    >Table of Contents <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-tree
+                      ><m3e-tree-item open
+                        ><span slot="label">Projects</span
+                        ><m3e-tree-item><span slot="label">Design</span></m3e-tree-item
+                        ><m3e-tree-item><span slot="label">Development</span></m3e-tree-item></m3e-tree-item
+                      ></m3e-tree
+                    >
+                  </div>
+                  <a href="../components/tree.html" target="content-frame"
+                    >Tree <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+              </div>
+            </m3e-expansion-panel>
+
+            <m3e-expansion-panel class="gallery-category">
+              <span slot="header" class="gallery-category-header"
+                ><span>Content &amp; layout</span><span>Structure for your ideas</span></span
+              >
+              <div class="gallery-grid">
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-avatar>AB</m3e-avatar><m3e-avatar><m3e-icon name="person"></m3e-icon></m3e-avatar>
+                  </div>
+                  <a href="../components/avatar.html" target="content-frame"
+                    >Avatar <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item gallery-item-wide">
+                  <div class="gallery-demo gallery-calendar">
+                    <m3e-calendar aria-label="Example calendar"></m3e-calendar>
+                  </div>
+                  <a href="../components/calendar.html" target="content-frame"
+                    >Calendar <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-card variant="filled"
+                      ><m3e-heading slot="header" variant="title" size="medium">A little note</m3e-heading>
+                      <div slot="content">A place for your content.</div></m3e-card
+                    >
+                  </div>
+                  <a href="../components/card.html" target="content-frame"
+                    >Card <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-content-pane class="gallery-pane"
+                      ><m3e-heading variant="title" size="medium">A content pane</m3e-heading>
+                      <p>A scrollable space for content.</p></m3e-content-pane
+                    >
+                  </div>
+                  <a href="../components/content-pane.html" target="content-frame"
+                    >Content Pane <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-list
+                      ><m3e-list-item>First item</m3e-list-item><m3e-divider></m3e-divider
+                      ><m3e-list-item>Second item</m3e-list-item></m3e-list
+                    >
+                  </div>
+                  <a href="../components/divider.html" target="content-frame"
+                    >Divider <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item gallery-item-wide">
+                  <div class="gallery-demo">
+                    <m3e-drawer-container class="gallery-drawer" start
+                      ><div slot="start">Drawer</div>
+                      <div>Content</div></m3e-drawer-container
+                    >
+                  </div>
+                  <a href="../components/drawer-container.html" target="content-frame"
+                    >Drawer Container <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-expansion-panel
+                      ><span slot="header">More details</span>There is more to explore.</m3e-expansion-panel
+                    >
+                  </div>
+                  <a href="../components/expansion-panel.html" target="content-frame"
+                    >Expansion Panel <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-heading variant="headline" size="small">Make an impression.</m3e-heading>
+                  </div>
+                  <a href="../components/heading.html" target="content-frame"
+                    >Heading <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-icon name="favorite" filled></m3e-icon><m3e-icon name="palette"></m3e-icon
+                    ><m3e-icon name="auto_awesome"></m3e-icon>
+                  </div>
+                  <a href="../components/icon.html" target="content-frame"
+                    >Icon <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-list variant="segmented"
+                      ><m3e-list-item
+                        ><m3e-icon slot="leading" name="folder"></m3e-icon>Projects<span slot="supporting-text"
+                          >All your work in one place</span
+                        ></m3e-list-item
+                      ><m3e-list-item
+                        ><m3e-icon slot="leading" name="description"></m3e-icon>Notes<span slot="supporting-text"
+                          >Ideas and inspiration</span
+                        ></m3e-list-item
+                      ></m3e-list
+                    >
+                  </div>
+                  <a href="../components/list.html" target="content-frame"
+                    >List <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-shape class="gallery-shape" name="8-leaf-clover"></m3e-shape
+                    ><m3e-shape class="gallery-shape" name="12-sided-cookie"></m3e-shape>
+                  </div>
+                  <a href="../components/shape.html" target="content-frame"
+                    >Shape <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-slide-group class="gallery-slides"
+                      ><div>One</div>
+                      <div>Two</div>
+                      <div>Three</div>
+                      <div>Four</div>
+                      <div>Five</div></m3e-slide-group
+                    >
+                  </div>
+                  <a href="../components/slide-group.html" target="content-frame"
+                    >Slide Group <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-split-pane class="gallery-split" value="50"
+                      ><div slot="start">Start</div>
+                      <div slot="end">End</div></m3e-split-pane
+                    >
+                  </div>
+                  <a href="../components/split-pane.html" target="content-frame"
+                    >Split Pane <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-theme color="#4285f4"
+                      ><div class="gallery-theme"><span></span><span></span><span></span></div
+                    ></m3e-theme>
+                  </div>
+                  <a href="../components/theme.html" target="content-frame"
+                    >Theme <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+              </div>
+            </m3e-expansion-panel>
+
+            <m3e-expansion-panel class="gallery-category">
+              <span slot="header" class="gallery-category-header"
+                ><span>Feedback &amp; communication</span><span>Keep everyone in the loop</span></span
+              >
+              <div class="gallery-grid">
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-badge size="small">3</m3e-badge><m3e-badge size="large">New</m3e-badge>
+                  </div>
+                  <a href="../components/badge.html" target="content-frame"
+                    >Badge <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-button variant="tonal"
+                      ><m3e-bottom-sheet-trigger for="gallery-sheet">Open sheet</m3e-bottom-sheet-trigger></m3e-button
+                    >
+                  </div>
+                  <a href="../components/bottom-sheet.html" target="content-frame"
+                    >Bottom Sheet <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-callout
+                      ><m3e-icon slot="icon" name="info"></m3e-icon><span slot="label">Good to know</span>A helpful
+                      message goes here.</m3e-callout
+                    >
+                  </div>
+                  <a href="../components/callout.html" target="content-frame"
+                    >Callout <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-button variant="tonal"
+                      ><m3e-dialog-trigger for="gallery-dialog">Open dialog</m3e-dialog-trigger></m3e-button
+                    >
+                    <m3e-dialog id="gallery-dialog" dismissible
+                      ><span slot="header">Hello there</span>This is a live dialog preview.
+                      <div slot="actions" end>
+                        <m3e-button><m3e-dialog-action>Close</m3e-dialog-action></m3e-button>
+                      </div></m3e-dialog
+                    >
+                  </div>
+                  <a href="../components/dialog.html" target="content-frame"
+                    >Dialog <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-loading-indicator aria-label="Loading"></m3e-loading-indicator
+                    ><m3e-loading-indicator variant="contained" aria-label="Loading"></m3e-loading-indicator>
+                  </div>
+                  <a href="../components/loading-indicator.html" target="content-frame"
+                    >Loading Indicator <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-circular-progress-indicator
+                      variant="wavy"
+                      indeterminate
+                      aria-label="Loading"
+                    ></m3e-circular-progress-indicator
+                    ><m3e-linear-progress-indicator
+                      variant="wavy"
+                      value="65"
+                      aria-label="65 percent complete"
+                    ></m3e-linear-progress-indicator>
+                  </div>
+                  <a href="../components/progress-indicator.html" target="content-frame"
+                    >Progress Indicator <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-skeleton class="gallery-skeleton"
+                      ><m3e-card><div slot="content">Loading content</div></m3e-card></m3e-skeleton
+                    >
+                  </div>
+                  <a href="../components/skeleton.html" target="content-frame"
+                    >Skeleton <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-button id="gallery-snackbar" variant="tonal">Show message</m3e-button>
+                  </div>
+                  <a href="../components/snackbar.html" target="content-frame"
+                    >Snackbar <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-icon-button id="gallery-tooltip-button" aria-label="Helpful information" variant="tonal"
+                      ><m3e-icon name="info"></m3e-icon
+                    ></m3e-icon-button>
+                    <m3e-tooltip for="gallery-tooltip-button">Helpful information</m3e-tooltip>
+                    <m3e-icon-button id="gallery-rich-tooltip-button" aria-label="Settings information" variant="tonal"
+                      ><m3e-icon name="settings"></m3e-icon
+                    ></m3e-icon-button>
+                    <m3e-rich-tooltip for="gallery-rich-tooltip-button"
+                      ><span slot="subhead">Make it yours</span>Adjust settings to personalize your
+                      experience.</m3e-rich-tooltip
+                    >
+                  </div>
+                  <a href="../components/tooltip.html" target="content-frame"
+                    >Tooltip <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+              </div>
+            </m3e-expansion-panel>
+
+            <m3e-expansion-panel class="gallery-category">
+              <span slot="header" class="gallery-category-header"
+                ><span>Interaction</span><span>Gestures &amp; touch</span></span
+              >
+              <div class="gallery-grid">
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <button id="gallery-tap" class="gallery-tap" type="button">Tap me</button
+                    ><m3e-tap-gesture for="gallery-tap"></m3e-tap-gesture
+                    ><span id="gallery-tap-result" aria-live="polite"></span>
+                  </div>
+                  <a href="../components/gestures.html" target="content-frame"
+                    >Gestures <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+                <article class="gallery-item">
+                  <div class="gallery-demo">
+                    <m3e-list variant="segmented"
+                      ><m3e-swipe-reveal
+                        ><m3e-list-item>Swipe this item</m3e-list-item
+                        ><m3e-icon-button slot="trailing" aria-label="Favorite" variant="tonal"
+                          ><m3e-icon name="favorite"></m3e-icon></m3e-icon-button></m3e-swipe-reveal
+                      ><m3e-swipe-reveal id="gallery-swipe-dismiss" dismissible="trailing"
+                        ><m3e-list-item>Swipe to dismiss</m3e-list-item
+                        ><m3e-icon-button
+                          id="gallery-swipe-delete"
+                          slot="trailing"
+                          aria-label="Dismiss item"
+                          variant="tonal"
+                          ><m3e-icon name="delete"></m3e-icon></m3e-icon-button></m3e-swipe-reveal
+                    ></m3e-list>
+                    <m3e-button id="gallery-swipe-reset" variant="text">Reset dismissed item</m3e-button>
+                  </div>
+                  <a href="../components/swipe-reveal.html" target="content-frame"
+                    >Swipe Reveal <m3e-icon name="arrow_forward"></m3e-icon
+                  ></a>
+                </article>
+              </div>
+            </m3e-expansion-panel>
+          </section>
+
+          <footer class="landing-footer">
+            <span>Made for the web. Made to be expressive.</span>
+            <a href="https://github.com/matraic/m3e" target="_blank" rel="noopener noreferrer">
+              <m3e-icon name="code"></m3e-icon> View on GitHub
+            </a>
+          </footer>
+        </main>
       </m3e-content-pane>
     </div>
+    <m3e-bottom-sheet id="gallery-sheet" modal handle hideable detents="fit half full"
+      ><m3e-action-list
+        ><m3e-list-action
+          ><m3e-bottom-sheet-action>Done</m3e-bottom-sheet-action
+          ><span slot="supporting-text">Close this preview</span></m3e-list-action
+        ></m3e-action-list
+      ></m3e-bottom-sheet
+    >
   </body>
 </html>

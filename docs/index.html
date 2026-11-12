@@ -1,10 +1,13 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>M3E</title>
+    <title>M3E — Material 3 Expressive Web Components</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="M3E" />
+    <meta
+      name="description"
+      content="Build expressive, accessible interfaces with M3E, a Material 3 Web Component library for the modern web."
+    />
     <base href="./" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -59,15 +62,15 @@
           <m3e-tooltip for="settings-button">Settings</m3e-tooltip>
         </span>
       </m3e-app-bar>
-      <m3e-drawer-container class="docs-drawer-container" start start-mode="auto" end-mode="auto">
+      <m3e-drawer-container class="docs-drawer-container" start-mode="auto" end-mode="auto">
         <m3e-nav-menu id="nav-drawer" slot="start">
+          <m3e-nav-menu-item>
+            <m3e-icon slot="icon" name="home"></m3e-icon>
+            <a slot="label" target="content-frame" href="getting-started/overview.html">Home</a>
+          </m3e-nav-menu-item>
           <m3e-nav-menu-item open>
             <m3e-icon slot="icon" name="rocket_launch"></m3e-icon>
             <span slot="label">Getting Started</span>
-            <m3e-nav-menu-item>
-              <m3e-icon slot="icon" name="near_me"></m3e-icon>
-              <a slot="label" target="content-frame" href="getting-started/overview.html">Overview</a>
-            </m3e-nav-menu-item>
             <m3e-nav-menu-item>
               <m3e-icon slot="icon" name="package_2"></m3e-icon>
               <a slot="label" target="content-frame" href="getting-started/installation.html">Installation</a>
