@@ -34,6 +34,42 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const hero = document.querySelector(".hero");
   const motion = window.matchMedia("(prefers-reduced-motion: no-preference)");
+  if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            if (motion.matches && !entry.target.matches(":focus-within")) {
+              const finishReveal = (event) => {
+                if (event.target === entry.target && event.animationName === "scroll-reveal-enter") {
+                  entry.target.classList.remove("scroll-reveal-enter");
+                  entry.target.removeEventListener("animationend", finishReveal);
+                  entry.target.removeEventListener("animationcancel", finishReveal);
+                }
+              };
+              entry.target.addEventListener("animationend", finishReveal);
+              entry.target.addEventListener("animationcancel", finishReveal);
+              entry.target.classList.add("scroll-reveal-enter");
+            }
+            revealObserver.unobserve(entry.target);
+          }
+        }
+      },
+      { root: scrollContainer },
+    );
+    const bottom = scrollContainer.getBoundingClientRect().bottom;
+    document
+      .querySelectorAll(
+        ".capabilities > .section-heading, .capability-group, .capabilities-try, " +
+          ".quick-start, .mcp-callout, .component-gallery > .section-heading, .gallery-category-header",
+      )
+      .forEach((element) => {
+        if (element.getBoundingClientRect().top >= bottom) {
+          revealObserver.observe(element);
+        }
+      });
+  }
+
   let frame = 0;
   const updateParallax = () => {
     frame = 0;
