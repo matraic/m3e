@@ -30,21 +30,59 @@ window.addEventListener("DOMContentLoaded", async () => {
   drawerContainer?.addEventListener("change", () => updateBodyMargin());
   updateBodyMargin();
 
-  const cem = await (await fetch("https://cdn.jsdelivr.net/npm/@m3e/web@2.12.1/dist/custom-elements.json")).json();
-  mergeParsedTypes(cem);
-
-  const promises = [];
-  for (const apiViewer of document.querySelectorAll("api-viewer")) {
-    apiViewer.manifest = cem;
-    promises.push(updateApiViewer(apiViewer));
+  let cem = null;
+  try {
+    const response = await fetch("https://cdn.jsdelivr.net/npm/@m3e/web@2.12.1/dist/custom-elements.json");
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    cem = await response.json();
+    mergeParsedTypes(cem);
+  } catch (error) {
+    console.error("Failed to load custom elements manifest:", error);
+    cem = null;
   }
 
-  await Promise.all(promises);
+  if (cem) {
+    const results = [];
+    const tagNames = new Set();
+    for (const module of cem.modules ?? []) {
+      for (const declaration of module.declarations ?? []) {
+        if (declaration.tagName) tagNames.add(declaration.tagName);
+      }
+    }
+
+    for (const apiViewer of document.querySelectorAll("api-viewer")) {
+      // The viewer throws when its element isn't in the manifest, so don't hand it one it can't render.
+      const only = apiViewer.getAttribute("only");
+      if (only && !tagNames.has(only)) {
+        console.error(`"${only}" was not found in the custom elements manifest.`);
+        showApiUnavailable(apiViewer);
+        continue;
+      }
+
+      try {
+        apiViewer.manifest = cem;
+        results.push(updateApiViewer(apiViewer).catch((error) => console.error("Failed to update API viewer:", error)));
+      } catch (error) {
+        console.error("Failed to update API viewer:", error);
+      }
+    }
+    await Promise.all(results);
+  } else {
+    for (const apiViewer of document.querySelectorAll("api-viewer")) {
+      showApiUnavailable(apiViewer);
+    }
+  }
 
   addCopyCode();
 
   document.body.classList.add("loaded");
 });
+
+function showApiUnavailable(apiViewer) {
+  const message = document.createElement("p");
+  message.textContent = "API documentation is currently unavailable.";
+  apiViewer.replaceWith(message);
+}
 
 function addCopyCode() {
   for (const card of document.querySelectorAll("m3e-card.install,m3e-card.example")) {
