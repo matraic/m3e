@@ -17,6 +17,16 @@ import { isMotionScheme, MotionScheme } from "./MotionScheme";
 import { MotionSchemeSprings, springEasing, supportsLinearEasing } from "./SpringEasing";
 import { isThemeVariant, ThemeVariant } from "./ThemeVariant";
 
+/** The default value of each attribute-backed property, restored when its attribute is removed. */
+const DEFAULTS = {
+  color: "#6750A4",
+  variant: "tonal-spot",
+  scheme: "auto",
+  contrast: "standard",
+  density: 0,
+  motion: "expressive",
+} as const satisfies Partial<Record<keyof M3eThemeElement, unknown>>;
+
 function composeCss(token: Record<string, CSSResult>): string {
   let css = "";
   for (const key in token) {
@@ -188,25 +198,25 @@ export class M3eThemeElement extends LitElement {
    * The hex color from which to derive dynamic color palettes.
    * @default "#6750A4"
    */
-  @property({ reflect: false }) color = "#6750A4";
+  @property({ reflect: false }) color: string = DEFAULTS.color;
 
   /**
    * The color variant of the theme.
    * @default "tonal-spot"
    */
-  @property({ reflect: false }) variant: ThemeVariant = "tonal-spot";
+  @property({ reflect: false }) variant: ThemeVariant = DEFAULTS.variant;
 
   /**
    * The color scheme of the theme.
    * @default "auto"
    */
-  @property({ reflect: false }) scheme: ColorScheme = "auto";
+  @property({ reflect: false }) scheme: ColorScheme = DEFAULTS.scheme;
 
   /**
    * The contrast level of the theme.
    * @default "standard"
    */
-  @property({ reflect: false }) contrast: ContrastLevel = "standard";
+  @property({ reflect: false }) contrast: ContrastLevel = DEFAULTS.contrast;
 
   /**
    * Whether to enable strong focus indicators.
@@ -218,12 +228,12 @@ export class M3eThemeElement extends LitElement {
    * The density scale (0, -1, -2).
    * @default 0
    */
-  @property({ type: Number, reflect: false }) density = 0;
+  @property({ type: Number, reflect: false }) density: number = DEFAULTS.density;
 
   /** The motion scheme.
    * @default "expressive"
    */
-  @property({ reflect: false }) motion: MotionScheme = "expressive";
+  @property({ reflect: false }) motion: MotionScheme = DEFAULTS.motion;
 
   /** Whether a dark theme is applied. */
   get isDark(): boolean {
@@ -291,6 +301,13 @@ export class M3eThemeElement extends LitElement {
   /** @inheritdoc */
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
+
+    // Lit assigns `null` when an attribute is removed; restore the declared default rather than treating it as invalid.
+    for (const key of Object.keys(DEFAULTS) as (keyof typeof DEFAULTS)[]) {
+      if (_changedProperties.has(key) && this[key] == null) {
+        (this[key] as unknown) = DEFAULTS[key];
+      }
+    }
 
     if (_changedProperties.has("variant") && !isThemeVariant(this.variant)) {
       this.variant = "neutral";
