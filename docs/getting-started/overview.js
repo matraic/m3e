@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document
       .querySelectorAll(
         ".capabilities > .section-heading, .capability-group, .capabilities-try, " +
-          ".quick-start, .mcp-callout, .component-gallery > .section-heading, .gallery-category-header",
+          ".quick-start, .mcp-callout, .component-gallery > .section-heading",
       )
       .forEach((element) => {
         if (element.getBoundingClientRect().top >= bottom) {
