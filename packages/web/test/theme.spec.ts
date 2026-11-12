@@ -244,6 +244,23 @@ test.describe("m3e-theme attribute removal", () => {
       TOKENS,
     );
 
+  test("removing an invalid variant restores the default rather than the invalid-value fallback", async ({
+    page,
+    render,
+  }) => {
+    await render(`<m3e-theme id="live" variant="bogus"></m3e-theme>`);
+    const live = page.locator("#live");
+
+    expect(await live.evaluate((x) => (x as HTMLElement & { variant: string }).variant)).toBe("neutral");
+    expect(
+      await live.evaluate(async (el) => {
+        el.removeAttribute("variant");
+        await (el as HTMLElement & { updateComplete: Promise<unknown> }).updateComplete;
+        return (el as HTMLElement & { variant: string }).variant;
+      }),
+    ).toBe("tonal-spot");
+  });
+
   for (const { attr, value, property } of REMOVABLE) {
     test(`removing ${attr} restores the fresh element's default`, async ({ page, render }) => {
       await page.emulateMedia({ colorScheme: "light" });
