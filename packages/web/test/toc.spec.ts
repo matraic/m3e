@@ -133,6 +133,93 @@ test.describe("m3e-toc", () => {
     await expect.poll(() => page.locator("#content").evaluate((el) => el.scrollTop)).toBeGreaterThan(300);
   });
 
+  test("scrolls a nested target without scrolling its outer container", async ({ page, render }) => {
+    await render(`
+      <div id="outer" style="height: 400px; overflow: auto">
+        <div style="height: 150px"></div>
+        <m3e-toc for="content"></m3e-toc>
+        <div id="content" style="height: 150px; overflow: auto; border: 5px solid; scroll-padding-top: 10%">
+          <h2 style="margin: 0">Intro</h2>
+          <div style="height: 250px"></div>
+          <div><h2 id="destination" style="margin: 0; scroll-margin-top: 8px">Destination</h2></div>
+          <div style="height: 300px"></div>
+        </div>
+        <div style="height: 700px"></div>
+      </div>
+    `);
+
+    await expect.poll(async () => (await labels(page)).length).toBe(2);
+    await page.locator("#outer").evaluate((el) => (el.scrollTop = 100));
+    const outerBefore = await page.locator("#outer").evaluate((el) => el.scrollTop);
+
+    await page.getByRole("link", { name: "Destination" }).click();
+
+    await expect.poll(() => current(page)).toBe("Destination");
+    await expect
+      .poll(() =>
+        page.locator("#content").evaluate((el) => {
+          const heading = el.querySelector("#destination")!;
+          return Math.round(heading.getBoundingClientRect().top - el.getBoundingClientRect().top);
+        }),
+      )
+      .toBe(28);
+    expect(await page.locator("#outer").evaluate((el) => el.scrollTop)).toBe(outerBefore);
+  });
+
+  test("scrolls the page when the target is not a scroll container", async ({ page, render }) => {
+    await render(`
+      <div id="outer" style="height: 250px; overflow: auto">
+        <m3e-toc for="content"></m3e-toc>
+        <div id="content">
+          <h2>Intro</h2>
+          <div style="height: 400px"></div>
+          <h2>Destination</h2>
+          <div style="height: 400px"></div>
+        </div>
+      </div>
+    `);
+
+    await expect.poll(async () => (await labels(page)).length).toBe(2);
+    await page.getByRole("link", { name: "Destination" }).click();
+
+    await expect.poll(() => current(page)).toBe("Destination");
+    await expect.poll(() => page.locator("#outer").evaluate((el) => el.scrollTop)).toBeGreaterThan(300);
+  });
+
+  test("reveals headings inside nested scroll containers without scrolling outside the target", async ({
+    page,
+    render,
+  }) => {
+    await render(`
+      <div id="outer" style="height: 400px; overflow: auto">
+        <div style="height: 150px"></div>
+        <m3e-toc for="content"></m3e-toc>
+        <div id="content" style="height: 180px; overflow: auto">
+          <h2>Intro</h2>
+          <div style="height: 250px"></div>
+          <div id="inner" style="height: 100px; overflow: auto">
+            <div style="height: 200px"></div>
+            <h2 id="destination">Destination</h2>
+            <div style="height: 150px"></div>
+          </div>
+          <div style="height: 200px"></div>
+        </div>
+        <div style="height: 700px"></div>
+      </div>
+    `);
+
+    await expect.poll(async () => (await labels(page)).length).toBe(2);
+    await page.locator("#outer").evaluate((el) => (el.scrollTop = 100));
+    const outerBefore = await page.locator("#outer").evaluate((el) => el.scrollTop);
+
+    await page.getByRole("link", { name: "Destination" }).click();
+
+    await expect.poll(() => page.locator("#inner").evaluate((el) => el.scrollTop)).toBeGreaterThan(100);
+    await expect.poll(() => page.locator("#content").evaluate((el) => el.scrollTop)).toBeGreaterThan(100);
+    expect(await page.locator("#outer").evaluate((el) => el.scrollTop)).toBe(outerBefore);
+    await expect(page.locator("#destination")).toBeInViewport();
+  });
+
   test("scrolling the target updates the current item", async ({ page, render }) => {
     await render(content());
     await expect.poll(() => current(page)).toBe("Intro");

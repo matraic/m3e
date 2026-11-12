@@ -423,7 +423,56 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   #handleClick(e: Event): void {
     if (e.target instanceof M3eTocItemElement && !e.target.disabled && e.target.node?.element) {
       this.#ignoreScroll = true;
-      e.target.node.element.scrollIntoView({ block: "start", behavior: "smooth" });
+      const heading = e.target.node.element;
+      const control = this.control;
+      const style = control && getComputedStyle(control);
+
+      if (
+        control &&
+        style &&
+        control !== this.ownerDocument.body &&
+        control !== this.ownerDocument.documentElement &&
+        ["auto", "scroll", "hidden"].includes(style.overflowY)
+      ) {
+        const marginTop = parseFloat(getComputedStyle(heading).scrollMarginTop) || 0;
+        const headingTop = heading.getBoundingClientRect().top;
+
+        let displacement = 0;
+        for (let container = heading.parentElement; container; container = container.parentElement) {
+          const containerStyle = getComputedStyle(container);
+
+          if (["auto", "scroll", "hidden"].includes(containerStyle.overflowY)) {
+            const padding = parseFloat(containerStyle.scrollPaddingTop) || 0;
+            const paddingTop = containerStyle.scrollPaddingTop.endsWith("%")
+              ? (padding * container.clientHeight) / 100
+              : padding;
+
+            const top = Math.max(
+              0,
+              Math.min(
+                container.scrollHeight - container.clientHeight,
+                container.scrollTop +
+                  headingTop -
+                  displacement -
+                  container.getBoundingClientRect().top -
+                  container.clientTop -
+                  paddingTop -
+                  marginTop,
+              ),
+            );
+
+            displacement += top - container.scrollTop;
+            container.scrollTo({ top, behavior: "smooth" });
+          }
+
+          if (container === control) {
+            break;
+          }
+        }
+      } else {
+        heading.scrollIntoView({ block: "start", behavior: "smooth" });
+      }
+
       this.#selectionManager.updateActiveItem(e.target);
       this.#selectionManager.select(e.target);
     }
