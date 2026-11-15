@@ -113,6 +113,18 @@ test.describe("m3e-toolbar", () => {
     await expect(items.nth(0)).toBeFocused();
   });
 
+  test("vertical toolbar arrows keep their direction in right-to-left", async ({ page, render }) => {
+    await render(toolbar("vertical"));
+    await page.evaluate(() => (document.documentElement.dir = "rtl"));
+    const items = page.locator("m3e-icon-button");
+
+    await items.nth(0).focus();
+    await page.keyboard.press("ArrowDown");
+    await expect(items.nth(1)).toBeFocused();
+    await page.keyboard.press("ArrowUp");
+    await expect(items.nth(0)).toBeFocused();
+  });
+
   test("arrow keys are reversed in right-to-left", async ({ page, render }) => {
     await render(toolbar());
     await page.evaluate(() => document.documentElement.setAttribute("dir", "rtl"));
@@ -122,6 +134,8 @@ test.describe("m3e-toolbar", () => {
     await page.keyboard.press("ArrowLeft");
 
     await expect(items.nth(1)).toBeFocused();
+    await page.keyboard.press("ArrowRight");
+    await expect(items.nth(0)).toBeFocused();
     await page.evaluate(() => document.documentElement.removeAttribute("dir"));
   });
 
