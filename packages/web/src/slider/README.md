@@ -184,18 +184,20 @@ This section details the attributes, events and CSS custom properties available 
 
 #### 🎛️ CSS Custom Properties
 
-| Property                              | Description                                    |
-| ------------------------------------- | ---------------------------------------------- |
-| `--m3e-slider-thumb-width`            | Width of the slider thumb.                     |
-| `--m3e-slider-thumb-padding`          | Horizontal padding around the thumb.           |
-| `--m3e-slider-thumb-color`            | Active color of the slider thumb when enabled. |
-| `--m3e-slider-thumb-pressed-width`    | Width of the thumb when pressed.               |
-| `--m3e-slider-thumb-disabled-color`   | Color of the thumb when disabled.              |
-| `--m3e-slider-thumb-disabled-opacity` | Opacity of the thumb when disabled.            |
-| `--m3e-slider-label-width`            | Width of the floating label above the thumb.   |
-| `--m3e-slider-label-container-color`  | Background color of the label container.       |
-| `--m3e-slider-label-color`            | Text color of the label.                       |
-| `--m3e-slider-label-font-size`        | Font size of the label text.                   |
-| `--m3e-slider-label-font-weight`      | Font weight of the label text.                 |
-| `--m3e-slider-label-line-height`      | Line height of the label text.                 |
-| `--m3e-slider-label-tracking`         | Letter spacing of the label text.              |
+| Property                              | Description                                     |
+| ------------------------------------- | ----------------------------------------------- |
+| `--m3e-slider-thumb-width`            | Width of the slider thumb.                      |
+| `--m3e-slider-thumb-padding`          | Horizontal padding around the thumb.            |
+| `--m3e-slider-thumb-color`            | Active color of the slider thumb when enabled.  |
+| `--m3e-slider-thumb-pressed-width`    | Width of the thumb when pressed.                |
+| `--m3e-slider-thumb-disabled-color`   | Color of the thumb when disabled.               |
+| `--m3e-slider-thumb-disabled-opacity` | Opacity of the thumb when disabled.             |
+| `--m3e-slider-label-width`            | Width of the floating label above the thumb.    |
+| `--m3e-slider-label-height`           | Height of the floating label above the thumb.   |
+| `--m3e-slider-label-margin`           | Space between the floating label and the thumb. |
+| `--m3e-slider-label-container-color`  | Background color of the label container.        |
+| `--m3e-slider-label-color`            | Text color of the label.                        |
+| `--m3e-slider-label-font-size`        | Font size of the label text.                    |
+| `--m3e-slider-label-font-weight`      | Font weight of the label text.                  |
+| `--m3e-slider-label-line-height`      | Line height of the label text.                  |
+| `--m3e-slider-label-tracking`         | Letter spacing of the label text.               |
