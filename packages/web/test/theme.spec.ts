@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import type { M3eThemeElement } from "@m3e/web/theme";
 
 import { expect, test } from "./fixtures";
 
@@ -269,7 +270,7 @@ test.describe("m3e-theme attribute removal", () => {
         <m3e-theme id="live" ${attr}="${value}"><div id="live-probe"></div></m3e-theme>`);
 
       const live = page.locator("#live");
-      const readProperty = (selector: string) => page.$eval(selector, (x, p) => (x as never)[p], property);
+      const readProperty = (selector: string) => page.$eval(selector, (x, p) => (x as M3eThemeElement)[p], property);
 
       // The non-default value must have taken effect, otherwise removal proves nothing.
       expect(await readProperty("#live")).not.toBe(await readProperty("#fresh"));

@@ -1,4 +1,4 @@
-import type { M3eNavRailElement } from "../src/nav-rail";
+import type { M3eNavRailElement } from "@m3e/web/nav-rail";
 import { expect, test } from "./fixtures";
 
 const rail = `

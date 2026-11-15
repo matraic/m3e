@@ -1,6 +1,6 @@
+import type { M3eFabMenuElement, M3eFabMenuItemElement } from "@m3e/web/fab-menu";
+
 import { expect, test } from "./fixtures";
-import type { M3eFabMenuElement } from "../src/fab-menu/FabMenuElement";
-import type { M3eFabMenuItemElement } from "../src/fab-menu/FabMenuItemElement";
 
 /** The items of the menus that check motion. */
 const ITEMS = ["Share", "Edit details", "Duplicate", "Move to folder", "Download", "Delete permanently"];
@@ -441,7 +441,7 @@ test.describe("m3e-fab-menu", () => {
 
     const result = await page.evaluate(async () => {
       const menu = document.querySelector("m3e-fab-menu")!;
-      const fab = document.querySelector("m3e-fab")!;
+      const fab = document.querySelector<HTMLElement>("m3e-fab")!;
       const items = [...menu.querySelectorAll("m3e-fab-menu-item")];
       const settle = async () => {
         document.getAnimations().forEach((a) => a.finish());
@@ -499,7 +499,7 @@ test.describe("m3e-fab-menu", () => {
 
     const result = await page.evaluate(async () => {
       const menu = document.querySelector("m3e-fab-menu")!;
-      const fab = document.querySelector("m3e-fab")!;
+      const fab = document.querySelector<HTMLElement>("m3e-fab")!;
       const items = [...menu.querySelectorAll("m3e-fab-menu-item")];
       const widthTransitions = () =>
         items.map((x) => x.getAnimations().find((a) => (a as CSSTransition).transitionProperty === "width")!);

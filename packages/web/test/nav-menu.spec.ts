@@ -1,4 +1,4 @@
-import type { M3eNavMenuElement, M3eNavMenuItemElement } from "../src/nav-menu";
+import type { M3eNavMenuElement, M3eNavMenuItemElement } from "@m3e/web/nav-menu";
 import { expect, test } from "./fixtures";
 
 const menu = `

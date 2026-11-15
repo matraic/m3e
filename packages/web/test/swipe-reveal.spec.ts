@@ -1,6 +1,6 @@
 import type { Page } from "@playwright/test";
 
-import type { M3eSwipeRevealElement, M3eSwipeRevealGroupElement } from "../src/swipe-reveal";
+import type { M3eSwipeRevealElement, M3eSwipeRevealGroupElement } from "@m3e/web/swipe-reveal";
 import { expect, test } from "./fixtures";
 
 type Side = "leading" | "trailing";

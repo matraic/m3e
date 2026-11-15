@@ -1,4 +1,4 @@
-import type { M3ePaginatorElement } from "../src/paginator";
+import type { M3ePaginatorElement } from "@m3e/web/paginator";
 import { expect, test } from "./fixtures";
 
 test.describe("m3e-paginator", () => {

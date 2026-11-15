@@ -1,3 +1,5 @@
+import type { M3eSelectionListElement } from "@m3e/web/list";
+
 import { expect, test } from "./fixtures";
 
 test.describe("m3e-list", () => {
@@ -87,7 +89,7 @@ test.describe("m3e-selection-list", () => {
       </m3e-selection-list>
     `);
     await page.evaluate(() => {
-      const list = document.querySelector("m3e-selection-list")!;
+      const list = document.querySelector<M3eSelectionListElement>("m3e-selection-list")!;
       const snapshots: Array<{ value: string | readonly string[] | null; selected: string[] }> = [];
       (window as typeof window & { selectionChangeSnapshots: typeof snapshots }).selectionChangeSnapshots = snapshots;
       list.addEventListener("change", () => {
