@@ -2,6 +2,8 @@ import { unsafeCSS } from "lit";
 
 import { DesignToken } from "@m3e/web/core";
 
+const containerMaxWidth = "max(0px, calc(100vw - var(--m3e-drawer-container-scrim-min-space, 56px)))";
+
 /**
  * Component design tokens that control `M3eDrawerContainerElement`.
  * @internal
@@ -9,7 +11,8 @@ import { DesignToken } from "@m3e/web/core";
 export const DrawerContainerToken = {
   containerColor: unsafeCSS(`var(--m3e-drawer-container-color, ${DesignToken.color.surface})`),
   containerElevation: unsafeCSS(`var(--m3e-drawer-container-elevation, ${DesignToken.elevation.level0})`),
-  containerWidth: unsafeCSS(`var(--m3e-drawer-container-width, 360px)`),
+  containerWidth: unsafeCSS(`min(var(--m3e-drawer-container-width, 360px), ${containerMaxWidth})`),
+  containerMaxWidth: unsafeCSS(containerMaxWidth),
   scrimOpacity: unsafeCSS("var(--m3e-drawer-container-scrim-opacity, 32%)"),
   startShape: unsafeCSS(
     `var(--m3e-modal-drawer-start-shape, var(--m3e-modal-drawer-corner-shape, ${DesignToken.shape.corner.large}))`,

@@ -83,6 +83,7 @@ export const DrawerContainerStyle: CSSResultGroup = css`
   ::slotted([slot="end"]) {
     height: 100%;
     width: ${DrawerContainerToken.containerWidth};
+    max-width: ${DrawerContainerToken.containerMaxWidth};
     box-sizing: border-box;
   }
   .content {

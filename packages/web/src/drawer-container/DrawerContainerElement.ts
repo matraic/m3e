@@ -124,7 +124,8 @@ import { DrawerContainerStyle } from "./styles";
  *
  * @cssprop --m3e-drawer-container-color - The background color of the drawer container.
  * @cssprop --m3e-drawer-container-elevation - The elevation level of the drawer container.
- * @cssprop --m3e-drawer-container-width - The width of the drawer container.
+ * @cssprop --m3e-drawer-container-width - The preferred drawer width, constrained by the available viewport space.
+ * @cssprop --m3e-drawer-container-scrim-min-space - The minimum space reserved beside the drawer.
  * @cssprop --m3e-drawer-container-scrim-opacity - The opacity of the scrim behind the drawer.
  * @cssprop --m3e-modal-drawer-start-shape - The shape of the drawer's start edge (typically left in LTR), used by a modal end drawer.
  * @cssprop --m3e-modal-drawer-end-shape - The shape of the drawer's end edge (typically right in LTR), used by a modal start drawer.

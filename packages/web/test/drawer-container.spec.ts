@@ -14,6 +14,42 @@ test.describe("m3e-drawer-container", () => {
     await expect(page.getByText("Main content")).toBeVisible();
   });
 
+  test("keeps a scrim edge on narrow viewports and caps the drawer width", async ({ page, render }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await render(`
+      <m3e-drawer-container>
+        <nav slot="start">Navigation</nav>
+        <main>Main content</main>
+      </m3e-drawer-container>
+    `);
+    await page.addStyleTag({ content: "body { margin: 0; }" });
+    const drawer = page.locator("nav[slot=start]");
+
+    await expect(drawer).toHaveCSS("width", "264px");
+
+    await page.setViewportSize({ width: 500, height: 640 });
+    await expect(drawer).toHaveCSS("width", "360px");
+
+    await page
+      .locator("m3e-drawer-container")
+      .evaluate((container) => container.style.setProperty("--m3e-drawer-container-scrim-min-space", "80px"));
+    await page.setViewportSize({ width: 320, height: 640 });
+    await expect(drawer).toHaveCSS("width", "240px");
+  });
+
+  test("preserves edge space when custom or slotted widths exceed the available width", async ({ page, render }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await render(`
+      <m3e-drawer-container style="--m3e-drawer-container-width: 400px">
+        <nav slot="start" style="width: 400px">Navigation</nav>
+        <main>Main content</main>
+      </m3e-drawer-container>
+    `);
+    const drawer = page.locator("nav[slot=start]");
+
+    await expect(drawer).toHaveCSS("width", "264px");
+  });
+
   test("opens the start drawer from its toggle and dispatches change", async ({ page, render }) => {
     await render(`
       <m3e-button toggle>
