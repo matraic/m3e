@@ -24,7 +24,7 @@ Separate list items with dividers. Import `@m3e/web/list` for the list elements.
 </m3e-list>
 ```
 
-Use `inset`, `inset-start`, or `inset-end` to indent a horizontal divider.
+Use `inset`, `inset-start`, or `inset-end` to indent a horizontal divider. Start and end follow the text direction.
 
 ```html
 <m3e-divider></m3e-divider>

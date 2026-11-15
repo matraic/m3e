@@ -82,6 +82,29 @@ test.describe("m3e-divider", () => {
     expect(await insets("#e")).toEqual({ start: 0, end: 8 });
   });
 
+  test("horizontal insets follow changes in page direction", async ({ page, render }) => {
+    await render(`
+      <m3e-divider inset-start style="width: 300px; --m3e-divider-inset-start-size: 12px"></m3e-divider>
+      <m3e-divider inset-end style="width: 300px; --m3e-divider-inset-end-size: 8px"></m3e-divider>
+      <m3e-divider inset style="width: 300px; --m3e-divider-inset-start-size: 12px; --m3e-divider-inset-end-size: 8px"></m3e-divider>
+      <m3e-divider style="width: 300px"></m3e-divider>
+    `);
+    const physicalInsets = () =>
+      page.locator("m3e-divider").evaluateAll((elements) =>
+        elements.map((element) => {
+          const host = element.getBoundingClientRect();
+          const line = element.shadowRoot!.querySelector(".line")!.getBoundingClientRect();
+          return [line.left - host.left, host.right - line.right];
+        }),
+      );
+
+    expect(await physicalInsets()).toEqual([[12, 0], [0, 8], [12, 8], [0, 0]]);
+    await page.evaluate(() => (document.documentElement.dir = "rtl"));
+    await expect.poll(physicalInsets).toEqual([[0, 12], [8, 0], [8, 12], [0, 0]]);
+    await page.evaluate(() => (document.documentElement.dir = "ltr"));
+    await expect.poll(physicalInsets).toEqual([[12, 0], [0, 8], [12, 8], [0, 0]]);
+  });
+
   test("insets apply along the vertical axis for a vertical divider", async ({ page, render }) => {
     await render('<m3e-divider vertical inset style="height: 200px; --m3e-divider-inset-size: 16px"></m3e-divider>');
 

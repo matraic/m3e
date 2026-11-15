@@ -26,6 +26,7 @@ import { customElement, DesignToken, Role } from "@m3e/web/core";
  *
  * @example
  * Use `inset`, `inset-start`, or `inset-end` to indent a horizontal divider.
+ * Start and end follow the text direction.
  * ```html
  * <m3e-divider></m3e-divider>
  * <m3e-divider inset></m3e-divider>
@@ -95,7 +96,10 @@ export class M3eDividerElement extends Role(LitElement, "separator") {
     }
     :host(:not([vertical])[inset]) .line,
     :host(:not([vertical])[inset-start]) .line {
-      left: var(--m3e-divider-inset-start-size, var(--m3e-divider-inset-size, ${DesignToken.measurement.space200}));
+      inset-inline-start: var(
+        --m3e-divider-inset-start-size,
+        var(--m3e-divider-inset-size, ${DesignToken.measurement.space200})
+      );
     }
     :host([vertical][inset]) .line,
     :host([vertical][inset-end]) .line {
@@ -103,19 +107,22 @@ export class M3eDividerElement extends Role(LitElement, "separator") {
     }
     :host(:not([vertical])[inset]) .line,
     :host(:not([vertical])[inset-end]) .line {
-      right: var(--m3e-divider-inset-end-size, var(--m3e-divider-inset-size, ${DesignToken.measurement.space200}));
+      inset-inline-end: var(
+        --m3e-divider-inset-end-size,
+        var(--m3e-divider-inset-size, ${DesignToken.measurement.space200})
+      );
     }
     :host([vertical]:not([inset]):not([inset-start])) .line {
       top: 0;
     }
     :host(:not([vertical]):not([inset]):not([inset-start])) .line {
-      left: 0;
+      inset-inline-start: 0;
     }
     :host([vertical]:not([inset]):not([inset-end])) .line {
       bottom: 0;
     }
     :host(:not([vertical]):not([inset]):not([inset-end])) .line {
-      right: 0;
+      inset-inline-end: 0;
     }
     @media (forced-colors: active) {
       .line {
