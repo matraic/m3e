@@ -114,19 +114,19 @@ export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitE
   static {
     if (typeof window !== "undefined") {
       registerStyleSheet(css`
-        @property --_m3e-skeleton-wave-pct {
+        @property --_skeleton-wave-pct {
           syntax: "<number>";
           inherits: true;
           initial-value: 0;
         }
-        @property --_m3e-skeleton-pulse-norm {
+        @property --_skeleton-pulse-norm {
           syntax: "<number>";
           inherits: true;
           initial-value: 0;
         }
         :root {
-          --_m3e-skeleton-wave-span: 40vw;
-          --_m3e-skeleton-pulse-min: 0.06;
+          --_skeleton-wave-span: 40vw;
+          --_skeleton-pulse-min: 0.06;
         }
       `);
 
@@ -193,7 +193,7 @@ export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitE
       height: 100%;
       opacity: calc(
         var(--m3e-skeleton-accent-opacity, 0.06) + (1 - var(--m3e-skeleton-accent-opacity, 0.06)) *
-          var(--_m3e-skeleton-pulse-norm)
+          var(--_skeleton-pulse-norm)
       );
       background-color: var(--m3e-skeleton-tint-color, ${DesignToken.color.surfaceDim});
     }
@@ -213,9 +213,9 @@ export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitE
         transparent 100%
       );
       background-attachment: fixed;
-      background-size: calc(100vw + var(--_m3e-skeleton-wave-span) * 2) 100%;
+      background-size: calc(100vw + var(--_skeleton-wave-span) * 2) 100%;
       background-position-x: calc(
-        var(--_m3e-skeleton-wave-pct) * (100vw + var(--_m3e-skeleton-wave-span) * 2) - var(--_m3e-skeleton-wave-span)
+        var(--_skeleton-wave-pct) * (100vw + var(--_skeleton-wave-span) * 2) - var(--_skeleton-wave-span)
       );
 
       opacity: var(--m3e-skeleton-accent-opacity, 0.06);
@@ -416,7 +416,7 @@ export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitE
 
   /**
    * Starts the wave/pulse animation on this skeleton itself rather than on
-   * `document.documentElement`. The `--_m3e-skeleton-*` properties are registered
+   * `document.documentElement`. The `--_skeleton-*` properties are registered
    * `inherits: true`, so animating them on the document root recalculates style for the
    * whole document every frame; scoping to the instance limits that to its own subtree.
    * Aligned to a shared timeline origin so multiple skeletons animate in phase, and
@@ -439,18 +439,14 @@ export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitE
     const animation =
       this.animation === "pulse"
         ? this.animate(
-            [
-              { ["--_m3e-skeleton-pulse-norm"]: 0 },
-              { ["--_m3e-skeleton-pulse-norm"]: 1 },
-              { ["--_m3e-skeleton-pulse-norm"]: 0 },
-            ],
+            [{ ["--_skeleton-pulse-norm"]: 0 }, { ["--_skeleton-pulse-norm"]: 1 }, { ["--_skeleton-pulse-norm"]: 0 }],
             {
               duration: 1200,
               iterations: Infinity,
               easing: "ease-in-out",
             },
           )
-        : this.animate([{ ["--_m3e-skeleton-wave-pct"]: 0 }, { ["--_m3e-skeleton-wave-pct"]: 1 }], {
+        : this.animate([{ ["--_skeleton-wave-pct"]: 0 }, { ["--_skeleton-wave-pct"]: 1 }], {
             duration: 2100,
             iterations: Infinity,
             easing: "linear",
