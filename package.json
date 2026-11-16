@@ -24,6 +24,7 @@
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^1.0.0",
     "@rollup/plugin-typescript": "12.1.0",
+    "@types/node": "^22.0.0",
     "@wc-toolkit/type-parser": "^1.2.1",
     "babel-plugin-template-html-minifier": "^4.1.0",
     "browserslist": "^4.28.1",
