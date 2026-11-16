@@ -59,6 +59,10 @@
       "types": "./dist/src/card/index.d.ts",
       "default": "./dist/card.js"
     },
+    "./carousel": {
+      "types": "./dist/src/carousel/index.d.ts",
+      "default": "./dist/carousel.js"
+    },
     "./checkbox": {
       "types": "./dist/src/checkbox/index.d.ts",
       "default": "./dist/checkbox.js"

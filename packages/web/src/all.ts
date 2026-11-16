@@ -9,6 +9,7 @@ export * from "./button-group";
 export * from "./calendar";
 export * from "./callout";
 export * from "./card";
+export * from "./carousel";
 export * from "./checkbox";
 export * from "./chips";
 export * from "./content-pane";

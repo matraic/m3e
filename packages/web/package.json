@@ -26,6 +26,7 @@
     "calendar",
     "callout",
     "card",
+    "carousel",
     "checkbox",
     "chips",
     "content-pane",
@@ -146,6 +147,10 @@
     "./card": {
       "types": "./dist/src/card/index.d.ts",
       "default": "./dist/card.js"
+    },
+    "./carousel": {
+      "types": "./dist/src/carousel/index.d.ts",
+      "default": "./dist/carousel.js"
     },
     "./checkbox": {
       "types": "./dist/src/checkbox/index.d.ts",
