@@ -20,7 +20,7 @@
     <link href="drawer-container.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.12.1/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.0/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -67,8 +67,10 @@
 
         <m3e-heading variant="headline" size="small" level="3">Sizes</m3e-heading>
         <p>
-          You can control the drawer widths using the <code>--m3e-drawer-container-width</code> CSS custom property or
-          by explicitly setting the width of a drawer.
+          Drawer widths are limited to keep at least 56px of the scrim visible beside the drawer. Set
+          <code>--m3e-drawer-container-width</code> to change the preferred width, or
+          <code>--m3e-drawer-container-scrim-min-space</code> to adjust the minimum visible scrim area. Widths set
+          directly on slotted drawers are subject to the same limit.
         </p>
         <m3e-card variant="outlined" class="showcase">
           <div slot="content">

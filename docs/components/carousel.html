@@ -1,0 +1,1574 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Carousel for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Carousel for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="api-viewer.css" rel="stylesheet" />
+    <link href="carousel.css" rel="stylesheet" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.0/dist/all.min.js"></script>
+    <script type="module" src="./carousel.js"></script>
+    <script src="../main.js"></script>
+  </head>
+  <body>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Carousel</m3e-heading>
+        <p>
+          The <code>m3e-carousel</code> presents a scrollable collection of related content in responsive Material 3
+          layouts. Depending on the variant, it shows differently sized items that preview neighboring content,
+          fixed-width items, or one edge-to-edge item at a time in a vertical fullscreen layout. Users navigate by
+          dragging, swiping, or using the keyboard. Items can contain images, video, or custom content with optional
+          title and subtitle overlays.
+        </p>
+        <m3e-card variant="outlined" class="install"><pre slot="content">import "@m3e/web/carousel";</pre></m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Usage</m3e-heading>
+        <p>This section outlines usage examples and configuration guidance for the components in this module.</p>
+
+        <m3e-heading variant="headline" size="small" level="3">Anatomy</m3e-heading>
+        <p>
+          Use <code>m3e-carousel</code> to present a collection of <code>m3e-carousel-item</code> elements in its
+          default slot. Each item accepts media or custom non-interactive content in its default slot, and optional
+          <code>title</code> and <code>subtitle</code> slots for text overlays.
+        </p>
+        <p>The example below uses a CSS custom property to enable the optional text scrim.</p>
+        <m3e-carousel class="carousel anatomy" aria-label="Featured destinations">
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Coast</span>
+            <span slot="subtitle">Follow the ocean breeze</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Forest</span>
+            <span slot="subtitle">Take the quieter trail</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Mountains</span>
+            <span slot="subtitle">Find a fresh perspective</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Desert</span>
+            <span slot="subtitle">Explore the golden dunes</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">City</span>
+            <span slot="subtitle">Discover somewhere new</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Lake</span>
+            <span slot="subtitle">Slow down by the water</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Night sky</span>
+            <span slot="subtitle">Stay for the stars</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Highlands</span>
+            <span slot="subtitle">Watch the morning mist</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Valley</span>
+            <span slot="subtitle">Wander beyond the ridge</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Lakeside</span>
+            <span slot="subtitle">Make time for the view</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Alpine lake</span>
+            <span slot="subtitle">Find your quiet corner</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Woodland</span>
+            <span slot="subtitle">Follow the sunlit path</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Open water</span>
+            <span slot="subtitle">Listen to the waves</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Mountain lake</span>
+            <span slot="subtitle">Reflect and recharge</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Countryside</span>
+            <span slot="subtitle">Take the scenic route</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Adventure</span>
+            <span slot="subtitle">Go a little further</span>
+          </m3e-carousel-item>
+        </m3e-carousel>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-carousel class=&quot;carousel&quot; aria-label=&quot;Featured destinations&quot;&gt;
+  &lt;m3e-carousel-item&gt;
+    &lt;img src=&quot;[YOUR IMAGE URL HERE]&quot; alt=&quot;&quot; loading=&quot;lazy&quot; /&gt;
+    &lt;span slot=&quot;title&quot;&gt;Coast&lt;/span&gt;
+    &lt;span slot=&quot;subtitle&quot;&gt;Follow the ocean breeze&lt;/span&gt;
+  &lt;/m3e-carousel-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-carousel&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.carousel {
+  --m3e-carousel-item-scrim-opacity: 0.65;
+}</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Media</m3e-heading>
+        <p>
+          Place an <code>img</code> or <code>video</code> directly inside an item to fill its fixed content area with a
+          centered <code>object-fit: cover</code> crop. As items expand or contract during scrolling, the carousel
+          reveals or hides portions of the media rather than resizing it.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-carousel-item label=&quot;View the coast&quot;&gt;
+  &lt;img src=&quot;[YOUR IMAGE URL HERE]&quot; alt=&quot;&quot; loading=&quot;lazy&quot; /&gt;
+&lt;/m3e-carousel-item&gt;
+
+&lt;m3e-carousel-item label=&quot;Play coastal tour&quot;&gt;
+  &lt;video src=&quot;[YOUR VIDEO URL HERE]&quot; poster=&quot;[YOUR IMAGE URL HERE]&quot;
+    muted playsinline preload=&quot;metadata&quot;&gt;&lt;/video&gt;
+&lt;/m3e-carousel-item&gt;</pre
+          >
+        </m3e-card>
+        <p>
+          Use <code>alt=""</code> when an image is decorative and the item's title or <code>label</code> already
+          describes its action. Provide meaningful alternative text when the image conveys information not covered by
+          that text.
+        </p>
+        <p>
+          Carousels can contain more images than are initially visible. Use <code>loading="lazy"</code> on offscreen
+          images so the browser can defer loading them until they are near the viewport. Keep initially visible or
+          otherwise critical images eager to avoid delaying their display.
+        </p>
+        <m3e-heading variant="headline" size="small" level="3">Variants</m3e-heading>
+        <p>
+          There are five carousel layout variants: <code>multi-browse</code> (default), <code>uncontained</code>,
+          <code>hero</code>, <code>hero-centered</code>, and <code>fullscreen</code>. Use the <code>variant</code>
+          attribute to change the layout.
+        </p>
+        <m3e-heading variant="title" size="medium" level="4">Multi-browse</m3e-heading>
+        <p>
+          Set <code>variant="multi-browse"</code> to browse several related items at once. The carousel sizes items to
+          fit the available space, showing large items alongside medium and small previews when they fit. Near the end
+          of the collection, previews move ahead of the large items so the final item can come fully into view. The
+          carousel snaps after a swipe, and a fast swipe can advance several items.
+        </p>
+        <m3e-carousel class="carousel" variant="multi-browse" aria-label="Multi-browse destinations">
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Coast</span>
+            <span slot="subtitle">Follow the ocean breeze</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Forest</span>
+            <span slot="subtitle">Take the quieter trail</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Mountains</span>
+            <span slot="subtitle">Find a fresh perspective</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Desert</span>
+            <span slot="subtitle">Explore the golden dunes</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">City</span>
+            <span slot="subtitle">Discover somewhere new</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Lake</span>
+            <span slot="subtitle">Slow down by the water</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Night sky</span>
+            <span slot="subtitle">Stay for the stars</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Highlands</span>
+            <span slot="subtitle">Watch the morning mist</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Valley</span>
+            <span slot="subtitle">Wander beyond the ridge</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Lakeside</span>
+            <span slot="subtitle">Make time for the view</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Alpine lake</span>
+            <span slot="subtitle">Find your quiet corner</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Woodland</span>
+            <span slot="subtitle">Follow the sunlit path</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Open water</span>
+            <span slot="subtitle">Listen to the waves</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Mountain lake</span>
+            <span slot="subtitle">Reflect and recharge</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Countryside</span>
+            <span slot="subtitle">Take the scenic route</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Adventure</span>
+            <span slot="subtitle">Go a little further</span>
+          </m3e-carousel-item>
+        </m3e-carousel>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-carousel variant=&quot;multi-browse&quot; aria-label=&quot;Destinations&quot;&gt;
+  &lt;m3e-carousel-item&gt;
+    &lt;img src=&quot;[YOUR IMAGE URL HERE]&quot; alt=&quot;&quot; loading=&quot;lazy&quot; /&gt;
+    &lt;span slot=&quot;title&quot;&gt;Coast&lt;/span&gt;
+    &lt;span slot=&quot;subtitle&quot;&gt;Follow the ocean breeze&lt;/span&gt;
+  &lt;/m3e-carousel-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-carousel&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="title" size="medium" level="4">Uncontained</m3e-heading>
+        <p>
+          Set <code>variant="uncontained"</code> for a horizontal layout with consistently sized items. It shows as many
+          items as fit and clips neighboring items at the edges, hinting that more content is available. Unlike all
+          other variants, it scrolls freely without snapping to an item when scrolling ends. Users can drag or use the
+          mouse wheel to stop anywhere along the collection, including between items. A fast swipe carries the
+          collection forward with inertia, gradually slowing to a stop. Title and subtitle overlays remain visible
+          throughout scrolling, keeping each item's text readable rather than fading as it moves toward the edges.
+        </p>
+        <m3e-carousel class="carousel" variant="uncontained" aria-label="Uncontained destinations">
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Coast</span>
+            <span slot="subtitle">Follow the ocean breeze</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Forest</span>
+            <span slot="subtitle">Take the quieter trail</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Mountains</span>
+            <span slot="subtitle">Find a fresh perspective</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Desert</span>
+            <span slot="subtitle">Explore the golden dunes</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">City</span>
+            <span slot="subtitle">Discover somewhere new</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Lake</span>
+            <span slot="subtitle">Slow down by the water</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Night sky</span>
+            <span slot="subtitle">Stay for the stars</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Highlands</span>
+            <span slot="subtitle">Watch the morning mist</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Valley</span>
+            <span slot="subtitle">Wander beyond the ridge</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Lakeside</span>
+            <span slot="subtitle">Make time for the view</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Alpine lake</span>
+            <span slot="subtitle">Find your quiet corner</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Woodland</span>
+            <span slot="subtitle">Follow the sunlit path</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Open water</span>
+            <span slot="subtitle">Listen to the waves</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Mountain lake</span>
+            <span slot="subtitle">Reflect and recharge</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Countryside</span>
+            <span slot="subtitle">Take the scenic route</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Adventure</span>
+            <span slot="subtitle">Go a little further</span>
+          </m3e-carousel-item>
+        </m3e-carousel>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-carousel variant=&quot;uncontained&quot; aria-label=&quot;Destinations&quot;&gt;
+  &lt;!-- Items omitted for brevity --&gt;
+&lt;/m3e-carousel&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="title" size="medium" level="4">Hero</m3e-heading>
+        <p>
+          Set <code>variant="hero"</code> to emphasize large items while previewing what comes next with a small item at
+          the trailing edge. Depending on available space and the preferred item width, one or more large items can be
+          visible.
+        </p>
+        <m3e-carousel id="hero-default" class="carousel" variant="hero" aria-label="Hero destinations">
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Coast</span>
+            <span slot="subtitle">Follow the ocean breeze</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Forest</span>
+            <span slot="subtitle">Take the quieter trail</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Mountains</span>
+            <span slot="subtitle">Find a fresh perspective</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Desert</span>
+            <span slot="subtitle">Explore the golden dunes</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">City</span>
+            <span slot="subtitle">Discover somewhere new</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Lake</span>
+            <span slot="subtitle">Slow down by the water</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Night sky</span>
+            <span slot="subtitle">Stay for the stars</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Highlands</span>
+            <span slot="subtitle">Watch the morning mist</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Valley</span>
+            <span slot="subtitle">Wander beyond the ridge</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Lakeside</span>
+            <span slot="subtitle">Make time for the view</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Alpine lake</span>
+            <span slot="subtitle">Find your quiet corner</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Woodland</span>
+            <span slot="subtitle">Follow the sunlit path</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Open water</span>
+            <span slot="subtitle">Listen to the waves</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Mountain lake</span>
+            <span slot="subtitle">Reflect and recharge</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Countryside</span>
+            <span slot="subtitle">Take the scenic route</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Adventure</span>
+            <span slot="subtitle">Go a little further</span>
+          </m3e-carousel-item>
+        </m3e-carousel>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-carousel variant=&quot;hero&quot; aria-label=&quot;Destinations&quot;&gt;
+  &lt;!-- Items omitted for brevity --&gt;
+&lt;/m3e-carousel&gt;</pre
+          >
+        </m3e-card>
+        <p>
+          To fit more large items in the available space, set a narrower preferred width with the
+          <code>--m3e-carousel-item-width</code> CSS custom property.
+        </p>
+        <m3e-carousel
+          id="hero-custom-width"
+          class="custom-width"
+          variant="hero"
+          aria-label="Hero destinations with narrower items"
+        ></m3e-carousel>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-carousel class=&quot;custom-width&quot; variant=&quot;hero&quot; aria-label=&quot;Destinations&quot;&gt;
+  &lt;!-- Items omitted for brevity --&gt;
+&lt;/m3e-carousel&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.custom-width {
+  --m3e-carousel-item-width: 256px;
+}</pre
+          >
+        </m3e-card>
+        <m3e-heading variant="title" size="medium" level="4">Centered hero</m3e-heading>
+        <p>
+          Set <code>variant="hero-centered"</code> to place large items between small previews, keeping the featured
+          content visually centered. At the start of the collection, both previews appear after the large items to show
+          the content that comes next. As users navigate through the collection, the previews shift around the large
+          items. Near the end, both previews appear before them so the final items can come fully into view. If there
+          are too few items to fill the centered arrangement, the collection aligns to the start instead. Like
+          <code>hero</code>, the carousel snaps into position after a swipe and advances at most one item, even when
+          users swipe quickly.
+        </p>
+        <m3e-carousel
+          id="hero-centered-default"
+          class="carousel"
+          variant="hero-centered"
+          aria-label="Centered hero destinations"
+        >
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Coast</span>
+            <span slot="subtitle">Follow the ocean breeze</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Forest</span>
+            <span slot="subtitle">Take the quieter trail</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Mountains</span>
+            <span slot="subtitle">Find a fresh perspective</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Desert</span>
+            <span slot="subtitle">Explore the golden dunes</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">City</span>
+            <span slot="subtitle">Discover somewhere new</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Lake</span>
+            <span slot="subtitle">Slow down by the water</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Night sky</span>
+            <span slot="subtitle">Stay for the stars</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Highlands</span>
+            <span slot="subtitle">Watch the morning mist</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Valley</span>
+            <span slot="subtitle">Wander beyond the ridge</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Lakeside</span>
+            <span slot="subtitle">Make time for the view</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Alpine lake</span>
+            <span slot="subtitle">Find your quiet corner</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Woodland</span>
+            <span slot="subtitle">Follow the sunlit path</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Open water</span>
+            <span slot="subtitle">Listen to the waves</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Mountain lake</span>
+            <span slot="subtitle">Reflect and recharge</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Countryside</span>
+            <span slot="subtitle">Take the scenic route</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Adventure</span>
+            <span slot="subtitle">Go a little further</span>
+          </m3e-carousel-item>
+        </m3e-carousel>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-carousel variant=&quot;hero-centered&quot; aria-label=&quot;Destinations&quot;&gt;
+  &lt;!-- Items omitted for brevity --&gt;
+&lt;/m3e-carousel&gt;</pre
+          >
+        </m3e-card>
+        <p>
+          As with <code>hero</code>, you can fit more large items in the available space by setting a narrower preferred
+          width with the <code>--m3e-carousel-item-width</code> CSS custom property. The centered layout keeps these
+          large items grouped between the previews as users navigate through the collection.
+        </p>
+        <m3e-carousel
+          id="hero-centered-custom-width"
+          class="custom-width"
+          variant="hero-centered"
+          aria-label="Centered hero destinations with narrower items"
+        ></m3e-carousel>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-carousel class=&quot;custom-width&quot; variant=&quot;hero-centered&quot; aria-label=&quot;Destinations&quot;&gt;
+  &lt;!-- Items omitted for brevity --&gt;
+&lt;/m3e-carousel&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.custom-width {
+  --m3e-carousel-item-width: 256px;
+}</pre
+          >
+        </m3e-card>
+        <m3e-heading variant="title" size="medium" level="4">Fullscreen</m3e-heading>
+        <p>
+          Set <code>variant="fullscreen"</code> to present one edge-to-edge item at a time in a vertically scrolling
+          carousel. This layout gives each item the full viewing area, making it well suited to portrait images, videos,
+          and other full-bleed content. Users move up and down through the collection by scrolling, swiping, or using
+          the keyboard. After a swipe, the carousel snaps into position and advances at most one item, even when users
+          swipe quickly. Title and subtitle overlays remain visible as items move, keeping their text available
+          throughout navigation. Unlike the horizontal layouts, this variant ignores the
+          <code>--m3e-carousel-item-width</code> preference and sizes each item to fill the carousel's height by
+          default.
+        </p>
+        <m3e-carousel class="carousel fullscreen" variant="fullscreen" aria-label="Fullscreen destinations">
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Coast</span>
+            <span slot="subtitle">Follow the ocean breeze</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Forest</span>
+            <span slot="subtitle">Take the quieter trail</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Mountains</span>
+            <span slot="subtitle">Find a fresh perspective</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Desert</span>
+            <span slot="subtitle">Explore the golden dunes</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">City</span>
+            <span slot="subtitle">Discover somewhere new</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Lake</span>
+            <span slot="subtitle">Slow down by the water</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Night sky</span>
+            <span slot="subtitle">Stay for the stars</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Highlands</span>
+            <span slot="subtitle">Watch the morning mist</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Valley</span>
+            <span slot="subtitle">Wander beyond the ridge</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Lakeside</span>
+            <span slot="subtitle">Make time for the view</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Alpine lake</span>
+            <span slot="subtitle">Find your quiet corner</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Woodland</span>
+            <span slot="subtitle">Follow the sunlit path</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Open water</span>
+            <span slot="subtitle">Listen to the waves</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Mountain lake</span>
+            <span slot="subtitle">Reflect and recharge</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Countryside</span>
+            <span slot="subtitle">Take the scenic route</span>
+          </m3e-carousel-item>
+          <m3e-carousel-item>
+            <img
+              src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&amp;fit=crop&amp;w=1200&amp;q=80"
+              alt=""
+              loading="lazy"
+            />
+            <span slot="title">Adventure</span>
+            <span slot="subtitle">Go a little further</span>
+          </m3e-carousel-item>
+        </m3e-carousel>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-carousel class=&quot;carousel&quot; variant=&quot;fullscreen&quot; aria-label=&quot;Destinations&quot;&gt;
+  &lt;!-- Items omitted for brevity --&gt;
+&lt;/m3e-carousel&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.carousel {
+  height: 256px;
+}</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Grid layout</m3e-heading>
+        <p>
+          Use <code>m3e-carousel-grid</code> as a vertically scrolling layout for a collection of
+          <code>m3e-carousel-item</code> elements. Unlike the carousel's moving sequence, the grid presents items
+          together in responsive rows and columns.
+        </p>
+        <p>
+          The grid can also serve as a Show all view. Display it in place of the carousel or on a dedicated page,
+          rendering the same collection in both components. When switching between views, transfer
+          <code>selectedIndex</code> to preserve the user's navigation position.
+        </p>
+        <p>
+          The grid adds columns as space permits. Set <code>--m3e-carousel-grid-item-min-width</code> (default
+          <code>240px</code>), <code>--m3e-carousel-grid-item-gap</code> (default <code>16px</code>), or
+          <code>--m3e-carousel-grid-item-aspect-ratio</code> (default <code>4 / 3</code>) to tune its layout.
+        </p>
+        <p>
+          This following example displays 16 destinations in a compact, multirow grid. Its reduced minimum item width
+          fits more destinations per row, while its maximum width keeps the layout from stretching too wide.
+        </p>
+        <m3e-carousel-grid class="carousel-grid-demo" aria-label="Featured destinations"></m3e-carousel-grid>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-carousel-grid class=&quot;carousel-grid-demo&quot; aria-label=&quot;Featured destinations&quot;&gt;
+  &lt;m3e-carousel-item&gt;
+    &lt;img src=&quot;[YOUR IMAGE URL HERE]&quot; alt=&quot;&quot; loading=&quot;lazy&quot; /&gt;
+    &lt;span slot=&quot;title&quot;&gt;Coast&lt;/span&gt;
+    &lt;span slot=&quot;subtitle&quot;&gt;Follow the ocean breeze&lt;/span&gt;
+  &lt;/m3e-carousel-item&gt;
+  &lt;!-- Additional items omitted for brevity --&gt;
+&lt;/m3e-carousel-grid&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.carousel-grid-demo {
+  --m3e-carousel-grid-item-min-width: 186px;
+  --m3e-carousel-item-scrim-opacity: 0.65;
+}</pre
+          >
+        </m3e-card>
+        <m3e-heading variant="headline" size="small" level="3">Sizing and spacing</m3e-heading>
+        <p>
+          Use CSS custom properties on <code>m3e-carousel</code> to customize item widths, gaps, and gutters to suit
+          your content and available space. Set the carousel's height directly with CSS or through its height custom
+          properties. Together, these settings control how much of the collection is visible and the space around each
+          item.
+        </p>
+        <m3e-heading variant="title" size="medium" level="4">Item widths</m3e-heading>
+        <p>
+          Set <code>--m3e-carousel-item-width</code> to control how wide items should be. Its effect depends on the
+          layout variant:
+        </p>
+        <ul>
+          <li>
+            <code>multi-browse</code>, <code>hero</code>, and <code>hero-centered</code> use it as a preferred width for
+            large items. The carousel adjusts the actual width to fit large items and previews into the available space.
+            A smaller preference allows more large items to fit.
+          </li>
+          <li><code>uncontained</code> uses it as a fixed item width, capped by the available space.</li>
+          <li><code>fullscreen</code> ignores it because each item fills the carousel's width.</li>
+        </ul>
+        <p>
+          Without an explicit width, <code>multi-browse</code> and <code>uncontained</code> use 280px.
+          <code>hero</code> and <code>hero-centered</code> target one large item with room for their previews. Widths
+          accept CSS lengths and percentages, including <code>calc()</code>, and can be changed with media or container
+          queries.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.carousel {
+  --m3e-carousel-item-width: 320px;
+}</pre
+          >
+        </m3e-card>
+        <p>
+          For finer control of responsive layouts, use <code>--m3e-carousel-small-item-min-width</code> and
+          <code>--m3e-carousel-small-item-max-width</code> to set the small preview range, which defaults to 40px
+          through 56px. <code>--m3e-carousel-large-item-max-width</code> limits large items and defaults to 100% of the
+          available space. Very narrow containers can omit previews when there is not enough room for them.
+        </p>
+
+        <m3e-heading variant="title" size="medium" level="4">Carousel height</m3e-heading>
+        <p>
+          Set the carousel's <code>height</code> to control its overall viewing area. All variants default to 205px.
+          Horizontal items fill that height minus the top and bottom gutters, while <code>fullscreen</code> items fill
+          the entire height.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.carousel {
+  height: 256px;
+}</pre
+          >
+        </m3e-card>
+        <p>
+          Alternatively, use <code>--m3e-carousel-height</code> to change the default height through an inheritable CSS
+          custom property. <code>--m3e-carousel-min-height</code> sets the minimum height and defaults to 0.
+        </p>
+
+        <m3e-heading variant="title" size="medium" level="4">Item gaps and gutters</m3e-heading>
+        <p>
+          Use <code>--m3e-carousel-item-gap</code> to set the space between horizontal items, which defaults to 8px. For
+          <code>fullscreen</code>, use <code>--m3e-carousel-fullscreen-item-gap</code> instead. Its default is 16px.
+        </p>
+        <p>
+          Horizontal layouts also reserve space around the collection for shadows and focus rings. The
+          <code>--m3e-carousel-inline-gutter</code> property defaults to 16px at each horizontal edge, and
+          <code>--m3e-carousel-block-gutter</code> defaults to 8px above and below the items. These gutters are inside
+          the carousel's dimensions, so increasing them reduces the space available for items.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.carousel {
+  --m3e-carousel-item-gap: 16px;
+  --m3e-carousel-inline-gutter: 24px;
+  --m3e-carousel-block-gutter: 12px;
+}</pre
+          >
+        </m3e-card>
+        <p>
+          Increase the gutters when custom shadows or focus rings need more room. Feedback is still clipped at the
+          carousel's outer boundary. <code>fullscreen</code> ignores both gutter properties and stays edge-to-edge.
+        </p>
+
+        <m3e-heading variant="headline" size="small" level="3">Titles and subtitles</m3e-heading>
+        <p>
+          Use <code>slot="title"</code> and <code>slot="subtitle"</code> to display text over an item's media or
+          content. Both slots are optional. The text sits near the bottom of the item, inset 16px from the sides and
+          bottom, and aligns to the left in left-to-right layouts or to the right in right-to-left layouts.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-carousel-item&gt;
+  &lt;img src=&quot;[YOUR IMAGE URL HERE]&quot; alt=&quot;&quot; /&gt;
+  &lt;span slot=&quot;title&quot;&gt;Coast&lt;/span&gt;
+  &lt;span slot=&quot;subtitle&quot;&gt;Follow the ocean breeze&lt;/span&gt;
+&lt;/m3e-carousel-item&gt;</pre
+          >
+        </m3e-card>
+        <p>
+          In <code>multi-browse</code>, <code>hero</code>, and <code>hero-centered</code>, both texts are visible on
+          large items. As an item contracts during scrolling, the title gradually fades out as it approaches medium
+          size, followed by the subtitle as it approaches small preview size. The text fades without changing its font
+          size. In <code>uncontained</code> and <code>fullscreen</code>, both texts remain visible throughout scrolling.
+        </p>
+        <p>
+          Titles use Title Large typography and subtitles use Body Medium, both with white text by default. Customize
+          their appearance with CSS custom properties on <code>m3e-carousel</code> to style the collection, or on an
+          individual <code>m3e-carousel-item</code> to style only that item. The following example uses smaller text for
+          a more compact presentation.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.carousel {
+  --m3e-carousel-item-title-font-size: 20px;
+  --m3e-carousel-item-subtitle-font-size: 12px;
+}</pre
+          >
+        </m3e-card>
+        <p>
+          Set <code>--m3e-carousel-item-text-color</code> to change both text colors together. Use
+          <code>--m3e-carousel-item-title-text-color</code> or <code>--m3e-carousel-item-subtitle-text-color</code>
+          when the title and subtitle need different colors.
+        </p>
+
+        <m3e-heading variant="headline" size="small" level="3">Text scrim</m3e-heading>
+        <p>
+          A text scrim is an optional gradient behind the title and subtitle that helps separate the text from the
+          item's media or content. It is strongest near the bottom and fades to transparent above the text, leaving the
+          rest of the item unobscured.
+        </p>
+        <m3e-callout>
+          <span slot="label">Check text contrast</span>
+          A scrim can improve text contrast, but it does not guarantee readability over every image or video. Check the
+          text against your actual content and adjust the scrim opacity or text colors as needed.
+        </m3e-callout>
+        <p>
+          Enable it with the <code>--m3e-carousel-item-scrim-opacity</code> CSS custom property on
+          <code>m3e-carousel</code> or an individual <code>m3e-carousel-item</code>. Values range from 0 to 1, with
+          larger values producing a stronger scrim. The default is 0, which turns it off. The photo examples on this
+          page use 0.65.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.carousel {
+  --m3e-carousel-item-scrim-opacity: 0.65;
+}</pre
+          >
+        </m3e-card>
+        <p>
+          The scrim uses the theme's Material Scrim color by default. Set
+          <code>--m3e-carousel-item-scrim-color</code> to use a different color. Its visibility follows the title and
+          subtitle as they fade during scrolling, and it disappears when both texts have faded out. Items without either
+          text slot do not show a scrim.
+        </p>
+
+        <m3e-heading variant="headline" size="small" level="3">Selected item and programmatic navigation</m3e-heading>
+        <p>
+          Use the <code>selected-index</code> attribute or <code>selectedIndex</code> JavaScript property to read or set
+          the carousel's current navigation position. The index starts at 0 and follows the order of the
+          <code>items</code> collection, which excludes hidden items. The carousel also updates this position as users
+          navigate through the collection.
+        </p>
+        <p>
+          Call <code>movePrevious()</code> or <code>moveNext()</code> to navigate one item at a time, or
+          <code>moveTo(index)</code> to go to a specific item. Navigation stops at the first and last items rather than
+          wrapping around. These methods reveal the requested item without activating its action or moving keyboard
+          focus.
+        </p>
+        <p>
+          Listen for the bubbling <code>change</code> event to respond when user navigation or a navigation method
+          changes the current item. Its <code>detail.index</code> contains the new position and
+          <code>detail.item</code> contains the corresponding <code>m3e-carousel-item</code> element. Setting
+          <code>selected-index</code> or <code>selectedIndex</code> directly updates the position without emitting this
+          event.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+const carousel = document.querySelector("m3e-carousel");
+
+carousel.addEventListener("change", event =&gt; {
+  console.log(event.detail.index, event.detail.item);
+});
+
+carousel.moveTo(2);</pre
+          >
+        </m3e-card>
+        <p>
+          The carousel does not render navigation buttons. If your application provides controls, place them above or
+          below the carousel rather than inside its items or beside it. A Show all action can offer an alternative way
+          to browse the full collection, as described in Grid layout.
+        </p>
+        <p>
+          <code>m3e-carousel-grid</code> supports the same navigation properties, methods, and <code>change</code>
+          event. Each component maintains its own position. When switching between a carousel and a grid, copy
+          <code>selectedIndex</code> if the destination view should resume at the same item.
+        </p>
+
+        <m3e-heading variant="headline" size="small" level="3">Item actions and links</m3e-heading>
+        <p>
+          Each <code>m3e-carousel-item</code> provides one primary action that covers the entire item. By default, it
+          behaves as a button. Listen for its <code>click</code> event to perform an application action, such as opening
+          a detail view or starting video playback.
+        </p>
+        <p>
+          Set <code>href</code> to make the item a link instead. Use <code>target</code> to choose where the destination
+          opens, <code>rel</code> to describe the link relationship, or <code>download</code> to request a download.
+          These attributes work like their native anchor counterparts.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-carousel-item href=&quot;/destinations/coast&quot;&gt;Coast&lt;/m3e-carousel-item&gt;
+&lt;m3e-carousel-item id=&quot;tour&quot;&gt;Play coastal tour&lt;/m3e-carousel-item&gt;
+</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+document.querySelector(&quot;#tour&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  // Perform the application's action.
+});
+</pre
+          >
+        </m3e-card>
+        <p>
+          Clicking or tapping a preview also activates its button action or follows its link. The carousel makes that
+          item current and scrolls to reveal it fully after release. Dragging or swiping navigates the collection
+          without activating an item, so users can browse without triggering its action.
+        </p>
+
+        <m3e-heading variant="headline" size="small" level="3">Disabling and hiding</m3e-heading>
+        <p>
+          Set <code>disabled</code> on an item to disable its action and exclude it from keyboard navigation. Use
+          <code>hidden</code> on an item to remove it from the layout; adding, removing, and hiding items updates the
+          arrangement.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-carousel aria-label=&quot;Destinations&quot;&gt;
+  &lt;m3e-carousel-item&gt;Coast&lt;/m3e-carousel-item&gt;
+  &lt;m3e-carousel-item disabled&gt;Forest unavailable&lt;/m3e-carousel-item&gt;
+  &lt;m3e-carousel-item hidden&gt;Mountains&lt;/m3e-carousel-item&gt;
+&lt;/m3e-carousel&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Shape and interaction feedback</m3e-heading>
+        <p>
+          Horizontal items have rounded corners and elevate on hover. Use CSS custom properties on
+          <code>m3e-carousel</code> or individual <code>m3e-carousel-item</code> elements to customize this feedback.
+          Set <code>--m3e-carousel-item-shape</code> to change the resting corner radius, which defaults to 28px, and
+          <code>--m3e-carousel-item-hover-elevation</code> to change the hover shadow, which defaults to elevation level
+          1. <code>fullscreen</code> items are square and do not elevate on hover by default.
+        </p>
+        <p>
+          Items also have a 1px outline that does not change their content dimensions. Customize its width and color
+          with <code>--m3e-carousel-item-outline-width</code> and <code>--m3e-carousel-item-outline-color</code>. Set
+          the width to 0 to remove it. This outline is separate from the keyboard focus ring, which appears outside
+          horizontal items and inside <code>fullscreen</code> items.
+        </p>
+        <p>
+          Pressing an item reduces its corner radius toward 16px. Set
+          <code>--m3e-carousel-item-shape-pressed-morph</code> to use a different pressed radius. The pressed shape
+          never increases a smaller resting radius, and starting a drag cancels the pressed appearance.
+        </p>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.carousel {
+  --m3e-carousel-item-shape: 24px;
+  --m3e-carousel-item-shape-pressed-morph: 12px;
+}</pre
+          >
+        </m3e-card>
+        <p>
+          See the API documentation for additional CSS custom properties that control state-specific outlines, state
+          layers, and ripples.
+        </p>
+
+        <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
+        <p>
+          Both <code>m3e-carousel</code> and <code>m3e-carousel-grid</code> use <code>role="grid"</code> and follow the
+          ARIA layout grid pattern, with <code>row</code> and <code>gridcell</code> roles organizing a button or link
+          action in each cell. The collection has one Tab stop, with arrow keys moving focus between its actions.
+          Horizontal carousels form one row, <code>fullscreen</code> forms one column, and
+          <code>m3e-carousel-grid</code> arranges items in responsive rows and columns. Navigating changes the current
+          position without marking items as selected for assistive technology.
+        </p>
+        <p>
+          Give each <code>m3e-carousel</code> and <code>m3e-carousel-grid</code> an accessible name using
+          <code>aria-label</code> or <code>aria-labelledby</code> so users can identify the collection. Slotted content
+          supplies each item's action name, including title and subtitle text that has visually faded out. Set the
+          item's <code>label</code> attribute when it needs a clearer action name, especially for image-only content.
+        </p>
+        <p>
+          Follow the alternative-text guidance in Media when naming images. Each item is a single action, so do not
+          place links, buttons, native video controls, or other interactive elements inside its content.
+        </p>
+        <p>
+          Each collection has one Tab stop. <kbd>Tab</kbd> enters at the remembered enabled item action. Pressing
+          <kbd>Tab</kbd> again moves out of the collection, and <kbd>Shift+Tab</kbd> moves out in the opposite
+          direction. Use navigation keys to move focus between items without activating them.
+        </p>
+        <p>For <code>m3e-carousel</code>, use the following navigation keys:</p>
+        <ul>
+          <li><kbd>Left Arrow</kbd> and <kbd>Right Arrow</kbd> move between horizontal items.</li>
+          <li><kbd>Up Arrow</kbd> and <kbd>Down Arrow</kbd> move between <code>fullscreen</code> items.</li>
+          <li>
+            <kbd>PageUp</kbd> and <kbd>PageDown</kbd> move backward and forward by approximately one viewport, or one
+            item in <code>fullscreen</code>.
+          </li>
+          <li><kbd>Home</kbd> and <kbd>End</kbd> focus the first and last enabled items.</li>
+        </ul>
+        <p>For <code>m3e-carousel-grid</code>, use the following navigation keys:</p>
+        <ul>
+          <li><kbd>Left Arrow</kbd> and <kbd>Right Arrow</kbd> move between enabled items within the current row.</li>
+          <li><kbd>Up Arrow</kbd> and <kbd>Down Arrow</kbd> move between rows, keeping the column when possible.</li>
+          <li><kbd>PageUp</kbd> and <kbd>PageDown</kbd> move by approximately one viewport of rows.</li>
+          <li><kbd>Home</kbd> and <kbd>End</kbd> focus the first and last enabled items in the current row.</li>
+          <li>
+            Hold <kbd>Ctrl</kbd> or <kbd>Meta</kbd> with <kbd>Home</kbd> or <kbd>End</kbd> to focus the first or last
+            enabled item in the entire grid.
+          </li>
+        </ul>
+        <p>
+          In both components, <kbd>Enter</kbd> activates buttons and links, while <kbd>Space</kbd> activates buttons.
+          Navigation skips disabled actions and does not wrap. Moving focus reveals the item so users can see the action
+          they are about to activate.
+        </p>
+        <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package uses
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#module_specifiers"
+            target="_blank"
+            >JavaScript Modules</a
+          >. To use it directly in a browser without a bundler, use a module script similar to the following.
+        </p>
+
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;script type=&quot;module&quot; src=&quot;/node_modules/@m3e/web/dist/carousel.js&quot;&gt;&lt;/script&gt;</pre
+          >
+        </m3e-card>
+        <p>
+          In addition, you must use an
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap"
+            target="_blank"
+            >import map</a
+          >
+          to include additional dependencies.
+        </p>
+        <m3e-card variant="outlined" class="install">
+          <pre slot="content">
+&lt;script type=&quot;importmap&quot;&gt;
+  {
+    &quot;imports&quot;: {
+      &quot;tslib&quot;: &quot;https://cdn.jsdelivr.net/npm/tslib@2.8.1/+esm&quot;,
+      &quot;lit&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/+esm&quot;,
+      &quot;lit/&quot;: &quot;https://cdn.jsdelivr.net/npm/lit@3.3.0/&quot;,
+      &quot;lit-html&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/+esm&quot;,
+      &quot;lit-html/directive.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directive.js&quot;,
+      &quot;lit-html/directives/if-defined.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/if-defined.js&quot;,
+      &quot;lit-html/directives/class-map.js&quot;: &quot;https://cdn.jsdelivr.net/npm/lit-html@3.3.0/directives/class-map.js&quot;,
+      &quot;@lit/reactive-element&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/+esm&quot;,
+      &quot;@lit/reactive-element/&quot;: &quot;https://cdn.jsdelivr.net/npm/@lit/reactive-element@2.0.4/&quot;,
+      &quot;@m3e/web/core&quot;: &quot;/node_modules/@m3e/web/dist/core.js&quot;,
+      &quot;@m3e/web/core/bidi&quot;: &quot;/node_modules/@m3e/web/dist/core-bidi.js&quot;,
+      &quot;@m3e/web/gestures&quot;: &quot;/node_modules/@m3e/web/dist/gestures.js&quot;,
+      &quot;@m3e/web/gestures/pan&quot;: &quot;/node_modules/@m3e/web/dist/gestures-pan.js&quot;,
+      &quot;@m3e/web/gestures/swipe&quot;: &quot;/node_modules/@m3e/web/dist/gestures-swipe.js&quot;
+    }
+  }
+&lt;/script&gt;</pre
+          >
+        </m3e-card>
+        <p>For production builds, use the minified files to ensure optimal load performance.</p>
+
+        <m3e-heading variant="headline" size="medium" level="2">API</m3e-heading>
+        <p>
+          The <code>@m3e/web</code> package includes a
+          <a href="https://github.com/webcomponents/custom-elements-manifest" target="_blank"
+            >Custom Elements Manifest</a
+          >
+          (<code>custom-elements.json</code>), which documents the properties, attributes, slots, events and CSS custom
+          properties of each component.
+        </p>
+        <p>You can explore the API below, or integrate the manifest into your own tooling.</p>
+        <m3e-heading variant="headline" size="small" level="3">m3e-carousel</m3e-heading>
+        <api-viewer only="m3e-carousel"> </api-viewer>
+        <m3e-heading variant="headline" size="small" level="3">m3e-carousel-item</m3e-heading>
+        <api-viewer only="m3e-carousel-item"> </api-viewer>
+        <m3e-heading variant="headline" size="small" level="3">m3e-carousel-grid</m3e-heading>
+        <api-viewer only="m3e-carousel-grid"> </api-viewer>
+      </m3e-content-pane>
+      <m3e-toc class="toc" for="body" max-depth="4">
+        <span slot="overline">On this page</span>
+        <span slot="title">Carousel</span>
+      </m3e-toc>
+    </div>
+  </body>
+</html>

@@ -32,7 +32,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   let cem = null;
   try {
-    const response = await fetch("https://cdn.jsdelivr.net/npm/@m3e/web@2.12.1/dist/custom-elements.json");
+    const response = await fetch("https://cdn.jsdelivr.net/npm/@m3e/web@2.13.0/dist/custom-elements.json");
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     cem = await response.json();
     mergeParsedTypes(cem);

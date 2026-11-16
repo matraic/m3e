@@ -6,7 +6,6 @@ This roadmap summarizes work in progress, future direction, and major release mi
 
 ### ✨ Components
 
-- Carousel
 - Form-field composite inputs (text, date, number, combobox, etc.)
 
 ## 🔮 Planned
@@ -18,6 +17,8 @@ This roadmap summarizes work in progress, future direction, and major release mi
 
 ## 🏛️ Major Milestones
 
+- **2.13.0**
+  Added `@m3e/web/carousel`.
 - **2.12.0**
   Added `@m3e/mcp`.
 

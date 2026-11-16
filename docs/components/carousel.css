@@ -1,0 +1,25 @@
+.carousel,
+.custom-width,
+.carousel-grid-demo {
+  --m3e-carousel-item-scrim-opacity: 0.65;
+}
+
+.carousel,
+.custom-width {
+  margin-block: 16px 32px;
+}
+
+.carousel:not(.anatomy),
+.custom-width {
+  height: 256px;
+}
+
+.custom-width {
+  --m3e-carousel-item-width: 256px;
+}
+
+.carousel-grid-demo {
+  --m3e-carousel-grid-item-min-width: 186px;
+  max-inline-size: 1280px;
+  margin-block: 16px 32px;
+}

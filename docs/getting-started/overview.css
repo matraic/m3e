@@ -372,10 +372,20 @@
 .gallery-demo > m3e-app-bar,
 .gallery-demo > m3e-expansion-panel,
 .gallery-demo > m3e-callout,
+.gallery-demo > m3e-carousel,
 .gallery-demo > m3e-tree,
 .gallery-demo > m3e-slide-group {
   width: 100%;
   min-width: 0;
+}
+
+.gallery-carousel {
+  --m3e-carousel-height: 12rem;
+  --m3e-carousel-min-height: 12rem;
+  --m3e-carousel-item-width: 186px;
+  --m3e-carousel-item-title-font-size: 1rem;
+  --m3e-carousel-item-subtitle-font-size: 0.875rem;
+  --m3e-carousel-item-scrim-opacity: 0.65;
 }
 
 .gallery-demo > m3e-nav-rail {
