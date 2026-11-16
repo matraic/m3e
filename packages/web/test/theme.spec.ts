@@ -79,6 +79,23 @@ test.describe("m3e-theme color", () => {
   });
 });
 
+test.describe("m3e-theme reconnection", () => {
+  test("reapplies styles when moved between body and a nested parent", async ({ page, render }) => {
+    await render(`
+      <div id="nested">
+        <m3e-theme id="theme" color="#006A6A" scheme="light"><div id="probe"></div></m3e-theme>
+      </div>`);
+    const primary = () => readToken(page, "#probe", "--md-sys-color-primary");
+    const initial = await primary();
+
+    await page.locator("#theme").evaluate((element) => document.body.append(element));
+    await expect.poll(primary).toBe(initial);
+
+    await page.locator("#theme").evaluate((element) => document.querySelector("#nested")!.append(element));
+    await expect.poll(primary).toBe(initial);
+  });
+});
+
 const VARIANTS = [
   "monochrome",
   "neutral",

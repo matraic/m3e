@@ -9,7 +9,7 @@ import {
   MaterialDynamicColors,
 } from "@material/material-color-utilities";
 
-import { customElement, DesignToken, registerStyleSheet } from "@m3e/web/core";
+import { customElement, DesignToken, ReconnectedCallback, registerStyleSheet } from "@m3e/web/core";
 
 import { ColorScheme, isColorScheme } from "./ColorScheme";
 import { ContrastLevel, isContrastLevel } from "./ContrastLevel";
@@ -116,7 +116,7 @@ function omitKeys<T extends object, K extends keyof T>(obj: T, ...keys: readonly
  * @fires change - Dispatched when the theme changes.
  */
 @customElement("m3e-theme")
-export class M3eThemeElement extends LitElement {
+export class M3eThemeElement extends ReconnectedCallback(LitElement) {
   static {
     if (typeof window !== "undefined") {
       let css = "";
@@ -286,6 +286,12 @@ export class M3eThemeElement extends LitElement {
     if (document.adoptedStyleSheets.includes(this.#styleSheet)) {
       document.adoptedStyleSheets = document.adoptedStyleSheets.filter((x) => x !== this.#styleSheet);
     }
+  }
+
+  /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.requestUpdate();
   }
 
   /** @inheritdoc */
