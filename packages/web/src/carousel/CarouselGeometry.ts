@@ -44,6 +44,9 @@ export interface CarouselItemGeometry {
 
 /** Calculated dimensions and position helpers for a carousel layout. */
 export interface CarouselGeometry {
+  /** Number of populated large-item slots in a responsive arrangement; one for fixed-size layouts. */
+  largeCount: number;
+
   /** Size of a large item, or the fixed item size for uncontained/fullscreen. */
   itemSize: number;
 
@@ -386,5 +389,13 @@ export function createCarouselGeometry(options: CarouselGeometryOptions): Carous
 
   const smallSize = arrangement?.smallSize || 0;
   const mediumSize = arrangement?.mediumSize || (itemSize + smallSize) / 2;
-  return { itemSize, smallSize, mediumSize, maxScroll, itemsAt, scrollForIndex };
+  return {
+    largeCount: Math.min(count, arrangement?.largeCount ?? 1),
+    itemSize,
+    smallSize,
+    mediumSize,
+    maxScroll,
+    itemsAt,
+    scrollForIndex,
+  };
 }

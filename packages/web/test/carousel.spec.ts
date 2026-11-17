@@ -2823,12 +2823,19 @@ test.describe("m3e-carousel", () => {
     ["uncontained", "ltr"],
     ["multi-browse", "ltr"],
     ["hero", "rtl"],
+    ["hero-centered", "ltr"],
     ["fullscreen", "ltr"],
   ] as const) {
     test(`${variant} drags and flings without forcing layout in ${direction}`, async ({ page, render }) => {
       await page.emulateMedia({ reducedMotion: "no-preference" });
-      await render(carousel(variant, 8), direction);
-      await geometry(page);
+      await render(
+        carousel(variant, 8, "", false, variant === "hero-centered" ? "--m3e-carousel-item-width:160px" : ""),
+        direction,
+      );
+      const initial = await geometry(page);
+      if (variant === "hero-centered") {
+        expect(initial.items.filter((item) => Math.abs(item.width - item.visible) < 0.5).length).toBe(2);
+      }
       await traceLayouts(
         page,
         () =>
@@ -4029,6 +4036,93 @@ test.describe("m3e-carousel", () => {
     await expect(host).toHaveAttribute("selected-index", "1");
     expect((await geometry(page)).scroll).toBeCloseTo(200, 0);
   });
+
+  for (const variant of ["hero", "hero-centered"] as const) {
+    for (const direction of ["ltr", "rtl"] as const) {
+      for (const motion of ["no-preference", "reduce"] as const) {
+        test(`${variant} flings across multiple large items in ${direction} with ${motion} motion`, async ({
+          page,
+          render,
+        }) => {
+          await page.emulateMedia({ reducedMotion: motion });
+          await render(carousel(variant, 12, "", false, "--m3e-carousel-item-width:320px"), direction);
+          const host = page.locator("m3e-carousel");
+          await host.evaluate((element: HTMLElement) => (element.style.width = "960px"));
+          await expect
+            .poll(
+              async () =>
+                (await geometry(page)).items.filter(
+                  (item) => item.left >= -0.5 && item.right <= 960.5 && Math.abs(item.width - item.visible) < 0.5,
+                ).length,
+            )
+            .toBe(3);
+          const layout = createCarouselGeometry({
+            variant,
+            viewportSize: 960,
+            gap: 8,
+            count: 12,
+            baseSize: 280,
+            preferredSize: 320,
+            reducedMotion: motion === "reduce",
+          })!;
+          const selected = async () => Number(await host.getAttribute("selected-index"));
+          const sign = direction === "rtl" ? 1 : -1;
+          await fling(page, sign * 0.5, sign * 40);
+          await expect.poll(selected).toBeGreaterThan(0);
+          const slowIndex = await selected();
+          await expect
+            .poll(async () => Math.abs((await geometry(page)).scroll - layout.scrollForIndex(slowIndex)))
+            .toBeLessThan(1.5);
+          await host.evaluate((element) => {
+            (element as HTMLElement & { moveTo(index: number): void }).moveTo(0);
+          });
+          await expect.poll(async () => (await geometry(page)).scroll).toBeLessThan(1.5);
+          await fling(page, sign * 20, sign * 40);
+          await expect.poll(selected).toBeGreaterThan(Math.max(1, slowIndex));
+          await expect.poll(async () => Math.abs((await geometry(page)).scroll - layout.maxScroll)).toBeLessThan(1.5);
+          await fling(page, -sign * 20, -sign * 40);
+          await expect(host).toHaveAttribute("selected-index", "0");
+          await expect.poll(async () => (await geometry(page)).scroll).toBeLessThan(1.5);
+        });
+      }
+    }
+
+    test(`${variant} switches fling distance as its large-item count changes`, async ({ page, render }) => {
+      await page.emulateMedia({ reducedMotion: "no-preference" });
+      await render(carousel(variant, 12, "", false, "--m3e-carousel-item-width:320px"));
+      const host = page.locator("m3e-carousel");
+      for (const width of [420, 960, 420]) {
+        await host.evaluate((element, width) => ((element as HTMLElement).style.width = `${width}px`), width);
+        await expect
+          .poll(
+            async () =>
+              (await geometry(page)).items.filter(
+                (item) => item.left >= -0.5 && item.right <= width + 0.5 && Math.abs(item.width - item.visible) < 0.5,
+              ).length,
+          )
+          .toBe(width === 420 ? 1 : 3);
+        await fling(page, -3.5, -40);
+        if (width === 420) await expect(host).toHaveAttribute("selected-index", "1");
+        else await expect.poll(async () => Number(await host.getAttribute("selected-index"))).toBeGreaterThan(1);
+        const index = Number(await host.getAttribute("selected-index"));
+        const layout = createCarouselGeometry({
+          variant,
+          viewportSize: width,
+          gap: 8,
+          count: 12,
+          baseSize: 280,
+          preferredSize: 320,
+        })!;
+        await expect
+          .poll(async () => Math.abs((await geometry(page)).scroll - layout.scrollForIndex(index)))
+          .toBeLessThan(1.5);
+        await host.evaluate((element) => {
+          (element as HTMLElement & { moveTo(index: number): void }).moveTo(0);
+        });
+        await expect.poll(async () => (await geometry(page)).scroll).toBeLessThan(1.5);
+      }
+    });
+  }
 
   for (const variant of ["hero", "hero-centered", "fullscreen"] as const) {
     for (const direction of variant === "fullscreen" ? (["ltr"] as const) : (["ltr", "rtl"] as const)) {

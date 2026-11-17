@@ -1218,7 +1218,7 @@ export class M3eCarouselElement extends CarouselElementBase {
     const projected = Math.max(0, Math.min(layout.maxScroll, start + velocity * FLING_DECAY_MS));
     const index =
       singleItemTarget ??
-      (this.variant === "multi-browse" ? this.#flingIndex(velocity, startIndex, start, projected) : undefined);
+      (this.variant !== "uncontained" ? this.#flingIndex(velocity, startIndex, start, projected) : undefined);
 
     const target = index === undefined ? undefined : layout.scrollForIndex(index);
     const duration =
@@ -1351,6 +1351,9 @@ export class M3eCarouselElement extends CarouselElementBase {
     const vertical = this.variant === "fullscreen";
     const axis = vertical ? "y" : "x";
     const rtl = this.#renderedDirection === "rtl";
+    const multiItemFling =
+      this.variant === "multi-browse" ||
+      ((this.variant === "hero" || this.variant === "hero-centered") && this.#layout.largeCount > 1);
 
     if (detail.phase === "start") {
       if (detail.axis !== axis) return;
@@ -1405,7 +1408,7 @@ export class M3eCarouselElement extends CarouselElementBase {
       return;
     }
 
-    if (detail.phase === "end" && (this.variant === "multi-browse" || this.variant === "uncontained")) {
+    if (detail.phase === "end" && (multiItemFling || this.variant === "uncontained")) {
       const velocity = -detail.velocityX * (rtl ? -1 : 1);
       const startIndex = this.#findSelectedIndex(drag.scroll);
 
@@ -1416,7 +1419,7 @@ export class M3eCarouselElement extends CarouselElementBase {
           return;
         }
 
-        if (this.variant === "multi-browse") {
+        if (multiItemFling) {
           const start = this.#scrollOffset();
           const target = Math.max(0, Math.min(this.#layout.maxScroll, start + velocity * FLING_DECAY_MS));
 
