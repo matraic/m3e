@@ -3796,13 +3796,14 @@ test.describe("m3e-carousel", () => {
       const result = await page.locator("m3e-carousel").evaluate(async (element, programmatic) => {
         const viewport = element.shadowRoot!.querySelector<HTMLElement>(".viewport")!;
         const gesture = element.shadowRoot!.querySelector("m3e-swipe-gesture")!;
-        const set = window.setTimeout;
-        const clear = window.clearTimeout;
+        const browserWindow: Window = window;
+        const set = browserWindow.setTimeout;
+        const clear = browserWindow.clearTimeout;
         const pending = new Set<number>();
         const counts = { scheduled: 0, fired: 0 };
         const blockScroll = (event: Event) => event.stopImmediatePropagation();
         if (programmatic) viewport.addEventListener("scroll", blockScroll, true);
-        window.setTimeout = function (handler, timeout, ...args) {
+        browserWindow.setTimeout = function (handler, timeout, ...args) {
           if (timeout !== 100 || typeof handler !== "function") return set.call(window, handler, timeout, ...args);
           counts.scheduled++;
           const timer = set.call(
@@ -3817,7 +3818,7 @@ test.describe("m3e-carousel", () => {
           pending.add(timer);
           return timer;
         };
-        window.clearTimeout = function (timer) {
+        browserWindow.clearTimeout = function (timer) {
           if (timer !== undefined) pending.delete(timer);
           clear.call(window, timer);
         };
@@ -3845,8 +3846,8 @@ test.describe("m3e-carousel", () => {
           await new Promise<void>((resolve) => set.call(window, resolve, 1750));
           return { during, after: { ...counts }, pending: pending.size, scroll: viewport.scrollLeft };
         } finally {
-          window.setTimeout = set;
-          window.clearTimeout = clear;
+          browserWindow.setTimeout = set;
+          browserWindow.clearTimeout = clear;
           viewport.removeEventListener("scroll", blockScroll, true);
         }
       }, programmatic);
