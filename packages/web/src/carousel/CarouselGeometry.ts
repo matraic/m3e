@@ -196,6 +196,7 @@ function chooseArrangement(
 
 /**
  * Creates responsive carousel geometry for the provided viewport and item count.
+ * Reuses at most two neighboring responsive arrangements per instance while returning independent item geometry.
  * @param {CarouselGeometryOptions} options - Variant, viewport dimensions, item count, and optional sizing constraints.
  * @returns {CarouselGeometry | undefined} The calculated geometry, or `undefined` if the inputs are invalid or no arrangement fits.
  */
@@ -337,6 +338,14 @@ export function createCarouselGeometry(options: CarouselGeometryOptions): Carous
     return snapOffsets?.[itemIndex] ?? (count === 1 ? 0 : (maxScroll * itemIndex) / (count - 1));
   };
 
+  let cachedLayouts:
+    | {
+        lower: number;
+        from: CarouselItemGeometry[];
+        to?: CarouselItemGeometry[];
+      }
+    | undefined;
+
   const itemsAt = (scroll: number): CarouselItemGeometry[] => {
     const offset = boundedScroll(scroll);
     if (options.reducedMotion || fixedSize || maxScroll === 0) {
@@ -359,15 +368,20 @@ export function createCarouselGeometry(options: CarouselGeometryOptions): Carous
     const nearest = Math.round(rawPhase);
     const phase = Math.abs(rawPhase - nearest) < 1e-10 ? nearest : rawPhase;
     const lower = Math.floor(phase);
-    const from = layoutAt(lower);
     const fraction = phase - lower;
 
-    if (fraction === 0) {
-      return from;
+    if (cachedLayouts?.lower !== lower) {
+      const from = cachedLayouts?.lower === lower - 1 ? (cachedLayouts.to ?? layoutAt(lower)) : layoutAt(lower);
+      const to = cachedLayouts?.lower === lower + 1 ? cachedLayouts.from : undefined;
+      cachedLayouts = { lower, from, to };
     }
 
-    const to = layoutAt(lower + 1);
-    return interpolateItems(from, to, fraction);
+    if (fraction === 0) {
+      return cachedLayouts.from.map((item) => ({ ...item }));
+    }
+
+    cachedLayouts.to ??= layoutAt(lower + 1);
+    return interpolateItems(cachedLayouts.from, cachedLayouts.to, fraction);
   };
 
   const smallSize = arrangement?.smallSize || 0;

@@ -7,7 +7,11 @@ const carousel = (variant = "multi-browse", count = 8, extra = "", withGutters =
   </m3e-carousel>
 `;
 
-const traceLayouts = async (page: import("@playwright/test").Page, action: () => Promise<void>) => {
+const traceLayouts = async (
+  page: import("@playwright/test").Page,
+  action: () => Promise<void>,
+  requireLayout = true,
+) => {
   const cdp = await page.context().newCDPSession(page);
   await cdp.send("Tracing.start", {
     categories: "devtools.timeline,disabled-by-default-devtools.timeline.stack",
@@ -37,7 +41,7 @@ const traceLayouts = async (page: import("@playwright/test").Page, action: () =>
     const trace: { traceEvents: Array<{ name: string; args?: { beginData?: { stackTrace?: unknown[] } } }> } =
       JSON.parse(data);
     const layouts = trace.traceEvents.filter((event) => event.name === "Layout");
-    expect(layouts.length).toBeGreaterThan(0);
+    if (requireLayout) expect(layouts.length).toBeGreaterThan(0);
     expect(layouts.filter((event) => event.args?.beginData?.stackTrace?.length)).toHaveLength(0);
   }
 };
@@ -2746,6 +2750,128 @@ test.describe("m3e-carousel", () => {
     });
   }
 
+  test("skips duplicate scroll presentations and invariant style reads during uncontained dragging", async ({
+    page,
+    render,
+  }) => {
+    await render(carousel("uncontained", 32, "", false, "--m3e-carousel-item-width:160px"));
+    await geometry(page);
+    const result = await page.locator("m3e-carousel").evaluate((element) => {
+      const viewport = element.shadowRoot!.querySelector<HTMLElement>(".viewport")!;
+      const gesture = element.shadowRoot!.querySelector("m3e-swipe-gesture")!;
+      const styles = new Set([...element.querySelectorAll<HTMLElement>("m3e-carousel-item")].map((item) => item.style));
+      const invariant = new Set([
+        "flex-basis",
+        "--_carousel-translate-x",
+        "--_carousel-translate-y",
+        "--_carousel-inset-x",
+        "--_carousel-inset-y",
+        "--_carousel-title-opacity",
+        "--_carousel-subtitle-opacity",
+        "--_carousel-clip",
+      ]);
+      const counts = { reads: 0, invariantReads: 0, writes: 0 };
+      const get = CSSStyleDeclaration.prototype.getPropertyValue;
+      const set = CSSStyleDeclaration.prototype.setProperty;
+      const send = (phase: string, translationX: number) =>
+        gesture.dispatchEvent(
+          new CustomEvent("gesture", {
+            detail: { phase, axis: "x", translationX, translationY: 0, velocityX: 0, velocityY: 0 },
+          }),
+        );
+      send("start", 0);
+      CSSStyleDeclaration.prototype.getPropertyValue = function (name) {
+        if (styles.has(this)) {
+          counts.reads++;
+          if (invariant.has(name)) counts.invariantReads++;
+        }
+        return get.call(this, name);
+      };
+      CSSStyleDeclaration.prototype.setProperty = function (name, value, priority) {
+        if (styles.has(this)) counts.writes++;
+        return set.call(this, name, value, priority);
+      };
+      try {
+        send("update", -40);
+        const updated = { ...counts };
+        viewport.dispatchEvent(new Event("scroll"));
+        const duplicate = { ...counts };
+        send("update", -80);
+        return { updated, duplicate, next: { ...counts }, scroll: viewport.scrollLeft };
+      } finally {
+        CSSStyleDeclaration.prototype.getPropertyValue = get;
+        CSSStyleDeclaration.prototype.setProperty = set;
+        send("cancel", -80);
+      }
+    });
+    expect(result.updated.writes).toBeGreaterThan(0);
+    expect(result.duplicate).toEqual(result.updated);
+    expect(result.next.invariantReads).toBe(0);
+    expect(result.next.reads).toBeLessThan(32);
+    expect(result.scroll).toBe(80);
+  });
+
+  for (const [variant, direction] of [
+    ["uncontained", "ltr"],
+    ["multi-browse", "ltr"],
+    ["hero", "rtl"],
+    ["fullscreen", "ltr"],
+  ] as const) {
+    test(`${variant} drags and flings without forcing layout in ${direction}`, async ({ page, render }) => {
+      await page.emulateMedia({ reducedMotion: "no-preference" });
+      await render(carousel(variant, 8), direction);
+      await geometry(page);
+      await traceLayouts(
+        page,
+        () =>
+          page.locator("m3e-carousel").evaluate(
+            async (element, { vertical, rtl }) => {
+              const gesture = element.shadowRoot!.querySelector("m3e-swipe-gesture")!;
+              const sign = rtl ? 1 : -1;
+              const send = (phase: string, distance: number) =>
+                gesture.dispatchEvent(
+                  new CustomEvent("gesture", {
+                    detail: {
+                      phase,
+                      axis: vertical ? "y" : "x",
+                      translationX: vertical ? 0 : sign * distance,
+                      translationY: vertical ? -distance : 0,
+                      velocityX: vertical ? 0 : sign * 0.3,
+                      velocityY: vertical ? -0.3 : 0,
+                    },
+                  }),
+                );
+              await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+              send("start", 0);
+              for (let frame = 1; frame <= 20; frame++) {
+                await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+                send("update", frame * 4);
+              }
+              await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+              send("end", 80);
+              await new Promise<void>((resolve) => setTimeout(resolve, 1500));
+            },
+            {
+              vertical: variant === "fullscreen",
+              rtl: direction === "rtl",
+            },
+          ),
+        false,
+      );
+      await expect
+        .poll(() =>
+          page
+            .locator("m3e-carousel")
+            .locator(".viewport")
+            .evaluate(
+              (element, vertical) => (vertical ? element.scrollTop : Math.abs(element.scrollLeft)),
+              variant === "fullscreen",
+            ),
+        )
+        .toBeGreaterThan(80);
+    });
+  }
+
   test("uses cached sizing measurements during animated navigation", async ({ page, render }) => {
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await render(carousel("hero", 8, "", false, "--m3e-carousel-item-width:186px"));
@@ -4195,6 +4321,71 @@ const expectSeparatedByGap = (items: { position: number; size: number }[], gap: 
 };
 
 test.describe("carousel geometry", () => {
+  for (const variant of ["multi-browse", "hero", "hero-centered"] as const) {
+    test(`${variant} reuses only adjacent responsive arrangements`, () => {
+      const count = 32;
+      const layout = createCarouselGeometry({
+        variant,
+        count,
+        viewportSize: 420,
+        gap: 8,
+        baseSize: 280,
+        preferredSize: 186,
+      })!;
+      const sample = (index: number, fraction = 0.25) =>
+        layout.itemsAt(
+          layout.scrollForIndex(index) + (layout.scrollForIndex(index + 1) - layout.scrollForIndex(index)) * fraction,
+        );
+      const OriginalArray = globalThis.Array;
+      let builds = 0;
+      const counts: number[] = [];
+      globalThis.Array = new Proxy(OriginalArray, {
+        construct(target, args, newTarget) {
+          if (args.length === 1 && args[0] === count) builds++;
+          return Reflect.construct(target, args, newTarget);
+        },
+      });
+      try {
+        for (const [index, fraction] of [
+          [5, 0.25],
+          [5, 0.75],
+          [6, 0.25],
+          [5, 0.25],
+          [20, 0.25],
+          [5, 0.25],
+        ]) {
+          sample(index, fraction);
+          counts.push(builds);
+        }
+      } finally {
+        globalThis.Array = OriginalArray;
+      }
+      expect(counts).toEqual([2, 2, 3, 4, 6, 8]);
+    });
+
+    test(`${variant} keeps cached geometry independent across calls and geometry instances`, () => {
+      for (const count of [2, 8, 32]) {
+        const options = { variant, count, viewportSize: 800, gap: 8, baseSize: 280, preferredSize: 180 };
+        const layout = createCarouselGeometry(options)!;
+        const offsets = Array.from({ length: count }, (_, index) => layout.scrollForIndex(index));
+        const samples = offsets.flatMap((offset, index) =>
+          index + 1 < count ? [offset, (offset + offsets[index + 1]) / 2] : [offset],
+        );
+        for (const offset of [...samples, ...samples.reverse()]) {
+          const expected = createCarouselGeometry(options)!.itemsAt(offset);
+          const items = layout.itemsAt(offset);
+          expect(items).toEqual(expected);
+          items[0].position = -999;
+          items[0].size = -1;
+          items.splice(1);
+        }
+        const resized = createCarouselGeometry({ ...options, viewportSize: 420 })!;
+        expect(resized.itemsAt(0)).toEqual(createCarouselGeometry({ ...options, viewportSize: 420 })!.itemsAt(0));
+        expect(layout.itemsAt(0)).toEqual(createCarouselGeometry(options)!.itemsAt(0));
+      }
+    });
+  }
+
   test("matches Compose arrangement counts and fitted widths rather than fixed slot counts", () => {
     const cases = [
       { variant: "hero", viewportSize: 420, preferredSize: 220, gap: 8, sizes: [182, 182, 40] },

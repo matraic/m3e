@@ -18,10 +18,29 @@ import { M3eCarouselItemElement } from "./CarouselItemElement";
 
 import { CarouselStyle } from "./styles";
 
-const FLING_DECAY_MS = 325;
-const FLING_STOP_VELOCITY = 0.02;
-const OVERSCROLL_LIMIT = 48;
-const OVERSCROLL_FRICTION = 0.4;
+/** @private */ const FLING_DECAY_MS = 325;
+/** @private */ const FLING_STOP_VELOCITY = 0.02;
+/** @private */ const OVERSCROLL_LIMIT = 48;
+/** @private */ const OVERSCROLL_FRICTION = 0.4;
+
+/** @private */
+interface CarouselPresentation {
+  layout: CarouselGeometry;
+  scroll: number;
+  position: number;
+  items: CarouselItemPresentation[];
+}
+
+/** @private */
+interface CarouselItemPresentation {
+  translation: number;
+  inset: number;
+  leadingClip: number;
+  trailingClip: number;
+  opacity: number;
+  titleOpacity: number;
+  subtitleOpacity: number;
+}
 
 /**
  * Arranges items in responsive, scrollable Material 3 carousel layouts.
@@ -242,6 +261,7 @@ export class M3eCarouselElement extends CarouselElementBase {
   /** @private */ #indexChangedByScroll = false;
 
   /** @private */ #layout?: CarouselGeometry;
+  /** @private */ #presentation?: CarouselPresentation;
   /** @private */ #itemGap = 0;
   /** @private */ #itemAreaSize = 0;
 
@@ -464,6 +484,7 @@ export class M3eCarouselElement extends CarouselElementBase {
 
     this.#programmaticScroll = false;
     this.#resizeScrollPending = false;
+    this.#presentation = undefined;
 
     for (const target of this.#resizeTargets) {
       M3eCarouselElement._resizeObserver?.unobserve(target);
@@ -703,6 +724,7 @@ export class M3eCarouselElement extends CarouselElementBase {
 
     if (!this.#items.length) {
       this.#layout = undefined;
+      this.#presentation = undefined;
       this._track.style.removeProperty("--_carousel-track-size");
 
       return;
@@ -774,84 +796,124 @@ export class M3eCarouselElement extends CarouselElementBase {
       this.#flingFrame === undefined &&
       Math.abs(scroll - target) < 1;
 
-    const positions = layout.itemsAt(settled ? target : scroll);
+    const position = settled ? target : scroll;
+    const previous = this.#presentation;
+
+    if (previous?.layout === layout && previous.scroll === scroll && previous.position === position) return;
+
+    const layoutChanged = previous?.layout !== layout;
+    const positions = layout.itemsAt(position);
     const rtl = !vertical && this.#renderedDirection === "rtl";
     const uncontained = this.variant === "uncontained";
     const feedbackWidth = this.#viewportSize!.width;
     const feedbackHeight = this.#viewportSize!.height;
 
-    // WebKit can size a max-content flex track as if its slotted items were absent.
-    const trackSize = `${this.#items.length * layout.itemSize + (this.#items.length - 1) * this.#itemGap}px`;
+    const items: CarouselItemPresentation[] = positions.map(({ position, size }, index) => {
+      const unadjusted = index * (layout.itemSize + this.#itemGap) + layout.itemSize / 2 - scroll;
+      const leadingClip = vertical ? 0 : Math.min(size, Math.max(0, size / 2 - position));
+      const trailingClip = vertical ? 0 : Math.min(size, Math.max(0, position + size / 2 - this.#itemAreaSize));
 
-    if (!vertical && this._track.style.getPropertyValue("--_carousel-track-size") !== trackSize) {
-      this._track.style.setProperty("--_carousel-track-size", trackSize);
+      return {
+        translation: position - unadjusted,
+        inset: Math.max(0, (layout.itemSize - size) / 2),
+        leadingClip,
+        trailingClip,
+        opacity: vertical || size > leadingClip + trailingClip ? 1 : 0,
+        titleOpacity:
+          vertical || uncontained
+            ? 1
+            : Math.min(1, Math.max(0, (size - layout.mediumSize) / (layout.itemSize - layout.mediumSize))),
+        subtitleOpacity:
+          vertical || uncontained
+            ? 1
+            : Math.min(1, Math.max(0, (size - layout.smallSize) / (layout.mediumSize - layout.smallSize))),
+      };
+    });
+
+    // WebKit can size a max-content flex track as if its slotted items were absent.
+    if (layoutChanged && !vertical) {
+      const trackSize = `${this.#items.length * layout.itemSize + (this.#items.length - 1) * this.#itemGap}px`;
+
+      if (this._track.style.getPropertyValue("--_carousel-track-size") !== trackSize) {
+        this._track.style.setProperty("--_carousel-track-size", trackSize);
+      }
     }
 
     this.#items.forEach((item, index) => {
-      const { position, size } = positions[index];
-      const unadjusted = index * (layout.itemSize + this.#itemGap) + layout.itemSize / 2 - scroll;
-      const translation = position - unadjusted;
-      const inset = Math.max(0, (layout.itemSize - size) / 2);
-      const leadingClip = vertical ? 0 : Math.min(size, Math.max(0, size / 2 - position));
-      const trailingClip = vertical ? 0 : Math.min(size, Math.max(0, position + size / 2 - this.#itemAreaSize));
-      const surfaceLeft = uncontained ? (rtl ? trailingClip : leadingClip) : 0;
-      const surfaceRight = uncontained ? (rtl ? leadingClip : trailingClip) : 0;
+      const frame = items[index];
+      const last = layoutChanged ? undefined : previous?.items[index];
+      const { translation, inset, leadingClip, trailingClip } = frame;
+      const insetChanged = last?.inset !== inset;
+      const edgesChanged = last?.leadingClip !== leadingClip || last?.trailingClip !== trailingClip;
 
-      this.#setItemStyle(item, "flex-basis", `${layout.itemSize}px`);
-      this.#setItemStyle(item, "--_carousel-translate-x", `${vertical ? 0 : rtl ? -translation : translation}px`);
-      this.#setItemStyle(item, "--_carousel-translate-y", `${vertical ? translation : 0}px`);
-      this.#setItemStyle(item, "--_carousel-inset-x", `${vertical ? 0 : inset}px`);
-      this.#setItemStyle(item, "--_carousel-inset-y", `${vertical ? inset : 0}px`);
-      this.#setItemStyle(
-        item,
-        "--_carousel-inset-left",
-        `${vertical ? 0 : inset + (rtl ? trailingClip : leadingClip)}px`,
-      );
+      if (layoutChanged) {
+        this.#setItemStyle(item, "flex-basis", `${layout.itemSize}px`);
+        this.#setItemStyle(item, vertical ? "--_carousel-translate-x" : "--_carousel-translate-y", "0px");
+        this.#setItemStyle(item, vertical ? "--_carousel-inset-x" : "--_carousel-inset-y", "0px");
+      }
 
-      this.#setItemStyle(
-        item,
-        "--_carousel-inset-right",
-        `${vertical ? 0 : inset + (rtl ? leadingClip : trailingClip)}px`,
-      );
+      if (last?.translation !== translation) {
+        this.#setItemStyle(
+          item,
+          vertical ? "--_carousel-translate-y" : "--_carousel-translate-x",
+          `${rtl ? -translation : translation}px`,
+        );
+      }
 
-      this.#setItemStyle(item, "--_carousel-item-opacity", vertical || size > leadingClip + trailingClip ? "1" : "0");
+      if (insetChanged) {
+        this.#setItemStyle(item, vertical ? "--_carousel-inset-y" : "--_carousel-inset-x", `${inset}px`);
+        this.#setItemStyle(
+          item,
+          "--_carousel-clip",
+          vertical
+            ? `inset(${inset}px 0 round var(--_carousel-clip-shape, var(--m3e-carousel-item-shape, var(--md-sys-shape-corner-extra-large, var(--md-sys-shape-corner-value-extra-large, 28px)))))`
+            : `inset(0 ${inset}px round var(--_carousel-clip-shape, var(--m3e-carousel-item-shape, var(--md-sys-shape-corner-extra-large, var(--md-sys-shape-corner-value-extra-large, 28px)))))`,
+        );
+      }
 
-      this.#setItemStyle(
-        item,
-        "--_carousel-title-opacity",
-        vertical || uncontained
-          ? "1"
-          : `${Math.min(1, Math.max(0, (size - layout.mediumSize) / (layout.itemSize - layout.mediumSize)))}`,
-      );
+      if (insetChanged || edgesChanged) {
+        this.#setItemStyle(
+          item,
+          "--_carousel-inset-left",
+          `${vertical ? 0 : inset + (rtl ? trailingClip : leadingClip)}px`,
+        );
+        this.#setItemStyle(
+          item,
+          "--_carousel-inset-right",
+          `${vertical ? 0 : inset + (rtl ? leadingClip : trailingClip)}px`,
+        );
+      }
 
-      this.#setItemStyle(
-        item,
-        "--_carousel-subtitle-opacity",
-        vertical || uncontained
-          ? "1"
-          : `${Math.min(1, Math.max(0, (size - layout.smallSize) / (layout.mediumSize - layout.smallSize)))}`,
-      );
+      if (last?.opacity !== frame.opacity) {
+        this.#setItemStyle(item, "--_carousel-item-opacity", `${frame.opacity}`);
+      }
 
-      this.#setItemStyle(item, "--_carousel-surface-left", `${surfaceLeft}px`);
-      this.#setItemStyle(item, "--_carousel-surface-right", `${surfaceRight}px`);
+      if (last?.titleOpacity !== frame.titleOpacity) {
+        this.#setItemStyle(item, "--_carousel-title-opacity", `${frame.titleOpacity}`);
+      }
 
-      // Only cut edges clip feedback; leave the rest of the viewport available for shadows and focus rings.
-      this.#setItemStyle(
-        item,
-        "--_carousel-surface-clip",
-        surfaceLeft > 0 || surfaceRight > 0
-          ? `inset(${-feedbackHeight}px ${surfaceRight > 0 ? 0 : -feedbackWidth}px ${-feedbackHeight}px ${surfaceLeft > 0 ? 0 : -feedbackWidth}px)`
-          : "none",
-      );
+      if (last?.subtitleOpacity !== frame.subtitleOpacity) {
+        this.#setItemStyle(item, "--_carousel-subtitle-opacity", `${frame.subtitleOpacity}`);
+      }
 
-      this.#setItemStyle(
-        item,
-        "--_carousel-clip",
-        vertical
-          ? `inset(${inset}px 0 round var(--_carousel-clip-shape, var(--m3e-carousel-item-shape, var(--md-sys-shape-corner-extra-large, var(--md-sys-shape-corner-value-extra-large, 28px)))))`
-          : `inset(0 ${inset}px round var(--_carousel-clip-shape, var(--m3e-carousel-item-shape, var(--md-sys-shape-corner-extra-large, var(--md-sys-shape-corner-value-extra-large, 28px)))))`,
-      );
+      if (layoutChanged || (uncontained && edgesChanged)) {
+        const surfaceLeft = uncontained ? (rtl ? trailingClip : leadingClip) : 0;
+        const surfaceRight = uncontained ? (rtl ? leadingClip : trailingClip) : 0;
+        this.#setItemStyle(item, "--_carousel-surface-left", `${surfaceLeft}px`);
+        this.#setItemStyle(item, "--_carousel-surface-right", `${surfaceRight}px`);
+
+        // Only cut edges clip feedback; leave the rest of the viewport available for shadows and focus rings.
+        this.#setItemStyle(
+          item,
+          "--_carousel-surface-clip",
+          surfaceLeft > 0 || surfaceRight > 0
+            ? `inset(${-feedbackHeight}px ${surfaceRight > 0 ? 0 : -feedbackWidth}px ${-feedbackHeight}px ${surfaceLeft > 0 ? 0 : -feedbackWidth}px)`
+            : "none",
+        );
+      }
     });
+
+    this.#presentation = { layout, scroll, position, items };
   }
 
   /** @private */
