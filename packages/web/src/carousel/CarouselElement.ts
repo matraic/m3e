@@ -962,6 +962,12 @@ export class M3eCarouselElement extends CarouselElementBase {
   /** @private */
   #handleScroll(): void {
     this.#renderItems();
+    this.#scheduleScrollSettle();
+  }
+
+  /** @private */
+  #scheduleScrollSettle(): void {
+    if (!this.isConnected || this.#flingFrame !== undefined) return;
 
     if (this.#scrollTimer !== undefined) {
       window.clearTimeout(this.#scrollTimer);
@@ -1249,6 +1255,9 @@ export class M3eCarouselElement extends CarouselElementBase {
       this.#setSelectedIndex(index ?? this.#findSelectedIndex(), false, true);
       this.#renderItems();
       this.#repairSwipeFocus();
+
+      // The final frame may not change the rounded native scroll offset enough to produce a scroll event.
+      this.#scheduleScrollSettle();
     };
 
     this.#flingFrame = requestAnimationFrame(step);

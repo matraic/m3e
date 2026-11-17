@@ -741,6 +741,7 @@ test.describe("m3e-carousel", () => {
       }) => {
         await page.emulateMedia({ reducedMotion: "no-preference" });
         await render(carousel(variant, 5, "", true), direction);
+        await geometry(page);
         const host = page.locator("m3e-carousel");
         await host.getByRole("button", { name: "Item 1", exact: true }).focus();
         const forward = variant === "fullscreen" ? "ArrowDown" : direction === "rtl" ? "ArrowLeft" : "ArrowRight";
@@ -3770,6 +3771,84 @@ test.describe("m3e-carousel", () => {
       await page.waitForTimeout(200);
       expect((await geometry(page)).scroll).toBeCloseTo(stopped, 0);
       expect(Math.abs(stopped - Math.round(stopped / 168) * 168)).toBeGreaterThan(3);
+    });
+  }
+
+  for (const [variant, programmatic] of [
+    ["multi-browse", false],
+    ["uncontained", false],
+    ["multi-browse", true],
+  ] as const) {
+    test(`${variant} ${programmatic ? "navigation" : "swipe"} defers scroll-settle timers until its fling ends`, async ({
+      page,
+      render,
+    }) => {
+      await page.emulateMedia({ reducedMotion: "no-preference" });
+      await render(carousel(variant, 8, "", false, "--m3e-carousel-item-width:160px"));
+      await geometry(page);
+      const result = await page.locator("m3e-carousel").evaluate(async (element, programmatic) => {
+        const viewport = element.shadowRoot!.querySelector<HTMLElement>(".viewport")!;
+        const gesture = element.shadowRoot!.querySelector("m3e-swipe-gesture")!;
+        const set = window.setTimeout;
+        const clear = window.clearTimeout;
+        const pending = new Set<number>();
+        const counts = { scheduled: 0, fired: 0 };
+        const blockScroll = (event: Event) => event.stopImmediatePropagation();
+        if (programmatic) viewport.addEventListener("scroll", blockScroll, true);
+        window.setTimeout = function (handler, timeout, ...args) {
+          if (timeout !== 100 || typeof handler !== "function") return set.call(window, handler, timeout, ...args);
+          counts.scheduled++;
+          const timer = set.call(
+            window,
+            () => {
+              pending.delete(timer);
+              counts.fired++;
+              handler.call(window, ...args);
+            },
+            timeout,
+          );
+          pending.add(timer);
+          return timer;
+        };
+        window.clearTimeout = function (timer) {
+          if (timer !== undefined) pending.delete(timer);
+          clear.call(window, timer);
+        };
+        try {
+          if (programmatic) {
+            (element as HTMLElement & { moveTo(index: number): void }).moveTo(3);
+          } else {
+            for (const phase of ["start", "update", "end"]) {
+              gesture.dispatchEvent(
+                new CustomEvent("gesture", {
+                  detail: {
+                    phase,
+                    axis: "x",
+                    translationX: phase === "start" ? 0 : -40,
+                    translationY: 0,
+                    velocityX: -1.5,
+                    velocityY: 0,
+                  },
+                }),
+              );
+            }
+          }
+          await new Promise<void>((resolve) => set.call(window, resolve, 150));
+          const during = { ...counts };
+          await new Promise<void>((resolve) => set.call(window, resolve, 1750));
+          return { during, after: { ...counts }, pending: pending.size, scroll: viewport.scrollLeft };
+        } finally {
+          window.setTimeout = set;
+          window.clearTimeout = clear;
+          viewport.removeEventListener("scroll", blockScroll, true);
+        }
+      }, programmatic);
+      expect(result.during.scheduled).toBe(0);
+      expect(result.after.scheduled).toBeGreaterThan(0);
+      expect(result.after.scheduled).toBeLessThanOrEqual(2);
+      expect(result.after.fired).toBe(1);
+      expect(result.pending).toBe(0);
+      expect(result.scroll).toBeGreaterThan(40);
     });
   }
 
