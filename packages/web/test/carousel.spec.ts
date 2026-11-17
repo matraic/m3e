@@ -156,7 +156,9 @@ test.describe("m3e-carousel", () => {
         </${tag}>
       `);
       const host = page.locator(tag);
-      expect(await host.evaluate((element) => (element as HTMLElement & { selectedIndex: number }).selectedIndex)).toBe(1);
+      expect(await host.evaluate((element) => (element as HTMLElement & { selectedIndex: number }).selectedIndex)).toBe(
+        1,
+      );
       await host.evaluate((element) => {
         element.addEventListener("change", (event) => {
           element.setAttribute("data-change", String((event as CustomEvent<{ index: number }>).detail.index));
@@ -247,7 +249,8 @@ test.describe("m3e-carousel", () => {
 
   for (const direction of ["ltr", "rtl"] as const) {
     test(`m3e-carousel-grid pages within its scroll area in ${direction}`, async ({ page, render }) => {
-      await render(`
+      await render(
+        `
         <div style="height:240px;overflow-y:auto">
           <div id="grid-host">
           <m3e-carousel-grid style="width:600px;--m3e-carousel-grid-item-min-width:180px;--m3e-carousel-grid-item-gap:20px">
@@ -255,7 +258,9 @@ test.describe("m3e-carousel", () => {
           </m3e-carousel-grid>
           </div>
         </div>
-      `, direction);
+      `,
+        direction,
+      );
       if (direction === "rtl") {
         await page.locator("#grid-host").evaluate((element) => {
           const grid = element.querySelector("m3e-carousel-grid")!;
@@ -272,13 +277,19 @@ test.describe("m3e-carousel", () => {
       await page.keyboard.press("PageUp");
       await expect(action(1)).toBeFocused();
 
-      await host.locator("m3e-carousel-item").nth(7).evaluate((item) => item.setAttribute("disabled", ""));
+      await host
+        .locator("m3e-carousel-item")
+        .nth(7)
+        .evaluate((item) => item.setAttribute("disabled", ""));
       await expect(action(7)).toHaveAttribute("aria-disabled", "true");
       await page.keyboard.press("PageDown");
       await expect(action(6)).toBeFocused();
       await action(1).focus();
       for (const index of [6, 8]) {
-        await host.locator("m3e-carousel-item").nth(index).evaluate((item) => item.setAttribute("disabled", ""));
+        await host
+          .locator("m3e-carousel-item")
+          .nth(index)
+          .evaluate((item) => item.setAttribute("disabled", ""));
         await expect(action(index)).toHaveAttribute("aria-disabled", "true");
       }
       await page.keyboard.press("PageDown");
@@ -503,7 +514,10 @@ test.describe("m3e-carousel", () => {
         await page.keyboard.press("PageUp");
         await expect(first).toBeFocused();
 
-        await host.locator("m3e-carousel-item").nth(destination).evaluate((item) => item.setAttribute("disabled", ""));
+        await host
+          .locator("m3e-carousel-item")
+          .nth(destination)
+          .evaluate((item) => item.setAttribute("disabled", ""));
         await expect(host.getByRole("button", { name: `Item ${destination + 1}`, exact: true })).toHaveAttribute(
           "aria-disabled",
           "true",
@@ -1001,7 +1015,10 @@ test.describe("m3e-carousel", () => {
         expect(Math.abs((await extent()) - expected(8))).toBeLessThan(1);
       }
       await swipePhase(page, "cancel", sign * 600);
-      await host.locator("m3e-carousel-item").last().evaluate((element: HTMLElement) => (element.hidden = true));
+      await host
+        .locator("m3e-carousel-item")
+        .last()
+        .evaluate((element: HTMLElement) => (element.hidden = true));
       await expect.poll(async () => Math.abs((await extent()) - expected(7))).toBeLessThan(1);
     });
   }
@@ -1599,6 +1616,7 @@ test.describe("m3e-carousel", () => {
     render,
   }) => {
     await render(carousel("hero", 3));
+    await geometry(page);
     const item = page.locator("m3e-carousel-item").first();
     const action = item.getByRole("button");
     const content = item.locator(".content");
@@ -1628,6 +1646,58 @@ test.describe("m3e-carousel", () => {
       isPrimary: true,
     });
     await expect(action).toHaveCSS("border-radius", "28px");
+  });
+
+  test("retains the pressed corner shape for 225ms after quick mouse and touch taps", async ({ page, render }) => {
+    await render(carousel("hero", 3));
+    await geometry(page);
+    const item = page.locator("m3e-carousel-item").first();
+    const action = item.getByRole("button");
+    await page.clock.install();
+    await page.clock.pauseAt(new Date(Date.now() + 1000));
+
+    for (const pointerType of ["mouse", "touch"]) {
+      await action.evaluate((element, pointerType) => {
+        const options = { pointerId: 42, pointerType, isPrimary: true, button: 0, bubbles: true, composed: true };
+        element.dispatchEvent(new PointerEvent("pointerdown", options));
+        element.dispatchEvent(new PointerEvent("pointerup", options));
+        if (pointerType === "touch") {
+          element.dispatchEvent(new TouchEvent("touchend", { bubbles: true, composed: true }));
+        }
+      }, pointerType);
+      expect(await item.evaluate((element) => element.matches(":state(--pressed)"))).toBe(true);
+      await page.clock.runFor(224);
+      expect(await item.evaluate((element) => element.matches(":state(--pressed)"))).toBe(true);
+      await page.clock.runFor(1);
+      expect(await item.evaluate((element) => element.matches(":state(--pressed)"))).toBe(false);
+    }
+  });
+
+  test("retains a quick Space press shape but cancels it immediately when a swipe starts", async ({ page, render }) => {
+    await render(carousel("hero", 3));
+    await geometry(page);
+    const item = page.locator("m3e-carousel-item").first();
+    const action = item.getByRole("button");
+    await action.focus();
+    await page.clock.install();
+    await page.clock.pauseAt(new Date(Date.now() + 1000));
+    await page.keyboard.press("Space");
+    expect(await item.evaluate((element) => element.matches(":state(--pressed)"))).toBe(true);
+    await page.clock.runFor(224);
+    expect(await item.evaluate((element) => element.matches(":state(--pressed)"))).toBe(true);
+    await page.clock.runFor(1);
+    expect(await item.evaluate((element) => element.matches(":state(--pressed)"))).toBe(false);
+
+    await action.dispatchEvent("pointerdown", {
+      pointerId: 42,
+      pointerType: "touch",
+      isPrimary: true,
+      button: 0,
+    });
+    expect(await item.evaluate((element) => element.matches(":state(--pressed)"))).toBe(true);
+    await swipePhase(page, "start", -10);
+    expect(await item.evaluate((element) => element.matches(":state(--pressed)"))).toBe(false);
+    await swipePhase(page, "cancel", -10);
   });
 
   test("does not activate an item outside its rounded corner", async ({ page, render }) => {
@@ -2833,9 +2903,12 @@ test.describe("m3e-carousel", () => {
         await expect.poll(async () => (await read()).max).toBeGreaterThan(0);
 
         for (const edge of ["start", "end"] as const) {
-          await host.evaluate((element, index) => {
-            (element as HTMLElement & { moveTo(index: number): void }).moveTo(index);
-          }, edge === "start" ? 0 : 4);
+          await host.evaluate(
+            (element, index) => {
+              (element as HTMLElement & { moveTo(index: number): void }).moveTo(index);
+            },
+            edge === "start" ? 0 : 4,
+          );
           await expect
             .poll(async () => {
               const { scroll, max } = await read();
@@ -2886,7 +2959,8 @@ test.describe("m3e-carousel", () => {
     await page.mouse.move(box.x + 120, box.y + 100);
     await page.mouse.down();
     await page.mouse.move(box.x + 220, box.y + 100, { steps: 8 });
-    await expect.poll(() => viewport.evaluate((element) => new DOMMatrixReadOnly(getComputedStyle(element).transform).m41))
+    await expect
+      .poll(() => viewport.evaluate((element) => new DOMMatrixReadOnly(getComputedStyle(element).transform).m41))
       .toBeGreaterThan(0);
     await page.mouse.up();
     await expect.poll(() => viewport.evaluate((element) => element.getAnimations().length)).toBeGreaterThan(0);
@@ -2899,10 +2973,12 @@ test.describe("m3e-carousel", () => {
     await page.mouse.move(box.x + 220, box.y + 100);
     await page.mouse.down();
     await page.mouse.move(box.x + 120, box.y + 100, { steps: 8 });
-    await expect.poll(() => viewport.evaluate((element) => new DOMMatrixReadOnly(getComputedStyle(element).transform).m41))
+    await expect
+      .poll(() => viewport.evaluate((element) => new DOMMatrixReadOnly(getComputedStyle(element).transform).m41))
       .toBeLessThan(0);
     await page.mouse.up();
-    await expect.poll(() => viewport.evaluate((element) => new DOMMatrixReadOnly(getComputedStyle(element).transform).m41))
+    await expect
+      .poll(() => viewport.evaluate((element) => new DOMMatrixReadOnly(getComputedStyle(element).transform).m41))
       .toBeCloseTo(0, 1);
     await expect(host).toHaveAttribute("data-clicks", "1");
     await expect(host).toHaveAttribute("selected-index", "0");
@@ -2916,9 +2992,10 @@ test.describe("m3e-carousel", () => {
     await render(carousel("hero", 5));
     const host = page.locator("m3e-carousel");
     const viewport = host.locator(".viewport");
-    const offset = () =>
-      viewport.evaluate((element) => new DOMMatrixReadOnly(getComputedStyle(element).transform).m41);
-    await expect.poll(async () => (await host.locator("m3e-carousel-item").first().boundingBox())!.width).toBeGreaterThan(0);
+    const offset = () => viewport.evaluate((element) => new DOMMatrixReadOnly(getComputedStyle(element).transform).m41);
+    await expect
+      .poll(async () => (await host.locator("m3e-carousel-item").first().boundingBox())!.width)
+      .toBeGreaterThan(0);
 
     await swipePhase(page, "start", 0);
     await swipePhase(page, "update", 100);
@@ -2983,7 +3060,10 @@ test.describe("m3e-carousel", () => {
     expect((await frame.boundingBox())!.height).toBe(240);
   });
 
-  test("fullscreen follows the carousel height and updates its item geometry when resized", async ({ page, render }) => {
+  test("fullscreen follows the carousel height and updates its item geometry when resized", async ({
+    page,
+    render,
+  }) => {
     await render(carousel("fullscreen", 3));
     const host = page.locator("m3e-carousel");
     const viewport = host.locator(".viewport");
@@ -3021,7 +3101,9 @@ test.describe("m3e-carousel", () => {
   }
 
   test("default carousel height remains 205px when the root font size changes", async ({ page, render }) => {
-    await render(`<style>html { font-size: 20px; }</style>${carousel("multi-browse", 3).replace("height: 200px;", "")}`);
+    await render(
+      `<style>html { font-size: 20px; }</style>${carousel("multi-browse", 3).replace("height: 200px;", "")}`,
+    );
     const host = page.locator("m3e-carousel");
     await expect.poll(async () => (await host.boundingBox())!.height).toBe(205);
     await expect.poll(async () => (await host.locator(".viewport").boundingBox())!.height).toBe(205);
@@ -3417,7 +3499,13 @@ test.describe("m3e-carousel", () => {
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await render(carousel("multi-browse", 8));
     const host = page.locator("m3e-carousel");
-    const layout = createCarouselGeometry({ variant: "multi-browse", viewportSize: 420, gap: 8, count: 8, baseSize: 280 })!;
+    const layout = createCarouselGeometry({
+      variant: "multi-browse",
+      viewportSize: 420,
+      gap: 8,
+      count: 8,
+      baseSize: 280,
+    })!;
     const target = layout.scrollForIndex(7);
     await host.evaluate(
       (element, target) =>
@@ -3438,7 +3526,9 @@ test.describe("m3e-carousel", () => {
       target,
     );
     await expect(host).toHaveAttribute("selected-index", "7");
-    await expect.poll(async () => Math.abs((await geometry(page)).scroll - target), { timeout: 3000 }).toBeLessThan(1.5);
+    await expect
+      .poll(async () => Math.abs((await geometry(page)).scroll - target), { timeout: 3000 })
+      .toBeLessThan(1.5);
   });
 
   for (const direction of ["ltr", "rtl"] as const) {
@@ -3570,7 +3660,10 @@ test.describe("m3e-carousel", () => {
     await render(carousel("uncontained", 8, "", false, "--m3e-carousel-item-width:160px"));
     const host = page.locator("m3e-carousel");
     await host.getByRole("button", { name: "Item 1", exact: true }).focus();
-    await host.locator("m3e-carousel-item").nth(1).evaluate((item) => item.setAttribute("disabled", ""));
+    await host
+      .locator("m3e-carousel-item")
+      .nth(1)
+      .evaluate((item) => item.setAttribute("disabled", ""));
     await expect(host.getByRole("button", { name: "Item 2", exact: true })).toHaveAttribute("aria-disabled", "true");
     await expect.poll(async () => (await geometry(page)).items[0].visible).toBeGreaterThan(100);
     await page.waitForTimeout(150);

@@ -176,6 +176,7 @@ export class M3eCarouselItemElement extends LinkButton(Disabled(AttachInternals(
     new PressedController(this, {
       filter: (event) => this.disabled || (event instanceof PointerEvent && (!event.isPrimary || event.button !== 0)),
       isPressedKey: (key) => !this.href && key === " ",
+      minPressedDuration: 225,
       callback: (pressed) => setCustomState(this, "--pressed", pressed && !this.disabled),
     });
 

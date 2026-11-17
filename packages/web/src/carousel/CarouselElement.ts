@@ -262,7 +262,7 @@ export class M3eCarouselElement extends CarouselElementBase {
   readonly #handlePointerEnd = (event: PointerEvent): void => {
     if (event.pointerId !== this.#pressedPointer) return;
 
-    this.#clearPressedPointer();
+    this.#clearPressedPointer(event.type === "pointercancel");
 
     if (
       this.#dragStart ||
@@ -1090,11 +1090,13 @@ export class M3eCarouselElement extends CarouselElementBase {
   }
 
   /** @private */
-  #clearPressedPointer(): void {
+  #clearPressedPointer(cancelPress = true): void {
     this.#pressedPointer = undefined;
     window.removeEventListener("pointerup", this.#handlePointerEnd);
     window.removeEventListener("pointercancel", this.#handlePointerEnd);
-    this.#releaseItemPresses();
+    if (cancelPress) {
+      this.#releaseItemPresses();
+    }
   }
 
   /** @private */
