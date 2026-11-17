@@ -248,6 +248,105 @@ test.describe("m3e-carousel", () => {
   });
 
   for (const direction of ["ltr", "rtl"] as const) {
+    test(`m3e-carousel-grid tracks CSS sizing, fractional thresholds and reconnection in ${direction}`, async ({
+      page,
+      render,
+    }) => {
+      await render(
+        `<div id="grid-container" style="--grid-min:200px;--grid-gap:16px">
+          <m3e-carousel-grid style="width:520px;--m3e-carousel-grid-item-min-width:var(--grid-min);--m3e-carousel-grid-item-gap:var(--grid-gap)">
+            ${Array.from({ length: 7 }, (_, index) => `<m3e-carousel-item>Item ${index + 1}</m3e-carousel-item>`).join("")}
+          </m3e-carousel-grid>
+        </div>`,
+        direction,
+      );
+      const host = page.locator("m3e-carousel-grid");
+      await expect(host).toHaveAttribute("aria-colcount", "2");
+      for (const [width, min, gap, columns] of [
+        ["632px", "200px", "16px", 3],
+        ["631.5px", "200px", "16px", 2],
+        ["631.5px", "25%", "2%", 3],
+        ["631.5px", "calc(50% - 8px)", "16px", 2],
+        ["632px", "200px", "8px 24px", 2],
+        ["648px", "200px", "8px 24px", 3],
+        ["648px", "200px", "8px 2%", 3],
+        ["631.5px", "150%", "0px", 1],
+        ["600.5px", "100px", "0px", 6],
+        ["99px", "100px", "0px", 1],
+        ["750.5px", "4px", "0px", 187],
+        ["750.5px", "1px", "0.5px", 500],
+        ["750.5px", "0.5px", "0px", 750],
+      ] as const) {
+        await host.evaluate(
+          (element, { width, min, gap }) => {
+            (element as HTMLElement).style.width = width;
+            element.parentElement!.style.setProperty("--grid-min", min);
+            element.parentElement!.style.setProperty("--grid-gap", gap);
+          },
+          { width, min, gap },
+        );
+        await expect(host).toHaveAttribute("aria-colcount", `${columns}`);
+        await expect(host.getByRole("row")).toHaveCount(Math.ceil(7 / columns));
+        await expect(host.locator("m3e-carousel-item").nth(Math.min(7, columns) - 1)).toHaveAttribute(
+          "aria-colindex",
+          `${Math.min(7, columns)}`,
+        );
+      }
+      await host.evaluate((element) => {
+        const parent = element.parentElement!;
+        element.remove();
+        (element as HTMLElement).style.width = "632px";
+        parent.style.setProperty("--grid-min", "200px");
+        parent.style.setProperty("--grid-gap", "16px");
+        parent.append(element);
+      });
+      await expect(host).toHaveAttribute("aria-colcount", "3");
+      await expect(host.getByRole("row")).toHaveCount(3);
+    });
+  }
+
+  test("m3e-carousel-grid updates simultaneous grids and inherited sizing without forcing layout", async ({
+    page,
+    render,
+  }) => {
+    await render(`
+      <div id="grid-container" style="--m3e-carousel-grid-item-min-width:200px;--m3e-carousel-grid-item-gap:16px">
+        ${Array.from(
+          { length: 3 },
+          () => `
+          <m3e-carousel-grid style="width:520px">
+            ${Array.from({ length: 7 }, (_, index) => `<m3e-carousel-item>Item ${index + 1}</m3e-carousel-item>`).join("")}
+          </m3e-carousel-grid>`,
+        ).join("")}
+      </div>
+    `);
+    for (const host of await page.locator("m3e-carousel-grid").all()) {
+      await expect(host).toHaveAttribute("aria-colcount", "2");
+    }
+    await traceLayouts(page, () =>
+      page.locator("#grid-container").evaluate(async (container) => {
+        const frame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+        await frame();
+        await frame();
+        for (const width of ["632px", "631.5px"]) {
+          for (const grid of container.querySelectorAll<HTMLElement>("m3e-carousel-grid")) {
+            grid.style.width = width;
+          }
+          await frame();
+          await frame();
+        }
+        container.style.setProperty("--m3e-carousel-grid-item-min-width", "25%");
+        container.style.setProperty("--m3e-carousel-grid-item-gap", "8px 2%");
+        await frame();
+        await frame();
+      }),
+    );
+    for (const host of await page.locator("m3e-carousel-grid").all()) {
+      await expect(host).toHaveAttribute("aria-colcount", "3");
+    }
+  });
+
+  for (const direction of ["ltr", "rtl"] as const) {
     test(`m3e-carousel-grid pages within its scroll area in ${direction}`, async ({ page, render }) => {
       await render(
         `

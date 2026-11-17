@@ -42,14 +42,24 @@ export const CarouselGridStyle: CSSResultGroup = css`
     inset-block-start: 0;
     inset-inline-start: 0;
     display: grid;
+    grid-template-columns: 0 minmax(0, 1fr);
+    gap: ${CarouselGridToken.itemGap};
     inline-size: 100%;
     block-size: 1px;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, ${CarouselGridToken.itemMinWidth}), 1fr));
-    gap: ${CarouselGridToken.itemGap};
     visibility: hidden;
     pointer-events: none;
   }
   .collector {
     display: none;
+  }
+  .item-width-probe {
+    position: absolute;
+    inline-size: min(100%, ${CarouselGridToken.itemMinWidth});
+    block-size: 1px;
+  }
+  .gap-probe {
+    grid-column: 2;
+    min-inline-size: 0;
+    block-size: 1px;
   }
 `;

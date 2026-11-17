@@ -67,10 +67,13 @@ export class M3eCarouselGridElement extends CarouselElementBase {
   static override styles: CSSResultGroup = CarouselGridStyle;
 
   /** @private */ @query(".column-probe") private _columnProbe!: HTMLElement;
+  /** @private */ @query(".item-width-probe") private _itemWidthProbe!: HTMLElement;
+  /** @private */ @query(".gap-probe") private _gapProbe!: HTMLElement;
 
   /** @private */ #items: M3eCarouselItemElement[] = [];
   /** @private */ #columns = 1;
 
+  /** @private */ readonly #probeSizes = new Map<Element, number>();
   /** @private */ #resizeObserver?: ResizeObserver;
   /** @private */ #managedSlots = new Map<M3eCarouselItemElement, { original: string | null; assigned: string }>();
   /** @private */ #generatedColumnIndices = new WeakMap<M3eCarouselItemElement, string>();
@@ -110,6 +113,7 @@ export class M3eCarouselGridElement extends CarouselElementBase {
     super.disconnectedCallback();
 
     this.#resizeObserver?.disconnect();
+    this.#probeSizes.clear();
 
     for (const [item, slot] of this.#managedSlots) {
       this.#restoreSlot(item, slot);
@@ -153,7 +157,10 @@ export class M3eCarouselGridElement extends CarouselElementBase {
     }
 
     return html`
-      <div class="column-probe" aria-hidden="true"></div>
+      <div class="column-probe" aria-hidden="true">
+        <div class="item-width-probe"></div>
+        <div class="gap-probe"></div>
+      </div>
       <div
         class="collection"
         tabindex="-1"
@@ -196,20 +203,37 @@ export class M3eCarouselGridElement extends CarouselElementBase {
         return;
       }
 
-      this.#resizeObserver = new ResizeObserver(() => this.#updateColumns());
+      this.#resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const size: ResizeObserverSize = Array.isArray(entry.contentBoxSize)
+            ? entry.contentBoxSize[0]
+            : entry.contentBoxSize;
+          this.#probeSizes.set(entry.target, size.inlineSize);
+        }
+
+        this.#updateColumns();
+      });
     }
 
     this.#resizeObserver.observe(this._columnProbe);
-    this.#updateColumns();
+    this.#resizeObserver.observe(this._itemWidthProbe);
+    this.#resizeObserver.observe(this._gapProbe);
   }
 
   /** @private */
   #updateColumns(): void {
-    if (!this._columnProbe) {
+    const width = this.#probeSizes.get(this._columnProbe);
+    const itemWidth = this.#probeSizes.get(this._itemWidthProbe);
+    const gapProbeWidth = this.#probeSizes.get(this._gapProbe);
+
+    if (!width || itemWidth === undefined || gapProbeWidth === undefined) {
       return;
     }
 
-    const columns = getComputedStyle(this._columnProbe).gridTemplateColumns.split(/\s+/).filter(Boolean).length;
+    // The second probe track occupies the container width minus its column gap.
+    const gap = Math.max(0, width - gapProbeWidth);
+    // Match auto-fill's minimum track sizing, including its 1px floor for counting tracks.
+    const columns = Math.max(1, Math.floor((width + gap) / (Math.max(1, itemWidth) + gap)));
 
     if (!columns || columns === this.#columns) {
       return;
