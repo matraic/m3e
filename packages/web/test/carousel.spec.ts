@@ -3245,6 +3245,43 @@ test.describe("m3e-carousel", () => {
     await expect.poll(async () => (await geometry(page)).scroll).toBeGreaterThan(0);
   });
 
+  for (const variant of ["hero", "hero-centered", "multi-browse"] as const) {
+    for (const direction of ["ltr", "rtl"] as const) {
+      test(`${variant} advances after a short fast ${direction} touch swipe`, async ({ page, render }) => {
+        await page.emulateMedia({ reducedMotion: "no-preference" });
+        await render(carousel(variant, 8), direction);
+        await geometry(page);
+        const host = page.locator("m3e-carousel");
+        await host.locator(".viewport").evaluate((element, direction) => {
+          element.setPointerCapture = () => {};
+          element.hasPointerCapture = () => false;
+          const sign = direction === "rtl" ? 1 : -1;
+          for (const [type, distance, timestamp] of [
+            ["pointerdown", 0, 1000],
+            ["pointermove", 15, 1020],
+            ["pointerup", 40, 1030],
+          ] as const) {
+            const event = new PointerEvent(type, {
+              bubbles: true,
+              composed: true,
+              pointerId: 1,
+              pointerType: "touch",
+              isPrimary: true,
+              button: 0,
+              buttons: type === "pointerup" ? 0 : 1,
+              clientX: 210 + sign * distance,
+              clientY: 100,
+            });
+            Object.defineProperty(event, "timeStamp", { value: timestamp });
+            element.dispatchEvent(event);
+          }
+        }, direction);
+        await expect.poll(async () => Number(await host.getAttribute("selected-index"))).toBeGreaterThan(0);
+        await expect.poll(async () => (await geometry(page)).scroll).toBeGreaterThan(40);
+      });
+    }
+  }
+
   for (const variant of ["hero", "hero-centered"] as const) {
     for (const direction of ["ltr", "rtl"] as const) {
       test(`${variant} settles according to drag distance in ${direction}`, async ({ page, render }) => {
@@ -3478,6 +3515,15 @@ test.describe("m3e-carousel", () => {
     await expect.poll(async () => (await geometry(page)).scroll).toBeCloseTo(75, 0);
     await page.waitForTimeout(200);
     expect((await geometry(page)).scroll).toBeCloseTo(75, 0);
+  });
+
+  test("applies final release movement to an uncontained drag without a fling", async ({ page, render }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await render(carousel("uncontained", 8, "", false, "--m3e-carousel-item-width:160px"));
+    await geometry(page);
+    await swipePhase(page, "start", -15);
+    await swipePhase(page, "end", -80, "x", -0.5);
+    expect((await geometry(page)).scroll).toBeCloseTo(80, 0);
   });
 
   for (const direction of ["ltr", "rtl"] as const) {

@@ -1308,7 +1308,7 @@ export class M3eCarouselElement extends CarouselElementBase {
     const requested = drag.scroll - delta;
     const target = Math.max(0, Math.min(this.#layout.maxScroll, requested));
 
-    if (detail.phase === "start" || detail.phase === "update") {
+    if (detail.phase === "start" || detail.phase === "update" || detail.phase === "end") {
       this.#setOverscroll(requested - target, vertical, rtl);
       this._viewport.scrollTo({
         top: vertical ? target : 0,
@@ -1317,7 +1317,7 @@ export class M3eCarouselElement extends CarouselElementBase {
       });
       this.#renderItems();
 
-      return;
+      if (detail.phase !== "end") return;
     }
 
     this.#dragStart = undefined;
@@ -1360,6 +1360,15 @@ export class M3eCarouselElement extends CarouselElementBase {
     let index = this.#findSelectedIndex();
 
     if (detail.phase === "end" && (this.variant === "multi-browse" || vertical)) {
+      index = drag.index + (delta < 0 ? 1 : -1);
+    }
+
+    if (
+      detail.phase === "end" &&
+      (this.variant === "hero" || this.variant === "hero-centered") &&
+      index === drag.index &&
+      delta !== 0
+    ) {
       index = drag.index + (delta < 0 ? 1 : -1);
     }
 
