@@ -2,6 +2,12 @@ window.addEventListener("beforeunload", () =>
   window.parent.document.querySelector(".docs-frame")?.setAttribute("hidden", "true"),
 );
 
+document.addEventListener("contextmenu", (event) => {
+  if (event.composedPath().some((target) => target instanceof HTMLImageElement)) {
+    event.preventDefault();
+  }
+});
+
 window.addEventListener("DOMContentLoaded", async () => {
   if (window.parent && window.parent.document && window.parent.document.documentElement) {
     document.documentElement.dir = window.parent.document.documentElement.dir;

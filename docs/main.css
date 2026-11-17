@@ -17,6 +17,11 @@ body.loaded {
   visibility: visible;
   opacity: 1;
 }
+img {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
 @starting-style {
   body.loaded {
     opacity: 0;
