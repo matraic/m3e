@@ -21,6 +21,7 @@ export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
   PanGestureRecognizer
 > {
   /** @private */ #state?: SwipeGestureState;
+  /** @private */ #movement?: PanGestureDetail;
 
   /**
    * Initializes a new instance of this class.
@@ -93,6 +94,7 @@ export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
         // On start, initialize state, emit start and defer input. Input is deferred so that the
         // recognizer can be informed when another gesture accepts the input.
 
+        this.#movement = detail;
         this.#state = { detail, direction: this.#computeDirection(detail), axis: detail.axis };
         this._emit(this.#createDetail("start", this.#state));
         this._defer(detail.inputId);
@@ -102,6 +104,9 @@ export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
         // On update (pointer move), update state, and validate whether the started gesture should be cancelled.
         const previousAxis = this.#state?.axis ?? detail.axis;
         const newAxis = detail.axis;
+        if (detail.clientX !== this.#movement?.clientX || detail.clientY !== this.#movement?.clientY) {
+          this.#movement = detail;
+        }
         this.#state = { detail, direction: this.#computeDirection(detail), axis: newAxis };
 
         if (this.options.directionGracePeriod > 0 && detail.duration > this.options.directionGracePeriod) {
@@ -126,10 +131,23 @@ export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
       }
 
       case "end": {
-        // Include any pause after the last movement when evaluating release velocity.
-        const lastMovement = this.#state?.detail.timestamp ?? detail.timestamp;
-        const elapsed = detail.deltaTime + Math.max(0, detail.timestamp - lastMovement);
-        const releaseSpeed = elapsed > 0 ? (detail.speed * detail.deltaTime) / elapsed : 0;
+        // Include release coordinates and pauses without treating stationary events as new motion.
+        const movement = this.#movement ?? detail;
+        const elapsed = movement.deltaTime + Math.max(0, detail.timestamp - movement.timestamp);
+        const velocityX = elapsed > 0 ? movement.deltaX / elapsed : 0;
+        const velocityY = elapsed > 0 ? movement.deltaY / elapsed : 0;
+        const totalDeltaX = detail.clientX - detail.startClientX;
+        const totalDeltaY = detail.clientY - detail.startClientY;
+        detail = {
+          ...detail,
+          totalDeltaX,
+          totalDeltaY,
+          totalDisplacement: Math.hypot(totalDeltaX, totalDeltaY),
+          axis: Math.abs(totalDeltaX) >= Math.abs(totalDeltaY) ? "x" : "y",
+          velocityX,
+          velocityY,
+          speed: Math.hypot(velocityX, velocityY),
+        };
         this.#state = { detail, direction: this.#computeDirection(detail), axis: detail.axis };
         // Cancel if there is not enough displacement.
         if (detail.totalDisplacement < this.options.minDisplacement) {
@@ -139,7 +157,7 @@ export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
         }
 
         // Cancel if not enough velocity.
-        if (releaseSpeed < this.options.minVelocity) {
+        if (detail.speed < this.options.minVelocity) {
           this._emit(this.#createDetail("cancel", this.#state));
           this.#releaseAndReset(detail.inputId);
           break;
@@ -175,6 +193,7 @@ export class SwipeGestureRecognizer extends DelegatingGestureRecognizerBase<
   override reset(): void {
     super.reset();
     this.#state = undefined;
+    this.#movement = undefined;
   }
 
   /** @private */

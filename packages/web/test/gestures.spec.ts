@@ -267,6 +267,58 @@ test.describe("gesture elements", () => {
     });
   }
 
+  for (const [name, moves, releaseX, releaseTime, expected, velocity] of [
+    ["movement at release", [[55, 1020]], 100, 1030, "end", 0.5],
+    [
+      "a stationary final move",
+      [
+        [100, 1020],
+        [100, 1025],
+      ],
+      100,
+      1030,
+      "end",
+      2,
+    ],
+    [
+      "a stationary move after a pause",
+      [
+        [100, 1020],
+        [100, 1270],
+      ],
+      100,
+      1275,
+      "cancel",
+      60 / 275,
+    ],
+  ] as const) {
+    test(`evaluates swipe release velocity with ${name}`, async ({ page, render }) => {
+      await render(`
+        <div id="target" style="width: 200px; height: 100px"></div>
+        <m3e-swipe-gesture for="target"></m3e-swipe-gesture>
+      `);
+      await page.locator("m3e-swipe-gesture").evaluate((gesture) => {
+        gesture.addEventListener("gesture", (event) => {
+          const detail = (event as CustomEvent<{ phase: string; translationX: number; velocityX: number }>).detail;
+          gesture.setAttribute("data-phase", detail.phase);
+          gesture.setAttribute("data-translation", String(detail.translationX));
+          gesture.setAttribute("data-velocity", String(detail.velocityX));
+        });
+      });
+
+      await dispatchPointer(page, "pointerdown", 1, 40, 50, 1000);
+      for (const [x, timestamp] of moves) {
+        await dispatchPointer(page, "pointermove", 1, x, 50, timestamp);
+      }
+      await dispatchPointer(page, "pointerup", 1, releaseX, 50, releaseTime);
+
+      const gesture = page.locator("m3e-swipe-gesture");
+      await expect(gesture).toHaveAttribute("data-phase", expected);
+      await expect(gesture).toHaveAttribute("data-translation", "60");
+      expect(Number(await gesture.getAttribute("data-velocity"))).toBeCloseTo(velocity, 5);
+    });
+  }
+
   test("cancels a swipe when its pointer is cancelled before completion", async ({ page, render }) => {
     await render(`
       <div id="target" style="width: 200px; height: 100px"></div>
