@@ -24,6 +24,7 @@ export const CarouselStyle: CSSResultGroup = css`
     --_carousel-inline-gutter: 0px;
   }
   .viewport-frame {
+    contain: layout style paint;
     block-size: 100%;
     overflow: hidden;
     overflow: clip;

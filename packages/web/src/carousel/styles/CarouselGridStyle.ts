@@ -16,6 +16,7 @@ export const CarouselGridStyle: CSSResultGroup = css`
     display: none;
   }
   .collection {
+    contain: layout;
     display: flex;
     flex-direction: column;
     gap: ${CarouselGridToken.itemGap};

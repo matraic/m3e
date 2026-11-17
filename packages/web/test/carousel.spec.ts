@@ -207,6 +207,10 @@ test.describe("m3e-carousel", () => {
       return width / height;
     });
     expect(aspectRatio).toBeCloseTo(4 / 3, 1);
+    const gridBounds = (await host.boundingBox())!;
+    const lastItemBounds = (await items.last().boundingBox())!;
+    expect(gridBounds.height).toBeCloseTo(lastItemBounds.y + lastItemBounds.height - gridBounds.y, 0);
+    expect((await page.locator("#after").boundingBox())!.y).toBeGreaterThanOrEqual(gridBounds.y + gridBounds.height);
 
     await host.evaluate((element) => {
       element.addEventListener("change", (event) => {
@@ -1201,13 +1205,16 @@ test.describe("m3e-carousel", () => {
     }
   }
 
-  for (const variant of ["hero", "uncontained"]) {
-    test(`${variant} renders shadows and the animated outward focus ring in the default gutters`, async ({
-      page,
-      render,
-    }) => {
-      await render(`<button id="before">Before</button>${carousel(variant, 1, "", true)}`);
-      const host = page.locator("m3e-carousel");
+  for (const variant of ["hero", "uncontained", "grid"]) {
+    const boundary = variant === "grid" ? "outside its bounds" : "in the default gutters";
+    test(`${variant} renders shadows and the animated outward focus ring ${boundary}`, async ({ page, render }) => {
+      const tag = variant === "grid" ? "m3e-carousel-grid" : "m3e-carousel";
+      const example =
+        variant === "grid"
+          ? `<m3e-carousel-grid style="width:420px"><m3e-carousel-item>Item 1</m3e-carousel-item></m3e-carousel-grid>`
+          : carousel(variant, 1, "", true);
+      await render(`<button id="before">Before</button>${example}`);
+      const host = page.locator(tag);
       const action = host.getByRole("button");
       await host.evaluate((element: HTMLElement) => {
         element.style.setProperty("--m3e-carousel-item-shape", "0px");
