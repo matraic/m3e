@@ -2,7 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "rootDir": "./src",
-    "outDir": "./dist/src",
+    "outDir": "./dist",
+    "declarationDir": "./dist/src",
     "types": [],
     "paths": {
       "@m3e/web": ["./src"],
