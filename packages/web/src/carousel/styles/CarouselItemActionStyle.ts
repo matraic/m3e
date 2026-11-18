@@ -27,9 +27,6 @@ export const CarouselItemActionStyle: CSSResultGroup = css`
   :host(:hover) {
     --_carousel-item-outline-color: ${CarouselItemToken.hover.outlineColor};
   }
-  :host(:focus) {
-    --_carousel-item-outline-color: ${CarouselItemToken.focus.outlineColor};
-  }
   :host(:active) {
     --_carousel-item-outline-color: ${CarouselItemToken.pressed.outlineColor};
   }

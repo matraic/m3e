@@ -62,7 +62,6 @@ import { CarouselItemStyle } from "./styles";
  * @cssprop --m3e-carousel-item-outline-width - The outline width. Set to 0 to disable it.
  * @cssprop --m3e-carousel-item-outline-color - The resting outline color.
  * @cssprop --m3e-carousel-item-hover-outline-color - The hover outline color.
- * @cssprop --m3e-carousel-item-focus-outline-color - The focus outline color.
  * @cssprop --m3e-carousel-item-pressed-outline-color - The pressed outline color.
  * @cssprop --m3e-carousel-item-disabled-outline-color - The disabled outline color.
  * @cssprop --m3e-carousel-item-disabled-outline-opacity - The disabled outline opacity.

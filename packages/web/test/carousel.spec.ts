@@ -1586,6 +1586,7 @@ test.describe("m3e-carousel", () => {
 
   test("uses spec outline and feedback colors without changing item content dimensions", async ({ page, render }) => {
     await render(`<button id="before">Before</button>${carousel("hero", 1)}`);
+    await geometry(page);
     await page.locator("m3e-carousel").evaluate((element: HTMLElement) => {
       element.style.setProperty("--md-sys-color-outline", "rgb(0, 0, 0)");
       element.style.setProperty("--md-sys-color-on-surface", "rgb(255, 0, 0)");
@@ -1610,7 +1611,7 @@ test.describe("m3e-carousel", () => {
     await page.locator("#before").focus();
     await page.keyboard.press("Tab");
     await expect(action).toBeFocused();
-    await expect.poll(outline).toEqual({ width: "1px", color: "rgb(255, 0, 0)" });
+    await expect.poll(outline).toEqual({ width: "1px", color: "rgb(0, 0, 0)" });
     await expect(item.locator("m3e-state-layer").locator(".layer")).toHaveCSS(
       "background-color",
       "color(srgb 1 0 0 / 0.1)",
@@ -1627,17 +1628,64 @@ test.describe("m3e-carousel", () => {
     await expect.poll(outline).toEqual({ width: "1px", color: "color(srgb 0 0 0 / 0.12)" });
   });
 
+  for (const touch of [false, true]) {
+    test.describe(touch ? "touch outlines" : "mouse outlines", () => {
+      test.use({ hasTouch: touch, isMobile: touch });
+
+      for (const link of [false, true]) {
+        test(`keeps the resting outline after ${touch ? "tapping" : "clicking"} an image ${link ? "link" : "button"}`, async ({
+          page,
+          render,
+        }) => {
+          await render(`
+            <button id="before">Before</button>
+            <m3e-carousel variant="hero" style="width: 420px; height: 200px;
+              --m3e-carousel-item-outline-color: rgb(0, 0, 0);
+              --md-sys-color-on-surface: rgb(255, 0, 0)">
+              <m3e-carousel-item label="Coast" ${link ? 'href="#coast"' : ""}>
+                <img alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='200'%3E%3Crect width='420' height='200' fill='skyblue'/%3E%3C/svg%3E" />
+              </m3e-carousel-item>
+            </m3e-carousel>
+          `);
+          const item = page.locator("m3e-carousel-item");
+          const action = item.getByRole(link ? "link" : "button");
+          await item.evaluate((element) => element.addEventListener("click", (event) => event.preventDefault()));
+          const outline = () =>
+            action.locator(".base").evaluate((element) => getComputedStyle(element, "::after").borderTopColor);
+
+          if (touch) {
+            await action.tap();
+          } else {
+            await action.click();
+          }
+          if (!link) {
+            await expect(action).toBeFocused();
+          }
+          await expect.poll(() => item.evaluate((element) => element.matches(":state(--pressed)"))).toBe(false);
+          await expect.poll(outline).toBe("rgb(0, 0, 0)");
+          await expect(item.locator("m3e-focus-ring").locator(".outline")).not.toHaveClass(/visible/);
+
+          await page.locator("#before").focus();
+          await page.keyboard.press("Tab");
+          await expect(action).toBeFocused();
+          await expect.poll(outline).toBe("rgb(0, 0, 0)");
+          await expect(item.locator("m3e-focus-ring").locator(".outline")).toHaveClass(/visible/);
+        });
+      }
+    });
+  }
+
   test("inherits outline and feedback overrides and supports item-specific ripple overrides", async ({
     page,
     render,
   }) => {
     await render(`<button id="before">Before</button>${carousel("hero", 1)}`);
+    await geometry(page);
     await page.locator("m3e-carousel").evaluate((element: HTMLElement) => {
       const properties = {
         "--m3e-carousel-item-outline-width": "2px",
         "--m3e-carousel-item-outline-color": "rgb(255, 128, 0)",
         "--m3e-carousel-item-hover-outline-color": "rgb(0, 255, 255)",
-        "--m3e-carousel-item-focus-outline-color": "rgb(255, 0, 255)",
         "--m3e-carousel-item-pressed-outline-color": "rgb(0, 255, 0)",
         "--m3e-carousel-item-disabled-outline-color": "rgb(0, 0, 255)",
         "--m3e-carousel-item-disabled-outline-opacity": "50%",
@@ -1666,7 +1714,7 @@ test.describe("m3e-carousel", () => {
     await page.mouse.move(0, 0);
     await page.locator("#before").focus();
     await page.keyboard.press("Tab");
-    await expect.poll(outline).toBe("rgb(255, 0, 255)");
+    await expect.poll(outline).toBe("rgb(255, 128, 0)");
     await expect(item.locator("m3e-state-layer").locator(".layer")).toHaveCSS(
       "background-color",
       "color(srgb 0 1 0 / 0.2)",

@@ -361,7 +361,6 @@ These properties can be set on an individual item or inherited from a carousel o
 | `--m3e-carousel-item-outline-width`               | Outline width; set to 0 to disable.                       |
 | `--m3e-carousel-item-outline-color`               | Resting outline color.                                    |
 | `--m3e-carousel-item-hover-outline-color`         | Hover outline color.                                      |
-| `--m3e-carousel-item-focus-outline-color`         | Focus outline color.                                      |
 | `--m3e-carousel-item-pressed-outline-color`       | Pressed outline color.                                    |
 | `--m3e-carousel-item-disabled-outline-color`      | Disabled outline color.                                   |
 | `--m3e-carousel-item-disabled-outline-opacity`    | Disabled outline opacity.                                 |

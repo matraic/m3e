@@ -55,7 +55,6 @@ export const CarouselItemToken = {
   },
 
   focus: {
-    outlineColor: unsafeCSS(`var(--m3e-carousel-item-focus-outline-color, ${DesignToken.color.onSurface})`),
     stateLayerColor: unsafeCSS(`var(--m3e-carousel-item-focus-state-layer-color, ${DesignToken.color.onSurface})`),
     stateLayerOpacity: unsafeCSS(
       `var(--m3e-carousel-item-focus-state-layer-opacity, ${DesignToken.state.focusStateLayerOpacity})`,
