@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>M3E Changelog</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="M3E commit history grouped by GitHub release." />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="main.css" rel="stylesheet" />
+    <link href="changelog.css" rel="stylesheet" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.1/dist/all.min.js"></script>
+    <script src="main.js"></script>
+    <script type="module" src="changelog.js"></script>
+  </head>
+  <body>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading variant="display" size="large" level="1">Changelog</m3e-heading>
+        <p>
+          Commit history pulled directly from GitHub and grouped by release, excluding chore, test, documentation,
+          refactoring, and release commits. Expand a release to load its changes. You can also
+          <a href="https://github.com/matraic/m3e/releases" target="_blank" rel="noopener noreferrer"
+            >browse releases on GitHub</a
+          >.
+        </p>
+        <m3e-action-list id="releases" variant="segmented" hidden></m3e-action-list>
+        <div id="release-status" role="status"></div>
+        <m3e-button id="load-releases" variant="outlined" hidden>Load more releases</m3e-button>
+        <noscript><p>Enable JavaScript to load the changelog from GitHub.</p></noscript>
+      </m3e-content-pane>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+.release {
+  overflow-wrap: anywhere;
+}
+.loading {
+  display: block;
+  margin: 16px auto;
+}
+.release-label {
+  display: inline-block;
+  max-inline-size: 100%;
+}
+.release > .loading {
+  flex: none;
+  margin: 0;
+  --m3e-loading-indicator-active-indicator-size: 24px;
+}
+#load-releases {
+  margin-block: 16px;
+}
+#load-releases[hidden] {
+  display: none;
+}

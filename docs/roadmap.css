@@ -1,0 +1,7 @@
+.roadmap-section {
+  margin-block-start: 32px;
+  overflow-wrap: anywhere;
+}
+.roadmap-section > m3e-heading {
+  margin-block-end: 12px;
+}
