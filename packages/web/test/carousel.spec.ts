@@ -131,7 +131,7 @@ const swipePhase = (
   velocity = 0,
 ) =>
   page.locator("m3e-carousel").evaluate(
-    (element, { phase, translation, axis, velocity }) => {
+    async (element, { phase, translation, axis, velocity }) => {
       element.shadowRoot!.querySelector("m3e-swipe-gesture")!.dispatchEvent(
         new CustomEvent("gesture", {
           detail: {
@@ -155,6 +155,7 @@ const swipePhase = (
           },
         }),
       );
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
     },
     { phase, translation, axis, velocity },
   );
@@ -948,6 +949,7 @@ test.describe("m3e-carousel", () => {
   for (const direction of ["ltr", "rtl"] as const) {
     test(`uncontained clips the original rounded surface while resizing in ${direction}`, async ({ page, render }) => {
       await render(carousel("uncontained", 5, "", true, "--m3e-carousel-item-width:160px"), direction);
+      await geometry(page);
       const host = page.locator("m3e-carousel");
       const viewport = host.locator(".viewport");
       const items = host.locator("m3e-carousel-item");
@@ -1174,8 +1176,16 @@ test.describe("m3e-carousel", () => {
             let overflow = Number(element.dataset.frameOverflow);
             for (const item of items) {
               if (getComputedStyle(item).opacity === "0") continue;
-              const rect = item.shadowRoot!.querySelector(".action")!.getBoundingClientRect();
-              overflow = Math.max(overflow, bounds.left + 16 - rect.left, rect.right - bounds.right + 16);
+              const action = item.shadowRoot!.querySelector(".action")!;
+              const rect = action.getBoundingClientRect();
+              const clips = getComputedStyle(action).clipPath.match(/-?[\d.]+px/g)?.map(Number.parseFloat) ?? [0];
+              const right = Math.max(0, clips[1] ?? clips[0]);
+              const left = Math.max(0, clips[3] ?? clips[1] ?? clips[0]);
+              overflow = Math.max(
+                overflow,
+                bounds.left + 16 - rect.left - left,
+                rect.right - right - bounds.right + 16,
+              );
             }
             element.dataset.frameOverflow = String(overflow);
             element.dataset.frameCount = String(Number(element.dataset.frameCount) + 1);
@@ -2293,6 +2303,108 @@ test.describe("m3e-carousel", () => {
     expect(result.items[1].left - result.items[0].right).toBeCloseTo(8, 0);
   });
 
+  for (const variant of ["multi-browse", "hero", "hero-centered"] as const) {
+    for (const direction of ["ltr", "rtl"] as const) {
+      test(`${variant} preserves rounded surfaces at viewport cuts in ${direction}`, async ({ page, render }) => {
+        await render(carousel(variant, 8, 'selected-index="2"'), direction);
+        await geometry(page);
+        const host = page.locator("m3e-carousel");
+        const viewport = host.locator(".viewport");
+        const layout = createCarouselGeometry({ variant, viewportSize: 420, gap: 8, count: 8, baseSize: 280 })!;
+        const start = layout.scrollForIndex(2);
+        await expect
+          .poll(async () => Math.abs((await viewport.evaluate((element) => Math.abs(element.scrollLeft))) - start))
+          .toBeLessThan(1);
+        const distance = layout.scrollForIndex(3) - start;
+        const cuts = { leading: 0, trailing: 0 };
+        await swipePhase(page, "start", 0);
+        for (const fraction of [0.05, 0.25, 0.75, 0.95, 0.75, 0.25, 0.05]) {
+          await swipePhase(page, "update", (direction === "ltr" ? -1 : 1) * distance * fraction);
+          const scroll = await viewport.evaluate((element) => Math.abs(element.scrollLeft));
+          const expected = layout.itemsAt(scroll);
+          for (const [index, item] of expected.entries()) {
+            const left = item.position - item.size / 2;
+            const right = item.position + item.size / 2;
+            const visible = Math.min(420, right) - Math.max(0, left);
+            if (visible <= 1 || visible >= item.size - 1) continue;
+            cuts[left < 0 ? "leading" : "trailing"]++;
+            const action = host.locator("m3e-carousel-item").nth(index).getByRole("button");
+            const bounds = (await action.boundingBox())!;
+            expect(bounds.width).toBeCloseTo(item.size, 0);
+            expect(bounds.width).toBeGreaterThanOrEqual(layout.smallSize - 0.1);
+            expect((await action.locator(".base").boundingBox())!.width).toBeCloseTo(item.size, 0);
+            expect((await action.locator(".content").boundingBox())!.width).toBeCloseTo(layout.itemSize, 0);
+            const hits = await action.evaluate(
+              (element, { cutLeft, visible }) => {
+                const rect = element.getBoundingClientRect();
+                const item = (element.getRootNode() as ShadowRoot).host;
+                const inner = cutLeft ? rect.right - 1 : rect.left + 1;
+                const outside = cutLeft ? rect.right - visible - 1 : rect.left + visible + 1;
+                return [
+                  [inner, rect.top + 1],
+                  [inner, rect.bottom - 1],
+                  [inner, rect.top + rect.height / 2],
+                  [outside, rect.top + rect.height / 2],
+                ].map(([x, y]) => document.elementFromPoint(x, y) === item);
+              },
+              { cutLeft: (left < 0) === (direction === "ltr"), visible },
+            );
+            expect(hits).toEqual([false, false, true, false]);
+          }
+        }
+        await swipePhase(page, "cancel", 0);
+        expect(cuts.leading).toBeGreaterThan(0);
+        expect(cuts.trailing).toBeGreaterThan(0);
+      });
+    }
+  }
+
+  for (const direction of ["ltr", "rtl"] as const) {
+    test(`multi-browse clips the first action without shrinking it below small size in ${direction}`, async ({
+      page,
+      render,
+    }) => {
+      await render(carousel("multi-browse"), direction);
+      await geometry(page);
+      const layout = createCarouselGeometry({
+        variant: "multi-browse",
+        viewportSize: 420,
+        gap: 8,
+        count: 8,
+        baseSize: 280,
+      })!;
+      const action = page.locator("m3e-carousel-item").first().getByRole("button");
+      const surface = action.locator(".base");
+      let previousWidth = (await surface.boundingBox())!.width;
+      let partiallyClipped = false;
+      const viewport = (await page.locator("m3e-carousel").locator(".viewport").boundingBox())!;
+      await swipePhase(page, "start", 0);
+      for (const fraction of [0.25, 0.5, 0.75, 0.9, 0.98, 1]) {
+        await swipePhase(
+          page,
+          "update",
+          (direction === "ltr" ? -1 : 1) * layout.scrollForIndex(1) * fraction,
+        );
+        const bounds = (await action.boundingBox())!;
+        const width = (await surface.boundingBox())!.width;
+        const visible =
+          Math.min(bounds.x + bounds.width, viewport.x + viewport.width) - Math.max(bounds.x, viewport.x);
+        partiallyClipped ||= visible > 1 && visible < layout.smallSize - 1;
+        expect(bounds.width).toBeGreaterThanOrEqual(layout.smallSize - 0.1);
+        expect(width).toBeLessThanOrEqual(previousWidth + 0.1);
+        expect(width).toBeGreaterThanOrEqual(layout.smallSize - 0.1);
+        if (width > layout.smallSize + 0.1) {
+          expect(visible).toBeCloseTo(bounds.width, 0);
+          await expect(action).toHaveCSS("clip-path", "none");
+        }
+        previousWidth = width;
+      }
+      expect(previousWidth).toBeCloseTo(layout.smallSize, 0);
+      expect(partiallyClipped).toBe(true);
+      await swipePhase(page, "cancel", 0);
+    });
+  }
+
   for (const variant of ["hero", "hero-centered"] as const) {
     for (const direction of ["ltr", "rtl"] as const) {
       test(`${variant} adds large items on wider screens in ${direction}`, async ({ page, render }) => {
@@ -2528,11 +2640,14 @@ test.describe("m3e-carousel", () => {
         await page.mouse.move(startX, box.y + 100);
         await page.mouse.down();
         await page.mouse.move(startX + (direction === "ltr" ? -distance : distance), box.y + 100, { steps: 8 });
-        await expect.poll(async () => (await geometry(page)).scroll).toBeCloseTo(distance, 0);
+        await expect.poll(async () => Math.abs((await geometry(page)).scroll - distance)).toBeLessThan(2);
         const during = await geometry(page);
-        const halfwaySize = (initial.items[0].visible + initial.items[1].visible) / 2;
-        expect(during.items[0].visible).toBeCloseTo(halfwaySize, 0);
-        expect(during.items[1].visible).toBeCloseTo(halfwaySize, 0);
+        const expected = layout.itemsAt(during.scroll);
+        for (const index of [0, 1]) {
+          expect(during.items[index].visible).toBeCloseTo(expected[index].size, 0);
+        }
+        expect(during.items[0].visible).toBeLessThan(initial.items[0].visible);
+        expect(during.items[1].visible).toBeGreaterThan(initial.items[1].visible);
         expect(during.items[0].width).toBeCloseTo(initial.items[0].width, 2);
         expect(during.items[1].width).toBeCloseTo(initial.items[1].width, 2);
         expect(
@@ -2820,7 +2935,7 @@ test.describe("m3e-carousel", () => {
   }) => {
     await render(carousel("uncontained", 32, "", false, "--m3e-carousel-item-width:160px"));
     await geometry(page);
-    const result = await page.locator("m3e-carousel").evaluate((element) => {
+    const result = await page.locator("m3e-carousel").evaluate(async (element) => {
       const viewport = element.shadowRoot!.querySelector<HTMLElement>(".viewport")!;
       const gesture = element.shadowRoot!.querySelector("m3e-swipe-gesture")!;
       const styles = new Set([...element.querySelectorAll<HTMLElement>("m3e-carousel-item")].map((item) => item.style));
@@ -2856,10 +2971,12 @@ test.describe("m3e-carousel", () => {
       };
       try {
         send("update", -40);
+        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
         const updated = { ...counts };
         viewport.dispatchEvent(new Event("scroll"));
         const duplicate = { ...counts };
         send("update", -80);
+        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
         return { updated, duplicate, next: { ...counts }, scroll: viewport.scrollLeft };
       } finally {
         CSSStyleDeclaration.prototype.getPropertyValue = get;
@@ -2969,6 +3086,66 @@ test.describe("m3e-carousel", () => {
         .toBeGreaterThan(80);
     });
   }
+
+  for (const direction of ["ltr", "rtl"] as const) {
+    test(`real pointer dragging avoids forced layout in ${direction}`, async ({ page, render }) => {
+      await page.emulateMedia({ reducedMotion: "no-preference" });
+      await render(carousel("multi-browse", 16, "", true, "width:800px"), direction);
+      await geometry(page);
+      const bounds = await page.locator("m3e-carousel").boundingBox();
+      const y = bounds!.y + bounds!.height / 2;
+      const start = bounds!.x + (direction === "rtl" ? 70 : bounds!.width - 70);
+      const end = bounds!.x + (direction === "rtl" ? bounds!.width - 70 : 70);
+      await page.mouse.move(start, y);
+      const firstItem = page.locator("m3e-carousel-item").first();
+      await traceLayouts(page, async () => {
+        await page.mouse.down();
+        await page.mouse.move(end, y, { steps: 30 });
+        expect(
+          await firstItem.evaluate((element: HTMLElement) => element.style.getPropertyValue("--_carousel-surface-clip")),
+        ).not.toBe("none");
+        await page.mouse.move(start + (direction === "rtl" ? -40 : 40), y, { steps: 30 });
+        await page.mouse.move(start + (direction === "rtl" ? 40 : -40), y, { steps: 30 });
+        expect(
+          await firstItem.evaluate((element: HTMLElement) => element.style.getPropertyValue("--_carousel-surface-clip")),
+        ).toBe("none");
+      });
+      await page.mouse.up();
+      await expect
+        .poll(() =>
+          page.locator("m3e-carousel").locator(".viewport").evaluate((element) => Math.abs(element.scrollLeft)),
+        )
+        .toBeGreaterThan(0);
+    });
+  }
+
+  test("handles rapid reversing drag updates without forcing layout", async ({ page, render }) => {
+    await render(carousel("multi-browse"));
+    await geometry(page);
+    await traceLayouts(page, () =>
+      page.locator("m3e-carousel").evaluate(async (element) => {
+        const gesture = element.shadowRoot!.querySelector("m3e-swipe-gesture")!;
+        const send = (phase: string, distance: number) =>
+          gesture.dispatchEvent(
+            new CustomEvent("gesture", {
+              detail: { phase, axis: "x", translationX: -distance, velocityX: 0, velocityY: 0 },
+            }),
+          );
+        send("start", 0);
+        for (let pass = 0; pass < 8; pass++) {
+          for (let frame = 0; frame < 8; frame++) {
+            await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+            for (let update = 1; update <= 3; update++) {
+              const progress = (frame * 3 + update) / 24;
+              send("update", (pass % 2 ? 1 - progress : progress) * 320);
+            }
+          }
+        }
+        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+        send("end", 0);
+      }),
+    );
+  });
 
   test("uses cached sizing measurements during animated navigation", async ({ page, render }) => {
     await page.emulateMedia({ reducedMotion: "no-preference" });
@@ -4686,7 +4863,7 @@ test.describe("carousel geometry", () => {
     }
   });
 
-  test("moves the first multi-browse item outward until it leaves the viewport", () => {
+  test("shrinks the first multi-browse item before moving it out of the viewport", () => {
     for (const baseSize of [186, 280]) {
       const layout = createCarouselGeometry({
         variant: "multi-browse",
@@ -4695,13 +4872,16 @@ test.describe("carousel geometry", () => {
         count: 8,
         baseSize,
       })!;
-      let previous = 0;
+      let previous = layout.itemsAt(0)[0];
       let exited = false;
       for (let scroll = 10; scroll <= layout.maxScroll; scroll += 10) {
         const first = layout.itemsAt(scroll)[0];
         const leading = first.position - first.size / 2;
-        expect(leading).toBeLessThan(previous - 0.01);
-        previous = leading;
+        expect(leading).toBeLessThanOrEqual(previous.position - previous.size / 2 + 0.001);
+        expect(first.position + first.size / 2).toBeLessThan(previous.position + previous.size / 2 - 0.01);
+        expect(first.size).toBeLessThanOrEqual(previous.size + 0.001);
+        if (first.size > layout.smallSize + 0.001) expect(leading).toBeCloseTo(0, 5);
+        previous = first;
         if (first.position + first.size / 2 <= 0) {
           exited = true;
           break;
@@ -4915,6 +5095,29 @@ test.describe("carousel geometry", () => {
             expect(Math.abs(item.size - to[i].size)).toBeLessThan(0.01);
           });
         }
+      }
+    }
+  });
+
+  test("only clips responsive masks after they reach the small size", () => {
+    for (const variant of ["multi-browse", "hero", "hero-centered"] as const) {
+      for (const viewportSize of [420, 800]) {
+        const layout = createCarouselGeometry({ variant, viewportSize, gap: 8, count: 8, baseSize: 280 })!;
+        let clipped = 0;
+        for (let step = 0; step <= 100; step++) {
+          const items = layout.itemsAt((layout.maxScroll * step) / 100);
+          for (const item of items) {
+            const left = item.position - item.size / 2;
+            const right = item.position + item.size / 2;
+            if (right <= 0 || left >= viewportSize) continue;
+            if (left < -0.001 || right > viewportSize + 0.001) {
+              expect(item.size).toBeCloseTo(layout.smallSize, 5);
+              clipped++;
+            }
+          }
+          expectSeparatedByGap(items, 8);
+        }
+        expect(clipped).toBeGreaterThan(0);
       }
     }
   });

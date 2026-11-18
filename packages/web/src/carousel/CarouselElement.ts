@@ -276,6 +276,9 @@ export class M3eCarouselElement extends CarouselElementBase {
 
   /** @private */ #overscrollOffset = 0;
   /** @private */ #dragStart?: { scroll: number; index: number; axis: "x" | "y" };
+  /** @private */ #dragFrame?: number;
+  /** @private */ #pendingDragRender?: () => number;
+  /** @private */ #dragTarget?: number;
   /** @private */ #touch?: { id: number; dragging: boolean };
 
   /** @private */
@@ -305,7 +308,7 @@ export class M3eCarouselElement extends CarouselElementBase {
       this.#setSelectedIndex(this.#findSelectedIndex(), false, true);
     }
 
-    this.#dragStart = undefined;
+    this.#cancelDrag();
     this.#cancelFling();
     this.#resetOverscroll();
 
@@ -493,7 +496,7 @@ export class M3eCarouselElement extends CarouselElementBase {
 
     this.#resizeTargets.clear();
 
-    this.#dragStart = undefined;
+    this.#cancelDrag();
     this.#touch = undefined;
     this.#suppressPointerClick = false;
     this.#swipeFocusedAction = undefined;
@@ -528,7 +531,7 @@ export class M3eCarouselElement extends CarouselElementBase {
 
     if (changedProperties.has("variant")) {
       if (this.hasUpdated) {
-        this.#dragStart = undefined;
+        this.#cancelDrag();
         this.#swipeFocusedAction = undefined;
         this.#resetOverscroll();
       }
@@ -545,7 +548,7 @@ export class M3eCarouselElement extends CarouselElementBase {
 
     if (changedProperties.has("variant") || direction !== this.#renderedDirection) {
       if (this.#renderedDirection !== undefined && direction !== this.#renderedDirection) {
-        this.#dragStart = undefined;
+        this.#cancelDrag();
         this.#swipeFocusedAction = undefined;
         this.#resetOverscroll();
       }
@@ -570,7 +573,7 @@ export class M3eCarouselElement extends CarouselElementBase {
       if (this.#indexChangedByScroll) {
         this.#indexChangedByScroll = false;
       } else {
-        this.#dragStart = undefined;
+        this.#cancelDrag();
         this.#swipeFocusedAction = undefined;
         this.#resetOverscroll();
         this.#scrollToSelected();
@@ -843,6 +846,8 @@ export class M3eCarouselElement extends CarouselElementBase {
       const frame = items[index];
       const last = layoutChanged ? undefined : previous?.items[index];
       const { translation, inset, leadingClip, trailingClip } = frame;
+      const leftClip = rtl ? trailingClip : leadingClip;
+      const rightClip = rtl ? leadingClip : trailingClip;
       const insetChanged = last?.inset !== inset;
       const edgesChanged = last?.leadingClip !== leadingClip || last?.trailingClip !== trailingClip;
 
@@ -869,15 +874,12 @@ export class M3eCarouselElement extends CarouselElementBase {
       }
 
       if (insetChanged || edgesChanged) {
-        this.#setItemStyle(
-          item,
-          "--_carousel-inset-left",
-          `${vertical ? 0 : inset + (rtl ? trailingClip : leadingClip)}px`,
-        );
+        // Responsive actions retain their rounded mask size; viewport cuts are applied separately.
+        this.#setItemStyle(item, "--_carousel-inset-left", `${vertical ? 0 : inset + (uncontained ? leftClip : 0)}px`);
         this.#setItemStyle(
           item,
           "--_carousel-inset-right",
-          `${vertical ? 0 : inset + (rtl ? leadingClip : trailingClip)}px`,
+          `${vertical ? 0 : inset + (uncontained ? rightClip : 0)}px`,
         );
       }
 
@@ -893,9 +895,9 @@ export class M3eCarouselElement extends CarouselElementBase {
         this.#setItemStyle(item, "--_carousel-subtitle-opacity", `${frame.subtitleOpacity}`);
       }
 
-      if (layoutChanged || (uncontained && edgesChanged)) {
-        const surfaceLeft = uncontained ? (rtl ? trailingClip : leadingClip) : 0;
-        const surfaceRight = uncontained ? (rtl ? leadingClip : trailingClip) : 0;
+      if (layoutChanged || edgesChanged) {
+        const surfaceLeft = uncontained ? leftClip : 0;
+        const surfaceRight = uncontained ? rightClip : 0;
         this.#setItemStyle(item, "--_carousel-surface-left", `${surfaceLeft}px`);
         this.#setItemStyle(item, "--_carousel-surface-right", `${surfaceRight}px`);
 
@@ -903,8 +905,8 @@ export class M3eCarouselElement extends CarouselElementBase {
         this.#setItemStyle(
           item,
           "--_carousel-surface-clip",
-          surfaceLeft > 0 || surfaceRight > 0
-            ? `inset(${-feedbackHeight}px ${surfaceRight > 0 ? 0 : -feedbackWidth}px ${-feedbackHeight}px ${surfaceLeft > 0 ? 0 : -feedbackWidth}px)`
+          leftClip > 0 || rightClip > 0
+            ? `inset(${-feedbackHeight}px ${rightClip > 0 ? rightClip - surfaceRight : -feedbackWidth}px ${-feedbackHeight}px ${leftClip > 0 ? leftClip - surfaceLeft : -feedbackWidth}px)`
             : "none",
         );
       }
@@ -958,7 +960,8 @@ export class M3eCarouselElement extends CarouselElementBase {
 
   /** @private */
   #handleScroll(): void {
-    this.#renderItems();
+    // Managed drags and flings already render their native scroll writes.
+    if (!this.#dragStart && this.#flingFrame === undefined) this.#renderItems();
     this.#scheduleScrollSettle();
   }
 
@@ -1028,7 +1031,7 @@ export class M3eCarouselElement extends CarouselElementBase {
     if (!this.#items.length || !Number.isFinite(index)) return;
 
     if (scroll) {
-      this.#dragStart = undefined;
+      this.#cancelDrag();
       this.#swipeFocusedAction = undefined;
       this.#cancelFling();
       this.#resetOverscroll();
@@ -1077,7 +1080,7 @@ export class M3eCarouselElement extends CarouselElementBase {
 
     if (smooth && !prefersReducedMotion()) {
       // Native smooth scrolling can move the track before its masks are updated.
-      this.#startFling((2 * (target - start)) / FLING_DECAY_MS, this.selectedIndex, this.selectedIndex);
+      this.#startFling((2 * (target - start)) / FLING_DECAY_MS, this.selectedIndex, this.selectedIndex, start);
 
       return;
     }
@@ -1185,6 +1188,15 @@ export class M3eCarouselElement extends CarouselElementBase {
   }
 
   /** @private */
+  #cancelDrag(): void {
+    if (this.#dragFrame !== undefined) cancelAnimationFrame(this.#dragFrame);
+    this.#dragFrame = undefined;
+    this.#pendingDragRender = undefined;
+    this.#dragTarget = undefined;
+    this.#dragStart = undefined;
+  }
+
+  /** @private */
   #flingIndex(velocity: number, startIndex: number, start: number, projected: number): number {
     const direction = velocity > 0 ? 1 : -1;
     const nearest = this.#findSelectedIndex(projected);
@@ -1204,11 +1216,10 @@ export class M3eCarouselElement extends CarouselElementBase {
   }
 
   /** @private */
-  #startFling(velocity: number, startIndex: number, singleItemTarget?: number): void {
+  #startFling(velocity: number, startIndex: number, singleItemTarget?: number, start = this.#scrollOffset()): void {
     if (!this.#layout || !Number.isFinite(velocity)) return;
 
     const layout = this.#layout;
-    const start = this.#scrollOffset();
     const started = performance.now();
     const vertical = this.variant === "fullscreen";
     const rtl = this.#renderedDirection === "rtl";
@@ -1236,7 +1247,8 @@ export class M3eCarouselElement extends CarouselElementBase {
         behavior: "auto",
       });
 
-      this.#renderItems();
+      const scroll = this.#scrollOffset();
+      this.#renderItems(scroll);
 
       if (
         target === undefined
@@ -1249,8 +1261,8 @@ export class M3eCarouselElement extends CarouselElementBase {
       }
 
       this.#flingFrame = undefined;
-      this.#setSelectedIndex(index ?? this.#findSelectedIndex(), false, true);
-      this.#renderItems();
+      this.#setSelectedIndex(index ?? this.#findSelectedIndex(scroll), false, true);
+      this.#renderItems(scroll);
       this.#repairSwipeFocus();
 
       // The final frame may not change the rounded native scroll offset enough to produce a scroll event.
@@ -1355,6 +1367,7 @@ export class M3eCarouselElement extends CarouselElementBase {
     if (detail.phase === "start") {
       if (detail.axis !== axis) return;
 
+      this.#cancelDrag();
       this.#cancelProgrammaticScroll();
 
       if (this.#touch) this.#touch.dragging = true;
@@ -1379,19 +1392,37 @@ export class M3eCarouselElement extends CarouselElementBase {
     const requested = drag.scroll - delta;
     const target = Math.max(0, Math.min(this.#layout.maxScroll, requested));
 
-    if (detail.phase === "start" || detail.phase === "update" || detail.phase === "end") {
+    const render = () => {
+      let scroll = this.#presentation?.scroll;
+      if (this.#dragTarget !== target || scroll === undefined || this.#presentation?.layout !== this.#layout) {
+        this._viewport.scrollTo({
+          top: vertical ? target : 0,
+          left: vertical ? 0 : rtl ? -target : target,
+          behavior: "auto",
+        });
+        scroll = this.#scrollOffset();
+        this.#dragTarget = target;
+      }
       this.#setOverscroll(requested - target, vertical, rtl);
-      this._viewport.scrollTo({
-        top: vertical ? target : 0,
-        left: vertical ? 0 : rtl ? -target : target,
-        behavior: "auto",
-      });
-      this.#renderItems();
+      this.#renderItems(scroll);
 
-      if (detail.phase !== "end") return;
+      return scroll;
+    };
+
+    if (detail.phase === "start" || detail.phase === "update") {
+      this.#pendingDragRender = render;
+      this.#dragFrame ??= requestAnimationFrame(() => {
+        this.#dragFrame = undefined;
+        const update = this.#pendingDragRender;
+        this.#pendingDragRender = undefined;
+        update?.();
+      });
+
+      return;
     }
 
-    this.#dragStart = undefined;
+    const scroll = detail.phase === "end" ? render() : (this.#presentation?.scroll ?? this.#scrollOffset());
+    this.#cancelDrag();
     this.#releaseOverscroll();
 
     if (detail.phase !== "end") this.#swipeFocusedAction = undefined;
@@ -1399,7 +1430,7 @@ export class M3eCarouselElement extends CarouselElementBase {
     if (detail.phase === "end" && requested !== target) {
       this.#setSelectedIndex(this.#findSelectedIndex(target), false, true);
 
-      if (this.variant !== "uncontained") this.#scrollToSelected();
+      if (this.variant !== "uncontained") this.#scrollToSelected(true, true, scroll);
       else this.#repairSwipeFocus();
 
       return;
@@ -1411,24 +1442,24 @@ export class M3eCarouselElement extends CarouselElementBase {
 
       if (Number.isFinite(velocity) && Math.abs(velocity) > FLING_STOP_VELOCITY) {
         if (!prefersReducedMotion()) {
-          this.#startFling(velocity, startIndex);
+          this.#startFling(velocity, startIndex, undefined, scroll);
 
           return;
         }
 
         if (multiItemFling) {
-          const start = this.#scrollOffset();
+          const start = scroll;
           const target = Math.max(0, Math.min(this.#layout.maxScroll, start + velocity * FLING_DECAY_MS));
 
           this.#setSelectedIndex(this.#flingIndex(velocity, startIndex, start, target), false, true);
-          this.#scrollToSelected(false);
+          this.#scrollToSelected(false, true, scroll);
 
           return;
         }
       }
     }
 
-    let index = this.#findSelectedIndex();
+    let index = this.#findSelectedIndex(scroll);
 
     if (detail.phase === "end" && (this.variant === "multi-browse" || vertical)) {
       index = drag.index + (delta < 0 ? 1 : -1);
@@ -1453,14 +1484,14 @@ export class M3eCarouselElement extends CarouselElementBase {
       const velocity = vertical ? -detail.velocityY : -detail.velocityX * (rtl ? -1 : 1);
 
       if (Number.isFinite(velocity) && Math.abs(velocity) > FLING_STOP_VELOCITY) {
-        this.#startFling(velocity, drag.index, this._clampIndex(index));
+        this.#startFling(velocity, drag.index, this._clampIndex(index), scroll);
 
         return;
       }
     }
 
     if (this.variant !== "uncontained") {
-      this.#scrollToSelected();
+      this.#scrollToSelected(true, true, scroll);
     } else {
       this.#repairSwipeFocus();
     }

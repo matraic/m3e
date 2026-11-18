@@ -384,7 +384,37 @@ export function createCarouselGeometry(options: CarouselGeometryOptions): Carous
     }
 
     cachedLayouts.to ??= layoutAt(lower + 1);
-    return interpolateItems(cachedLayouts.from, cachedLayouts.to, fraction);
+    const items = interpolateItems(cachedLayouts.from, cachedLayouts.to, fraction);
+    const minimumSize = arrangement!.smallSize || arrangement!.mediumSize || itemSize;
+
+    // Keep the inward edge moving while shrinking against the viewport; only small masks may cross it.
+    for (let index = 0; index < items.length; index++) {
+      const item = items[index];
+      if (item.size <= minimumSize) continue;
+      const left = item.position - item.size / 2;
+      const right = item.position + item.size / 2;
+      if (left < 0) {
+        item.size = Math.max(minimumSize, right);
+        item.position = right - item.size / 2;
+
+        let edge = right - item.size - gap;
+        for (let previous = index - 1; previous >= 0; previous--) {
+          items[previous].position = edge - items[previous].size / 2;
+          edge -= items[previous].size + gap;
+        }
+      } else if (right > viewportSize) {
+        item.size = Math.max(minimumSize, viewportSize - left);
+        item.position = left + item.size / 2;
+
+        let edge = left + item.size + gap;
+        for (let next = index + 1; next < items.length; next++) {
+          items[next].position = edge + items[next].size / 2;
+          edge += items[next].size + gap;
+        }
+      }
+    }
+
+    return items;
   };
 
   const smallSize = arrangement?.smallSize || 0;
