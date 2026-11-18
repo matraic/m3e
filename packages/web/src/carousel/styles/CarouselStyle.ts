@@ -99,7 +99,6 @@ export const CarouselStyle: CSSResultGroup = css`
     flex-shrink: 0;
     min-inline-size: 0;
     block-size: 100%;
-    transform: translate(var(--_carousel-translate-x, 0px), var(--_carousel-translate-y, 0px));
     clip-path: var(--_carousel-clip, none);
   }
   ::slotted(:not(m3e-carousel-item)) {

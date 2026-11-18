@@ -13,6 +13,7 @@ const traceLayouts = async (
   requireLayout = true,
 ) => {
   const cdp = await page.context().newCDPSession(page);
+  let maxStyledElements = 0;
   await cdp.send("Tracing.start", {
     categories: "devtools.timeline,disabled-by-default-devtools.timeline.stack",
     transferMode: "ReturnAsStream",
@@ -38,12 +39,19 @@ const traceLayouts = async (
     }
     await cdp.send("IO.close", { handle: stream });
     await cdp.detach();
-    const trace: { traceEvents: Array<{ name: string; args?: { beginData?: { stackTrace?: unknown[] } } }> } =
-      JSON.parse(data);
+    const trace: {
+      traceEvents: Array<{ name: string; args?: { beginData?: { stackTrace?: unknown[] }; elementCount?: number } }>;
+    } = JSON.parse(data);
     const layouts = trace.traceEvents.filter((event) => event.name === "Layout");
     if (requireLayout) expect(layouts.length).toBeGreaterThan(0);
     expect(layouts.filter((event) => event.args?.beginData?.stackTrace?.length)).toHaveLength(0);
+    for (const event of trace.traceEvents) {
+      if (event.name === "UpdateLayoutTree") {
+        maxStyledElements = Math.max(maxStyledElements, event.args?.elementCount ?? 0);
+      }
+    }
   }
+  return maxStyledElements;
 };
 
 const geometry = async (page: import("@playwright/test").Page) => {
@@ -2818,8 +2826,7 @@ test.describe("m3e-carousel", () => {
       const styles = new Set([...element.querySelectorAll<HTMLElement>("m3e-carousel-item")].map((item) => item.style));
       const invariant = new Set([
         "flex-basis",
-        "--_carousel-translate-x",
-        "--_carousel-translate-y",
+        "transform",
         "--_carousel-inset-x",
         "--_carousel-inset-y",
         "--_carousel-title-opacity",
@@ -2865,6 +2872,34 @@ test.describe("m3e-carousel", () => {
     expect(result.next.invariantReads).toBe(0);
     expect(result.next.reads).toBeLessThan(32);
     expect(result.scroll).toBe(80);
+  });
+
+  test("limits descendant style recalculation while translating offscreen items", async ({ page, render }) => {
+    await render(carousel("hero-centered", 32, 'selected-index="3"'));
+    await geometry(page);
+    const maxStyledElements = await traceLayouts(
+      page,
+      () =>
+        page.locator("m3e-carousel").evaluate(async (element) => {
+          const gesture = element.shadowRoot!.querySelector("m3e-swipe-gesture")!;
+          const send = (phase: string, distance: number) =>
+            gesture.dispatchEvent(
+              new CustomEvent("gesture", {
+                detail: { phase, axis: "x", translationX: -distance, velocityX: 0, velocityY: 0 },
+              }),
+            );
+          await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+          send("start", 0);
+          for (let frame = 1; frame <= 8; frame++) {
+            await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+            send("update", frame * 4);
+          }
+          await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+        }),
+      false,
+    );
+    expect(maxStyledElements).toBeGreaterThan(0);
+    expect(maxStyledElements).toBeLessThan(128);
   });
 
   for (const [variant, direction] of [
@@ -3148,7 +3183,12 @@ test.describe("m3e-carousel", () => {
   });
 
   test("updates layout when an item is hidden and restores its styles when removed", async ({ page, render }) => {
-    await render(carousel("hero-centered", 3));
+    await render(
+      carousel("hero-centered", 3).replace(
+        "<m3e-carousel-item>",
+        '<m3e-carousel-item style="transform:scale(0.9) !important">',
+      ),
+    );
     const item = page.locator("m3e-carousel-item").first();
     await item.evaluate((element: HTMLElement) => {
       element.hidden = true;
@@ -3162,6 +3202,12 @@ test.describe("m3e-carousel", () => {
       .toBe(2);
     await expect(item).not.toHaveAttribute("aria-label", /./);
     expect(await item.evaluate((element: HTMLElement) => element.style.getPropertyValue("flex-basis"))).toBe("");
+    expect(await item.evaluate((element: HTMLElement) => element.style.getPropertyValue("transform"))).toBe(
+      "scale(0.9)",
+    );
+    expect(await item.evaluate((element: HTMLElement) => element.style.getPropertyPriority("transform"))).toBe(
+      "important",
+    );
     await expect(item).toBeHidden();
     expect((await geometry(page)).items[1].left).toBeCloseTo(0, 0);
   });

@@ -848,16 +848,13 @@ export class M3eCarouselElement extends CarouselElementBase {
 
       if (layoutChanged) {
         this.#setItemStyle(item, "flex-basis", `${layout.itemSize}px`);
-        this.#setItemStyle(item, vertical ? "--_carousel-translate-x" : "--_carousel-translate-y", "0px");
         this.#setItemStyle(item, vertical ? "--_carousel-inset-x" : "--_carousel-inset-y", "0px");
       }
 
       if (last?.translation !== translation) {
-        this.#setItemStyle(
-          item,
-          vertical ? "--_carousel-translate-y" : "--_carousel-translate-x",
-          `${rtl ? -translation : translation}px`,
-        );
+        // Avoid inheriting per-frame translations through each item's shadow trees and slotted content.
+        const offset = rtl ? -translation : translation;
+        this.#setItemStyle(item, "transform", vertical ? `translate(0px, ${offset}px)` : `translate(${offset}px, 0px)`);
       }
 
       if (insetChanged) {
