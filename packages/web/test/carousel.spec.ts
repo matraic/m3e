@@ -155,7 +155,9 @@ const swipePhase = (
           },
         }),
       );
-      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+      if (phase === "update") {
+        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+      }
     },
     { phase, translation, axis, velocity },
   );
@@ -2007,7 +2009,7 @@ test.describe("m3e-carousel", () => {
 
   for (const direction of ["ltr", "rtl"] as const) {
     for (const preferredSize of [undefined, 186]) {
-      test(`moves the leading multi-browse item outward throughout a ${direction} drag with ${
+      test(`shrinks the leading multi-browse item before clipping during a ${direction} drag with ${
         preferredSize ? "preferred" : "default"
       } sizing`, async ({ page, render }) => {
         await render(
@@ -2016,23 +2018,43 @@ test.describe("m3e-carousel", () => {
         );
         const viewport = page.locator("m3e-carousel").locator(".viewport");
         const box = (await viewport.boundingBox())!;
+        const layout = createCarouselGeometry({
+          variant: "multi-browse",
+          viewportSize: 420,
+          gap: 8,
+          count: 8,
+          baseSize: 280,
+          preferredSize,
+        })!;
         const sign = direction === "rtl" ? 1 : -1;
         const startX = box.x + (direction === "rtl" ? 120 : 300);
-        const leadingEdge = (item: { left: number; right: number }) => (direction === "rtl" ? item.right : item.left);
-        let previous = leadingEdge((await geometry(page)).items[0]);
+        const leadingEdge = (item: { left: number; right: number }) =>
+          direction === "rtl" ? 420 - item.right : item.left;
+        let previous = (await geometry(page)).items[0];
+        let partiallyClipped = false;
 
         await page.mouse.move(startX, box.y + 100);
         await page.mouse.down();
-        for (const distance of [40, 80, 120, 160, 200]) {
+        for (const fraction of [0.25, 0.5, 0.75, 0.9, 0.98, 1]) {
+          const distance = Math.round(layout.scrollForIndex(1) * fraction);
           await page.mouse.move(startX + sign * distance, box.y + 100, { steps: 4 });
           await expect.poll(async () => (await geometry(page)).scroll).toBeCloseTo(distance, 0);
           await page.evaluate(
             () => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))),
           );
-          const current = leadingEdge((await geometry(page)).items[0]);
-          expect(sign * (current - previous)).toBeGreaterThan(0.5);
+          const current = (await geometry(page)).items[0];
+          const edge = leadingEdge(current);
+          expect(current.visible).toBeLessThanOrEqual(previous.visible + 0.5);
+          expect(current.visible).toBeGreaterThanOrEqual(layout.smallSize - 0.5);
+          expect(edge).toBeLessThanOrEqual(leadingEdge(previous) + 0.5);
+          if (current.visible > layout.smallSize + 0.5) {
+            expect(edge).toBeCloseTo(0, 0);
+          } else {
+            partiallyClipped ||= edge < -0.5 && edge + current.visible > 0.5;
+          }
           previous = current;
         }
+        expect(partiallyClipped).toBe(true);
         await page.mouse.up();
       });
     }
@@ -3657,6 +3679,13 @@ test.describe("m3e-carousel", () => {
     }) => {
       await page.emulateMedia({ reducedMotion: "no-preference" });
       await render(carousel(variant, 5));
+      const layout = createCarouselGeometry({
+        variant,
+        viewportSize: 420,
+        gap: 8,
+        count: 5,
+        baseSize: 280,
+      })!;
       const host = page.locator("m3e-carousel");
       await host.evaluate((element: HTMLElement) => {
         element.style.marginLeft = "200px";
@@ -3689,7 +3718,7 @@ test.describe("m3e-carousel", () => {
         .poll(async () => {
           const result = await geometry(page);
           const index = Number(await host.getAttribute("selected-index"));
-          return Math.abs(result.scroll - (result.max * index) / 4);
+          return Math.abs(result.scroll - layout.scrollForIndex(index));
         })
         .toBeLessThan(1.5);
     });
