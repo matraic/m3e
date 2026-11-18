@@ -854,6 +854,10 @@ export class M3eCarouselElement extends CarouselElementBase {
       if (layoutChanged) {
         this.#setItemStyle(item, "flex-basis", `${layout.itemSize}px`);
         this.#setItemStyle(item, vertical ? "--_carousel-inset-x" : "--_carousel-inset-y", "0px");
+        this.#setItemStyle(item, "--_carousel-inset-left", vertical ? "0px" : "var(--_carousel-inset-x)");
+        this.#setItemStyle(item, "--_carousel-inset-right", vertical ? "0px" : "var(--_carousel-inset-x)");
+        this.#setItemStyle(item, "--_carousel-surface-left", "0px");
+        this.#setItemStyle(item, "--_carousel-surface-right", "0px");
       }
 
       if (last?.translation !== translation) {
@@ -873,16 +877,6 @@ export class M3eCarouselElement extends CarouselElementBase {
         );
       }
 
-      if (insetChanged || edgesChanged) {
-        // Responsive actions retain their rounded mask size; viewport cuts are applied separately.
-        this.#setItemStyle(item, "--_carousel-inset-left", `${vertical ? 0 : inset + (uncontained ? leftClip : 0)}px`);
-        this.#setItemStyle(
-          item,
-          "--_carousel-inset-right",
-          `${vertical ? 0 : inset + (uncontained ? rightClip : 0)}px`,
-        );
-      }
-
       if (last?.opacity !== frame.opacity) {
         this.#setItemStyle(item, "--_carousel-item-opacity", `${frame.opacity}`);
       }
@@ -896,17 +890,12 @@ export class M3eCarouselElement extends CarouselElementBase {
       }
 
       if (layoutChanged || edgesChanged) {
-        const surfaceLeft = uncontained ? leftClip : 0;
-        const surfaceRight = uncontained ? rightClip : 0;
-        this.#setItemStyle(item, "--_carousel-surface-left", `${surfaceLeft}px`);
-        this.#setItemStyle(item, "--_carousel-surface-right", `${surfaceRight}px`);
-
         // Only cut edges clip feedback; leave the rest of the viewport available for shadows and focus rings.
         this.#setItemStyle(
           item,
           "--_carousel-surface-clip",
           leftClip > 0 || rightClip > 0
-            ? `inset(${-feedbackHeight}px ${rightClip > 0 ? rightClip - surfaceRight : -feedbackWidth}px ${-feedbackHeight}px ${leftClip > 0 ? leftClip - surfaceLeft : -feedbackWidth}px)`
+            ? `inset(${-feedbackHeight}px ${rightClip > 0 ? rightClip : -feedbackWidth}px ${-feedbackHeight}px ${leftClip > 0 ? leftClip : -feedbackWidth}px)`
             : "none",
         );
       }

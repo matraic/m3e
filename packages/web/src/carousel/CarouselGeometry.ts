@@ -197,8 +197,83 @@ function chooseArrangement(
   return arrangement;
 }
 
+/** @private */
+function uncontainedItemsAt(
+  viewport: number,
+  size: number,
+  gap: number,
+  count: number,
+  maxScroll: number,
+): (scroll: number) => CarouselItemGeometry[] {
+  const pitch = size + gap;
+  const fullCount = Math.max(1, Math.floor((viewport + gap) / pitch));
+  const remaining = Math.max(0, viewport - fullCount * pitch);
+  const anchor = Math.min(10, size);
+
+  let medium = Math.max(anchor, remaining * 1.5);
+  if (medium > size * 0.85) {
+    medium = Math.min(size, Math.max(size * 0.85, remaining * 1.2));
+  }
+
+  const hasMedium = remaining > 0;
+  const leadingAnchor = Math.max(anchor, medium / 2);
+  const fullSizes = Array<number>(fullCount).fill(size);
+
+  const keylines = (sizes: number[], pivot: number, position: number): CarouselItemGeometry[] => {
+    const items = sizes.map((size) => ({ size, position: 0 }));
+    items[pivot].position = position;
+
+    for (let index = pivot - 1; index >= 0; index--) {
+      items[index].position = items[index + 1].position - (items[index + 1].size + items[index].size) / 2 - gap;
+    }
+
+    for (let index = pivot + 1; index < items.length; index++) {
+      items[index].position = items[index - 1].position + (items[index - 1].size + items[index].size) / 2 + gap;
+    }
+
+    return items;
+  };
+
+  const from = keylines([leadingAnchor, ...fullSizes, ...(hasMedium ? [medium] : []), anchor], 1, size / 2);
+
+  // Move the partial slot before the full slots as the last item reaches the viewport end.
+  const endPivot = hasMedium ? 2 : 1;
+  const endPosition = viewport - size / 2 - (fullCount - 1) * pitch;
+  const to = keylines([leadingAnchor, ...(hasMedium ? [medium] : []), ...fullSizes, anchor], endPivot, endPosition);
+
+  const domainShift = endPosition - (endPivot - 1) * pitch - size / 2;
+  const shiftDistance = Math.abs(domainShift);
+
+  return (scroll) => {
+    const progress = shiftDistance > 0 ? clamp((scroll - maxScroll + shiftDistance) / shiftDistance, 0, 1) : 0;
+    const current = progress === 0 ? from : progress === 1 ? to : interpolateItems(from, to, progress);
+
+    // Keylines are equally spaced in the full-width track, not in their masked positions.
+    const origin = size / 2 - pitch + domainShift * progress;
+    return Array.from({ length: count }, (_, index) => {
+      const position = size / 2 + index * pitch - scroll;
+      const phase = (position - origin) / pitch;
+      const lower = clamp(Math.floor(phase), 0, current.length - 1);
+      const upper = Math.min(lower + 1, current.length - 1);
+      const before = current[lower];
+      const after = current[upper];
+
+      if (phase < 0 || phase > current.length - 1) {
+        // Keep native travel outside the keylines so hidden items need no per-frame transforms.
+        return { size: before.size, position: position + before.position - (origin + lower * pitch) };
+      }
+
+      const fraction = phase - lower;
+      return {
+        size: before.size + (after.size - before.size) * fraction,
+        position: before.position + (after.position - before.position) * fraction,
+      };
+    });
+  };
+}
+
 /**
- * Creates responsive carousel geometry for the provided viewport and item count.
+ * Creates carousel geometry for the provided viewport and item count.
  * Reuses at most two neighboring responsive arrangements per instance while returning independent item geometry.
  * @param {CarouselGeometryOptions} options - Variant, viewport dimensions, item count, and optional sizing constraints.
  * @returns {CarouselGeometry | undefined} The calculated geometry, or `undefined` if the inputs are invalid or no arrangement fits.
@@ -240,6 +315,10 @@ export function createCarouselGeometry(options: CarouselGeometryOptions): Carous
     arrangement?.largeSize ?? (variant === "fullscreen" ? viewportSize : Math.min(baseSize, viewportSize));
   const pitch = itemSize + gap;
   const maxScroll = Math.max(0, count * itemSize + (count - 1) * gap - viewportSize);
+  const uncontained =
+    variant === "uncontained" && !options.reducedMotion && maxScroll > 0
+      ? uncontainedItemsAt(viewportSize, itemSize, gap, count, maxScroll)
+      : undefined;
 
   const boundedScroll = (scroll: number): number => clamp(Number.isFinite(scroll) ? scroll : 0, 0, maxScroll);
   const layoutAt = (focus: number): CarouselItemGeometry[] => {
@@ -351,6 +430,7 @@ export function createCarouselGeometry(options: CarouselGeometryOptions): Carous
 
   const itemsAt = (scroll: number): CarouselItemGeometry[] => {
     const offset = boundedScroll(scroll);
+    if (uncontained) return uncontained(offset);
     if (options.reducedMotion || fixedSize || maxScroll === 0) {
       return Array.from({ length: count }, (_, index) => ({
         position: itemSize / 2 + index * pitch - offset,

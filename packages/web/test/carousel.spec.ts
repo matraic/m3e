@@ -947,100 +947,44 @@ test.describe("m3e-carousel", () => {
   });
 
   for (const direction of ["ltr", "rtl"] as const) {
-    test(`uncontained clips the original rounded surface while resizing in ${direction}`, async ({ page, render }) => {
-      await render(carousel("uncontained", 5, "", true, "--m3e-carousel-item-width:160px"), direction);
+    test(`uncontained morphs edge masks without resizing content in ${direction}`, async ({ page, render }) => {
+      await render(carousel("uncontained", 5, "", false, "--m3e-carousel-item-width:160px"), direction);
       await geometry(page);
       const host = page.locator("m3e-carousel");
       const viewport = host.locator(".viewport");
       const items = host.locator("m3e-carousel-item");
-      const leading = items.first().getByRole("button");
-      const trailing = items.nth(2).getByRole("button");
-      const left = direction === "ltr";
-      const surface = trailing.locator(".base");
-      await host.evaluate((element: HTMLElement) => {
-        element.style.setProperty("--m3e-elevation-lift-duration", "0s");
-        element.style.setProperty("--m3e-elevation-settle-duration", "0s");
-      });
-      const originalContent = await items.nth(2).locator(".content").boundingBox();
-      await expect(surface).toHaveCSS("border-radius", "28px");
-      expect((await surface.boundingBox())!.width).toBe(160);
+      const layout = createCarouselGeometry({
+        variant: "uncontained",
+        viewportSize: 420,
+        gap: 8,
+        count: 5,
+        baseSize: 160,
+      })!;
       const viewportBounds = (await viewport.boundingBox())!;
-      const actionBounds = (await trailing.boundingBox())!;
-      const gutterClip = {
-        x: left ? viewportBounds.x + viewportBounds.width - 15 : viewportBounds.x + 1,
-        y: actionBounds.y + 80,
-        width: 14,
-        height: 8,
-      };
-      const beforeGutter = await page.screenshot({ clip: gutterClip });
-      await items
-        .nth(2)
-        .locator(".content")
-        .evaluate((element: HTMLElement) => {
-          element.style.background = "rgb(0, 128, 255)";
-        });
-      expect(await page.screenshot({ clip: gutterClip })).toEqual(beforeGutter);
-      const cutClip = {
-        x: left ? actionBounds.x + actionBounds.width - 1 : actionBounds.x,
-        y: actionBounds.y + 80,
-        width: 1,
-        height: 8,
-      };
-      const outlined = await page.screenshot({ clip: cutClip });
-      await host.evaluate((element: HTMLElement) =>
-        element.style.setProperty("--m3e-carousel-item-outline-width", "0px"),
-      );
-      expect(await page.screenshot({ clip: cutClip })).toEqual(outlined);
-      await host.evaluate((element: HTMLElement) => element.style.removeProperty("--m3e-carousel-item-outline-width"));
-      await trailing.hover();
-      await expect(trailing.locator("m3e-elevation").locator(".shadow")).toHaveClass(/hover/);
-      expect(await page.screenshot({ clip: gutterClip })).toEqual(beforeGutter);
-      await page.mouse.move(0, 0);
-      for (const visible of [100, 132, 148, 159, 160, 161, 159, 148, 132, 100]) {
-        await host.evaluate((element: HTMLElement, visible) => {
-          element.style.width = `${32 + 336 + visible}px`;
-        }, visible);
-        await expect.poll(async () => (await trailing.boundingBox())!.width).toBeCloseTo(Math.min(visible, 160), 1);
-        await expect(surface).toHaveCSS("border-radius", "28px");
-        const bounds = (await surface.boundingBox())!;
-        expect(bounds.width).toBe(160);
-        const hits = await surface.evaluate(
-          (element, { left, visible }) => {
-            const rect = element.getBoundingClientRect();
-            const action = (element.getRootNode() as ShadowRoot).host;
-            const item = (action.getRootNode() as ShadowRoot).host;
-            const x = left ? rect.left + visible - 1 : rect.right - visible + 1;
-            return document.elementFromPoint(x, rect.top + 1) === item;
-          },
-          { left, visible },
+      for (const scroll of [0, 20, 80, 150, layout.maxScroll - 80, layout.maxScroll, 80, 0]) {
+        await viewport.evaluate(
+          (element, offset) => (element.scrollLeft = offset),
+          direction === "rtl" ? -scroll : scroll,
         );
-        expect(hits).toBe(visible <= 132);
-        expect((await items.nth(2).locator(".content").boundingBox())!.width).toBe(originalContent!.width);
+        const expected = layout.itemsAt(scroll);
+        await expect
+          .poll(async () => (await items.first().getByRole("button").boundingBox())!.width)
+          .toBeCloseTo(expected[0].size, 1);
+        for (let index = 0; index < 5; index++) {
+          const item = items.nth(index);
+          const action = item.getByRole("button");
+          const bounds = (await action.boundingBox())!;
+          const left =
+            direction === "rtl"
+              ? viewportBounds.x + viewportBounds.width - bounds.x - bounds.width
+              : bounds.x - viewportBounds.x;
+          expect(bounds.width).toBeCloseTo(expected[index].size, 1);
+          expect(left).toBeCloseTo(expected[index].position - expected[index].size / 2, 1);
+          expect((await action.locator(".base").boundingBox())!.width).toBeCloseTo(expected[index].size, 1);
+          expect((await item.locator(".content").boundingBox())!.width).toBeCloseTo(160, 1);
+          await expect(action.locator(".base")).toHaveCSS("border-radius", "28px");
+        }
       }
-      await viewport.evaluate((element, left) => {
-        element.scrollLeft = left ? 80 : -80;
-      }, left);
-      await expect.poll(async () => (await leading.boundingBox())!.width).toBe(80);
-      await expect(leading.locator(".base")).toHaveCSS("border-radius", "28px");
-      expect((await leading.locator(".base").boundingBox())!.width).toBe(160);
-      const hits = await leading.evaluate((element, left) => {
-        const rect = element.getBoundingClientRect();
-        const item = (element.getRootNode() as ShadowRoot).host;
-        return [left ? rect.left + 1 : rect.right - 1, left ? rect.right - 1 : rect.left + 1].map(
-          (x) => document.elementFromPoint(x, rect.top + 1) === item,
-        );
-      }, left);
-      expect(hits).toEqual([true, false]);
-      await host.evaluate((element: HTMLElement) => element.style.setProperty("--m3e-carousel-item-shape", "12px"));
-      await expect(leading.locator(".base")).toHaveCSS("border-radius", "12px");
-      await viewport.evaluate((element) => {
-        element.scrollLeft = 0;
-      });
-      await expect.poll(async () => (await leading.boundingBox())!.width).toBe(160);
-      await host.evaluate((element) => element.setAttribute("variant", "hero"));
-      await expect(leading).toHaveCSS("clip-path", "none");
-      await expect(trailing).toHaveCSS("clip-path", "none");
-      await expect(trailing.locator(".base")).toHaveCSS("border-radius", "12px");
     });
   }
 
@@ -1178,7 +1122,9 @@ test.describe("m3e-carousel", () => {
               if (getComputedStyle(item).opacity === "0") continue;
               const action = item.shadowRoot!.querySelector(".action")!;
               const rect = action.getBoundingClientRect();
-              const clips = getComputedStyle(action).clipPath.match(/-?[\d.]+px/g)?.map(Number.parseFloat) ?? [0];
+              const clips = getComputedStyle(action)
+                .clipPath.match(/-?[\d.]+px/g)
+                ?.map(Number.parseFloat) ?? [0];
               const right = Math.max(0, clips[1] ?? clips[0]);
               const left = Math.max(0, clips[3] ?? clips[1] ?? clips[0]);
               overflow = Math.max(
@@ -2347,7 +2293,7 @@ test.describe("m3e-carousel", () => {
                   [outside, rect.top + rect.height / 2],
                 ].map(([x, y]) => document.elementFromPoint(x, y) === item);
               },
-              { cutLeft: (left < 0) === (direction === "ltr"), visible },
+              { cutLeft: left < 0 === (direction === "ltr"), visible },
             );
             expect(hits).toEqual([false, false, true, false]);
           }
@@ -2380,15 +2326,10 @@ test.describe("m3e-carousel", () => {
       const viewport = (await page.locator("m3e-carousel").locator(".viewport").boundingBox())!;
       await swipePhase(page, "start", 0);
       for (const fraction of [0.25, 0.5, 0.75, 0.9, 0.98, 1]) {
-        await swipePhase(
-          page,
-          "update",
-          (direction === "ltr" ? -1 : 1) * layout.scrollForIndex(1) * fraction,
-        );
+        await swipePhase(page, "update", (direction === "ltr" ? -1 : 1) * layout.scrollForIndex(1) * fraction);
         const bounds = (await action.boundingBox())!;
         const width = (await surface.boundingBox())!.width;
-        const visible =
-          Math.min(bounds.x + bounds.width, viewport.x + viewport.width) - Math.max(bounds.x, viewport.x);
+        const visible = Math.min(bounds.x + bounds.width, viewport.x + viewport.width) - Math.max(bounds.x, viewport.x);
         partiallyClipped ||= visible > 1 && visible < layout.smallSize - 1;
         expect(bounds.width).toBeGreaterThanOrEqual(layout.smallSize - 0.1);
         expect(width).toBeLessThanOrEqual(previousWidth + 0.1);
@@ -2941,12 +2882,13 @@ test.describe("m3e-carousel", () => {
       const styles = new Set([...element.querySelectorAll<HTMLElement>("m3e-carousel-item")].map((item) => item.style));
       const invariant = new Set([
         "flex-basis",
-        "transform",
-        "--_carousel-inset-x",
         "--_carousel-inset-y",
+        "--_carousel-inset-left",
+        "--_carousel-inset-right",
+        "--_carousel-surface-left",
+        "--_carousel-surface-right",
         "--_carousel-title-opacity",
         "--_carousel-subtitle-opacity",
-        "--_carousel-clip",
       ]);
       const counts = { reads: 0, invariantReads: 0, writes: 0 };
       const get = CSSStyleDeclaration.prototype.getPropertyValue;
@@ -3102,50 +3044,59 @@ test.describe("m3e-carousel", () => {
         await page.mouse.down();
         await page.mouse.move(end, y, { steps: 30 });
         expect(
-          await firstItem.evaluate((element: HTMLElement) => element.style.getPropertyValue("--_carousel-surface-clip")),
+          await firstItem.evaluate((element: HTMLElement) =>
+            element.style.getPropertyValue("--_carousel-surface-clip"),
+          ),
         ).not.toBe("none");
         await page.mouse.move(start + (direction === "rtl" ? -40 : 40), y, { steps: 30 });
         await page.mouse.move(start + (direction === "rtl" ? 40 : -40), y, { steps: 30 });
         expect(
-          await firstItem.evaluate((element: HTMLElement) => element.style.getPropertyValue("--_carousel-surface-clip")),
+          await firstItem.evaluate((element: HTMLElement) =>
+            element.style.getPropertyValue("--_carousel-surface-clip"),
+          ),
         ).toBe("none");
       });
       await page.mouse.up();
       await expect
         .poll(() =>
-          page.locator("m3e-carousel").locator(".viewport").evaluate((element) => Math.abs(element.scrollLeft)),
+          page
+            .locator("m3e-carousel")
+            .locator(".viewport")
+            .evaluate((element) => Math.abs(element.scrollLeft)),
         )
         .toBeGreaterThan(0);
     });
   }
 
-  test("handles rapid reversing drag updates without forcing layout", async ({ page, render }) => {
-    await render(carousel("multi-browse"));
-    await geometry(page);
-    await traceLayouts(page, () =>
-      page.locator("m3e-carousel").evaluate(async (element) => {
-        const gesture = element.shadowRoot!.querySelector("m3e-swipe-gesture")!;
-        const send = (phase: string, distance: number) =>
-          gesture.dispatchEvent(
-            new CustomEvent("gesture", {
-              detail: { phase, axis: "x", translationX: -distance, velocityX: 0, velocityY: 0 },
-            }),
-          );
-        send("start", 0);
-        for (let pass = 0; pass < 8; pass++) {
-          for (let frame = 0; frame < 8; frame++) {
-            await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-            for (let update = 1; update <= 3; update++) {
-              const progress = (frame * 3 + update) / 24;
-              send("update", (pass % 2 ? 1 - progress : progress) * 320);
+  for (const variant of ["multi-browse", "uncontained"] as const) {
+    test(`${variant} handles rapid reversing drag updates without forcing layout`, async ({ page, render }) => {
+      await render(carousel(variant));
+      await geometry(page);
+      await traceLayouts(page, () =>
+        page.locator("m3e-carousel").evaluate(async (element) => {
+          const gesture = element.shadowRoot!.querySelector("m3e-swipe-gesture")!;
+          const send = (phase: string, distance: number) =>
+            gesture.dispatchEvent(
+              new CustomEvent("gesture", {
+                detail: { phase, axis: "x", translationX: -distance, velocityX: 0, velocityY: 0 },
+              }),
+            );
+          send("start", 0);
+          for (let pass = 0; pass < 8; pass++) {
+            for (let frame = 0; frame < 8; frame++) {
+              await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+              for (let update = 1; update <= 3; update++) {
+                const progress = (frame * 3 + update) / 24;
+                send("update", (pass % 2 ? 1 - progress : progress) * 320);
+              }
             }
           }
-        }
-        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-        send("end", 0);
-      }),
-    );
-  });
+          await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+          send("end", 0);
+        }),
+      );
+    });
+  }
 
   test("uses cached sizing measurements during animated navigation", async ({ page, render }) => {
     await page.emulateMedia({ reducedMotion: "no-preference" });
@@ -5506,7 +5457,7 @@ test.describe("carousel geometry", () => {
     }
   });
 
-  test("uncontained and fullscreen preserve fixed tracks and clamp both edges", () => {
+  test("uncontained and fullscreen preserve content sizes and clamp both edges", () => {
     const uncontained = createCarouselGeometry({
       variant: "uncontained",
       viewportSize: 100,
@@ -5545,8 +5496,60 @@ test.describe("carousel geometry", () => {
     expect(fullscreen.itemsAt(fullscreen.maxScroll + 1)).toHaveLength(4);
   });
 
-  test("reduced motion keeps item sizes and movement uniform while snapping to fixed tracks", () => {
-    for (const variant of ["multi-browse", "hero", "hero-centered"] as const) {
+  test("uncontained interpolates edge keylines and shifts its final full item to the end", () => {
+    const layout = createCarouselGeometry({
+      variant: "uncontained",
+      viewportSize: 420,
+      gap: 8,
+      count: 5,
+      baseSize: 160,
+    })!;
+    const start = layout.itemsAt(0);
+    expect(start.slice(0, 2).map((item) => item.size)).toEqual([160, 160]);
+    expect(start[2]).toEqual({ size: 126, position: 399 });
+    const middle = layout.itemsAt(80);
+    expect(middle[0].size).toBeCloseTo(113.809524);
+    expect(middle[0].position).toBeCloseTo(23.095238);
+    expect(middle[2].size).toBeCloseTo(142.190476);
+    const end = layout.itemsAt(layout.maxScroll);
+    expect(end[4]).toEqual({ size: 160, position: 340 });
+    expect(end[2]).toEqual({ size: 126, position: 21 });
+    for (let scroll = 0; scroll <= layout.maxScroll; scroll++) {
+      expectSeparatedByGap(
+        layout
+          .itemsAt(scroll)
+          .filter((item) => item.position + item.size / 2 > 0 && item.position - item.size / 2 < 420),
+        8,
+      );
+    }
+  });
+
+  test("uncontained keeps endpoint items full-sized across cutoff and exact-fit arrangements", () => {
+    for (const viewportSize of [100, 160, 168, 300, 328, 336, 420, 900]) {
+      const layout = createCarouselGeometry({
+        variant: "uncontained",
+        viewportSize,
+        gap: 8,
+        count: 8,
+        baseSize: 160,
+      })!;
+      const first = layout.itemsAt(0)[0];
+      const last = layout.itemsAt(layout.maxScroll)[7];
+      expect(first.size).toBeCloseTo(layout.itemSize);
+      expect(first.position - first.size / 2).toBeCloseTo(0);
+      expect(last.size).toBeCloseTo(layout.itemSize);
+      expect(last.position + last.size / 2).toBeCloseTo(viewportSize);
+      expectSeparatedByGap(
+        layout
+          .itemsAt(layout.maxScroll / 2)
+          .filter((item) => item.position + item.size / 2 > 0 && item.position - item.size / 2 < viewportSize),
+        8,
+      );
+    }
+  });
+
+  test("reduced motion keeps item sizes and movement uniform on fixed tracks", () => {
+    for (const variant of ["multi-browse", "hero", "hero-centered", "uncontained"] as const) {
       const geometry = createCarouselGeometry({
         variant,
         viewportSize: 420,
