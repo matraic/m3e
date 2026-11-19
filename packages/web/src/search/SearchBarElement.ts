@@ -13,9 +13,9 @@ import { SearchBarLightDomStyle, SearchBarStyle } from "./styles";
  *
  * @description
  * The `m3e-search-bar` component provides a prominent entry point for search,
- * capturing user input and emitting `query` and `clear` events as the text
- * changes. It reflects focus and interaction states through customizable CSS
- * properties for container, icons, and text styling.
+ * capturing user input and optionally providing a clear button that clears
+ * the input and emits a `clear` event. It reflects focus and interaction states
+ * through customizable CSS properties for container, icons, and text styling.
  *
  * @example
  * Showcase: Typical usage. Import `@m3e/web/search`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
