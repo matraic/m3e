@@ -46,8 +46,7 @@ import { CardOrientation, isCardOrientation } from "./CardOrientation";
  * and a cohesive user experience in accordance with Material Design 3 guidelines.
  *
  * @example
- * Use the named slots to arrange a header, content, actions, and footer.
- * Import `@m3e/web/heading` and `@m3e/web/button` for the elements used here.
+ * Use the `header`, `content`, `actions`, and `footer` slots to lay out a card.
  * ```html
  * <m3e-card>
  *   <m3e-heading slot="header" variant="display" size="small">Card Header</m3e-heading>
@@ -60,8 +59,7 @@ import { CardOrientation, isCardOrientation } from "./CardOrientation";
  * ```
  *
  * @example
- * Add `end` to the actions slot's element to align actions at the end.
- * Import `@m3e/web/heading` and `@m3e/web/button` for the elements used here.
+ * Wrap the buttons in an element with `slot="actions"` and add `end` to align them at the end of the card.
  * ```html
  * <m3e-card>
  *   <m3e-heading slot="header" variant="display" size="small">Card Header</m3e-heading>

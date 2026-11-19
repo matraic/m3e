@@ -41,7 +41,7 @@ import { M3eFilterChipElement } from "./FilterChipElement";
  * ```
  *
  * @example
- * Use `selected` to select a filter chip and `icon` to add a leading icon. Import `@m3e/web/icon` for the icons.
+ * Use `selected` to preselect a filter chip and the `icon` slot to identify its topic.
  *
  * ```html
  * <m3e-filter-chip-set aria-label="Filter by topic">
@@ -53,7 +53,7 @@ import { M3eFilterChipElement } from "./FilterChipElement";
  * ```
  *
  * @example
- * Use `multi` on the set to allow multiple selected filter chips. Import `@m3e/web/icon` for the icons.
+ * Set `multi` on the filter chip set to allow more than one topic to be selected.
  *
  * ```html
  * <m3e-filter-chip-set aria-label="Filter by topic" multi>
@@ -68,7 +68,7 @@ import { M3eFilterChipElement } from "./FilterChipElement";
  * ```
  *
  * @example
- * Disable individual filter chips, or use `disabled-interactive` to retain keyboard focusability. Import `@m3e/web/icon` for the icons.
+ * Use `disabled` to disable a filter chip or `disabled-interactive` to leave it keyboard-focusable.
  *
  * ```html
  * <m3e-filter-chip-set aria-label="Filter by topic">
@@ -92,7 +92,7 @@ import { M3eFilterChipElement } from "./FilterChipElement";
  * ```
  *
  * @example
- * Use `hide-selection-indicator` to hide the selected indicator while retaining leading icons. Import `@m3e/web/icon` for the icons.
+ * Use `hide-selection-indicator` to suppress the check mark on selected filter chips.
  *
  * ```html
  * <m3e-filter-chip-set aria-label="Filter by topic" hide-selection-indicator>

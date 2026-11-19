@@ -12,8 +12,7 @@ import "@m3e/web/callout";
 
 ## 🧪 Examples
 
-Compose a callout with content, an optional label, and an optional icon.
-Import `@m3e/web/icon` when using `m3e-icon`.
+Put the callout body in the default slot. Use the `label` and `icon` slots for an optional heading and icon.
 
 ```html
 <m3e-callout>
@@ -32,8 +31,7 @@ Import `@m3e/web/icon` when using `m3e-icon`.
 </m3e-callout>
 ```
 
-Use `variant` to select `primary`, `secondary` (default), `tertiary`, `error`, or `surface`.
-Import `@m3e/web/icon` when using `m3e-icon`.
+Use `variant="primary"` to give an informational callout the theme's primary colors.
 
 ```html
 <m3e-callout variant="primary">

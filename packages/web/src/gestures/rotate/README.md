@@ -24,7 +24,7 @@ The element dispatches a `gesture` event with `RotateGestureDetail` as its detai
 
 ## Showcase examples
 
-Detect rotation declaratively by importing `@m3e/web/gestures/rotate` and binding the gesture element to the target with `for`. Listen for its `gesture` event. Give the target a visible size and an appropriate `touch-action` (the showcase uses `touch-action: none`); provide an accessible alternative for gesture-only interactions.
+Bind `m3e-rotate-gesture` to the target with `for` and listen for `gesture` to track rotation. Give the target a visible size and set `touch-action` to avoid conflicts with browser gestures.
 
 ```html
 <div id="item"></div>

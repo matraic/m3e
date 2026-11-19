@@ -76,7 +76,7 @@ function staggerDelays(count: number, open: boolean): number[] {
  * On devices with a touch-capable pointer, the scrollable menu also receives touches in its empty space.
  *
  * @example
- * Nest a menu trigger in a FAB and associate it with the menu by id. Import `@m3e/web/fab` and `@m3e/web/icon` for the FAB and icons. Give the icon-only FAB an accessible label.
+ * Nest `m3e-fab-menu-trigger` in a FAB and match its `for` to the menu's `id`.
  *
  * ```html
  * <m3e-fab variant="primary" size="large">
@@ -101,7 +101,7 @@ function staggerDelays(count: number, open: boolean): number[] {
  * ```
  *
  * @example
- * Use `variant` to select the menu appearance. Import `@m3e/web/fab` and `@m3e/web/icon` for the FAB and icon. Give the icon-only FAB an accessible label.
+ * Set `variant="secondary"` on the menu and its FAB to give them a matching appearance.
  *
  * ```html
  * <m3e-fab variant="secondary" size="large">

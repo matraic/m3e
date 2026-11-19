@@ -40,8 +40,7 @@ import "./BreadcrumbItemButtonElement";
  * ```
  *
  * @example
- * Use the `icon` slot for an icon before a label, or use `item-label` for an
- * icon-only item. Import `@m3e/web/icon` when using `m3e-icon`.
+ * Use the `icon` slot to place an icon before a label. For an icon-only item, place the icon in the default slot and set `item-label`.
  * ```html
  * <m3e-breadcrumb>
  *   <m3e-breadcrumb-item item-label="Dashboard">

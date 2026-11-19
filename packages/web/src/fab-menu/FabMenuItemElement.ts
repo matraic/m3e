@@ -22,7 +22,7 @@ import type { M3eFabMenuElement } from "./FabMenuElement";
  * An item of a floating action button (FAB) menu.
  *
  * @example
- * Nest a menu trigger in a FAB and associate it with the menu by id. Import `@m3e/web/fab` and `@m3e/web/icon` for the FAB and icons. Give the icon-only FAB an accessible label.
+ * Nest `m3e-fab-menu-trigger` in a FAB and match its `for` to the menu's `id`.
  *
  * ```html
  * <m3e-fab variant="primary" size="large">
@@ -47,7 +47,7 @@ import type { M3eFabMenuElement } from "./FabMenuElement";
  * ```
  *
  * @example
- * Use the `icon` slot to provide a leading icon for a menu item. Place the item inside an `m3e-fab-menu`. Import `@m3e/web/icon` for the icon.
+ * Put an item in an `m3e-fab-menu` and use its `icon` slot to display an icon before the label.
  *
  * ```html
  * <m3e-fab-menu-item>
@@ -57,7 +57,7 @@ import type { M3eFabMenuElement } from "./FabMenuElement";
  * ```
  *
  * @example
- * Use `disabled` to disable a menu item. Place the item inside an `m3e-fab-menu`. Import `@m3e/web/icon` for the icon.
+ * Set `disabled` on a menu item to make that action unavailable without disabling the menu.
  *
  * ```html
  * <m3e-fab-menu-item disabled>
@@ -67,7 +67,7 @@ import type { M3eFabMenuElement } from "./FabMenuElement";
  * ```
  *
  * @example
- * Use `href` to make a menu item a link. Place the item inside an `m3e-fab-menu`. Import `@m3e/web/icon` for the icon.
+ * Set `href` on a menu item to make it a link. Use `target="_blank"` to open the destination separately.
  *
  * ```html
  * <m3e-fab-menu-item href="https://www.google.com" target="_blank">

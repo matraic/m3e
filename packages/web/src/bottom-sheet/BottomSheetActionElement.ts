@@ -4,8 +4,8 @@ import { ActionElementBase, customElement } from "@m3e/web/core";
  * An element, nested within a clickable element, used to close a parenting bottom sheet.
  *
  * @example
- * Nest actions inside clickable list items in a bottom sheet. Import `@m3e/web/button`
- * and `@m3e/web/list` for the other components.
+ * Nest a bottom sheet action inside a clickable list item to close the sheet when the item is activated.
+ *
  * ```html
  * <m3e-button>
  *   <m3e-bottom-sheet-trigger for="bottomSheet">

@@ -60,9 +60,7 @@ import {
  * ```
  *
  * @example
- * Use `required` to require a checked value on form submission. Import `@m3e/web/button`
- * for the submit button. The showcase script prevents navigation and checks validity;
- * load it before `DOMContentLoaded`.
+ * Add `required` to make the checkbox mandatory for form submission. Register the example's `DOMContentLoaded` listener before the event fires to check validity without navigating away.
  * ```html
  * <form>
  *   <label>

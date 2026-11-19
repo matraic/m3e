@@ -7,7 +7,7 @@ import { M3eDatepickerElement } from "./DatepickerElement";
  * An element, nested within a clickable element, used to toggle a datepicker.
  *
  * @example
- * Nest a datepicker toggle in a clickable element and connect it to the picker using `for`. Import `@m3e/web/form-field` for the form field. Import `@m3e/web/icon-button` and `@m3e/web/icon` for the icon button and icon. Give the icon button an accessible label. With a native input, handle the picker's `change` event to update the field.
+ * Nest the toggle in a clickable element and set its `for` to the datepicker's id. With a native input, handle the picker's `change` event to copy the selected date into the field.
  *
  * ```html
  * <m3e-form-field variant="outlined">

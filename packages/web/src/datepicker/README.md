@@ -22,7 +22,7 @@ import "@m3e/web/datepicker";
 
 ## 🧪 Examples
 
-Nest a datepicker toggle in a clickable element and connect it to the picker using `for`. Import `@m3e/web/form-field` for the form field. Import `@m3e/web/icon-button` and `@m3e/web/icon` for the icon button and icon. Give the icon button an accessible label. With a native input, handle the picker's `change` event to update the field.
+Nest the toggle in a clickable element and set its `for` to the datepicker's id. With a native input, handle the picker's `change` event to copy the selected date into the field.
 
 ```html
 <m3e-form-field variant="outlined">
@@ -37,7 +37,7 @@ Nest a datepicker toggle in a clickable element and connect it to the picker usi
 <m3e-datepicker id="datepicker"></m3e-datepicker>
 ```
 
-Bind the datepicker to a segmented date input using `for`. Import `@m3e/web/form-field` for the form field. Import `@m3e/web/icon-button` and `@m3e/web/icon` for the icon button and icon. Import `@m3e/web/date-input` for the input.
+Set the datepicker's `for` to the id of an `m3e-date-input` so the picker can update the segmented field directly.
 
 ```html
 <m3e-form-field variant="outlined">
@@ -87,7 +87,7 @@ Use `start-view` to select `month` (default), `year`, or `multi-year`. The form 
 <m3e-datepicker id="datepicker" start-view="multi-year"></m3e-datepicker>
 ```
 
-Use `range-start` and `range-end` for a date range. Import `@m3e/web/form-field` for the form field. Import `@m3e/web/icon-button` and `@m3e/web/icon` for the icon button and icon. Give the icon button an accessible label. Provide `toLocaleDateString(date)` to format a `Date` or `null`, and run the script after the elements are available and upgraded.
+Set `range-start` and `range-end` to preselect a date range. Run the script after the elements have upgraded and provide `toLocaleDateString(date)` to format a `Date` or `null` for the native input.
 
 ```html
 <m3e-form-field variant="outlined">

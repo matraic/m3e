@@ -30,7 +30,7 @@ import { typeaheadLabel } from "@m3e/web/core/a11y";
  * selection and disabled states, with configurable styling for interactive and non-interactive variants.
  *
  * @example
- * Use options inside a select. Import `@m3e/web/select` and `@m3e/web/form-field`.
+ * Put `m3e-option` elements inside a select to define the choices it presents.
  *
  * ```html
  * <m3e-form-field>

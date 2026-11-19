@@ -44,7 +44,7 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * as disabled but allow for it to receive focus. The button will have `aria-disabled="true"` for assistive technology.
  *
  * @example
- * Set the FAB appearance using `variant`. Import `@m3e/web/icon` for the icon. Give each icon-only FAB an accessible label.
+ * Use `variant="primary"` for a FAB in the theme's primary color.
  *
  * ```html
  * <m3e-fab variant="primary">
@@ -54,7 +54,7 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * ```
  *
  * @example
- * Use `lowered` for a lower elevation. Import `@m3e/web/icon` for the icon. Give each icon-only FAB an accessible label.
+ * Add `lowered` to reduce the elevation of the primary FAB.
  *
  * ```html
  * <m3e-fab lowered variant="primary">
@@ -64,7 +64,7 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * ```
  *
  * @example
- * Use `size` to select the FAB size. Import `@m3e/web/icon` for the icon. Give each icon-only FAB an accessible label.
+ * Set `size="small"` for a compact icon-only FAB.
  *
  * ```html
  * <m3e-fab size="small">
@@ -74,7 +74,7 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * ```
  *
  * @example
- * Use `disabled` to disable a FAB, or `disabled-interactive` to retain keyboard focusability. Import `@m3e/web/icon` for the icon. Give each icon-only FAB an accessible label.
+ * Use `disabled` to make a FAB unavailable, or `disabled-interactive` to keep it keyboard-focusable.
  *
  * ```html
  * <m3e-fab disabled>
@@ -86,7 +86,7 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * ```
  *
  * @example
- * Use `extended` and the `label` slot to show an icon and label. Import `@m3e/web/icon` for the icon.
+ * Add `extended` and put text in the `label` slot to show an icon and label together.
  *
  * ```html
  * <m3e-fab extended size="small">
@@ -97,7 +97,7 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * ```
  *
  * @example
- * Use `href` to make an extended FAB a link. Import `@m3e/web/icon` for the icon.
+ * Set `href` on an extended FAB to navigate to a destination labeled in the `label` slot.
  *
  * ```html
  * <m3e-fab extended href="https://www.google.com" target="_blank">

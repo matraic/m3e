@@ -30,7 +30,7 @@ The element dispatches a `gesture` event with `SequenceGestureDetail` as its det
 
 ## Showcase examples
 
-Detect a long press followed by a pan declaratively by importing `@m3e/web/gestures/sequence`, `@m3e/web/gestures/long-press`, `@m3e/web/gestures/pan` and binding the gesture element to the target with `for`. Listen for its `gesture` event. Give the target a visible size and an appropriate `touch-action` (the showcase uses `touch-action: none`); provide an accessible alternative for gesture-only interactions.
+Bind `m3e-sequence-gesture` to the target with `for` and nest a long-press gesture before a pan gesture to recognize a press followed by a drag.
 
 ```html
 <div id="item" class="target"></div>

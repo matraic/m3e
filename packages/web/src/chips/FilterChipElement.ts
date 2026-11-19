@@ -36,7 +36,7 @@ import { M3eChipElement } from "./ChipElement";
  * ```
  *
  * @example
- * Use `selected` to select a filter chip and `icon` to add a leading icon. Import `@m3e/web/icon` for the icons.
+ * Use `selected` to preselect a filter chip and the `icon` slot to identify its topic.
  *
  * ```html
  * <m3e-filter-chip-set aria-label="Filter by topic">
@@ -48,7 +48,7 @@ import { M3eChipElement } from "./ChipElement";
  * ```
  *
  * @example
- * Use `multi` on the set to allow multiple selected filter chips. Import `@m3e/web/icon` for the icons.
+ * Set `multi` on the filter chip set to allow more than one topic to be selected.
  *
  * ```html
  * <m3e-filter-chip-set aria-label="Filter by topic" multi>
@@ -63,7 +63,7 @@ import { M3eChipElement } from "./ChipElement";
  * ```
  *
  * @example
- * Disable individual filter chips, or use `disabled-interactive` to retain keyboard focusability. Import `@m3e/web/icon` for the icons.
+ * Use `disabled` to disable a filter chip or `disabled-interactive` to leave it keyboard-focusable.
  *
  * ```html
  * <m3e-filter-chip-set aria-label="Filter by topic">

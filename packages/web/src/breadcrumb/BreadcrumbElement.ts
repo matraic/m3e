@@ -34,7 +34,7 @@ import type { M3eBreadcrumbItemElement } from "./BreadcrumbItemElement";
  * ```
  *
  * @example
- * Use the `icon` slot for an icon before a label, or place an icon in the default slot and use `item-label` for an icon-only item. Import `@m3e/web/icon` when using `m3e-icon`.
+ * Use the `icon` slot to place an icon before a label. For an icon-only item, place the icon in the default slot and set `item-label`.
  * ```html
  * <m3e-breadcrumb>
  *   <m3e-breadcrumb-item item-label="Dashboard">
@@ -68,7 +68,7 @@ import type { M3eBreadcrumbItemElement } from "./BreadcrumbItemElement";
  * ```
  *
  * @example
- * Use `--md-sys-density-scale` to adjust the breadcrumb density. Supply the items shown in the basic example. The showcase omits additional breadcrumbs and density classes.
+ * Set `--md-sys-density-scale: -3` to make the breadcrumb more compact.
  * ```html
  * <m3e-breadcrumb class="density-3">
  *   <!-- Items omitted for brevity -->

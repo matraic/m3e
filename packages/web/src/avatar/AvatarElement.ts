@@ -10,7 +10,7 @@ import { customElement, DesignToken } from "@m3e/web/core";
  * textual representation with consistent sizing, shape, and typography.
  *
  * @example
- * An avatar can display initials, an image, or an icon. Replace the image URL placeholder and import `@m3e/web/icon` when using `m3e-icon`. Provide appropriate alternative text or an accessible name when the image or icon conveys identity.
+ * Use initials, an image, or an icon as an avatar. If an image or icon conveys identity, give it a text alternative.
  * ```html
  * <m3e-avatar>AB</m3e-avatar>
  * <m3e-avatar>

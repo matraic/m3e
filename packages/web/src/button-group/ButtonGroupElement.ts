@@ -34,7 +34,7 @@ import { ButtonGroupSize, isButtonGroupSize } from "./ButtonGroupSize";
  * in a visually harmonious and intuitive way.
  *
  * @example
- * A standard group arranges icon buttons and adds interaction between adjacent buttons. Import `@m3e/web/icon-button`. Import `@m3e/web/icon` and load the Material Symbols font. Give each icon-only button an accessible name using `aria-label`.
+ * Group related icon buttons in an `m3e-button-group` to get the standard spacing and interaction between adjacent buttons.
  * ```html
  * <m3e-button-group>
  *   <m3e-icon-button>
@@ -56,7 +56,7 @@ import { ButtonGroupSize, isButtonGroupSize } from "./ButtonGroupSize";
  * ```
  *
  * @example
- * A standard group can contain text buttons. Import `@m3e/web/button`. Import `@m3e/web/icon` and load the Material Symbols font.
+ * Group text buttons with leading icons to present related actions.
  * ```html
  * <m3e-button-group>
  *   <m3e-button variant="tonal">
@@ -72,7 +72,7 @@ import { ButtonGroupSize, isButtonGroupSize } from "./ButtonGroupSize";
  * ```
  *
  * @example
- * A standard group can mix text and icon buttons, including wide icon buttons. Import `@m3e/web/button`. Import `@m3e/web/icon-button`. Import `@m3e/web/icon` and load the Material Symbols font. Give each icon-only button an accessible name using `aria-label`.
+ * Mix text buttons and icon buttons in a standard group. Set `width="wide"` on the icon buttons to give them more space.
  * ```html
  * <m3e-button-group>
  *   <m3e-icon-button variant="filled" width="wide">
@@ -88,7 +88,7 @@ import { ButtonGroupSize, isButtonGroupSize } from "./ButtonGroupSize";
  * ```
  *
  * @example
- * Use `variant="connected"` to create a connected group. Import `@m3e/web/button`.
+ * Use `variant="connected"` to join adjacent toggle buttons into a single control.
  * ```html
  * <m3e-button-group variant="connected">
  *   <m3e-button variant="tonal" toggle>Start</m3e-button>
@@ -98,7 +98,7 @@ import { ButtonGroupSize, isButtonGroupSize } from "./ButtonGroupSize";
  * ```
  *
  * @example
- * Use `size` to control standard group spacing. Set the same size on each button for uniform sizing. Import `@m3e/web/icon-button`. Import `@m3e/web/icon` and load the Material Symbols font. Give each icon-only button an accessible name using `aria-label`.
+ * Set `size="large"` on the standard group and its buttons to match the spacing to the button size.
  * ```html
  * <m3e-button-group size="large">
  *   <m3e-icon-button size="large">
@@ -120,7 +120,7 @@ import { ButtonGroupSize, isButtonGroupSize } from "./ButtonGroupSize";
  * ```
  *
  * @example
- * Connected groups have the same spacing regardless of size. Set the group and button sizes to match for uniform sizing. Import `@m3e/web/button`.
+ * Set `size="large"` on the connected group and its buttons for a uniform height. Connected buttons stay joined at any size.
  * ```html
  * <m3e-button-group size="large" variant="connected">
  *   <m3e-button variant="tonal" size="large" toggle>Start</m3e-button>
@@ -130,7 +130,7 @@ import { ButtonGroupSize, isButtonGroupSize } from "./ButtonGroupSize";
  * ```
  *
  * @example
- * Use `multi` to allow multiple toggle buttons to be selected; without it the group is single-select. Import `@m3e/web/icon-button`. Import `@m3e/web/icon` and load the Material Symbols font. Give each icon-only button an accessible name using `aria-label`.
+ * Set `multi` to let users turn on more than one formatting option at a time.
  * ```html
  * <m3e-button-group multi>
  *   <m3e-icon-button variant="tonal" toggle>
@@ -146,7 +146,7 @@ import { ButtonGroupSize, isButtonGroupSize } from "./ButtonGroupSize";
  * ```
  *
  * @example
- * Apply `--md-sys-density-scale` to the group to adjust its buttons. Supply buttons as in the standard or connected examples. The showcase omits additional groups and density classes.
+ * Set `--md-sys-density-scale: -3` on the group to make its buttons more compact.
  * ```html
  * <m3e-button-group class="density-3">
  *   <!-- Buttons omitted for brevity -->

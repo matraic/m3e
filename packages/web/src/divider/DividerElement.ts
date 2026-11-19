@@ -13,7 +13,7 @@ import { customElement, DesignToken, Role } from "@m3e/web/core";
  * It is designed to reinforce spatial relationships without drawing attention, preserving focus on primary content.
  *
  * @example
- * Separate list items with dividers. Import `@m3e/web/list` for the list elements.
+ * Place `m3e-divider` between items in a standard list.
  * ```html
  * <m3e-list>
  *   <m3e-list-item>Item 1</m3e-list-item>

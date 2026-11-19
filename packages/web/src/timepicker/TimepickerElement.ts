@@ -111,7 +111,7 @@ import "./TimepickerInputElement";
  * ```
  *
  * @example
- * Set the picker date and handle changes to update the field. Provide the showcase's `toLocaleTimeString` helper and the referenced field and picker elements.
+ * Set the initial picker date and copy its formatted time to `#field` on initialization and on `change`. Provide a `toLocaleTimeString(date)` formatter for the field.
  *
  * ```html
  * <!-- Form field omitted for brevity -->

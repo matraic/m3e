@@ -7,7 +7,7 @@ import { M3eFabMenuElement } from "./FabMenuElement";
  * An element, nested within a clickable element, used to open a floating action button (FAB) menu.
  *
  * @example
- * Nest a menu trigger in a FAB and associate it with the menu by id. Import `@m3e/web/fab` and `@m3e/web/icon` for the FAB and icons. Give the icon-only FAB an accessible label.
+ * Nest `m3e-fab-menu-trigger` in a FAB and match its `for` to the menu's `id`.
  *
  * ```html
  * <m3e-fab variant="primary" size="large">

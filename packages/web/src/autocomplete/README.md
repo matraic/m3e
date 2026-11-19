@@ -214,7 +214,7 @@ Pair autocomplete with an input chip set. Supply options as in the basic example
 </m3e-autocomplete>
 ```
 
-Apply density to the form field and panel using `panel-class`. Supply options as in the basic example. The showcase omits additional density classes.
+Set `--md-sys-density-scale` on the form field and pass the same class to the autocomplete panel with `panel-class`.
 
 ```html
 <m3e-form-field class="density-3">

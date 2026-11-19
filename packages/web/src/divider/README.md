@@ -12,7 +12,7 @@ import "@m3e/web/divider";
 
 ## 🧪 Examples
 
-Separate list items with dividers. Import `@m3e/web/list` for the list elements.
+Place `m3e-divider` between items in a standard list.
 
 ```html
 <m3e-list>

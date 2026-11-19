@@ -15,7 +15,7 @@ import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y"
  * and contained options.
  *
  * @example
- * Group options inside a select. Import `@m3e/web/select` and `@m3e/web/form-field`.
+ * Use `m3e-optgroup` to put related options under a group label in a select.
  *
  * ```html
  * <m3e-form-field>

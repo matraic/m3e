@@ -24,7 +24,7 @@ The element dispatches a `gesture` event with `TapGestureDetail` as its detail.
 
 ## Showcase examples
 
-Detect tap declaratively by importing `@m3e/web/gestures/tap` and binding the gesture element to the target with `for`. Listen for its `gesture` event. Give the target a visible size and an appropriate `touch-action` (the showcase uses `touch-action: none`); provide an accessible alternative for gesture-only interactions.
+Bind `m3e-tap-gesture` to a visible target with `for` and listen for its `gesture` event to respond to a tap.
 
 ```html
 <div id="item"></div>

@@ -16,7 +16,7 @@ import { PanGestureRecognizer } from "./PanGestureRecognizer";
  * produced from an attached element.
  *
  * @example
- * Detect pan declaratively by importing `@m3e/web/gestures/pan` and binding the gesture element to the target with `for`. Listen for its `gesture` event. Give the target a visible size and an appropriate `touch-action` (the showcase uses `touch-action: none`); provide an accessible alternative for gesture-only interactions.
+ * Bind `m3e-pan-gesture` to the target with `for` and listen for `gesture` to track movement as the pointer drags. Size the target and set `touch-action` to allow the drag without unwanted page scrolling.
  *
  * ```html
  * <div id="item"></div>

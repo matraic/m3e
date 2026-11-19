@@ -14,8 +14,7 @@ import "@m3e/web/dialog";
 
 ## 🧪 Examples
 
-Use a trigger to open a dismissible dialog with a header and an action.
-Import `@m3e/web/button` for the buttons.
+Use a trigger to open a dismissible dialog with a header and a close action.
 
 ```html
 <m3e-button variant="filled">
@@ -30,8 +29,7 @@ Import `@m3e/web/button` for the buttons.
 </m3e-dialog>
 ```
 
-Nest a trigger inside a clickable element and connect it to the dialog by id.
-Import `@m3e/web/button` for the button.
+Nest the trigger in a button and match its `for` to the dialog's `id`.
 
 ```html
 <m3e-button variant="filled">

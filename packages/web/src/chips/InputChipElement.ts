@@ -26,7 +26,7 @@ import { M3eChipElement } from "./ChipElement";
  * keyboard interaction, and appearance variants including `elevated` and `outlined`.
  *
  * @example
- * Prepopulate an input chip set with removable input chips. Import `@m3e/web/form-field` for the form field.
+ * Add `m3e-input-chip` elements to start a keyword field with removable values.
  *
  * ```html
  * <m3e-form-field>

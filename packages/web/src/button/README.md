@@ -16,28 +16,28 @@ import "@m3e/web/button";
 
 ## 🧪 Examples
 
-Use `variant` to choose `elevated`, `filled`, `tonal`, `outlined`, or `text` (default). The showcase omits the additional variants.
+Use `variant="elevated"` to raise the button above the surrounding surface.
 
 ```html
 <m3e-button variant="elevated">Elevated</m3e-button>
 <!-- Additional variants omitted for brevity -->
 ```
 
-Use `shape` to choose `square` or `rounded` (default). The showcase omits the additional variants.
+Use `shape="square"` to replace the default rounded shape.
 
 ```html
 <m3e-button variant="elevated" shape="square">Square Elevated</m3e-button>
 <!-- Additional variants omitted for brevity -->
 ```
 
-Use `size` to choose `extra-small`, `small` (default), `medium`, `large`, or `extra-large`. The showcase omits the additional sizes.
+Use `size="extra-small"` for a compact tonal button.
 
 ```html
 <m3e-button variant="tonal" size="extra-small">Extra Small</m3e-button>
 <!-- Additional sizes omitted for brevity -->
 ```
 
-Use the `icon` and `trailing-icon` slots to place icons before or after the label. Import `@m3e/web/icon` and load the Material Symbols font to use `m3e-icon`.
+Use `icon` to place an icon before the label or `trailing-icon` to place it after the label.
 
 ```html
 <m3e-button variant="tonal">
@@ -48,14 +48,14 @@ Use the `icon` and `trailing-icon` slots to place icons before or after the labe
 </m3e-button>
 ```
 
-Use `toggle` for binary selection and `selected` to control its state. The cancelable `beforeinput` event precedes the `input` and `change` events. The showcase omits the additional variants.
+Add `toggle` to make a button selectable. Use `selected` to set its state or cancel `beforeinput` to prevent a user-initiated change.
 
 ```html
 <m3e-button variant="elevated" toggle>Elevated Toggle</m3e-button>
 <!-- Additional variants omitted for brevity -->
 ```
 
-Use the `selected` and `selected-icon` slots for alternate content when selected. Import `@m3e/web/icon` and load the Material Symbols font to use `m3e-icon`.
+Use the `selected` and `selected-icon` slots to replace the label and icon when the toggle is selected.
 
 ```html
 <m3e-button variant="filled" toggle>
@@ -73,7 +73,7 @@ Use `disabled` to disable a button, or `disabled-interactive` to keep a disabled
 <m3e-button variant="filled" disabled-interactive>Disabled Interactive</m3e-button>
 ```
 
-Use `href` to make the button a link; `target`, `rel`, and `download` are also supported. Import `@m3e/web/icon` and load the Material Symbols font to use `m3e-icon`.
+Set `href` to make the button a link and `target="_blank"` to open the destination in a new tab or window.
 
 ```html
 <m3e-button variant="tonal" href="https://www.google.com" target="_blank">
@@ -81,7 +81,7 @@ Use `href` to make the button a link; `target`, `rel`, and `download` are also s
 </m3e-button>
 ```
 
-Apply `--md-sys-density-scale` to adjust the density of an extra-small button. Import `@m3e/web/icon` and load the Material Symbols font to use `m3e-icon`. The showcase omits additional buttons and density classes.
+Set `--md-sys-density-scale: -3` to reduce the density of an extra-small button.
 
 ```html
 <m3e-button variant="filled" size="extra-small" class="density-3">

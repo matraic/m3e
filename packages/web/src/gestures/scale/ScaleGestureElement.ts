@@ -14,7 +14,7 @@ import { ScaleGestureRecognizer } from "./ScaleGestureRecognizer";
  * produced from an attached element.
  *
  * @example
- * Detect scale declaratively by importing `@m3e/web/gestures/scale` and binding the gesture element to the target with `for`. Listen for its `gesture` event. Give the target a visible size and an appropriate `touch-action` (the showcase uses `touch-action: none`); provide an accessible alternative for gesture-only interactions.
+ * Bind `m3e-scale-gesture` to the target with `for` and listen for `gesture` to track changes in scale. Give the target a visible size and account for the browser's own pinch gesture with `touch-action`.
  *
  * ```html
  * <div id="item"></div>
@@ -22,7 +22,7 @@ import { ScaleGestureRecognizer } from "./ScaleGestureRecognizer";
  * ```
  *
  * @example
- * Alternatively, use the same target with `detectGesture` and `phase`. Replace the handler placeholders and retain the returned controller to call `destroy()` when no longer needed. The showcase's rotate comments are placeholders for scale handling.
+ * Use `detectGesture` with `scale` and `phase` to handle scale changes in JavaScript. Keep the returned controller and call `destroy()` when you no longer need it.
  *
  * ```js
  * import { detectGesture, phase } from "@m3e/web/gestures";
@@ -37,10 +37,10 @@ import { ScaleGestureRecognizer } from "./ScaleGestureRecognizer";
  *     // Continuous movement
  *   },
  *   onEnd: (detail) => {
- *     // Finalize rotate
+ *     // Finalize scaling
  *   },
  *   onCancel: (detail) => {
- *     // Abort rotate
+ *     // Cancel scaling
  *   }
  * })));
  * ```

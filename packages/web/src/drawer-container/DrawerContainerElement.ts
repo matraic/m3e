@@ -82,7 +82,7 @@ import { DrawerContainerStyle } from "./styles";
  * ```
  *
  * @example
- * Nest a drawer toggle in a clickable element and connect `for` to the drawer's id. Import `@m3e/web/icon-button` and `@m3e/web/icon` for the button and icons; place the button in an element that supports its `leading-icon` slot.
+ * Nest the drawer toggle in a toggleable icon button and match its `for` to the drawer's `id`. Place the button in the host element's `leading-icon` slot.
  *
  * ```html
  * <m3e-icon-button slot="leading-icon" aria-label="Menu" toggle>

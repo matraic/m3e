@@ -24,7 +24,7 @@ The element dispatches a `gesture` event with `SwipeGestureDetail` as its detail
 
 ## Showcase examples
 
-Detect swipe declaratively by importing `@m3e/web/gestures/swipe` and binding the gesture element to the target with `for`. Listen for its `gesture` event. Give the target a visible size and an appropriate `touch-action` (the showcase uses `touch-action: none`); provide an accessible alternative for gesture-only interactions.
+Bind `m3e-swipe-gesture` to the target with `for` and listen for `gesture` to respond to a swipe. Size the target and use `touch-action` to avoid conflicts with page scrolling.
 
 ```html
 <div id="item"></div>

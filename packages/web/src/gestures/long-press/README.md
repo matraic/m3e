@@ -24,7 +24,7 @@ The element dispatches a `gesture` event with `LongPressGestureDetail` as its de
 
 ## Showcase examples
 
-Detect long press declaratively by importing `@m3e/web/gestures/long-press` and binding the gesture element to the target with `for`. Listen for its `gesture` event. Give the target a visible size and an appropriate `touch-action` (the showcase uses `touch-action: none`); provide an accessible alternative for gesture-only interactions.
+Bind `m3e-long-press-gesture` to the target with `for` and listen for `gesture` to respond to a sustained press. Give the target a visible size and provide another way to perform the action.
 
 ```html
 <div id="item"></div>

@@ -33,7 +33,7 @@ import { M3eChipElement } from "./ChipElement";
  * ```
  *
  * @example
- * Use the `icon` slot for a leading icon on a suggestion chip. Import `@m3e/web/icon` for the icons.
+ * Use the `icon` slot to put a lightbulb before the suggestion text.
  *
  * ```html
  * <m3e-suggestion-chip>

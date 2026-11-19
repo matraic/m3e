@@ -66,7 +66,7 @@ const MIN_PRIMARY_TAB_WIDTH = 24;
  * Use `variant` to choose `primary` or `secondary` (default).
  *
  * ```html
- * <m3e-tabs variant="primary"&gt
+ * <m3e-tabs variant="primary">
  *   <!-- Content omitted for brevity -->
  * </m3e-tabs>
  * ```
@@ -75,7 +75,7 @@ const MIN_PRIMARY_TAB_WIDTH = 24;
  * Use `stretch` to stretch tabs across the available space.
  *
  * ```html
- * <m3e-tabs stretch&gt
+ * <m3e-tabs stretch>
  *   <!-- Content omitted for brevity -->
  * </m3e-tabs>
  * ```
@@ -84,7 +84,7 @@ const MIN_PRIMARY_TAB_WIDTH = 24;
  * Use `header-position` to place the tab header `before` (default) or `after` the panels.
  *
  * ```html
- * <m3e-tabs header-position="after"&gt
+ * <m3e-tabs header-position="after">
  *   <!-- Content omitted for brevity -->
  * </m3e-tabs>
  * ```

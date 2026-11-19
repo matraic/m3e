@@ -30,7 +30,7 @@ The element dispatches a `gesture` event with `RepeatGestureDetail` as its detai
 
 ## Showcase examples
 
-Detect a triple tap declaratively by importing `@m3e/web/gestures/repeat`, `@m3e/web/gestures/tap` and binding the gesture element to the target with `for`. Listen for its `gesture` event. Give the target a visible size and an appropriate `touch-action` (the showcase uses `touch-action: none`); provide an accessible alternative for gesture-only interactions.
+Nest `m3e-tap-gesture` in `m3e-repeat-gesture` with `count="3"` and `max-interval="350"` to recognize three taps with at most 350 ms between them. Bind the repeat gesture to the target with `for`.
 
 ```html
 <div id="item" class="target"></div>

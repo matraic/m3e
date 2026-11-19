@@ -32,7 +32,7 @@ import { M3eChipElement } from "./ChipElement";
  * ```
  *
  * @example
- * Use the `icon` slot for a leading icon on an assist chip. Import `@m3e/web/icon` for the icons.
+ * Add a leading icon to an assist chip with the `icon` slot.
  *
  * ```html
  * <m3e-assist-chip>
@@ -59,7 +59,7 @@ import { M3eChipElement } from "./ChipElement";
  * ```
  *
  * @example
- * Apply a density scale with CSS custom properties. Additional classes are omitted for brevity. Import `@m3e/web/icon` for the icons.
+ * Set `--md-sys-density-scale: -3` to make the assist chip more compact.
  *
  * ```html
  * <m3e-assist-chip class="density-3">

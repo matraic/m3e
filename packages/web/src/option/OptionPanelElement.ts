@@ -42,8 +42,7 @@ import { M3eOptionElement } from "./OptionElement";
  * ```
  *
  * @example
- * The option panel is used by controls such as `m3e-select` to present their options. Import
- * `@m3e/web/select` and `@m3e/web/form-field`; the select creates and manages its panel.
+ * Define options on `m3e-select`; the select creates and manages the panel that displays them.
  *
  * ```html
  * <m3e-form-field>

@@ -10,7 +10,7 @@ import { M3eBottomSheetElement } from "./BottomSheetElement";
  *
  * @example
  * Nest the trigger inside a clickable element and use `for` to reference the sheet.
- * Import `@m3e/web/button` and `@m3e/web/list` for the other components.
+ *
  * ```html
  * <m3e-button>
  *   <m3e-bottom-sheet-trigger for="bottomSheet">
@@ -32,8 +32,8 @@ import { M3eBottomSheetElement } from "./BottomSheetElement";
  * ```
  *
  * @example
- * Set `detent` on the trigger to select the initial height. Supply the sheet content
- * from the basic example and import `@m3e/web/button`.
+ * Set `detent="1"` on the trigger to open the sheet at `half` from that trigger.
+ *
  * ```html
  * <m3e-button>
  *   <m3e-bottom-sheet-trigger for="bottomSheet" detent="1">

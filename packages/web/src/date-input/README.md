@@ -19,7 +19,7 @@ import "@m3e/web/date-input";
 
 ## 🧪 Examples
 
-Use a date input in a form field. Import `@m3e/web/form-field` for the form field.
+Place the date input in an outlined form field and match the label's `for` to the input's `id`.
 
 ```html
 <m3e-form-field variant="outlined">
@@ -29,7 +29,7 @@ Use a date input in a form field. Import `@m3e/web/form-field` for the form fiel
 </m3e-form-field>
 ```
 
-Set the initial value with the `value` attribute. Import `@m3e/web/form-field` for the form field.
+Set `value` to an ISO date string to prefill the date field.
 
 ```html
 <m3e-form-field variant="outlined">
@@ -39,7 +39,7 @@ Set the initial value with the `value` attribute. Import `@m3e/web/form-field` f
 </m3e-form-field>
 ```
 
-Use `type` to edit time or date and time. Import `@m3e/web/form-field` for the form field.
+Set `type="time"` to show time segments or `type="datetime"` to show both date and time segments.
 
 ```html
 <m3e-form-field variant="outlined">
@@ -55,7 +55,7 @@ Use `type` to edit time or date and time. Import `@m3e/web/form-field` for the f
 </m3e-form-field>
 ```
 
-Bind date and time pickers to the date input using `for`. Import `@m3e/web/form-field` for the form field. Import `@m3e/web/icon-button` and `@m3e/web/icon` for the icon button and icon. Import `@m3e/web/datepicker` and `@m3e/web/timepicker` for the pickers and toggles.
+Set each picker's `for` to the id of the date input it updates. Set each toggle's `for` to the id of the picker it opens.
 
 ```html
 <m3e-form-field variant="outlined">
@@ -97,7 +97,7 @@ Bind date and time pickers to the date input using `for`. Import `@m3e/web/form-
 <m3e-timepicker id="timepicker2" for="field3"></m3e-timepicker>
 ```
 
-Use `time-format` to select the hour format. Import `@m3e/web/form-field` for the form field.
+Set `time-format="24"` on time and date-time fields to use a 24-hour clock.
 
 ```html
 <m3e-form-field variant="outlined">
@@ -115,7 +115,7 @@ Use `time-format` to select the hour format. Import `@m3e/web/form-field` for th
 </m3e-form-field>
 ```
 
-Use `show-seconds` to display the seconds segment. Import `@m3e/web/form-field` for the form field.
+Add `show-seconds` to time and date-time fields to make seconds editable.
 
 ```html
 <m3e-form-field variant="outlined">
@@ -133,7 +133,7 @@ Use `show-seconds` to display the seconds segment. Import `@m3e/web/form-field` 
 </m3e-form-field>
 ```
 
-Use `disabled` to disable the input. Import `@m3e/web/form-field` for the form field.
+Add `disabled` to display the preset date without allowing interaction.
 
 ```html
 <m3e-form-field variant="outlined">
@@ -143,7 +143,7 @@ Use `disabled` to disable the input. Import `@m3e/web/form-field` for the form f
 </m3e-form-field>
 ```
 
-Use `readonly` to prevent editing while retaining focus and segment navigation. Import `@m3e/web/form-field` for the form field.
+Add `readonly` to prevent editing while keeping the field focusable and its segments navigable.
 
 ```html
 <m3e-form-field variant="outlined">
@@ -153,7 +153,7 @@ Use `readonly` to prevent editing while retaining focus and segment navigation. 
 </m3e-form-field>
 ```
 
-Use `required` to require a value. Import `@m3e/web/form-field` for the form field.
+Add `required` to make the date field invalid when empty.
 
 ```html
 <m3e-form-field variant="outlined">
@@ -163,7 +163,7 @@ Use `required` to require a value. Import `@m3e/web/form-field` for the form fie
 </m3e-form-field>
 ```
 
-Use `min-date` and `max-date` to validate date bounds. Import `@m3e/web/form-field` for the form field.
+Use `min-date` and `max-date` to validate the date against a permitted range.
 
 ```html
 <m3e-form-field variant="outlined">
@@ -180,7 +180,7 @@ Set `blackoutDates` to a predicate that marks dates invalid. Provide an input wi
 document.querySelector("#blackout-dates").blackoutDates = (date) => isWeekend(date);
 ```
 
-Use `min-time` and `max-time` to validate time bounds. Import `@m3e/web/form-field` for the form field.
+Use `min-time` and `max-time` to validate the time against a permitted range.
 
 ```html
 <m3e-form-field variant="outlined">

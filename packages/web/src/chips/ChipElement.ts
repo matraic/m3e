@@ -51,7 +51,7 @@ import { ChipVariant, isChipVariant } from "./ChipVariant";
  * ```
  *
  * @example
- * Use the `icon` slot for a leading icon. Import `@m3e/web/icon` for the icons.
+ * Place an icon before the Finance chip's text with the `icon` slot.
  *
  * ```html
  * <m3e-chip>

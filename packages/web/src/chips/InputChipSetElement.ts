@@ -38,7 +38,7 @@ import { InputChipSetChangeEventDetail } from "./InputChipSetChangeEventDetail";
  * keywords, or selections in a visually consistent and interactive manner.
  *
  * @example
- * Place an input chip set in a form field and provide an input through its `input` slot. Import `@m3e/web/form-field` for the form field.
+ * Place a text input in the set's `input` slot to let users enter keywords.
  *
  * ```html
  * <m3e-form-field>
@@ -50,7 +50,7 @@ import { InputChipSetChangeEventDetail } from "./InputChipSetChangeEventDetail";
  * ```
  *
  * @example
- * Prepopulate an input chip set with removable input chips. Import `@m3e/web/form-field` for the form field.
+ * Add `m3e-input-chip` elements to start a keyword field with removable values.
  *
  * ```html
  * <m3e-form-field>
@@ -65,7 +65,7 @@ import { InputChipSetChangeEventDetail } from "./InputChipSetChangeEventDetail";
  * ```
  *
  * @example
- * Use `max-chips` to limit the chips shown while the input is not focused. Import `@m3e/web/form-field` for the form field.
+ * Set `max-chips="1"` to show only one chip while the input is unfocused.
  *
  * ```html
  * <m3e-form-field>
@@ -80,7 +80,7 @@ import { InputChipSetChangeEventDetail } from "./InputChipSetChangeEventDetail";
  * ```
  *
  * @example
- * Use `disabled` to disable the input chip set, its input, and its chips. Import `@m3e/web/form-field` for the form field.
+ * Disable the entire input chip set with `disabled` so users cannot edit the input or remove chips.
  *
  * ```html
  * <m3e-form-field>

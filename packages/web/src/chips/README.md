@@ -50,7 +50,7 @@ Use `vertical` to stack chips in a set.
 </m3e-chip-set>
 ```
 
-Use the `icon` slot for a leading icon. Import `@m3e/web/icon` for the icons.
+Place an icon before the Finance chip's text with the `icon` slot.
 
 ```html
 <m3e-chip>
@@ -68,7 +68,7 @@ Use assist chips for actions; select the `outlined` or `elevated` variant.
 <m3e-assist-chip variant="elevated">Elevated Assist</m3e-assist-chip>
 ```
 
-Use the `icon` slot for a leading icon on an assist chip. Import `@m3e/web/icon` for the icons.
+Add a leading icon to an assist chip with the `icon` slot.
 
 ```html
 <m3e-assist-chip>
@@ -92,7 +92,7 @@ Use `href` to make an assist chip a link.
 </m3e-assist-chip>
 ```
 
-Apply a density scale with CSS custom properties. Additional classes are omitted for brevity. Import `@m3e/web/icon` for the icons.
+Set `--md-sys-density-scale: -3` to make the assist chip more compact.
 
 ```html
 <m3e-assist-chip class="density-3">
@@ -118,7 +118,7 @@ Use a filter chip set to select a filter; chips support `outlined` and `elevated
 </m3e-filter-chip-set>
 ```
 
-Use `selected` to select a filter chip and `icon` to add a leading icon. Import `@m3e/web/icon` for the icons.
+Use `selected` to preselect a filter chip and the `icon` slot to identify its topic.
 
 ```html
 <m3e-filter-chip-set aria-label="Filter by topic">
@@ -129,7 +129,7 @@ Use `selected` to select a filter chip and `icon` to add a leading icon. Import 
 </m3e-filter-chip-set>
 ```
 
-Use `multi` on the set to allow multiple selected filter chips. Import `@m3e/web/icon` for the icons.
+Set `multi` on the filter chip set to allow more than one topic to be selected.
 
 ```html
 <m3e-filter-chip-set aria-label="Filter by topic" multi>
@@ -143,7 +143,7 @@ Use `multi` on the set to allow multiple selected filter chips. Import `@m3e/web
 </m3e-filter-chip-set>
 ```
 
-Disable individual filter chips, or use `disabled-interactive` to retain keyboard focusability. Import `@m3e/web/icon` for the icons.
+Use `disabled` to disable a filter chip or `disabled-interactive` to leave it keyboard-focusable.
 
 ```html
 <m3e-filter-chip-set aria-label="Filter by topic">
@@ -165,7 +165,7 @@ Use `disabled` to disable the whole filter chip set.
 </m3e-filter-chip-set>
 ```
 
-Use `hide-selection-indicator` to hide the selected indicator while retaining leading icons. Import `@m3e/web/icon` for the icons.
+Use `hide-selection-indicator` to suppress the check mark on selected filter chips.
 
 ```html
 <m3e-filter-chip-set aria-label="Filter by topic" hide-selection-indicator>
@@ -178,7 +178,7 @@ Use `hide-selection-indicator` to hide the selected indicator while retaining le
 
 ### 🗂️ Input Chip
 
-Place an input chip set in a form field and provide an input through its `input` slot. Import `@m3e/web/form-field` for the form field.
+Place a text input in the set's `input` slot to let users enter keywords.
 
 ```html
 <m3e-form-field>
@@ -189,7 +189,7 @@ Place an input chip set in a form field and provide an input through its `input`
 </m3e-form-field>
 ```
 
-Prepopulate an input chip set with removable input chips. Import `@m3e/web/form-field` for the form field.
+Add `m3e-input-chip` elements to start a keyword field with removable values.
 
 ```html
 <m3e-form-field>
@@ -203,7 +203,7 @@ Prepopulate an input chip set with removable input chips. Import `@m3e/web/form-
 </m3e-form-field>
 ```
 
-Use `max-chips` to limit the chips shown while the input is not focused. Import `@m3e/web/form-field` for the form field.
+Set `max-chips="1"` to show only one chip while the input is unfocused.
 
 ```html
 <m3e-form-field>
@@ -217,7 +217,7 @@ Use `max-chips` to limit the chips shown while the input is not focused. Import 
 </m3e-form-field>
 ```
 
-Use `disabled` to disable the input chip set, its input, and its chips. Import `@m3e/web/form-field` for the form field.
+Disable the entire input chip set with `disabled` so users cannot edit the input or remove chips.
 
 ```html
 <m3e-form-field>
@@ -240,7 +240,7 @@ Use suggestion chips to offer actions; select the `outlined` or `elevated` varia
 <m3e-suggestion-chip variant="elevated">Elevated Suggestion</m3e-suggestion-chip>
 ```
 
-Use the `icon` slot for a leading icon on a suggestion chip. Import `@m3e/web/icon` for the icons.
+Use the `icon` slot to put a lightbulb before the suggestion text.
 
 ```html
 <m3e-suggestion-chip>

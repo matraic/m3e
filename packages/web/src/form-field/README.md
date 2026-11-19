@@ -82,7 +82,7 @@ Use `hide-required-marker` to hide the required marker without removing the cont
 </m3e-form-field>
 ```
 
-Use `prefix` and `suffix` for icons or buttons, and `prefix-text` and `suffix-text` for text. Import `@m3e/web/icon-button` and `@m3e/web/icon`. Give the icon-only button an accessible label and implement its clear action.
+Use `prefix-text` and `suffix-text` for text such as currency symbols, and `prefix` and `suffix` for elements such as the clear button. Wire the clear button to reset the input.
 
 ```html
 <m3e-form-field>
