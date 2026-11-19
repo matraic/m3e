@@ -34,7 +34,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * and accessible interactions following Material 3 design principles.
  *
  * @example
- * Showcase: Selection lists. Import `@m3e/web/list`.
+ * Place `m3e-list-option` elements in a single-selection list.
  *
  * ```html
  * <m3e-selection-list>
@@ -44,7 +44,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * ```
  *
  * @example
- * Showcase: Selection lists. Import `@m3e/web/list`.
+ * Use `variant="segmented"` to present selectable list items separately.
  *
  * ```html
  * <m3e-selection-list variant="segmented">

@@ -56,7 +56,7 @@ test("exposes showcase examples for the remaining modules and supporting element
     "toolbar", "tooltip", "rich-tooltip", "tree",
   ];
   for (const name of main) {
-    assert.ok(catalog.get(name)?.examples.some((example) => example.startsWith("Showcase:")), name);
+    assert.ok(catalog.get(name)?.examples.some((example) => /```(?:html|css|js|ts)\r?\n/.test(example)), name);
   }
   for (const name of [
     "option", "optgroup", "option-panel", "list-action", "list-option", "menu-item-group",

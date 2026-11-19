@@ -28,7 +28,7 @@ import { addAriaReferencedId, removeAriaReferencedId, selectionManager } from "@
  * specific panel via the `for` attribute, enabling declarative control and semantic clarity.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/tabs`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Place tabs and their panels inside a tabs container.
  *
  * ```html
  * <m3e-tabs>
@@ -48,7 +48,7 @@ import { addAriaReferencedId, removeAriaReferencedId, selectionManager } from "@
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/tabs`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use `disabled` to disable individual tabs.
  *
  * ```html
  * <m3e-tabs>

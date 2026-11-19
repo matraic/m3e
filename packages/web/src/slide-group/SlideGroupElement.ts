@@ -16,7 +16,7 @@ import "@m3e/web/icon-button";
  * encodes accessibility through customizable labels and interaction states.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/slide-group`.
+ * Place content inside a slide group; pagination controls appear when it overflows.
  *
  * ```html
  * <m3e-slide-group>
@@ -26,7 +26,7 @@ import "@m3e/web/icon-button";
  * ```
  *
  * @example
- * Showcase: Orientation. Import `@m3e/web/slide-group`.
+ * Use `vertical` to orient the slide group vertically.
  *
  * ```html
  * <m3e-slide-group vertical>

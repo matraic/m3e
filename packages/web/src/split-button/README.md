@@ -12,7 +12,7 @@ import "@m3e/web/split-button";
 
 ## 🧪 Examples
 
-Showcase: Anatomy. Import `@m3e/web/split-button`. Also import `@m3e/web/button`, `@m3e/web/icon`, `@m3e/web/icon-button`, `@m3e/web/menu`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Combine a leading button, trailing menu trigger, and menu in a split button.
 
 ```html
 <m3e-split-button>
@@ -31,7 +31,7 @@ Showcase: Anatomy. Import `@m3e/web/split-button`. Also import `@m3e/web/button`
 </m3e-menu>
 ```
 
-Showcase: Variants. Import `@m3e/web/split-button`. Also import `@m3e/web/button`, `@m3e/web/icon`, `@m3e/web/icon-button`, `@m3e/web/menu`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Use `variant` to choose `filled` (default), `tonal`, `outlined`, or `elevated`.
 
 ```html
 <m3e-split-button variant="filled">
@@ -47,7 +47,7 @@ Showcase: Variants. Import `@m3e/web/split-button`. Also import `@m3e/web/button
 <!-- Menu omitted for brevity -->
 ```
 
-Showcase: Sizes. Import `@m3e/web/split-button`. Also import `@m3e/web/button`, `@m3e/web/icon`, `@m3e/web/icon-button`, `@m3e/web/menu`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Use `size` to choose `extra-small`, `small` (default), `medium`, `large`, or `extra-large`.
 
 ```html
 <m3e-split-button size="extra-small">
@@ -63,7 +63,7 @@ Showcase: Sizes. Import `@m3e/web/split-button`. Also import `@m3e/web/button`, 
 <!-- Menu omitted for brevity -->
 ```
 
-Showcase: Density. Import `@m3e/web/split-button`. Also import `@m3e/web/button`, `@m3e/web/icon`, `@m3e/web/icon-button`, `@m3e/web/menu`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names. Apply the required styling for the illustrated classes in your application.
+Apply a density scale of `-3` to adjust spacing.
 
 ```html
 <m3e-split-button size="extra-small" class="density-3">

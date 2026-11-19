@@ -19,7 +19,7 @@ import { TooltipElementBase } from "./TooltipElementBase";
  * icon-driven interfaces. Use the `for` attribute to designate the element for which to provide a tooltip.
  *
  * @example
- * Showcase: Plain tooltip. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Connect a tooltip to a trigger by id.
  *
  * ```html
  * <m3e-icon-button id="button">
@@ -29,7 +29,7 @@ import { TooltipElementBase } from "./TooltipElementBase";
  * ```
  *
  * @example
- * Showcase: Delays. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `show-delay` and `hide-delay` to control the tooltip delays in milliseconds.
  *
  * ```html
  * <m3e-icon-button id="button">
@@ -39,7 +39,7 @@ import { TooltipElementBase } from "./TooltipElementBase";
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `disabled` to prevent the tooltip from opening.
  *
  * ```html
  * <m3e-icon-button id="button">

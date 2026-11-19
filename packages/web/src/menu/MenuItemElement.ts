@@ -18,7 +18,7 @@ import { M3eMenuTriggerElement } from "./MenuTriggerElement";
  * when a nested `m3e-menu-trigger` is present—enabling hierarchical flows.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/menu`. Also import `@m3e/web/button`.
+ * Nest a menu trigger in a clickable element and connect its `for` attribute to the menu id.
  *
  * ```html
  * <m3e-button>
@@ -31,7 +31,7 @@ import { M3eMenuTriggerElement } from "./MenuTriggerElement";
  * ```
  *
  * @example
- * Showcase: Variants. Import `@m3e/web/menu`.
+ * Use `variant` to choose `standard` (default) or `vibrant`.
  *
  * ```html
  * <!-- Trigger omitted for brevity -->

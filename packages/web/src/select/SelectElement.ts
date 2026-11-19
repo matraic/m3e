@@ -47,7 +47,7 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * with form submission and reactive state management systems.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
+ * Place a select and its options inside a form field.
  *
  * ```html
  * <m3e-form-field>
@@ -62,7 +62,7 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * ```
  *
  * @example
- * Showcase: Empty options. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
+ * Use an option with an empty value to represent no meaningful selection.
  *
  * ```html
  * <m3e-form-field>
@@ -78,7 +78,7 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * ```
  *
  * @example
- * Showcase: Option groups. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
+ * Group options with `m3e-optgroup`; nested groups are not supported.
  *
  * ```html
  * <m3e-form-field>
@@ -96,7 +96,7 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * ```
  *
  * @example
- * Showcase: Selection. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
+ * Use `multi` to allow multiple selections and `selected` to select options.
  *
  * ```html
  * <m3e-form-field>
@@ -110,7 +110,7 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * ```
  *
  * @example
- * Showcase: Selection. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
+ * Use `multi` and `value` to set multiple selected options; do not combine this with option-level `selected`.
  *
  * ```html
  * <m3e-form-field>
@@ -124,7 +124,7 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
+ * Use `disabled` on the select to disable the entire control.
  *
  * ```html
  * <m3e-form-field>
@@ -137,7 +137,7 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
+ * Use `disabled` on an individual option.
  *
  * ```html
  * <m3e-form-field>
@@ -150,7 +150,7 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * ```
  *
  * @example
- * Showcase: Required. Import `@m3e/web/select`. Also import `@m3e/web/form-field`, `@m3e/web/option`.
+ * Use `required` to require a selection.
  *
  * ```html
  * <m3e-form-field>
@@ -164,7 +164,7 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@m3e/web/option";
  * ```
  *
  * @example
- * Showcase: Density. Import `@m3e/web/select`. Also import `@m3e/web/form-field`. Apply the required styling for the illustrated classes in your application. Additional styles are omitted for brevity.
+ * Apply a density scale of `-3` to the form field and the select panel using `panel-class`.
  *
  * ```html
  * <m3e-form-field class="density-3">

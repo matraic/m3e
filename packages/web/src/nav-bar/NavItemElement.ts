@@ -39,7 +39,7 @@ import { isNavItemOrientation, NavItemOrientation } from "./NavItemOrientation";
  * orientation, and extensive theming via CSS custom properties.
  *
  * @example
- * Showcase: Modes. Import `@m3e/web/nav-bar`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use `mode` to choose a compact or expanded navigation bar.
  *
  * ```html
  * <m3e-nav-bar mode="compact">
@@ -55,7 +55,7 @@ import { isNavItemOrientation, NavItemOrientation } from "./NavItemOrientation";
  * ```
  *
  * @example
- * Showcase: Items. Import `@m3e/web/nav-bar`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Place navigation items inside a navigation bar.
  *
  * ```html
  * <m3e-nav-item><m3e-icon slot="icon" name="news"></m3e-icon>News</m3e-nav-item>

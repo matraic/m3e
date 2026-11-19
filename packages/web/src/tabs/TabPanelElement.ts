@@ -13,7 +13,7 @@ import { customElement, DesignToken, Role } from "@m3e/web/core";
  * accessible navigation consistent with Material 3 guidance.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/tabs`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Place tabs and their panels inside a tabs container.
  *
  * ```html
  * <m3e-tabs>

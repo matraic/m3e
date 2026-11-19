@@ -23,7 +23,7 @@ import { MenuItemElementBase } from "./MenuItemElementBase";
  * selection contract and can coexist with other checkbox or radio items within the same menu.
  *
  * @example
- * Showcase: Checkboxes. Import `@m3e/web/menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use checkbox menu items for independent selections and `checked` to control their state.
  *
  * ```html
  * <!-- Trigger omitted for brevity -->

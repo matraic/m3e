@@ -18,7 +18,7 @@ import "./ListItemButtonElement";
  * button-like interactions, supporting ripple effects, and state layers.
  *
  * @example
- * Showcase: Action lists. Import `@m3e/web/list`.
+ * Use `m3e-list-action` inside an action list to present actions.
  *
  * ```html
  * <m3e-action-list>
@@ -28,7 +28,7 @@ import "./ListItemButtonElement";
  * ```
  *
  * @example
- * Showcase: Action lists. Import `@m3e/web/list`.
+ * Use `variant="segmented"` to present actions as separated items.
  *
  * ```html
  * <m3e-action-list variant="segmented">

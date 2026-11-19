@@ -25,7 +25,7 @@ import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
  * buffering, and activity indication.
  *
  * @example
- * Showcase: Determinate. Import `@m3e/web/progress-indicator`.
+ * Set `value` to show linear progress toward `max`.
  *
  * ```html
  * <m3e-linear-progress-indicator value="25"></m3e-linear-progress-indicator>
@@ -33,7 +33,7 @@ import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
  * ```
  *
  * @example
- * Showcase: Indeterminate. Import `@m3e/web/progress-indicator`.
+ * Use `mode="indeterminate"` when linear progress cannot be measured.
  *
  * ```html
  * <m3e-linear-progress-indicator mode="indeterminate"></m3e-linear-progress-indicator>
@@ -41,7 +41,7 @@ import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
  * ```
  *
  * @example
- * Showcase: Buffer. Import `@m3e/web/progress-indicator`.
+ * Use buffer mode with `value` and `buffer-value` to show progress and buffered progress.
  *
  * ```html
  * <m3e-linear-progress-indicator mode="buffer" value="10" buffer-value="25"></m3e-linear-progress-indicator>
@@ -49,7 +49,7 @@ import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
  * ```
  *
  * @example
- * Showcase: Query. Import `@m3e/web/progress-indicator`.
+ * Use query mode to indicate pre-loading before progress begins.
  *
  * ```html
  * <m3e-linear-progress-indicator mode="query"></m3e-linear-progress-indicator>

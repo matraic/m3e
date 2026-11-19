@@ -12,7 +12,7 @@ import "@m3e/web/slide-group";
 
 ## 🧪 Examples
 
-Showcase: Basic usage. Import `@m3e/web/slide-group`.
+Place content inside a slide group; pagination controls appear when it overflows.
 
 ```html
 <m3e-slide-group>
@@ -21,7 +21,7 @@ Showcase: Basic usage. Import `@m3e/web/slide-group`.
 </m3e-slide-group>
 ```
 
-Showcase: Orientation. Import `@m3e/web/slide-group`.
+Use `vertical` to orient the slide group vertically.
 
 ```html
 <m3e-slide-group vertical>

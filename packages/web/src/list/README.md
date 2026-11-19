@@ -18,7 +18,7 @@ import "@m3e/web/list";
 
 ## 🧪 Examples
 
-Showcase: Anatomy. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use the `leading`, `overline`, `supporting-text`, and `trailing` slots to arrange item content.
 
 ```html
 <m3e-list>
@@ -32,7 +32,7 @@ Showcase: Anatomy. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a m
 </m3e-list>
 ```
 
-Showcase: Variants. Import `@m3e/web/list`.
+Use the default `standard` variant to present a list of items.
 
 ```html
 <m3e-list>
@@ -41,7 +41,7 @@ Showcase: Variants. Import `@m3e/web/list`.
 </m3e-list>
 ```
 
-Showcase: Variants. Import `@m3e/web/list`.
+Use `variant="segmented"` to separate the list items.
 
 ```html
 <m3e-list variant="segmented">
@@ -50,7 +50,7 @@ Showcase: Variants. Import `@m3e/web/list`.
 </m3e-list>
 ```
 
-Showcase: Multiline items. Import `@m3e/web/list`.
+Use the `overline` and `supporting-text` slots to create two- or three-line items.
 
 ```html
 <m3e-list>
@@ -67,7 +67,7 @@ Showcase: Multiline items. Import `@m3e/web/list`.
 </m3e-list>
 ```
 
-Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use the `leading` and `trailing` slots for icons.
 
 ```html
 <m3e-list>
@@ -80,7 +80,7 @@ Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Lo
 </m3e-list>
 ```
 
-Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/avatar`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use the `leading` slot for an avatar and `trailing` for an icon.
 
 ```html
 <m3e-list>
@@ -93,7 +93,7 @@ Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/avatar`, 
 </m3e-list>
 ```
 
-Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use the `leading` slot for an image and `trailing` for an icon.
 
 ```html
 <m3e-list>
@@ -106,13 +106,13 @@ Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Lo
 </m3e-list>
 ```
 
-Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use the `leading` slot for a video and `trailing` for an icon.
 
 ```html
 <m3e-list>
   <m3e-list-item>
     <video slot="leading" autoplay loop poster="[YOUR IMAGE URL HERE]" preload="auto">
-      <source src="[YOUR VIDEO URL HERE]" type="video/mp4"/>
+      <source src="[YOUR VIDEO URL HERE]" type="video/mp4" />
     </video>
     Label text
     <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
@@ -121,7 +121,7 @@ Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Lo
 </m3e-list>
 ```
 
-Showcase: Dividers. Import `@m3e/web/list`. Also import `@m3e/web/divider`.
+Use dividers to separate items in a standard list; dividers are hidden in segmented lists.
 
 ```html
 <m3e-list>
@@ -133,7 +133,7 @@ Showcase: Dividers. Import `@m3e/web/list`. Also import `@m3e/web/divider`.
 </m3e-list>
 ```
 
-Showcase: Dividers. Import `@m3e/web/list`. Also import `@m3e/web/divider`.
+Use `inset` on a divider to inset it within a standard list.
 
 ```html
 <m3e-list>
@@ -143,7 +143,7 @@ Showcase: Dividers. Import `@m3e/web/list`. Also import `@m3e/web/divider`.
 </m3e-list>
 ```
 
-Showcase: Action lists. Import `@m3e/web/list`.
+Use `m3e-list-action` inside an action list to present actions.
 
 ```html
 <m3e-action-list>
@@ -152,7 +152,7 @@ Showcase: Action lists. Import `@m3e/web/list`.
 </m3e-action-list>
 ```
 
-Showcase: Action lists. Import `@m3e/web/list`.
+Use `variant="segmented"` to present actions as separated items.
 
 ```html
 <m3e-action-list variant="segmented">
@@ -161,7 +161,7 @@ Showcase: Action lists. Import `@m3e/web/list`.
 </m3e-action-list>
 ```
 
-Showcase: Disabling. Import `@m3e/web/list`.
+Use `disabled` on an individual list action.
 
 ```html
 <m3e-action-list>
@@ -170,7 +170,7 @@ Showcase: Disabling. Import `@m3e/web/list`.
 </m3e-action-list>
 ```
 
-Showcase: Disabling. Import `@m3e/web/list`.
+Use `disabled` on an action in a segmented action list.
 
 ```html
 <m3e-action-list variant="segmented">
@@ -179,7 +179,7 @@ Showcase: Disabling. Import `@m3e/web/list`.
 </m3e-action-list>
 ```
 
-Showcase: Links. Import `@m3e/web/list`.
+Use `href` to navigate to a destination.
 
 ```html
 <m3e-action-list>
@@ -187,7 +187,7 @@ Showcase: Links. Import `@m3e/web/list`.
 </m3e-action-list>
 ```
 
-Showcase: Nested lists. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use `m3e-expandable-list-item` and its `items` slot to group nested actions.
 
 ```html
 <m3e-action-list>
@@ -206,7 +206,7 @@ Showcase: Nested lists. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Loa
 </m3e-action-list>
 ```
 
-Showcase: Nested lists. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use an expandable item in a `segmented` action list to group nested actions.
 
 ```html
 <m3e-action-list variant="segmented">
@@ -225,7 +225,7 @@ Showcase: Nested lists. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Loa
 </m3e-action-list>
 ```
 
-Showcase: Selection lists. Import `@m3e/web/list`.
+Place `m3e-list-option` elements in a single-selection list.
 
 ```html
 <m3e-selection-list>
@@ -234,7 +234,7 @@ Showcase: Selection lists. Import `@m3e/web/list`.
 </m3e-selection-list>
 ```
 
-Showcase: Selection lists. Import `@m3e/web/list`.
+Use `variant="segmented"` to present selectable list items separately.
 
 ```html
 <m3e-selection-list variant="segmented">
@@ -243,7 +243,7 @@ Showcase: Selection lists. Import `@m3e/web/list`.
 </m3e-selection-list>
 ```
 
-Showcase: Multiple selection. Import `@m3e/web/list`.
+Use `multi` to allow multiple selected list options.
 
 ```html
 <m3e-selection-list multi>
@@ -252,7 +252,7 @@ Showcase: Multiple selection. Import `@m3e/web/list`.
 </m3e-selection-list>
 ```
 
-Showcase: Multiple selection. Import `@m3e/web/list`.
+Use `multi` with `variant="segmented"` to select multiple separated options.
 
 ```html
 <m3e-selection-list variant="segmented" multi>
@@ -261,7 +261,7 @@ Showcase: Multiple selection. Import `@m3e/web/list`.
 </m3e-selection-list>
 ```
 
-Showcase: Hiding the selection indicator. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use `hide-selection-indicator` to hide the selection indicator.
 
 ```html
 <m3e-selection-list multi hide-selection-indicator>
@@ -271,7 +271,7 @@ Showcase: Hiding the selection indicator. Import `@m3e/web/list`. Also import `@
 </m3e-selection-list>
 ```
 
-Showcase: Disabling. Import `@m3e/web/list`.
+Use `disabled` on individual list options; a disabled option can also be selected.
 
 ```html
 <m3e-selection-list multi>
@@ -281,7 +281,7 @@ Showcase: Disabling. Import `@m3e/web/list`.
 </m3e-selection-list>
 ```
 
-Showcase: Disabling. Import `@m3e/web/list`.
+Use `disabled` on options in a segmented selection list; a disabled option can also be selected.
 
 ```html
 <m3e-selection-list variant="segmented" multi>
@@ -291,7 +291,7 @@ Showcase: Disabling. Import `@m3e/web/list`.
 </m3e-selection-list>
 ```
 
-Showcase: Density. Import `@m3e/web/list`. Apply the required styling for the illustrated classes in your application.
+Apply a density scale of `-3` to adjust spacing.
 
 ```html
 <m3e-selection-list class="density-3" variant="segmented" multi>

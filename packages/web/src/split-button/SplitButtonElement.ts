@@ -30,7 +30,7 @@ import { isSplitButtonVariant, SplitButtonVariant } from "./SplitButtonVariant";
  * interactions, reflecting Material 3's principles of clarity, flexibility, and expressive design.
  *
  * @example
- * Showcase: Anatomy. Import `@m3e/web/split-button`. Also import `@m3e/web/button`, `@m3e/web/icon`, `@m3e/web/icon-button`, `@m3e/web/menu`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Combine a leading button, trailing menu trigger, and menu in a split button.
  *
  * ```html
  * <m3e-split-button>
@@ -50,7 +50,7 @@ import { isSplitButtonVariant, SplitButtonVariant } from "./SplitButtonVariant";
  * ```
  *
  * @example
- * Showcase: Variants. Import `@m3e/web/split-button`. Also import `@m3e/web/button`, `@m3e/web/icon`, `@m3e/web/icon-button`, `@m3e/web/menu`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `variant` to choose `filled` (default), `tonal`, `outlined`, or `elevated`.
  *
  * ```html
  * <m3e-split-button variant="filled">
@@ -67,7 +67,7 @@ import { isSplitButtonVariant, SplitButtonVariant } from "./SplitButtonVariant";
  * ```
  *
  * @example
- * Showcase: Sizes. Import `@m3e/web/split-button`. Also import `@m3e/web/button`, `@m3e/web/icon`, `@m3e/web/icon-button`, `@m3e/web/menu`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `size` to choose `extra-small`, `small` (default), `medium`, `large`, or `extra-large`.
  *
  * ```html
  * <m3e-split-button size="extra-small">
@@ -84,7 +84,7 @@ import { isSplitButtonVariant, SplitButtonVariant } from "./SplitButtonVariant";
  * ```
  *
  * @example
- * Showcase: Density. Import `@m3e/web/split-button`. Also import `@m3e/web/button`, `@m3e/web/icon`, `@m3e/web/icon-button`, `@m3e/web/menu`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names. Apply the required styling for the illustrated classes in your application.
+ * Apply a density scale of `-3` to adjust spacing.
  *
  * ```html
  * <m3e-split-button size="extra-small" class="density-3">

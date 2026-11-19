@@ -13,7 +13,7 @@ import "@m3e/web/search";
 
 ## 🧪 Examples
 
-Showcase: Typical usage. Import `@m3e/web/search`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use a leading icon and `clearable` to let users clear the search input.
 
 ```html
 <m3e-search-bar clearable>
@@ -22,7 +22,7 @@ Showcase: Typical usage. Import `@m3e/web/search`. Also import `@m3e/web/icon`. 
 </m3e-search-bar>
 ```
 
-Showcase: Modes. Import `@m3e/web/search`. Also import `@m3e/web/list`.
+Use the default docked search view to present results near the search bar.
 
 ```html
 <m3e-search-view>
@@ -35,7 +35,7 @@ Showcase: Modes. Import `@m3e/web/search`. Also import `@m3e/web/list`.
 </m3e-search-view>
 ```
 
-Showcase: Modes. Import `@m3e/web/search`.
+Use `mode="fullscreen"` to present results across the viewport.
 
 ```html
 <m3e-search-view mode="fullscreen">
@@ -44,7 +44,7 @@ Showcase: Modes. Import `@m3e/web/search`.
 </m3e-search-view>
 ```
 
-Showcase: Appearance variants. Import `@m3e/web/search`.
+Use `contained` in docked mode for a filled search container.
 
 ```html
 <m3e-search-view mode="docked" contained>
@@ -53,7 +53,7 @@ Showcase: Appearance variants. Import `@m3e/web/search`.
 </m3e-search-view>
 ```
 
-Showcase: Appearance variants. Import `@m3e/web/search`.
+Use `contained` in fullscreen mode for a filled search container.
 
 ```html
 <m3e-search-view mode="fullscreen" contained>
@@ -62,7 +62,7 @@ Showcase: Appearance variants. Import `@m3e/web/search`.
 </m3e-search-view>
 ```
 
-Showcase: Hiding the search icon. Import `@m3e/web/search`.
+Use `hide-search-icon` to hide the icon when the search view is closed.
 
 ```html
 <m3e-search-view mode="docked" hide-search-icon>

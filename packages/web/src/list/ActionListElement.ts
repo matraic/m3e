@@ -10,7 +10,7 @@ import { M3eListElement } from "./ListElement";
  * interactions following Material 3 design principles.
  *
  * @example
- * Showcase: Action lists. Import `@m3e/web/list`.
+ * Use `m3e-list-action` inside an action list to present actions.
  *
  * ```html
  * <m3e-action-list>
@@ -20,7 +20,7 @@ import { M3eListElement } from "./ListElement";
  * ```
  *
  * @example
- * Showcase: Action lists. Import `@m3e/web/list`.
+ * Use `variant="segmented"` to present actions as separated items.
  *
  * ```html
  * <m3e-action-list variant="segmented">
@@ -30,7 +30,7 @@ import { M3eListElement } from "./ListElement";
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/list`.
+ * Use `disabled` on an individual list action.
  *
  * ```html
  * <m3e-action-list>
@@ -40,7 +40,7 @@ import { M3eListElement } from "./ListElement";
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/list`.
+ * Use `disabled` on an action in a segmented action list.
  *
  * ```html
  * <m3e-action-list variant="segmented">
@@ -50,7 +50,7 @@ import { M3eListElement } from "./ListElement";
  * ```
  *
  * @example
- * Showcase: Links. Import `@m3e/web/list`.
+ * Use `href` to navigate to a destination.
  *
  * ```html
  * <m3e-action-list>
@@ -59,7 +59,7 @@ import { M3eListElement } from "./ListElement";
  * ```
  *
  * @example
- * Showcase: Nested lists. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use `m3e-expandable-list-item` and its `items` slot to group nested actions.
  *
  * ```html
  * <m3e-action-list>
@@ -79,7 +79,7 @@ import { M3eListElement } from "./ListElement";
  * ```
  *
  * @example
- * Showcase: Nested lists. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use an expandable item in a `segmented` action list to group nested actions.
  *
  * ```html
  * <m3e-action-list variant="segmented">

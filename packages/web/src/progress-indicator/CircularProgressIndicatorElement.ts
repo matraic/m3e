@@ -26,7 +26,7 @@ const WAVY_INDETERMINATE_DURATION = 1.575;
  * loading and activity indication.
  *
  * @example
- * Showcase: Determinate. Import `@m3e/web/progress-indicator`.
+ * Set `value` to show circular progress toward `max`. The default slot can display the value.
  *
  * ```html
  * <m3e-circular-progress-indicator value="25">25</m3e-circular-progress-indicator>
@@ -34,7 +34,7 @@ const WAVY_INDETERMINATE_DURATION = 1.575;
  * ```
  *
  * @example
- * Showcase: Indeterminate. Import `@m3e/web/progress-indicator`.
+ * Use `indeterminate` when circular progress cannot be measured.
  *
  * ```html
  * <m3e-circular-progress-indicator indeterminate></m3e-circular-progress-indicator>

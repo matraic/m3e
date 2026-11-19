@@ -29,7 +29,7 @@ import { selectionManager } from "@m3e/web/core/a11y";
  * based on their position and state.
  *
  * @example
- * Showcase: Anatomy. Import `@m3e/web/segmented-button`.
+ * Place button segments inside a segmented button.
  *
  * ```html
  * <m3e-segmented-button>
@@ -39,7 +39,7 @@ import { selectionManager } from "@m3e/web/core/a11y";
  * ```
  *
  * @example
- * Showcase: Icons. Import `@m3e/web/segmented-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use the `icon` slot to add a segment icon; the selected state replaces it with a check.
  *
  * ```html
  * <m3e-segmented-button>

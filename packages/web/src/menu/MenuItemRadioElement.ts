@@ -16,7 +16,7 @@ import { MenuItemElementBase } from "./MenuItemElementBase";
  * groups to coexist within a single menu.
  *
  * @example
- * Showcase: Radios. Import `@m3e/web/menu`.
+ * Use radio menu items for single selection and `checked` to control their state.
  *
  * ```html
  * <!-- Trigger omitted for brevity -->
@@ -27,7 +27,7 @@ import { MenuItemElementBase } from "./MenuItemElementBase";
  * ```
  *
  * @example
- * Showcase: Radios. Import `@m3e/web/menu`. Also import `@m3e/web/divider`.
+ * Use menu item groups to organize independent sets of radio items.
  *
  * ```html
  * <!-- Trigger omitted for brevity -->

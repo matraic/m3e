@@ -12,7 +12,7 @@ import "@m3e/web/textarea-autosize";
 
 ## 🧪 Examples
 
-Showcase: Basic usage. Import `@m3e/web/textarea-autosize`. Also import `@m3e/web/form-field`.
+Attach textarea autosize to a textarea by its id.
 
 ```html
 <m3e-form-field variant="filled">
@@ -24,7 +24,7 @@ Showcase: Basic usage. Import `@m3e/web/textarea-autosize`. Also import `@m3e/we
 <m3e-textarea-autosize for="field"></m3e-textarea-autosize>
 ```
 
-Showcase: Min and max rows. Import `@m3e/web/textarea-autosize`. Also import `@m3e/web/form-field`.
+Use `min-rows` and `max-rows` to constrain the textarea height.
 
 ```html
 <m3e-form-field variant="filled">
@@ -36,7 +36,7 @@ Showcase: Min and max rows. Import `@m3e/web/textarea-autosize`. Also import `@m
 <m3e-textarea-autosize for="field" max-rows="5"></m3e-textarea-autosize>
 ```
 
-Showcase: Disabling. Import `@m3e/web/textarea-autosize`.
+Use `disabled` to turn off autosizing.
 
 ```html
 <m3e-textarea-autosize for="field" disabled></m3e-textarea-autosize>

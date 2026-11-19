@@ -33,7 +33,7 @@ import { M3eStepPanelElement } from "./StepPanelElement";
  * disclosure, accessible navigation, and visual continuity across horizontal and vertical layouts.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/stepper`. Also import `@m3e/web/form-field`, `@m3e/web/button`.
+ * Connect each step to a panel with `for` and use stepper actions to navigate.
  *
  * ```html
  * <m3e-stepper>
@@ -74,7 +74,7 @@ import { M3eStepPanelElement } from "./StepPanelElement";
  * ```
  *
  * @example
- * Showcase: Linear stepper. Import `@m3e/web/stepper`.
+ * Use `linear` to require steps in order; mark completed steps `editable` to allow returning.
  *
  * ```html
  * <m3e-stepper linear>

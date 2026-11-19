@@ -24,7 +24,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * via CSS custom properties.
  *
  * @example
- * Showcase: Anatomy. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use the `leading`, `overline`, `supporting-text`, and `trailing` slots to arrange item content.
  *
  * ```html
  * <m3e-list>
@@ -39,7 +39,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * ```
  *
  * @example
- * Showcase: Variants. Import `@m3e/web/list`.
+ * Use the default `standard` variant to present a list of items.
  *
  * ```html
  * <m3e-list>
@@ -49,7 +49,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * ```
  *
  * @example
- * Showcase: Variants. Import `@m3e/web/list`.
+ * Use `variant="segmented"` to separate the list items.
  *
  * ```html
  * <m3e-list variant="segmented">
@@ -59,7 +59,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * ```
  *
  * @example
- * Showcase: Multiline items. Import `@m3e/web/list`.
+ * Use the `overline` and `supporting-text` slots to create two- or three-line items.
  *
  * ```html
  * <m3e-list>
@@ -77,7 +77,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * ```
  *
  * @example
- * Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use the `leading` and `trailing` slots for icons.
  *
  * ```html
  * <m3e-list>
@@ -91,7 +91,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * ```
  *
  * @example
- * Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/avatar`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use the `leading` slot for an avatar and `trailing` for an icon.
  *
  * ```html
  * <m3e-list>
@@ -105,7 +105,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * ```
  *
  * @example
- * Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use the `leading` slot for an image and `trailing` for an icon.
  *
  * ```html
  * <m3e-list>
@@ -119,7 +119,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * ```
  *
  * @example
- * Showcase: Media content. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use the `leading` slot for a video and `trailing` for an icon.
  *
  * ```html
  * <m3e-list>
@@ -135,7 +135,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * ```
  *
  * @example
- * Showcase: Dividers. Import `@m3e/web/list`. Also import `@m3e/web/divider`.
+ * Use dividers to separate items in a standard list; dividers are hidden in segmented lists.
  *
  * ```html
  * <m3e-list>
@@ -148,7 +148,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * ```
  *
  * @example
- * Showcase: Dividers. Import `@m3e/web/list`. Also import `@m3e/web/divider`.
+ * Use `inset` on a divider to inset it within a standard list.
  *
  * ```html
  * <m3e-list>

@@ -14,14 +14,13 @@ import "@m3e/web/loading-indicator";
 
 ## 🧪 Examples
 
-Showcase: Variants. Import `@m3e/web/loading-indicator`.
+Use `variant` to choose `uncontained` (default) or `contained`.
 
 ```html
-<m3e-loading-indicator></m3e-loading-indicator>
-<m3e-loading-indicator variant="contained"></m3e-loading-indicator>
+<m3e-loading-indicator></m3e-loading-indicator> <m3e-loading-indicator variant="contained"></m3e-loading-indicator>
 ```
 
-Showcase: Pull to refresh. Import `@m3e/web/loading-indicator`. Also import `@m3e/web/gestures/pan`.
+Combine a loading indicator with a pan gesture for pull-to-refresh behavior.
 
 ```html
 <div id="pull-target">

@@ -12,13 +12,13 @@ import "@m3e/web/switch";
 
 ## 🧪 Examples
 
-Showcase: Basic usage. Import `@m3e/web/switch`.
+Use `checked` to set the switch state.
 
 ```html
 <m3e-switch checked></m3e-switch>
 ```
 
-Showcase: Labels. Import `@m3e/web/switch`.
+Associate labels with the controls.
 
 ```html
 <label><m3e-switch></m3e-switch>&nbsp;Switch 1</label>
@@ -26,14 +26,14 @@ Showcase: Labels. Import `@m3e/web/switch`.
 <label for="switch2">&nbsp;Switch 2</label>
 ```
 
-Showcase: Icons. Import `@m3e/web/switch`.
+Use `icons` to choose `none` (default), `selected`, or `both`.
 
 ```html
 <m3e-switch icons="selected" checked></m3e-switch>
 <m3e-switch icons="both"></m3e-switch>
 ```
 
-Showcase: Disabling. Import `@m3e/web/switch`.
+Use `disabled` to prevent interaction with the switch.
 
 ```html
 <label><m3e-switch disabled></m3e-switch>Disabled Switch 1</label>
@@ -41,7 +41,7 @@ Showcase: Disabling. Import `@m3e/web/switch`.
 <label for="chk3">Disabled Switch 2</label>
 ```
 
-Showcase: Density. Import `@m3e/web/switch`. Apply the required styling for the illustrated classes in your application. Additional styles are omitted for brevity.
+Apply a density scale of `-3` to adjust spacing.
 
 ```html
 <m3e-switch class="density-3"></m3e-switch>

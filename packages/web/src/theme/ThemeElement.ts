@@ -54,7 +54,7 @@ function omitKeys<T extends object, K extends keyof T>(obj: T, ...keys: readonly
  * when supported, cascades to all viewport scrollbars.
  *
  * @example
- * Showcase: Color. Import `@m3e/web/theme`.
+ * Use `color` to derive Material color palettes from a HEX color.
  *
  * ```html
  * <m3e-theme color="#4285F4">
@@ -63,7 +63,7 @@ function omitKeys<T extends object, K extends keyof T>(obj: T, ...keys: readonly
  * ```
  *
  * @example
- * Showcase: Schemes. Import `@m3e/web/theme`.
+ * Use `scheme` to choose a color scheme, or `auto` to follow system preferences.
  *
  * ```html
  * <m3e-theme color="#4285F4" scheme="dark">
@@ -72,7 +72,7 @@ function omitKeys<T extends object, K extends keyof T>(obj: T, ...keys: readonly
  * ```
  *
  * @example
- * Showcase: Contrast. Import `@m3e/web/theme`.
+ * Use `contrast` to adjust the theme contrast.
  *
  * ```html
  * <m3e-theme color="#4285F4" contrast="high">
@@ -81,7 +81,7 @@ function omitKeys<T extends object, K extends keyof T>(obj: T, ...keys: readonly
  * ```
  *
  * @example
- * Showcase: Density. Import `@m3e/web/theme`.
+ * Use `density` to adjust component density.
  *
  * ```html
  * <m3e-theme density="-3">
@@ -91,7 +91,7 @@ function omitKeys<T extends object, K extends keyof T>(obj: T, ...keys: readonly
  * ```
  *
  * @example
- * Showcase: Motion. Import `@m3e/web/theme`.
+ * Use `motion` to choose the theme motion scheme.
  *
  * ```html
  * <m3e-theme motion="standard">

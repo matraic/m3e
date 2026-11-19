@@ -24,7 +24,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * is designed for accessibility and flexible layout.
  *
  * @example
- * Showcase: Anatomy. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use the `leading`, `overline`, `supporting-text`, and `trailing` slots to arrange item content.
  *
  * ```html
  * <m3e-list>
@@ -39,7 +39,7 @@ import { ListItemContentType } from "./ListItemContentType";
  * ```
  *
  * @example
- * Showcase: Variants. Import `@m3e/web/list`.
+ * Use the default `standard` variant to present a list of items.
  *
  * ```html
  * <m3e-list>

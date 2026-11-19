@@ -22,14 +22,14 @@ import "./TimepickerInputPeriodToggleElement";
  * toggle AM/PM, and receive accessible validation feedback.
  *
  * @example
- * Showcase: Blackout times. Import `@m3e/web/timepicker`. Apply this to a timepicker with the matching id.
+ * Set `blackoutTimes` to a function that disables unavailable times. Apply this to a timepicker with the matching id.
  *
  * ```js
  * document.querySelector("#blackout-times").blackoutTimes = (t) => t.hour < 8 || t.hour > 18;
  * ```
  *
  * @example
- * Showcase: À-la-carte usage. Import `@m3e/web/timepicker`. Provide an element with id `inputValue` for the output.
+ * Use timepicker input and dial elements together for a custom presentation. Provide an element with id `inputValue` for the output.
  *
  * ```html
  * <m3e-timepicker-input id="input" for="dial"></m3e-timepicker-input>

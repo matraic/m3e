@@ -5,7 +5,7 @@ import { StepperButtonElementBase } from "./StepperButtonElementBase";
 /**
  * An element, nested within a clickable element, used to reset a stepper to its initial state.
  * @example
- * Showcase: Basic usage. Import `@m3e/web/stepper`. Also import `@m3e/web/form-field`, `@m3e/web/button`.
+ * Connect each step to a panel with `for` and use stepper actions to navigate.
  *
  * ```html
  * <m3e-stepper>

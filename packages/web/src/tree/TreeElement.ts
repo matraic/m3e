@@ -25,7 +25,7 @@ import { M3eTreeItemElement } from "./TreeItemElement";
  * navigate, with nested levels that open and collapse as needed.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/tree`.
+ * Nest tree items, use the `label` slot for text, and `open` to expand children.
  *
  * ```html
  * <m3e-tree>
@@ -43,7 +43,7 @@ import { M3eTreeItemElement } from "./TreeItemElement";
  * ```
  *
  * @example
- * Showcase: Selection. Import `@m3e/web/tree`.
+ * Use `selected` to select a tree item.
  *
  * ```html
  * <m3e-tree>
@@ -61,7 +61,7 @@ import { M3eTreeItemElement } from "./TreeItemElement";
  * ```
  *
  * @example
- * Showcase: Multiple selection. Import `@m3e/web/tree`.
+ * Use `multi` to allow multiple selections.
  *
  * ```html
  * <m3e-tree multi>
@@ -82,7 +82,7 @@ import { M3eTreeItemElement } from "./TreeItemElement";
  * ```
  *
  * @example
- * Showcase: Cascade selection. Import `@m3e/web/tree`.
+ * Use `multi` and `cascade` to cascade selection through the tree.
  *
  * ```html
  * <m3e-tree multi cascade>
@@ -103,7 +103,7 @@ import { M3eTreeItemElement } from "./TreeItemElement";
  * ```
  *
  * @example
- * Showcase: Icons. Import `@m3e/web/tree`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use the `icon` and `selected-icon` slots to show item icons.
  *
  * ```html
  * <m3e-tree>
@@ -123,7 +123,7 @@ import { M3eTreeItemElement } from "./TreeItemElement";
  * ```
  *
  * @example
- * Showcase: Toggle icons. Import `@m3e/web/tree`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use the `toggle-icon` and `open-toggle-icon` slots to customize expand and collapse icons.
  *
  * ```html
  * <m3e-tree>
@@ -137,7 +137,7 @@ import { M3eTreeItemElement } from "./TreeItemElement";
  * ```
  *
  * @example
- * Showcase: Density. Import `@m3e/web/tree`. Apply the required styling for the illustrated classes in your application.
+ * Apply a density scale of `-3` to adjust spacing.
  *
  * ```html
  * <m3e-tree class="density-3">

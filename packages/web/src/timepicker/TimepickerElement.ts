@@ -58,7 +58,7 @@ import "./TimepickerInputElement";
  * own formatting, parsing, and localization.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/timepicker`. Also import `@m3e/web/form-field`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names. The native input is not automatically bound: handle the picker's `change` event to format and update its value.
+ * Use a timepicker toggle to open a picker from a form field. The native input is not automatically bound: handle the picker's `change` event to format and update its value.
  *
  * ```html
  * <m3e-form-field variant="outlined">
@@ -74,7 +74,7 @@ import "./TimepickerInputElement";
  * ```
  *
  * @example
- * Showcase: Time input. Import `@m3e/web/timepicker`. Also import `@m3e/web/form-field`, `@m3e/web/date-input`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Connect a timepicker to a time-enabled date input for time entry.
  *
  * ```html
  * <m3e-form-field variant="outlined">
@@ -90,28 +90,28 @@ import "./TimepickerInputElement";
  * ```
  *
  * @example
- * Showcase: Variants. Import `@m3e/web/timepicker`.
+ * Use `variant` to choose the picker presentation.
  *
  * ```html
  * <m3e-timepicker variant="auto"></m3e-timepicker>
  * ```
  *
  * @example
- * Showcase: Orientation. Import `@m3e/web/timepicker`.
+ * Use `orientation` to select the picker layout; pair `auto` with `variant="auto"` for responsive layouts.
  *
  * ```html
  * <m3e-timepicker variant="auto" orientation="horizontal"></m3e-timepicker>
  * ```
  *
  * @example
- * Showcase: Modes. Import `@m3e/web/timepicker`.
+ * Use `mode="input"` and `hide-mode-toggle` to force keyboard entry.
  *
  * ```html
  * <m3e-timepicker mode="input" hide-mode-toggle></m3e-timepicker>
  * ```
  *
  * @example
- * Showcase: Time selection. Import `@m3e/web/timepicker`. Provide the showcase's `toLocaleTimeString` helper and the referenced field and picker elements.
+ * Set the picker date and handle changes to update the field. Provide the showcase's `toLocaleTimeString` helper and the referenced field and picker elements.
  *
  * ```html
  * <!-- Form field omitted for brevity -->
@@ -128,28 +128,28 @@ import "./TimepickerInputElement";
  * ```
  *
  * @example
- * Showcase: Hour format. Import `@m3e/web/timepicker`.
+ * Use `format="24"` for a 24-hour clock.
  *
  * ```html
  * <m3e-timepicker format="24"></m3e-timepicker>
  * ```
  *
  * @example
- * Showcase: Min and max times. Import `@m3e/web/timepicker`.
+ * Use `min-time` and `max-time` to constrain selectable times.
  *
  * ```html
  * <m3e-timepicker min-time="8:15 AM"  max-time="5:30 PM"></m3e-timepicker>
  * ```
  *
  * @example
- * Showcase: Blackout times. Import `@m3e/web/timepicker`. Apply this to a timepicker with the matching id.
+ * Set `blackoutTimes` to a function that disables unavailable times. Apply this to a timepicker with the matching id.
  *
  * ```js
  * document.querySelector("#blackout-times").blackoutTimes = (t) => t.hour < 8 || t.hour > 18;
  * ```
  *
  * @example
- * Showcase: Seconds. Import `@m3e/web/timepicker`.
+ * Use `show-seconds` to display the seconds segment.
  *
  * ```html
  * <m3e-timepicker show-seconds></m3e-timepicker>

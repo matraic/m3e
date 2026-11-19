@@ -17,7 +17,7 @@ import "@m3e/web/theme";
 
 ## 🧪 Examples
 
-Showcase: Color. Import `@m3e/web/theme`.
+Use `color` to derive Material color palettes from a HEX color.
 
 ```html
 <m3e-theme color="#4285F4">
@@ -25,7 +25,7 @@ Showcase: Color. Import `@m3e/web/theme`.
 </m3e-theme>
 ```
 
-Showcase: Schemes. Import `@m3e/web/theme`.
+Use `scheme` to choose a color scheme, or `auto` to follow system preferences.
 
 ```html
 <m3e-theme color="#4285F4" scheme="dark">
@@ -33,7 +33,7 @@ Showcase: Schemes. Import `@m3e/web/theme`.
 </m3e-theme>
 ```
 
-Showcase: Contrast. Import `@m3e/web/theme`.
+Use `contrast` to adjust the theme contrast.
 
 ```html
 <m3e-theme color="#4285F4" contrast="high">
@@ -41,7 +41,7 @@ Showcase: Contrast. Import `@m3e/web/theme`.
 </m3e-theme>
 ```
 
-Showcase: Density. Import `@m3e/web/theme`.
+Use `density` to adjust component density.
 
 ```html
 <m3e-theme density="-3">
@@ -50,7 +50,7 @@ Showcase: Density. Import `@m3e/web/theme`.
 <!-- Additional densities omitted for brevity -->
 ```
 
-Showcase: Motion. Import `@m3e/web/theme`.
+Use `motion` to choose the theme motion scheme.
 
 ```html
 <m3e-theme motion="standard">

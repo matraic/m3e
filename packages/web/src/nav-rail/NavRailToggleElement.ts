@@ -9,7 +9,7 @@ import { M3eNavRailElement } from "./NavRailElement";
  * An element, nested within a clickable element, used to toggle the expanded state of a navigation rail.
  *
  * @example
- * Showcase: Modes. Import `@m3e/web/nav-rail`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`, `@m3e/web/fab`, `@m3e/web/nav-bar`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Place navigation items and controls in a rail; use the toggle to switch its mode.
  *
  * ```html
  * <m3e-nav-rail id="nav-rail">

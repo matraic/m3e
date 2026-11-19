@@ -26,7 +26,7 @@ import { isSkeletonAnimation, SkeletonAnimation } from "./SkeletonAnimation";
  * content is loaded, the skeleton fades out with a smooth transition.
  *
  * @example
- * Showcase: Card Header. Import `@m3e/web/skeleton`. Also import `@m3e/web/card`, `@m3e/web/heading`, `@m3e/web/button`.
+ * Wrap a card in a skeleton to provide a placeholder while content loads.
  *
  * ```html
  * <m3e-skeleton>
@@ -42,7 +42,7 @@ import { isSkeletonAnimation, SkeletonAnimation } from "./SkeletonAnimation";
  * ```
  *
  * @example
- * Showcase: Shape. Import `@m3e/web/skeleton`.
+ * Use `shape` to choose `circular`, `rounded`, `square`, or `auto`.
  *
  * ```html
  * <m3e-skeleton shape="circular">
@@ -63,7 +63,7 @@ import { isSkeletonAnimation, SkeletonAnimation } from "./SkeletonAnimation";
  * ```
  *
  * @example
- * Showcase: Animation. Import `@m3e/web/skeleton`.
+ * Use `animation="pulse"` to animate the skeleton with a fade.
  *
  * ```html
  * <m3e-skeleton shape="circular" animation="pulse">
@@ -73,7 +73,7 @@ import { isSkeletonAnimation, SkeletonAnimation } from "./SkeletonAnimation";
  * ```
  *
  * @example
- * Showcase: Animation. Import `@m3e/web/skeleton`.
+ * Use `animation="none"` to display a static skeleton.
  *
  * ```html
  * <m3e-skeleton shape="circular" animation="none">

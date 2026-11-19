@@ -11,7 +11,7 @@ import { customElement, Role } from "@m3e/web/core";
  * items into mutually exclusive sets.
  *
  * @example
- * Showcase: Radios. Import `@m3e/web/menu`. Also import `@m3e/web/divider`.
+ * Use menu item groups to organize independent sets of radio items.
  *
  * ```html
  * <!-- Trigger omitted for brevity -->

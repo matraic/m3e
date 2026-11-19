@@ -16,7 +16,7 @@ import "@m3e/web/shape";
 
 ## 🧪 Examples
 
-Showcase: Shapes. Import `@m3e/web/shape`.
+Use `name` to select a shape.
 
 ```html
 <m3e-shape name="12-sided-cookie"></m3e-shape>
@@ -56,7 +56,7 @@ Showcase: Shapes. Import `@m3e/web/shape`.
 <m3e-shape name="triangle"></m3e-shape>
 ```
 
-Showcase: Images and video. Import `@m3e/web/shape`.
+Nest images or videos in a shape to clip them to its outline.
 
 ```html
 <m3e-shape name="sunny">

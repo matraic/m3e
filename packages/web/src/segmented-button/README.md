@@ -13,7 +13,7 @@ import "@m3e/web/segmented-button";
 
 ## 🧪 Example
 
-Showcase: Anatomy. Import `@m3e/web/segmented-button`.
+Place button segments inside a segmented button.
 
 ```html
 <m3e-segmented-button>
@@ -22,7 +22,7 @@ Showcase: Anatomy. Import `@m3e/web/segmented-button`.
 </m3e-segmented-button>
 ```
 
-Showcase: Icons. Import `@m3e/web/segmented-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use the `icon` slot to add a segment icon; the selected state replaces it with a check.
 
 ```html
 <m3e-segmented-button>
@@ -33,7 +33,7 @@ Showcase: Icons. Import `@m3e/web/segmented-button`. Also import `@m3e/web/icon`
 </m3e-segmented-button>
 ```
 
-Showcase: Selection. Import `@m3e/web/segmented-button`.
+Use `multi` to allow multiple selected segments and `checked` to control a segment.
 
 ```html
 <m3e-segmented-button multi>
@@ -43,7 +43,7 @@ Showcase: Selection. Import `@m3e/web/segmented-button`.
 </m3e-segmented-button>
 ```
 
-Showcase: Disabling. Import `@m3e/web/segmented-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use `disabled` on an individual button segment.
 
 ```html
 <m3e-segmented-button>
@@ -54,7 +54,7 @@ Showcase: Disabling. Import `@m3e/web/segmented-button`. Also import `@m3e/web/i
 </m3e-segmented-button>
 ```
 
-Showcase: Disabling. Import `@m3e/web/segmented-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use `disabled` on the segmented button to disable all of its segments.
 
 ```html
 <m3e-segmented-button disabled>
@@ -65,7 +65,7 @@ Showcase: Disabling. Import `@m3e/web/segmented-button`. Also import `@m3e/web/i
 </m3e-segmented-button>
 ```
 
-Showcase: Hiding the selection indicator. Import `@m3e/web/segmented-button`.
+Use `hide-selection-indicator` to hide the selection indicator.
 
 ```html
 <m3e-segmented-button hide-selection-indicator>
@@ -73,7 +73,7 @@ Showcase: Hiding the selection indicator. Import `@m3e/web/segmented-button`.
 </m3e-segmented-button>
 ```
 
-Showcase: Density. Import `@m3e/web/segmented-button`. Apply the required styling for the illustrated classes in your application. Additional styles are omitted for brevity.
+Apply a density scale of `-3` to adjust spacing.
 
 ```html
 <m3e-segmented-button class="density-3">

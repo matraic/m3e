@@ -5,7 +5,7 @@ import { ActionElementBase, customElement } from "@m3e/web/core";
 /**
  * An element, nested within a clickable element, used to dismiss a parenting rich tooltip.
  * @example
- * Showcase: Actions. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`, `@m3e/web/button`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Place a `m3e-rich-tooltip-action` inside a clickable element in the `actions` slot to dismiss the tooltip.
  *
  * ```html
  * <m3e-icon-button id="button">

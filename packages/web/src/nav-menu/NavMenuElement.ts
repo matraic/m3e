@@ -26,7 +26,7 @@ import { M3eNavMenuItemElement } from "./NavMenuItemElement";
  * and complex menu structures.
  *
  * @example
- * Showcase: Multilevel menus. Import `@m3e/web/nav-menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Nest navigation menu items to organize multiple levels.
  *
  * ```html
  * <m3e-nav-menu>
@@ -47,7 +47,7 @@ import { M3eNavMenuItemElement } from "./NavMenuItemElement";
  * ```
  *
  * @example
- * Showcase: Personal folders. Import `@m3e/web/nav-menu`. Also import `@m3e/web/heading`, `@m3e/web/icon`, `@m3e/web/divider`. Load a matching Material Symbols font or register the icons.
+ * Group related destinations with `m3e-nav-menu-item-group` and a `label` slot.
  *
  * ```html
  * <m3e-nav-menu>
@@ -69,7 +69,7 @@ import { M3eNavMenuItemElement } from "./NavMenuItemElement";
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/nav-menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use `disabled` on a menu item to disable it and its children.
  *
  * ```html
  * <m3e-nav-menu>
@@ -91,7 +91,7 @@ import { M3eNavMenuItemElement } from "./NavMenuItemElement";
  * ```
  *
  * @example
- * Showcase: Personal folders. Import `@m3e/web/nav-menu`. Apply the required styling for the illustrated classes in your application.
+ * Apply a density scale of `-3` to adjust menu spacing.
  *
  * ```html
  * <m3e-nav-menu class="density-3">

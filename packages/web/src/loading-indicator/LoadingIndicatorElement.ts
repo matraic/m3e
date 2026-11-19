@@ -29,7 +29,7 @@ import { ShapePolygon } from "./ShapePolygon";
  * Remove the attribute or set `pullProgress` to `null` when no pull gesture is active.
  *
  * @example
- * Showcase: Variants. Import `@m3e/web/loading-indicator`.
+ * Use `variant` to choose `uncontained` (default) or `contained`.
  *
  * ```html
  * <m3e-loading-indicator></m3e-loading-indicator>
@@ -37,7 +37,7 @@ import { ShapePolygon } from "./ShapePolygon";
  * ```
  *
  * @example
- * Showcase: Pull to refresh. Import `@m3e/web/loading-indicator`. Also import `@m3e/web/gestures/pan`.
+ * Combine a loading indicator with a pan gesture for pull-to-refresh behavior.
  *
  * ```html
  * <div id="pull-target">

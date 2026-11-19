@@ -33,7 +33,7 @@ import type { M3eTreeElement } from "./TreeElement";
  * that hosts additional `m3e-tree-item` elements.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/tree`.
+ * Nest tree items, use the `label` slot for text, and `open` to expand children.
  *
  * ```html
  * <m3e-tree>
@@ -51,7 +51,7 @@ import type { M3eTreeElement } from "./TreeElement";
  * ```
  *
  * @example
- * Showcase: Selection. Import `@m3e/web/tree`.
+ * Use `selected` to select a tree item.
  *
  * ```html
  * <m3e-tree>

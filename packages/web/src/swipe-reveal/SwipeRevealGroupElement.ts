@@ -18,7 +18,7 @@ import type { M3eSwipeRevealElement } from "./SwipeRevealElement";
  * Items may override any setting.
  *
  * @example
- * Showcase: Triggers. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/list`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `triggers` to choose interactions that reveal actions.
  *
  * ```html
  * <m3e-swipe-reveal-group triggers="swipe long-press">
@@ -35,7 +35,7 @@ import type { M3eSwipeRevealElement } from "./SwipeRevealElement";
  * ```
  *
  * @example
- * Showcase: Stagger. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/list`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `stagger` to adjust how adjacent items follow the dragged item.
  *
  * ```html
  * <m3e-swipe-reveal-group stagger="0.05">
@@ -52,7 +52,7 @@ import type { M3eSwipeRevealElement } from "./SwipeRevealElement";
  * ```
  *
  * @example
- * Showcase: Dismissible. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/list`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `dismissible` to allow dismissal by dragging toward the specified side.
  *
  * ```html
  * <m3e-swipe-reveal-group dismissible="trailing">

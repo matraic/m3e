@@ -32,7 +32,7 @@ import { M3eRadioElement } from "./RadioElement";
  * behavior, focus, and feedback across its radios.
  *
  * @example
- * Showcase: Radio groups. Import `@m3e/web/radio-group`.
+ * Group radio buttons to offer mutually exclusive choices.
  *
  * ```html
  * <m3e-radio-group>
@@ -44,7 +44,7 @@ import { M3eRadioElement } from "./RadioElement";
  * ```
  *
  * @example
- * Showcase: Labels. Import `@m3e/web/radio-group`.
+ * Use a `label` element to label a radio or radio group.
  *
  * ```html
  * <label for="radio-group">Select an option</label>
@@ -55,7 +55,7 @@ import { M3eRadioElement } from "./RadioElement";
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/radio-group`.
+ * Use `disabled` on an individual radio to disable that option.
  *
  * ```html
  * <label for="radio-group">Select an option</label>
@@ -66,7 +66,7 @@ import { M3eRadioElement } from "./RadioElement";
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/radio-group`.
+ * Use `disabled` on the radio group to disable the entire group.
  *
  * ```html
  * <label for="radio-group">Select an option</label>
@@ -77,7 +77,7 @@ import { M3eRadioElement } from "./RadioElement";
  * ```
  *
  * @example
- * Showcase: Required. Import `@m3e/web/radio-group`.
+ * Use `required` to require a selection.
  *
  * ```html
  * <label for="radio-group">Select an option</label>

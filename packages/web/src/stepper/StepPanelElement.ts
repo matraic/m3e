@@ -11,7 +11,7 @@ import { customElement, Role } from "@m3e/web/core";
  * associated with a single step in a structured workflow.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/stepper`. Also import `@m3e/web/form-field`, `@m3e/web/button`.
+ * Connect each step to a panel with `for` and use stepper actions to navigate.
  *
  * ```html
  * <m3e-stepper>
@@ -52,7 +52,7 @@ import { customElement, Role } from "@m3e/web/core";
  * ```
  *
  * @example
- * Showcase: Stepper buttons. Import `@m3e/web/stepper`. Also import `@m3e/web/button`.
+ * Use stepper buttons to navigate or reset the stepper.
  *
  * ```html
  * <m3e-step-panel>

@@ -40,7 +40,7 @@ import "./SearchBarElement";
  * screen configurations.
  *
  * @example
- * Showcase: Modes. Import `@m3e/web/search`. Also import `@m3e/web/list`.
+ * Use the default docked search view to present results near the search bar.
  *
  * ```html
  * <m3e-search-view>
@@ -54,7 +54,7 @@ import "./SearchBarElement";
  * ```
  *
  * @example
- * Showcase: Modes. Import `@m3e/web/search`.
+ * Use `mode="fullscreen"` to present results across the viewport.
  *
  * ```html
  * <m3e-search-view mode="fullscreen">
@@ -64,7 +64,7 @@ import "./SearchBarElement";
  * ```
  *
  * @example
- * Showcase: Appearance variants. Import `@m3e/web/search`.
+ * Use `contained` in docked mode for a filled search container.
  *
  * ```html
  * <m3e-search-view mode="docked" contained>
@@ -74,7 +74,7 @@ import "./SearchBarElement";
  * ```
  *
  * @example
- * Showcase: Appearance variants. Import `@m3e/web/search`.
+ * Use `contained` in fullscreen mode for a filled search container.
  *
  * ```html
  * <m3e-search-view mode="fullscreen" contained>
@@ -84,7 +84,7 @@ import "./SearchBarElement";
  * ```
  *
  * @example
- * Showcase: Hiding the search icon. Import `@m3e/web/search`.
+ * Use `hide-search-icon` to hide the icon when the search view is closed.
  *
  * ```html
  * <m3e-search-view mode="docked" hide-search-icon>

@@ -17,7 +17,7 @@ import "@m3e/web/menu";
 
 ## 🧪 Examples
 
-Showcase: Basic usage. Import `@m3e/web/menu`. Also import `@m3e/web/button`.
+Nest a menu trigger in a clickable element and connect its `for` attribute to the menu id.
 
 ```html
 <m3e-button>
@@ -29,7 +29,7 @@ Showcase: Basic usage. Import `@m3e/web/menu`. Also import `@m3e/web/button`.
 </m3e-menu>
 ```
 
-Showcase: Variants. Import `@m3e/web/menu`.
+Use `variant` to choose `standard` (default) or `vibrant`.
 
 ```html
 <!-- Trigger omitted for brevity -->
@@ -39,7 +39,7 @@ Showcase: Variants. Import `@m3e/web/menu`.
 </m3e-menu>
 ```
 
-Showcase: Icons. Import `@m3e/web/menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use the `icon` and `trailing-icon` slots for menu item icons.
 
 ```html
 <!-- Trigger omitted for brevity -->
@@ -59,7 +59,7 @@ Showcase: Icons. Import `@m3e/web/menu`. Also import `@m3e/web/icon`. Load a mat
 </m3e-menu>
 ```
 
-Showcase: Disabling. Import `@m3e/web/menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use `disabled` to disable a menu item.
 
 ```html
 <!-- Trigger omitted for brevity -->
@@ -72,7 +72,7 @@ Showcase: Disabling. Import `@m3e/web/menu`. Also import `@m3e/web/icon`. Load a
 </m3e-menu>
 ```
 
-Showcase: Checkboxes. Import `@m3e/web/menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use checkbox menu items for independent selections and `checked` to control their state.
 
 ```html
 <!-- Trigger omitted for brevity -->
@@ -92,7 +92,7 @@ Showcase: Checkboxes. Import `@m3e/web/menu`. Also import `@m3e/web/icon`. Load 
 </m3e-menu>
 ```
 
-Showcase: Radios. Import `@m3e/web/menu`.
+Use radio menu items for single selection and `checked` to control their state.
 
 ```html
 <!-- Trigger omitted for brevity -->
@@ -102,7 +102,7 @@ Showcase: Radios. Import `@m3e/web/menu`.
 </m3e-menu>
 ```
 
-Showcase: Radios. Import `@m3e/web/menu`. Also import `@m3e/web/divider`.
+Use menu item groups to organize independent sets of radio items.
 
 ```html
 <!-- Trigger omitted for brevity -->
@@ -119,7 +119,7 @@ Showcase: Radios. Import `@m3e/web/menu`. Also import `@m3e/web/divider`.
 </m3e-menu>
 ```
 
-Showcase: Submenus. Import `@m3e/web/menu`. Also import `@m3e/web/button`.
+Nest a menu trigger in a menu item and connect it to the submenu by id.
 
 ```html
 <m3e-button>
@@ -147,7 +147,7 @@ Showcase: Submenus. Import `@m3e/web/menu`. Also import `@m3e/web/button`.
 </m3e-menu>
 ```
 
-Showcase: Density. Import `@m3e/web/menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Apply the required styling for the illustrated classes in your application. Additional styles are omitted for brevity.
+Apply a density scale of `-3` to adjust spacing.
 
 ```html
 <!-- Trigger omitted for brevity -->

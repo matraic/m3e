@@ -31,7 +31,7 @@ import { M3eListOptionElement } from "./ListOptionElement";
  * design principles.
  *
  * @example
- * Showcase: Selection lists. Import `@m3e/web/list`.
+ * Place `m3e-list-option` elements in a single-selection list.
  *
  * ```html
  * <m3e-selection-list>
@@ -41,7 +41,7 @@ import { M3eListOptionElement } from "./ListOptionElement";
  * ```
  *
  * @example
- * Showcase: Selection lists. Import `@m3e/web/list`.
+ * Use `variant="segmented"` to present selectable list items separately.
  *
  * ```html
  * <m3e-selection-list variant="segmented">
@@ -51,7 +51,7 @@ import { M3eListOptionElement } from "./ListOptionElement";
  * ```
  *
  * @example
- * Showcase: Multiple selection. Import `@m3e/web/list`.
+ * Use `multi` to allow multiple selected list options.
  *
  * ```html
  * <m3e-selection-list multi>
@@ -61,7 +61,7 @@ import { M3eListOptionElement } from "./ListOptionElement";
  * ```
  *
  * @example
- * Showcase: Multiple selection. Import `@m3e/web/list`.
+ * Use `multi` with `variant="segmented"` to select multiple separated options.
  *
  * ```html
  * <m3e-selection-list variant="segmented" multi>
@@ -71,7 +71,7 @@ import { M3eListOptionElement } from "./ListOptionElement";
  * ```
  *
  * @example
- * Showcase: Hiding the selection indicator. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use `hide-selection-indicator` to hide the selection indicator.
  *
  * ```html
  * <m3e-selection-list multi hide-selection-indicator>
@@ -82,7 +82,7 @@ import { M3eListOptionElement } from "./ListOptionElement";
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/list`.
+ * Use `disabled` on individual list options; a disabled option can also be selected.
  *
  * ```html
  * <m3e-selection-list multi>
@@ -93,7 +93,7 @@ import { M3eListOptionElement } from "./ListOptionElement";
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/list`.
+ * Use `disabled` on options in a segmented selection list; a disabled option can also be selected.
  *
  * ```html
  * <m3e-selection-list variant="segmented" multi>
@@ -104,7 +104,7 @@ import { M3eListOptionElement } from "./ListOptionElement";
  * ```
  *
  * @example
- * Showcase: Density. Import `@m3e/web/list`. Apply the required styling for the illustrated classes in your application.
+ * Apply a density scale of `-3` to adjust spacing.
  *
  * ```html
  * <m3e-selection-list class="density-3" variant="segmented" multi>

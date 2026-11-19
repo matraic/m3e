@@ -6,7 +6,7 @@ import { M3eTimepickerElement } from "./TimepickerElement";
 /**
  * An element, nested within a clickable element, used to toggle a timepicker.
  * @example
- * Showcase: Basic usage. Import `@m3e/web/timepicker`. Also import `@m3e/web/form-field`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names. The native input is not automatically bound: handle the picker's `change` event to format and update its value.
+ * Use a timepicker toggle to open a picker from a form field. The native input is not automatically bound: handle the picker's `change` event to format and update its value.
  *
  * ```html
  * <m3e-form-field variant="outlined">
@@ -22,7 +22,7 @@ import { M3eTimepickerElement } from "./TimepickerElement";
  * ```
  *
  * @example
- * Showcase: Time input. Import `@m3e/web/timepicker`. Also import `@m3e/web/form-field`, `@m3e/web/date-input`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Connect a timepicker to a time-enabled date input for time entry.
  *
  * ```html
  * <m3e-form-field variant="outlined">

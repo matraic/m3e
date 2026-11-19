@@ -40,7 +40,7 @@ import { isSplitPaneOrientation, SplitPaneOrientation } from "./SplitPaneOrienta
  * for consistent, accessible content distribution.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+ * Use the `start` and `end` slots for pane content and `value` for the start pane percentage.
  *
  * ```html
  * <m3e-split-pane value="50">
@@ -50,7 +50,7 @@ import { isSplitPaneOrientation, SplitPaneOrientation } from "./SplitPaneOrienta
  * ```
  *
  * @example
- * Showcase: Orientation. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+ * Use `orientation` to choose `horizontal` (default), `vertical`, or `auto`.
  *
  * ```html
  * <m3e-split-pane value="50" orientation="vertical">
@@ -60,7 +60,7 @@ import { isSplitPaneOrientation, SplitPaneOrientation } from "./SplitPaneOrienta
  * ```
  *
  * @example
- * Showcase: Min and max sizes. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+ * Use `min` and `max` to constrain the start pane percentage.
  *
  * ```html
  * <m3e-split-pane value="50" min="25" max="75">
@@ -70,7 +70,7 @@ import { isSplitPaneOrientation, SplitPaneOrientation } from "./SplitPaneOrienta
  * ```
  *
  * @example
- * Showcase: Step size. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+ * Use `step` to control the increment for keyboard resizing.
  *
  * ```html
  * <m3e-split-pane value="50" step="10">
@@ -80,7 +80,7 @@ import { isSplitPaneOrientation, SplitPaneOrientation } from "./SplitPaneOrienta
  * ```
  *
  * @example
- * Showcase: Detents. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+ * Use `detents` to define split positions and `wrap-detents` to cycle back to the first.
  *
  * ```html
  * <m3e-split-pane value="50" detents="0 25 50 75 100"  wrap-detents>
@@ -90,7 +90,7 @@ import { isSplitPaneOrientation, SplitPaneOrientation } from "./SplitPaneOrienta
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+ * Use `disabled` to prevent resizing.
  *
  * ```html
  * <m3e-split-pane value="50" disabled>
@@ -100,7 +100,7 @@ import { isSplitPaneOrientation, SplitPaneOrientation } from "./SplitPaneOrienta
  * ```
  *
  * @example
- * Showcase: Conditional rendering. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`.
+ * Hide or omit pane content to let the visible pane fill the available space.
  *
  * ```html
  * <m3e-split-pane value="50">
@@ -110,7 +110,7 @@ import { isSplitPaneOrientation, SplitPaneOrientation } from "./SplitPaneOrienta
  * ```
  *
  * @example
- * Showcase: Nested panes. Import `@m3e/web/split-pane`. Also import `@m3e/web/card`. Apply the required styling for the illustrated classes in your application.
+ * Nest split panes to create a more complex layout. Size the panes to suit the layout.
  *
  * ```html
  * <m3e-split-pane value="25" class="complex">

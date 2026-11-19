@@ -10,7 +10,7 @@ import { AttachInternals, customElement, deleteCustomState, DesignToken, Role, s
  * It encapsulates related items under a shared heading or label, supporting visual hierarchy and accessibility.
  *
  * @example
- * Showcase: Personal folders. Import `@m3e/web/nav-menu`. Also import `@m3e/web/heading`, `@m3e/web/icon`, `@m3e/web/divider`. Load a matching Material Symbols font or register the icons.
+ * Group related destinations with `m3e-nav-menu-item-group` and a `label` slot.
  *
  * ```html
  * <m3e-nav-menu>

@@ -13,7 +13,7 @@ import "@m3e/web/radio-group";
 
 ## 🧪 Example
 
-Showcase: Radio groups. Import `@m3e/web/radio-group`.
+Group radio buttons to offer mutually exclusive choices.
 
 ```html
 <m3e-radio-group>
@@ -24,7 +24,7 @@ Showcase: Radio groups. Import `@m3e/web/radio-group`.
 </m3e-radio-group>
 ```
 
-Showcase: Labels. Import `@m3e/web/radio-group`.
+Use a `label` element to label a radio or radio group.
 
 ```html
 <label for="radio-group">Select an option</label>
@@ -34,7 +34,7 @@ Showcase: Labels. Import `@m3e/web/radio-group`.
 </m3e-radio-group>
 ```
 
-Showcase: Disabling. Import `@m3e/web/radio-group`.
+Use `disabled` on an individual radio to disable that option.
 
 ```html
 <label for="radio-group">Select an option</label>
@@ -44,7 +44,7 @@ Showcase: Disabling. Import `@m3e/web/radio-group`.
 </m3e-radio-group>
 ```
 
-Showcase: Disabling. Import `@m3e/web/radio-group`.
+Use `disabled` on the radio group to disable the entire group.
 
 ```html
 <label for="radio-group">Select an option</label>
@@ -54,7 +54,7 @@ Showcase: Disabling. Import `@m3e/web/radio-group`.
 </m3e-radio-group>
 ```
 
-Showcase: Required. Import `@m3e/web/radio-group`.
+Use `required` to require a selection.
 
 ```html
 <label for="radio-group">Select an option</label>
@@ -64,7 +64,7 @@ Showcase: Required. Import `@m3e/web/radio-group`.
 </m3e-radio-group>
 ```
 
-Showcase: Density. Import `@m3e/web/radio-group`. Apply the required styling for the illustrated classes in your application. Additional styles are omitted for brevity.
+Apply a density scale of `-3` to adjust spacing.
 
 ```html
 <label>

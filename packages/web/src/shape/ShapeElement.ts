@@ -21,7 +21,7 @@ import { ShapeNameStyle } from "./ShapeNameStyle";
  * `triangle`, and `very-sunny`. Refer to the Material Shape library for visual references and details.
  *
  * @example
- * Showcase: Shapes. Import `@m3e/web/shape`.
+ * Use `name` to select a shape.
  *
  * ```html
  * <m3e-shape name="12-sided-cookie"></m3e-shape>
@@ -62,7 +62,7 @@ import { ShapeNameStyle } from "./ShapeNameStyle";
  * ```
  *
  * @example
- * Showcase: Images and video. Import `@m3e/web/shape`.
+ * Nest images or videos in a shape to clip them to its outline.
  *
  * ```html
  * <m3e-shape name="sunny">

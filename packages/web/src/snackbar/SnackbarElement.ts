@@ -11,14 +11,14 @@ import "@m3e/web/icon-button";
 /**
  * Presents short updates about application processes at the bottom of the screen.
  * @example
- * Showcase: Snackbar service. Import `@m3e/web/snackbar` to install the global `M3eSnackbar` service.
+ * Use the snackbar service to display a message.
  *
  * ```js
  * M3eSnackbar.open("File deleted");
  * ```
  *
  * @example
- * Showcase: Actions. Import `@m3e/web/snackbar` to install the global `M3eSnackbar` service.
+ * Pass an action label and callback to the snackbar service.
  *
  * ```js
  * M3eSnackbar.open("File deleted", "Undo", {
@@ -29,7 +29,7 @@ import "@m3e/web/icon-button";
  * ```
  *
  * @example
- * Showcase: Dismissal. Import `@m3e/web/snackbar` to install the global `M3eSnackbar` service.
+ * Pass `true` to the snackbar service to show a dismiss button.
  *
  * ```js
  * M3eSnackbar.open("File deleted", true);

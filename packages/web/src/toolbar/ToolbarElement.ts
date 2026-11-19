@@ -19,7 +19,7 @@ import { ToolbarShapeStyle, ToolbarStyle, ToolbarVariantStyle } from "./styles";
  * and adaptive layout via CSS custom properties.
  *
  * @example
- * Showcase: Variants. Import `@m3e/web/toolbar`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `variant` to choose `standard` (default) or `vibrant`.
  *
  * ```html
  * <m3e-toolbar variant="standard">
@@ -45,7 +45,7 @@ import { ToolbarShapeStyle, ToolbarStyle, ToolbarVariantStyle } from "./styles";
  * ```
  *
  * @example
- * Showcase: Shapes. Import `@m3e/web/toolbar`.
+ * Use `shape` to choose `square` (default) or `rounded`.
  *
  * ```html
  * <m3e-toolbar variant="vibrant" shape="rounded">
@@ -54,7 +54,7 @@ import { ToolbarShapeStyle, ToolbarStyle, ToolbarVariantStyle } from "./styles";
  * ```
  *
  * @example
- * Showcase: Elevation. Import `@m3e/web/toolbar`.
+ * Use `elevated` to raise the toolbar.
  *
  * ```html
  * <m3e-toolbar variant="vibrant" shape="rounded" elevated>
@@ -63,7 +63,7 @@ import { ToolbarShapeStyle, ToolbarStyle, ToolbarVariantStyle } from "./styles";
  * ```
  *
  * @example
- * Showcase: Orientation. Import `@m3e/web/toolbar`.
+ * Use `vertical` to orient the toolbar vertically.
  *
  * ```html
  * <m3e-toolbar variant="vibrant" shape="rounded" vertical>
@@ -72,7 +72,7 @@ import { ToolbarShapeStyle, ToolbarStyle, ToolbarVariantStyle } from "./styles";
  * ```
  *
  * @example
- * Showcase: Density. Import `@m3e/web/toolbar`. Apply the required styling for the illustrated classes in your application.
+ * Apply a density scale of `-3` to adjust spacing.
  *
  * ```html
  * <m3e-toolbar class="density-3">

@@ -24,7 +24,7 @@ import {
  * It emits `input` and `change` events to reflect value updates.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/slider`.
+ * Place a thumb inside a slider to select a value.
  *
  * ```html
  * <m3e-slider>
@@ -33,7 +33,7 @@ import {
  * ```
  *
  * @example
- * Showcase: Selecting a value. Import `@m3e/web/slider`.
+ * Use `min`, `max`, and `step` on the slider and `value` on its thumb.
  *
  * ```html
  * <m3e-slider min="1" max="5" step="0.5">

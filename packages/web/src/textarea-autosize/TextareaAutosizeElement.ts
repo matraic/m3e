@@ -22,7 +22,7 @@ import { customElement, debounce, HtmlFor, Role } from "@m3e/web/core";
  * can be disabled when manual control is preferred.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/textarea-autosize`. Also import `@m3e/web/form-field`.
+ * Attach textarea autosize to a textarea by its id.
  *
  * ```html
  * <m3e-form-field variant="filled">
@@ -35,7 +35,7 @@ import { customElement, debounce, HtmlFor, Role } from "@m3e/web/core";
  * ```
  *
  * @example
- * Showcase: Min and max rows. Import `@m3e/web/textarea-autosize`. Also import `@m3e/web/form-field`.
+ * Use `min-rows` and `max-rows` to constrain the textarea height.
  *
  * ```html
  * <m3e-form-field variant="filled">
@@ -48,7 +48,7 @@ import { customElement, debounce, HtmlFor, Role } from "@m3e/web/core";
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/textarea-autosize`.
+ * Use `disabled` to turn off autosizing.
  *
  * ```html
  * <m3e-textarea-autosize for="field" disabled></m3e-textarea-autosize>

@@ -17,7 +17,7 @@ import "@m3e/web/stepper";
 
 ## 🧪 Examples
 
-Showcase: Basic usage. Import `@m3e/web/stepper`. Also import `@m3e/web/form-field`, `@m3e/web/button`.
+Connect each step to a panel with `for` and use stepper actions to navigate.
 
 ```html
 <m3e-stepper>
@@ -57,7 +57,7 @@ Showcase: Basic usage. Import `@m3e/web/stepper`. Also import `@m3e/web/form-fie
 </m3e-stepper>
 ```
 
-Showcase: Orientation. Import `@m3e/web/stepper`.
+Use `orientation` to choose `horizontal` (default), `vertical`, or `auto`.
 
 ```html
 <m3e-stepper orientation="vertical">
@@ -65,7 +65,7 @@ Showcase: Orientation. Import `@m3e/web/stepper`.
 </m3e-stepper>
 ```
 
-Showcase: Header positions. Import `@m3e/web/stepper`.
+Use `header-position` to place horizontal step headers above or below the content.
 
 ```html
 <m3e-stepper header-position="below">
@@ -73,7 +73,7 @@ Showcase: Header positions. Import `@m3e/web/stepper`.
 </m3e-stepper>
 ```
 
-Showcase: Label positions. Import `@m3e/web/stepper`.
+Use `label-position` to place horizontal step labels after or below their icons.
 
 ```html
 <m3e-stepper label-position="below">
@@ -81,7 +81,7 @@ Showcase: Label positions. Import `@m3e/web/stepper`.
 </m3e-stepper>
 ```
 
-Showcase: Linear stepper. Import `@m3e/web/stepper`.
+Use `linear` to require steps in order; mark completed steps `editable` to allow returning.
 
 ```html
 <m3e-stepper linear>

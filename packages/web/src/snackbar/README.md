@@ -8,13 +8,13 @@ import "@m3e/web/snackbar";
 
 ## 🧪 Examples
 
-Showcase: Snackbar service. Import `@m3e/web/snackbar` to install the global `M3eSnackbar` service.
+Use the snackbar service to display a message.
 
 ```js
 M3eSnackbar.open("File deleted");
 ```
 
-Showcase: Actions. Import `@m3e/web/snackbar` to install the global `M3eSnackbar` service.
+Pass an action label and callback to the snackbar service.
 
 ```js
 M3eSnackbar.open("File deleted", "Undo", {
@@ -24,7 +24,7 @@ M3eSnackbar.open("File deleted", "Undo", {
 });
 ```
 
-Showcase: Dismissal. Import `@m3e/web/snackbar` to install the global `M3eSnackbar` service.
+Pass `true` to the snackbar service to show a dismiss button.
 
 ```js
 M3eSnackbar.open("File deleted", true);

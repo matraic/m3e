@@ -56,7 +56,7 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
  * as disabled but allow for it to receive focus. The button will have `aria-disabled="true"` for assistive technology.
  *
  * @example
- * Showcase: Variants. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `variant` to choose `filled`, `tonal`, `outlined`, or `standard` (default).
  *
  * ```html
  * <m3e-icon-button variant="filled">
@@ -66,7 +66,7 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
  * ```
  *
  * @example
- * Showcase: Shapes. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `shape` to choose `rounded` (default) or `square`.
  *
  * ```html
  * <m3e-icon-button variant="filled" shape="square">
@@ -76,7 +76,7 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
  * ```
  *
  * @example
- * Showcase: Sizes. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `size` to choose `extra-small`, `small` (default), `medium`, `large`, or `extra-large`.
  *
  * ```html
  * <m3e-icon-button variant="tonal" size="extra-small">
@@ -86,7 +86,7 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
  * ```
  *
  * @example
- * Showcase: Widths. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `width` to choose `default`, `narrow`, or `wide`.
  *
  * ```html
  * <m3e-icon-button variant="tonal" width="narrow">
@@ -98,7 +98,7 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
  * ```
  *
  * @example
- * Showcase: Toggle. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `toggle` for binary selection and `selected` to control its state.
  *
  * ```html
  * <m3e-icon-button variant="filled" toggle>
@@ -108,7 +108,7 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
  * ```
  *
  * @example
- * Showcase: Toggle. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use the `selected` slot to display a different icon when the toggle is selected.
  *
  * ```html
  * <m3e-icon-button variant="tonal" toggle>
@@ -118,7 +118,7 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `disabled` to disable the button, or `disabled-interactive` to retain keyboard focusability.
  *
  * ```html
  * <m3e-icon-button variant="filled" disabled>
@@ -130,7 +130,7 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
  * ```
  *
  * @example
- * Showcase: Links. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `href` to navigate to a destination.
  *
  * ```html
  * <m3e-icon-button variant="tonal" href="https://www.google.com" target="_blank">
@@ -139,7 +139,7 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
  * ```
  *
  * @example
- * Showcase: Density. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names. Apply the required styling for the illustrated classes in your application. Additional styles are omitted for brevity.
+ * Apply a density scale of `-3` to adjust spacing.
  *
  * ```html
  * <m3e-icon-button class="density-3" variant="filled" size="extra-small">

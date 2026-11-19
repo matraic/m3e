@@ -18,7 +18,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * content support.
  *
  * @example
- * Showcase: Nested lists. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use `m3e-expandable-list-item` and its `items` slot to group nested actions.
  *
  * ```html
  * <m3e-action-list>
@@ -38,7 +38,7 @@ import { M3eListItemElement } from "./ListItemElement";
  * ```
  *
  * @example
- * Showcase: Nested lists. Import `@m3e/web/list`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use an expandable item in a `segmented` action list to group nested actions.
  *
  * ```html
  * <m3e-action-list variant="segmented">

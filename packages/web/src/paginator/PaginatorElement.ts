@@ -35,28 +35,28 @@ import { M3eOptionElement } from "@m3e/web/option";
  * to ensure consistent typography, density, and spacing across applications.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/paginator`.
+ * Set `length` to paginate a collection.
  *
  * ```html
  * <m3e-paginator length="100"></m3e-paginator>
  * ```
  *
  * @example
- * Showcase: Page sizes. Import `@m3e/web/paginator`.
+ * Use `page-sizes` and `page-size` to configure the available and current page sizes.
  *
  * ```html
  * <m3e-paginator length="100" page-sizes="10,50,all" page-size="all"></m3e-paginator>
  * ```
  *
  * @example
- * Showcase: Navigation actions. Import `@m3e/web/paginator`.
+ * Use `show-first-last-buttons` to show first and last page controls.
  *
  * ```html
  * <m3e-paginator length="100" show-first-last-buttons></m3e-paginator>
  * ```
  *
  * @example
- * Showcase: Density. Import `@m3e/web/paginator`. Apply the required styling for the illustrated classes in your application.
+ * Apply a density scale of `-3` to adjust spacing.
  *
  * ```html
  * <m3e-paginator class="density-3" length="100" show-first-last-buttons></m3e-paginator>

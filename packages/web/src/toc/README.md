@@ -15,7 +15,7 @@ import "@m3e/web/toc";
 
 ## 🧪 Example
 
-Showcase: Generating a TOC. Import `@m3e/web/toc`.
+Connect a table of contents to a container by id.
 
 ```html
 <div id="d1">
@@ -33,7 +33,7 @@ Showcase: Generating a TOC. Import `@m3e/web/toc`.
 </div>
 ```
 
-Showcase: Heading. Import `@m3e/web/toc`.
+Use the `overline` and `title` slots for table of contents heading text.
 
 ```html
 <m3e-toc for="d1">

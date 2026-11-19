@@ -14,7 +14,7 @@ import "@m3e/web/tooltip";
 
 ## 🧪 Examples
 
-Showcase: Plain tooltip. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Connect a tooltip to a trigger by id.
 
 ```html
 <m3e-icon-button id="button">
@@ -23,7 +23,7 @@ Showcase: Plain tooltip. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-b
 <m3e-tooltip for="button">Go Back</m3e-tooltip>
 ```
 
-Showcase: Delays. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Use `show-delay` and `hide-delay` to control the tooltip delays in milliseconds.
 
 ```html
 <m3e-icon-button id="button">
@@ -32,7 +32,7 @@ Showcase: Delays. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`,
 <m3e-tooltip for="button" show-delay="0" hide-delay="200">Go Back</m3e-tooltip>
 ```
 
-Showcase: Disabling. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Use `disabled` to prevent the tooltip from opening.
 
 ```html
 <m3e-icon-button id="button">
@@ -41,7 +41,7 @@ Showcase: Disabling. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-butto
 <m3e-tooltip for="button" disabled>Go Back</m3e-tooltip>
 ```
 
-Showcase: Rich tooltip. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Connect a rich tooltip to a trigger by id.
 
 ```html
 <m3e-icon-button id="button">
@@ -53,7 +53,7 @@ Showcase: Rich tooltip. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-bu
 </m3e-rich-tooltip>
 ```
 
-Showcase: Actions. Import `@m3e/web/tooltip`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`, `@m3e/web/button`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Place a `m3e-rich-tooltip-action` inside a clickable element in the `actions` slot to dismiss the tooltip.
 
 ```html
 <m3e-icon-button id="button">

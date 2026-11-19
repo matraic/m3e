@@ -39,14 +39,14 @@ import { isSwitchIcons, SwitchIcons } from "./SwitchIcons";
  * and integrates with form-associated behavior, emitting `input` and `change` events when toggled.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/switch`.
+ * Use `checked` to set the switch state.
  *
  * ```html
  * <m3e-switch checked></m3e-switch>
  * ```
  *
  * @example
- * Showcase: Labels. Import `@m3e/web/switch`.
+ * Associate labels with the controls.
  *
  * ```html
  * <label><m3e-switch></m3e-switch>&nbsp;Switch 1</label>
@@ -55,7 +55,7 @@ import { isSwitchIcons, SwitchIcons } from "./SwitchIcons";
  * ```
  *
  * @example
- * Showcase: Icons. Import `@m3e/web/switch`.
+ * Use `icons` to choose `none` (default), `selected`, or `both`.
  *
  * ```html
  * <m3e-switch icons="selected" checked></m3e-switch>
@@ -63,7 +63,7 @@ import { isSwitchIcons, SwitchIcons } from "./SwitchIcons";
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/switch`.
+ * Use `disabled` to prevent interaction with the switch.
  *
  * ```html
  * <label><m3e-switch disabled></m3e-switch>Disabled Switch 1</label>
@@ -72,7 +72,7 @@ import { isSwitchIcons, SwitchIcons } from "./SwitchIcons";
  * ```
  *
  * @example
- * Showcase: Density. Import `@m3e/web/switch`. Apply the required styling for the illustrated classes in your application. Additional styles are omitted for brevity.
+ * Apply a density scale of `-3` to adjust spacing.
  *
  * ```html
  * <m3e-switch class="density-3"></m3e-switch>

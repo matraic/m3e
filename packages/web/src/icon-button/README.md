@@ -16,34 +16,34 @@ import "@m3e/web/icon-button";
 
 ## 🧪 Examples
 
-Showcase: Variants. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Use `variant` to choose `filled`, `tonal`, `outlined`, or `standard` (default).
 
 ```html
 <m3e-icon-button variant="filled">
-    <m3e-icon name="check"></m3e-icon>
+  <m3e-icon name="check"></m3e-icon>
 </m3e-icon-button>
 <!-- Additional variants omitted for brevity -->
 ```
 
-Showcase: Shapes. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Use `shape` to choose `rounded` (default) or `square`.
 
 ```html
 <m3e-icon-button variant="filled" shape="square">
-    <m3e-icon name="check"></m3e-icon>
+  <m3e-icon name="check"></m3e-icon>
 </m3e-icon-button>
 <!-- Additional variants omitted for brevity -->
 ```
 
-Showcase: Sizes. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Use `size` to choose `extra-small`, `small` (default), `medium`, `large`, or `extra-large`.
 
 ```html
 <m3e-icon-button variant="tonal" size="extra-small">
-    <m3e-icon name="add"></m3e-icon>
+  <m3e-icon name="add"></m3e-icon>
 </m3e-icon-button>
 <!-- Additional sizes omitted for brevity -->
 ```
 
-Showcase: Widths. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Use `width` to choose `default`, `narrow`, or `wide`.
 
 ```html
 <m3e-icon-button variant="tonal" width="narrow">
@@ -54,16 +54,16 @@ Showcase: Widths. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Lo
 </m3e-icon-button>
 ```
 
-Showcase: Toggle. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Use `toggle` for binary selection and `selected` to control its state.
 
 ```html
 <m3e-icon-button variant="filled" toggle>
-    <m3e-icon name="check"></m3e-icon>
+  <m3e-icon name="check"></m3e-icon>
 </m3e-icon-button>
 <!-- Additional variants omitted for brevity -->
 ```
 
-Showcase: Toggle. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Use the `selected` slot to display a different icon when the toggle is selected.
 
 ```html
 <m3e-icon-button variant="tonal" toggle>
@@ -72,7 +72,7 @@ Showcase: Toggle. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Lo
 </m3e-icon-button>
 ```
 
-Showcase: Disabling. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Use `disabled` to disable the button, or `disabled-interactive` to retain keyboard focusability.
 
 ```html
 <m3e-icon-button variant="filled" disabled>
@@ -83,7 +83,7 @@ Showcase: Disabling. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`.
 </m3e-icon-button>
 ```
 
-Showcase: Links. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+Use `href` to navigate to a destination.
 
 ```html
 <m3e-icon-button variant="tonal" href="https://www.google.com" target="_blank">
@@ -91,7 +91,7 @@ Showcase: Links. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Loa
 </m3e-icon-button>
 ```
 
-Showcase: Density. Import `@m3e/web/icon-button`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names. Apply the required styling for the illustrated classes in your application. Additional styles are omitted for brevity.
+Apply a density scale of `-3` to adjust spacing.
 
 ```html
 <m3e-icon-button class="density-3" variant="filled" size="extra-small">

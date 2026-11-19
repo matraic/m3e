@@ -33,7 +33,7 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  * keyboard-navigable menu structures.
  *
  * @example
- * Showcase: Multilevel menus. Import `@m3e/web/nav-menu`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Nest navigation menu items to organize multiple levels.
  *
  * ```html
  * <m3e-nav-menu>
@@ -54,7 +54,7 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  * ```
  *
  * @example
- * Showcase: Personal folders. Import `@m3e/web/nav-menu`. Also import `@m3e/web/heading`, `@m3e/web/icon`, `@m3e/web/divider`. Load a matching Material Symbols font or register the icons.
+ * Group related destinations with `m3e-nav-menu-item-group` and a `label` slot.
  *
  * ```html
  * <m3e-nav-menu>

@@ -19,7 +19,7 @@ import { isNavBarMode, NavBarMode } from "./NavBarMode";
  * via CSS custom properties.
  *
  * @example
- * Showcase: Modes. Import `@m3e/web/nav-bar`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use `mode` to choose a compact or expanded navigation bar.
  *
  * ```html
  * <m3e-nav-bar mode="compact">
@@ -35,7 +35,7 @@ import { isNavBarMode, NavBarMode } from "./NavBarMode";
  * ```
  *
  * @example
- * Showcase: Selection. Import `@m3e/web/nav-bar`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use `selected` to mark the current navigation item.
  *
  * ```html
  * <m3e-nav-bar>
@@ -45,7 +45,7 @@ import { isNavBarMode, NavBarMode } from "./NavBarMode";
  * ```
  *
  * @example
- * Showcase: Disabling. Import `@m3e/web/nav-bar`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use `disabled` to disable an item, or `disabled-interactive` to retain keyboard focusability.
  *
  * ```html
  * <m3e-nav-bar>
@@ -56,7 +56,7 @@ import { isNavBarMode, NavBarMode } from "./NavBarMode";
  * ```
  *
  * @example
- * Showcase: Links. Import `@m3e/web/nav-bar`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+ * Use `href` to navigate to a destination.
  *
  * ```html
  * <m3e-nav-bar>

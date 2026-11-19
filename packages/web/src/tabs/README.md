@@ -14,7 +14,7 @@ import "@m3e/web/tabs";
 
 ## 🧪 Examples
 
-Showcase: Basic usage. Import `@m3e/web/tabs`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Place tabs and their panels inside a tabs container.
 
 ```html
 <m3e-tabs>
@@ -33,7 +33,7 @@ Showcase: Basic usage. Import `@m3e/web/tabs`. Also import `@m3e/web/icon`. Load
 </m3e-tabs>
 ```
 
-Showcase: Variants. Import `@m3e/web/tabs`.
+Use `variant` to choose `primary` or `secondary` (default).
 
 ```html
 <m3e-tabs variant="primary"&gt
@@ -41,7 +41,7 @@ Showcase: Variants. Import `@m3e/web/tabs`.
 </m3e-tabs>
 ```
 
-Showcase: Stretching. Import `@m3e/web/tabs`.
+Use `stretch` to stretch tabs across the available space.
 
 ```html
 <m3e-tabs stretch&gt
@@ -49,7 +49,7 @@ Showcase: Stretching. Import `@m3e/web/tabs`.
 </m3e-tabs>
 ```
 
-Showcase: Header positions. Import `@m3e/web/tabs`.
+Use `header-position` to place the tab header `before` (default) or `after` the panels.
 
 ```html
 <m3e-tabs header-position="after"&gt
@@ -57,7 +57,7 @@ Showcase: Header positions. Import `@m3e/web/tabs`.
 </m3e-tabs>
 ```
 
-Showcase: Disabling. Import `@m3e/web/tabs`. Also import `@m3e/web/icon`. Load a matching Material Symbols font or register the icons.
+Use `disabled` to disable individual tabs.
 
 ```html
 <m3e-tabs>
@@ -71,7 +71,7 @@ Showcase: Disabling. Import `@m3e/web/tabs`. Also import `@m3e/web/icon`. Load a
 </m3e-tabs>
 ```
 
-Showcase: Density. Import `@m3e/web/tabs`. Apply the required styling for the illustrated classes in your application.
+Apply a density scale of `-3` to adjust spacing.
 
 ```html
 <m3e-tabs class="density-3">

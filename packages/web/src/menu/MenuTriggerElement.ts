@@ -12,7 +12,7 @@ import type { M3eMenuElement } from "./MenuElement";
  * nested hierarchies.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/menu`. Also import `@m3e/web/button`.
+ * Nest a menu trigger in a clickable element and connect its `for` attribute to the menu id.
  *
  * ```html
  * <m3e-button>
@@ -25,7 +25,7 @@ import type { M3eMenuElement } from "./MenuElement";
  * ```
  *
  * @example
- * Showcase: Submenus. Import `@m3e/web/menu`. Also import `@m3e/web/button`.
+ * Nest a menu trigger in a menu item and connect it to the submenu by id.
  *
  * ```html
  * <m3e-button>

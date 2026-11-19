@@ -64,7 +64,7 @@ interface StaggerItem {
  * mirrored for right-to-left layouts. Wrap items in an `m3e-swipe-reveal-group` to coordinate them.
  *
  * @example
- * Showcase: Basic usage. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/list`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Place actions in `leading` or `trailing` slots to reveal them by swiping the content.
  *
  * ```html
  * <m3e-list variant="segmented">
@@ -88,7 +88,7 @@ interface StaggerItem {
  * ```
  *
  * @example
- * Showcase: Triggers. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/list`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `triggers` to choose interactions that reveal actions.
  *
  * ```html
  * <m3e-swipe-reveal-group triggers="swipe long-press">
@@ -105,7 +105,7 @@ interface StaggerItem {
  * ```
  *
  * @example
- * Showcase: Stagger. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/list`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `stagger` to adjust how adjacent items follow the dragged item.
  *
  * ```html
  * <m3e-swipe-reveal-group stagger="0.05">
@@ -122,7 +122,7 @@ interface StaggerItem {
  * ```
  *
  * @example
- * Showcase: Dismissible. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/list`, `@m3e/web/icon-button`, `@m3e/web/icon`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names.
+ * Use `dismissible` to allow dismissal by dragging toward the specified side.
  *
  * ```html
  * <m3e-swipe-reveal-group dismissible="trailing">
@@ -139,7 +139,7 @@ interface StaggerItem {
  * ```
  *
  * @example
- * Showcase: Card Header. Import `@m3e/web/swipe-reveal`. Also import `@m3e/web/icon-button`, `@m3e/web/icon`, `@m3e/web/card`. Load a matching Material Symbols font or register the icons. Give icon-only buttons accessible names. Apply the required styling for the illustrated classes in your application.
+ * Use swipe reveal with card content and actions.
  *
  * ```html
  * <m3e-swipe-reveal class="card-reveal" elastic="none">
