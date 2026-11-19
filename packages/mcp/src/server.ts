@@ -79,7 +79,7 @@ function reactUsage(c: Component): string {
 }
 
 export function createServer(catalog: Catalog): McpServer {
-  const server = new McpServer({ name: "m3e", version: "2.13.2" });
+  const server = new McpServer({ name: "m3e", version: "2.13.3" });
   const readOnly = { readOnlyHint: true, openWorldHint: false };
 
   server.registerTool(
