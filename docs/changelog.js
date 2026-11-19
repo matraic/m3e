@@ -103,6 +103,7 @@ async function loadCommits(content, release, previousRelease, retryLoading) {
       page++;
     } while (hasNext);
 
+    const hasDocumentationCommits = commits.some((commit) => /^docs(?:\([^)]*\))?!?:/i.test(commit.commit.message));
     const changes = commits.filter(
       (commit) => !/^(?:chore|test|docs|refactor|release)(?:\([^)]*\))?!?:/i.test(commit.commit.message),
     );
@@ -118,7 +119,9 @@ async function loadCommits(content, release, previousRelease, retryLoading) {
     if (changes.length) {
       content.replaceChildren(list);
     } else {
-      message.textContent = "No changes to display for this release.";
+      message.textContent = hasDocumentationCommits
+        ? "Documentation updates only for this release."
+        : "No changes to display for this release.";
       content.replaceChildren(message);
     }
     return true;
