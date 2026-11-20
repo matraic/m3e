@@ -115,7 +115,11 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
     }
     :host(:not(:disabled):not([current])) {
       cursor: pointer;
+      -webkit-user-select: none;
       user-select: none;
+    }
+    :host(:not(:disabled):not([current]):not([href])) {
+      -webkit-touch-callout: none;
     }
     :host(:disabled:not([current])) .base {
       color: color-mix(

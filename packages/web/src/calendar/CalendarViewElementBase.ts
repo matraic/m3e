@@ -14,6 +14,7 @@ export abstract class CalendarViewElementBase extends LitElement {
   static override styles: CSSResultGroup = css`
     :host {
       display: inline-block;
+      -webkit-user-select: none;
       user-select: none;
       vertical-align: top;
     }

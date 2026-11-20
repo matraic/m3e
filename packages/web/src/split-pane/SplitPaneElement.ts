@@ -211,8 +211,10 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       justify-content: center;
       outline: none;
       touch-action: none;
-      user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
 
       --m3e-state-layer-hover-color: var(--m3e-split-pane-drag-handle-hover-color, ${DesignToken.color.onSurface});
       --m3e-state-layer-hover-opacity: var(--m3e-split-pane-drag-handle-hover-opacity, 8%);
@@ -241,8 +243,10 @@ export class M3eSplitPaneElement extends FormAssociated(Disabled(ReconnectedCall
       width: 48px;
       margin: auto;
       touch-action: none;
-      user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
     :host(:not(:is(:state(--pressed), :--pressed))) .handle {
       background-color: var(--m3e-split-pane-drag-handle-color, ${DesignToken.color.outline});

@@ -88,10 +88,12 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
     :host {
       display: block;
       outline: none;
-      user-select: none;
       flex: none;
       height: calc(var(--m3e-option-container-height, 44px) + ${DesignToken.density.calc(-3)});
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
     :host([hidden]) {
       display: none;

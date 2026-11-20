@@ -34,8 +34,12 @@ export class M3eListItemButtonElement extends KeyboardClick(
     css`
       :host {
         outline: none;
-        user-select: none;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      :host(:not([href])) {
+        -webkit-touch-callout: none;
       }
       .base {
         position: relative;

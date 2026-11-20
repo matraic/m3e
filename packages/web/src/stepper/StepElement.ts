@@ -147,8 +147,10 @@ export class M3eStepElement extends SupportsDirectionality(
       outline: none;
       min-width: 0px;
       position: relative;
-      user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
     :host([hidden]) {
       display: none;

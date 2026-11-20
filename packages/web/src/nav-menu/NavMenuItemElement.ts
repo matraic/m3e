@@ -151,8 +151,9 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
       display: block;
       flex: none;
       outline: none;
-      user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-user-select: none;
+      user-select: none;
     }
     :host([hidden]) {
       display: none;

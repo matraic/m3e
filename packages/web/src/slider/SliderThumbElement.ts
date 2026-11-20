@@ -82,8 +82,10 @@ export class M3eSliderThumbElement extends Dirty(
       top: 0;
       bottom: 0;
       border-radius: var(--m3e-slider-thumb-shape, ${DesignToken.shape.corner.full});
-      user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
     :host([hidden]) {
       display: none;
@@ -121,6 +123,7 @@ export class M3eSliderThumbElement extends Dirty(
       right: var(--m3e-focus-ring-thickness, 3px);
     }
     .label {
+      -webkit-user-select: none;
       user-select: none;
       position: absolute;
       display: flex;

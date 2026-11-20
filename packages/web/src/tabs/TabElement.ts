@@ -105,7 +105,6 @@ export class M3eTabElement extends Selected(
     :host {
       display: inline-block;
       outline: none;
-      user-select: none;
       height: calc(var(--_tab-height) + ${DesignToken.density.calc(-3)});
       font-size: var(--m3e-tab-font-size, ${DesignToken.typescale.standard.title.small.fontSize});
       font-weight: var(--m3e-tab-font-weight, ${DesignToken.typescale.standard.title.small.fontWeight});
@@ -113,6 +112,9 @@ export class M3eTabElement extends Selected(
       letter-spacing: var(--m3e-tab-tracking, ${DesignToken.typescale.standard.title.small.tracking});
       flex-grow: var(--_tab-grow);
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
     :host([hidden]) {
       display: none;

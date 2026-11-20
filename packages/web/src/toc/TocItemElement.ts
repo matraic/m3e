@@ -67,11 +67,12 @@ export class M3eTocItemElement extends Selected(Disabled(AttachInternals(Role(Li
       contain: layout style paint;
       display: inline-block;
       position: relative;
-      user-select: none;
       outline: none;
       border-radius: var(--m3e-toc-item-shape, ${DesignToken.shape.corner.largeIncreased});
       padding-block: var(--m3e-toc-item-padding-block, ${DesignToken.measurement.space100});
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-user-select: none;
+      user-select: none;
     }
     :host([hidden]) {
       display: none;

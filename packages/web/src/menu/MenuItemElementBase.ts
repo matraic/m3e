@@ -26,10 +26,14 @@ export abstract class MenuItemElementBase extends KeyboardClick(
     :host {
       display: inline-block;
       outline: none;
-      user-select: none;
       flex: none;
       height: calc(var(--m3e-menu-item-container-height, 44px) + ${DesignToken.density.calc(-3)});
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    :host(:not([href])) {
+      -webkit-touch-callout: none;
     }
     :host([hidden]) {
       display: none;

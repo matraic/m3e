@@ -129,7 +129,11 @@ export class M3eChipElement extends SuppressInitialAnimation(AttachInternals(Lit
       cursor: not-allowed;
     }
     :host(:not(m3e-chip):not(:disabled):not([disabled-interactive])) .base {
+      -webkit-user-select: none;
       user-select: none;
+    }
+    :host(:not(m3e-chip):not(:disabled):not([disabled-interactive]):not([href])) .base {
+      -webkit-touch-callout: none;
     }
     .touch {
       position: absolute;

@@ -129,7 +129,6 @@ export class M3eNavItemElement extends SupportsDirectionality(
       vertical-align: middle;
       position: relative;
       outline: none;
-      user-select: none;
       flex: 1;
       font-size: var(--m3e-nav-item-label-text-font-size, ${DesignToken.typescale.standard.label.medium.fontSize});
       font-weight: var(
@@ -144,6 +143,11 @@ export class M3eNavItemElement extends SupportsDirectionality(
       border-radius: var(--m3e-nav-item-shape, ${DesignToken.shape.corner.full});
       align-self: var(--_nav-item-align-self);
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    :host(:not([href])) {
+      -webkit-touch-callout: none;
     }
     :host([hidden]) {
       display: none;

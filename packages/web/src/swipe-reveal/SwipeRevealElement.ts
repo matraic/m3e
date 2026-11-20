@@ -226,8 +226,9 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       will-change: transform;
     }
     .content.long-press-enabled {
-      user-select: none;
+      -webkit-touch-callout: none;
       -webkit-user-select: none;
+      user-select: none;
     }
     :host(:state(--dragging)) .content {
       user-select: none;

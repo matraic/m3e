@@ -105,10 +105,12 @@ export class M3eButtonSegmentElement extends Dirty(
       position: relative;
       vertical-align: middle;
       outline: none;
-      user-select: none;
       flex: 1 1 auto;
       min-width: 0;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
     :host([hidden]) {
       display: none;

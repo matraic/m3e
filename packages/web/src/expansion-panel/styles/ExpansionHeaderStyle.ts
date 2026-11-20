@@ -13,8 +13,10 @@ export const ExpansionHeaderStyle = css`
     display: block;
     border-radius: inherit;
     outline: none;
-    user-select: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
     transition: ${unsafeCSS(`height var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
         ${DesignToken.motion.easing.standard}`)};
   }

@@ -12,8 +12,10 @@ export const SwitchStyle = css`
     outline: none;
     height: fit-content;
     width: fit-content;
-    user-select: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
   :host([hidden]) {
     display: none;

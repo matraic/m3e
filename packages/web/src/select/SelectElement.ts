@@ -246,6 +246,7 @@ export class M3eSelectElement
     }
     :host(:not(:disabled)) {
       cursor: pointer;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
     :host(:disabled) {
       color: color-mix(

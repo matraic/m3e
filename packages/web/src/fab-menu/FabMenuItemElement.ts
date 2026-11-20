@@ -111,8 +111,12 @@ export class M3eFabMenuItemElement extends KeyboardClick(
     :host {
       display: inline-block;
       outline: none;
-      user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    :host(:not([href])) {
+      -webkit-touch-callout: none;
     }
     :host([hidden]) {
       display: none;

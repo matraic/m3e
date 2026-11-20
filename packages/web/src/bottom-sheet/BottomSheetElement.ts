@@ -386,8 +386,10 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
       cursor: grab;
       touch-action: none;
       outline: none;
-      user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
       box-sizing: border-box;
       flex: none;
       display: flex;

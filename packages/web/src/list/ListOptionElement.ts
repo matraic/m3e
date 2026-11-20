@@ -150,8 +150,10 @@ export class M3eListOptionElement extends KeyboardClick(
     css`
       :host {
         outline: none;
-        user-select: none;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
       }
       .base {
         position: relative;

@@ -46,8 +46,10 @@ export class M3eTimepickerInputPeriodToggleElement extends Role(LitElement, "rad
       align-items: center;
       justify-content: center;
       outline: none;
-      user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
       cursor: pointer;
       position: relative;
       transition: ${unsafeCSS(

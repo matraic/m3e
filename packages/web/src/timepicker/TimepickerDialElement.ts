@@ -107,6 +107,7 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
       width: 100%;
       height: 100%;
       touch-action: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       border-radius: var(--m3e-timepicker-dial-container-shape, ${DesignToken.shape.corner.full});
       background-color: var(--m3e-timepicker-dial-container-color, ${DesignToken.color.surfaceContainerHighest});
     }
@@ -188,6 +189,8 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
     .handle {
       position: absolute;
       touch-action: inherit;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
       user-select: none;
       left: calc(50% - calc(var(--m3e-timepicker-dial-handle-size, 2px) / 2));
       width: var(--m3e-timepicker-dial-handle-size, 2px);
@@ -278,6 +281,7 @@ export class M3eTimepickerDialElement extends SuppressInitialAnimation(
       );
     }
     .numeral {
+      -webkit-user-select: none;
       user-select: none;
       pointer-events: none;
       touch-action: inherit;

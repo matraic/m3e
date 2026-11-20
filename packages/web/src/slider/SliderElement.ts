@@ -182,8 +182,10 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
       display: inline-block;
       vertical-align: middle;
       min-inline-size: var(--m3e-slider-min-width, 200px);
-      user-select: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
       line-height: 0;
     }
     :host([hidden]) {
