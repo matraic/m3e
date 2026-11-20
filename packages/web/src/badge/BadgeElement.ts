@@ -253,6 +253,7 @@ export class M3eBadgeElement extends ReconnectedCallback(HtmlFor(SupportsDirecti
   /** @inheritdoc */
   override reconnectedCallback(): void {
     super.reconnectedCallback();
+    this.#updatePadding();
     this.#initAnchoring();
   }
 
