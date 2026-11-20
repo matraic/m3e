@@ -10,6 +10,7 @@
     "cem": "npm run cem --workspaces",
     "lint": "npm run lint --workspaces",
     "test": "npm run test --workspaces --if-present",
+    "test:coverage": "npm run test:coverage --workspaces --if-present",
     "all": "npm run build && npm run cem && npm run lint",
     "clean": "npm run clean --workspaces",
     "clean:coverage": "npm run clean:coverage --workspaces --if-present",
