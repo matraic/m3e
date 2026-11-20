@@ -173,6 +173,7 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
   override connectedCallback(): void {
     this.addEventListener("click", this.#clickHandler);
     super.connectedCallback();
+    this.#updateRole();
   }
 
   /** @inheritdoc */
@@ -202,13 +203,7 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
     }
 
     if (changedProperties.has("current")) {
-      if (this.current) {
-        this.role = null;
-      } else if (this.hasAttribute("href")) {
-        this.role = "link";
-      } else {
-        this.role = "button";
-      }
+      this.#updateRole();
     }
   }
 
@@ -232,6 +227,17 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
   /** @private */
   #handleSlotChange(e: Event): void {
     setCustomState(this, "--icon-only", isIconOnly(e.target as HTMLSlotElement));
+  }
+
+  /** @private */
+  #updateRole(): void {
+    if (this.current) {
+      this.role = null;
+    } else if (this.hasAttribute("href")) {
+      this.role = "link";
+    } else {
+      this.role = "button";
+    }
   }
 
   /** @private */
