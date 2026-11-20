@@ -12,6 +12,7 @@
     "test": "npm run test --workspaces --if-present",
     "all": "npm run build && npm run cem && npm run lint",
     "clean": "npm run clean --workspaces",
+    "clean:coverage": "npm run clean:coverage --workspaces --if-present",
     "release": "npm publish --access public --workspace=@m3e/web --workspace=@m3e/react --workspace=@m3e/mcp",
     "release:icons": "npm publish --access public --workspace=@m3e/icons"
   },

@@ -264,7 +264,8 @@
     "build": "rollup -c",
     "cem": "echo \"@m3e/react: skipping cem\"",
     "lint": "npx eslint ./src",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "clean:coverage": "rimraf coverage"
   },
   "peerDependencies": {
     "@lit/react": "^1.0.8",

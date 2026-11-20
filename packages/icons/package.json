@@ -32,7 +32,8 @@
     "build": "rimraf dist && node build.js",
     "cem": "echo \"@m3e/icons: skipping cem\"",
     "lint": "echo \"@m3e/icons: skipping lint\"",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "clean:coverage": "rimraf coverage"
   },
   "peerDependencies": {
     "@m3e/web": "^2.3.2"

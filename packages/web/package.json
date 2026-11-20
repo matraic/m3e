@@ -383,7 +383,8 @@
     "lint": "npx eslint ./src",
     "test": "bddgen && playwright test",
     "test:coverage": "bddgen && playwright test --config playwright.coverage.config.ts",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist .features-gen test-results playwright-report",
+    "clean:coverage": "rimraf coverage"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.13",

@@ -32,7 +32,8 @@
     "cem": "echo \"@m3e/mcp: using @m3e/web manifest\"",
     "lint": "echo \"@m3e/mcp: skipping lint\"",
     "test": "rimraf test-results && tsc -p test/tsconfig.json && node --test test-results/test/*.test.js",
-    "clean": "rimraf dist test-results"
+    "clean": "rimraf dist test-results",
+    "clean:coverage": "rimraf coverage"
   },
   "dependencies": {
     "@m3e/web": "^2.13.5",
