@@ -54,6 +54,12 @@ import { M3eBottomSheetElement } from "./BottomSheetElement";
  */
 @customElement("m3e-bottom-sheet-trigger")
 export class M3eBottomSheetTriggerElement extends HtmlFor(ActionElementBase) {
+  /** @private */ readonly #updateExpanded = () => {
+    if (!this.secondary && this.parentElement && this.control instanceof M3eBottomSheetElement) {
+      this.parentElement.ariaExpanded = `${this.control.open}`;
+    }
+  };
+
   /**
    * The zero‑based index of the detent the sheet should open to.
    * @default undefined
@@ -69,6 +75,11 @@ export class M3eBottomSheetTriggerElement extends HtmlFor(ActionElementBase) {
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
     if (control instanceof M3eBottomSheetElement) {
+      if (this.control instanceof M3eBottomSheetElement) {
+        this.control.removeEventListener("opened", this.#updateExpanded);
+        this.control.removeEventListener("closed", this.#updateExpanded);
+      }
+
       super.attach(control);
 
       if (this.parentElement) {
@@ -79,6 +90,8 @@ export class M3eBottomSheetTriggerElement extends HtmlFor(ActionElementBase) {
             if (this.parentElement.id) {
               addAriaReferencedId(control, "aria-labelledby", this.parentElement.id);
             }
+            control.addEventListener("opened", this.#updateExpanded);
+            control.addEventListener("closed", this.#updateExpanded);
           }
         } else {
           this.parentElement.ariaHasPopup = "dialog";
@@ -89,8 +102,12 @@ export class M3eBottomSheetTriggerElement extends HtmlFor(ActionElementBase) {
 
   /** @inheritdoc */
   override detach(): void {
-    if (this.control && this.parentElement && !this.secondary) {
-      removeAriaReferencedId(this.parentElement, "aria-controls", this.control.id);
+    if (this.control instanceof M3eBottomSheetElement && !this.secondary) {
+      this.control.removeEventListener("opened", this.#updateExpanded);
+      this.control.removeEventListener("closed", this.#updateExpanded);
+      if (this.parentElement) {
+        removeAriaReferencedId(this.parentElement, "aria-controls", this.control.id);
+      }
     }
     super.detach();
   }
