@@ -296,6 +296,7 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
   /** @private */ #slot?: HTMLSlotElement | null;
   /** @private */ #ignoreFocusVisible = false;
   /** @private */ #menu?: M3eOptionPanelElement;
+  /** @private */ #reopenMenuOnClose = false;
   /** @private */ #ignoreHideMenuOnBlur = false;
   /** @private */ #inputChanged = false;
   /** @private */ #loadingCompletionPending = false;
@@ -830,6 +831,10 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
         if (!this.#menu) {
           this.#showMenu();
           e.preventDefault();
+        } else if (!this.#menu.isOpen) {
+          // A closed panel can still be mounted while its exit animation finishes.
+          this.#reopenMenuOnClose = true;
+          e.preventDefault();
         } else {
           this._listKeyManager.onKeyDown(e);
         }
@@ -889,6 +894,7 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
     if (!this.#menu) return;
 
     if (e.newState !== "closed") {
+      this.#reopenMenuOnClose = false;
       const option = this.#options.find((x) => x.selected && !x.disabled);
       if (option) {
         this._listKeyManager.setActiveItem(option);
@@ -909,13 +915,19 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
       } else {
         // NOTE: use transitionend is preferred but doesn't fire when used here.
         // This is a workaround until that is fixed.
-        setTimeout(() => this.#destroyMenu(e), 100);
+        const menu = this.#menu;
+        setTimeout(() => {
+          if (this.#menu === menu) {
+            this.#destroyMenu(e);
+          }
+        }, 100);
       }
     }
   }
 
   /** @private */
   #removeMenu(): void {
+    this.#reopenMenuOnClose = false;
     if (!this.#menu) return;
     this.#clone?.replaceChildren(...this.#menu.childNodes);
 
@@ -936,6 +948,7 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
   #destroyMenu(e: ToggleEvent): void {
     if (!this.#menu) return;
 
+    const reopen = this.#reopenMenuOnClose;
     this.#removeMenu();
     this.requestUpdate();
 
@@ -950,6 +963,9 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
 
     if (this.#input?.slot === "input" && this.#input.parentElement?.tagName === "M3E-INPUT-CHIP-SET") {
       this.#clearOptions();
+    }
+    if (reopen && this.#hasFocus && this.isConnected) {
+      this.#showMenu();
     }
   }
 
@@ -1051,6 +1067,7 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
 
   /** @private */
   #hideMenu(): void {
+    this.#reopenMenuOnClose = false;
     this.#menu?.hide();
   }
 
