@@ -298,6 +298,8 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
   /** @private */ #menu?: M3eOptionPanelElement;
   /** @private */ #ignoreHideMenuOnBlur = false;
   /** @private */ #inputChanged = false;
+  /** @private */ #loadingCompletionPending = false;
+  /** @private */ #mutationUpdate?: Promise<void>;
   /** @private */ #hasFocus = false;
   /** @private */ #mutationAbortController?: AbortController;
 
@@ -557,6 +559,7 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
 
     if (changedProperties.has("loading")) {
       if (this.loading) {
+        this.#loadingCompletionPending = false;
         if (this.#hasFocus) {
           if (this.loadingLabel) {
             M3eLiveAnnouncer.announce(this.loadingLabel, "polite");
@@ -565,6 +568,9 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
             this.#showMenu();
           }
         }
+      } else if (changedProperties.get("loading") === true) {
+        this.#loadingCompletionPending = true;
+        void this.#finishLoading();
       } else if (this.#menu && !this.#shouldShowMenu) {
         this.#hideMenu();
       } else if (this.#menu) {
@@ -573,6 +579,28 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
         this.#showMenu();
       }
     }
+  }
+
+  /** @private */
+  async #finishLoading(): Promise<void> {
+    // Let the mutation observer pick up options delivered alongside loading=false.
+    await this.updateComplete;
+    let update: Promise<void> | undefined;
+    do {
+      update = this.#mutationUpdate;
+      await update;
+    } while (update !== this.#mutationUpdate);
+
+    if (this.loading || !this.#loadingCompletionPending || !this.isConnected) return;
+    this.#loadingCompletionPending = false;
+
+    const count = this.#filterOptions();
+    if (this.#menu && !this.#shouldShowMenu) {
+      this.#hideMenu();
+    } else if (!this.#menu && this.#hasFocus) {
+      this.#showMenu();
+    }
+    this.#announceResults(count);
   }
 
   /** @inheritdoc */
@@ -612,7 +640,12 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
   }
 
   /** @private */
-  async #handleMutation(): Promise<void> {
+  #handleMutation(): void {
+    this.#mutationUpdate = this.#updateOptions();
+  }
+
+  /** @private */
+  async #updateOptions(): Promise<void> {
     if (this.#mutationAbortController) {
       this.#mutationAbortController.abort();
     }
@@ -1160,7 +1193,7 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
     }
 
     if (shouldAnnounce) {
-      this.#announceResults(oldCount, newCount);
+      this.#announceResults(newCount, oldCount);
     }
 
     this.#autoActivate();
@@ -1181,10 +1214,10 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
   }
 
   /** @private */
-  #announceResults(oldCount: number, newCount: number): void {
+  #announceResults(newCount: number, oldCount?: number): void {
     if (!this.#hasFocus) return;
     if (newCount == 0) {
-      if (oldCount > 0 && this.noDataLabel) {
+      if ((oldCount === undefined || oldCount > 0) && this.noDataLabel) {
         M3eLiveAnnouncer.announce(this.noDataLabel, "polite");
       }
     } else if (oldCount != newCount) {
