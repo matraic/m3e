@@ -1,4 +1,4 @@
-import { html, LitElement, nothing } from "lit";
+import { html, LitElement, nothing, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
@@ -67,7 +67,8 @@ export function LinkButton<T extends Constructor<LitElement>>(
   disableClick: boolean = false,
 ): Constructor<LinkButtonMixin> & T {
   abstract class _LinkButtonMixin extends base implements LinkButtonMixin {
-    private [_clickHandler] = async (e: Event) => {
+    /** @private */ #usesAutomaticLinkRole = false;
+    /** @private */ private [_clickHandler] = async (e: Event) => {
       if (isDisabledInteractiveMixin(this) && this.disabledInteractive) {
         e.preventDefault();
         e.stopPropagation();
@@ -159,9 +160,14 @@ export function LinkButton<T extends Constructor<LitElement>>(
       if (!disableClick) {
         this.addEventListener("click", this[_clickHandler]);
       }
+      this.#syncRoleWithHref();
+    }
 
-      if (this.hasAttribute("href") && this.role === "button") {
-        this.role = "link";
+    /** @inheritdoc */
+    protected override willUpdate(changedProperties: PropertyValues<this>): void {
+      super.willUpdate(changedProperties);
+      if (changedProperties.has("href")) {
+        this.#syncRoleWithHref();
       }
     }
 
@@ -212,6 +218,19 @@ export function LinkButton<T extends Constructor<LitElement>>(
     /** @private */
     #handleLinkBlur(e: Event): void {
       (e.target as HTMLLinkElement).setAttribute("aria-hidden", "true");
+    }
+
+    /** @private */
+    #syncRoleWithHref(): void {
+      if (this.href && this.role === "button") {
+        this.role = "link";
+        this.#usesAutomaticLinkRole = true;
+      } else if (!this.href && this.#usesAutomaticLinkRole) {
+        if (this.role === "link") {
+          this.role = "button";
+        }
+        this.#usesAutomaticLinkRole = false;
+      }
     }
   }
 
