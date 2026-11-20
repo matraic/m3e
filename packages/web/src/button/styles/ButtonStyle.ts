@@ -35,8 +35,8 @@ export const ButtonStyle: CSSResultGroup = css`
   .touch {
     position: absolute;
     height: 48px;
-    left: 0;
-    right: 0;
+    width: max(48px, 100%);
+    margin: auto;
   }
   :host(:is(:state(--pressed), :--pressed)) .base,
   :host(:is(:state(--resting), :--resting)) .base {
