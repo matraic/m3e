@@ -381,7 +381,8 @@
     "build": "rollup -c",
     "cem": "cem analyze --config cem.config.mjs",
     "lint": "npx eslint ./src",
-    "test": "playwright test",
+    "test": "bddgen && playwright test",
+    "test:coverage": "bddgen && playwright test --config playwright.coverage.config.ts",
     "clean": "rimraf dist"
   },
   "dependencies": {

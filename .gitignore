@@ -7,3 +7,5 @@ dist/
 # Test outputs
 test-results/
 playwright-report/
+/packages/web/.features-gen/
+/packages/web/coverage/

@@ -27,6 +27,17 @@ Thank you for your interest in contributing to the M3E monorepo! We welcome cont
      npm run build -w @m3e/web
      npm test
      ```
+   - The web test command generates Playwright tests from [Gherkin scenarios](./packages/web/test)
+     before running them alongside the hand-written specs. Edit the `.feature` files and their adjacent `.steps.ts`
+     files, not the generated specs. Keep each component's feature, steps, and harness together in its own folder,
+     as in [app-bar](./packages/web/test/app-bar). Scenarios tagged `@needs-review` are excluded from generation.
+     To run a single feature, use `npm test -w @m3e/web -- autocomplete.feature` (or `app-bar.feature`).
+   - To collect Chromium code coverage for the web package, build it as above and run
+     `npm run test:coverage -w @m3e/web`. Add `-- app-bar.feature` to run a single feature.
+     Open `packages/web/coverage/index.html` for the consolidated Monocart HTML report. Focused runs update
+     that component's saved coverage while preserving coverage from other component runs; an unfiltered run
+     collects coverage for the full suite. Component-specific HTML reports are under
+     `packages/web/coverage/components/`.
 6. **Commit and Push**
    - Commit your changes with a descriptive message:
      ```
