@@ -724,7 +724,11 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
       );
     }
 
-    this.#showMenu();
+    if (this.#menu && !this.#menu.isOpen) {
+      this.#reopenMenuOnClose = true;
+    } else {
+      this.#showMenu();
+    }
   }
 
   /** @private */
