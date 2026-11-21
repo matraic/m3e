@@ -64,6 +64,7 @@ Set `date` and use `clearable` to allow clearing. The form field and toggle are 
 <!-- Form field omitted for brevity -->
 <m3e-datepicker id="datepicker" date="2026-01-01" clearable></m3e-datepicker>
 ```
+
 ```js
 const picker = document.querySelector("#datepicker");
 const field = document.querySelector("#field");
@@ -107,6 +108,7 @@ Set `range-start` and `range-end` to preselect a date range. Run the script afte
   start-at="2026-01-01"
 ></m3e-datepicker>
 ```
+
 ```js
 const picker = document.querySelector("#range-picker");
 const field = document.querySelector("#field");
@@ -120,12 +122,7 @@ Use `min-date` and `max-date` to restrict selectable dates. The form field and t
 
 ```html
 <!-- Form field omitted for brevity -->
-<m3e-datepicker
-  id="picker1"
-  start-at="2026-04-01"
-  min-date="2026-01-01"
-  max-date="2026-04-30"
-></m3e-datepicker>
+<m3e-datepicker id="picker1" start-at="2026-04-01" min-date="2026-01-01" max-date="2026-04-30"></m3e-datepicker>
 ```
 
 Set `blackoutDates` to a predicate that disables dates. Provide a picker with id `blackout-dates` and an `isWeekend(date)` function that returns a boolean. Run the script after the element is available and upgraded.
@@ -179,28 +176,33 @@ This section details the attributes, events, and CSS custom properties available
 
 ### 🎛️ CSS Custom Properties
 
-| Property                                             | Description                                            |
-| ---------------------------------------------------- | ------------------------------------------------------ |
-| `--m3e-datepicker-container-padding-block`           | Block‑axis padding of the date picker container.       |
-| `--m3e-datepicker-container-padding-inline`          | Inline‑axis padding of the date picker container.      |
-| `--m3e-datepicker-container-color`                   | Background color of the standard container surface.    |
-| `--m3e-datepicker-container-elevation`               | Elevation shadow applied to the container surface.     |
-| `--m3e-datepicker-modal-headline-color`              | Color used for the modal headline text.                |
-| `--m3e-datepicker-modal-headline-font-size`          | Font size used for the modal headline text.            |
-| `--m3e-datepicker-modal-headline-font-weight`        | Font weight used for the modal headline text.          |
-| `--m3e-datepicker-modal-headline-line-height`        | Line height used for the modal headline text.          |
-| `--m3e-datepicker-modal-headline-tracking`           | Letter spacing used for the modal headline text.       |
-| `--m3e-datepicker-modal-supporting-text-color`       | Color used for supporting text in modal mode.          |
-| `--m3e-datepicker-modal-supporting-text-font-size`   | Font size used for supporting text in modal mode.      |
-| `--m3e-datepicker-modal-supporting-text-font-weight` | Font weight used for supporting text in modal mode.    |
-| `--m3e-datepicker-modal-supporting-text-line-height` | Line height used for supporting text in modal mode.    |
-| `--m3e-datepicker-modal-supporting-text-tracking`    | Letter spacing used for supporting text in modal mode. |
-| `--m3e-datepicker-actions-padding-inline`            | Inline‑axis padding of the action row.                 |
-| `--m3e-datepicker-docked-container-color`            | Background color of the container in docked mode.      |
-| `--m3e-datepicker-docked-container-shape`            | Corner radius of the container in docked mode.         |
-| `--m3e-datepicker-modal-container-color`             | Background color of the container in modal mode.       |
-| `--m3e-datepicker-modal-container-shape`             | Corner radius of the container in modal mode.          |
-| `--m3e-divider-thickness`                            | Thickness of divider elements within the picker.       |
-| `--m3e-divider-color`                                | Color of divider rules within the picker.              |
-| `--m3e-dialog-scrim-color`                           | Base color used for the modal scrim behind the picker. |
-| `--m3e-dialog-scrim-opacity`                         | Opacity applied to the scrim color in modal mode.      |
+| Property                                              | Description                                                   |
+| ----------------------------------------------------- | ------------------------------------------------------------- |
+| `--m3e-datepicker-container-padding-block`            | Block‑axis padding of the date picker container.              |
+| `--m3e-datepicker-container-padding-inline`           | Inline‑axis padding of the date picker container.             |
+| `--m3e-datepicker-container-color`                    | Background color of the standard container surface.           |
+| `--m3e-datepicker-container-elevation`                | Elevation shadow applied to the container surface.            |
+| `--m3e-datepicker-container-shape-family`             | Corner family applied to all corners of the picker container. |
+| `--m3e-datepicker-container-shape-family-start-start` | Corner family of the block-start, inline-start corner.        |
+| `--m3e-datepicker-container-shape-family-start-end`   | Corner family of the block-start, inline-end corner.          |
+| `--m3e-datepicker-container-shape-family-end-start`   | Corner family of the block-end, inline-start corner.          |
+| `--m3e-datepicker-container-shape-family-end-end`     | Corner family of the block-end, inline-end corner.            |
+| `--m3e-datepicker-modal-headline-color`               | Color used for the modal headline text.                       |
+| `--m3e-datepicker-modal-headline-font-size`           | Font size used for the modal headline text.                   |
+| `--m3e-datepicker-modal-headline-font-weight`         | Font weight used for the modal headline text.                 |
+| `--m3e-datepicker-modal-headline-line-height`         | Line height used for the modal headline text.                 |
+| `--m3e-datepicker-modal-headline-tracking`            | Letter spacing used for the modal headline text.              |
+| `--m3e-datepicker-modal-supporting-text-color`        | Color used for supporting text in modal mode.                 |
+| `--m3e-datepicker-modal-supporting-text-font-size`    | Font size used for supporting text in modal mode.             |
+| `--m3e-datepicker-modal-supporting-text-font-weight`  | Font weight used for supporting text in modal mode.           |
+| `--m3e-datepicker-modal-supporting-text-line-height`  | Line height used for supporting text in modal mode.           |
+| `--m3e-datepicker-modal-supporting-text-tracking`     | Letter spacing used for supporting text in modal mode.        |
+| `--m3e-datepicker-actions-padding-inline`             | Inline‑axis padding of the action row.                        |
+| `--m3e-datepicker-docked-container-color`             | Background color of the container in docked mode.             |
+| `--m3e-datepicker-docked-container-shape`             | Corner radius of the container in docked mode.                |
+| `--m3e-datepicker-modal-container-color`              | Background color of the container in modal mode.              |
+| `--m3e-datepicker-modal-container-shape`              | Corner radius of the container in modal mode.                 |
+| `--m3e-divider-thickness`                             | Thickness of divider elements within the picker.              |
+| `--m3e-divider-color`                                 | Color of divider rules within the picker.                     |
+| `--m3e-dialog-scrim-color`                            | Base color used for the modal scrim behind the picker.        |
+| `--m3e-dialog-scrim-opacity`                          | Opacity applied to the scrim color in modal mode.             |

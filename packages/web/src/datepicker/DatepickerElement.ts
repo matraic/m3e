@@ -216,6 +216,11 @@ import { DatepickerVariant, isDatepickerVariant } from "./DatepickerVariant";
  * @cssprop --m3e-datepicker-container-padding-inline - Inline‑axis padding of the date picker container.
  * @cssprop --m3e-datepicker-container-color - Background color of the standard container surface.
  * @cssprop --m3e-datepicker-container-elevation - Elevation shadow applied to the container surface.
+ * @cssprop --m3e-datepicker-container-shape-family - Corner family applied to all corners of the picker container.
+ * @cssprop --m3e-datepicker-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-datepicker-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-datepicker-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-datepicker-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-datepicker-modal-headline-color - Color used for the modal headline text.
  * @cssprop --m3e-datepicker-modal-headline-font-size - Font size used for the modal headline text.
  * @cssprop --m3e-datepicker-modal-headline-font-weight - Font weight used for the modal headline text.
@@ -250,6 +255,22 @@ export class M3eDatepickerElement extends HtmlFor(
       padding-inline: var(--m3e-datepicker-container-padding-inline, ${DesignToken.measurement.space50});
       background-color: var(--m3e-datepicker-container-color, ${DesignToken.color.surfaceContainer});
       box-shadow: var(--m3e-datepicker-container-elevation, ${DesignToken.elevation.level3});
+      corner-start-start-shape: var(
+        --m3e-datepicker-container-shape-family-start-start,
+        var(--m3e-datepicker-container-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-datepicker-container-shape-family-start-end,
+        var(--m3e-datepicker-container-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-datepicker-container-shape-family-end-start,
+        var(--m3e-datepicker-container-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-datepicker-container-shape-family-end-end,
+        var(--m3e-datepicker-container-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       opacity: 0;
       display: none;
     }
