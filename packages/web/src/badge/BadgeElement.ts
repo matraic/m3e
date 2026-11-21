@@ -56,6 +56,11 @@ import { BadgePosition, isBadgePosition } from "./BadgePosition";
  * @attr size - The size of the badge.
  *
  * @cssprop --m3e-badge-shape - Corner radius of the badge.
+ * @cssprop --m3e-badge-shape-family - Corner family applied to all corners of the badge.
+ * @cssprop --m3e-badge-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-badge-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-badge-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-badge-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-badge-color - Foreground color of badge content.
  * @cssprop --m3e-badge-container-color - Background color of the badge.
  * @cssprop --m3e-badge-small-size - Fixed dimensions for small badge. Used for minimal indicators (e.g. dot).
@@ -99,6 +104,22 @@ export class M3eBadgeElement extends ReconnectedCallback(HtmlFor(SupportsDirecti
       user-select: none;
       padding: var(--_badge-padding);
       border-radius: var(--m3e-badge-shape, ${DesignToken.shape.corner.full});
+      corner-start-start-shape: var(
+        --m3e-badge-shape-family-start-start,
+        var(--m3e-badge-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-badge-shape-family-start-end,
+        var(--m3e-badge-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-badge-shape-family-end-start,
+        var(--m3e-badge-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-badge-shape-family-end-end,
+        var(--m3e-badge-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       color: var(--m3e-badge-color, ${DesignToken.color.onError});
       background-color: var(--m3e-badge-container-color, ${DesignToken.color.error});
     }
