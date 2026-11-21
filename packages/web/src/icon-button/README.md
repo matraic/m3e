@@ -168,6 +168,18 @@ All size variants (`extra-small`, `small`, `medium`, `large`, `extra-large`) sup
 | `--m3e-icon-button-[size]-wide-leading-space`     | Space before icon (wide width)       |
 | `--m3e-icon-button-[size]-wide-trailing-space`    | Space after icon (wide width)        |
 
+#### Shape Family Properties
+
+These properties apply to all icon button sizes, widths, shapes, appearance variants, and interaction states independently of the corner radii.
+
+| Property                                     | Description                                           |
+| -------------------------------------------- | ----------------------------------------------------- |
+| `--m3e-icon-button-shape-family`             | Corner family applied to all corners of the button    |
+| `--m3e-icon-button-shape-family-start-start` | Corner family of the block-start, inline-start corner |
+| `--m3e-icon-button-shape-family-start-end`   | Corner family of the block-start, inline-end corner   |
+| `--m3e-icon-button-shape-family-end-start`   | Corner family of the block-end, inline-start corner   |
+| `--m3e-icon-button-shape-family-end-end`     | Corner family of the block-end, inline-end corner     |
+
 #### 📐 Logical Corner Properties
 
 These override an individual logical corner in every state and size.

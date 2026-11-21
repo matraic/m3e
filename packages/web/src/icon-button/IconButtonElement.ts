@@ -188,6 +188,11 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
  * @cssprop --m3e-icon-button-selected-shape-round - Corner radius for all selected round size variants.
  * @cssprop --m3e-icon-button-selected-shape-square - Corner radius for all selected square size variants.
  * @cssprop --m3e-icon-button-shape-pressed-morph - Corner radius for all pressed size variants.
+ * @cssprop --m3e-icon-button-shape-family - Corner family applied to all corners of the button, for all states and size variants.
+ * @cssprop --m3e-icon-button-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-icon-button-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-icon-button-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-icon-button-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-icon-button-start-start-shape - Overrides the start-start logical corner radius in all states.
  * @cssprop --m3e-icon-button-start-end-shape - Overrides the start-end logical corner radius in all states.
  * @cssprop --m3e-icon-button-end-start-shape - Overrides the end-start logical corner radius in all states.

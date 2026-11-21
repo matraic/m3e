@@ -37,6 +37,22 @@ export const IconButtonStyle: CSSResultGroup = css`
   .base {
     position: relative;
     width: var(--_icon-button-size, 100%);
+    corner-start-start-shape: var(
+      --m3e-icon-button-shape-family-start-start,
+      var(--m3e-icon-button-shape-family, ${DesignToken.shape.family.startStart})
+    );
+    corner-start-end-shape: var(
+      --m3e-icon-button-shape-family-start-end,
+      var(--m3e-icon-button-shape-family, ${DesignToken.shape.family.startEnd})
+    );
+    corner-end-start-shape: var(
+      --m3e-icon-button-shape-family-end-start,
+      var(--m3e-icon-button-shape-family, ${DesignToken.shape.family.endStart})
+    );
+    corner-end-end-shape: var(
+      --m3e-icon-button-shape-family-end-end,
+      var(--m3e-icon-button-shape-family, ${DesignToken.shape.family.endEnd})
+    );
     transition: ${unsafeCSS(
       `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
     )};
