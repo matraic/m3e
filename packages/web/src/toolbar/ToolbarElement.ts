@@ -99,6 +99,11 @@ import { ToolbarShapeStyle, ToolbarStyle, ToolbarVariantStyle } from "./styles";
  * @cssprop --m3e-toolbar-spacing - The gap between toolbar items.
  * @cssprop --m3e-toolbar-rounded-shape - Border radius for rounded shape.
  * @cssprop --m3e-toolbar-square-shape - Border radius for square shape.
+ * @cssprop --m3e-toolbar-shape-family - Corner family applied to all corners of the toolbar.
+ * @cssprop --m3e-toolbar-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-toolbar-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-toolbar-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-toolbar-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-toolbar-rounded-leading-space - Leading space for rounded shape.
  * @cssprop --m3e-toolbar-rounded-trailing-space - Trailing space for rounded shape.
  * @cssprop --m3e-toolbar-rounded-top-space - Top space for rounded shape.

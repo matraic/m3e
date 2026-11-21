@@ -16,6 +16,26 @@ export const ToolbarStyle = css`
   :host([hidden]) {
     display: none;
   }
+  .base,
+  .state-layer,
+  .elevation {
+    corner-start-start-shape: var(
+      --m3e-toolbar-shape-family-start-start,
+      var(--m3e-toolbar-shape-family, ${DesignToken.shape.family.startStart})
+    );
+    corner-start-end-shape: var(
+      --m3e-toolbar-shape-family-start-end,
+      var(--m3e-toolbar-shape-family, ${DesignToken.shape.family.startEnd})
+    );
+    corner-end-start-shape: var(
+      --m3e-toolbar-shape-family-end-start,
+      var(--m3e-toolbar-shape-family, ${DesignToken.shape.family.endStart})
+    );
+    corner-end-end-shape: var(
+      --m3e-toolbar-shape-family-end-end,
+      var(--m3e-toolbar-shape-family, ${DesignToken.shape.family.endEnd})
+    );
+  }
   .base {
     display: flex;
     align-items: center;
