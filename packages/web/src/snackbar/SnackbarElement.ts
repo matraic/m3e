@@ -71,6 +71,11 @@ import "@m3e/web/icon-button";
  *
  * @cssprop --m3e-snackbar-margin - Vertical offset from the bottom of the viewport.
  * @cssprop --m3e-snackbar-container-shape - Border radius of the snackbar container.
+ * @cssprop --m3e-snackbar-container-shape-family - Corner family applied to all corners of the snackbar container.
+ * @cssprop --m3e-snackbar-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-snackbar-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-snackbar-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-snackbar-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-snackbar-container-color - Background color of the snackbar.
  * @cssprop --m3e-snackbar-padding - Internal spacing of the snackbar container.
  * @cssprop --m3e-snackbar-min-width - Minimum width of the snackbar.
@@ -132,6 +137,25 @@ export class M3eSnackbarElement extends Role(LitElement, "status") {
         opacity: 0;
         transform: scaleY(0.8);
       }
+    }
+    :host,
+    .base {
+      corner-start-start-shape: var(
+        --m3e-snackbar-container-shape-family-start-start,
+        var(--m3e-snackbar-container-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-snackbar-container-shape-family-start-end,
+        var(--m3e-snackbar-container-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-snackbar-container-shape-family-end-start,
+        var(--m3e-snackbar-container-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-snackbar-container-shape-family-end-end,
+        var(--m3e-snackbar-container-shape-family, ${DesignToken.shape.family.endEnd})
+      );
     }
     .base {
       display: inline-flex;

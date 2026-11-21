@@ -88,18 +88,23 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                     | Description                                  |
-| -------------------------------------------- | -------------------------------------------- |
-| `--m3e-snackbar-margin`                      | Vertical offset from the bottom of viewport. |
-| `--m3e-snackbar-container-shape`             | Border radius of the snackbar container.     |
-| `--m3e-snackbar-container-color`             | Background color of the snackbar.            |
-| `--m3e-snackbar-padding`                     | Internal spacing of the snackbar container.  |
-| `--m3e-snackbar-min-width`                   | Minimum width of the snackbar.               |
-| `--m3e-snackbar-max-width`                   | Maximum width of the snackbar.               |
-| `--m3e-snackbar-supporting-text-font-size`   | Font size for supporting text.               |
-| `--m3e-snackbar-supporting-text-font-weight` | Font weight for supporting text.             |
-| `--m3e-snackbar-supporting-text-line-height` | Line height for supporting text.             |
-| `--m3e-snackbar-supporting-text-tracking`    | Letter spacing for supporting text.          |
-| `--m3e-snackbar-supporting-text-color`       | Color of supporting text.                    |
-| `--m3e-snackbar-action-text-color`           | Color of the action button text.             |
-| `--m3e-snackbar-close-icon-color`            | Color of the close icon.                     |
+| Property                                            | Description                                                     |
+| --------------------------------------------------- | --------------------------------------------------------------- |
+| `--m3e-snackbar-margin`                             | Vertical offset from the bottom of viewport.                    |
+| `--m3e-snackbar-container-shape`                    | Border radius of the snackbar container.                        |
+| `--m3e-snackbar-container-shape-family`             | Corner family applied to all corners of the snackbar container. |
+| `--m3e-snackbar-container-shape-family-start-start` | Corner family of the block-start, inline-start corner.          |
+| `--m3e-snackbar-container-shape-family-start-end`   | Corner family of the block-start, inline-end corner.            |
+| `--m3e-snackbar-container-shape-family-end-start`   | Corner family of the block-end, inline-start corner.            |
+| `--m3e-snackbar-container-shape-family-end-end`     | Corner family of the block-end, inline-end corner.              |
+| `--m3e-snackbar-container-color`                    | Background color of the snackbar.                               |
+| `--m3e-snackbar-padding`                            | Internal spacing of the snackbar container.                     |
+| `--m3e-snackbar-min-width`                          | Minimum width of the snackbar.                                  |
+| `--m3e-snackbar-max-width`                          | Maximum width of the snackbar.                                  |
+| `--m3e-snackbar-supporting-text-font-size`          | Font size for supporting text.                                  |
+| `--m3e-snackbar-supporting-text-font-weight`        | Font weight for supporting text.                                |
+| `--m3e-snackbar-supporting-text-line-height`        | Line height for supporting text.                                |
+| `--m3e-snackbar-supporting-text-tracking`           | Letter spacing for supporting text.                             |
+| `--m3e-snackbar-supporting-text-color`              | Color of supporting text.                                       |
+| `--m3e-snackbar-action-text-color`                  | Color of the action button text.                                |
+| `--m3e-snackbar-close-icon-color`                   | Color of the close icon.                                        |
