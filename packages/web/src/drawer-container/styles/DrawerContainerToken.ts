@@ -20,6 +20,20 @@ export const DrawerContainerToken = {
   endShape: unsafeCSS(
     `var(--m3e-modal-drawer-end-shape, var(--m3e-modal-drawer-corner-shape, ${DesignToken.shape.corner.large}))`,
   ),
+  shapeFamily: {
+    startStart: unsafeCSS(
+      `var(--m3e-modal-drawer-shape-family-start-start, var(--m3e-modal-drawer-shape-family, ${DesignToken.shape.family.startStart}))`,
+    ),
+    startEnd: unsafeCSS(
+      `var(--m3e-modal-drawer-shape-family-start-end, var(--m3e-modal-drawer-shape-family, ${DesignToken.shape.family.startEnd}))`,
+    ),
+    endStart: unsafeCSS(
+      `var(--m3e-modal-drawer-shape-family-end-start, var(--m3e-modal-drawer-shape-family, ${DesignToken.shape.family.endStart}))`,
+    ),
+    endEnd: unsafeCSS(
+      `var(--m3e-modal-drawer-shape-family-end-end, var(--m3e-modal-drawer-shape-family, ${DesignToken.shape.family.endEnd}))`,
+    ),
+  },
   modalContainerColor: unsafeCSS(`var(--m3e-modal-drawer-container-color, ${DesignToken.color.surfaceContainerLow})`),
   modalContainerElevation: unsafeCSS(`var(--m3e-modal-drawer-elevation, ${DesignToken.elevation.level1})`),
   dividerColor: unsafeCSS(`var(--m3e-drawer-divider-color, ${DesignToken.color.outline})`),

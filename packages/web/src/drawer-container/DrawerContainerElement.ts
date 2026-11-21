@@ -129,6 +129,11 @@ import { DrawerContainerStyle } from "./styles";
  * @cssprop --m3e-drawer-container-scrim-opacity - The opacity of the scrim behind the drawer.
  * @cssprop --m3e-modal-drawer-start-shape - The shape of the drawer's start edge (typically left in LTR), used by a modal end drawer.
  * @cssprop --m3e-modal-drawer-end-shape - The shape of the drawer's end edge (typically right in LTR), used by a modal start drawer.
+ * @cssprop --m3e-modal-drawer-shape-family - Corner family of the shaped edges of modal drawers.
+ * @cssprop --m3e-modal-drawer-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-modal-drawer-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-modal-drawer-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-modal-drawer-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-modal-drawer-container-color - The background color of the modal drawer container.
  * @cssprop --m3e-modal-drawer-elevation - The elevation level of the modal drawer container.
  * @cssprop --m3e-drawer-divider-color - The color of the divider between drawer sections.
