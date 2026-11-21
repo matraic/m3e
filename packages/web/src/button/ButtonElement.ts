@@ -174,6 +174,11 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * @cssprop --m3e-button-selected-shape-round - Corner radius when selected (round), for all size variants.
  * @cssprop --m3e-button-selected-shape-square - Corner radius when selected (square), for all size variants.
  * @cssprop --m3e-button-shape-pressed-morph - Corner radius when pressed, for all size variants.
+ * @cssprop --m3e-button-shape-family - Corner family applied to all corners of the button, for all states and size variants.
+ * @cssprop --m3e-button-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-button-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-button-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-button-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-button-start-start-shape - Overrides the start-start logical corner radius in all states.
  * @cssprop --m3e-button-start-end-shape - Overrides the start-end logical corner radius in all states.
  * @cssprop --m3e-button-end-start-shape - Overrides the end-start logical corner radius in all states.

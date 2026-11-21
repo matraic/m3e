@@ -40,12 +40,8 @@ Use `size="extra-small"` for a compact tonal button.
 Use `icon` to place an icon before the label or `trailing-icon` to place it after the label.
 
 ```html
-<m3e-button variant="tonal">
-  <m3e-icon slot="icon" name="send"></m3e-icon>Send
-</m3e-button>
-<m3e-button variant="tonal">
-  Open<m3e-icon slot="trailing-icon" name="open_in_new_window"></m3e-icon>
-</m3e-button>
+<m3e-button variant="tonal"> <m3e-icon slot="icon" name="send"></m3e-icon>Send </m3e-button>
+<m3e-button variant="tonal"> Open<m3e-icon slot="trailing-icon" name="open_in_new_window"></m3e-icon> </m3e-button>
 ```
 
 Add `toggle` to make a button selectable. Use `selected` to set its state or cancel `beforeinput` to prevent a user-initiated change.
@@ -77,7 +73,7 @@ Set `href` to make the button a link and `target="_blank"` to open the destinati
 
 ```html
 <m3e-button variant="tonal" href="https://www.google.com" target="_blank">
-  Google<m3e-icon slot="trailing-icon" name="open_in_new_window"></m3e-icon>
+    Google<m3e-icon slot="trailing-icon" name="open_in_new_window"></m3e-icon>
 </m3e-button>
 ```
 
@@ -161,6 +157,18 @@ All size variants (`extra-small`, `small`, `medium`, `large`, `extra-large`) sup
 | `--m3e-button-[size]-leading-space`          | Space before icon/label              |
 | `--m3e-button-[size]-trailing-space`         | Space after icon/label               |
 | `--m3e-button-[size]-icon-label-space`       | Space between icon and label         |
+
+#### Shape Family Properties
+
+These properties apply to all button sizes, shapes, appearance variants, and interaction states independently of the corner radii.
+
+| Property                                | Description                                           |
+| --------------------------------------- | ----------------------------------------------------- |
+| `--m3e-button-shape-family`             | Corner family applied to all corners of the button    |
+| `--m3e-button-shape-family-start-start` | Corner family of the block-start, inline-start corner |
+| `--m3e-button-shape-family-start-end`   | Corner family of the block-start, inline-end corner   |
+| `--m3e-button-shape-family-end-start`   | Corner family of the block-end, inline-start corner   |
+| `--m3e-button-shape-family-end-end`     | Corner family of the block-end, inline-end corner     |
 
 #### 📐 Logical Corner Properties
 
