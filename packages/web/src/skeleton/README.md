@@ -29,6 +29,8 @@ Wrap a card in a skeleton to provide a placeholder while content loads.
 
 Use `shape` to choose `circular`, `rounded`, `square`, or `auto`.
 
+The default `auto` shape copies the underlying content's computed radius and corner shape, including mixed rounded/cut corners. When the content host has no radius and has a single shadow-root element, both values come from that surface instead. Explicit shape variants use the skeleton's own radius and shape-family properties, including when switching away from `auto`.
+
 ```html
 <m3e-skeleton shape="circular">
   <div style="width: 100px; height: 100px"></div>
@@ -85,14 +87,19 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### 🎛️ CSS Custom Properties
 
-| Property                        | Description                                                        |
-| ------------------------------- | ------------------------------------------------------------------ |
-| `--m3e-skeleton-color`          | Base fill color for the skeleton surface.                          |
-| `--m3e-skeleton-tint-color`     | Tint fill color for the skeleton surface.                          |
-| `--m3e-skeleton-tint-opacity`   | Tint opacity applied when the skeleton animation is not pulsating. |
-| `--m3e-skeleton-accent-color`   | Accent color used in wave animation.                               |
-| `--m3e-skeleton-accent-opacity` | Opacity of the accent effect in animations.                        |
-| `--m3e-skeleton-rounded-shape`  | Corner radius for the rounded skeleton shape.                      |
-| `--m3e-skeleton-circular-shape` | Corner radius for the circular skeleton shape.                     |
-| `--m3e-skeleton-square-shape`   | Corner radius for the square skeleton shape.                       |
-| `--m3e-skeleton-shape`          | Corner radius for the skeleton shape.                              |
+| Property                                  | Description                                                        |
+| ----------------------------------------- | ------------------------------------------------------------------ |
+| `--m3e-skeleton-color`                    | Base fill color for the skeleton surface.                          |
+| `--m3e-skeleton-tint-color`               | Tint fill color for the skeleton surface.                          |
+| `--m3e-skeleton-tint-opacity`             | Tint opacity applied when the skeleton animation is not pulsating. |
+| `--m3e-skeleton-accent-color`             | Accent color used in wave animation.                               |
+| `--m3e-skeleton-accent-opacity`           | Opacity of the accent effect in animations.                        |
+| `--m3e-skeleton-rounded-shape`            | Corner radius for the rounded skeleton shape.                      |
+| `--m3e-skeleton-circular-shape`           | Corner radius for the circular skeleton shape.                     |
+| `--m3e-skeleton-square-shape`             | Corner radius for the square skeleton shape.                       |
+| `--m3e-skeleton-shape`                    | Corner radius for the skeleton shape.                              |
+| `--m3e-skeleton-shape-family`             | Corner family applied to all corners of the skeleton surface.      |
+| `--m3e-skeleton-shape-family-start-start` | Corner family of the block-start, inline-start corner.             |
+| `--m3e-skeleton-shape-family-start-end`   | Corner family of the block-start, inline-end corner.               |
+| `--m3e-skeleton-shape-family-end-start`   | Corner family of the block-end, inline-start corner.               |
+| `--m3e-skeleton-shape-family-end-end`     | Corner family of the block-end, inline-end corner.                 |

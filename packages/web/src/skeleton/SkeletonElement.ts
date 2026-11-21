@@ -24,6 +24,8 @@ import { isSkeletonAnimation, SkeletonAnimation } from "./SkeletonAnimation";
  * or rendering delays. The component supports different animation effects (`pulse`, `wave`, `none`) and
  * shape variants (`circular`, `rounded`, `square`, `auto`) to adapt to various content types. When the
  * content is loaded, the skeleton fades out with a smooth transition.
+ * With `shape="auto"`, the placeholder copies the content's computed radius and corner shape, using
+ * its single shadow-root surface when the content host has no radius.
  *
  * @example
  * Wrap a card in a skeleton to provide a placeholder while content loads.
@@ -99,6 +101,11 @@ import { isSkeletonAnimation, SkeletonAnimation } from "./SkeletonAnimation";
  * @cssprop --m3e-skeleton-circular-shape - Corner radius for the circular skeleton shape.
  * @cssprop --m3e-skeleton-square-shape - Corner radius for the square skeleton shape.
  * @cssprop --m3e-skeleton-shape - Corner radius for the skeleton shape.
+ * @cssprop --m3e-skeleton-shape-family - Corner family applied to all corners of the skeleton surface.
+ * @cssprop --m3e-skeleton-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-skeleton-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-skeleton-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-skeleton-shape-family-end-end - Corner family of the block-end, inline-end corner.
  */
 @customElement("m3e-skeleton")
 export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitElement)) {
@@ -151,6 +158,22 @@ export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitE
       pointer-events: none;
       opacity: 1;
       background-color: var(--m3e-skeleton-color, ${DesignToken.color.surface});
+      corner-start-start-shape: var(
+        --m3e-skeleton-shape-family-start-start,
+        var(--m3e-skeleton-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-skeleton-shape-family-start-end,
+        var(--m3e-skeleton-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-skeleton-shape-family-end-start,
+        var(--m3e-skeleton-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-skeleton-shape-family-end-end,
+        var(--m3e-skeleton-shape-family, ${DesignToken.shape.family.endEnd})
+      );
     }
     .shape::before {
       content: "";
@@ -174,6 +197,10 @@ export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitE
     :host([loaded]) .shape {
       opacity: 0;
       transition: ${unsafeCSS(`opacity ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard}`)};
+    }
+    :host(:is(:state(--auto), :--auto)) .shape {
+      border-radius: var(--_skeleton-auto-shape);
+      corner-shape: var(--_skeleton-auto-corner-shape);
     }
     :host(:is(:state(--rounded), :--rounded)) .shape {
       border-radius: var(--m3e-skeleton-rounded-shape, var(--m3e-skeleton-shape, ${DesignToken.shape.corner.large}));
@@ -333,6 +360,7 @@ export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitE
     setCustomState(this, "--circular", this.shape === "circular");
     setCustomState(this, "--rounded", this.shape === "rounded");
     setCustomState(this, "--square", this.shape === "square");
+    setCustomState(this, "--auto", this.shape === "auto");
   }
 
   /** @private */
@@ -368,19 +396,15 @@ export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitE
     const shape = document.createElement("div");
     shape.classList.add("shape");
 
-    if (this.shape === "auto") {
-      let borderRadius = getComputedStyle(element).borderRadius;
-      if (!borderRadius || borderRadius === "0px") {
-        const firstElement = element.shadowRoot?.firstElementChild;
-        if (firstElement && !firstElement.nextElementSibling) {
-          borderRadius = getComputedStyle(firstElement).borderRadius;
-        }
-      }
-
-      if (borderRadius && borderRadius !== "0px") {
-        shape.style.borderRadius = borderRadius;
+    let surfaceStyle = getComputedStyle(element);
+    if (!surfaceStyle.borderRadius || surfaceStyle.borderRadius === "0px") {
+      const firstElement = element.shadowRoot?.firstElementChild;
+      if (firstElement && !firstElement.nextElementSibling) {
+        surfaceStyle = getComputedStyle(firstElement);
       }
     }
+    shape.style.setProperty("--_skeleton-auto-shape", surfaceStyle.borderRadius);
+    shape.style.setProperty("--_skeleton-auto-corner-shape", surfaceStyle.getPropertyValue("corner-shape"));
 
     const anchoringCleanup = await positionAnchor(
       shape,
