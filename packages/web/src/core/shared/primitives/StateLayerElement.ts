@@ -63,6 +63,7 @@ export class M3eStateLayerElement extends HtmlFor(Role(LitElement, "none")) {
       bottom: 0;
       pointer-events: none;
       border-radius: inherit;
+      corner-shape: inherit;
     }
     .layer {
       contain: layout style paint;

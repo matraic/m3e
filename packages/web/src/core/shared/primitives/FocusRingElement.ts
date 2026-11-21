@@ -57,6 +57,7 @@ export class M3eFocusRingElement extends HtmlFor(Role(LitElement, "none")) {
       bottom: 0;
       pointer-events: none;
       border-radius: inherit;
+      corner-shape: inherit;
       outline: none;
     }
     :host([hidden]) {
@@ -71,6 +72,7 @@ export class M3eFocusRingElement extends HtmlFor(Role(LitElement, "none")) {
       bottom: 0;
       pointer-events: none;
       border-radius: inherit;
+      corner-shape: inherit;
       z-index: 1;
       outline-color: ${FocusRingToken.color};
       outline-width: ${FocusRingToken.thickness};

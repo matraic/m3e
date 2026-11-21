@@ -1,5 +1,7 @@
 import { unsafeCSS } from "lit";
 
+const DefaultFamily = unsafeCSS("var(--m3e-shape-family, round)");
+
 const CornerValue = {
   /** No rounding. */
   none: unsafeCSS("var(--md-sys-shape-corner-value-none, 0)"),
@@ -31,6 +33,22 @@ const CornerValue = {
 
 /** Design tokens that control shape. */
 export const ShapeToken = {
+  family: {
+    /** Default family for all corners. */
+    default: DefaultFamily,
+
+    /** Block-start, inline-start corner family. */
+    startStart: unsafeCSS(`var(--m3e-shape-family-start-start, ${DefaultFamily})`),
+
+    /** Block-start, inline-end corner family. */
+    startEnd: unsafeCSS(`var(--m3e-shape-family-start-end, ${DefaultFamily})`),
+
+    /** Block-end, inline-start corner family. */
+    endStart: unsafeCSS(`var(--m3e-shape-family-end-start, ${DefaultFamily})`),
+
+    /** Block-end, inline-end corner family. */
+    endEnd: unsafeCSS(`var(--m3e-shape-family-end-end, ${DefaultFamily})`),
+  },
   corner: {
     /** Fully rounded symmetric shape. */
     full: unsafeCSS("var(--md-sys-shape-corner-full, 9999px)"),

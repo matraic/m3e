@@ -77,6 +77,7 @@ export class M3eElevationElement extends HtmlFor(Role(LitElement, "none")) {
       bottom: 0;
       pointer-events: none;
       border-radius: inherit;
+      corner-shape: inherit;
     }
     .shadow.resting,
     .shadow.focus,

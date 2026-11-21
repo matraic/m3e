@@ -90,6 +90,7 @@ export class M3eSelectionIndicatorElement extends SuppressInitialAnimation(
       inset: 0;
       pointer-events: none;
       border-radius: inherit;
+      corner-shape: inherit;
     }
     .indicator {
       opacity: 0;
