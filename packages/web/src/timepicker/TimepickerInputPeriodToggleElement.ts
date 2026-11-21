@@ -27,6 +27,22 @@ export class M3eTimepickerInputPeriodToggleElement extends Role(LitElement, "rad
       width: 100%;
       height: 100%;
       border-radius: var(--m3e-timepicker-input-period-toggle-shape, ${DesignToken.shape.corner.small});
+      corner-start-start-shape: var(
+        --m3e-timepicker-input-period-toggle-shape-family-start-start,
+        var(--m3e-timepicker-input-period-toggle-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-timepicker-input-period-toggle-shape-family-start-end,
+        var(--m3e-timepicker-input-period-toggle-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-timepicker-input-period-toggle-shape-family-end-start,
+        var(--m3e-timepicker-input-period-toggle-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-timepicker-input-period-toggle-shape-family-end-end,
+        var(--m3e-timepicker-input-period-toggle-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       border: var(--m3e-timepicker-input-period-toggle-outline-thickness, 1px) solid
         var(--m3e-timepicker-input-period-toggle-outline-color, ${DesignToken.color.outline});
     }
@@ -42,6 +58,7 @@ export class M3eTimepickerInputPeriodToggleElement extends Role(LitElement, "rad
       width: var(--m3e-timepicker-input-period-toggle-horizontal-width, 216px);
     }
     .period-button {
+      corner-shape: inherit;
       display: flex;
       align-items: center;
       justify-content: center;

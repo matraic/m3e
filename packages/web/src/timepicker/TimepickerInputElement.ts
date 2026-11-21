@@ -69,6 +69,16 @@ import "./TimepickerInputPeriodToggleElement";
  * @cssprop --m3e-timepicker-input-field-container-width - Width of the input field container.
  * @cssprop --m3e-timepicker-input-field-height - Height of the input fields.
  * @cssprop --m3e-timepicker-input-field-container-shape - Corner radius of the input field container.
+ * @cssprop --m3e-timepicker-input-field-container-shape-family - Corner family applied to all corners of the input fields.
+ * @cssprop --m3e-timepicker-input-field-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-timepicker-input-field-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-timepicker-input-field-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-timepicker-input-field-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
+ * @cssprop --m3e-timepicker-input-period-toggle-shape-family - Corner family applied to all corners of the period toggle.
+ * @cssprop --m3e-timepicker-input-period-toggle-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-timepicker-input-period-toggle-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-timepicker-input-period-toggle-shape-family-end-start - Corner family of the block-end, inline-end corner.
+ * @cssprop --m3e-timepicker-input-period-toggle-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-timepicker-input-field-font-size - Font size of the input field text.
  * @cssprop --m3e-timepicker-input-field-font-weight - Font weight of the input field text.
  * @cssprop --m3e-timepicker-input-field-line-height - Line height of the input field text.
@@ -128,6 +138,22 @@ export class M3eTimepickerInputElement extends HtmlFor(TimepickerInputElementBas
       width: var(--m3e-timepicker-input-field-container-width, 96px);
       height: var(--m3e-timepicker-input-field-height, 80px);
       border-radius: var(--m3e-timepicker-input-field-container-shape, ${DesignToken.shape.corner.small});
+      corner-start-start-shape: var(
+        --m3e-timepicker-input-field-container-shape-family-start-start,
+        var(--m3e-timepicker-input-field-container-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-timepicker-input-field-container-shape-family-start-end,
+        var(--m3e-timepicker-input-field-container-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-timepicker-input-field-container-shape-family-end-start,
+        var(--m3e-timepicker-input-field-container-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-timepicker-input-field-container-shape-family-end-end,
+        var(--m3e-timepicker-input-field-container-shape-family, ${DesignToken.shape.family.endEnd})
+      );
     }
     .field {
       display: block;

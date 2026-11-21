@@ -90,7 +90,7 @@ Use `format="24"` for a 24-hour clock.
 Use `min-time` and `max-time` to constrain selectable times.
 
 ```html
-<m3e-timepicker min-time="8:15 AM"  max-time="5:30 PM"></m3e-timepicker>
+<m3e-timepicker min-time="8:15 AM" max-time="5:30 PM"></m3e-timepicker>
 ```
 
 Set `blackoutTimes` to a function that disables unavailable times. Apply this to a timepicker with the matching id.
@@ -116,8 +116,7 @@ Use timepicker input and dial elements together for a custom presentation. Provi
 ```js
 document.querySelector("#input").addEventListener("change", (e) => {
   const picker = e.target;
-  document.querySelector("#inputValue").innerText =
-    `hour = ${picker.hour ?? ""}, minute = ${picker.minute ?? ""}`;
+  document.querySelector("#inputValue").innerText = `hour = ${picker.hour ?? ""}, minute = ${picker.minute ?? ""}`;
 });
 ```
 
@@ -160,27 +159,32 @@ This section details the attributes, events and CSS custom properties available 
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                                            | Description                                               |
-| ------------------------------------------------------------------- | --------------------------------------------------------- |
-| `--m3e-timepicker-container-padding-block`                          | Block padding inside the picker container.                |
-| `--m3e-timepicker-container-padding-inline`                         | Inline padding inside the picker container.               |
-| `--m3e-timepicker-container-color`                                  | Background color of the picker container.                 |
-| `--m3e-timepicker-container-elevation`                              | Elevation shadow applied to the picker container.         |
-| `--m3e-timepicker-docked-container-color`                           | Background color of the docked container.                 |
-| `--m3e-timepicker-docked-container-shape`                           | Border radius of the docked container.                    |
-| `--m3e-timepicker-modal-container-color`                            | Background color of the modal container.                  |
-| `--m3e-timepicker-modal-container-shape`                            | Border radius of the modal container.                     |
-| `--m3e-timepicker-headline-color`                                   | Color of the headline text.                               |
-| `--m3e-timepicker-actions-space`                                    | Space above the action buttons.                           |
-| `--m3e-timepicker-input-field-unselected-hover-state-layer-color`   | State layer color on hover for unselected input fields.   |
-| `--m3e-timepicker-input-field-unselected-focus-state-layer-color`   | State layer color on focus for unselected input fields.   |
-| `--m3e-timepicker-input-field-unselected-pressed-state-layer-color` | State layer color on pressed for unselected input fields. |
-| `--m3e-timepicker-input-field-selected-hover-state-layer-color`     | State layer color on hover for selected input fields.     |
-| `--m3e-timepicker-input-field-selected-focus-state-layer-color`     | State layer color on focus for selected input fields.     |
-| `--m3e-timepicker-input-field-selected-pressed-state-layer-color`   | State layer color on pressed for selected input fields.   |
-| `--m3e-timepicker-input-field-invalid-hover-state-layer-color`      | State layer color on hover for invalid input fields.      |
-| `--m3e-timepicker-input-field-invalid-focus-state-layer-color`      | State layer color on focus for invalid input fields.      |
-| `--m3e-timepicker-input-field-invalid-pressed-state-layer-color`    | State layer color on pressed for invalid input fields.    |
+| Property                                                            | Description                                                   |
+| ------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `--m3e-timepicker-container-padding-block`                          | Block padding inside the picker container.                    |
+| `--m3e-timepicker-container-padding-inline`                         | Inline padding inside the picker container.                   |
+| `--m3e-timepicker-container-color`                                  | Background color of the picker container.                     |
+| `--m3e-timepicker-container-elevation`                              | Elevation shadow applied to the picker container.             |
+| `--m3e-timepicker-container-shape-family`                           | Corner family applied to all corners of the picker container. |
+| `--m3e-timepicker-container-shape-family-start-start`               | Corner family of the block-start, inline-start corner.        |
+| `--m3e-timepicker-container-shape-family-start-end`                 | Corner family of the block-start, inline-end corner.          |
+| `--m3e-timepicker-container-shape-family-end-start`                 | Corner family of the block-end, inline-start corner.          |
+| `--m3e-timepicker-container-shape-family-end-end`                   | Corner family of the block-end, inline-end corner.            |
+| `--m3e-timepicker-docked-container-color`                           | Background color of the docked container.                     |
+| `--m3e-timepicker-docked-container-shape`                           | Border radius of the docked container.                        |
+| `--m3e-timepicker-modal-container-color`                            | Background color of the modal container.                      |
+| `--m3e-timepicker-modal-container-shape`                            | Border radius of the modal container.                         |
+| `--m3e-timepicker-headline-color`                                   | Color of the headline text.                                   |
+| `--m3e-timepicker-actions-space`                                    | Space above the action buttons.                               |
+| `--m3e-timepicker-input-field-unselected-hover-state-layer-color`   | State layer color on hover for unselected input fields.       |
+| `--m3e-timepicker-input-field-unselected-focus-state-layer-color`   | State layer color on focus for unselected input fields.       |
+| `--m3e-timepicker-input-field-unselected-pressed-state-layer-color` | State layer color on pressed for unselected input fields.     |
+| `--m3e-timepicker-input-field-selected-hover-state-layer-color`     | State layer color on hover for selected input fields.         |
+| `--m3e-timepicker-input-field-selected-focus-state-layer-color`     | State layer color on focus for selected input fields.         |
+| `--m3e-timepicker-input-field-selected-pressed-state-layer-color`   | State layer color on pressed for selected input fields.       |
+| `--m3e-timepicker-input-field-invalid-hover-state-layer-color`      | State layer color on hover for invalid input fields.          |
+| `--m3e-timepicker-input-field-invalid-focus-state-layer-color`      | State layer color on focus for invalid input fields.          |
+| `--m3e-timepicker-input-field-invalid-pressed-state-layer-color`    | State layer color on pressed for invalid input fields.        |
 
 > The `m3e-timepicker` container also exposes styling for the nested input and dial custom properties.
 
@@ -219,22 +223,32 @@ This section details the attributes, events and CSS custom properties available 
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                                            | Description                                               |
-| ------------------------------------------------------------------- | --------------------------------------------------------- |
-| `--m3e-timepicker-input-field-container-width`                      | Width of the input field container.                       |
-| `--m3e-timepicker-input-field-height`                               | Height of the input fields.                               |
-| `--m3e-timepicker-input-field-container-shape`                      | Corner radius of the input field container.               |
-| `--m3e-timepicker-input-field-font-size`                            | Font size of the input field text.                        |
-| `--m3e-timepicker-input-field-unselected-container-color`           | Background color of unselected input fields.              |
-| `--m3e-timepicker-input-field-unselected-hover-state-layer-color`   | State layer color for unselected input fields on hover.   |
-| `--m3e-timepicker-input-field-unselected-focus-state-layer-color`   | State layer color for unselected input fields on focus.   |
-| `--m3e-timepicker-input-field-unselected-pressed-state-layer-color` | State layer color for unselected input fields on pressed. |
-| `--m3e-timepicker-input-field-selected-hover-state-layer-color`     | State layer color for selected input fields on hover.     |
-| `--m3e-timepicker-input-field-selected-focus-state-layer-color`     | State layer color for selected input fields on focus.     |
-| `--m3e-timepicker-input-field-selected-pressed-state-layer-color`   | State layer color for selected input fields on pressed.   |
-| `--m3e-timepicker-input-field-invalid-hover-state-layer-color`      | State layer color for invalid input fields on hover.      |
-| `--m3e-timepicker-input-field-invalid-focus-state-layer-color`      | State layer color for invalid input fields on focus.      |
-| `--m3e-timepicker-input-field-invalid-pressed-state-layer-color`    | State layer color for invalid input fields on pressed.    |
+| Property                                                            | Description                                                |
+| ------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `--m3e-timepicker-input-field-container-width`                      | Width of the input field container.                        |
+| `--m3e-timepicker-input-field-height`                               | Height of the input fields.                                |
+| `--m3e-timepicker-input-field-container-shape`                      | Corner radius of the input field container.                |
+| `--m3e-timepicker-input-field-container-shape-family`               | Corner family applied to all corners of the input fields.  |
+| `--m3e-timepicker-input-field-container-shape-family-start-start`   | Corner family of the block-start, inline-start corner.     |
+| `--m3e-timepicker-input-field-container-shape-family-start-end`     | Corner family of the block-start, inline-end corner.       |
+| `--m3e-timepicker-input-field-container-shape-family-end-start`     | Corner family of the block-end, inline-start corner.       |
+| `--m3e-timepicker-input-field-container-shape-family-end-end`       | Corner family of the block-end, inline-end corner.         |
+| `--m3e-timepicker-input-period-toggle-shape-family`                 | Corner family applied to all corners of the period toggle. |
+| `--m3e-timepicker-input-period-toggle-shape-family-start-start`     | Corner family of the block-start, inline-start corner.     |
+| `--m3e-timepicker-input-period-toggle-shape-family-start-end`       | Corner family of the block-start, inline-end corner.       |
+| `--m3e-timepicker-input-period-toggle-shape-family-end-start`       | Corner family of the block-end, inline-start corner.       |
+| `--m3e-timepicker-input-period-toggle-shape-family-end-end`         | Corner family of the block-end, inline-end corner.         |
+| `--m3e-timepicker-input-field-font-size`                            | Font size of the input field text.                         |
+| `--m3e-timepicker-input-field-unselected-container-color`           | Background color of unselected input fields.               |
+| `--m3e-timepicker-input-field-unselected-hover-state-layer-color`   | State layer color for unselected input fields on hover.    |
+| `--m3e-timepicker-input-field-unselected-focus-state-layer-color`   | State layer color for unselected input fields on focus.    |
+| `--m3e-timepicker-input-field-unselected-pressed-state-layer-color` | State layer color for unselected input fields on pressed.  |
+| `--m3e-timepicker-input-field-selected-hover-state-layer-color`     | State layer color for selected input fields on hover.      |
+| `--m3e-timepicker-input-field-selected-focus-state-layer-color`     | State layer color for selected input fields on focus.      |
+| `--m3e-timepicker-input-field-selected-pressed-state-layer-color`   | State layer color for selected input fields on pressed.    |
+| `--m3e-timepicker-input-field-invalid-hover-state-layer-color`      | State layer color for invalid input fields on hover.       |
+| `--m3e-timepicker-input-field-invalid-focus-state-layer-color`      | State layer color for invalid input fields on focus.       |
+| `--m3e-timepicker-input-field-invalid-pressed-state-layer-color`    | State layer color for invalid input fields on pressed.     |
 
 ---
 
