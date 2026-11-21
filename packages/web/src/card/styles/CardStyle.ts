@@ -35,6 +35,10 @@ export const CardStyle: CSSResult = css`
     position: relative;
     box-sizing: border-box;
     border-radius: ${CardToken.shape};
+    corner-start-start-shape: ${CardToken.shapeFamily.startStart};
+    corner-start-end-shape: ${CardToken.shapeFamily.startEnd};
+    corner-end-start-shape: ${CardToken.shapeFamily.endStart};
+    corner-end-end-shape: ${CardToken.shapeFamily.endEnd};
   }
   :host([actionable]) .base {
     transition: ${unsafeCSS(
@@ -75,6 +79,10 @@ export const CardStyle: CSSResult = css`
   ::slotted(img[slot="header"]),
   ::slotted(video[slot="header"]) {
     border-radius: ${CardToken.shape};
+    corner-start-start-shape: ${CardToken.shapeFamily.startStart};
+    corner-start-end-shape: ${CardToken.shapeFamily.startEnd};
+    corner-end-start-shape: ${CardToken.shapeFamily.endStart};
+    corner-end-end-shape: ${CardToken.shapeFamily.endEnd};
   }
   ::slotted([slot="actions"][end]) {
     justify-content: flex-end;

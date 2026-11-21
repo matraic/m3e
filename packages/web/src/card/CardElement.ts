@@ -149,6 +149,11 @@ import { CardOrientation, isCardOrientation } from "./CardOrientation";
  *
  * @cssprop --m3e-card-padding - Internal spacing for all slotted regions
  * @cssprop --m3e-card-shape - Corner radius of the card container.
+ * @cssprop --m3e-card-shape-family - Corner family applied to all corners of the card container.
+ * @cssprop --m3e-card-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-card-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-card-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-card-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-filled-card-text-color - Foreground color for text content in filled cards.
  * @cssprop --m3e-filled-card-container-color - Background color of the filled card container.
  * @cssprop --m3e-filled-card-container-elevation - Elevation level for filled card container.

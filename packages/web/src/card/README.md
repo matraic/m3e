@@ -134,10 +134,15 @@ The `m3e-card` element supports extensive theming via scoped CSS custom properti
 
 #### 🧱 Global Properties
 
-| Property             | Description                               |
-| -------------------- | ----------------------------------------- |
-| `--m3e-card-padding` | Internal spacing for all slotted regions. |
-| `--m3e-card-shape`   | Corner radius of the card container.      |
+| Property                              | Description                                                 |
+| ------------------------------------- | ----------------------------------------------------------- |
+| `--m3e-card-padding`                  | Internal spacing for all slotted regions.                   |
+| `--m3e-card-shape`                    | Corner radius of the card container.                        |
+| `--m3e-card-shape-family`             | Corner family applied to all corners of the card container. |
+| `--m3e-card-shape-family-start-start` | Corner family of the block-start, inline-start corner.      |
+| `--m3e-card-shape-family-start-end`   | Corner family of the block-start, inline-end corner.        |
+| `--m3e-card-shape-family-end-start`   | Corner family of the block-end, inline-start corner.        |
+| `--m3e-card-shape-family-end-end`     | Corner family of the block-end, inline-end corner.          |
 
 #### 🟫 Filled Variant
 
