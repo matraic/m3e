@@ -95,6 +95,11 @@ import type { M3eFabMenuElement } from "./FabMenuElement";
  * @cssprop --m3e-fab-menu-item-line-height - Line height of the menu item label.
  * @cssprop --m3e-fab-menu-item-tracking - Letter spacing of the menu item label.
  * @cssprop --m3e-fab-menu-item-shape - Border radius of the menu item.
+ * @cssprop --m3e-fab-menu-item-shape-family - Corner family applied to all corners of the menu item.
+ * @cssprop --m3e-fab-menu-item-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-fab-menu-item-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-fab-menu-item-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-fab-menu-item-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-fab-menu-item-leading-space - Padding at the start of the menu item.
  * @cssprop --m3e-fab-menu-item-trailing-space - Padding at the end of the menu item.
  * @cssprop --m3e-fab-menu-item-top-space - Padding at the top of the menu item.
@@ -138,6 +143,22 @@ export class M3eFabMenuItemElement extends KeyboardClick(
       line-height: var(--m3e-fab-menu-item-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
       letter-spacing: var(--m3e-fab-menu-item-tracking, ${DesignToken.typescale.standard.label.large.tracking});
       border-radius: var(--m3e-fab-menu-item-shape, ${DesignToken.shape.corner.full});
+      corner-start-start-shape: var(
+        --m3e-fab-menu-item-shape-family-start-start,
+        var(--m3e-fab-menu-item-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-fab-menu-item-shape-family-start-end,
+        var(--m3e-fab-menu-item-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-fab-menu-item-shape-family-end-start,
+        var(--m3e-fab-menu-item-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-fab-menu-item-shape-family-end-end,
+        var(--m3e-fab-menu-item-shape-family, ${DesignToken.shape.family.endEnd})
+      );
     }
     :host(:not(:disabled)) .label,
     :host(:not(:disabled)) .icon {
@@ -178,6 +199,7 @@ export class M3eFabMenuItemElement extends KeyboardClick(
       display: inline-flex;
       justify-content: var(--_fab-menu-item-justify, center);
       border-radius: inherit;
+      corner-shape: inherit;
     }
     .content {
       flex: none;

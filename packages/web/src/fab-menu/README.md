@@ -76,25 +76,30 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### 🎛️ CSS Custom Properties
 
-| Property                              | Description                                         |
-| ------------------------------------- | --------------------------------------------------- |
-| `--m3e-fab-menu-spacing`              | Vertical gap between menu items.                    |
-| `--m3e-fab-menu-max-width`            | Maximum width of the menu.                          |
-| `--m3e-primary-fab-color`             | Foreground color for primary variant items.         |
-| `--m3e-primary-fab-container-color`   | Container color for primary variant items.          |
-| `--m3e-primary-fab-hover-color`       | Hover background color for primary variant items.   |
-| `--m3e-primary-fab-focus-color`       | Focus background color for primary variant items.   |
-| `--m3e-primary-fab-ripple-color`      | Ripple color for primary variant items.             |
-| `--m3e-secondary-fab-color`           | Foreground color for secondary variant items.       |
-| `--m3e-secondary-fab-container-color` | Container color for secondary variant items.        |
-| `--m3e-secondary-fab-hover-color`     | Hover background color for secondary variant items. |
-| `--m3e-secondary-fab-focus-color`     | Focus background color for secondary variant items. |
-| `--m3e-secondary-fab-ripple-color`    | Ripple color for secondary variant items.           |
-| `--m3e-tertiary-fab-color`            | Foreground color for tertiary variant items.        |
-| `--m3e-tertiary-fab-container-color`  | Container color for tertiary variant items.         |
-| `--m3e-tertiary-fab-hover-color`      | Hover background color for tertiary variant items.  |
-| `--m3e-tertiary-fab-focus-color`      | Focus background color for tertiary variant items.  |
-| `--m3e-tertiary-fab-ripple-color`     | Ripple color for tertiary variant items.            |
+| Property                                            | Description                                                              |
+| --------------------------------------------------- | ------------------------------------------------------------------------ |
+| `--m3e-fab-menu-spacing`                            | Vertical gap between menu items.                                         |
+| `--m3e-fab-menu-max-width`                          | Maximum width of the menu.                                               |
+| `--m3e-fab-menu-container-shape-family`             | Corner family applied to all corners of the forced-color menu container. |
+| `--m3e-fab-menu-container-shape-family-start-start` | Corner family of the block-start, inline-start corner.                   |
+| `--m3e-fab-menu-container-shape-family-start-end`   | Corner family of the block-start, inline-end corner.                     |
+| `--m3e-fab-menu-container-shape-family-end-start`   | Corner family of the block-end, inline-start corner.                     |
+| `--m3e-fab-menu-container-shape-family-end-end`     | Corner family of the block-end, inline-end corner.                       |
+| `--m3e-primary-fab-color`                           | Foreground color for primary variant items.                              |
+| `--m3e-primary-fab-container-color`                 | Container color for primary variant items.                               |
+| `--m3e-primary-fab-hover-color`                     | Hover background color for primary variant items.                        |
+| `--m3e-primary-fab-focus-color`                     | Focus background color for primary variant items.                        |
+| `--m3e-primary-fab-ripple-color`                    | Ripple color for primary variant items.                                  |
+| `--m3e-secondary-fab-color`                         | Foreground color for secondary variant items.                            |
+| `--m3e-secondary-fab-container-color`               | Container color for secondary variant items.                             |
+| `--m3e-secondary-fab-hover-color`                   | Hover background color for secondary variant items.                      |
+| `--m3e-secondary-fab-focus-color`                   | Focus background color for secondary variant items.                      |
+| `--m3e-secondary-fab-ripple-color`                  | Ripple color for secondary variant items.                                |
+| `--m3e-tertiary-fab-color`                          | Foreground color for tertiary variant items.                             |
+| `--m3e-tertiary-fab-container-color`                | Container color for tertiary variant items.                              |
+| `--m3e-tertiary-fab-hover-color`                    | Hover background color for tertiary variant items.                       |
+| `--m3e-tertiary-fab-focus-color`                    | Focus background color for tertiary variant items.                       |
+| `--m3e-tertiary-fab-ripple-color`                   | Ripple color for tertiary variant items.                                 |
 
 ### 🗂️ `m3e-fab-menu-item`
 
@@ -119,17 +124,22 @@ This section details the attributes, slots and CSS custom properties available f
 
 ### 🎛️ CSS Custom Properties
 
-| Property                             | Description                             |
-| ------------------------------------ | --------------------------------------- |
-| `--m3e-fab-menu-item-height`         | Height of the menu item.                |
-| `--m3e-fab-menu-item-font-size`      | Font size of the menu item label.       |
-| `--m3e-fab-menu-item-font-weight`    | Font weight of the menu item label.     |
-| `--m3e-fab-menu-item-line-height`    | Line height of the menu item label.     |
-| `--m3e-fab-menu-item-tracking`       | Letter spacing of the menu item label.  |
-| `--m3e-fab-menu-item-shape`          | Border radius of the menu item.         |
-| `--m3e-fab-menu-item-leading-space`  | Padding at the start of the menu item.  |
-| `--m3e-fab-menu-item-trailing-space` | Padding at the end of the menu item.    |
-| `--m3e-fab-menu-item-top-space`      | Padding at the top of the menu item.    |
-| `--m3e-fab-menu-item-bottom-space`   | Padding at the bottom of the menu item. |
-| `--m3e-fab-menu-item-spacing`        | Gap between icon and label.             |
-| `--m3e-fab-menu-item-icon-size`      | Size of the icon in the menu item.      |
+| Property                                       | Description                                            |
+| ---------------------------------------------- | ------------------------------------------------------ |
+| `--m3e-fab-menu-item-height`                   | Height of the menu item.                               |
+| `--m3e-fab-menu-item-font-size`                | Font size of the menu item label.                      |
+| `--m3e-fab-menu-item-font-weight`              | Font weight of the menu item label.                    |
+| `--m3e-fab-menu-item-line-height`              | Line height of the menu item label.                    |
+| `--m3e-fab-menu-item-tracking`                 | Letter spacing of the menu item label.                 |
+| `--m3e-fab-menu-item-shape`                    | Border radius of the menu item.                        |
+| `--m3e-fab-menu-item-shape-family`             | Corner family applied to all corners of the menu item. |
+| `--m3e-fab-menu-item-shape-family-start-start` | Corner family of the block-start, inline-start corner. |
+| `--m3e-fab-menu-item-shape-family-start-end`   | Corner family of the block-start, inline-end corner.   |
+| `--m3e-fab-menu-item-shape-family-end-start`   | Corner family of the block-end, inline-start corner.   |
+| `--m3e-fab-menu-item-shape-family-end-end`     | Corner family of the block-end, inline-end corner.     |
+| `--m3e-fab-menu-item-leading-space`            | Padding at the start of the menu item.                 |
+| `--m3e-fab-menu-item-trailing-space`           | Padding at the end of the menu item.                   |
+| `--m3e-fab-menu-item-top-space`                | Padding at the top of the menu item.                   |
+| `--m3e-fab-menu-item-bottom-space`             | Padding at the bottom of the menu item.                |
+| `--m3e-fab-menu-item-spacing`                  | Gap between icon and label.                            |
+| `--m3e-fab-menu-item-icon-size`                | Size of the icon in the menu item.                     |

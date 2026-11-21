@@ -127,6 +127,11 @@ function staggerDelays(count: number, open: boolean): number[] {
  * @cssprop --m3e-fab-menu-spacing - Vertical gap between menu items.
  * @cssprop --m3e-fab-menu-max-width - Maximum width of the menu.
  * @cssprop --m3e-primary-fab-color - Foreground color for primary variant items.
+ * @cssprop --m3e-fab-menu-container-shape-family - Corner family applied to all corners of the forced-color menu container.
+ * @cssprop --m3e-fab-menu-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-fab-menu-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-fab-menu-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-fab-menu-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-primary-fab-container-color - Container color for primary variant items.
  * @cssprop --m3e-primary-fab-hover-color - Hover background color for primary variant items.
  * @cssprop --m3e-primary-fab-focus-color - Focus background color for primary variant items.
@@ -288,6 +293,22 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       }
       :host {
         border-radius: ${DesignToken.shape.corner.medium};
+        corner-start-start-shape: var(
+          --m3e-fab-menu-container-shape-family-start-start,
+          var(--m3e-fab-menu-container-shape-family, ${DesignToken.shape.family.startStart})
+        );
+        corner-start-end-shape: var(
+          --m3e-fab-menu-container-shape-family-start-end,
+          var(--m3e-fab-menu-container-shape-family, ${DesignToken.shape.family.startEnd})
+        );
+        corner-end-start-shape: var(
+          --m3e-fab-menu-container-shape-family-end-start,
+          var(--m3e-fab-menu-container-shape-family, ${DesignToken.shape.family.endStart})
+        );
+        corner-end-end-shape: var(
+          --m3e-fab-menu-container-shape-family-end-end,
+          var(--m3e-fab-menu-container-shape-family, ${DesignToken.shape.family.endEnd})
+        );
         outline: 1px solid MenuText;
         background-color: Menu;
       }

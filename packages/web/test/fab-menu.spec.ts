@@ -24,6 +24,35 @@ function motionMenu(motion: "standard" | "expressive"): string {
 }
 
 test.describe("m3e-fab-menu", () => {
+  test("shapes menu items and their layers independently of the forced-color container", async ({ page, render }) => {
+    await page.emulateMedia({ reducedMotion: "reduce", forcedColors: "active" });
+    await render(`
+      <m3e-fab aria-label="More actions" style="position: fixed; right: 16px; bottom: 16px">
+        <m3e-fab-menu-trigger for="actions"></m3e-fab-menu-trigger>
+      </m3e-fab>
+      <m3e-fab-menu id="actions" style="
+        --m3e-fab-menu-container-shape-family: round;
+        --m3e-fab-menu-item-shape-family: bevel">
+        <m3e-fab-menu-item>Share</m3e-fab-menu-item>
+      </m3e-fab-menu>
+    `);
+    await page.getByRole("button", { name: "More actions" }).click();
+    const menu = page.getByRole("menu");
+    await expect(menu).toBeVisible();
+    await expect(menu).toHaveCSS("corner-shape", "superellipse(1)");
+    await expect(menu).toHaveCSS("border-radius", "12px");
+    const layers = page
+      .locator("m3e-fab-menu-item")
+      .locator(".base, .wrapper, .focus-ring, .state-layer, .ripple, .elevation");
+    for (const layer of await layers.all()) {
+      await expect(layer).toHaveCSS("corner-shape", "superellipse(0)");
+      await expect(layer).toHaveCSS("border-radius", "9999px");
+    }
+    await menu.evaluate((element) => element.style.setProperty("--m3e-fab-menu-container-shape-family", "bevel"));
+    await expect(menu).toHaveCSS("corner-shape", "superellipse(0)");
+    await expect(menu).toHaveCSS("border-radius", "12px");
+  });
+
   test("opens from its FAB trigger and exposes menu items", async ({ page, render }) => {
     await render(`
       <m3e-fab style="margin-top: 50%;" aria-label="More actions">
