@@ -64,6 +64,11 @@ import { TooltipElementBase } from "./TooltipElementBase";
  * @cssprop --m3e-tooltip-min-height - Minimum height of the tooltip container.
  * @cssprop --m3e-tooltip-max-height - Maximum height of the tooltip.
  * @cssprop --m3e-tooltip-shape - Border radius of the tooltip container.
+ * @cssprop --m3e-tooltip-shape-family - Corner family applied to all corners of the tooltip container.
+ * @cssprop --m3e-tooltip-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-tooltip-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-tooltip-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-tooltip-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-tooltip-container-color - Background color of the tooltip.
  * @cssprop --m3e-tooltip-supporting-text-color - Text color of supporting text.
  * @cssprop --m3e-tooltip-supporting-text-font-size - Font size of supporting text.
@@ -98,6 +103,22 @@ export class M3eTooltipElement extends TooltipElementBase {
       overflow: hidden;
       text-align: center;
       border-radius: var(--m3e-tooltip-shape, ${DesignToken.shape.corner.extraSmall});
+      corner-start-start-shape: var(
+        --m3e-tooltip-shape-family-start-start,
+        var(--m3e-tooltip-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-tooltip-shape-family-start-end,
+        var(--m3e-tooltip-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-tooltip-shape-family-end-start,
+        var(--m3e-tooltip-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-tooltip-shape-family-end-end,
+        var(--m3e-tooltip-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       background-color: var(--m3e-tooltip-container-color, ${DesignToken.color.inverseSurface});
       color: var(--m3e-tooltip-supporting-text-color, ${DesignToken.color.inverseOnSurface});
       font-size: var(--m3e-tooltip-supporting-text-font-size, ${DesignToken.typescale.standard.body.small.fontSize});

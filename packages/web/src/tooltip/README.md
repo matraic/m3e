@@ -103,6 +103,11 @@ This section details the attributes, slots and CSS custom properties available f
 | `--m3e-rich-tooltip-padding-inline`              | Horizontal padding of the tooltip container.                           |
 | `--m3e-rich-tooltip-max-width`                   | Maximum width of the tooltip surface.                                  |
 | `--m3e-rich-tooltip-shape`                       | Border‑radius of the tooltip container.                                |
+| `--m3e-rich-tooltip-shape-family`                | Corner family applied to all corners of the tooltip container.         |
+| `--m3e-rich-tooltip-shape-family-start-start`    | Corner family of the block-start, inline-start corner.                 |
+| `--m3e-rich-tooltip-shape-family-start-end`      | Corner family of the block-start, inline-end corner.                   |
+| `--m3e-rich-tooltip-shape-family-end-start`      | Corner family of the block-end, inline-start corner.                   |
+| `--m3e-rich-tooltip-shape-family-end-end`        | Corner family of the block-end, inline-end corner.                     |
 | `--m3e-rich-tooltip-container-color`             | Background color of the tooltip surface.                               |
 | `--m3e-rich-tooltip-subhead-color`               | Color of the subhead text.                                             |
 | `--m3e-rich-tooltip-subhead-font-size`           | Font size of the subhead text.                                         |
@@ -141,17 +146,22 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                    | Description                                |
-| ------------------------------------------- | ------------------------------------------ |
-| `--m3e-tooltip-padding`                     | Internal spacing of the tooltip container. |
-| `--m3e-tooltip-min-width`                   | Minimum width of the tooltip.              |
-| `--m3e-tooltip-max-width`                   | Maximum width of the tooltip.              |
-| `--m3e-tooltip-min-height`                  | Minimum height of the tooltip container.   |
-| `--m3e-tooltip-max-height`                  | Maximum height of the tooltip.             |
-| `--m3e-tooltip-shape`                       | Border radius of the tooltip container.    |
-| `--m3e-tooltip-container-color`             | Background color of the tooltip.           |
-| `--m3e-tooltip-supporting-text-color`       | Text color of supporting text.             |
-| `--m3e-tooltip-supporting-text-font-size`   | Font size of supporting text.              |
-| `--m3e-tooltip-supporting-text-font-weight` | Font weight of supporting text.            |
-| `--m3e-tooltip-supporting-text-line-height` | Line height of supporting text.            |
-| `--m3e-tooltip-supporting-text-tracking`    | Letter spacing of supporting text.         |
+| Property                                    | Description                                                    |
+| ------------------------------------------- | -------------------------------------------------------------- |
+| `--m3e-tooltip-padding`                     | Internal spacing of the tooltip container.                     |
+| `--m3e-tooltip-min-width`                   | Minimum width of the tooltip.                                  |
+| `--m3e-tooltip-max-width`                   | Maximum width of the tooltip.                                  |
+| `--m3e-tooltip-min-height`                  | Minimum height of the tooltip container.                       |
+| `--m3e-tooltip-max-height`                  | Maximum height of the tooltip.                                 |
+| `--m3e-tooltip-shape`                       | Border radius of the tooltip container.                        |
+| `--m3e-tooltip-shape-family`                | Corner family applied to all corners of the tooltip container. |
+| `--m3e-tooltip-shape-family-start-start`    | Corner family of the block-start, inline-start corner.         |
+| `--m3e-tooltip-shape-family-start-end`      | Corner family of the block-start, inline-end corner.           |
+| `--m3e-tooltip-shape-family-end-start`      | Corner family of the block-end, inline-start corner.           |
+| `--m3e-tooltip-shape-family-end-end`        | Corner family of the block-end, inline-end corner.             |
+| `--m3e-tooltip-container-color`             | Background color of the tooltip.                               |
+| `--m3e-tooltip-supporting-text-color`       | Text color of supporting text.                                 |
+| `--m3e-tooltip-supporting-text-font-size`   | Font size of supporting text.                                  |
+| `--m3e-tooltip-supporting-text-font-weight` | Font weight of supporting text.                                |
+| `--m3e-tooltip-supporting-text-line-height` | Line height of supporting text.                                |
+| `--m3e-tooltip-supporting-text-tracking`    | Letter spacing of supporting text.                             |
