@@ -51,6 +51,13 @@ export const SearchViewStyle: CSSResultGroup = css`
     margin: unset;
     border: unset;
   }
+  .view,
+  .results {
+    corner-start-start-shape: ${SearchViewToken.containerShapeFamily.startStart};
+    corner-start-end-shape: ${SearchViewToken.containerShapeFamily.startEnd};
+    corner-end-start-shape: ${SearchViewToken.containerShapeFamily.endStart};
+    corner-end-end-shape: ${SearchViewToken.containerShapeFamily.endEnd};
+  }
   .header {
     flex: none;
     display: flex;

@@ -119,6 +119,11 @@ import "./SearchBarElement";
  *
  * @cssprop --m3e-search-view-container-color - Background color of the view container.
  * @cssprop --m3e-search-view-contained-container-color - Background color of the contained view container.
+ * @cssprop --m3e-search-view-container-shape-family - Corner family applied to all corners of the view and results containers.
+ * @cssprop --m3e-search-view-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-search-view-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-search-view-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-search-view-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-search-view-divider-color - Color of the divider separating header and results.
  * @cssprop --m3e-search-view-divider-thickness - Thickness of the divider separating header and results.
  * @cssprop --m3e-search-view-full-screen-container-shape - Shape of the fullscreen view container.

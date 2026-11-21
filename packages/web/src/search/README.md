@@ -101,31 +101,36 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                          | Description                                        |
-| ------------------------------------------------- | -------------------------------------------------- |
-| `--m3e-search-bar-container-color`                | Background color of the search bar container.      |
-| `--m3e-search-bar-leading-icon-color`             | Color of the leading icon.                         |
-| `--m3e-search-bar-trailing-icon-color`            | Color of the trailing icon.                        |
-| `--m3e-search-bar-container-height`               | Height of the search bar container.                |
-| `--m3e-search-bar-container-shape`                | Shape (border radius) of the search bar container. |
-| `--m3e-search-bar-icon-size`                      | Size of icons inside the search bar.               |
-| `--m3e-search-bar-supporting-text-color`          | Color of the supporting text.                      |
-| `--m3e-search-bar-supporting-text-font-size`      | Font size of the supporting text.                  |
-| `--m3e-search-bar-supporting-text-font-weight`    | Font weight of the supporting text.                |
-| `--m3e-search-bar-supporting-text-line-height`    | Line height of the supporting text.                |
-| `--m3e-search-bar-supporting-text-tracking`       | Letter spacing of the supporting text.             |
-| `--m3e-search-bar-input-color`                    | Color of the input text.                           |
-| `--m3e-search-bar-input-text-font-size`           | Font size of the input text.                       |
-| `--m3e-search-bar-input-text-font-weight`         | Font weight of the input text.                     |
-| `--m3e-search-bar-input-text-line-height`         | Line height of the input text.                     |
-| `--m3e-search-bar-input-text-tracking`            | Letter spacing of the input text.                  |
-| `--m3e-search-bar-leading-space`                  | Space before the leading icon.                     |
-| `--m3e-search-bar-trailing-space`                 | Space after the trailing icon.                     |
-| `--m3e-search-bar-no-actions-leading-space`       | Leading padding when no actions are present.       |
-| `--m3e-search-bar-no-actions-trailing-space`      | Trailing padding when no actions are present.      |
-| `--m3e-search-bar-leading-actions-trailing-space` | Space between leading actions and the input.       |
-| `--m3e-search-bar-trailing-actions-leading-space` | Space between the input and trailing actions.      |
-| `--m3e-search-bar-actions-gap`                    | Gap between action icons.                          |
+| Property                                              | Description                                                       |
+| ----------------------------------------------------- | ----------------------------------------------------------------- |
+| `--m3e-search-bar-container-color`                    | Background color of the search bar container.                     |
+| `--m3e-search-bar-leading-icon-color`                 | Color of the leading icon.                                        |
+| `--m3e-search-bar-trailing-icon-color`                | Color of the trailing icon.                                       |
+| `--m3e-search-bar-container-height`                   | Height of the search bar container.                               |
+| `--m3e-search-bar-container-shape`                    | Shape (border radius) of the search bar container.                |
+| `--m3e-search-bar-container-shape-family`             | Corner family applied to all corners of the search bar container. |
+| `--m3e-search-bar-container-shape-family-start-start` | Corner family of the block-start, inline-start corner.            |
+| `--m3e-search-bar-container-shape-family-start-end`   | Corner family of the block-start, inline-end corner.              |
+| `--m3e-search-bar-container-shape-family-end-start`   | Corner family of the block-end, inline-start corner.              |
+| `--m3e-search-bar-container-shape-family-end-end`     | Corner family of the block-end, inline-end corner.                |
+| `--m3e-search-bar-icon-size`                          | Size of icons inside the search bar.                              |
+| `--m3e-search-bar-supporting-text-color`              | Color of the supporting text.                                     |
+| `--m3e-search-bar-supporting-text-font-size`          | Font size of the supporting text.                                 |
+| `--m3e-search-bar-supporting-text-font-weight`        | Font weight of the supporting text.                               |
+| `--m3e-search-bar-supporting-text-line-height`        | Line height of the supporting text.                               |
+| `--m3e-search-bar-supporting-text-tracking`           | Letter spacing of the supporting text.                            |
+| `--m3e-search-bar-input-color`                        | Color of the input text.                                          |
+| `--m3e-search-bar-input-text-font-size`               | Font size of the input text.                                      |
+| `--m3e-search-bar-input-text-font-weight`             | Font weight of the input text.                                    |
+| `--m3e-search-bar-input-text-line-height`             | Line height of the input text.                                    |
+| `--m3e-search-bar-input-text-tracking`                | Letter spacing of the input text.                                 |
+| `--m3e-search-bar-leading-space`                      | Space before the leading icon.                                    |
+| `--m3e-search-bar-trailing-space`                     | Space after the trailing icon.                                    |
+| `--m3e-search-bar-no-actions-leading-space`           | Leading padding when no actions are present.                      |
+| `--m3e-search-bar-no-actions-trailing-space`          | Trailing padding when no actions are present.                     |
+| `--m3e-search-bar-leading-actions-trailing-space`     | Space between leading actions and the input.                      |
+| `--m3e-search-bar-trailing-actions-leading-space`     | Space between the input and trailing actions.                     |
+| `--m3e-search-bar-actions-gap`                        | Gap between action icons.                                         |
 
 ### 🗂️ m3e-search-view
 
@@ -166,27 +171,32 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                                       | Description                                               |
-| -------------------------------------------------------------- | --------------------------------------------------------- |
-| `--m3e-search-view-container-color`                            | Background color of the view container.                   |
-| `--m3e-search-view-contained-container-color`                  | Background color of the contained view container.         |
-| `--m3e-search-view-divider-color`                              | Color of the divider separating header and results.       |
-| `--m3e-search-view-divider-thickness`                          | Thickness of the divider separating header and results.   |
-| `--m3e-search-view-full-screen-container-shape`                | Shape of the fullscreen view container.                   |
-| `--m3e-search-view-full-screen-header-container-height`        | Height of the header container in fullscreen mode.        |
-| `--m3e-search-view-docked-container-shape`                     | Shape of the docked view container.                       |
-| `--m3e-search-view-docked-header-container-height`             | Height of the header container in docked mode.            |
-| `--m3e-search-view-contained-leading-margin`                   | Leading margin for the contained view.                    |
-| `--m3e-search-view-contained-trailing-margin`                  | Trailing margin for the contained view.                   |
-| `--m3e-search-view-contained-focused-leading-margin`           | Leading margin when the contained view is focused.        |
-| `--m3e-search-view-contained-focused-trailing-margin`          | Trailing margin when the contained view is focused.       |
-| `--m3e-search-view-contained-docked-bar-results-gap`           | Gap between the contained docked bar and results.         |
-| `--m3e-search-view-contained-docked-results-shape`             | Shape of the results container in contained docked mode.  |
-| `--m3e-search-view-contained-docked-bar-shape`                 | Shape of the bar in contained docked mode.                |
-| `--m3e-search-view-contained-full-screen-bar-container-height` | Height of the bar container in contained fullscreen mode. |
-| `--m3e-search-view-docked-container-min-height`                | Minimum height of the docked view container.              |
-| `--m3e-search-view-docked-container-max-height`                | Maximum height of the docked view container.              |
-| `--m3e-search-view-contained-docked-results-space`             | Space above the results in contained docked mode.         |
-| `--m3e-search-view-docked-results-bottom-space`                | Space below the results in docked mode.                   |
-| `--m3e-search-view-docked-scrim-color`                         | Color of the scrim behind the docked view.                |
-| `--m3e-search-view-docked-scrim-opacity`                       | Opacity of the scrim behind the docked view.              |
+| Property                                                       | Description                                                              |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `--m3e-search-view-container-color`                            | Background color of the view container.                                  |
+| `--m3e-search-view-contained-container-color`                  | Background color of the contained view container.                        |
+| `--m3e-search-view-container-shape-family`                     | Corner family applied to all corners of the view and results containers. |
+| `--m3e-search-view-container-shape-family-start-start`         | Corner family of the block-start, inline-start corner.                   |
+| `--m3e-search-view-container-shape-family-start-end`           | Corner family of the block-start, inline-end corner.                     |
+| `--m3e-search-view-container-shape-family-end-start`           | Corner family of the block-end, inline-start corner.                     |
+| `--m3e-search-view-container-shape-family-end-end`             | Corner family of the block-end, inline-end corner.                       |
+| `--m3e-search-view-divider-color`                              | Color of the divider separating header and results.                      |
+| `--m3e-search-view-divider-thickness`                          | Thickness of the divider separating header and results.                  |
+| `--m3e-search-view-full-screen-container-shape`                | Shape of the fullscreen view container.                                  |
+| `--m3e-search-view-full-screen-header-container-height`        | Height of the header container in fullscreen mode.                       |
+| `--m3e-search-view-docked-container-shape`                     | Shape of the docked view container.                                      |
+| `--m3e-search-view-docked-header-container-height`             | Height of the header container in docked mode.                           |
+| `--m3e-search-view-contained-leading-margin`                   | Leading margin for the contained view.                                   |
+| `--m3e-search-view-contained-trailing-margin`                  | Trailing margin for the contained view.                                  |
+| `--m3e-search-view-contained-focused-leading-margin`           | Leading margin when the contained view is focused.                       |
+| `--m3e-search-view-contained-focused-trailing-margin`          | Trailing margin when the contained view is focused.                      |
+| `--m3e-search-view-contained-docked-bar-results-gap`           | Gap between the contained docked bar and results.                        |
+| `--m3e-search-view-contained-docked-results-shape`             | Shape of the results container in contained docked mode.                 |
+| `--m3e-search-view-contained-docked-bar-shape`                 | Shape of the bar in contained docked mode.                               |
+| `--m3e-search-view-contained-full-screen-bar-container-height` | Height of the bar container in contained fullscreen mode.                |
+| `--m3e-search-view-docked-container-min-height`                | Minimum height of the docked view container.                             |
+| `--m3e-search-view-docked-container-max-height`                | Maximum height of the docked view container.                             |
+| `--m3e-search-view-contained-docked-results-space`             | Space above the results in contained docked mode.                        |
+| `--m3e-search-view-docked-results-bottom-space`                | Space below the results in docked mode.                                  |
+| `--m3e-search-view-docked-scrim-color`                         | Color of the scrim behind the docked view.                               |
+| `--m3e-search-view-docked-scrim-opacity`                       | Opacity of the scrim behind the docked view.                             |

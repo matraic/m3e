@@ -9,6 +9,20 @@ export const SearchBarToken = {
   trailingIconColor: unsafeCSS(`var(--m3e-search-bar-trailing-icon-color, ${DesignToken.color.onSurfaceVariant})`),
   containerHeight: unsafeCSS("var(--m3e-search-bar-container-height, 56px)"),
   containerShape: unsafeCSS(`var(--m3e-search-bar-container-shape, ${DesignToken.shape.corner.full})`),
+  containerShapeFamily: {
+    startStart: unsafeCSS(
+      `var(--m3e-search-bar-container-shape-family-start-start, var(--m3e-search-bar-container-shape-family, ${DesignToken.shape.family.startStart}))`,
+    ),
+    startEnd: unsafeCSS(
+      `var(--m3e-search-bar-container-shape-family-start-end, var(--m3e-search-bar-container-shape-family, ${DesignToken.shape.family.startEnd}))`,
+    ),
+    endStart: unsafeCSS(
+      `var(--m3e-search-bar-container-shape-family-end-start, var(--m3e-search-bar-container-shape-family, ${DesignToken.shape.family.endStart}))`,
+    ),
+    endEnd: unsafeCSS(
+      `var(--m3e-search-bar-container-shape-family-end-end, var(--m3e-search-bar-container-shape-family, ${DesignToken.shape.family.endEnd}))`,
+    ),
+  },
   iconSize: unsafeCSS("var(--m3e-search-bar-icon-size, 24px)"),
   supportingTextColor: unsafeCSS(`var(--m3e-search-bar-supporting-text-color, ${DesignToken.color.onSurfaceVariant})`),
   supportingTextFontSize: unsafeCSS(

@@ -4,6 +4,20 @@ import { DesignToken } from "@m3e/web/core";
 
 /** @internal */
 export const SearchViewToken = {
+  containerShapeFamily: {
+    startStart: unsafeCSS(
+      `var(--m3e-search-view-container-shape-family-start-start, var(--m3e-search-view-container-shape-family, ${DesignToken.shape.family.startStart}))`,
+    ),
+    startEnd: unsafeCSS(
+      `var(--m3e-search-view-container-shape-family-start-end, var(--m3e-search-view-container-shape-family, ${DesignToken.shape.family.startEnd}))`,
+    ),
+    endStart: unsafeCSS(
+      `var(--m3e-search-view-container-shape-family-end-start, var(--m3e-search-view-container-shape-family, ${DesignToken.shape.family.endStart}))`,
+    ),
+    endEnd: unsafeCSS(
+      `var(--m3e-search-view-container-shape-family-end-end, var(--m3e-search-view-container-shape-family, ${DesignToken.shape.family.endEnd}))`,
+    ),
+  },
   containerColor: unsafeCSS(`var(--m3e-search-view-container-color, ${DesignToken.color.surfaceContainerHigh})`),
   containedContainerColor: unsafeCSS(
     `var(--m3e-search-view-contained-container-color, ${DesignToken.color.surfaceContainerLow})`,

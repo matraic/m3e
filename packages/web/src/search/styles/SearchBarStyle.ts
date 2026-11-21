@@ -40,6 +40,10 @@ export const SearchBarStyle: CSSResultGroup = css`
     width: 100%;
     height: 100%;
     border-radius: ${SearchBarToken.containerShape};
+    corner-start-start-shape: ${SearchBarToken.containerShapeFamily.startStart};
+    corner-start-end-shape: ${SearchBarToken.containerShapeFamily.startEnd};
+    corner-end-start-shape: ${SearchBarToken.containerShapeFamily.endStart};
+    corner-end-end-shape: ${SearchBarToken.containerShapeFamily.endEnd};
     background-color: ${SearchBarToken.containerColor};
     --_icon-button-size: auto;
     --_icon-button-min-size: 48px;

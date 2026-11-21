@@ -44,6 +44,11 @@ import { SearchBarLightDomStyle, SearchBarStyle } from "./styles";
  * @cssprop --m3e-search-bar-trailing-icon-color - Color of the trailing icon.
  * @cssprop --m3e-search-bar-container-height - Height of the search bar container.
  * @cssprop --m3e-search-bar-container-shape - Shape (border radius) of the search bar container.
+ * @cssprop --m3e-search-bar-container-shape-family - Corner family applied to all corners of the search bar container.
+ * @cssprop --m3e-search-bar-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-search-bar-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-search-bar-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-search-bar-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-search-bar-icon-size - Size of icons inside the search bar.
  * @cssprop --m3e-search-bar-supporting-text-color - Color of the supporting text.
  * @cssprop --m3e-search-bar-supporting-text-font-size - Font size of the supporting text.
