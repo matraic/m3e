@@ -195,6 +195,11 @@ interface StaggerItem {
  * @cssprop --m3e-swipe-reveal-actions-gap - The gap between adjacent actions.
  * @cssprop --m3e-swipe-reveal-actions-container-color - The background color of the leading and trailing actions.
  * @cssprop --m3e-swipe-reveal-actions-container-shape - The corner shape of the leading and trailing actions.
+ * @cssprop --m3e-swipe-reveal-actions-container-shape-family - Corner family applied to all corners of both action backgrounds.
+ * @cssprop --m3e-swipe-reveal-actions-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-swipe-reveal-actions-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-swipe-reveal-actions-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-swipe-reveal-actions-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-swipe-reveal-actions-underlap - How far the actions' container extends beneath the content.
  * @cssprop --m3e-swipe-reveal-leading-actions-underlap - How far the leading actions' container extends beneath the content.
  * @cssprop --m3e-swipe-reveal-trailing-actions-underlap - How far the trailing actions' container extends beneath the content.
@@ -202,10 +207,20 @@ interface StaggerItem {
  * @cssprop --m3e-swipe-reveal-leading-actions-gap - The gap between adjacent leading actions.
  * @cssprop --m3e-swipe-reveal-leading-actions-container-color - The background color of the leading actions.
  * @cssprop --m3e-swipe-reveal-leading-actions-container-shape - The corner shape of the leading actions.
+ * @cssprop --m3e-swipe-reveal-leading-actions-container-shape-family - Corner family applied to all corners of the leading action background.
+ * @cssprop --m3e-swipe-reveal-leading-actions-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-swipe-reveal-leading-actions-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-swipe-reveal-leading-actions-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-swipe-reveal-leading-actions-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-swipe-reveal-trailing-actions-padding - The inline padding around the trailing actions.
  * @cssprop --m3e-swipe-reveal-trailing-actions-gap - The gap between adjacent trailing actions.
  * @cssprop --m3e-swipe-reveal-trailing-actions-container-color - The background color of the trailing actions.
  * @cssprop --m3e-swipe-reveal-trailing-actions-container-shape - The corner shape of the trailing actions.
+ * @cssprop --m3e-swipe-reveal-trailing-actions-container-shape-family - Corner family applied to all corners of the trailing action background.
+ * @cssprop --m3e-swipe-reveal-trailing-actions-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-swipe-reveal-trailing-actions-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-swipe-reveal-trailing-actions-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-swipe-reveal-trailing-actions-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-swipe-reveal-shape-growth - Set while dragging on the active item and any staggered siblings, indicates the amount by which content may increase its border radius.
  */
 @customElement("m3e-swipe-reveal")
@@ -243,10 +258,30 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       --_actions-gap: var(--m3e-swipe-reveal-actions-gap, ${DesignToken.measurement.space50});
       --_actions-container-color: var(--m3e-swipe-reveal-actions-container-color, transparent);
       --_actions-container-shape: var(--m3e-swipe-reveal-actions-container-shape, ${DesignToken.shape.corner.none});
+      --_actions-container-shape-family-start-start: var(
+        --m3e-swipe-reveal-actions-container-shape-family-start-start,
+        var(--m3e-swipe-reveal-actions-container-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      --_actions-container-shape-family-start-end: var(
+        --m3e-swipe-reveal-actions-container-shape-family-start-end,
+        var(--m3e-swipe-reveal-actions-container-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      --_actions-container-shape-family-end-start: var(
+        --m3e-swipe-reveal-actions-container-shape-family-end-start,
+        var(--m3e-swipe-reveal-actions-container-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      --_actions-container-shape-family-end-end: var(
+        --m3e-swipe-reveal-actions-container-shape-family-end-end,
+        var(--m3e-swipe-reveal-actions-container-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       --_actions-underlap: var(--m3e-swipe-reveal-actions-underlap, 0px);
       inset-block: 0;
       background-color: var(--_container-color);
       border-radius: var(--_container-shape);
+      corner-start-start-shape: var(--_container-shape-family-start-start);
+      corner-start-end-shape: var(--_container-shape-family-start-end);
+      corner-end-start-shape: var(--_container-shape-family-end-start);
+      corner-end-end-shape: var(--_container-shape-family-end-end);
       inset-inline: 0 auto;
       visibility: var(--_swipe-reveal-actions-visibility, hidden);
       opacity: var(--_swipe-reveal-opacity, 0);
@@ -260,6 +295,25 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       gap: var(--m3e-swipe-reveal-leading-actions-gap, var(--_actions-gap));
       --_container-color: var(--m3e-swipe-reveal-leading-actions-container-color, var(--_actions-container-color));
       --_container-shape: var(--m3e-swipe-reveal-leading-actions-container-shape, var(--_actions-container-shape));
+      --_container-shape-family-start-start: var(
+        --m3e-swipe-reveal-leading-actions-container-shape-family-start-start,
+        var(
+          --m3e-swipe-reveal-leading-actions-container-shape-family,
+          var(--_actions-container-shape-family-start-start)
+        )
+      );
+      --_container-shape-family-start-end: var(
+        --m3e-swipe-reveal-leading-actions-container-shape-family-start-end,
+        var(--m3e-swipe-reveal-leading-actions-container-shape-family, var(--_actions-container-shape-family-start-end))
+      );
+      --_container-shape-family-end-start: var(
+        --m3e-swipe-reveal-leading-actions-container-shape-family-end-start,
+        var(--m3e-swipe-reveal-leading-actions-container-shape-family, var(--_actions-container-shape-family-end-start))
+      );
+      --_container-shape-family-end-end: var(
+        --m3e-swipe-reveal-leading-actions-container-shape-family-end-end,
+        var(--m3e-swipe-reveal-leading-actions-container-shape-family, var(--_actions-container-shape-family-end-end))
+      );
       --_underlap: var(--m3e-swipe-reveal-leading-actions-underlap, var(--_actions-underlap));
       margin-inline-end: var(--_underlap);
     }
@@ -269,6 +323,31 @@ export class M3eSwipeRevealElement extends SupportsDirectionality(AttachInternal
       gap: var(--m3e-swipe-reveal-trailing-actions-gap, var(--_actions-gap));
       --_container-color: var(--m3e-swipe-reveal-trailing-actions-container-color, var(--_actions-container-color));
       --_container-shape: var(--m3e-swipe-reveal-trailing-actions-container-shape, var(--_actions-container-shape));
+      --_container-shape-family-start-start: var(
+        --m3e-swipe-reveal-trailing-actions-container-shape-family-start-start,
+        var(
+          --m3e-swipe-reveal-trailing-actions-container-shape-family,
+          var(--_actions-container-shape-family-start-start)
+        )
+      );
+      --_container-shape-family-start-end: var(
+        --m3e-swipe-reveal-trailing-actions-container-shape-family-start-end,
+        var(
+          --m3e-swipe-reveal-trailing-actions-container-shape-family,
+          var(--_actions-container-shape-family-start-end)
+        )
+      );
+      --_container-shape-family-end-start: var(
+        --m3e-swipe-reveal-trailing-actions-container-shape-family-end-start,
+        var(
+          --m3e-swipe-reveal-trailing-actions-container-shape-family,
+          var(--_actions-container-shape-family-end-start)
+        )
+      );
+      --_container-shape-family-end-end: var(
+        --m3e-swipe-reveal-trailing-actions-container-shape-family-end-end,
+        var(--m3e-swipe-reveal-trailing-actions-container-shape-family, var(--_actions-container-shape-family-end-end))
+      );
       --_underlap: var(--m3e-swipe-reveal-trailing-actions-underlap, var(--_actions-underlap));
       inset-inline: auto 0;
       justify-content: flex-end;

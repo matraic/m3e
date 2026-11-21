@@ -73,6 +73,135 @@ async function press(page: Page, id: string, dx: number) {
 const left = async (page: Page, id: string) => (await page.locator(`#${id}`).boundingBox())!.x;
 
 test.describe("m3e-swipe-reveal", () => {
+  for (const direction of ["ltr", "rtl"]) {
+    test(`resolves shared and side-specific action families in ${direction}`, async ({ page, render }) => {
+      await render(item("a", `dir="${direction}"`));
+      const host = page.locator("#a");
+      const leading = host.locator(".leading");
+      const trailing = host.locator(".trailing");
+      const corners = ["start-start", "start-end", "end-start", "end-end"];
+      const check = async (leadingFamilies: number[], trailingFamilies = leadingFamilies) => {
+        for (let i = 0; i < corners.length; i++) {
+          await expect(leading).toHaveCSS(`corner-${corners[i]}-shape`, `superellipse(${leadingFamilies[i]})`);
+          await expect(trailing).toHaveCSS(`corner-${corners[i]}-shape`, `superellipse(${trailingFamilies[i]})`);
+        }
+      };
+      await check([1, 1, 1, 1]);
+      await expect(leading).toHaveCSS("border-radius", "0px");
+      await host.evaluate((element) => {
+        element.style.setProperty("--m3e-shape-family", "bevel");
+        element.style.setProperty("--m3e-swipe-reveal-actions-container-shape", "12px");
+      });
+      await check([0, 0, 0, 0]);
+      for (let i = 0; i < corners.length; i++) {
+        await host.evaluate(
+          (element, corner) => element.style.setProperty(`--m3e-shape-family-${corner}`, "round"),
+          corners[i],
+        );
+        await check(corners.map((_, index) => (index === i ? 1 : 0)));
+        await host.evaluate(
+          (element, corner) => element.style.removeProperty(`--m3e-shape-family-${corner}`),
+          corners[i],
+        );
+      }
+      await host.evaluate((element) => {
+        element.style.setProperty("--m3e-shape-family-start-start", "bevel");
+        element.style.setProperty("--m3e-swipe-reveal-actions-container-shape-family", "round");
+      });
+      await check([1, 1, 1, 1]);
+      for (let i = 0; i < corners.length; i++) {
+        await host.evaluate(
+          (element, corner) =>
+            element.style.setProperty(`--m3e-swipe-reveal-actions-container-shape-family-${corner}`, "bevel"),
+          corners[i],
+        );
+        await check(corners.map((_, index) => (index === i ? 0 : 1)));
+        await host.evaluate(
+          (element, corner) =>
+            element.style.removeProperty(`--m3e-swipe-reveal-actions-container-shape-family-${corner}`),
+          corners[i],
+        );
+      }
+      await host.evaluate((element) => {
+        element.style.setProperty("--m3e-swipe-reveal-actions-container-shape-family-end-start", "bevel");
+        element.style.setProperty("--m3e-swipe-reveal-leading-actions-container-shape-family", "round");
+        element.style.setProperty("--m3e-swipe-reveal-trailing-actions-container-shape-family", "round");
+      });
+      await check([1, 1, 1, 1]);
+      for (const sideName of ["leading", "trailing"]) {
+        for (let i = 0; i < corners.length; i++) {
+          await host.evaluate(
+            (element, input) =>
+              element.style.setProperty(
+                `--m3e-swipe-reveal-${input.sideName}-actions-container-shape-family-${input.corner}`,
+                "bevel",
+              ),
+            { sideName, corner: corners[i] },
+          );
+          const changed = corners.map((_, index) => (index === i ? 0 : 1));
+          await check(
+            sideName === "leading" ? changed : [1, 1, 1, 1],
+            sideName === "trailing" ? changed : [1, 1, 1, 1],
+          );
+          if (i === 0) {
+            await expect(host.locator(`.${sideName}`)).toHaveCSS(
+              "corner-top-left-shape",
+              direction === "ltr" ? "superellipse(0)" : "superellipse(1)",
+            );
+          }
+          await host.evaluate(
+            (element, input) =>
+              element.style.removeProperty(
+                `--m3e-swipe-reveal-${input.sideName}-actions-container-shape-family-${input.corner}`,
+              ),
+            { sideName, corner: corners[i] },
+          );
+        }
+      }
+      await expect(leading).toHaveCSS("border-radius", "12px");
+      await expect(trailing).toHaveCSS("border-radius", "12px");
+    });
+  }
+
+  test("cut action backgrounds stay independent while dragging rounded content and buttons", async ({
+    page,
+    render,
+  }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await render(`
+      <m3e-swipe-reveal id="a" style="width: 400px;
+        --m3e-swipe-reveal-actions-container-color: #e8def8;
+        --m3e-swipe-reveal-actions-container-shape: 12px;
+        --m3e-swipe-reveal-actions-container-shape-family: bevel">
+        <m3e-icon-button slot="leading" aria-label="Pin" variant="tonal">+</m3e-icon-button>
+        <m3e-icon-button slot="trailing" aria-label="Delete" variant="tonal">-</m3e-icon-button>
+        <m3e-list-item style="--m3e-list-item-container-shape: 4px">Content</m3e-list-item>
+      </m3e-swipe-reveal>
+    `);
+    const background = page.locator("#a .leading");
+    const content = page.locator("#a m3e-list-item .base");
+    await press(page, "a", 60);
+    await expect(background).toHaveCSS("corner-shape", "superellipse(0)");
+    await expect(background).toHaveCSS("border-radius", "12px");
+    await expect(content).toHaveCSS("corner-shape", "superellipse(1)");
+    await expect
+      .poll(() => content.evaluate((element) => parseFloat(getComputedStyle(element).borderTopLeftRadius)))
+      .toBeGreaterThan(4);
+    expect(
+      await content.evaluate((element) => parseFloat(getComputedStyle(element).borderTopLeftRadius)),
+    ).toBeLessThanOrEqual(16);
+    for (const button of await page.locator("#a m3e-icon-button .base").all()) {
+      await expect(button).toHaveCSS("corner-shape", "superellipse(1)");
+    }
+    await page.mouse.up();
+    await expect.poll(() => state(page, "a")).toBe("revealed");
+    await expect(content).toHaveCSS("border-radius", "4px");
+    await call(page, "a", "close");
+    await expect.poll(() => state(page, "a")).toBe("covered");
+    await expect(background).toHaveCSS("corner-shape", "superellipse(0)");
+    await expect(background).toHaveCSS("border-radius", "12px");
+  });
+
   test("starts covered", async ({ page, render }) => {
     await render(item("a"));
 

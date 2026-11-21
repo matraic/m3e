@@ -173,24 +173,39 @@ All events are `CustomEvent<SwipeRevealEventDetail>`, where `detail.side` is `"l
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                              | Description                                                                                                                             |
-| ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `--m3e-swipe-reveal-actions-padding`                  | The inline padding around the leading and trailing actions.                                                                             |
-| `--m3e-swipe-reveal-actions-gap`                      | The gap between adjacent actions.                                                                                                       |
-| `--m3e-swipe-reveal-actions-container-color`          | The background color of the leading and trailing actions.                                                                               |
-| `--m3e-swipe-reveal-actions-container-shape`          | The corner shape of the leading and trailing actions.                                                                                   |
-| `--m3e-swipe-reveal-leading-actions-padding`          | The inline padding around the leading actions.                                                                                          |
-| `--m3e-swipe-reveal-leading-actions-gap`              | The gap between adjacent leading actions.                                                                                               |
-| `--m3e-swipe-reveal-leading-actions-container-color`  | The background color of the leading actions.                                                                                            |
-| `--m3e-swipe-reveal-leading-actions-container-shape`  | The corner shape of the leading actions.                                                                                                |
-| `--m3e-swipe-reveal-trailing-actions-padding`         | The inline padding around the trailing actions.                                                                                         |
-| `--m3e-swipe-reveal-trailing-actions-gap`             | The gap between adjacent trailing actions.                                                                                              |
-| `--m3e-swipe-reveal-trailing-actions-container-color` | The background color of the trailing actions.                                                                                           |
-| `--m3e-swipe-reveal-trailing-actions-container-shape` | The corner shape of the trailing actions.                                                                                               |
-| `--m3e-swipe-reveal-actions-underlap`                 | How far the actions' container extends beneath the content.                                                                             |
-| `--m3e-swipe-reveal-leading-actions-underlap`         | How far the leading actions' container extends beneath the content.                                                                     |
-| `--m3e-swipe-reveal-trailing-actions-underlap`        | How far the trailing actions' container extends beneath the content.                                                                    |
-| `--m3e-swipe-reveal-shape-growth`                     | Set while dragging on the active item and any staggered siblings, indicates the amount by which content may increase its border radius. |
+| Property                                                                 | Description                                                                                                                             |
+| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `--m3e-swipe-reveal-actions-padding`                                     | The inline padding around the leading and trailing actions.                                                                             |
+| `--m3e-swipe-reveal-actions-gap`                                         | The gap between adjacent actions.                                                                                                       |
+| `--m3e-swipe-reveal-actions-container-color`                             | The background color of the leading and trailing actions.                                                                               |
+| `--m3e-swipe-reveal-actions-container-shape`                             | The corner shape of the leading and trailing actions.                                                                                   |
+| `--m3e-swipe-reveal-actions-container-shape-family`                      | Corner family applied to all corners of both action backgrounds.                                                                        |
+| `--m3e-swipe-reveal-actions-container-shape-family-start-start`          | Corner family of the block-start, inline-start corner.                                                                                  |
+| `--m3e-swipe-reveal-actions-container-shape-family-start-end`            | Corner family of the block-start, inline-end corner.                                                                                    |
+| `--m3e-swipe-reveal-actions-container-shape-family-end-start`            | Corner family of the block-end, inline-start corner.                                                                                    |
+| `--m3e-swipe-reveal-actions-container-shape-family-end-end`              | Corner family of the block-end, inline-end corner.                                                                                      |
+| `--m3e-swipe-reveal-leading-actions-padding`                             | The inline padding around the leading actions.                                                                                          |
+| `--m3e-swipe-reveal-leading-actions-gap`                                 | The gap between adjacent leading actions.                                                                                               |
+| `--m3e-swipe-reveal-leading-actions-container-color`                     | The background color of the leading actions.                                                                                            |
+| `--m3e-swipe-reveal-leading-actions-container-shape`                     | The corner shape of the leading actions.                                                                                                |
+| `--m3e-swipe-reveal-leading-actions-container-shape-family`              | Corner family applied to all corners of the leading action background.                                                                  |
+| `--m3e-swipe-reveal-leading-actions-container-shape-family-start-start`  | Corner family of the block-start, inline-start corner.                                                                                  |
+| `--m3e-swipe-reveal-leading-actions-container-shape-family-start-end`    | Corner family of the block-start, inline-end corner.                                                                                    |
+| `--m3e-swipe-reveal-leading-actions-container-shape-family-end-start`    | Corner family of the block-end, inline-start corner.                                                                                    |
+| `--m3e-swipe-reveal-leading-actions-container-shape-family-end-end`      | Corner family of the block-end, inline-end corner.                                                                                      |
+| `--m3e-swipe-reveal-trailing-actions-padding`                            | The inline padding around the trailing actions.                                                                                         |
+| `--m3e-swipe-reveal-trailing-actions-gap`                                | The gap between adjacent trailing actions.                                                                                              |
+| `--m3e-swipe-reveal-trailing-actions-container-color`                    | The background color of the trailing actions.                                                                                           |
+| `--m3e-swipe-reveal-trailing-actions-container-shape`                    | The corner shape of the trailing actions.                                                                                               |
+| `--m3e-swipe-reveal-trailing-actions-container-shape-family`             | Corner family applied to all corners of the trailing action background.                                                                 |
+| `--m3e-swipe-reveal-trailing-actions-container-shape-family-start-start` | Corner family of the block-start, inline-start corner.                                                                                  |
+| `--m3e-swipe-reveal-trailing-actions-container-shape-family-start-end`   | Corner family of the block-start, inline-end corner.                                                                                    |
+| `--m3e-swipe-reveal-trailing-actions-container-shape-family-end-start`   | Corner family of the block-end, inline-start corner.                                                                                    |
+| `--m3e-swipe-reveal-trailing-actions-container-shape-family-end-end`     | Corner family of the block-end, inline-end corner.                                                                                      |
+| `--m3e-swipe-reveal-actions-underlap`                                    | How far the actions' container extends beneath the content.                                                                             |
+| `--m3e-swipe-reveal-leading-actions-underlap`                            | How far the leading actions' container extends beneath the content.                                                                     |
+| `--m3e-swipe-reveal-trailing-actions-underlap`                           | How far the trailing actions' container extends beneath the content.                                                                    |
+| `--m3e-swipe-reveal-shape-growth`                                        | Set while dragging on the active item and any staggered siblings, indicates the amount by which content may increase its border radius. |
 
 ### m3e-swipe-reveal-group
 
