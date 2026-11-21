@@ -98,6 +98,11 @@ import type { M3eTreeElement } from "./TreeElement";
  * @cssprop --m3e-tree-item-bottom-space - Bottom space for the item.
  * @cssprop --m3e-tree-item-height - Height of the item.
  * @cssprop --m3e-tree-item-shape - Border radius of the item and focus ring.
+ * @cssprop --m3e-tree-item-shape-family - Corner family applied to all corners of the item.
+ * @cssprop --m3e-tree-item-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-tree-item-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-tree-item-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-tree-item-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-tree-item-icon-size - Size of the icon.
  * @cssprop --m3e-tree-item-checkbox-label-space - Space between checkbox and label.
  * @cssprop --m3e-tree-item-icon-label-space - Space between icon and label.
@@ -159,6 +164,22 @@ export class M3eTreeItemElement extends Selected(Disabled(AttachInternals(Role(L
     .base,
     .focus-ring {
       border-radius: var(--m3e-tree-item-shape, ${DesignToken.shape.corner.none});
+      corner-start-start-shape: var(
+        --m3e-tree-item-shape-family-start-start,
+        var(--m3e-tree-item-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-tree-item-shape-family-start-end,
+        var(--m3e-tree-item-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-tree-item-shape-family-end-start,
+        var(--m3e-tree-item-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-tree-item-shape-family-end-end,
+        var(--m3e-tree-item-shape-family, ${DesignToken.shape.family.endEnd})
+      );
     }
     .label {
       flex: 1 1 auto;
