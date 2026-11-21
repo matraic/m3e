@@ -35,8 +35,7 @@ Group non-interactive chips in a chip set.
 Choose the `outlined` (default) or `elevated` variant.
 
 ```html
-<m3e-chip>Outlined</m3e-chip>
-<m3e-chip variant="elevated">Elevated</m3e-chip>
+<m3e-chip>Outlined</m3e-chip> <m3e-chip variant="elevated">Elevated</m3e-chip>
 ```
 
 Use `vertical` to stack chips in a set.
@@ -64,8 +63,7 @@ Place an icon before the Finance chip's text with the `icon` slot.
 Use assist chips for actions; select the `outlined` or `elevated` variant.
 
 ```html
-<m3e-assist-chip>Outlined Assist</m3e-assist-chip>
-<m3e-assist-chip variant="elevated">Elevated Assist</m3e-assist-chip>
+<m3e-assist-chip>Outlined Assist</m3e-assist-chip> <m3e-assist-chip variant="elevated">Elevated Assist</m3e-assist-chip>
 ```
 
 Add a leading icon to an assist chip with the `icon` slot.
@@ -87,9 +85,7 @@ Disable an assist chip, or use `disabled-interactive` to retain keyboard focusab
 Use `href` to make an assist chip a link.
 
 ```html
-<m3e-assist-chip href="https://www.google.com" target="_blank">
-  Google
-</m3e-assist-chip>
+<m3e-assist-chip href="https://www.google.com" target="_blank"> Google </m3e-assist-chip>
 ```
 
 Set `--md-sys-density-scale: -3` to make the assist chip more compact.
@@ -101,6 +97,7 @@ Set `--md-sys-density-scale: -3` to make the assist chip more compact.
 </m3e-assist-chip>
 <!-- Additional chips omitted for brevity -->
 ```
+
 ```css
 .density-3 {
   --md-sys-density-scale: -3;
@@ -122,9 +119,7 @@ Use `selected` to preselect a filter chip and the `icon` slot to identify its to
 
 ```html
 <m3e-filter-chip-set aria-label="Filter by topic">
-  <m3e-filter-chip selected>
-    <m3e-icon slot="icon" name="palette"></m3e-icon>Design
-  </m3e-filter-chip>
+  <m3e-filter-chip selected> <m3e-icon slot="icon" name="palette"></m3e-icon>Design </m3e-filter-chip>
   <!-- Additional chips omitted for brevity -->
 </m3e-filter-chip-set>
 ```
@@ -133,12 +128,8 @@ Set `multi` on the filter chip set to allow more than one topic to be selected.
 
 ```html
 <m3e-filter-chip-set aria-label="Filter by topic" multi>
-  <m3e-filter-chip selected>
-    <m3e-icon slot="icon" name="palette"></m3e-icon>Design
-  </m3e-filter-chip>
-  <m3e-filter-chip selected>
-    <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility
-  </m3e-filter-chip>
+  <m3e-filter-chip selected> <m3e-icon slot="icon" name="palette"></m3e-icon>Design </m3e-filter-chip>
+  <m3e-filter-chip selected> <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility </m3e-filter-chip>
   <!-- Additional chips omitted for brevity -->
 </m3e-filter-chip-set>
 ```
@@ -147,9 +138,7 @@ Use `disabled` to disable a filter chip or `disabled-interactive` to leave it ke
 
 ```html
 <m3e-filter-chip-set aria-label="Filter by topic">
-  <m3e-filter-chip disabled>
-    <m3e-icon slot="icon" name="palette"></m3e-icon>Design
-  </m3e-filter-chip>
+  <m3e-filter-chip disabled> <m3e-icon slot="icon" name="palette"></m3e-icon>Design </m3e-filter-chip>
   <m3e-filter-chip disabled-interactive>
     <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility
   </m3e-filter-chip>
@@ -259,9 +248,7 @@ Disable a suggestion chip, or use `disabled-interactive` to retain keyboard focu
 Use `href` to make a suggestion chip a link.
 
 ```html
-<m3e-suggestion-chip href="https://www.google.com" target="_blank">
-  Google
-</m3e-suggestion-chip>
+<m3e-suggestion-chip href="https://www.google.com" target="_blank"> Google </m3e-suggestion-chip>
 ```
 
 ## 📖 API Reference
@@ -287,27 +274,32 @@ This section details the attributes, slots, and CSS custom properties available 
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                | Description                                                 |
-| --------------------------------------- | ----------------------------------------------------------- |
-| `--m3e-chip-container-shape`            | Border radius of the chip container                         |
-| `--m3e-chip-container-height`           | Base height of the chip container before density adjustment |
-| `--m3e-chip-label-text-font-size`       | Font size of the chip label text                            |
-| `--m3e-chip-label-text-font-weight`     | Font weight of the chip label text                          |
-| `--m3e-chip-label-text-line-height`     | Line height of the chip label text                          |
-| `--m3e-chip-label-text-tracking`        | Letter spacing of the chip label text                       |
-| `--m3e-chip-label-text-color`           | Label text color in default state                           |
-| `--m3e-chip-icon-color`                 | Icon color in default state                                 |
-| `--m3e-chip-icon-size`                  | Font size of leading/trailing icons                         |
-| `--m3e-chip-spacing`                    | Horizontal gap between chip content elements                |
-| `--m3e-chip-padding-start`              | Default start padding when no icon is present               |
-| `--m3e-chip-padding-end`                | Default end padding when no trailing icon is present        |
-| `--m3e-chip-with-icon-padding-start`    | Start padding when leading icon is present                  |
-| `--m3e-chip-with-icon-padding-end`      | End padding when trailing icon is present                   |
-| `--m3e-elevated-chip-container-color`   | Background color for elevated variant                       |
-| `--m3e-elevated-chip-elevation`         | Elevation level for elevated variant                        |
-| `--m3e-elevated-chip-hover-elevation`   | Elevation level on hover                                    |
-| `--m3e-outlined-chip-outline-thickness` | Outline thickness for outlined variant                      |
-| `--m3e-outlined-chip-outline-color`     | Outline color for outlined variant                          |
+| Property                                        | Description                                                 |
+| ----------------------------------------------- | ----------------------------------------------------------- |
+| `--m3e-chip-container-shape`                    | Border radius of the chip container                         |
+| `--m3e-chip-container-shape-family`             | Corner family applied to all corners of the chip container  |
+| `--m3e-chip-container-shape-family-start-start` | Corner family of the block-start, inline-start corner       |
+| `--m3e-chip-container-shape-family-start-end`   | Corner family of the block-start, inline-end corner         |
+| `--m3e-chip-container-shape-family-end-start`   | Corner family of the block-end, inline-start corner         |
+| `--m3e-chip-container-shape-family-end-end`     | Corner family of the block-end, inline-end corner           |
+| `--m3e-chip-container-height`                   | Base height of the chip container before density adjustment |
+| `--m3e-chip-label-text-font-size`               | Font size of the chip label text                            |
+| `--m3e-chip-label-text-font-weight`             | Font weight of the chip label text                          |
+| `--m3e-chip-label-text-line-height`             | Line height of the chip label text                          |
+| `--m3e-chip-label-text-tracking`                | Letter spacing of the chip label text                       |
+| `--m3e-chip-label-text-color`                   | Label text color in default state                           |
+| `--m3e-chip-icon-color`                         | Icon color in default state                                 |
+| `--m3e-chip-icon-size`                          | Font size of leading/trailing icons                         |
+| `--m3e-chip-spacing`                            | Horizontal gap between chip content elements                |
+| `--m3e-chip-padding-start`                      | Default start padding when no icon is present               |
+| `--m3e-chip-padding-end`                        | Default end padding when no trailing icon is present        |
+| `--m3e-chip-with-icon-padding-start`            | Start padding when leading icon is present                  |
+| `--m3e-chip-with-icon-padding-end`              | End padding when trailing icon is present                   |
+| `--m3e-elevated-chip-container-color`           | Background color for elevated variant                       |
+| `--m3e-elevated-chip-elevation`                 | Elevation level for elevated variant                        |
+| `--m3e-elevated-chip-hover-elevation`           | Elevation level on hover                                    |
+| `--m3e-outlined-chip-outline-thickness`         | Outline thickness for outlined variant                      |
+| `--m3e-outlined-chip-outline-color`             | Outline color for outlined variant                          |
 
 ### 🗂️ Chip Set
 
@@ -362,6 +354,11 @@ This section details the attributes, slots, and CSS custom properties available 
 | Property                                         | Description                                                 |
 | ------------------------------------------------ | ----------------------------------------------------------- |
 | `--m3e-chip-container-shape`                     | Border radius of the chip container                         |
+| `--m3e-chip-container-shape-family`              | Corner family applied to all corners of the chip container  |
+| `--m3e-chip-container-shape-family-start-start`  | Corner family of the block-start, inline-start corner       |
+| `--m3e-chip-container-shape-family-start-end`    | Corner family of the block-start, inline-end corner         |
+| `--m3e-chip-container-shape-family-end-start`    | Corner family of the block-end, inline-start corner         |
+| `--m3e-chip-container-shape-family-end-end`      | Corner family of the block-end, inline-end corner           |
 | `--m3e-chip-container-height`                    | Base height of the chip container before density adjustment |
 | `--m3e-chip-label-text-font-size`                | Font size of the chip label text                            |
 | `--m3e-chip-label-text-font-weight`              | Font weight of the chip label text                          |
@@ -425,6 +422,11 @@ This section details the attributes, events, slots, and CSS custom properties av
 | Property                                         | Description                                                        |
 | ------------------------------------------------ | ------------------------------------------------------------------ |
 | `--m3e-chip-container-shape`                     | Border radius of the chip container                                |
+| `--m3e-chip-container-shape-family`              | Corner family applied to all corners of the chip container         |
+| `--m3e-chip-container-shape-family-start-start`  | Corner family of the block-start, inline-start corner              |
+| `--m3e-chip-container-shape-family-start-end`    | Corner family of the block-start, inline-end corner                |
+| `--m3e-chip-container-shape-family-end-start`    | Corner family of the block-end, inline-start corner                |
+| `--m3e-chip-container-shape-family-end-end`      | Corner family of the block-end, inline-end corner                  |
 | `--m3e-chip-container-height`                    | Base height of the chip container before density adjustment        |
 | `--m3e-chip-label-text-font-size`                | Font size of the chip label text                                   |
 | `--m3e-chip-label-text-font-weight`              | Font weight of the chip label text                                 |
@@ -529,6 +531,11 @@ This section details the attributes, events, slots, and CSS custom properties av
 | Property                                         | Description                                                 |
 | ------------------------------------------------ | ----------------------------------------------------------- |
 | `--m3e-chip-container-shape`                     | Border radius of the chip container                         |
+| `--m3e-chip-container-shape-family`              | Corner family applied to all corners of the chip container  |
+| `--m3e-chip-container-shape-family-start-start`  | Corner family of the block-start, inline-start corner       |
+| `--m3e-chip-container-shape-family-start-end`    | Corner family of the block-start, inline-end corner         |
+| `--m3e-chip-container-shape-family-end-start`    | Corner family of the block-end, inline-start corner         |
+| `--m3e-chip-container-shape-family-end-end`      | Corner family of the block-end, inline-end corner           |
 | `--m3e-chip-container-height`                    | Base height of the chip container before density adjustment |
 | `--m3e-chip-label-text-font-size`                | Font size of the chip label text                            |
 | `--m3e-chip-label-text-font-weight`              | Font weight of the chip label text                          |
@@ -637,6 +644,11 @@ This section details the attributes, slots, and CSS custom properties available 
 | Property                                         | Description                                                 |
 | ------------------------------------------------ | ----------------------------------------------------------- |
 | `--m3e-chip-container-shape`                     | Border radius of the chip container                         |
+| `--m3e-chip-container-shape-family`              | Corner family applied to all corners of the chip container  |
+| `--m3e-chip-container-shape-family-start-start`  | Corner family of the block-start, inline-start corner       |
+| `--m3e-chip-container-shape-family-start-end`    | Corner family of the block-start, inline-end corner         |
+| `--m3e-chip-container-shape-family-end-start`    | Corner family of the block-end, inline-start corner         |
+| `--m3e-chip-container-shape-family-end-end`      | Corner family of the block-end, inline-end corner           |
 | `--m3e-chip-container-height`                    | Base height of the chip container before density adjustment |
 | `--m3e-chip-label-text-font-size`                | Font size of the chip label text                            |
 | `--m3e-chip-label-text-font-weight`              | Font weight of the chip label text                          |

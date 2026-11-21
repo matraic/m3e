@@ -95,6 +95,11 @@ import { M3eChipElement } from "./ChipElement";
  * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-chip-container-shape - Border radius of the chip container.
+ * @cssprop --m3e-chip-container-shape-family - Corner family applied to all corners of the chip container.
+ * @cssprop --m3e-chip-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-chip-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-chip-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-chip-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-chip-container-height - Base height of the chip container before density adjustment.
  * @cssprop --m3e-chip-label-text-font-size - Font size of the chip label text.
  * @cssprop --m3e-chip-label-text-font-weight - Font weight of the chip label text.

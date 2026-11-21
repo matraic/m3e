@@ -70,6 +70,11 @@ import { ChipVariant, isChipVariant } from "./ChipVariant";
  * @attr variant - The appearance variant of the chip.
  *
  * @cssprop --m3e-chip-container-shape - Border radius of the chip container.
+ * @cssprop --m3e-chip-container-shape-family - Corner family applied to all corners of the chip container.
+ * @cssprop --m3e-chip-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-chip-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-chip-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-chip-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-chip-container-height - Base height of the chip container before density adjustment.
  * @cssprop --m3e-chip-label-text-font-size - Font size of the chip label text.
  * @cssprop --m3e-chip-label-text-font-weight - Font weight of the chip label text.
@@ -116,6 +121,22 @@ export class M3eChipElement extends SuppressInitialAnimation(AttachInternals(Lit
       position: relative;
       width: 100%;
       border-radius: var(--m3e-chip-container-shape, ${DesignToken.shape.corner.small});
+      corner-start-start-shape: var(
+        --m3e-chip-container-shape-family-start-start,
+        var(--m3e-chip-container-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-chip-container-shape-family-start-end,
+        var(--m3e-chip-container-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-chip-container-shape-family-end-start,
+        var(--m3e-chip-container-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-chip-container-shape-family-end-end,
+        var(--m3e-chip-container-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       height: calc(var(--m3e-chip-container-height, 32px) + ${DesignToken.density.calc(-3)});
       font-size: var(--m3e-chip-label-text-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
       font-weight: var(--m3e-chip-label-text-font-weight, ${DesignToken.typescale.standard.label.large.fontWeight});
