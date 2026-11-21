@@ -77,6 +77,11 @@ import { M3eListItemElement } from "./ListItemElement";
  *
  * @cssprop --m3e-expandable-list-item-toggle-icon-container-width - Width of the toggle icon container.
  * @cssprop --m3e-expandable-list-item-toggle-icon-container-shape - Border radius of the toggle icon container.
+ * @cssprop --m3e-expandable-list-item-toggle-icon-container-shape-family - Corner family applied to all corners of the toggle icon container.
+ * @cssprop --m3e-expandable-list-item-toggle-icon-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-expandable-list-item-toggle-icon-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-expandable-list-item-toggle-icon-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-expandable-list-item-toggle-icon-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-expandable-list-item-toggle-icon-size - Size of the toggle icon.
  * @cssprop --m3e-expandable-list-item-expanded-toggle-icon-container-color - Background color of the toggle icon container when expanded.
  * @cssprop --m3e-list-item-between-space - Horizontal gap between elements.
@@ -107,14 +112,29 @@ import { M3eListItemElement } from "./ListItemElement";
  * @cssprop --m3e-list-item-trailing-color - Color for the trailing content.
  * @cssprop --m3e-list-item-container-color - Background color of the list item.
  * @cssprop --m3e-list-item-container-shape - Border radius of the list item.
+ * @cssprop --m3e-list-item-container-shape-family - Corner family applied to all corners of the list item.
+ * @cssprop --m3e-list-item-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-list-item-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-list-item-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-list-item-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-list-item-hover-container-shape - Border radius of the list item on hover.
  * @cssprop --m3e-list-item-focus-container-shape - Border radius of the list item on focus.
  * @cssprop --m3e-list-item-video-width - Width of the video slot.
  * @cssprop --m3e-list-item-video-height - Height of the video slot.
  * @cssprop --m3e-list-item-video-shape - Border radius of the video slot.
+ * @cssprop --m3e-list-item-video-shape-family - Corner family applied to all corners of the video slot.
+ * @cssprop --m3e-list-item-video-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-list-item-video-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-list-item-video-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-list-item-video-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-list-item-image-width - Width of the image slot.
  * @cssprop --m3e-list-item-image-height - Height of the image slot.
  * @cssprop --m3e-list-item-image-shape - Border radius of the image slot.
+ * @cssprop --m3e-list-item-image-shape-family - Corner family applied to all corners of the image slot.
+ * @cssprop --m3e-list-item-image-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-list-item-image-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-list-item-image-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-list-item-image-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-list-item-disabled-label-text-color - Color for the main content when disabled.
  * @cssprop --m3e-list-item-disabled-label-text-opacity - Opacity for the main content when disabled.
  * @cssprop --m3e-list-item-disabled-overline-color - Color for the overline slot when disabled.
@@ -156,6 +176,22 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
       align-self: stretch;
       width: var(--m3e-expandable-list-item-toggle-icon-container-width, 32px);
       border-radius: var(--m3e-expandable-list-item-toggle-icon-container-shape, ${DesignToken.shape.corner.full});
+      corner-start-start-shape: var(
+        --m3e-expandable-list-item-toggle-icon-container-shape-family-start-start,
+        var(--m3e-expandable-list-item-toggle-icon-container-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-expandable-list-item-toggle-icon-container-shape-family-start-end,
+        var(--m3e-expandable-list-item-toggle-icon-container-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-expandable-list-item-toggle-icon-container-shape-family-end-start,
+        var(--m3e-expandable-list-item-toggle-icon-container-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-expandable-list-item-toggle-icon-container-shape-family-end-end,
+        var(--m3e-expandable-list-item-toggle-icon-container-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       transition: ${unsafeCSS(
         `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
       )};
@@ -185,6 +221,16 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
     :host([open]) .header {
       --_list-item-top-container-shape: var(--_expandable-list-item-expanded-top-shape, initial);
       --_list-item-bottom-container-shape: initial;
+      --_list-item-top-container-shape-family-start-start: var(
+        --_expandable-list-item-expanded-top-shape-family-start-start,
+        initial
+      );
+      --_list-item-top-container-shape-family-start-end: var(
+        --_expandable-list-item-expanded-top-shape-family-start-end,
+        initial
+      );
+      --_list-item-bottom-container-shape-family-end-start: initial;
+      --_list-item-bottom-container-shape-family-end-end: initial;
       margin-bottom: var(--_expandable-list-item-items-segment-gap, 0px);
     }
     :host([open]) .header,
@@ -207,6 +253,10 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
       flex: none;
       --_list-item-top-container-shape: initial;
       --_list-item-bottom-container-shape: initial;
+      --_list-item-top-container-shape-family-start-start: initial;
+      --_list-item-top-container-shape-family-start-end: initial;
+      --_list-item-bottom-container-shape-family-end-start: initial;
+      --_list-item-bottom-container-shape-family-end-end: initial;
       row-gap: var(--_expandable-list-item-items-segment-gap, 0px);
     }
     .items {
@@ -351,8 +401,17 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
           "--_list-item-bottom-container-shape",
           `var(--_expandable-list-item-bottom-container-shape)`,
         );
+        for (const corner of ["end-start", "end-end"]) {
+          x.style.setProperty(
+            `--_list-item-bottom-container-shape-family-${corner}`,
+            `var(--_expandable-list-item-bottom-container-shape-family-${corner})`,
+          );
+        }
       } else {
         x.style.removeProperty("--_list-item-bottom-container-shape");
+        for (const corner of ["end-start", "end-end"]) {
+          x.style.removeProperty(`--_list-item-bottom-container-shape-family-${corner}`);
+        }
       }
     });
 

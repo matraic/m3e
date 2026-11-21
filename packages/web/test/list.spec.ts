@@ -2,6 +2,116 @@ import type { M3eSelectionListElement } from "@m3e/web/list";
 
 import { expect, test } from "./fixtures";
 
+test.describe("list shape families", () => {
+  for (const direction of ["ltr", "rtl"]) {
+    test(`resolves item and media families independently in ${direction}`, async ({ page, render }) => {
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      await render(`
+        <div id="surfaces" dir="${direction}">
+          <m3e-list>
+            <m3e-list-item><img slot="leading" alt="" />Item<video slot="trailing"></video></m3e-list-item>
+          </m3e-list>
+          <m3e-list variant="segmented"><m3e-list-item>Segment</m3e-list-item></m3e-list>
+          <m3e-action-list><m3e-list-action>Action</m3e-list-action></m3e-action-list>
+          <m3e-selection-list><m3e-list-option selected>Option</m3e-list-option></m3e-selection-list>
+          <m3e-action-list><m3e-expandable-list-item>Expand<div slot="items"></div></m3e-expandable-list-item></m3e-action-list>
+        </div>
+      `);
+      const bases = page.locator("m3e-list-item .base, m3e-list-item-button .base, m3e-list-option .base");
+      await expect(bases).toHaveCount(5);
+      for (const base of await bases.all()) {
+        await expect(base).toHaveCSS("corner-shape", "superellipse(1)");
+      }
+      await page.locator("#surfaces").evaluate((element) => {
+        element.style.setProperty("--m3e-shape-family", "bevel");
+        element.style.setProperty("--m3e-shape-family-start-end", "round");
+      });
+      const corners = ["start-start", "start-end", "end-start", "end-end"];
+      for (const surface of await bases
+        .or(page.locator(".state-layer, .focus-ring, .ripple, img, video, .toggle-container"))
+        .all()) {
+        for (const corner of corners) {
+          await expect(surface).toHaveCSS(
+            `corner-${corner}-shape`,
+            corner === "start-end" ? "superellipse(1)" : "superellipse(0)",
+          );
+        }
+      }
+      await page.locator("#surfaces").evaluate((element) => {
+        element.style.setProperty("--m3e-list-item-container-shape-family", "round");
+        element.style.setProperty("--m3e-list-item-container-shape-family-end-start", "bevel");
+        element.style.setProperty("--m3e-list-item-image-shape-family", "round");
+        element.style.setProperty("--m3e-list-item-video-shape-family", "round");
+        element.style.setProperty("--m3e-list-item-video-shape-family-end-end", "bevel");
+      });
+      for (const base of await bases.all()) {
+        await expect(base).toHaveCSS("corner-start-start-shape", "superellipse(1)");
+        await expect(base).toHaveCSS("corner-end-start-shape", "superellipse(0)");
+      }
+      await expect(page.locator("img")).toHaveCSS("corner-shape", "superellipse(1)");
+      await expect(page.locator("video")).toHaveCSS("corner-end-end-shape", "superellipse(0)");
+      await expect(page.locator("video")).toHaveCSS("corner-end-start-shape", "superellipse(1)");
+      await expect(page.locator(".toggle-container")).toHaveCSS("corner-end-start-shape", "superellipse(0)");
+      await expect(page.locator("m3e-list-option .base")).toHaveCSS("border-radius", "16px");
+      await expect(page.locator("img")).toHaveCSS("border-radius", "0px");
+    });
+
+    test(`keeps segmented outer families on the correct expanded surfaces in ${direction}`, async ({
+      page,
+      render,
+    }) => {
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      await render(`
+        <m3e-action-list variant="segmented" dir="${direction}" style="
+          --m3e-list-item-container-shape-family: bevel;
+          --m3e-segmented-list-container-shape-family: round;
+          --m3e-expandable-list-item-toggle-icon-container-shape-family: round">
+          <m3e-list-action id="first">First</m3e-list-action>
+          <m3e-expandable-list-item>
+            Expand
+            <div slot="items">
+              <m3e-list-action id="nested-first">Nested first</m3e-list-action>
+              <m3e-list-action id="nested-last">Nested last</m3e-list-action>
+            </div>
+          </m3e-expandable-list-item>
+          <m3e-list-action id="last">Last</m3e-list-action>
+        </m3e-action-list>
+      `);
+      const first = page.locator("#first .base");
+      const last = page.locator("#last .base");
+      const header = page.locator("m3e-expandable-list-item m3e-list-item-button.header");
+      const headerBase = header.locator(".base");
+      await expect(first).toHaveCSS("corner-start-start-shape", "superellipse(1)");
+      await expect(first).toHaveCSS("corner-end-start-shape", "superellipse(0)");
+      await expect(last).toHaveCSS("corner-start-start-shape", "superellipse(0)");
+      await expect(last).toHaveCSS("corner-end-start-shape", "superellipse(1)");
+      await expect(headerBase).toHaveCSS("corner-shape", "superellipse(0)");
+      await header.click();
+      await page.mouse.move(0, 0);
+      await expect(header).toHaveAttribute("aria-expanded", "true");
+      await expect(headerBase).toHaveCSS("corner-start-start-shape", "superellipse(1)");
+      await expect(headerBase).toHaveCSS("corner-end-start-shape", "superellipse(0)");
+      await expect(page.locator("#nested-first .base")).toHaveCSS("corner-shape", "superellipse(0)");
+      await expect(page.locator("#nested-last .base")).toHaveCSS("corner-start-start-shape", "superellipse(0)");
+      await expect(page.locator("#nested-last .base")).toHaveCSS("corner-end-start-shape", "superellipse(1)");
+      await expect(headerBase).toHaveCSS("border-top-left-radius", "16px");
+      await expect(page.locator("#nested-last .base")).toHaveCSS("border-bottom-left-radius", "16px");
+      await expect(page.locator(".toggle-container")).toHaveCSS("corner-shape", "superellipse(1)");
+      await page.locator("m3e-action-list").evaluate((element) => {
+        element.style.setProperty("--m3e-segmented-list-container-shape-family-start-start", "bevel");
+        element.style.setProperty("--m3e-segmented-list-container-shape-family-end-end", "bevel");
+      });
+      await expect(headerBase).toHaveCSS("corner-start-start-shape", "superellipse(0)");
+      await expect(headerBase).toHaveCSS("corner-start-end-shape", "superellipse(1)");
+      await expect(page.locator("#nested-last .base")).toHaveCSS("corner-end-end-shape", "superellipse(0)");
+      await expect(page.locator("#nested-last .base")).toHaveCSS("corner-end-start-shape", "superellipse(1)");
+      await header.click();
+      await expect(header).toHaveAttribute("aria-expanded", "false");
+      await expect(headerBase).toHaveCSS("corner-shape", "superellipse(0)");
+    });
+  }
+});
+
 test.describe("m3e-list", () => {
   test("exposes list and listitem semantics and supports segmented styling", async ({ page, render }) => {
     await render(`
@@ -69,7 +179,11 @@ test.describe("m3e-selection-list", () => {
     await expect(green).toHaveAttribute("aria-selected", "false");
     expect(await list.evaluate((element) => (element as HTMLElement & { value: string }).value)).toBe("blue");
     expect(
-      await page.evaluate(() => (window as typeof window & { selectionEvents: Array<{ type: string; value: string | null }> }).selectionEvents),
+      await page.evaluate(
+        () =>
+          (window as typeof window & { selectionEvents: Array<{ type: string; value: string | null }> })
+            .selectionEvents,
+      ),
     ).toEqual([
       { type: "input", value: "blue" },
       { type: "change", value: "blue" },
@@ -124,9 +238,11 @@ test.describe("m3e-selection-list", () => {
     expect(
       await page.evaluate(
         () =>
-          (window as typeof window & {
-            selectionChangeSnapshots: Array<{ value: string | readonly string[] | null; selected: string[] }>;
-          }).selectionChangeSnapshots,
+          (
+            window as typeof window & {
+              selectionChangeSnapshots: Array<{ value: string | readonly string[] | null; selected: string[] }>;
+            }
+          ).selectionChangeSnapshots,
       ),
     ).toEqual([
       { value: "search", selected: ["search"] },

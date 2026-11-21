@@ -81,14 +81,29 @@ import "./ListItemButtonElement";
  * @cssprop --m3e-list-item-trailing-color - Color for the trailing content.
  * @cssprop --m3e-list-item-container-color - Background color of the list item.
  * @cssprop --m3e-list-item-container-shape - Border radius of the list item.
+ * @cssprop --m3e-list-item-container-shape-family - Corner family applied to all corners of the list item.
+ * @cssprop --m3e-list-item-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-list-item-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-list-item-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-list-item-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-list-item-hover-container-shape - Border radius of the list item on hover.
  * @cssprop --m3e-list-item-focus-container-shape - Border radius of the list item on focus.
  * @cssprop --m3e-list-item-video-width - Width of the video slot.
  * @cssprop --m3e-list-item-video-height - Height of the video slot.
  * @cssprop --m3e-list-item-video-shape - Border radius of the video slot.
+ * @cssprop --m3e-list-item-video-shape-family - Corner family applied to all corners of the video slot.
+ * @cssprop --m3e-list-item-video-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-list-item-video-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-list-item-video-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-list-item-video-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-list-item-image-width - Width of the image slot.
  * @cssprop --m3e-list-item-image-height - Height of the image slot.
  * @cssprop --m3e-list-item-image-shape - Border radius of the image slot.
+ * @cssprop --m3e-list-item-image-shape-family - Corner family applied to all corners of the image slot.
+ * @cssprop --m3e-list-item-image-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-list-item-image-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-list-item-image-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-list-item-image-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-list-item-disabled-container-color - Background color of the list item when disabled.
  * @cssprop --m3e-list-item-disabled-label-text-color - Color for the main content when disabled.
  * @cssprop --m3e-list-item-disabled-label-text-opacity - Opacity for the main content when disabled.

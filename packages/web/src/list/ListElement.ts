@@ -168,6 +168,11 @@ import { ListItemContentType } from "./ListItemContentType";
  * @cssprop --m3e-list-divider-inset-end-size - End inset for dividers within the list.
  * @cssprop --m3e-segmented-list-segment-gap - Gap between list items in segmented variant.
  * @cssprop --m3e-segmented-list-container-shape - Border radius of the segmented list container.
+ * @cssprop --m3e-segmented-list-container-shape-family - Corner family of the segmented list's outer corners.
+ * @cssprop --m3e-segmented-list-container-shape-family-start-start - Corner family of the block-start, inline-start outer corner.
+ * @cssprop --m3e-segmented-list-container-shape-family-start-end - Corner family of the block-start, inline-end outer corner.
+ * @cssprop --m3e-segmented-list-container-shape-family-end-start - Corner family of the block-end, inline-start outer corner.
+ * @cssprop --m3e-segmented-list-container-shape-family-end-end - Corner family of the block-end, inline-end outer corner.
  * @cssprop --m3e-segmented-list-item-container-color - Background color of items in segmented variant.
  * @cssprop --m3e-segmented-list-item-disabled-container-color - Background color of disabled items in segmented variant.
  * @cssprop --m3e-segmented-list-item-container-shape - Border radius of items in segmented variant.
@@ -186,6 +191,14 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
           :is(:state(--has-previous-open), :--has-previous-open):not([open])
         ) {
         --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
+        --_list-item-top-container-shape-family-start-start: var(
+          --m3e-segmented-list-container-shape-family-start-start,
+          var(--m3e-segmented-list-container-shape-family, initial)
+        );
+        --_list-item-top-container-shape-family-start-end: var(
+          --m3e-segmented-list-container-shape-family-start-end,
+          var(--m3e-segmented-list-container-shape-family, initial)
+        );
       }
       :is(m3e-list, m3e-action-list, m3e-selection-list):is(:state(--segmented), :--segmented)
         :is(m3e-list-item, m3e-list-action, m3e-list-option, m3e-expandable-list-item):is(
@@ -196,6 +209,14 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
         --_list-item-bottom-container-shape: var(
           --m3e-segmented-list-container-shape,
           ${DesignToken.shape.corner.large}
+        );
+        --_list-item-bottom-container-shape-family-end-start: var(
+          --m3e-segmented-list-container-shape-family-end-start,
+          var(--m3e-segmented-list-container-shape-family, initial)
+        );
+        --_list-item-bottom-container-shape-family-end-end: var(
+          --m3e-segmented-list-container-shape-family-end-end,
+          var(--m3e-segmented-list-container-shape-family, initial)
         );
       }
     `);
@@ -261,9 +282,25 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
         --m3e-segmented-list-container-shape,
         ${DesignToken.shape.corner.large}
       );
+      --_expandable-list-item-expanded-top-shape-family-start-start: var(
+        --m3e-segmented-list-container-shape-family-start-start,
+        var(--m3e-segmented-list-container-shape-family, initial)
+      );
+      --_expandable-list-item-expanded-top-shape-family-start-end: var(
+        --m3e-segmented-list-container-shape-family-start-end,
+        var(--m3e-segmented-list-container-shape-family, initial)
+      );
       --_expandable-list-item-bottom-container-shape: var(
         --m3e-segmented-list-container-shape,
         ${DesignToken.shape.corner.large}
+      );
+      --_expandable-list-item-bottom-container-shape-family-end-start: var(
+        --m3e-segmented-list-container-shape-family-end-start,
+        var(--m3e-segmented-list-container-shape-family, initial)
+      );
+      --_expandable-list-item-bottom-container-shape-family-end-end: var(
+        --m3e-segmented-list-container-shape-family-end-end,
+        var(--m3e-segmented-list-container-shape-family, initial)
       );
     }
     :host(:is(:state(--segmented), :--segmented)) ::slotted(m3e-divider) {

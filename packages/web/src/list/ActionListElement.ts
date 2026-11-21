@@ -108,6 +108,11 @@ import { M3eListElement } from "./ListElement";
  * @cssprop --m3e-list-divider-inset-end-size - End inset for dividers within the list.
  * @cssprop --m3e-segmented-list-segment-gap - Gap between list items in segmented variant.
  * @cssprop --m3e-segmented-list-container-shape - Border radius of the segmented list container.
+ * @cssprop --m3e-segmented-list-container-shape-family - Corner family of the segmented list's outer corners.
+ * @cssprop --m3e-segmented-list-container-shape-family-start-start - Corner family of the block-start, inline-start outer corner.
+ * @cssprop --m3e-segmented-list-container-shape-family-start-end - Corner family of the block-start, inline-end outer corner.
+ * @cssprop --m3e-segmented-list-container-shape-family-end-start - Corner family of the block-end, inline-start outer corner.
+ * @cssprop --m3e-segmented-list-container-shape-family-end-end - Corner family of the block-end, inline-end outer corner.
  * @cssprop --m3e-segmented-list-item-container-color - Background color of items in segmented variant.
  * @cssprop --m3e-segmented-list-item-disabled-container-color - Background color of disabled items in segmented variant.
  * @cssprop --m3e-segmented-list-item-container-shape - Border radius of items in segmented variant.

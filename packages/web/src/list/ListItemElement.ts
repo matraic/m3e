@@ -91,14 +91,29 @@ import { ListItemContentType } from "./ListItemContentType";
  * @cssprop --m3e-list-item-trailing-color - Color for the trailing content.
  * @cssprop --m3e-list-item-container-color - Background color of the list item.
  * @cssprop --m3e-list-item-container-shape - Border radius of the list item.
+ * @cssprop --m3e-list-item-container-shape-family - Corner family applied to all corners of the list item.
+ * @cssprop --m3e-list-item-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-list-item-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-list-item-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-list-item-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-list-item-hover-container-shape - Border radius of the list item on hover.
  * @cssprop --m3e-list-item-focus-container-shape - Border radius of the list item on focus.
  * @cssprop --m3e-list-item-video-width - Width of the video slot.
  * @cssprop --m3e-list-item-video-height - Height of the video slot.
  * @cssprop --m3e-list-item-video-shape - Border radius of the video slot.
+ * @cssprop --m3e-list-item-video-shape-family - Corner family applied to all corners of the video slot.
+ * @cssprop --m3e-list-item-video-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-list-item-video-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-list-item-video-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-list-item-video-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-list-item-image-width - Width of the image slot.
  * @cssprop --m3e-list-item-image-height - Height of the image slot.
  * @cssprop --m3e-list-item-image-shape - Border radius of the image slot.
+ * @cssprop --m3e-list-item-image-shape-family - Corner family applied to all corners of the image slot.
+ * @cssprop --m3e-list-item-image-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-list-item-image-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-list-item-image-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-list-item-image-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-list-item-three-line-top-offset - Top offset for media in three line items.
  * @cssprop --m3e-list-item-one-line-height - Minimum height of a one line list item.
  * @cssprop --m3e-list-item-two-line-height - Minimum height of a two line list item.
@@ -143,6 +158,34 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       border-bottom-right-radius: min(
         max(var(--_shape-bottom), calc(var(--_shape-bottom) + var(--_growth))),
         max(var(--_shape-bottom), ${DesignToken.shape.corner.large})
+      );
+      corner-start-start-shape: var(
+        --_list-item-top-container-shape-family-start-start,
+        var(
+          --m3e-list-item-container-shape-family-start-start,
+          var(--m3e-list-item-container-shape-family, ${DesignToken.shape.family.startStart})
+        )
+      );
+      corner-start-end-shape: var(
+        --_list-item-top-container-shape-family-start-end,
+        var(
+          --m3e-list-item-container-shape-family-start-end,
+          var(--m3e-list-item-container-shape-family, ${DesignToken.shape.family.startEnd})
+        )
+      );
+      corner-end-start-shape: var(
+        --_list-item-bottom-container-shape-family-end-start,
+        var(
+          --m3e-list-item-container-shape-family-end-start,
+          var(--m3e-list-item-container-shape-family, ${DesignToken.shape.family.endStart})
+        )
+      );
+      corner-end-end-shape: var(
+        --_list-item-bottom-container-shape-family-end-end,
+        var(
+          --m3e-list-item-container-shape-family-end-end,
+          var(--m3e-list-item-container-shape-family, ${DesignToken.shape.family.endEnd})
+        )
       );
       transition: ${unsafeCSS(
         `border-radius ${DesignToken.motion.spring.fastEffects}, background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
@@ -289,6 +332,22 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
     ::slotted(video[slot="leading"]),
     ::slotted(video[slot="trailing"]) {
       border-radius: var(--m3e-list-item-video-shape, ${DesignToken.shape.corner.none});
+      corner-start-start-shape: var(
+        --m3e-list-item-video-shape-family-start-start,
+        var(--m3e-list-item-video-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-list-item-video-shape-family-start-end,
+        var(--m3e-list-item-video-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-list-item-video-shape-family-end-start,
+        var(--m3e-list-item-video-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-list-item-video-shape-family-end-end,
+        var(--m3e-list-item-video-shape-family, ${DesignToken.shape.family.endEnd})
+      );
     }
     ::slotted(video[slot="leading"]) {
       margin-inline-start: calc(0px - var(--_list-item-leading-video-outset, 0px));
@@ -306,6 +365,22 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
     ::slotted(img[slot="leading"]),
     ::slotted(img[slot="trailing"]) {
       border-radius: var(--m3e-list-item-image-shape, ${DesignToken.shape.corner.none});
+      corner-start-start-shape: var(
+        --m3e-list-item-image-shape-family-start-start,
+        var(--m3e-list-item-image-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-list-item-image-shape-family-start-end,
+        var(--m3e-list-item-image-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-list-item-image-shape-family-end-start,
+        var(--m3e-list-item-image-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-list-item-image-shape-family-end-end,
+        var(--m3e-list-item-image-shape-family, ${DesignToken.shape.family.endEnd})
+      );
     }
     ::slotted(m3e-icon[slot="leading"]),
     ::slotted(m3e-icon[slot="leading-icon"]),
