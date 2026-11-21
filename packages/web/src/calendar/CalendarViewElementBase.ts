@@ -24,7 +24,7 @@ export abstract class CalendarViewElementBase extends LitElement {
     .visually-hidden {
       position: absolute;
       appearance: none;
-      visibility: hidden;
+      clip-path: inset(50%);
       border: none;
       outline: none;
       overflow: hidden;
