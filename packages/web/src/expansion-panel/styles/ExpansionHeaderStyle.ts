@@ -12,6 +12,7 @@ export const ExpansionHeaderStyle = css`
   :host {
     display: block;
     border-radius: inherit;
+    corner-shape: inherit;
     outline: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-touch-callout: none;
@@ -30,6 +31,7 @@ export const ExpansionHeaderStyle = css`
     height: 100%;
     display: flex;
     border-radius: inherit;
+    corner-shape: inherit;
     outline: none;
     position: relative;
     padding-inline-start: ${ExpansionHeaderToken.paddingLeft};

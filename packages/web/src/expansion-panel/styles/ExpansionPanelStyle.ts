@@ -18,6 +18,22 @@ export const ExpansionPanelStyle = css`
   }
   .base {
     background-color: ${ExpansionPanelToken.containerColor};
+    corner-start-start-shape: var(
+      --m3e-expansion-panel-shape-family-start-start,
+      var(--m3e-expansion-panel-shape-family, ${DesignToken.shape.family.startStart})
+    );
+    corner-start-end-shape: var(
+      --m3e-expansion-panel-shape-family-start-end,
+      var(--m3e-expansion-panel-shape-family, ${DesignToken.shape.family.startEnd})
+    );
+    corner-end-start-shape: var(
+      --m3e-expansion-panel-shape-family-end-start,
+      var(--m3e-expansion-panel-shape-family, ${DesignToken.shape.family.endStart})
+    );
+    corner-end-end-shape: var(
+      --m3e-expansion-panel-shape-family-end-end,
+      var(--m3e-expansion-panel-shape-family, ${DesignToken.shape.family.endEnd})
+    );
     transition: ${unsafeCSS(`box-shadow var(--m3e-collapsible-animation-duration, ${DesignToken.motion.duration.medium1})
         ${DesignToken.motion.easing.standard}`)};
   }

@@ -130,6 +130,11 @@ import { M3eExpansionHeaderElement } from "./ExpansionHeaderElement";
  * @cssprop --m3e-expansion-panel-container-color - Background color of the panel container.
  * @cssprop --m3e-expansion-panel-elevation - Elevation level when the panel is collapsed.
  * @cssprop --m3e-expansion-panel-shape - Shape (e.g. border radius) of the panel when collapsed.
+ * @cssprop --m3e-expansion-panel-shape-family - Corner family applied to all corners of the panel in both collapsed and expanded states.
+ * @cssprop --m3e-expansion-panel-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-expansion-panel-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-expansion-panel-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-expansion-panel-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-expansion-panel-open-elevation - Elevation level when the panel is expanded.
  * @cssprop --m3e-expansion-panel-open-shape - Shape (e.g. border radius) of the panel when expanded.
  * @cssprop --m3e-expansion-panel-content-padding - Padding around the panel's content area.
