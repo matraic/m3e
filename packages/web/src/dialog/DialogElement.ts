@@ -70,6 +70,11 @@ import "@m3e/web/icon-button";
  * @fires closed - Dispatched when the dialog has closed.
  *
  * @cssprop --m3e-dialog-shape - Border radius of the dialog container.
+ * @cssprop --m3e-dialog-shape-family - Corner family applied to all corners of the dialog container.
+ * @cssprop --m3e-dialog-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-dialog-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-dialog-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-dialog-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-dialog-min-width - Minimum width of the dialog.
  * @cssprop --m3e-dialog-max-height - Maximum height of the dialog.
  * @cssprop --m3e-dialog-max-width - Maximum width of the dialog.
@@ -110,6 +115,22 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       position: fixed;
       overflow: visible;
       border-radius: var(--m3e-dialog-shape, ${DesignToken.shape.corner.extraLarge});
+      corner-start-start-shape: var(
+        --m3e-dialog-shape-family-start-start,
+        var(--m3e-dialog-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-dialog-shape-family-start-end,
+        var(--m3e-dialog-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-dialog-shape-family-end-start,
+        var(--m3e-dialog-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-dialog-shape-family-end-end,
+        var(--m3e-dialog-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       min-width: var(--m3e-dialog-min-width, 280px);
       max-width: var(--m3e-dialog-max-width, min(560px, 100% - 48px));
       max-height: var(--m3e-dialog-max-height, min(560px, 100% - 48px));
@@ -124,6 +145,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       display: flex;
       flex-direction: column;
       border-radius: inherit;
+      corner-shape: inherit;
       position: relative;
       min-height: 0;
     }
@@ -132,6 +154,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       position: absolute;
       inset: 0;
       border-radius: inherit;
+      corner-shape: inherit;
       background-color: var(--m3e-dialog-container-color, ${DesignToken.color.surfaceContainerHigh});
       box-shadow: ${DesignToken.elevation.level3};
     }

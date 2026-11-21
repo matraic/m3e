@@ -76,24 +76,29 @@ This section details the attributes, slots, events, and CSS custom properties av
 
 ### 🎛️ CSS Custom Properties
 
-| Property                              | Description                               |
-| ------------------------------------- | ----------------------------------------- |
-| `--m3e-dialog-shape`                  | Border radius of the dialog container.    |
-| `--m3e-dialog-min-width`              | Minimum width of the dialog.              |
-| `--m3e-dialog-max-height`             | Maximum height of the dialog.             |
-| `--m3e-dialog-max-width`              | Maximum width of the dialog.              |
-| `--m3e-dialog-color`                  | Foreground color of the dialog.           |
-| `--m3e-dialog-container-color`        | Background color of the dialog container. |
-| `--m3e-dialog-scrim-color`            | Color of the scrim (backdrop overlay).    |
-| `--m3e-dialog-scrim-opacity`          | Opacity of the scrim when open.           |
-| `--m3e-dialog-header-container-color` | Background color of the dialog header.    |
-| `--m3e-dialog-header-color`           | Foreground color of the dialog header.    |
-| `--m3e-dialog-header-font-size`       | Font size for the dialog header.          |
-| `--m3e-dialog-header-font-weight`     | Font weight for the dialog header.        |
-| `--m3e-dialog-header-line-height`     | Line height for the dialog header.        |
-| `--m3e-dialog-header-tracking`        | Letter spacing for the dialog header.     |
-| `--m3e-dialog-content-color`          | Foreground color of the dialog content.   |
-| `--m3e-dialog-content-font-size`      | Font size for the dialog content.         |
-| `--m3e-dialog-content-font-weight`    | Font weight for the dialog content.       |
-| `--m3e-dialog-content-line-height`    | Line height for the dialog content.       |
-| `--m3e-dialog-content-tracking`       | Letter spacing for the dialog content.    |
+| Property                                | Description                                                   |
+| --------------------------------------- | ------------------------------------------------------------- |
+| `--m3e-dialog-shape`                    | Border radius of the dialog container.                        |
+| `--m3e-dialog-shape-family`             | Corner family applied to all corners of the dialog container. |
+| `--m3e-dialog-shape-family-start-start` | Corner family of the block-start, inline-start corner.        |
+| `--m3e-dialog-shape-family-start-end`   | Corner family of the block-start, inline-end corner.          |
+| `--m3e-dialog-shape-family-end-start`   | Corner family of the block-end, inline-start corner.          |
+| `--m3e-dialog-shape-family-end-end`     | Corner family of the block-end, inline-end corner.            |
+| `--m3e-dialog-min-width`                | Minimum width of the dialog.                                  |
+| `--m3e-dialog-max-height`               | Maximum height of the dialog.                                 |
+| `--m3e-dialog-max-width`                | Maximum width of the dialog.                                  |
+| `--m3e-dialog-color`                    | Foreground color of the dialog.                               |
+| `--m3e-dialog-container-color`          | Background color of the dialog container.                     |
+| `--m3e-dialog-scrim-color`              | Color of the scrim (backdrop overlay).                        |
+| `--m3e-dialog-scrim-opacity`            | Opacity of the scrim when open.                               |
+| `--m3e-dialog-header-container-color`   | Background color of the dialog header.                        |
+| `--m3e-dialog-header-color`             | Foreground color of the dialog header.                        |
+| `--m3e-dialog-header-font-size`         | Font size for the dialog header.                              |
+| `--m3e-dialog-header-font-weight`       | Font weight for the dialog header.                            |
+| `--m3e-dialog-header-line-height`       | Line height for the dialog header.                            |
+| `--m3e-dialog-header-tracking`          | Letter spacing for the dialog header.                         |
+| `--m3e-dialog-content-color`            | Foreground color of the dialog content.                       |
+| `--m3e-dialog-content-font-size`        | Font size for the dialog content.                             |
+| `--m3e-dialog-content-font-weight`      | Font weight for the dialog content.                           |
+| `--m3e-dialog-content-line-height`      | Line height for the dialog content.                           |
+| `--m3e-dialog-content-tracking`         | Letter spacing for the dialog content.                        |
