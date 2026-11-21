@@ -24,6 +24,69 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  const searchInput = document.querySelector("#gallery-search-input");
+  const searchStatus = document.querySelector("#gallery-search-status");
+  const galleryCategories = Array.from(document.querySelectorAll(".gallery-category")).map((category) => ({
+    element: category,
+    items: Array.from(category.querySelectorAll(".gallery-item")).map((item) => {
+      const link = item.querySelector("a");
+      if (!link) {
+        throw new Error("Every gallery item must link to its component showcase.");
+      }
+      const label = link.cloneNode(true);
+      label.querySelectorAll("m3e-icon").forEach((icon) => icon.remove());
+      return {
+        element: item,
+        name: label.textContent.trim().toLowerCase(),
+      };
+    }),
+  }));
+  let expandedCategoriesBeforeSearch = null;
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.trim().toLowerCase();
+    if (!query) {
+      galleryCategories.forEach(({ element, items }, index) => {
+        element.hidden = false;
+        items.forEach(({ element: item }) => {
+          item.hidden = false;
+        });
+        if (expandedCategoriesBeforeSearch) {
+          element.open = expandedCategoriesBeforeSearch[index];
+        }
+      });
+      expandedCategoriesBeforeSearch = null;
+      searchStatus.hidden = true;
+      searchStatus.textContent = "";
+      return;
+    }
+
+    if (!expandedCategoriesBeforeSearch) {
+      expandedCategoriesBeforeSearch = galleryCategories.map(({ element }) => element.open);
+    }
+
+    let matchCount = 0;
+    galleryCategories.forEach(({ element, items }) => {
+      let categoryMatchCount = 0;
+      items.forEach(({ element: item, name }) => {
+        item.hidden = !name.includes(query);
+        if (!item.hidden) {
+          categoryMatchCount += 1;
+          matchCount += 1;
+        }
+      });
+      element.hidden = categoryMatchCount === 0;
+      if (categoryMatchCount > 0) {
+        element.open = true;
+      }
+    });
+
+    searchStatus.hidden = false;
+    searchStatus.textContent =
+      matchCount === 0
+        ? "No components found. Try a different search."
+        : `${matchCount} component${matchCount === 1 ? "" : "s"} found.`;
+  });
+
   const pane = document.querySelector("#body");
   await customElements.whenDefined("m3e-content-pane");
   await pane.updateComplete;

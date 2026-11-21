@@ -250,6 +250,19 @@
               <p>Try a component here, then open its showcase for examples and API details.</p>
             </div>
 
+            <div class="gallery-search">
+              <m3e-search-bar clearable>
+                <m3e-icon slot="leading" name="search" aria-hidden="true"></m3e-icon>
+                <input
+                  id="gallery-search-input"
+                  slot="input"
+                  aria-label="Search components"
+                  placeholder="Search components"
+                />
+              </m3e-search-bar>
+              <p id="gallery-search-status" role="status" aria-live="polite" hidden></p>
+            </div>
+
             <m3e-expansion-panel class="gallery-category" open>
               <span slot="header" class="gallery-category-header"
                 ><span>Actions</span><span>Buttons, menus &amp; more</span></span
