@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const bottom = scrollContainer.getBoundingClientRect().bottom;
     document
       .querySelectorAll(
-        ".capabilities > .section-heading, .capability-group, .capabilities-try, " +
+        ".coverage-highlight, .capabilities > .section-heading, .capability-group, .capabilities-try, " +
           ".quick-start, .mcp-callout, .component-gallery > .section-heading",
       )
       .forEach((element) => {

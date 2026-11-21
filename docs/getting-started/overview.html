@@ -103,6 +103,20 @@
             </div>
           </section>
 
+          <section class="coverage-highlight" aria-labelledby="coverage-title">
+            <div class="coverage-mark" aria-hidden="true">
+              <span>100</span><span class="coverage-percent">%</span>
+              <m3e-icon name="auto_awesome"></m3e-icon>
+            </div>
+            <div class="coverage-copy">
+              <p class="eyebrow">OFFICIAL MATERIAL 3 COMPONENT COVERAGE</p>
+              <h2 id="coverage-title" aria-label="100% official Material 3 component coverage.">
+                All of Material 3. Plus more.
+              </h2>
+              <p>Every official Material 3 component, and more, in one expressive, accessible Web Component library.</p>
+            </div>
+          </section>
+
           <section class="capabilities" aria-labelledby="capabilities-title">
             <div class="section-heading">
               <div>
@@ -186,10 +200,10 @@
                 <p>Try color, contrast, text size, direction, and motion settings across the showcase.</p>
                 <p>Reduced motion and forced colors follow your system settings.</p>
               </div>
-              <button id="open-showcase-settings" class="callout-action callout-action-outlined" type="button">
-                <m3e-icon name="settings" aria-hidden="true"></m3e-icon>
-                <span>Open settings</span>
-              </button>
+              <m3e-button id="open-showcase-settings" class="callout-button" variant="outlined" size="medium">
+                <m3e-icon slot="icon" name="settings"></m3e-icon>
+                Open settings
+              </m3e-button>
             </div>
           </section>
 
@@ -203,9 +217,15 @@
               <m3e-card variant="outlined" class="install">
                 <pre slot="content">npm i @m3e/web</pre>
               </m3e-card>
-              <a class="callout-action" href="installation.html" target="content-frame">
-                <span>Read the quick start</span><m3e-icon name="arrow_forward" aria-hidden="true"></m3e-icon>
-              </a>
+              <m3e-button
+                class="callout-button"
+                href="installation.html"
+                target="content-frame"
+                variant="outlined"
+                size="medium"
+              >
+                Read the quick start<m3e-icon slot="trailing-icon" name="arrow_forward"></m3e-icon>
+              </m3e-button>
             </section>
 
             <section class="mcp-callout" aria-labelledby="mcp-title">
@@ -215,9 +235,9 @@
                 <h2 id="mcp-title">Meet the M3E MCP server.</h2>
                 <p>Give your AI assistant access to component documentation and usage examples.</p>
               </div>
-              <a class="callout-action" href="mcp.html" target="content-frame">
-                <span>Explore MCP</span><m3e-icon name="arrow_forward" aria-hidden="true"></m3e-icon>
-              </a>
+              <m3e-button class="callout-button" href="mcp.html" target="content-frame" variant="tonal" size="medium">
+                Explore MCP<m3e-icon slot="trailing-icon" name="arrow_forward"></m3e-icon>
+              </m3e-button>
             </section>
           </div>
 
@@ -1092,7 +1112,8 @@
           <footer class="landing-footer">
             <span>Made for the web. Made to be expressive.</span>
             <a href="https://github.com/matraic/m3e" target="_blank" rel="noopener noreferrer">
-              <m3e-icon name="code"></m3e-icon> View on GitHub
+              <m3e-icon name="star" aria-hidden="true"></m3e-icon>
+              If M3E is useful to you, consider starring it on GitHub.
             </a>
           </footer>
         </main>

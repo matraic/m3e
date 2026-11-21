@@ -270,9 +270,57 @@
   box-shadow: 0 0 0 4px var(--md-sys-color-tertiary-container);
 }
 
+.coverage-highlight {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 64px);
+  margin-block-start: 24px;
+  padding: clamp(24px, 4vw, 40px);
+  border-radius: 32px;
+}
+
+.coverage-mark {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: baseline;
+  color: transparent;
+  background: linear-gradient(125deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+  background-clip: text;
+  font-size: clamp(5rem, 12vw, 9rem);
+  font-weight: 750;
+  letter-spacing: -0.11em;
+  line-height: 0.9;
+}
+
+.coverage-percent {
+  font-size: 0.48em;
+  letter-spacing: -0.08em;
+}
+
+.coverage-mark m3e-icon {
+  position: absolute;
+  inset-block-start: -0.1em;
+  inset-inline-end: -0.65em;
+  color: var(--md-sys-color-tertiary);
+  font-size: 0.25em;
+}
+
+.coverage-copy .eyebrow {
+  margin-block-end: 12px;
+}
+
+.coverage-copy > p:last-child {
+  max-width: 600px;
+  margin: 10px 0 0;
+}
+
 .section-heading > p,
 .mcp-callout > div > p:last-child,
-.quick-start > div > p:last-child {
+.quick-start > div > p:last-child,
+.coverage-copy > p:last-child {
   color: var(--md-sys-color-on-surface-variant);
   font-size: 0.875rem;
   line-height: 1.55;
@@ -666,63 +714,15 @@
   flex-wrap: wrap;
   gap: 20px;
   margin-block-start: 16px;
-  padding: clamp(20px, 2.5vw, 32px);
-  border-radius: 24px;
-  background: var(--md-sys-color-secondary-container);
-  color: var(--md-sys-color-on-secondary-container);
+  padding: clamp(24px, 4vw, 40px);
+  border-radius: 32px;
 }
 
 .capabilities-try p {
   margin: 8px 0 0;
-  color: var(--md-sys-color-on-secondary-container);
+  color: var(--md-sys-color-on-surface-variant);
   font-size: 0.875rem;
   line-height: 1.5;
-}
-
-.callout-action,
-.callout-action:visited {
-  display: inline-flex;
-  box-sizing: border-box;
-  max-width: 100%;
-  min-height: 40px;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  background: var(--md-sys-color-secondary-container);
-  color: var(--md-sys-color-on-secondary-container);
-  font: inherit;
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.4;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.callout-action span {
-  min-width: 0;
-}
-
-.callout-action m3e-icon {
-  flex: none;
-}
-
-.callout-action:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.callout-action:focus-visible {
-  outline: 2px solid var(--md-sys-color-secondary);
-  outline-offset: 2px;
-}
-
-.callout-action-outlined {
-  border-color: var(--md-sys-color-outline);
-  background: transparent;
-  color: var(--md-sys-color-on-secondary-container);
 }
 
 .getting-started-grid {
@@ -762,7 +762,8 @@
 }
 
 .mcp-callout h2,
-.quick-start h2 {
+.quick-start h2,
+.coverage-copy h2 {
   margin: 0;
   font-size: clamp(1.5rem, 2.5vw, 2rem);
   font-weight: 600;
@@ -774,12 +775,13 @@
   margin: 10px 0 0;
 }
 
-.mcp-callout > .callout-action,
-.quick-start > .callout-action {
+.mcp-callout > m3e-button,
+.quick-start > m3e-button {
   margin-block-start: auto;
+  max-width: 100%;
 }
 
-.quick-start {
+.coverage-highlight {
   background:
     radial-gradient(
       ellipse at 100% 0%,
@@ -787,6 +789,11 @@
       transparent 55%
     ),
     var(--md-sys-color-surface-container);
+}
+
+.quick-start,
+.capabilities-try {
+  background: var(--md-sys-color-surface-container);
 }
 
 .quick-start .eyebrow {
@@ -807,6 +814,7 @@
 
 .landing-footer {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
@@ -841,7 +849,6 @@
   .note-top {
     inset-inline-end: -3%;
   }
-
 }
 
 @media (max-width: 700px) {
@@ -883,6 +890,20 @@
     display: block;
   }
 
+  .coverage-highlight {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .coverage-mark,
+  .coverage-copy {
+    min-width: 0;
+  }
+
+  .coverage-mark {
+    font-size: clamp(2rem, 24vw, 7rem);
+  }
+
   .section-heading > p {
     margin-block-start: 12px;
   }
@@ -894,7 +915,6 @@
   .capabilities-grid {
     grid-template-columns: 1fr;
   }
-
 }
 
 @media (max-width: 420px) {
@@ -909,12 +929,6 @@
 
   .hero-actions m3e-button {
     width: 100%;
-  }
-
-  .hero-browse {
-    --m3e-button-medium-leading-space: 8px;
-    --m3e-button-medium-trailing-space: 8px;
-    --m3e-button-medium-icon-label-space: 4px;
   }
 
   .hero-art {
