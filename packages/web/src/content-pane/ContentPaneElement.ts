@@ -25,6 +25,11 @@ import { customElement, DesignToken, getScrollbarWidth, ReconnectedCallback } fr
  * @slot - Renders the content of the pane.
  *
  * @cssprop --m3e-content-pane-container-shape - Corner radius applied to the pane's outer surface.
+ * @cssprop --m3e-content-pane-container-shape-family - Corner family applied to all corners of the pane's outer surface.
+ * @cssprop --m3e-content-pane-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-content-pane-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-content-pane-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-content-pane-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-content-pane-container-color - Background color of the pane's surface.
  * @cssprop --m3e-content-pane-container-padding - Internal padding applied to all sides of the scrollable content.
  */
@@ -43,6 +48,22 @@ export class M3eContentPaneElement extends ReconnectedCallback(LitElement) {
       height: 100%;
       overflow: hidden;
       border-radius: var(--m3e-content-pane-container-shape, ${DesignToken.shape.corner.extraLarge});
+      corner-start-start-shape: var(
+        --m3e-content-pane-container-shape-family-start-start,
+        var(--m3e-content-pane-container-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-content-pane-container-shape-family-start-end,
+        var(--m3e-content-pane-container-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-content-pane-container-shape-family-end-start,
+        var(--m3e-content-pane-container-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-content-pane-container-shape-family-end-end,
+        var(--m3e-content-pane-container-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       background-color: var(--m3e-content-pane-container-color, ${DesignToken.color.surface});
       transition: ${unsafeCSS(
         `border-radius ${DesignToken.motion.duration.medium2} ${DesignToken.motion.easing.standard}`,
@@ -52,6 +73,7 @@ export class M3eContentPaneElement extends ReconnectedCallback(LitElement) {
       width: inherit;
       height: inherit;
       border-radius: inherit;
+      corner-shape: inherit;
       box-sizing: border-box;
       overflow-y: auto;
       overflow-x: hidden;

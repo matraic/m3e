@@ -35,8 +35,13 @@ This section details the slots and CSS custom properties available for the `m3e-
 
 ### 🎛️ CSS Custom Properties
 
-| Property                               | Description                                                      |
-| -------------------------------------- | ---------------------------------------------------------------- |
-| `--m3e-content-pane-container-shape`   | Corner radius applied to the pane's outer surface.               |
-| `--m3e-content-pane-container-color`   | Background color of the pane's surface.                          |
-| `--m3e-content-pane-container-padding` | Internal padding applied to all sides of the scrollable content. |
+| Property                                                | Description                                                       |
+| ------------------------------------------------------- | ----------------------------------------------------------------- |
+| `--m3e-content-pane-container-shape`                    | Corner radius applied to the pane's outer surface.                |
+| `--m3e-content-pane-container-shape-family`             | Corner family applied to all corners of the pane's outer surface. |
+| `--m3e-content-pane-container-shape-family-start-start` | Corner family of the block-start, inline-start corner.            |
+| `--m3e-content-pane-container-shape-family-start-end`   | Corner family of the block-start, inline-end corner.              |
+| `--m3e-content-pane-container-shape-family-end-start`   | Corner family of the block-end, inline-start corner.              |
+| `--m3e-content-pane-container-shape-family-end-end`     | Corner family of the block-end, inline-end corner.                |
+| `--m3e-content-pane-container-color`                    | Background color of the pane's surface.                           |
+| `--m3e-content-pane-container-padding`                  | Internal padding applied to all sides of the scrollable content.  |
