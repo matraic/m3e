@@ -128,6 +128,7 @@ export class M3eFilterChipSetElement extends Labelled(
   /** @internal */
   readonly [selectionManager] = new SelectionManager<M3eFilterChipElement>()
     .onActiveItemChange(() => this[selectionManager].activeItem?.focus())
+    .onSelectedItemsChange(() => this.requestUpdate())
     .withWrap()
     .withDirectionality(M3eDirectionality.current);
 
