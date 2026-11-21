@@ -36,13 +36,18 @@ This section details the slots and CSS custom properties available for the `m3e-
 
 ### 🎛️ CSS Custom Properties
 
-| Property                   | Description                     |
-| -------------------------- | ------------------------------- |
-| `--m3e-avatar-size`        | Size of the avatar.             |
-| `--m3e-avatar-shape`       | Border radius of the avatar.    |
-| `--m3e-avatar-font-size`   | Font size for the avatar.       |
-| `--m3e-avatar-font-weight` | Font weight for the avatar.     |
-| `--m3e-avatar-line-height` | Line height for the avatar.     |
-| `--m3e-avatar-tracking`    | Letter spacing for the avatar.  |
-| `--m3e-avatar-color`       | Background color of the avatar. |
-| `--m3e-avatar-label-color` | Text color of the avatar.       |
+| Property                                | Description                                            |
+| --------------------------------------- | ------------------------------------------------------ |
+| `--m3e-avatar-size`                     | Size of the avatar.                                    |
+| `--m3e-avatar-shape`                    | Border radius of the avatar.                           |
+| `--m3e-avatar-shape-family`             | Corner family applied to all corners of the avatar.    |
+| `--m3e-avatar-shape-family-start-start` | Corner family of the block-start, inline-start corner. |
+| `--m3e-avatar-shape-family-start-end`   | Corner family of the block-start, inline-end corner.   |
+| `--m3e-avatar-shape-family-end-start`   | Corner family of the block-end, inline-start corner.   |
+| `--m3e-avatar-shape-family-end-end`     | Corner family of the block-end, inline-end corner.     |
+| `--m3e-avatar-font-size`                | Font size for the avatar.                              |
+| `--m3e-avatar-font-weight`              | Font weight for the avatar.                            |
+| `--m3e-avatar-line-height`              | Line height for the avatar.                            |
+| `--m3e-avatar-tracking`                 | Letter spacing for the avatar.                         |
+| `--m3e-avatar-color`                    | Background color of the avatar.                        |
+| `--m3e-avatar-label-color`              | Text color of the avatar.                              |

@@ -27,6 +27,11 @@ import { customElement, DesignToken } from "@m3e/web/core";
  *
  * @cssprop --m3e-avatar-size - Size of the avatar.
  * @cssprop --m3e-avatar-shape - Border radius of the avatar.
+ * @cssprop --m3e-avatar-shape-family - Corner family applied to all corners of the avatar.
+ * @cssprop --m3e-avatar-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-avatar-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-avatar-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-avatar-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-avatar-font-size - Font size for the avatar.
  * @cssprop --m3e-avatar-font-weight - Font weight for the avatar.
  * @cssprop --m3e-avatar-line-height - Line height for the avatar.
@@ -58,6 +63,22 @@ export class M3eAvatarElement extends LitElement {
       justify-content: center;
       overflow: hidden;
       border-radius: var(--m3e-avatar-shape, ${DesignToken.shape.corner.full});
+      corner-start-start-shape: var(
+        --m3e-avatar-shape-family-start-start,
+        var(--m3e-avatar-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-avatar-shape-family-start-end,
+        var(--m3e-avatar-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-avatar-shape-family-end-start,
+        var(--m3e-avatar-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-avatar-shape-family-end-end,
+        var(--m3e-avatar-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       font-size: var(--m3e-avatar-font-size, ${DesignToken.typescale.standard.title.medium.fontSize});
       font-weight: var(--m3e-avatar-font-weight, ${DesignToken.typescale.standard.title.medium.fontWeight});
       line-height: var(--m3e-avatar-line-height, ${DesignToken.typescale.standard.title.medium.lineHeight});
