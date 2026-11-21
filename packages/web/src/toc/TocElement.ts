@@ -75,9 +75,20 @@ import { TocGenerator, TocNode } from "./TocGenerator";
  *
  * @cssprop --m3e-toc-width - Width of the table of contents.
  * @cssprop --m3e-toc-container-color - Background color of the table of contents container.
+ * @cssprop --m3e-toc-container-shape - Border radius of the table of contents container.
+ * @cssprop --m3e-toc-container-shape-family - Corner family applied to all corners of the table of contents container.
+ * @cssprop --m3e-toc-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-toc-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-toc-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-toc-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-toc-container-padding-inline - Inline padding of the table of contents container.
  * @cssprop --m3e-toc-container-padding-block - Block padding of the table of contents container.
  * @cssprop --m3e-toc-item-shape - Border radius of TOC items and active indicator.
+ * @cssprop --m3e-toc-item-shape-family - Corner family applied to all corners of TOC items and the active indicator.
+ * @cssprop --m3e-toc-item-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-toc-item-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-toc-item-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-toc-item-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-toc-active-indicator-color - Border color of the active indicator.
  * @cssprop --m3e-toc-active-indicator-animation-duration - Animation duration for the active indicator.
  * @cssprop --m3e-toc-item-padding - Inline padding for TOC items and header.
@@ -107,6 +118,22 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
     .base {
       contain: layout style paint;
       border-radius: var(--m3e-toc-container-shape, ${DesignToken.shape.corner.none});
+      corner-start-start-shape: var(
+        --m3e-toc-container-shape-family-start-start,
+        var(--m3e-toc-container-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-toc-container-shape-family-start-end,
+        var(--m3e-toc-container-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-toc-container-shape-family-end-start,
+        var(--m3e-toc-container-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-toc-container-shape-family-end-end,
+        var(--m3e-toc-container-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       box-sizing: border-box;
       overflow: hidden;
       height: 100%;
@@ -118,6 +145,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
       box-sizing: inherit;
       background-color: var(--m3e-toc-container-color, transparent);
       border-radius: inherit;
+      corner-shape: inherit;
       padding-inline: var(--m3e-toc-container-padding-inline, 0px);
       padding-block: var(--m3e-toc-container-padding-block, 0px);
       position: relative;
@@ -150,6 +178,22 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
       right: var(--m3e-toc-container-padding-inline, 0px);
 
       border-radius: var(--m3e-toc-item-shape, ${DesignToken.shape.corner.largeIncreased});
+      corner-start-start-shape: var(
+        --m3e-toc-item-shape-family-start-start,
+        var(--m3e-toc-item-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-toc-item-shape-family-start-end,
+        var(--m3e-toc-item-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-toc-item-shape-family-end-start,
+        var(--m3e-toc-item-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-toc-item-shape-family-end-end,
+        var(--m3e-toc-item-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       border: 1px solid var(--m3e-toc-active-indicator-color, ${DesignToken.color.outline});
       transition: ${unsafeCSS(`height var(--m3e-toc-active-indicator-animation-duration, ${DesignToken.motion.duration.long1})
           ${DesignToken.motion.easing.standard},

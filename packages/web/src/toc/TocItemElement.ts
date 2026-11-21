@@ -44,6 +44,11 @@ import { TocNode } from "./TocGenerator";
  * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-toc-item-shape - Border radius of the TOC item.
+ * @cssprop --m3e-toc-item-shape-family - Corner family applied to all corners of the TOC item.
+ * @cssprop --m3e-toc-item-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-toc-item-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-toc-item-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-toc-item-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-toc-item-padding-block - Block padding for the TOC item.
  * @cssprop --m3e-toc-item-padding - Inline padding for the TOC item.
  * @cssprop --m3e-toc-item-inset - Indentation per level for the TOC item.
@@ -69,6 +74,22 @@ export class M3eTocItemElement extends Selected(Disabled(AttachInternals(Role(Li
       position: relative;
       outline: none;
       border-radius: var(--m3e-toc-item-shape, ${DesignToken.shape.corner.largeIncreased});
+      corner-start-start-shape: var(
+        --m3e-toc-item-shape-family-start-start,
+        var(--m3e-toc-item-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-toc-item-shape-family-start-end,
+        var(--m3e-toc-item-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-toc-item-shape-family-end-start,
+        var(--m3e-toc-item-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-toc-item-shape-family-end-end,
+        var(--m3e-toc-item-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       padding-block: var(--m3e-toc-item-padding-block, ${DesignToken.measurement.space100});
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       -webkit-user-select: none;
