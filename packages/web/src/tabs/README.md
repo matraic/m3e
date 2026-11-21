@@ -18,15 +18,9 @@ Place tabs and their panels inside a tabs container.
 
 ```html
 <m3e-tabs>
-  <m3e-tab selected for="videos">
-    <m3e-icon slot="icon" name="videocam"></m3e-icon>Video
-  </m3e-tab>
-  <m3e-tab for="photos">
-    <m3e-icon slot="icon" name="photo"></m3e-icon>Photos
-  </m3e-tab>
-  <m3e-tab for="audio">
-    <m3e-icon slot="icon" name="music_note"></m3e-icon>Audio
-  </m3e-tab>
+  <m3e-tab selected for="videos"> <m3e-icon slot="icon" name="videocam"></m3e-icon>Video </m3e-tab>
+  <m3e-tab for="photos"> <m3e-icon slot="icon" name="photo"></m3e-icon>Photos </m3e-tab>
+  <m3e-tab for="audio"> <m3e-icon slot="icon" name="music_note"></m3e-icon>Audio </m3e-tab>
   <m3e-tab-panel id="videos">Videos</m3e-tab-panel>
   <m3e-tab-panel id="photos">Photos</m3e-tab-panel>
   <m3e-tab-panel id="audio">Audio</m3e-tab-panel>
@@ -61,12 +55,8 @@ Use `disabled` to disable individual tabs.
 
 ```html
 <m3e-tabs>
-  <m3e-tab selected for="videos">
-    <m3e-icon slot="icon" name="videocam"></m3e-icon>Video
-  </m3e-tab>
-  <m3e-tab disabled for="photos">
-    <m3e-icon slot="icon" name="photo"></m3e-icon>Photos
-  </m3e-tab>
+  <m3e-tab selected for="videos"> <m3e-icon slot="icon" name="videocam"></m3e-icon>Video </m3e-tab>
+  <m3e-tab disabled for="photos"> <m3e-icon slot="icon" name="photo"></m3e-icon>Photos </m3e-tab>
   <!-- Additional content omitted for brevity -->
 </m3e-tabs>
 ```
@@ -122,15 +112,20 @@ This section details the attributes, events, slots and CSS custom properties ava
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                           | Description                                                                      |
-| -------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `--m3e-tabs-paginator-button-icon-size`            | Overrides the icon size for paginator buttons.                                   |
-| `--m3e-tabs-active-indicator-color`                | Color of the active tab indicator.                                               |
-| `--m3e-tabs-primary-before-active-indicator-shape` | Border radius for active indicator when header is before and variant is primary. |
-| `--m3e-tabs-primary-after-active-indicator-shape`  | Border radius for active indicator when header is after and variant is primary.  |
-| `--m3e-tabs-primary-active-indicator-inset`        | Inset for primary variant's active indicator.                                    |
-| `--m3e-tabs-primary-active-indicator-thickness`    | Thickness for primary variant's active indicator.                                |
-| `--m3e-tabs-secondary-active-indicator-thickness`  | Thickness for secondary variant's active indicator.                              |
+| Property                                                       | Description                                                                      |
+| -------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `--m3e-tabs-paginator-button-icon-size`                        | Overrides the icon size for paginator buttons.                                   |
+| `--m3e-tabs-active-indicator-color`                            | Color of the active tab indicator.                                               |
+| `--m3e-tabs-primary-before-active-indicator-shape`             | Border radius for active indicator when header is before and variant is primary. |
+| `--m3e-tabs-primary-after-active-indicator-shape`              | Border radius for active indicator when header is after and variant is primary.  |
+| `--m3e-tabs-primary-active-indicator-shape-family`             | Corner family of the primary active indicator in either header position.         |
+| `--m3e-tabs-primary-active-indicator-shape-family-start-start` | Corner family of the block-start, inline-start corner.                           |
+| `--m3e-tabs-primary-active-indicator-shape-family-start-end`   | Corner family of the block-start, inline-end corner.                             |
+| `--m3e-tabs-primary-active-indicator-shape-family-end-start`   | Corner family of the block-end, inline-start corner.                             |
+| `--m3e-tabs-primary-active-indicator-shape-family-end-end`     | Corner family of the block-end, inline-end corner.                               |
+| `--m3e-tabs-primary-active-indicator-inset`                    | Inset for primary variant's active indicator.                                    |
+| `--m3e-tabs-primary-active-indicator-thickness`                | Thickness for primary variant's active indicator.                                |
+| `--m3e-tabs-secondary-active-indicator-thickness`              | Thickness for secondary variant's active indicator.                              |
 
 ### 🗂️ m3e-tab
 
@@ -161,27 +156,32 @@ This section details the attributes, slots and CSS custom properties available f
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                     | Description                                 |
-| -------------------------------------------- | ------------------------------------------- |
-| `--m3e-tab-font-size`                        | Font size for tab label.                    |
-| `--m3e-tab-font-weight`                      | Font weight for tab label.                  |
-| `--m3e-tab-line-height`                      | Line height for tab label.                  |
-| `--m3e-tab-tracking`                         | Letter spacing for tab label.               |
-| `--m3e-tab-padding-start`                    | Padding on the inline start of the tab.     |
-| `--m3e-tab-padding-end`                      | Padding on the inline end of the tab.       |
-| `--m3e-tab-focus-ring-shape`                 | Border radius for the focus ring.           |
-| `--m3e-tab-selected-color`                   | Text color for selected tab.                |
-| `--m3e-tab-selected-container-hover-color`   | Hover state-layer color for selected tab.   |
-| `--m3e-tab-selected-container-focus-color`   | Focus state-layer color for selected tab.   |
-| `--m3e-tab-selected-ripple-color`            | Ripple color for selected tab.              |
-| `--m3e-tab-unselected-color`                 | Text color for unselected tab.              |
-| `--m3e-tab-unselected-container-hover-color` | Hover state-layer color for unselected tab. |
-| `--m3e-tab-unselected-container-focus-color` | Focus state-layer color for unselected tab. |
-| `--m3e-tab-unselected-ripple-color`          | Ripple color for unselected tab.            |
-| `--m3e-tab-disabled-color`                   | Text color for disabled tab.                |
-| `--m3e-tab-disabled-opacity`                 | Text opacity for disabled tab.              |
-| `--m3e-tab-spacing`                          | Column gap between icon and label.          |
-| `--m3e-tab-icon-size`                        | Font size for slotted icon.                 |
+| Property                                        | Description                                                   |
+| ----------------------------------------------- | ------------------------------------------------------------- |
+| `--m3e-tab-font-size`                           | Font size for tab label.                                      |
+| `--m3e-tab-font-weight`                         | Font weight for tab label.                                    |
+| `--m3e-tab-line-height`                         | Line height for tab label.                                    |
+| `--m3e-tab-tracking`                            | Letter spacing for tab label.                                 |
+| `--m3e-tab-padding-start`                       | Padding on the inline start of the tab.                       |
+| `--m3e-tab-padding-end`                         | Padding on the inline end of the tab.                         |
+| `--m3e-tab-focus-ring-shape`                    | Border radius for the focus ring.                             |
+| `--m3e-tab-focus-ring-shape-family`             | Corner family applied to all corners of the tab's focus ring. |
+| `--m3e-tab-focus-ring-shape-family-start-start` | Corner family of the block-start, inline-start corner.        |
+| `--m3e-tab-focus-ring-shape-family-start-end`   | Corner family of the block-start, inline-end corner.          |
+| `--m3e-tab-focus-ring-shape-family-end-start`   | Corner family of the block-end, inline-start corner.          |
+| `--m3e-tab-focus-ring-shape-family-end-end`     | Corner family of the block-end, inline-end corner.            |
+| `--m3e-tab-selected-color`                      | Text color for selected tab.                                  |
+| `--m3e-tab-selected-container-hover-color`      | Hover state-layer color for selected tab.                     |
+| `--m3e-tab-selected-container-focus-color`      | Focus state-layer color for selected tab.                     |
+| `--m3e-tab-selected-ripple-color`               | Ripple color for selected tab.                                |
+| `--m3e-tab-unselected-color`                    | Text color for unselected tab.                                |
+| `--m3e-tab-unselected-container-hover-color`    | Hover state-layer color for unselected tab.                   |
+| `--m3e-tab-unselected-container-focus-color`    | Focus state-layer color for unselected tab.                   |
+| `--m3e-tab-unselected-ripple-color`             | Ripple color for unselected tab.                              |
+| `--m3e-tab-disabled-color`                      | Text color for disabled tab.                                  |
+| `--m3e-tab-disabled-opacity`                    | Text opacity for disabled tab.                                |
+| `--m3e-tab-spacing`                             | Column gap between icon and label.                            |
+| `--m3e-tab-icon-size`                           | Font size for slotted icon.                                   |
 
 ### 🗂️ m3e-tab-panel
 

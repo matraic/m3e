@@ -22,6 +22,32 @@ test.describe("m3e-tabs", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
   });
 
+  test("uses one primary indicator family in both header positions without changing tab surfaces", async ({
+    page,
+    render,
+  }) => {
+    await render(tabs('variant="primary"', ["selected", "", ""]));
+    const element = page.locator("m3e-tabs");
+    await element.evaluate((element) => {
+      element.style.setProperty("--m3e-tabs-primary-active-indicator-shape-family", "bevel");
+      element.style.setProperty("--m3e-tab-focus-ring-shape-family", "round");
+    });
+    const indicator = element.locator(".active-indicator");
+    await expect(indicator).toHaveCSS("corner-shape", "superellipse(0)");
+    await expect(indicator).toHaveCSS("border-radius", "4px 4px 0px 0px");
+    await element.evaluate((element) => element.setAttribute("header-position", "after"));
+    await expect(indicator).toHaveCSS("corner-shape", "superellipse(0)");
+    await expect(indicator).toHaveCSS("border-radius", "0px 0px 4px 4px");
+    for (const ring of await page.locator("m3e-tab .focus-ring").all()) {
+      await expect(ring).toHaveCSS("corner-shape", "superellipse(1)");
+      await expect(ring).toHaveCSS("border-radius", "16px");
+    }
+    await expect(page.locator("m3e-tab .state-layer").first()).toHaveCSS("border-radius", "0px");
+    await element.evaluate((element) => element.setAttribute("variant", "secondary"));
+    await expect(indicator).toHaveCSS("corner-shape", "superellipse(1)");
+    await expect(indicator).toHaveCSS("border-radius", "0px");
+  });
+
   test("exposes a tablist, tabs and tab panels", async ({ page, render }) => {
     await render(tabs());
 

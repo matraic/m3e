@@ -83,6 +83,11 @@ import { addAriaReferencedId, removeAriaReferencedId, selectionManager } from "@
  * @cssprop --m3e-tab-padding-start - Padding on the inline start of the tab.
  * @cssprop --m3e-tab-padding-end - Padding on the inline end of the tab.
  * @cssprop --m3e-tab-focus-ring-shape - Border radius for the focus ring.
+ * @cssprop --m3e-tab-focus-ring-shape-family - Corner family applied to all corners of the tab's focus ring.
+ * @cssprop --m3e-tab-focus-ring-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-tab-focus-ring-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-tab-focus-ring-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-tab-focus-ring-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-tab-selected-color - Text color for selected tab.
  * @cssprop --m3e-tab-selected-container-hover-color - Hover state-layer color for selected tab.
  * @cssprop --m3e-tab-selected-container-focus-color - Focus state-layer color for selected tab.
@@ -143,6 +148,22 @@ export class M3eTabElement extends Selected(
     }
     .focus-ring {
       border-radius: var(--m3e-tab-focus-ring-shape, ${DesignToken.shape.corner.large});
+      corner-start-start-shape: var(
+        --m3e-tab-focus-ring-shape-family-start-start,
+        var(--m3e-tab-focus-ring-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-tab-focus-ring-shape-family-start-end,
+        var(--m3e-tab-focus-ring-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-tab-focus-ring-shape-family-end-start,
+        var(--m3e-tab-focus-ring-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-tab-focus-ring-shape-family-end-end,
+        var(--m3e-tab-focus-ring-shape-family, ${DesignToken.shape.family.endEnd})
+      );
     }
     :host([selected]:focus-within) .focus-ring {
       top: var(--_tab-focus-ring-top-offset, 0);

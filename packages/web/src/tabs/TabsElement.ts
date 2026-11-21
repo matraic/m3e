@@ -142,6 +142,11 @@ const MIN_PRIMARY_TAB_WIDTH = 24;
  * @cssprop --m3e-tabs-active-indicator-color - Color of the active tab indicator.
  * @cssprop --m3e-tabs-primary-before-active-indicator-shape - Border radius for active indicator when header is before and variant is primary.
  * @cssprop --m3e-tabs-primary-after-active-indicator-shape - Border radius for active indicator when header is after and variant is primary.
+ * @cssprop --m3e-tabs-primary-active-indicator-shape-family - Corner family of the primary active indicator in either header position.
+ * @cssprop --m3e-tabs-primary-active-indicator-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-tabs-primary-active-indicator-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-tabs-primary-active-indicator-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-tabs-primary-active-indicator-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-tabs-primary-active-indicator-inset - Inset for primary variant's active indicator.
  * @cssprop --m3e-tabs-primary-active-indicator-thickness - Thickness for primary variant's active indicator.
  * @cssprop --m3e-tabs-secondary-active-indicator-thickness - Thickness for secondary variant's active indicator.
@@ -207,6 +212,24 @@ export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitEl
             var(--_tabs-active-tab-position) + var(--_tabs-active-tab-size) -
               ((var(--_tabs-activate-indicator-inset, 0px) * 2))
           )
+      );
+    }
+    :host(:is(:state(--primary), :--primary)) .active-indicator {
+      corner-start-start-shape: var(
+        --m3e-tabs-primary-active-indicator-shape-family-start-start,
+        var(--m3e-tabs-primary-active-indicator-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-tabs-primary-active-indicator-shape-family-start-end,
+        var(--m3e-tabs-primary-active-indicator-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-tabs-primary-active-indicator-shape-family-end-start,
+        var(--m3e-tabs-primary-active-indicator-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-tabs-primary-active-indicator-shape-family-end-end,
+        var(--m3e-tabs-primary-active-indicator-shape-family, ${DesignToken.shape.family.endEnd})
       );
     }
     :host(:is(:state(--primary), :--primary)) .active-indicator.start {
