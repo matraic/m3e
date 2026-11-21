@@ -54,33 +54,38 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                      | Description                                       |
-| --------------------------------------------- | ------------------------------------------------- |
-| `--m3e-option-container-height`               | The height of the option container.               |
-| `--m3e-option-color`                          | The text color of the option.                     |
-| `--m3e-option-container-hover-color`          | The color for the hover state layer.              |
-| `--m3e-option-container-focus-color`          | The color for the focus state layer.              |
-| `--m3e-option-ripple-color`                   | The color of the ripple effect.                   |
-| `--m3e-option-selected-color`                 | The text color when the option is selected.       |
-| `--m3e-option-selected-container-color`       | The background color when the option is selected. |
-| `--m3e-option-selected-container-hover-color` | The hover color for the selected state layer.     |
-| `--m3e-option-selected-container-focus-color` | The focus color for the selected state layer.     |
-| `--m3e-option-selected-ripple-color`          | The ripple color when the option is selected.     |
-| `--m3e-option-disabled-color`                 | The text color when the option is disabled.       |
-| `--m3e-option-disabled-opacity`               | The opacity level applied to the disabled text.   |
-| `--m3e-option-icon-label-space`               | The spacing between the icon and label.           |
-| `--m3e-option-padding-start`                  | The left padding of the option content.           |
-| `--m3e-option-padding-end`                    | The right padding of the option content.          |
-| `--m3e-option-label-text-font-size`           | The font size of the option label.                |
-| `--m3e-option-label-text-font-weight`         | The font weight of the option label.              |
-| `--m3e-option-label-text-line-height`         | The line height of the option label.              |
-| `--m3e-option-label-text-tracking`            | The letter spacing of the option label.           |
-| `--m3e-option-focus-ring-shape`               | The corner radius of the focus ring.              |
-| `--m3e-option-icon-size`                      | The size of the option icons.                     |
-| `--m3e-option-shape`                          | Base shape of the option.                         |
-| `--m3e-option-selected-shape`                 | Shape used for a selected option.                 |
-| `--m3e-option-first-child-shape`              | Shape for the first option in list.               |
-| `--m3e-option-last-child-shape`               | Shape for the last option in a list.              |
+| Property                                      | Description                                            |
+| --------------------------------------------- | ------------------------------------------------------ |
+| `--m3e-option-container-height`               | The height of the option container.                    |
+| `--m3e-option-color`                          | The text color of the option.                          |
+| `--m3e-option-container-hover-color`          | The color for the hover state layer.                   |
+| `--m3e-option-container-focus-color`          | The color for the focus state layer.                   |
+| `--m3e-option-ripple-color`                   | The color of the ripple effect.                        |
+| `--m3e-option-selected-color`                 | The text color when the option is selected.            |
+| `--m3e-option-selected-container-color`       | The background color when the option is selected.      |
+| `--m3e-option-selected-container-hover-color` | The hover color for the selected state layer.          |
+| `--m3e-option-selected-container-focus-color` | The focus color for the selected state layer.          |
+| `--m3e-option-selected-ripple-color`          | The ripple color when the option is selected.          |
+| `--m3e-option-disabled-color`                 | The text color when the option is disabled.            |
+| `--m3e-option-disabled-opacity`               | The opacity level applied to the disabled text.        |
+| `--m3e-option-icon-label-space`               | The spacing between the icon and label.                |
+| `--m3e-option-padding-start`                  | The left padding of the option content.                |
+| `--m3e-option-padding-end`                    | The right padding of the option content.               |
+| `--m3e-option-label-text-font-size`           | The font size of the option label.                     |
+| `--m3e-option-label-text-font-weight`         | The font weight of the option label.                   |
+| `--m3e-option-label-text-line-height`         | The line height of the option label.                   |
+| `--m3e-option-label-text-tracking`            | The letter spacing of the option label.                |
+| `--m3e-option-focus-ring-shape`               | The corner radius of the focus ring.                   |
+| `--m3e-option-icon-size`                      | The size of the option icons.                          |
+| `--m3e-option-shape`                          | Base shape of the option.                              |
+| `--m3e-option-shape-family`                   | Corner family applied to all corners of the option.    |
+| `--m3e-option-shape-family-start-start`       | Corner family of the block-start, inline-start corner. |
+| `--m3e-option-shape-family-start-end`         | Corner family of the block-start, inline-end corner.   |
+| `--m3e-option-shape-family-end-start`         | Corner family of the block-end, inline-start corner.   |
+| `--m3e-option-shape-family-end-end`           | Corner family of the block-end, inline-end corner.     |
+| `--m3e-option-selected-shape`                 | Shape used for a selected option.                      |
+| `--m3e-option-first-child-shape`              | Shape for the first option in list.                    |
+| `--m3e-option-last-child-shape`               | Shape for the last option in a list.                   |
 
 ### 🗂️ m3e-option-panel
 
@@ -103,20 +108,25 @@ This section details the attributes, slots, events and CSS custom properties ava
 
 #### 🎛️ CSS Custom Properties
 
-| Property                                            | Description                                             |
-| --------------------------------------------------- | ------------------------------------------------------- |
-| `--m3e-option-panel-container-shape`                | Corner radius of the panel container.                   |
-| `--m3e-option-panel-container-min-width`            | Minimum width of the panel container.                   |
-| `--m3e-option-panel-container-max-width`            | Maximum width of the panel container.                   |
-| `--m3e-option-panel-container-max-height`           | Maximum height of the panel container.                  |
-| `--m3e-option-panel-container-padding-block`        | Vertical padding inside the panel container.            |
-| `--m3e-option-panel-container-padding-inline`       | Horizontal padding inside the panel container.          |
-| `--m3e-option-panel-container-color`                | Background color of the panel container.                |
-| `--m3e-option-panel-container-elevation`            | Box shadow elevation of the panel container.            |
-| `--m3e-option-panel-gap`                            | Vertical spacing between option items.                  |
-| `--m3e-option-panel-divider-spacing`                | Vertical spacing around slotted `m3e-divider` elements. |
-| `--m3e-option-panel-text-highlight-container-color` | Background color used for text highlight matches.       |
-| `--m3e-option-panel-text-highlight-color`           | Text color used for text highlight matches.             |
+| Property                                                | Description                                                  |
+| ------------------------------------------------------- | ------------------------------------------------------------ |
+| `--m3e-option-panel-container-shape`                    | Corner radius of the panel container.                        |
+| `--m3e-option-panel-container-shape-family`             | Corner family applied to all corners of the panel container. |
+| `--m3e-option-panel-container-shape-family-start-start` | Corner family of the block-start, inline-start corner.       |
+| `--m3e-option-panel-container-shape-family-start-end`   | Corner family of the block-start, inline-end corner.         |
+| `--m3e-option-panel-container-shape-family-end-start`   | Corner family of the block-end, inline-start corner.         |
+| `--m3e-option-panel-container-shape-family-end-end`     | Corner family of the block-end, inline-end corner.           |
+| `--m3e-option-panel-container-min-width`                | Minimum width of the panel container.                        |
+| `--m3e-option-panel-container-max-width`                | Maximum width of the panel container.                        |
+| `--m3e-option-panel-container-max-height`               | Maximum height of the panel container.                       |
+| `--m3e-option-panel-container-padding-block`            | Vertical padding inside the panel container.                 |
+| `--m3e-option-panel-container-padding-inline`           | Horizontal padding inside the panel container.               |
+| `--m3e-option-panel-container-color`                    | Background color of the panel container.                     |
+| `--m3e-option-panel-container-elevation`                | Box shadow elevation of the panel container.                 |
+| `--m3e-option-panel-gap`                                | Vertical spacing between option items.                       |
+| `--m3e-option-panel-divider-spacing`                    | Vertical spacing around slotted `m3e-divider` elements.      |
+| `--m3e-option-panel-text-highlight-container-color`     | Background color used for text highlight matches.            |
+| `--m3e-option-panel-text-highlight-color`               | Text color used for text highlight matches.                  |
 
 ### 🗂️ m3e-optgroup
 

@@ -77,6 +77,11 @@ import { typeaheadLabel } from "@m3e/web/core/a11y";
  * @cssprop --m3e-option-focus-ring-shape - The corner radius of the focus ring.
  * @cssprop --m3e-option-icon-size - The size of the option icons.
  * @cssprop --m3e-option-shape - Base shape of the option.
+ * @cssprop --m3e-option-shape-family - Corner family applied to all corners of the option.
+ * @cssprop --m3e-option-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-option-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-option-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-option-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-option-selected-shape - Shape used for a selected option.
  * @cssprop --m3e-option-first-child-shape - Shape for the first option in a list.
  * @cssprop --m3e-option-last-child-shape - Shape for the last option in a list.
@@ -136,6 +141,22 @@ export class M3eOptionElement extends Selected(Disabled(AttachInternals(Role(Lit
       width: 100%;
       height: 100%;
       border-radius: var(--m3e-option-shape, ${DesignToken.shape.corner.extraSmall});
+      corner-start-start-shape: var(
+        --m3e-option-shape-family-start-start,
+        var(--m3e-option-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-option-shape-family-start-end,
+        var(--m3e-option-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-option-shape-family-end-start,
+        var(--m3e-option-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-option-shape-family-end-end,
+        var(--m3e-option-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       transition: ${unsafeCSS(`border-radius ${DesignToken.motion.spring.fastEffects}`)};
     }
     :host([selected]:not(:is(:state(--first), :--first))) .base {

@@ -66,6 +66,11 @@ import { M3eOptionElement } from "./OptionElement";
  * @fires toggle - Dispatched after the toggle state has changed.
  *
  * @cssprop --m3e-option-panel-container-shape - Corner radius of the panel container.
+ * @cssprop --m3e-option-panel-container-shape-family - Corner family applied to all corners of the panel container.
+ * @cssprop --m3e-option-panel-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-option-panel-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-option-panel-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-option-panel-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-option-panel-container-min-width - Minimum width of the panel container.
  * @cssprop --m3e-option-panel-container-max-width - Maximum width of the panel container.
  * @cssprop --m3e-option-panel-container-max-height - Maximum height of the panel container.
@@ -96,6 +101,46 @@ export class M3eOptionPanelElement extends Role(M3eFloatingPanelElement, "listbo
         --m3e-floating-panel-container-shape: var(
           --m3e-option-panel-container-shape,
           ${DesignToken.shape.corner.large}
+        );
+        corner-start-start-shape: var(
+          --m3e-option-panel-container-shape-family-start-start,
+          var(
+            --m3e-option-panel-container-shape-family,
+            var(
+              --m3e-floating-panel-container-shape-family-start-start,
+              var(--m3e-floating-panel-container-shape-family, ${DesignToken.shape.family.startStart})
+            )
+          )
+        );
+        corner-start-end-shape: var(
+          --m3e-option-panel-container-shape-family-start-end,
+          var(
+            --m3e-option-panel-container-shape-family,
+            var(
+              --m3e-floating-panel-container-shape-family-start-end,
+              var(--m3e-floating-panel-container-shape-family, ${DesignToken.shape.family.startEnd})
+            )
+          )
+        );
+        corner-end-start-shape: var(
+          --m3e-option-panel-container-shape-family-end-start,
+          var(
+            --m3e-option-panel-container-shape-family,
+            var(
+              --m3e-floating-panel-container-shape-family-end-start,
+              var(--m3e-floating-panel-container-shape-family, ${DesignToken.shape.family.endStart})
+            )
+          )
+        );
+        corner-end-end-shape: var(
+          --m3e-option-panel-container-shape-family-end-end,
+          var(
+            --m3e-option-panel-container-shape-family,
+            var(
+              --m3e-floating-panel-container-shape-family-end-end,
+              var(--m3e-floating-panel-container-shape-family, ${DesignToken.shape.family.endEnd})
+            )
+          )
         );
         --m3e-floating-panel-container-min-width: var(--m3e-option-panel-container-min-width, 112px);
         --m3e-floating-panel-container-max-width: var(--m3e-option-panel-container-max-width, 280px);
