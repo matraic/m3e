@@ -196,20 +196,25 @@ This section details the attributes, events, slots and CSS custom properties ava
 
 #### 🎛️ CSS Custom Properties
 
-| Property                              | Description                                                   |
-| ------------------------------------- | ------------------------------------------------------------- |
-| `--m3e-menu-container-shape`          | Controls the corner radius of the menu container.             |
-| `--m3e-menu-active-container-shape`   | Controls the corner radius of the menu container when active. |
-| `--m3e-menu-container-min-width`      | Minimum width of the menu container.                          |
-| `--m3e-menu-container-max-width`      | Maximum width of the menu container.                          |
-| `--m3e-menu-container-max-height`     | Maximum height of the menu container.                         |
-| `--m3e-menu-container-padding-block`  | Vertical padding inside the menu container.                   |
-| `--m3e-menu-container-padding-inline` | Horizontal padding inside the menu container.                 |
-| `--m3e-menu-container-color`          | Background color of the menu container.                       |
-| `--m3e-menu-container-elevation`      | Box shadow elevation of the menu container.                   |
-| `--m3e-vibrant-menu-container-color`  | Background color of the menu container for vibrant variant.   |
-| `--m3e-menu-divider-spacing`          | Vertical spacing around slotted `m3e-divider` elements.       |
-| `--m3e-menu-gap`                      | Gap between content in the menu.                              |
+| Property                                        | Description                                                   |
+| ----------------------------------------------- | ------------------------------------------------------------- |
+| `--m3e-menu-container-shape`                    | Controls the corner radius of the menu container.             |
+| `--m3e-menu-container-shape-family`             | Corner family applied to all corners of the menu container.   |
+| `--m3e-menu-container-shape-family-start-start` | Corner family of the block-start, inline-start corner.        |
+| `--m3e-menu-container-shape-family-start-end`   | Corner family of the block-start, inline-end corner.          |
+| `--m3e-menu-container-shape-family-end-start`   | Corner family of the block-end, inline-start corner.          |
+| `--m3e-menu-container-shape-family-end-end`     | Corner family of the block-end, inline-end corner.            |
+| `--m3e-menu-active-container-shape`             | Controls the corner radius of the menu container when active. |
+| `--m3e-menu-container-min-width`                | Minimum width of the menu container.                          |
+| `--m3e-menu-container-max-width`                | Maximum width of the menu container.                          |
+| `--m3e-menu-container-max-height`               | Maximum height of the menu container.                         |
+| `--m3e-menu-container-padding-block`            | Vertical padding inside the menu container.                   |
+| `--m3e-menu-container-padding-inline`           | Horizontal padding inside the menu container.                 |
+| `--m3e-menu-container-color`                    | Background color of the menu container.                       |
+| `--m3e-menu-container-elevation`                | Box shadow elevation of the menu container.                   |
+| `--m3e-vibrant-menu-container-color`            | Background color of the menu container for vibrant variant.   |
+| `--m3e-menu-divider-spacing`                    | Vertical spacing around slotted `m3e-divider` elements.       |
+| `--m3e-menu-gap`                                | Gap between content in the menu.                              |
 
 ### 🗂️ m3e-menu-item
 
@@ -272,6 +277,11 @@ This section details the attributes, slots and CSS custom properties available f
 | `--m3e-menu-item-focus-ring-shape`                       | Border radius for the focus ring.                                  |
 | `--m3e-menu-item-icon-size`                              | Font size for leading and trailing icons.                          |
 | `--m3e-menu-item-shape`                                  | Base shape of the menu item.                                       |
+| `--m3e-menu-item-shape-family`                           | Corner family applied to all corners of the menu item.             |
+| `--m3e-menu-item-shape-family-start-start`               | Corner family of the block-start, inline-start corner.             |
+| `--m3e-menu-item-shape-family-start-end`                 | Corner family of the block-start, inline-end corner.               |
+| `--m3e-menu-item-shape-family-end-start`                 | Corner family of the block-end, inline-start corner.               |
+| `--m3e-menu-item-shape-family-end-end`                   | Corner family of the block-end, inline-end corner.                 |
 | `--m3e-menu-item-first-child-shape`                      | Shape for the first menu item in a menu.                           |
 | `--m3e-menu-item-last-child-shape`                       | Shape for the last menu item in a menu.                            |
 
@@ -333,6 +343,11 @@ This section details the attributes, slots and CSS custom properties available f
 | `--m3e-menu-item-focus-ring-shape`                       | Border radius for the focus ring.                                  |
 | `--m3e-menu-item-icon-size`                              | Font size for leading and trailing icons.                          |
 | `--m3e-menu-item-shape`                                  | Base shape of the menu item.                                       |
+| `--m3e-menu-item-shape-family`                           | Corner family applied to all corners of the menu item.             |
+| `--m3e-menu-item-shape-family-start-start`               | Corner family of the block-start, inline-start corner.             |
+| `--m3e-menu-item-shape-family-start-end`                 | Corner family of the block-start, inline-end corner.               |
+| `--m3e-menu-item-shape-family-end-start`                 | Corner family of the block-end, inline-start corner.               |
+| `--m3e-menu-item-shape-family-end-end`                   | Corner family of the block-end, inline-end corner.                 |
 | `--m3e-menu-item-selected-shape`                         | Shape used for a selected menu item.                               |
 | `--m3e-menu-item-first-child-shape`                      | Shape for the first menu item in a menu.                           |
 | `--m3e-menu-item-last-child-shape`                       | Shape for the last menu item in a menu.                            |
@@ -395,6 +410,11 @@ This section details the attributes, slots and CSS custom properties available f
 | `--m3e-menu-item-focus-ring-shape`                       | Border radius for the focus ring.                                  |
 | `--m3e-menu-item-icon-size`                              | Font size for leading and trailing icons.                          |
 | `--m3e-menu-item-shape`                                  | Base shape of the menu item.                                       |
+| `--m3e-menu-item-shape-family`                           | Corner family applied to all corners of the menu item.             |
+| `--m3e-menu-item-shape-family-start-start`               | Corner family of the block-start, inline-start corner.             |
+| `--m3e-menu-item-shape-family-start-end`                 | Corner family of the block-start, inline-end corner.               |
+| `--m3e-menu-item-shape-family-end-start`                 | Corner family of the block-end, inline-start corner.               |
+| `--m3e-menu-item-shape-family-end-end`                   | Corner family of the block-end, inline-end corner.                 |
 | `--m3e-menu-item-selected-shape`                         | Shape used for a selected menu item.                               |
 | `--m3e-menu-item-first-child-shape`                      | Shape for the first menu item in a menu.                           |
 | `--m3e-menu-item-last-child-shape`                       | Shape for the last menu item in a menu.                            |

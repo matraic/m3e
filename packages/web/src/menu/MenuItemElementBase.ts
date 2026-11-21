@@ -93,6 +93,22 @@ export abstract class MenuItemElementBase extends KeyboardClick(
       width: 100%;
       height: 100%;
       border-radius: var(--m3e-menu-item-shape, ${DesignToken.shape.corner.extraSmall});
+      corner-start-start-shape: var(
+        --m3e-menu-item-shape-family-start-start,
+        var(--m3e-menu-item-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-menu-item-shape-family-start-end,
+        var(--m3e-menu-item-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-menu-item-shape-family-end-start,
+        var(--m3e-menu-item-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-menu-item-shape-family-end-end,
+        var(--m3e-menu-item-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       transition: ${unsafeCSS(`border-radius ${DesignToken.motion.spring.fastEffects}`)};
     }
     :host([checked]:not(:is(:state(--first), :--first))) .base {

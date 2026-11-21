@@ -203,6 +203,11 @@ import { isMenuVariant, MenuVariant } from "./MenuVariant";
  * @fires toggle - Dispatched after the toggle state has changed.
  *
  * @cssprop --m3e-menu-container-shape - Controls the corner radius of the menu container.
+ * @cssprop --m3e-menu-container-shape-family - Corner family applied to all corners of the menu container.
+ * @cssprop --m3e-menu-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-menu-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-menu-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-menu-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-menu-active-container-shape - Controls the corner radius of the menu container when active.
  * @cssprop --m3e-menu-container-min-width - Minimum width of the menu container.
  * @cssprop --m3e-menu-container-max-width - Maximum width of the menu container.
@@ -239,6 +244,22 @@ export class M3eMenuElement extends SuppressInitialAnimation(AttachInternals(Rol
       scroll-padding-block: calc(
         var(--m3e-focus-ring-thickness, 3px) +
           var(--m3e-menu-container-padding-block, ${DesignToken.measurement.space50})
+      );
+      corner-start-start-shape: var(
+        --m3e-menu-container-shape-family-start-start,
+        var(--m3e-menu-container-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-menu-container-shape-family-start-end,
+        var(--m3e-menu-container-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-menu-container-shape-family-end-start,
+        var(--m3e-menu-container-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-menu-container-shape-family-end-end,
+        var(--m3e-menu-container-shape-family, ${DesignToken.shape.family.endEnd})
       );
       min-width: var(--m3e-menu-container-min-width, 112px);
       max-width: var(--m3e-menu-container-max-width, 280px);

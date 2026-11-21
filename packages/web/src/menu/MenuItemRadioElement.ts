@@ -90,6 +90,11 @@ import { MenuItemElementBase } from "./MenuItemElementBase";
  * @cssprop --m3e-menu-item-focus-ring-shape - Border radius for the focus ring.
  * @cssprop --m3e-menu-item-icon-size - Font size for leading and trailing icons.
  * @cssprop --m3e-menu-item-shape - Base shape of the menu item.
+ * @cssprop --m3e-menu-item-shape-family - Corner family applied to all corners of the menu item.
+ * @cssprop --m3e-menu-item-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-menu-item-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-menu-item-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-menu-item-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-menu-item-selected-shape - Shape used for a selected menu item.
  * @cssprop --m3e-menu-item-first-child-shape - Shape for the first menu item in a menu.
  * @cssprop --m3e-menu-item-last-child-shape - Shape for the last menu item in a menu.
