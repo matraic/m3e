@@ -15,6 +15,22 @@ export const CalloutStyle: CSSResultGroup = css`
     flex-direction: column;
     position: relative;
     overflow: clip;
+    corner-start-start-shape: var(
+      --m3e-callout-shape-family-start-start,
+      var(--m3e-callout-shape-family, ${DesignToken.shape.family.startStart})
+    );
+    corner-start-end-shape: var(
+      --m3e-callout-shape-family-start-end,
+      var(--m3e-callout-shape-family, ${DesignToken.shape.family.startEnd})
+    );
+    corner-end-start-shape: var(
+      --m3e-callout-shape-family-end-start,
+      var(--m3e-callout-shape-family, ${DesignToken.shape.family.endStart})
+    );
+    corner-end-end-shape: var(
+      --m3e-callout-shape-family-end-end,
+      var(--m3e-callout-shape-family, ${DesignToken.shape.family.endEnd})
+    );
     padding-inline-start: var(--m3e-callout-leading-space, ${DesignToken.measurement.space200});
     padding-inline-end: var(--m3e-callout-trailing-space, ${DesignToken.measurement.space200});
     padding-block-start: calc(

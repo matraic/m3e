@@ -82,6 +82,11 @@ import { CalloutStyle, CalloutVariantStyle } from "./styles";
  * @cssprop --m3e-callout-label-content-space - Space between the header and content.
  * @cssprop --m3e-callout-rounded-shape - Corner radius of the rounded shape.
  * @cssprop --m3e-callout-square-shape - Corner radius of the square shape.
+ * @cssprop --m3e-callout-shape-family - Corner family applied to all corners of the callout.
+ * @cssprop --m3e-callout-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-callout-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-callout-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-callout-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-callout-container-color - Fallback background color for all variants.
  * @cssprop --m3e-callout-label-text-color - Fallback label text color for all variants.
  * @cssprop --m3e-callout-icon-color - Fallback icon color for all variants.

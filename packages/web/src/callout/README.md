@@ -99,23 +99,28 @@ These properties provide a fallback color for all variants.
 
 These properties are shared by all variants.
 
-| Property                            | Description                           |
-| ----------------------------------- | ------------------------------------- |
-| `--m3e-callout-leading-space`       | Padding at the start of the callout.  |
-| `--m3e-callout-trailing-space`      | Padding at the end of the callout.    |
-| `--m3e-callout-top-space`           | Padding at the top of the callout.    |
-| `--m3e-callout-bottom-space`        | Padding at the bottom of the callout. |
-| `--m3e-callout-leading-accent-size` | Width of the leading accent.          |
-| `--m3e-callout-icon-label-space`    | Space between the icon and label.     |
-| `--m3e-callout-icon-size`           | Size of the icon.                     |
-| `--m3e-callout-label-font-size`     | Font size of the label.               |
-| `--m3e-callout-label-font-weight`   | Font weight of the label.             |
-| `--m3e-callout-label-line-height`   | Line height of the label.             |
-| `--m3e-callout-label-tracking`      | Letter spacing of the label.          |
-| `--m3e-callout-content-font-size`   | Font size of the content.             |
-| `--m3e-callout-content-font-weight` | Font weight of the content.           |
-| `--m3e-callout-content-line-height` | Line height of the content.           |
-| `--m3e-callout-content-tracking`    | Letter spacing of the content.        |
-| `--m3e-callout-label-content-space` | Space between the header and content. |
-| `--m3e-callout-rounded-shape`       | Corner radius of the rounded shape.   |
-| `--m3e-callout-square-shape`        | Corner radius of the square shape.    |
+| Property                                 | Description                                            |
+| ---------------------------------------- | ------------------------------------------------------ |
+| `--m3e-callout-leading-space`            | Padding at the start of the callout.                   |
+| `--m3e-callout-trailing-space`           | Padding at the end of the callout.                     |
+| `--m3e-callout-top-space`                | Padding at the top of the callout.                     |
+| `--m3e-callout-bottom-space`             | Padding at the bottom of the callout.                  |
+| `--m3e-callout-leading-accent-size`      | Width of the leading accent.                           |
+| `--m3e-callout-icon-label-space`         | Space between the icon and label.                      |
+| `--m3e-callout-icon-size`                | Size of the icon.                                      |
+| `--m3e-callout-label-font-size`          | Font size of the label.                                |
+| `--m3e-callout-label-font-weight`        | Font weight of the label.                              |
+| `--m3e-callout-label-line-height`        | Line height of the label.                              |
+| `--m3e-callout-label-tracking`           | Letter spacing of the label.                           |
+| `--m3e-callout-content-font-size`        | Font size of the content.                              |
+| `--m3e-callout-content-font-weight`      | Font weight of the content.                            |
+| `--m3e-callout-content-line-height`      | Line height of the content.                            |
+| `--m3e-callout-content-tracking`         | Letter spacing of the content.                         |
+| `--m3e-callout-label-content-space`      | Space between the header and content.                  |
+| `--m3e-callout-rounded-shape`            | Corner radius of the rounded shape.                    |
+| `--m3e-callout-square-shape`             | Corner radius of the square shape.                     |
+| `--m3e-callout-shape-family`             | Corner family applied to all corners of the callout.   |
+| `--m3e-callout-shape-family-start-start` | Corner family of the block-start, inline-start corner. |
+| `--m3e-callout-shape-family-start-end`   | Corner family of the block-start, inline-end corner.   |
+| `--m3e-callout-shape-family-end-start`   | Corner family of the block-end, inline-start corner.   |
+| `--m3e-callout-shape-family-end-end`     | Corner family of the block-end, inline-end corner.     |
