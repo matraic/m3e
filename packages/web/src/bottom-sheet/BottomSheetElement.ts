@@ -204,6 +204,11 @@ import "@m3e/web/gestures/tap";
  * @cssprop --m3e-bottom-sheet-z-index - The z-index of the non-modal sheet.
  * @cssprop --m3e-bottom-sheet-minimized-container-shape - The border radius when minimized.
  * @cssprop --m3e-bottom-sheet-container-shape - The border radius of the sheet container.
+ * @cssprop --m3e-bottom-sheet-container-shape-family - Corner family applied to all corners of the sheet container.
+ * @cssprop --m3e-bottom-sheet-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-bottom-sheet-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-bottom-sheet-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-bottom-sheet-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-bottom-sheet-full-container-shape - The border radius when full height.
  * @cssprop --m3e-bottom-sheet-scrim-color - The color of the scrim overlay.
  * @cssprop --m3e-bottom-sheet-scrim-opacity - The opacity of the scrim overlay.
@@ -246,6 +251,25 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
 
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
+    :host,
+    .base {
+      corner-start-start-shape: var(
+        --m3e-bottom-sheet-container-shape-family-start-start,
+        var(--m3e-bottom-sheet-container-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-bottom-sheet-container-shape-family-start-end,
+        var(--m3e-bottom-sheet-container-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-bottom-sheet-container-shape-family-end-start,
+        var(--m3e-bottom-sheet-container-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-bottom-sheet-container-shape-family-end-end,
+        var(--m3e-bottom-sheet-container-shape-family, ${DesignToken.shape.family.endEnd})
+      );
+    }
     :host {
       display: block;
       position: fixed;
@@ -293,15 +317,24 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
     }
     :host(:not([modal]):not([open])),
     :host([modal]:not(:popover-open)) {
-      border-radius: var(--m3e-bottom-sheet-minimized-container-shape, ${DesignToken.shape.corner.none});
       transform: translateX(-50%) translateY(100%);
     }
+    :host(:not([modal]):not([open])),
+    :host([modal]:not(:popover-open)),
+    :host(:not([modal]):not([open])) .base,
+    :host([modal]:not(:popover-open)) .base {
+      border-radius: var(--m3e-bottom-sheet-minimized-container-shape, ${DesignToken.shape.corner.none});
+    }
     :host(:not([modal])[open]:not(:is(:state(--full), :--full))),
-    :host([modal]:not(:is(:state(--full), :--full)):popover-open) {
+    :host([modal]:not(:is(:state(--full), :--full)):popover-open),
+    :host(:not([modal])[open]:not(:is(:state(--full), :--full))) .base,
+    :host([modal]:not(:is(:state(--full), :--full)):popover-open) .base {
       border-radius: var(--m3e-bottom-sheet-container-shape, ${DesignToken.shape.corner.extraLargeTop});
     }
     :host(:not([modal])[open]:is(:state(--full), :--full)),
-    :host([modal]:is(:state(--full), :--full):popover-open) {
+    :host([modal]:is(:state(--full), :--full):popover-open),
+    :host(:not([modal])[open]:is(:state(--full), :--full)) .base,
+    :host([modal]:is(:state(--full), :--full):popover-open) .base {
       border-radius: var(--m3e-bottom-sheet-full-container-shape, ${DesignToken.shape.corner.extraLargeTop});
     }
     :host(:not([modal])[open]),
@@ -341,7 +374,6 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
     .base {
       contain: layout style paint;
       display: flex;
-      border-radius: inherit;
       flex-direction: column;
       height: 100%;
       --_bottom-sheet-peek-height: var(--m3e-bottom-sheet-peek-height, 0);
@@ -380,6 +412,7 @@ export class M3eBottomSheetElement extends ReconnectedCallback(SuppressInitialAn
     .header {
       border-top-left-radius: inherit;
       border-top-right-radius: inherit;
+      corner-shape: inherit;
       padding-block-start: var(--m3e-bottom-sheet-padding-block, ${DesignToken.measurement.space100});
     }
     .header {
