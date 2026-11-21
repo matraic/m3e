@@ -679,7 +679,11 @@ export class M3eDateInputElement
             : "24";
     }
 
-    if (_changedProperties.has("type")) {
+    if (
+      _changedProperties.has("type") ||
+      _changedProperties.has("timeFormat") ||
+      _changedProperties.has("showSeconds")
+    ) {
       if (!isDateInputType(this.type)) {
         this.type = "date";
       }
@@ -714,9 +718,14 @@ export class M3eDateInputElement
           break;
       }
 
-      this._activeField = <DateInputFieldSegment>(
-        this.#format.filter((x) => ["month", "day", "year", "hour", "minute", "second"].includes(x.type))[0].type
-      );
+      if (
+        _changedProperties.has("type") ||
+        !this.#format.some((part) => (part.type === "dayPeriod" ? "period" : part.type) === this._activeField)
+      ) {
+        this._activeField = <DateInputFieldSegment>(
+          this.#format.filter((x) => ["month", "day", "year", "hour", "minute", "second"].includes(x.type))[0].type
+        );
+      }
     }
 
     if (_changedProperties.has("value")) {
@@ -1077,7 +1086,6 @@ export class M3eDateInputElement
           this.value = oldValue;
           this.#updateValueBuffer();
         }
-        this.dispatchEvent(new Event("input", { bubbles: true }));
       } else {
         this.#changed = true;
       }
@@ -1598,7 +1606,7 @@ export class M3eDateInputElement
 
   /** @private */
   #adjustHourForPeriod(hour: number | undefined, period: number | undefined): number | undefined {
-    if (hour !== undefined) {
+    if (hour !== undefined && this.#timeFormat === "12") {
       if (period === 1 && hour < 12) hour += 12;
       if (period === 0 && hour === 12) hour = 0;
     }
