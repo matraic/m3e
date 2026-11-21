@@ -619,7 +619,12 @@ export class M3eIconButtonElement extends KeyboardClick(
     }
 
     if (_changedProperties.has("toggle") || _changedProperties.has("selected")) {
-      this.ariaPressed = this.toggle ? `${this.selected}` : null;
+      if (this.toggle && this.role === "radio") {
+        this.ariaChecked = `${this.selected}`;
+        this.ariaPressed = null;
+      } else {
+        this.ariaPressed = this.toggle ? `${this.selected}` : null;
+      }
       if (this.toggle) {
         for (const icon of this.querySelectorAll("m3e-icon")) {
           icon.toggleAttribute("filled", this.selected);
