@@ -18,6 +18,29 @@ const bar = `
 `;
 
 test.describe("m3e-nav-bar", () => {
+  test("keeps item layers shaped across orientations with an independent vertical focus ring", async ({
+    page,
+    render,
+  }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await render(`
+      <m3e-nav-bar style="--m3e-nav-item-shape-family: bevel; --m3e-nav-item-focus-ring-shape-family: round">
+        <m3e-nav-item selected>Home</m3e-nav-item>
+      </m3e-nav-bar>
+    `);
+    const item = page.locator("m3e-nav-item");
+    for (const surface of await item.locator(".outer, .inner, m3e-selection-indicator.indicator").all()) {
+      await expect(surface).toHaveCSS("corner-shape", "superellipse(0)");
+    }
+    await expect(item.locator(".focus-ring")).toHaveCSS("corner-shape", "superellipse(1)");
+    await expect(item.locator(".focus-ring")).toHaveCSS("border-radius", "12px");
+    await page.locator("m3e-nav-bar").evaluate((element) => element.setAttribute("mode", "expanded"));
+    await expect(item).toHaveAttribute("orientation", "horizontal");
+    await expect(item.locator(".focus-ring")).toHaveCSS("corner-shape", "superellipse(0)");
+    await expect(item.locator(".focus-ring")).toHaveCSS("border-radius", "9999px");
+    await expect(item.locator("m3e-selection-indicator.indicator")).toHaveCSS("corner-shape", "superellipse(0)");
+  });
+
   test("exposes navigation semantics and marks the selected item as current", async ({ page, render }) => {
     await render(bar);
     const home = page.getByRole("button", { name: "Home" });

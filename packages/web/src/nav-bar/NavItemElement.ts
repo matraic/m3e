@@ -86,6 +86,11 @@ import { isNavItemOrientation, NavItemOrientation } from "./NavItemOrientation";
  * @cssprop --m3e-nav-item-label-text-line-height - Line height for the label text.
  * @cssprop --m3e-nav-item-label-text-tracking - Letter spacing for the label text.
  * @cssprop --m3e-nav-item-shape - Border radius of the nav item.
+ * @cssprop --m3e-nav-item-shape-family - Corner family applied to all corners of the nav item and active indicator.
+ * @cssprop --m3e-nav-item-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-nav-item-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-nav-item-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-nav-item-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-nav-item-icon-size - Size of the icon.
  * @cssprop --m3e-nav-item-spacing - Spacing between icon and label.
  * @cssprop --m3e-nav-item-inactive-label-text-color - Color of the label text when inactive.
@@ -100,6 +105,11 @@ import { isNavItemOrientation, NavItemOrientation } from "./NavItemOrientation";
  * @cssprop --m3e-nav-item-active-focus-state-layer-color - State layer color on focus when active.
  * @cssprop --m3e-nav-item-active-pressed-state-layer-color - State layer color on press when active.
  * @cssprop --m3e-nav-item-focus-ring-shape - Border radius for the focus ring.
+ * @cssprop --m3e-nav-item-focus-ring-shape-family - Corner family applied to all corners of the vertical nav item's focus ring.
+ * @cssprop --m3e-nav-item-focus-ring-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-nav-item-focus-ring-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-nav-item-focus-ring-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-nav-item-focus-ring-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-nav-item-disabled-label-text-color - Color of the label text when disabled.
  * @cssprop --m3e-nav-item-disabled-label-text-opacity - Opacity of the label text when disabled.
  * @cssprop --m3e-nav-item-disabled-icon-color - Color of the icon when disabled.
@@ -141,6 +151,22 @@ export class M3eNavItemElement extends SupportsDirectionality(
       );
       letter-spacing: var(--m3e-nav-item-label-text-tracking, ${DesignToken.typescale.standard.label.medium.tracking});
       border-radius: var(--m3e-nav-item-shape, ${DesignToken.shape.corner.full});
+      corner-start-start-shape: var(
+        --m3e-nav-item-shape-family-start-start,
+        var(--m3e-nav-item-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-nav-item-shape-family-start-end,
+        var(--m3e-nav-item-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-nav-item-shape-family-end-start,
+        var(--m3e-nav-item-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-nav-item-shape-family-end-end,
+        var(--m3e-nav-item-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       align-self: var(--_nav-item-align-self);
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       -webkit-user-select: none;
@@ -180,6 +206,7 @@ export class M3eNavItemElement extends SupportsDirectionality(
       justify-content: var(--_nav-item-justify-content, center);
       position: relative;
       border-radius: inherit;
+      corner-shape: inherit;
     }
     .icon-wrapper {
       position: relative;
@@ -348,6 +375,22 @@ export class M3eNavItemElement extends SupportsDirectionality(
     }
     :host(:is(:state(--vertical), :--vertical)) .focus-ring {
       border-radius: var(--m3e-nav-item-focus-ring-shape, ${DesignToken.shape.corner.medium});
+      corner-start-start-shape: var(
+        --m3e-nav-item-focus-ring-shape-family-start-start,
+        var(--m3e-nav-item-focus-ring-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-nav-item-focus-ring-shape-family-start-end,
+        var(--m3e-nav-item-focus-ring-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-nav-item-focus-ring-shape-family-end-start,
+        var(--m3e-nav-item-focus-ring-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-nav-item-focus-ring-shape-family-end-end,
+        var(--m3e-nav-item-focus-ring-shape-family, ${DesignToken.shape.family.endEnd})
+      );
     }
     :host(:is(:state(--horizontal), :--horizontal)) .icon-wrapper {
       width: var(--m3e-nav-item-icon-size, 24px);
