@@ -10,14 +10,16 @@ export const test = mergeTests(componentTest, bddTest).extend<{ avatar: AvatarHa
 const { Given, When, Then } = createBdd(test);
 
 Given("an avatar with slotted initials", ({ avatar }) => avatar.prepareInitials());
-Given("an avatar with a slotted image", ({ avatar }) => avatar.prepareImage());
-Given("an avatar with a slotted icon", ({ avatar }) => avatar.prepareIcon());
 When("the avatar renders", async ({ avatar }) => avatar.render());
 Then("the avatar is visible", async ({ avatar }) => expect(avatar.avatar).toBeVisible());
 Then('the initials "AB" are visible', async ({ page }) => expect(page.getByText("AB", { exact: true })).toBeVisible());
+
+Given("an avatar with a slotted image", ({ avatar }) => avatar.prepareImage());
 Then("the slotted image has accessible name {string}", async ({ avatar }, name: string) =>
   expect(avatar.graphic(name)).toBeVisible(),
 );
+
+Given("an avatar with a slotted icon", ({ avatar }) => avatar.prepareIcon());
 Then("the slotted icon has accessible name {string}", async ({ avatar }, name: string) =>
   expect(avatar.graphic(name)).toBeVisible(),
 );
