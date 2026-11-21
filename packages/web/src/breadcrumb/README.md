@@ -39,12 +39,8 @@ Use the `icon` slot to place an icon before a label. For an icon-only item, plac
   <m3e-breadcrumb-item item-label="Dashboard">
     <m3e-icon name="dashboard"></m3e-icon>
   </m3e-breadcrumb-item>
-  <m3e-breadcrumb-item>
-    <m3e-icon slot="icon" name="analytics"></m3e-icon>Reports
-  </m3e-breadcrumb-item>
-  <m3e-breadcrumb-item>
-    <m3e-icon slot="icon" name="calendar_month"></m3e-icon>Annual
-  </m3e-breadcrumb-item>
+  <m3e-breadcrumb-item> <m3e-icon slot="icon" name="analytics"></m3e-icon>Reports </m3e-breadcrumb-item>
+  <m3e-breadcrumb-item> <m3e-icon slot="icon" name="calendar_month"></m3e-icon>Annual </m3e-breadcrumb-item>
 </m3e-breadcrumb>
 ```
 
@@ -118,26 +114,31 @@ This section describes the attributes and slots available for the breadcrumb com
 
 ### 🎛️ CSS Custom Properties
 
-| Property                                                | Description                                               |
-| ------------------------------------------------------- | --------------------------------------------------------- |
-| `--m3e-breadcrumb-item-shape`                           | Shape of the internal breadcrumb item button.             |
-| `--m3e-breadcrumb-item-container-height`                | Height of the internal breadcrumb item button container.  |
-| `--m3e-breadcrumb-item-icon-color`                      | Color of breadcrumb item icon-only content.               |
-| `--m3e-breadcrumb-item-icon-padding-inline`             | Horizontal padding for icon-only breadcrumb items.        |
-| `--m3e-breadcrumb-item-icon-hover-state-layer-color`    | Hover state layer color for icon-only breadcrumb items.   |
-| `--m3e-breadcrumb-item-icon-focus-state-layer-color`    | Focus state layer color for icon-only breadcrumb items.   |
-| `--m3e-breadcrumb-item-icon-pressed-state-layer-color`  | Pressed state layer color for icon-only breadcrumb items. |
-| `--m3e-breadcrumb-item-label-color`                     | Color of breadcrumb item label content.                   |
-| `--m3e-breadcrumb-item-label-font-size`                 | Font size of breadcrumb item label content.               |
-| `--m3e-breadcrumb-item-label-font-weight`               | Font weight of breadcrumb item label content.             |
-| `--m3e-breadcrumb-item-label-line-height`               | Line height of breadcrumb item label content.             |
-| `--m3e-breadcrumb-item-label-tracking`                  | Letter spacing of breadcrumb item label content.          |
-| `--m3e-breadcrumb-item-label-padding-inline`            | Horizontal padding for label breadcrumb items.            |
-| `--m3e-breadcrumb-item-label-hover-state-layer-color`   | Hover state layer color for label breadcrumb items.       |
-| `--m3e-breadcrumb-item-label-focus-state-layer-color`   | Focus state layer color for label breadcrumb items.       |
-| `--m3e-breadcrumb-item-label-pressed-state-layer-color` | Pressed state layer color for label breadcrumb items.     |
-| `--m3e-breadcrumb-item-last-color`                      | Color used for the current breadcrumb item.               |
-| `--m3e-breadcrumb-item-icon-label-space`                | Space between icon and label.                             |
-| `--m3e-breadcrumb-item-icon-size`                       | Size of the icon.                                         |
-| `--m3e-breadcrumb-item-disabled-color`                  | Disabled color used by the breadcrumb item button.        |
-| `--m3e-breadcrumb-item-disabled-opacity`                | Disabled opacity used by the breadcrumb item button.      |
+| Property                                                | Description                                                                  |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `--m3e-breadcrumb-item-shape`                           | Shape of the internal breadcrumb item button.                                |
+| `--m3e-breadcrumb-item-shape-family`                    | Corner family applied to all corners of the internal breadcrumb item button. |
+| `--m3e-breadcrumb-item-shape-family-start-start`        | Corner family of the block-start, inline-start corner.                       |
+| `--m3e-breadcrumb-item-shape-family-start-end`          | Corner family of the block-start, inline-end corner.                         |
+| `--m3e-breadcrumb-item-shape-family-end-start`          | Corner family of the block-end, inline-start corner.                         |
+| `--m3e-breadcrumb-item-shape-family-end-end`            | Corner family of the block-end, inline-end corner.                           |
+| `--m3e-breadcrumb-item-container-height`                | Height of the internal breadcrumb item button container.                     |
+| `--m3e-breadcrumb-item-icon-color`                      | Color of breadcrumb item icon-only content.                                  |
+| `--m3e-breadcrumb-item-icon-padding-inline`             | Horizontal padding for icon-only breadcrumb items.                           |
+| `--m3e-breadcrumb-item-icon-hover-state-layer-color`    | Hover state layer color for icon-only breadcrumb items.                      |
+| `--m3e-breadcrumb-item-icon-focus-state-layer-color`    | Focus state layer color for icon-only breadcrumb items.                      |
+| `--m3e-breadcrumb-item-icon-pressed-state-layer-color`  | Pressed state layer color for icon-only breadcrumb items.                    |
+| `--m3e-breadcrumb-item-label-color`                     | Color of breadcrumb item label content.                                      |
+| `--m3e-breadcrumb-item-label-font-size`                 | Font size of breadcrumb item label content.                                  |
+| `--m3e-breadcrumb-item-label-font-weight`               | Font weight of breadcrumb item label content.                                |
+| `--m3e-breadcrumb-item-label-line-height`               | Line height of breadcrumb item label content.                                |
+| `--m3e-breadcrumb-item-label-tracking`                  | Letter spacing of breadcrumb item label content.                             |
+| `--m3e-breadcrumb-item-label-padding-inline`            | Horizontal padding for label breadcrumb items.                               |
+| `--m3e-breadcrumb-item-label-hover-state-layer-color`   | Hover state layer color for label breadcrumb items.                          |
+| `--m3e-breadcrumb-item-label-focus-state-layer-color`   | Focus state layer color for label breadcrumb items.                          |
+| `--m3e-breadcrumb-item-label-pressed-state-layer-color` | Pressed state layer color for label breadcrumb items.                        |
+| `--m3e-breadcrumb-item-last-color`                      | Color used for the current breadcrumb item.                                  |
+| `--m3e-breadcrumb-item-icon-label-space`                | Space between icon and label.                                                |
+| `--m3e-breadcrumb-item-icon-size`                       | Size of the icon.                                                            |
+| `--m3e-breadcrumb-item-disabled-color`                  | Disabled color used by the breadcrumb item button.                           |
+| `--m3e-breadcrumb-item-disabled-opacity`                | Disabled opacity used by the breadcrumb item button.                         |

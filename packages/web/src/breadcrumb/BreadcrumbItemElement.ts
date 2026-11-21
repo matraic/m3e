@@ -71,6 +71,11 @@ import "./BreadcrumbItemButtonElement";
  * @fires click - Dispatched when the element is clicked.
  *
  * @cssprop --m3e-breadcrumb-item-shape - Shape of the internal breadcrumb item button.
+ * @cssprop --m3e-breadcrumb-item-shape-family - Corner family applied to all corners of the internal breadcrumb item button.
+ * @cssprop --m3e-breadcrumb-item-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-breadcrumb-item-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-breadcrumb-item-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-breadcrumb-item-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-breadcrumb-item-container-height - Height of the internal breadcrumb item button container.
  * @cssprop --m3e-breadcrumb-item-icon-color - Color of breadcrumb item icon-only content.
  * @cssprop --m3e-breadcrumb-item-icon-padding-inline - Horizontal padding for icon-only breadcrumb items.

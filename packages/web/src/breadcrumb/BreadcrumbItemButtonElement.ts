@@ -45,6 +45,22 @@ export class M3eBreadcrumbItemButtonElement extends KeyboardClick(
       justify-content: center;
       position: relative;
       border-radius: var(--m3e-breadcrumb-item-shape, ${DesignToken.shape.corner.full});
+      corner-start-start-shape: var(
+        --m3e-breadcrumb-item-shape-family-start-start,
+        var(--m3e-breadcrumb-item-shape-family, ${DesignToken.shape.family.startStart})
+      );
+      corner-start-end-shape: var(
+        --m3e-breadcrumb-item-shape-family-start-end,
+        var(--m3e-breadcrumb-item-shape-family, ${DesignToken.shape.family.startEnd})
+      );
+      corner-end-start-shape: var(
+        --m3e-breadcrumb-item-shape-family-end-start,
+        var(--m3e-breadcrumb-item-shape-family, ${DesignToken.shape.family.endStart})
+      );
+      corner-end-end-shape: var(
+        --m3e-breadcrumb-item-shape-family-end-end,
+        var(--m3e-breadcrumb-item-shape-family, ${DesignToken.shape.family.endEnd})
+      );
       height: calc(var(--m3e-breadcrumb-item-container-height, 40px) + ${DesignToken.density.calc(-3)});
       column-gap: var(--m3e-breadcrumb-item-icon-label-space, ${DesignToken.measurement.space100});
     }
