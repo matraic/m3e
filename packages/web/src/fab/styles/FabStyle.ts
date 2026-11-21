@@ -28,6 +28,22 @@ export const FabStyle: CSSResultGroup = css`
     justify-content: center;
     position: relative;
     width: 100%;
+    corner-start-start-shape: var(
+      --m3e-fab-shape-family-start-start,
+      var(--m3e-fab-shape-family, ${DesignToken.shape.family.startStart})
+    );
+    corner-start-end-shape: var(
+      --m3e-fab-shape-family-start-end,
+      var(--m3e-fab-shape-family, ${DesignToken.shape.family.startEnd})
+    );
+    corner-end-start-shape: var(
+      --m3e-fab-shape-family-end-start,
+      var(--m3e-fab-shape-family, ${DesignToken.shape.family.endStart})
+    );
+    corner-end-end-shape: var(
+      --m3e-fab-shape-family-end-end,
+      var(--m3e-fab-shape-family, ${DesignToken.shape.family.endEnd})
+    );
     transition: ${unsafeCSS(
       `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
     )};
@@ -80,6 +96,22 @@ export const FabStyle: CSSResultGroup = css`
   }
   :host([aria-expanded="true"]) .base.with-menu {
     border-radius: var(--m3e-fab-menu-close-button-container-shape, ${DesignToken.shape.corner.full});
+    corner-start-start-shape: var(
+      --m3e-fab-menu-close-button-container-shape-family-start-start,
+      var(--m3e-fab-menu-close-button-container-shape-family, ${DesignToken.shape.family.startStart})
+    );
+    corner-start-end-shape: var(
+      --m3e-fab-menu-close-button-container-shape-family-start-end,
+      var(--m3e-fab-menu-close-button-container-shape-family, ${DesignToken.shape.family.startEnd})
+    );
+    corner-end-start-shape: var(
+      --m3e-fab-menu-close-button-container-shape-family-end-start,
+      var(--m3e-fab-menu-close-button-container-shape-family, ${DesignToken.shape.family.endStart})
+    );
+    corner-end-end-shape: var(
+      --m3e-fab-menu-close-button-container-shape-family-end-end,
+      var(--m3e-fab-menu-close-button-container-shape-family, ${DesignToken.shape.family.endEnd})
+    );
     min-height: calc(var(--m3e-fab-menu-close-button-container-height, 56px) + ${DesignToken.density.calc(-3)});
   }
   :host([aria-expanded="true"]) .base.with-menu .wrapper {

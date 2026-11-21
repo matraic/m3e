@@ -135,6 +135,17 @@ import { FabSizeStyle, FabStyle, FabVariantStyle } from "./styles";
  * @cssprop --m3e-fab-label-text-tracking - Letter spacing (tracking) for the FAB label text for all size variants.
  * @cssprop --m3e-fab-icon-size - Icon size for the FAB for all size variants.
  * @cssprop --m3e-fab-shape - Border radius for the FAB for all size variants.
+ * @cssprop --m3e-fab-shape-family - Corner family applied to all corners of the FAB for all size variants.
+ * @cssprop --m3e-fab-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-fab-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-fab-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-fab-shape-family-end-end - Corner family of the block-end, inline-end corner.
+ * @cssprop --m3e-fab-menu-close-button-container-shape - Border radius of the FAB menu's open-state close button.
+ * @cssprop --m3e-fab-menu-close-button-container-shape-family - Corner family applied to all corners of the FAB menu's open-state close button.
+ * @cssprop --m3e-fab-menu-close-button-container-shape-family-start-start - Corner family of the block-start, inline-start corner.
+ * @cssprop --m3e-fab-menu-close-button-container-shape-family-start-end - Corner family of the block-start, inline-end corner.
+ * @cssprop --m3e-fab-menu-close-button-container-shape-family-end-start - Corner family of the block-end, inline-start corner.
+ * @cssprop --m3e-fab-menu-close-button-container-shape-family-end-end - Corner family of the block-end, inline-end corner.
  * @cssprop --m3e-fab-leading-space - Leading space for the FAB for all size variants.
  * @cssprop --m3e-fab-trailing-space - Trailing space for the FAB for all size variants.
  * @cssprop --m3e-fab-icon-label-space - Space between icon and label for the FAB for all size variants.

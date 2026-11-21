@@ -124,6 +124,31 @@ All size variants (`small`, `medium`, `large`) support the following tokens. Omi
 | `--m3e-fab-[size]-extended-trailing-space` | Space after icon/label for extended FABs  |
 | `--m3e-fab-[size]-icon-label-space`        | Space between icon and label              |
 
+#### Shape Family Properties
+
+These properties apply to all FAB sizes and appearance variants. The FAB menu's open-state close button uses its own shape properties.
+
+| Property                             | Description                                           |
+| ------------------------------------ | ----------------------------------------------------- |
+| `--m3e-fab-shape-family`             | Corner family applied to all corners of the FAB       |
+| `--m3e-fab-shape-family-start-start` | Corner family of the block-start, inline-start corner |
+| `--m3e-fab-shape-family-start-end`   | Corner family of the block-start, inline-end corner   |
+| `--m3e-fab-shape-family-end-start`   | Corner family of the block-end, inline-start corner   |
+| `--m3e-fab-shape-family-end-end`     | Corner family of the block-end, inline-end corner     |
+
+#### FAB Menu Close Button Shape Properties
+
+Set these properties on the FAB to customize its open-state close button independently.
+
+| Property                                                         | Description                                              |
+| ---------------------------------------------------------------- | -------------------------------------------------------- |
+| `--m3e-fab-menu-close-button-container-shape`                    | Border radius of the close button                        |
+| `--m3e-fab-menu-close-button-container-shape-family`             | Corner family applied to all corners of the close button |
+| `--m3e-fab-menu-close-button-container-shape-family-start-start` | Corner family of the block-start, inline-start corner    |
+| `--m3e-fab-menu-close-button-container-shape-family-start-end`   | Corner family of the block-start, inline-end corner      |
+| `--m3e-fab-menu-close-button-container-shape-family-end-start`   | Corner family of the block-end, inline-start corner      |
+| `--m3e-fab-menu-close-button-container-shape-family-end-end`     | Corner family of the block-end, inline-end corner        |
+
 #### 🎨 Appearance Variant Properties
 
 All appearance variants (`primary`, `primary-container`, `secondary`, `secondary-container`, `tertiary`, `tertiary-container`, `surface`) support the following tokens. Omitting the `[variant]-` prefix overrides the value for all variants.
