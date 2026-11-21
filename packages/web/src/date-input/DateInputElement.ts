@@ -964,12 +964,12 @@ export class M3eDateInputElement
       e.relatedTarget.classList.contains("field") &&
       this.shadowRoot?.contains(e.relatedTarget)
     ) {
-      this.#commitBuffer(this._activeField, true);
+      this.#commitBuffer(this._activeField);
       return;
     }
 
     // Commit active buffer.
-    this.#commitBuffer(this._activeField, false);
+    this.#commitBuffer(this._activeField);
 
     // Always clear buffer and deselect all when leaving input
     this._buffer = {};
@@ -989,19 +989,13 @@ export class M3eDateInputElement
   }
 
   /** @private */
-  #commitBuffer(id: DateInputFieldSegment, emitEvent: boolean): void {
-    // Commit segment if buffer exists
-    if (this._buffer[id] !== undefined) {
-      const old = this._value[id];
-      const next = Number(this._buffer[id]); // works for period too ("0"/"1")
-
-      if (next !== old) {
-        this._value = { ...this._value, [id]: next };
-      }
-    }
-
-    // Clear only this segment's buffer
+  #commitBuffer(id: DateInputFieldSegment): void {
+    const buffered = this._buffer[id];
+    if (buffered === undefined) return;
     this._buffer = { ...this._buffer, [id]: undefined };
+    const next = Number(buffered);
+    if (next === this._value[id]) return;
+    this._value = { ...this._value, [id]: next };
 
     const { month, day, year, hour, minute, second, period } = this._value;
 
@@ -1078,16 +1072,12 @@ export class M3eDateInputElement
     if (!oldValue || oldValue.getTime() !== newDate.getTime()) {
       this.value = newDate;
 
-      if (emitEvent) {
-        if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
-          this.#changed = true;
-          this.dispatchEvent(new Event("input", { bubbles: true }));
-        } else {
-          this.value = oldValue;
-          this.#updateValueBuffer();
-        }
-      } else {
+      if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
         this.#changed = true;
+        this.dispatchEvent(new Event("input", { bubbles: true }));
+      } else {
+        this.value = oldValue;
+        this.#updateValueBuffer();
       }
     }
   }
@@ -1148,7 +1138,7 @@ export class M3eDateInputElement
       case "Up":
         e.preventDefault();
         if (!this.readOnly) {
-          this.#commitBuffer(id, false);
+          this.#commitBuffer(id);
 
           const now = Number(field.ariaValueNow);
           const min = Number(field.ariaValueMin);
@@ -1172,7 +1162,7 @@ export class M3eDateInputElement
       case "Down":
         e.preventDefault();
         if (!this.readOnly) {
-          this.#commitBuffer(id, false);
+          this.#commitBuffer(id);
 
           const now = Number(field.ariaValueNow);
           const min = Number(field.ariaValueMin);
@@ -1195,7 +1185,7 @@ export class M3eDateInputElement
       case "Home":
         e.preventDefault();
         if (!this.readOnly) {
-          this.#commitBuffer(id, false);
+          this.#commitBuffer(id);
           this._value = { ...this._value };
           this._value[id] = Number(field.ariaValueMin);
 
@@ -1214,7 +1204,7 @@ export class M3eDateInputElement
       case "End":
         e.preventDefault();
         if (!this.readOnly) {
-          this.#commitBuffer(id, false);
+          this.#commitBuffer(id);
           this._value = { ...this._value };
           this._value[id] = Number(field.ariaValueMax);
 
@@ -1233,7 +1223,7 @@ export class M3eDateInputElement
       case "PageUp":
         e.preventDefault();
         if (!this.readOnly) {
-          this.#commitBuffer(id, false);
+          this.#commitBuffer(id);
 
           const now = Number(field.ariaValueNow);
           const min = Number(field.ariaValueMin);
@@ -1261,7 +1251,7 @@ export class M3eDateInputElement
       case "PageDown":
         e.preventDefault();
         if (!this.readOnly) {
-          this.#commitBuffer(id, false);
+          this.#commitBuffer(id);
 
           const now = Number(field.ariaValueNow);
           const min = Number(field.ariaValueMin);
@@ -1272,7 +1262,8 @@ export class M3eDateInputElement
             this._value[id] = this.#getCurrent()[id];
           } else {
             const next = now - 5;
-            this._value[id] = next < min ? max - ((min - next) % (max - min + 1)) : next;
+            const range = max - min + 1;
+            this._value[id] = next < min ? min + ((((next - min) % range) + range) % range) : next;
           }
 
           // Special handling for period (AM/PM)
@@ -1371,7 +1362,7 @@ export class M3eDateInputElement
     e.preventDefault();
 
     if (!this.readOnly) {
-      this.#commitBuffer(id, false);
+      this.#commitBuffer(id);
 
       const now = Number(field.ariaValueNow);
       const min = Number(field.ariaValueMin);
@@ -1479,11 +1470,7 @@ export class M3eDateInputElement
   /** @private */
   #updateHourFromPeriod() {
     if (this._value.hour === undefined || this._value.period === undefined) return;
-    const hour12 = this._value.hour % 12 || 12;
-    let newHour = hour12;
-    if (this._value.period === 1) newHour += 12;
-    if (this._value.period === 0 && hour12 === 12) newHour = 0;
-    this._value.hour = newHour;
+    this._value.hour = (this._value.hour % 12) + (this._value.period === 1 ? 12 : 0);
   }
 
   /** @private */
