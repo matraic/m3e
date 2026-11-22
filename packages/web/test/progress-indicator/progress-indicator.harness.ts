@@ -1,11 +1,8 @@
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-
 import type { Locator, Page } from "@playwright/test";
+import type { M3eLinearProgressIndicatorElement } from "@m3e/web/progress-indicator";
+import type { M3eSliderThumbElement } from "@m3e/web/slider";
 
 import { expect } from "../fixtures";
-
-const showcase = new URL("../../../../docs/components/", import.meta.url);
 
 export type ProgressIndicatorKind = "linear" | "circular";
 
@@ -471,40 +468,42 @@ export class ProgressIndicatorHarness {
     expect(waves).toEqual([false, false, true, false, false]);
   }
 
-  async prepareShowcase(width: number) {
+  async prepareCompletion(width: number) {
     await this.page.setViewportSize({ width, height: 720 });
     this.kind = "linear";
-    this.html = await this.page.evaluate(
-      (source) => {
-        const document = new DOMParser().parseFromString(source, "text/html");
-        const theme = document.querySelector("m3e-theme");
-        const demos = [
-          ...document.querySelectorAll(".circular-progress-demo, .linear-progress-demo, .progress-thickness-demo"),
-        ];
-        if (!theme || demos.length !== 3) throw new Error("Missing progress showcases");
-        return (
-          theme.outerHTML +
-          demos
-            .map((demo) => {
-              if (!demo.parentElement) throw new Error("Missing progress showcase card");
-              return demo.parentElement.outerHTML;
-            })
-            .join("")
-        );
-      },
-      readFileSync(new URL("progress-indicator.html", showcase), "utf8"),
-    );
+    this.html = `<div style="display: flex; align-items: center; gap: 16px">
+      <m3e-linear-progress-indicator variant="wavy" value="0" aria-label="Progress"
+        style="flex: 1; min-width: 0"></m3e-linear-progress-indicator>
+      <span id="linear-progress-value" style="flex: none; width: 5ch; text-align: right">0%</span>
+      <m3e-button id="run-linear-progress" style="flex: none; min-width: 128px">Run progress</m3e-button>
+    </div>`;
   }
 
-  async renderShowcase() {
+  async renderCompletion() {
     await this.render();
-    await this.page.addStyleTag({ path: fileURLToPath(new URL("../main.css", showcase)) });
-    await this.page.addStyleTag({ path: fileURLToPath(new URL("progress-indicator.css", showcase)) });
-    await this.page.addScriptTag({ path: fileURLToPath(new URL("progress-indicator.js", showcase)) });
-    await this.page.evaluate(() => window.dispatchEvent(new Event("DOMContentLoaded")));
+    await this.page.evaluate(() => {
+      const progress = document.querySelector<M3eLinearProgressIndicatorElement>("m3e-linear-progress-indicator");
+      const run = document.querySelector("m3e-button");
+      const display = document.querySelector("#linear-progress-value");
+      if (!progress || !run || !display) throw new Error("Missing completion test controls");
+      run.addEventListener("click", () => {
+        run.disabled = true;
+        progress.value = 0;
+        display.textContent = "0%";
+        const timer = setInterval(() => {
+          progress.value += 1;
+          display.textContent = `${progress.value}%`;
+          if (progress.value === 100) {
+            clearInterval(timer);
+            run.disabled = false;
+            run.textContent = "Replay";
+          }
+        }, 100);
+      });
+    });
   }
 
-  async verifyCompletionShowcaseWidth() {
+  async verifyCompletionWidth() {
     const width = await this.indicator.evaluate((element) => element.getBoundingClientRect().width);
     expect(width).toBeGreaterThan(0);
     const run = this.page.locator("#run-linear-progress");
@@ -530,7 +529,44 @@ export class ProgressIndicatorHarness {
     }
   }
 
-  async verifyThicknessShowcase() {
+  async prepareThickness(width: number) {
+    await this.page.setViewportSize({ width, height: 720 });
+    this.html = `<div id="progress-thickness-demo" style="display: grid; gap: 24px">
+      <div style="display: flex; align-items: center; gap: 16px">
+        <m3e-slider min="1" max="12" step="1" style="flex: 1; min-width: 0">
+          <m3e-slider-thumb id="progress-thickness-thumb" value="4" aria-label="Stroke thickness"></m3e-slider-thumb>
+        </m3e-slider>
+        <span id="progress-thickness-value" style="flex: none; width: 5ch; text-align: right">4px</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+        <m3e-linear-progress-indicator value="50" aria-label="Flat linear thickness example"></m3e-linear-progress-indicator>
+        <m3e-linear-progress-indicator value="50" variant="wavy" aria-label="Wavy linear thickness example"></m3e-linear-progress-indicator>
+        <m3e-circular-progress-indicator value="50" aria-label="Flat circular thickness example"></m3e-circular-progress-indicator>
+        <m3e-circular-progress-indicator value="50" variant="wavy" aria-label="Wavy circular thickness example"></m3e-circular-progress-indicator>
+      </div>
+    </div>`;
+  }
+
+  async renderThickness() {
+    await this.render();
+    await this.page.evaluate(() => {
+      const demo = document.querySelector<HTMLElement>("#progress-thickness-demo");
+      const thumb = document.querySelector<M3eSliderThumbElement>("m3e-slider-thumb");
+      const display = document.querySelector("#progress-thickness-value");
+      if (!demo || !thumb || !display) throw new Error("Missing thickness test controls");
+      const updateThickness = () => {
+        const thickness = `${thumb.value}px`;
+        demo.style.setProperty("--m3e-linear-progress-indicator-thickness", thickness);
+        demo.style.setProperty("--m3e-circular-progress-indicator-thickness", thickness);
+        display.textContent = thickness;
+        thumb.ariaValueText = `${thumb.value} pixels`;
+      };
+      thumb.addEventListener("input", updateThickness);
+      updateThickness();
+    });
+  }
+
+  async verifyThickness() {
     const demo = this.page.locator("#progress-thickness-demo");
     const thumb = demo.getByRole("slider", { name: "Stroke thickness" });
     const display = demo.locator("#progress-thickness-value");

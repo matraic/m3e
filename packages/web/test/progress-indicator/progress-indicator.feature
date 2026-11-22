@@ -356,11 +356,11 @@ Feature: Progress indicators
       When the progress indicator renders
       Then only the middle circular indicator has a wave path
 
-  Rule: Completion showcases keep their layout stable
+  Rule: Progress completion keeps its layout stable
 
-    Scenario Outline: The linear showcase keeps its width through completion and replay
-      Given a paused progress completion showcase in a <width> pixel wide viewport
-      When the completion showcase renders
+    Scenario Outline: A linear indicator keeps its width through completion and replay
+      Given a paused linear progress control in a <width> pixel wide viewport
+      When the completion control renders
       Then the linear indicator keeps its width and end position through completion and replay
 
       Examples:
@@ -371,8 +371,8 @@ Feature: Progress indicators
   Rule: Thickness can be configured for both indicator shapes
 
     Scenario Outline: A shared thickness control updates linear and circular variants
-      Given progress showcases in a <width> pixel wide viewport
-      When the progress showcases render
+      Given progress indicators with a shared thickness control in a <width> pixel wide viewport
+      When the thickness control renders
       Then the shared thickness control changes both indicator shapes and variants
 
       Examples:

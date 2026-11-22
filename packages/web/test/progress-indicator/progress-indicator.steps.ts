@@ -490,24 +490,25 @@ Then("only the middle circular indicator has a wave path", async ({ progressIndi
 );
 
 Given(
-  "a paused progress completion showcase in a {int} pixel wide viewport",
+  "a paused linear progress control in a {int} pixel wide viewport",
   async ({ page, progressIndicator }, width: number) => {
     const start = new Date("2026-01-01T00:00:00Z");
     await page.clock.install({ time: start });
     await page.clock.pauseAt(start);
-    await progressIndicator.prepareShowcase(width);
+    await progressIndicator.prepareCompletion(width);
   },
 );
-When("the completion showcase renders", async ({ progressIndicator }) => progressIndicator.renderShowcase());
+When("the completion control renders", async ({ progressIndicator }) => progressIndicator.renderCompletion());
 Then(
   "the linear indicator keeps its width and end position through completion and replay",
-  async ({ progressIndicator }) => progressIndicator.verifyCompletionShowcaseWidth(),
+  async ({ progressIndicator }) => progressIndicator.verifyCompletionWidth(),
 );
 
-Given("progress showcases in a {int} pixel wide viewport", async ({ progressIndicator }, width: number) =>
-  progressIndicator.prepareShowcase(width),
+Given(
+  "progress indicators with a shared thickness control in a {int} pixel wide viewport",
+  async ({ progressIndicator }, width: number) => progressIndicator.prepareThickness(width),
 );
-When("the progress showcases render", async ({ progressIndicator }) => progressIndicator.renderShowcase());
+When("the thickness control renders", async ({ progressIndicator }) => progressIndicator.renderThickness());
 Then("the shared thickness control changes both indicator shapes and variants", async ({ progressIndicator }) =>
-  progressIndicator.verifyThicknessShowcase(),
+  progressIndicator.verifyThickness(),
 );
