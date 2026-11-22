@@ -303,7 +303,7 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
 
-    if (changedProperties.has("indeterminate")) {
+    if (changedProperties.has("indeterminate") || (changedProperties.has("value") && this.indeterminate)) {
       this.ariaValueNow = this.indeterminate ? null : `${this.value}`;
     }
   }

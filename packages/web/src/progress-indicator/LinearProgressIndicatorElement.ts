@@ -463,7 +463,10 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
 
-    if (changedProperties.has("mode")) {
+    if (
+      changedProperties.has("mode") ||
+      (changedProperties.has("value") && (this.mode === "indeterminate" || this.mode === "query"))
+    ) {
       this.ariaValueNow = this.mode === "indeterminate" || this.mode === "query" ? null : `${this.value}`;
     }
   }
