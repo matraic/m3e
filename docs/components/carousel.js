@@ -8,7 +8,7 @@ const cloneItems = (source) =>
     const clone = item.cloneNode(true);
 
     for (const property of [...clone.style]) {
-      if (property === "flex-basis" || property.startsWith("--_carousel-")) {
+      if (property === "flex-basis" || property === "transform" || property.startsWith("--_carousel-")) {
         clone.style.removeProperty(property);
       }
     }
