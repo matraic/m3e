@@ -127,7 +127,9 @@ export const IconButtonStyle: CSSResultGroup = css`
   :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) .wrapper {
     transition: var(
       --_swipe-reveal-sizing-transition,
-      ${unsafeCSS(`padding-inline ${DesignToken.motion.spring.fastSpatial}`)}
+      ${unsafeCSS(
+        `padding-inline-start ${DesignToken.motion.spring.fastSpatial}, padding-inline-end ${DesignToken.motion.spring.fastSpatial}`,
+      )}
     );
   }
   :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) {
@@ -155,8 +157,6 @@ export const IconButtonStyle: CSSResultGroup = css`
       ):not([disabled-interactive]):not(:disabled)
   ) {
     width: calc(var(--_button-width) + var(--_pressed-growth, 0px));
-    /* Padding grows with the width, so the icon keeps its box while the spring overshoots on release. */
-    --_adjacent-shrink: calc(var(--_pressed-growth, 0px) * -1);
   }
   :host(:is(:state(--squished), :--squished)) {
     --_adjacent-shrink: calc(var(--_button-width) * (1 - var(--_squish-progress, 1)));

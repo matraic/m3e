@@ -687,6 +687,7 @@ export class M3eButtonElement extends KeyboardClick(
     this._base?.style.removeProperty("--_button-shape");
     this.style.removeProperty("--_button-width");
     this.style.removeProperty("--_adjacent-shrink");
+    this.#setAdjacentPaddingAdjustment(this, null);
     this.style.removeProperty("--_pressed-growth");
     deleteCustomState(this, "--adjacent-pressed");
 
@@ -847,12 +848,16 @@ export class M3eButtonElement extends KeyboardClick(
         // pressed button grows by what its neighbors give up.
         const adjacent = [buttons[index - 1], buttons[index + 1]].filter((x) => x !== undefined);
         adjacentShrink = Math.min(adjacentShrink, ...adjacent.map((x) => this.#compressionLimit(x)));
-        this.style.setProperty("--_pressed-growth", `${adjacentShrink * Math.max(1, adjacent.length)}px`);
+
+        const pressedGrowth = adjacentShrink * Math.max(1, adjacent.length);
+        this.style.setProperty("--_pressed-growth", `${pressedGrowth}px`);
+        this.#setAdjacentPaddingAdjustment(this, pressedGrowth / 2);
 
         for (let i = 0; i < buttons.length; i++) {
           if (i == index - 1 || i == index + 1) {
             addCustomState(buttons[i], "--no-resize");
             buttons[i].style.setProperty("--_adjacent-shrink", `${adjacentShrink}px`);
+            this.#setAdjacentPaddingAdjustment(buttons[i], -adjacentShrink / 2);
             addCustomState(buttons[i], "--adjacent-pressed");
           } else if (i == index) {
             addCustomState(buttons[i], "--no-resize");
@@ -861,13 +866,16 @@ export class M3eButtonElement extends KeyboardClick(
           } else {
             deleteCustomState(buttons[i], "--no-resize");
             buttons[i].style.removeProperty("--_adjacent-shrink");
+            this.#setAdjacentPaddingAdjustment(buttons[i], null);
             deleteCustomState(buttons[i], "--adjacent-pressed");
           }
         }
       } else {
+        this.#setAdjacentPaddingAdjustment(this, 0);
         for (let i = 0; i < buttons.length; i++) {
           if (i == index - 1 || i == index + 1) {
             buttons[i].style.setProperty("--_adjacent-shrink", "0px");
+            this.#setAdjacentPaddingAdjustment(buttons[i], 0);
           }
         }
         if (!prefersReducedMotion()) {
@@ -904,8 +912,35 @@ export class M3eButtonElement extends KeyboardClick(
       deleteCustomState(button, "--adjacent-pressed");
       deleteCustomState(button, "--no-resize");
       button.style.removeProperty("--_adjacent-shrink");
+      this.#setAdjacentPaddingAdjustment(button, null);
       button.style.removeProperty("--_pressed-growth");
     }
+  }
+
+  /** @private */
+  #setAdjacentPaddingAdjustment(button: HTMLElement, adjustment: number | null): void {
+    const wrapper = button.shadowRoot?.querySelector<HTMLElement>(".wrapper");
+    if (!wrapper) return;
+
+    if (adjustment === null) {
+      wrapper.style.removeProperty("padding-inline-start");
+      wrapper.style.removeProperty("padding-inline-end");
+      wrapper.style.removeProperty("--_adjacent-padding-start");
+      wrapper.style.removeProperty("--_adjacent-padding-end");
+      return;
+    }
+
+    // Keep the padding adjustment numeric; WebKit did not resolve the previous calc-based compensation reliably.
+    if (!wrapper.style.getPropertyValue("--_adjacent-padding-start")) {
+      const style = getComputedStyle(wrapper);
+      wrapper.style.setProperty("--_adjacent-padding-start", style.paddingInlineStart);
+      wrapper.style.setProperty("--_adjacent-padding-end", style.paddingInlineEnd);
+    }
+
+    const start = parseFloat(wrapper.style.getPropertyValue("--_adjacent-padding-start"));
+    const end = parseFloat(wrapper.style.getPropertyValue("--_adjacent-padding-end"));
+    wrapper.style.setProperty("padding-inline-start", `${start + adjustment}px`);
+    wrapper.style.setProperty("padding-inline-end", `${end + adjustment}px`);
   }
 
   /** @private */

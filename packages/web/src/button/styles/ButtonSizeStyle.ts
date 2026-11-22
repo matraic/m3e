@@ -11,8 +11,8 @@ function buttonStyle(size: ButtonSize): CSSResult {
       height: ${ButtonSizeToken[size].containerHeight};
     }
     :host(${selector}) .wrapper {
-      padding-inline-start: calc(${ButtonSizeToken[size].leadingSpace} - calc(var(--_adjacent-shrink, 0px) / 2));
-      padding-inline-end: calc(${ButtonSizeToken[size].trailingSpace} - calc(var(--_adjacent-shrink, 0px) / 2));
+      padding-inline-start: ${ButtonSizeToken[size].leadingSpace};
+      padding-inline-end: ${ButtonSizeToken[size].trailingSpace};
       column-gap: ${ButtonSizeToken[size].iconLabelSpace};
     }
     :host(${selector}) .label {

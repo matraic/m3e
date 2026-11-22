@@ -129,6 +129,27 @@ Feature: Button group
       And the pressed and adjacent labels clip instead of ellipsizing
       And the pressed and adjacent labels stay clipped during the return spring
 
+    Scenario: Pressing a middle icon and text button keeps its content centered
+      Given a standard group with icon and text buttons
+      When the group renders
+      And the user holds the middle button down
+      Then its icon and label stay centered within the pressed button
+      And the middle button's center stays in place
+
+    Scenario: Pressing a leftmost icon and text button keeps its content centered
+      Given a standard group with icon and text buttons
+      When the group renders
+      And the user holds the leftmost button down
+      Then its icon and label stay centered within the pressed button
+      And the leftmost button's center moves right
+
+    Scenario: Pressing the rightmost icon and text button keeps its content centered
+      Given a standard group with icon and text buttons
+      When the group renders
+      And the user holds the rightmost button down
+      Then its icon and label stay centered within the pressed button
+      And the rightmost button's center moves left
+
     Scenario: Pressing a connected button does not resize its neighbors
       Given a connected group with Start, Directions, and Share toggle buttons
       When the group renders

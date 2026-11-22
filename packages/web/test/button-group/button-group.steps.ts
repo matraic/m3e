@@ -175,7 +175,11 @@ Given("a standard group using the {string} motion scheme", ({ buttonGroup }, mot
 Then("each button and its label wrapper use the fast spatial spring", async ({ buttonGroup }) => {
   const timings = buttonGroup.motionTimings;
   if (!timings) throw new Error("Motion timings have not been collected.");
-  expect(timings.buttons).toEqual(Array(4).fill(timings.spring));
+  for (const [duration, easing] of timings.buttons) {
+    const durations = duration.split(",").map((value) => value.trim());
+    expect(durations.every((value) => value === timings.spring[0])).toBe(true);
+    expect(easing).toBe(Array(durations.length).fill(timings.spring[1]).join(", "));
+  }
 });
 
 Given("an expressive group with three buttons", ({ buttonGroup }) => {
@@ -252,6 +256,51 @@ Then("the pressed and adjacent labels stay clipped during the return spring", as
   expect(released[0].textOverflow).toBe("clip");
   expect(released[1].textOverflow).toBe("clip");
   expect(released[2].textOverflow).toBe("ellipsis");
+});
+
+Given("a standard group with icon and text buttons", ({ buttonGroup }) => {
+  buttonGroup.markup = `
+    <m3e-button-group>
+      <m3e-button variant="tonal"><m3e-icon slot="icon" name="play_arrow"></m3e-icon>Start</m3e-button>
+      <m3e-button variant="tonal"><m3e-icon slot="icon" name="directions_car"></m3e-icon>Directions</m3e-button>
+      <m3e-button variant="tonal"><m3e-icon slot="icon" name="share"></m3e-icon>Share</m3e-button>
+    </m3e-button-group>
+  `;
+});
+When("the user holds the middle button down", async ({ buttonGroup }) => {
+  buttonGroup.middleContentDrift = await buttonGroup.holdButtonAndMeasureContentDrift(1);
+});
+Then("its icon and label stay centered within the pressed button", async ({ buttonGroup }) => {
+  const drift = buttonGroup.middleContentDrift;
+  if (!drift) throw new Error("Middle button content drift was not measured.");
+  expect(drift.icon.right, "rightward icon shift").toBeLessThan(0.5);
+  expect(drift.icon.left, "leftward icon shift").toBeLessThan(0.5);
+  expect(drift.label.right, "rightward label shift").toBeLessThan(0.5);
+  expect(drift.label.left, "leftward label shift").toBeLessThan(0.5);
+});
+Then("the middle button's center stays in place", async ({ buttonGroup }) => {
+  const drift = buttonGroup.middleContentDrift;
+  if (!drift) throw new Error("Middle button center movement was not measured.");
+  expect(drift.buttonCenter.right).toBeLessThan(0.5);
+  expect(drift.buttonCenter.left).toBeLessThan(0.5);
+});
+When("the user holds the leftmost button down", async ({ buttonGroup }) => {
+  buttonGroup.middleContentDrift = await buttonGroup.holdButtonAndMeasureContentDrift(0);
+});
+Then("the leftmost button's center moves right", async ({ buttonGroup }) => {
+  const drift = buttonGroup.middleContentDrift;
+  if (!drift) throw new Error("Leftmost button center movement was not measured.");
+  expect(drift.buttonCenter.right).toBeGreaterThan(0.5);
+  expect(drift.buttonCenter.left).toBeLessThan(0.5);
+});
+When("the user holds the rightmost button down", async ({ buttonGroup }) => {
+  buttonGroup.middleContentDrift = await buttonGroup.holdButtonAndMeasureContentDrift(2);
+});
+Then("the rightmost button's center moves left", async ({ buttonGroup }) => {
+  const drift = buttonGroup.middleContentDrift;
+  if (!drift) throw new Error("Rightmost button center movement was not measured.");
+  expect(drift.buttonCenter.left).toBeGreaterThan(0.5);
+  expect(drift.buttonCenter.right).toBeLessThan(0.5);
 });
 
 Given("a connected group with Start, Directions, and Share toggle buttons", ({ buttonGroup }) => {

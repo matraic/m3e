@@ -32,7 +32,9 @@ export const test = base.extend<
     try {
       await use(async (html, direction) => {
         const directionAttribute = direction ? ` dir="${direction}"` : "";
-        await page.setContent(`<!doctype html><html><body${directionAttribute}>${html}</body></html>`);
+        await page.setContent(
+          `<!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1"></head><body${directionAttribute}>${html}</body></html>`,
+        );
         await page.addScriptTag(
           collectCoverage ? { url: coverageBundleUrl, type: "module" } : { path, type: "module" },
         );

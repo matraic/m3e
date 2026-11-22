@@ -13,6 +13,13 @@ type NeighborMeasurements = {
   released: { width: number; endPadding: number; textOverflow: string }[];
 };
 
+type AxisDrift = { right: number; left: number };
+type ContentDrift = {
+  icon: AxisDrift;
+  label: AxisDrift;
+  buttonCenter: AxisDrift;
+};
+
 function armWidthTransition(button: ArmedButton): void {
   button.widthTransition = new Promise((resolve) => {
     const listener = (event: TransitionEvent) => {
@@ -34,6 +41,7 @@ export class ButtonGroupHarness {
   widthPeaks?: number[];
   labelOverflow?: number;
   neighborMeasurements?: NeighborMeasurements;
+  middleContentDrift?: ContentDrift;
   connectedWidthChange?: number;
   quickPressDeviation?: number;
   reducedMotionResult?: { pressedWidth: number; restWidth: number; animations: number };
@@ -191,6 +199,98 @@ export class ButtonGroupHarness {
       document.querySelectorAll("m3e-button").forEach((button) => button.getAnimations().forEach((x) => x.finish())),
     );
     return { rest, held, released };
+  }
+
+  async holdButtonAndMeasureContentDrift(index: number): Promise<ContentDrift> {
+    const button = this.page.locator("m3e-button").nth(index);
+    const rest = await button.evaluate((element) => {
+      const positions = () => {
+        const icon = element.querySelector<HTMLElement>('[slot="icon"]');
+        const text = [...element.childNodes].find(
+          (node) => node.nodeType === Node.TEXT_NODE && node.textContent?.trim(),
+        );
+        if (!icon || !text) throw new Error("Button icon or label is missing.");
+        const range = document.createRange();
+        range.selectNodeContents(text);
+        const iconRect = icon.getBoundingClientRect();
+        const labelRect = range.getBoundingClientRect();
+        const buttonRect = element.getBoundingClientRect();
+        const buttonCenter = (buttonRect.left + buttonRect.right) / 2;
+        return {
+          icon: (iconRect.left + iconRect.right) / 2 - buttonCenter,
+          label: (labelRect.left + labelRect.right) / 2 - buttonCenter,
+          buttonCenter,
+        };
+      };
+      return positions();
+    });
+
+    const tracking = button.evaluate(
+      (element, restPositions) =>
+        new Promise<ContentDrift>((resolve) => {
+          const positions = () => {
+            const icon = element.querySelector<HTMLElement>('[slot="icon"]');
+            const text = [...element.childNodes].find(
+              (node) => node.nodeType === Node.TEXT_NODE && node.textContent?.trim(),
+            );
+            if (!icon || !text) throw new Error("Button icon or label is missing.");
+            const range = document.createRange();
+            range.selectNodeContents(text);
+            const iconRect = icon.getBoundingClientRect();
+            const labelRect = range.getBoundingClientRect();
+            const buttonRect = element.getBoundingClientRect();
+            const buttonCenter = (buttonRect.left + buttonRect.right) / 2;
+            return {
+              icon: (iconRect.left + iconRect.right) / 2 - buttonCenter,
+              label: (labelRect.left + labelRect.right) / 2 - buttonCenter,
+              buttonCenter,
+            };
+          };
+          const drift: ContentDrift = {
+            icon: { right: 0, left: 0 },
+            label: { right: 0, left: 0 },
+            buttonCenter: { right: 0, left: 0 },
+          };
+
+          element.addEventListener(
+            "pointerdown",
+            () => {
+              let start: number | undefined;
+              const sample = (time: number) => {
+                start ??= time;
+                const current = positions();
+                for (const part of ["icon", "label", "buttonCenter"] as const) {
+                  const difference = current[part] - restPositions[part];
+                  drift[part].right = Math.max(drift[part].right, difference);
+                  drift[part].left = Math.max(drift[part].left, -difference);
+                }
+                if (time - start < 500) requestAnimationFrame(sample);
+                else resolve(drift);
+              };
+              requestAnimationFrame(sample);
+            },
+            { once: true },
+          );
+        }),
+      rest,
+    );
+
+    const bounds = await button.boundingBox();
+    if (!bounds) throw new Error("Button has no bounding box.");
+    const pointer = {
+      pointerId: 1,
+      pointerType: "touch",
+      isPrimary: true,
+      button: 0,
+      clientX: bounds.x + bounds.width / 2,
+      clientY: bounds.y + bounds.height / 2,
+      bubbles: true,
+      composed: true,
+    };
+    await button.dispatchEvent("pointerdown", pointer);
+    const drift = await tracking;
+    await button.dispatchEvent("pointerup", pointer);
+    return drift;
   }
 
   async pressConnectedButton(name: string): Promise<number> {
