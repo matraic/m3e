@@ -441,11 +441,13 @@ export class M3eDatepickerElement extends HtmlFor(
   /** @private */ @query("m3e-calendar") private readonly _calendar!: M3eCalendarElement;
   /** @private */ @state() private _variant?: Exclude<DatepickerVariant, "auto">;
   /** @private */ #breakpointUnobserve?: () => void;
+  /** @private */ #connectionVersion = 0;
 
   /** @private */ #trigger?: HTMLElement;
   /** @private */ #anchor?: HTMLElement;
   /** @private */ #anchorCleanup?: () => void;
   /** @private */ #anchorLastPosition?: { x: number; y: number; dir: Direction };
+  /** @private */ #positionVersion = 0;
 
   /** @private */ readonly #scrollLockController = new ScrollLockController(this);
   /** @private */ readonly #inertController = new InertController(this);
@@ -456,6 +458,7 @@ export class M3eDatepickerElement extends HtmlFor(
   readonly #toggleHandler = (e: ToggleEvent) => {
     if (e.newState === "closed") {
       this.#clearSelectionState();
+      this.#positionVersion++;
       this.#anchorCleanup?.();
       this.#anchorCleanup = undefined;
       this.#anchorLastPosition = undefined;
@@ -631,6 +634,7 @@ export class M3eDatepickerElement extends HtmlFor(
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
+    this.#connectionVersion++;
     if (this.#trigger) {
       this.#trigger.ariaExpanded = "false";
       this.#trigger = undefined;
@@ -665,9 +669,10 @@ export class M3eDatepickerElement extends HtmlFor(
    * Opens the picker.
    * @param {HTMLElement} trigger The element that triggered the picker.
    * @param {HTMLElement | undefined} anchor The element used to position the picker.
-   * @returns {Promise<void>} A `Promise` that resolves when the picker is opened.
+   * @returns {Promise<void>} A `Promise` that resolves when the picker is opened or disconnected during opening.
    */
   async show(trigger: HTMLElement, anchor?: HTMLElement): Promise<void> {
+    const connectionVersion = this.#connectionVersion;
     if (this.#trigger && this.#trigger !== trigger) {
       this.hide();
     }
@@ -684,6 +689,7 @@ export class M3eDatepickerElement extends HtmlFor(
 
     // Wait for the calendar to render
     await waitForUpdate(this);
+    if (connectionVersion !== this.#connectionVersion) return;
 
     const calendar = this._calendar;
 
@@ -709,12 +715,14 @@ export class M3eDatepickerElement extends HtmlFor(
     calendar.blackoutDates = (<M3eDateInputElement>this.control)?.blackoutDates ?? this.blackoutDates;
 
     await waitForUpdate(calendar);
+    if (connectionVersion !== this.#connectionVersion) return;
 
     this.#trigger = trigger;
     this.#trigger.ariaExpanded = "true";
     this.#anchor = anchor;
 
     await this.#updatePosition();
+    if (connectionVersion !== this.#connectionVersion) return;
     this.showPopover();
 
     document.addEventListener("click", this.#documentClickHandler);
@@ -959,9 +967,11 @@ export class M3eDatepickerElement extends HtmlFor(
   /** @private */
   async #updatePosition(): Promise<void> {
     if (this.currentVariant === "docked" && this.#trigger) {
+      const positionVersion = ++this.#positionVersion;
       this.#anchorCleanup?.();
+      this.#anchorCleanup = undefined;
       this.#anchorLastPosition = undefined;
-      this.#anchorCleanup = await positionAnchor(
+      const cleanup = await positionAnchor(
         this,
         this.#anchor ?? this.#trigger,
         {
@@ -971,6 +981,7 @@ export class M3eDatepickerElement extends HtmlFor(
           shift: "both",
         },
         (x, y, position) => {
+          if (positionVersion !== this.#positionVersion) return;
           setCustomState(this, "--top", position.includes("top"));
           setCustomState(this, "--bottom", position.includes("bottom"));
 
@@ -991,6 +1002,11 @@ export class M3eDatepickerElement extends HtmlFor(
           this.#anchorLastPosition = { x, y, dir: M3eDirectionality.current };
         },
       );
+      if (positionVersion !== this.#positionVersion) {
+        cleanup();
+      } else {
+        this.#anchorCleanup = cleanup;
+      }
     } else {
       this.#clearAnchoring();
     }
@@ -998,6 +1014,7 @@ export class M3eDatepickerElement extends HtmlFor(
 
   /** @private */
   #clearAnchoring(): void {
+    this.#positionVersion++;
     this.#anchorCleanup?.();
     this.#anchorCleanup = undefined;
     this.#anchorLastPosition = undefined;
