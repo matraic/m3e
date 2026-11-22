@@ -2,6 +2,7 @@ import { css, CSSResultGroup, html, nothing, PropertyValues, svg } from "lit";
 import { property } from "lit/decorators.js";
 
 import {
+  AnimationLoopController,
   customElement,
   DesignToken,
   ResizeController,
@@ -9,10 +10,13 @@ import {
   safeStyleMap,
   setCustomEnumState,
 } from "@m3e/web/core";
+
 import { SupportsDirectionality } from "@m3e/web/core/bidi";
 
 import { isLinearProgressMode, LinearProgressMode } from "./LinearProgressMode";
+import { linearWavyPath } from "./LinearWavyGeometry";
 import { ProgressElementIndicatorBase } from "./ProgressElementIndicatorBase";
+import { WavyAmplitude, wavyAmplitudeTarget, wavyProgress } from "./WavyAmplitude";
 
 /**
  * A horizontal bar for indicating progress and activity.
@@ -100,11 +104,7 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
       }
       .amplitude-and-wavelength {
         height: var(--m3e-linear-wavy-progress-indicator-amplitude, 3px);
-        width: var(--m3e-linear-wavy-progress-indicator-wavelength, 40px);
-      }
-      :host(:is(:state(--indeterminate), :--indeterminate)) .amplitude-and-wavelength,
-      :host(:is(:state(--query), :--query)) .amplitude-and-wavelength {
-        width: var(--m3e-linear-wavy-indeterminate-progress-indicator-wavelength, 24px);
+        width: var(--_linear-wavy-wavelength, var(--m3e-linear-wavy-progress-indicator-wavelength, 40px));
       }
       .primary,
       .secondary,
@@ -120,10 +120,15 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
         height: var(--m3e-linear-progress-indicator-thickness, 4px);
       }
       :host(:is(:state(--wavy), :--wavy)) {
+        --_linear-wavy-wavelength: var(--m3e-linear-wavy-progress-indicator-wavelength, 40px);
         height: calc(
           var(--m3e-linear-progress-indicator-thickness, 4px) +
-            calc(var(--m3e-linear-wavy-progress-indicator-amplitude, 3px) * 2)
+            calc(var(--_linear-wavy-amplitude, var(--m3e-linear-wavy-progress-indicator-amplitude, 3px)) * 2)
         );
+      }
+      :host(:is(:state(--wavy), :--wavy):is(:state(--indeterminate), :--indeterminate)),
+      :host(:is(:state(--wavy), :--wavy):is(:state(--query), :--query)) {
+        --_linear-wavy-wavelength: var(--m3e-linear-wavy-indeterminate-progress-indicator-wavelength, 24px);
       }
       :host(:is(:state(--wavy), :--wavy)) .primary,
       :host(:is(:state(--wavy), :--wavy)) .secondary {
@@ -149,18 +154,17 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
       }
       .primary .wave,
       .secondary .wave {
-        margin-inline-start: calc(0px - var(--m3e-linear-wavy-progress-indicator-wavelength, 40px));
+        margin-inline-start: calc(0px - var(--_linear-wavy-wavelength, 40px));
       }
-      :host(:is(:state(--wavy), :--wavy):is(:state(--determinate), :--determinate)) .primary path,
-      :host(:is(:state(--wavy), :--wavy):is(:state(--buffer), :--buffer)) .primary path {
-        animation: wave-slide 1.5s linear infinite;
+      :host(:is(:state(--wavy), :--wavy)) .wave-path {
+        animation: wave-slide 1s linear infinite;
       }
       @keyframes wave-slide {
         from {
           transform: translateX(0);
         }
         to {
-          transform: translateX(calc(0px - var(--m3e-linear-wavy-progress-indicator-wavelength, 40px)));
+          transform: translateX(calc(0px - var(--_linear-wavy-wavelength, 40px)));
         }
       }
       :host(:is(:state(--determinate), :--determinate)) .progress,
@@ -364,12 +368,20 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
   /** @private */ #amplitude = 0;
   /** @private */ #wavelength = 0;
 
+  /** @private */ readonly #wavyAmplitude = new WavyAmplitude();
+  /** @private */ readonly #wavyAnimationLoop = new AnimationLoopController(this, (_, t) => {
+    if (this.#wavyAmplitude.sample(t)) this.requestUpdate();
+
+    if (!this.#wavyAmplitude.animating) this.#wavyAnimationLoop.stop();
+  });
+
   /** @private */ readonly #resizeController = new ResizeController(this, {
     skipInitial: true,
     target: null,
     callback: () => {
       this.#updateStroke();
       this.#updateAmplitudeAndWavelength();
+
       queueMicrotask(() => this.requestUpdate());
     },
   });
@@ -389,13 +401,16 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
+
     this.#applyMode();
   }
 
   /** @inheritdoc */
   override reconnectedCallback(): void {
     super.reconnectedCallback();
+
     this.#initialize();
+    this.#syncWavyAmplitude();
   }
 
   /** @inheritdoc */
@@ -410,6 +425,7 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
+
     this.#initialize();
   }
 
@@ -418,10 +434,14 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
     if (!isLinearProgressMode(this.mode)) {
       this.mode = "determinate";
     }
+
     setCustomEnumState(this, this.mode, "buffer", "determinate", "indeterminate", "query");
   }
 
-  /** @private */
+  /**
+   * Reads CSS measurement probes and reconnects observation to the rendered instances.
+   * @private
+   */
   #initialize(): void {
     this.#updateStroke();
     this.#updateAmplitudeAndWavelength();
@@ -435,6 +455,8 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
     if (amplitudeAndWavelength) {
       this.#resizeController.observe(amplitudeAndWavelength);
     }
+
+    this.requestUpdate();
   }
 
   /** @inheritdoc */
@@ -452,9 +474,48 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
 
     if (_changedProperties.has("value") || _changedProperties.has("bufferValue") || _changedProperties.has("max")) {
       const progress = this.shadowRoot?.querySelector<HTMLElement>(".progress");
+
       progress?.style.setProperty("--_value", `${(this.value / this.max) * 100}%`);
       progress?.style.setProperty("--_buffer-value", `${(this.bufferValue / this.max) * 100}%`);
     }
+
+    if (_changedProperties.has("mode") || _changedProperties.has("variant")) {
+      this.#resizeController.unobserveAll();
+      this.#initialize();
+    }
+
+    this.#syncWavyAmplitude();
+  }
+
+  /** @private */
+  #getTargetAmplitude(): number {
+    return wavyAmplitudeTarget(
+      wavyProgress(this.value, this.max),
+      this.#amplitude,
+      this.mode === "indeterminate" || this.mode === "query",
+    );
+  }
+
+  /**
+   * Retargets the amplitude and reserves host height for waves still flattening after a CSS change.
+   * @private
+   */
+  #syncWavyAmplitude(): void {
+    if (this.variant !== "wavy") {
+      this.#wavyAnimationLoop.stop();
+      this.#wavyAmplitude.reset();
+      this.style.removeProperty("--_linear-wavy-amplitude");
+
+      return;
+    }
+
+    this.#wavyAmplitude.setTarget(this.#getTargetAmplitude(), performance.now() / 1000);
+    if (this.#wavyAmplitude.animating) this.#wavyAnimationLoop.start();
+
+    this.style.setProperty(
+      "--_linear-wavy-amplitude",
+      `${Math.max(this.#amplitude, this.#wavyAmplitude.value ?? this.#amplitude)}px`,
+    );
   }
 
   /** @inheritdoc */
@@ -463,10 +524,17 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
     const activeWidth = (clampedValue / this.max) * this.clientWidth;
     const waveWidth =
       this.mode === "indeterminate" || this.mode === "query" ? this.clientWidth : activeWidth + this.#wavelength * 3;
+    const amplitude = this.#wavyAmplitude.value ?? this.#getTargetAmplitude();
 
     const wave =
-      this.variant === "wavy" && this.#strokeWidth > 0 && this.#amplitude > 0 && this.#wavelength > 0
-        ? this.#drawWavyPath(waveWidth)
+      this.variant === "wavy" && this.#strokeWidth > 0 && this.#wavelength > 0
+        ? linearWavyPath({
+            width: waveWidth,
+            strokeWidth: this.#strokeWidth,
+            configuredAmplitude: this.#amplitude,
+            amplitude,
+            wavelength: this.#wavelength,
+          })
         : undefined;
 
     return html`<div
@@ -499,12 +567,18 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
       ${this.#renderResizeObservedElements()}`;
   }
 
-  /** @private */
+  /**
+   * Renders the moving segments and inverse track masks, or a determinate wave until flattening completes.
+   * @private
+   */
   #renderWave(width: number, height: number, viewBox: string, path: string): unknown {
     const masked = this.mode === "indeterminate" || this.mode === "query";
-    if (!masked && this.value / this.max === 1) {
+
+    // A jump to 100% must finish the morph before replacing the wave with the completed bar.
+    if (!masked && this.max > 0 && this.value >= this.max && this.#wavyAmplitude.value === 0) {
       return html`<div class="complete"></div>`;
     }
+
     return html`<svg class="wave" width="${width}" height="${height}" viewBox="${viewBox}" preserveAspectRatio="none">
       ${masked
         ? svg`
@@ -519,12 +593,12 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
           <rect class="secondary" height="${height}" fill="black" />
         </mask>
         <g mask="${resolveFragmentUrl(this.#maskId)}">
-          <path d="${path}" stroke="currentColor" stroke-width=${this.#strokeWidth} fill="none" stroke-linecap="round" />
+          <path class="wave-path" d="${path}" stroke="currentColor" stroke-width=${this.#strokeWidth} fill="none" stroke-linecap="round" />
         </g>
         <g mask="${resolveFragmentUrl(`${this.#maskId}-inverse`)}">
           <rect class="track" width="100%" height="${this.#strokeWidth}" fill="currentColor" />
         </g>`
-        : svg`<path d="${path}" stroke="currentColor" stroke-width=${this.#strokeWidth} fill="none" stroke-linecap="round" />`}
+        : svg`<path class="wave-path" d="${path}" stroke="currentColor" stroke-width=${this.#strokeWidth} fill="none" stroke-linecap="round" />`}
     </svg>`;
   }
 
@@ -537,6 +611,7 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
   /** @private */
   #updateStroke(): void {
     const element = this.shadowRoot?.querySelector<HTMLElement>(".stroke");
+
     if (element) {
       this.#strokeWidth = element.clientHeight;
     }
@@ -545,37 +620,11 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
   /** @private */
   #updateAmplitudeAndWavelength(): void {
     const element = this.shadowRoot?.querySelector<HTMLElement>(".amplitude-and-wavelength");
+
     if (element) {
       this.#amplitude = element.clientHeight;
       this.#wavelength = element.clientWidth;
     }
-  }
-
-  /** @private */
-  #drawWavyPath(width: number, phase: number = 0) {
-    const amplitude = this.#amplitude + this.#strokeWidth / 2;
-    const y = amplitude;
-
-    const path: string[] = [];
-    const step = this.#wavelength / 2;
-    let x = 0;
-
-    path.push(`M ${x},${y}`);
-
-    while (x <= width) {
-      const endX = x + step;
-      const endY = y + amplitude * Math.sin((2 * Math.PI * endX) / this.#wavelength + phase);
-      const cpX = x + step / 2;
-      const cpY = y + amplitude * Math.sin((2 * Math.PI * (x + step / 2)) / this.#wavelength + phase);
-
-      path.push(`Q ${cpX},${cpY} ${endX},${endY}`);
-      x += step;
-    }
-
-    const padding = 1;
-    const viewBox = `0 ${-padding} ${width} ${amplitude * 2 + padding * 2}`;
-
-    return { path: path.join(" "), viewBox, height: this.#strokeWidth + this.#amplitude * 2, padding };
   }
 }
 
