@@ -396,6 +396,14 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
    * @returns {Promise<void>} A `Promise` that resolves when the menu is opened.
    */
   async show(trigger: HTMLElement): Promise<void> {
+    if (!this.#items().length) {
+      if (this.#trigger || this.#pendingTrigger || this.#closing) {
+        this.#hide(false, false);
+      }
+
+      return;
+    }
+
     if (this.#trigger && this.#trigger !== trigger) {
       this.hide();
     }
@@ -441,14 +449,22 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       },
     );
 
-    if (showId !== this.#showId || !this.isConnected || !trigger.isConnected) {
+    if (showId !== this.#showId || !this.isConnected || !trigger.isConnected || !this.#items().length) {
       cancelled = true;
       cleanup();
-      if (showId === this.#showId) this.#pendingTrigger = undefined;
+
+      if (showId === this.#showId) {
+        this.#pendingTrigger = undefined;
+        if (this.#trigger && !this.#items().length) {
+          this.#hide(false, false);
+        }
+      }
       return;
     }
+
     this.#pendingTrigger = undefined;
     active = true;
+
     this.#anchoringCleanup = () => {
       cancelled = true;
       cleanup();
@@ -795,6 +811,9 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   /** @private */
   #handleSlotChange(): void {
     const items: (LitElement & DisabledMixin)[] = [...this.querySelectorAll("m3e-fab-menu-item")];
+    if (!items.some((item) => !item.hidden) && (this.#trigger || this.#pendingTrigger)) {
+      this.#hide(false, false);
+    }
 
     const fab = this.#trigger?.closest<M3eFabElement>("m3e-fab");
     if (fab) {
