@@ -177,6 +177,7 @@ export class M3eTooltipElement extends TooltipElementBase {
   `;
 
   /** @private */ #message?: string | null;
+  /** @private */ #descriptionRoot?: Document | ShadowRoot;
   /** @private */ #anchorLastPosition?: { x: number; y: number; dir: Direction };
 
   /**
@@ -206,13 +207,16 @@ export class M3eTooltipElement extends TooltipElementBase {
 
     if (this.#message) {
       M3eAriaDescriber.describe(control, this.#message);
+      const root = control.getRootNode();
+      this.#descriptionRoot = root instanceof Document || root instanceof ShadowRoot ? root : undefined;
     }
   }
 
   /** @inheritdoc */
   override detach(): void {
     if (this.control && this.#message) {
-      M3eAriaDescriber.removeDescription(this.control, this.#message);
+      M3eAriaDescriber.removeDescription(this.control, this.#message, "tooltip", this.#descriptionRoot);
+      this.#descriptionRoot = undefined;
     }
     super.detach();
   }
@@ -275,13 +279,16 @@ export class M3eTooltipElement extends TooltipElementBase {
     const message = getTextContent(e.target as HTMLSlotElement, true);
     if (this.isConnected && this.control) {
       if (this.#message) {
-        M3eAriaDescriber.removeDescription(this.control, this.#message);
+        M3eAriaDescriber.removeDescription(this.control, this.#message, "tooltip", this.#descriptionRoot);
+        this.#descriptionRoot = undefined;
       }
 
       this.#message = message;
 
       if (this.#message) {
         M3eAriaDescriber.describe(this.control, this.#message);
+        const root = this.control.getRootNode();
+        this.#descriptionRoot = root instanceof Document || root instanceof ShadowRoot ? root : undefined;
       }
     } else {
       this.#message = message;

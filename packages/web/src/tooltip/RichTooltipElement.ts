@@ -240,6 +240,9 @@ export class M3eRichTooltipElement extends TooltipElementBase {
   /** @private */ #contentText = "";
   /** @private */ #message = "";
   /** @private */ #messageRegistered = false;
+  /** @private */ #descriptionRoot?: Document | ShadowRoot;
+  /** @private */ #popupControl?: HTMLElement;
+  /** @private */ #previousPopup: string | null = null;
   /** @private */ #anchorLastPosition?: { x: number; y: number; dir: Direction };
 
   /** @private */ @state() private _hasSubhead = false;
@@ -341,8 +344,19 @@ export class M3eRichTooltipElement extends TooltipElementBase {
     this.#updateMessage();
 
     if (this._interactive) {
-      control.ariaHasPopup = "dialog";
+      this.#setDialogPopup(control);
     }
+  }
+
+  /** @inheritdoc */
+  override detach(): void {
+    this.#clearDialogPopup();
+    if (this.control && this.#message && this.#messageRegistered) {
+      M3eAriaDescriber.removeDescription(this.control, this.#message, "tooltip", this.#descriptionRoot);
+      this.#messageRegistered = false;
+      this.#descriptionRoot = undefined;
+    }
+    super.detach();
   }
 
   /** @inheritdoc */
@@ -354,7 +368,9 @@ export class M3eRichTooltipElement extends TooltipElementBase {
       this.#updateMessage();
 
       if (this.control && this._interactive) {
-        this.control.ariaHasPopup = "dialog";
+        this.#setDialogPopup(this.control);
+      } else {
+        this.#clearDialogPopup();
       }
     }
   }
@@ -472,19 +488,44 @@ export class M3eRichTooltipElement extends TooltipElementBase {
   }
 
   /** @private */
+  #setDialogPopup(control: HTMLElement): void {
+    if (this.#popupControl === control) return;
+    this.#clearDialogPopup();
+    this.#popupControl = control;
+    this.#previousPopup = control.getAttribute("aria-haspopup");
+    control.ariaHasPopup = "dialog";
+  }
+
+  /** @private */
+  #clearDialogPopup(): void {
+    if (this.#popupControl?.getAttribute("aria-haspopup") === "dialog") {
+      if (this.#previousPopup === null) {
+        this.#popupControl.removeAttribute("aria-haspopup");
+      } else {
+        this.#popupControl.setAttribute("aria-haspopup", this.#previousPopup);
+      }
+    }
+    this.#popupControl = undefined;
+    this.#previousPopup = null;
+  }
+
+  /** @private */
   #updateMessage() {
     const message = this.#subheadText ? `${this.#subheadText}\n${this.#contentText}` : this.#contentText;
     if (this.isConnected && this.control) {
       if (this.#message && this.#messageRegistered) {
-        M3eAriaDescriber.removeDescription(this.control, this.#message);
+        M3eAriaDescriber.removeDescription(this.control, this.#message, "tooltip", this.#descriptionRoot);
         this.#messageRegistered = false;
+        this.#descriptionRoot = undefined;
       }
 
       this.#message = message;
 
       if (this.#message && !this._interactive) {
         M3eAriaDescriber.describe(this.control, this.#message);
-        this.#messageRegistered = true;
+        const root = this.control.getRootNode();
+        this.#descriptionRoot = root instanceof Document || root instanceof ShadowRoot ? root : undefined;
+        this.#messageRegistered = this.#descriptionRoot !== undefined;
       }
     }
   }
