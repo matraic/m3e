@@ -102,7 +102,7 @@ export class M3eAccordionElement extends LitElement {
     }
 
     let alreadyOpen = false;
-    for (const panel of this.#panels.filter((x) => !x.open)) {
+    for (const panel of this.#panels.filter((x) => x.open)) {
       if (alreadyOpen) {
         panel.open = false;
       }
