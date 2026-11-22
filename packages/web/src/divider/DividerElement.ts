@@ -1,7 +1,7 @@
-import { css, CSSResultGroup, html, LitElement } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { customElement, DesignToken, Role } from "@m3e/web/core";
+import { customElement, DesignToken, Role, Vertical } from "@m3e/web/core";
 
 /**
  * A thin line that separates content in lists or other containers.
@@ -48,7 +48,7 @@ import { customElement, DesignToken, Role } from "@m3e/web/core";
  * @attr inset - Whether the divider is indented with equal padding on both sides.
  * @attr inset-start - Whether the divider is indented with padding on the leading side.
  * @attr inset-end - Whether the divider is indented with padding on the trailing side.
- * @attr vertical - Whether the divider is vertically aligned with adjacent content.
+ * @attr vertical - Whether the element is oriented vertically.
  *
  * @cssprop --m3e-divider-thickness - Thickness of the divider line.
  * @cssprop --m3e-divider-color - Color of the divider line.
@@ -57,7 +57,12 @@ import { customElement, DesignToken, Role } from "@m3e/web/core";
  * @cssprop --m3e-divider-inset-end-size - When inset, trailing inset size.
  */
 @customElement("m3e-divider")
-export class M3eDividerElement extends Role(LitElement, "separator") {
+export class M3eDividerElement extends Vertical(Role(LitElement, "separator")) {
+  /** The list of attributes corresponding to the registered properties. */
+  static override get observedAttributes() {
+    return [...super.observedAttributes, "role"];
+  }
+
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -132,12 +137,6 @@ export class M3eDividerElement extends Role(LitElement, "separator") {
   `;
 
   /**
-   * Whether the divider is vertically aligned with adjacent content.
-   * @default false
-   */
-  @property({ type: Boolean, reflect: true }) vertical = false;
-
-  /**
    * Whether the divider is indented with equal padding on both sides.
    * @default false
    */
@@ -154,6 +153,27 @@ export class M3eDividerElement extends Role(LitElement, "separator") {
    * @default false
    */
   @property({ attribute: "inset-end", type: Boolean, reflect: true }) insetEnd = false;
+
+  /** @inheritdoc */
+  override attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    super.attributeChangedCallback(name, oldValue, newValue);
+    if (name === "role" && oldValue !== newValue) {
+      this.ariaOrientation = this.#isPresentational() ? null : this.vertical ? "vertical" : "horizontal";
+    }
+  }
+
+  /** @inheritdoc */
+  protected override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+    if (changedProperties.has("vertical") && this.#isPresentational()) {
+      this.ariaOrientation = null;
+    }
+  }
+
+  /** @private */
+  #isPresentational(): boolean {
+    return this.role === "none" || this.role === "presentation";
+  }
 
   /** @inheritdoc */
   protected override render(): unknown {

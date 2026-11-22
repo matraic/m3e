@@ -53,7 +53,7 @@ This section details the attributes and CSS custom properties available for the 
 | `inset`       | `boolean` | `false` | Whether the divider is indented with equal padding on both sides.  |
 | `inset-start` | `boolean` | `false` | Whether the divider is indented with padding on the leading side.  |
 | `inset-end`   | `boolean` | `false` | Whether the divider is indented with padding on the trailing side. |
-| `vertical`    | `boolean` | `false` | Whether the divider is vertically aligned with adjacent content.   |
+| `vertical`    | `boolean` | `false` | Whether the element is oriented vertically.                        |
 
 ### 🎛️ CSS Custom Properties
 
