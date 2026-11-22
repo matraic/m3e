@@ -8,8 +8,9 @@ type MotionTimings = {
 };
 
 type NeighborMeasurements = {
-  rest: { width: number; endPadding: number }[];
-  held: { width: number; endPadding: number }[];
+  rest: { width: number; endPadding: number; textOverflow: string }[];
+  held: { width: number; endPadding: number; textOverflow: string }[];
+  released: { width: number; endPadding: number; textOverflow: string }[];
 };
 
 function armWidthTransition(button: ArmedButton): void {
@@ -162,9 +163,12 @@ export class ButtonGroupHarness {
         [...document.querySelectorAll("m3e-button")].map((button) => {
           const wrapper = button.shadowRoot?.querySelector(".wrapper");
           if (!wrapper) throw new Error("Button wrapper is missing.");
+          const label = button.shadowRoot?.querySelector(".label");
+          if (!label) throw new Error("Button label is missing.");
           return {
             width: button.getBoundingClientRect().width,
             endPadding: parseFloat(getComputedStyle(wrapper).paddingInlineEnd),
+            textOverflow: getComputedStyle(label).textOverflow,
           };
         }),
       );
@@ -178,8 +182,15 @@ export class ButtonGroupHarness {
       document.querySelectorAll("m3e-button").forEach((button) => button.getAnimations().forEach((x) => x.finish())),
     );
     const held = await measure();
+    const pressedButton = this.button("Start turn-by-turn navigation");
+    await pressedButton.evaluate(armWidthTransition);
     await this.page.mouse.up();
-    return { rest, held };
+    await pressedButton.evaluate((element: ArmedButton) => element.widthTransition);
+    const released = await measure();
+    await this.page.evaluate(() =>
+      document.querySelectorAll("m3e-button").forEach((button) => button.getAnimations().forEach((x) => x.finish())),
+    );
+    return { rest, held, released };
   }
 
   async pressConnectedButton(name: string): Promise<number> {

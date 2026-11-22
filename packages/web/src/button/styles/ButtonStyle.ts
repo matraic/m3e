@@ -150,9 +150,13 @@ export const ButtonStyle: CSSResultGroup = css`
   }
   :host(
       :is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected)):is(
+          :state(--pressed),
+          :--pressed,
           :state(--adjacent-pressed),
-          :--adjacent-pressed
-        ):not(:is(:state(--pressed), :--pressed))
+          :--adjacent-pressed,
+          :state(--no-resize),
+          :--no-resize
+        )
     )
     .label {
     text-overflow: clip;

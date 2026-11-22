@@ -241,6 +241,18 @@ Then("the Week button keeps its width", async ({ buttonGroup }) => {
   const { rest, held } = buttonGroup.neighborMeasurements!;
   expect(held[2].width).toBeCloseTo(rest[2].width, 0);
 });
+Then("the pressed and adjacent labels clip instead of ellipsizing", async ({ buttonGroup }) => {
+  const { held } = buttonGroup.neighborMeasurements!;
+  expect(held[0].textOverflow).toBe("clip");
+  expect(held[1].textOverflow).toBe("clip");
+  expect(held[2].textOverflow).toBe("ellipsis");
+});
+Then("the pressed and adjacent labels stay clipped during the return spring", async ({ buttonGroup }) => {
+  const { released } = buttonGroup.neighborMeasurements!;
+  expect(released[0].textOverflow).toBe("clip");
+  expect(released[1].textOverflow).toBe("clip");
+  expect(released[2].textOverflow).toBe("ellipsis");
+});
 
 Given("a connected group with Start, Directions, and Share toggle buttons", ({ buttonGroup }) => {
   buttonGroup.markup = `

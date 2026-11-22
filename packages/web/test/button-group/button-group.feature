@@ -126,6 +126,8 @@ Feature: Button group
       Then the Day button shrinks by no more than its end padding
       And the pressed button grows by the same amount
       And the Week button keeps its width
+      And the pressed and adjacent labels clip instead of ellipsizing
+      And the pressed and adjacent labels stay clipped during the return spring
 
     Scenario: Pressing a connected button does not resize its neighbors
       Given a connected group with Start, Directions, and Share toggle buttons
