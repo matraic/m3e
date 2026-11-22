@@ -352,6 +352,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
   /** @private */ #id = M3eDialogElement.__nextId++;
 
   /** @private */ #open = false;
+  /** @private */ #syncingOpen = false;
   /** @private */ #connectionVersion = 0;
   /** @private */ #escapePressedWithoutCancel = false;
   /** @private */ @state() private _withActions = false;
@@ -376,6 +377,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
   set open(value: boolean) {
     if (value === this.#open) return;
     this.#open = value;
+    if (this.#syncingOpen) return;
     if (this.#open) {
       this.show();
     } else {
@@ -417,7 +419,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.#connectionVersion++;
-    this.open = false;
+    this.#setOpenState(false);
     this._base?.close();
     const collapsible = this.shadowRoot?.querySelector("m3e-collapsible");
     if (collapsible) {
@@ -440,7 +442,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
     }
 
     if (!this.dispatchEvent(new Event("opening", { cancelable: true }))) {
-      this.open = false;
+      this.#setOpenState(false);
       return;
     }
     if (!this.isConnected || connectionVersion !== this.#connectionVersion) return;
@@ -452,6 +454,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
 
     this.#scrollLockController.lock();
     this._base.showModal();
+    this.#setOpenState(true);
     this._content.scrollTop = 0;
     const focusable = this.querySelector<HTMLElement>("[autofocus]");
 
@@ -469,7 +472,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
    */
   async hide(returnValue: string = this.returnValue): Promise<void> {
     if (!this.isConnected) {
-      this.open = false;
+      this.#setOpenState(false);
       return;
     }
 
@@ -477,16 +480,10 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
     await this.updateComplete;
     if (!this.isConnected || connectionVersion !== this.#connectionVersion) return;
 
-    this.#scrollLockController.unlock();
-
     if (!this._base.open) {
-      this.open = false;
+      this.#scrollLockController.unlock();
+      this.#setOpenState(false);
       return;
-    }
-
-    const collapsible = this.shadowRoot?.querySelector("m3e-collapsible");
-    if (collapsible) {
-      collapsible.open = false;
     }
 
     const prevReturnValue = this.returnValue;
@@ -494,12 +491,30 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
 
     if (!this.dispatchEvent(new Event("closing", { cancelable: true }))) {
       this.returnValue = prevReturnValue;
+      this.#setOpenState(true);
       return;
     }
 
-    this.open = false;
+    if (!this.isConnected || connectionVersion !== this.#connectionVersion) return;
+    this.#scrollLockController.unlock();
+    const collapsible = this.shadowRoot?.querySelector("m3e-collapsible");
+    if (collapsible) {
+      collapsible.open = false;
+    }
+
+    this.#setOpenState(false);
     this._base.close(returnValue);
     this.dispatchEvent(new Event("closed"));
+  }
+
+  /** @private */
+  #setOpenState(value: boolean): void {
+    this.#syncingOpen = true;
+    try {
+      this.open = value;
+    } finally {
+      this.#syncingOpen = false;
+    }
   }
 
   /** @inheritdoc */
