@@ -297,7 +297,7 @@
 
 .coverage-percent {
   font-size: 0.48em;
-  letter-spacing: -0.08em;
+  letter-spacing: normal;
 }
 
 .coverage-mark m3e-icon {
