@@ -232,6 +232,16 @@ export class M3eExpansionPanelElement extends Disabled(ReconnectedCallback(Attac
   protected override willUpdate(_changedProperties: PropertyValues<this>): void {
     super.willUpdate(_changedProperties);
 
+    if (
+      _changedProperties.has("open") &&
+      !this.open &&
+      this._header &&
+      !this.disabled &&
+      this.shadowRoot?.querySelector("m3e-collapsible")?.matches(":focus-within")
+    ) {
+      this._header.focus();
+    }
+
     if (_changedProperties.has("togglePosition")) {
       this.#applyTogglePosition();
     }
@@ -358,6 +368,7 @@ export class M3eExpansionPanelElement extends Disabled(ReconnectedCallback(Attac
 
   /** @private */
   #handleCollapsibleEvent(e: Event): void {
+    if (e.target !== e.currentTarget) return;
     e.stopPropagation();
     this.dispatchEvent(new Event(e.type, { bubbles: true }));
   }

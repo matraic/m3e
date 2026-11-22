@@ -186,6 +186,7 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
 
   /** @private */ #slotChanged = false;
   /** @private */ #hasOpened = false;
+  /** @private */ #transitionEndHandler?: () => void;
 
   /**
    * Whether content is visible.
@@ -259,6 +260,11 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
       return;
     }
 
+    if (this.#transitionEndHandler) {
+      this.removeEventListener("transitionend", this.#transitionEndHandler);
+      this.#transitionEndHandler = undefined;
+    }
+
     this.toggleAttribute("inert", !this.open);
 
     if (this.open) {
@@ -293,13 +299,13 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
       } else {
         this.addEventListener(
           "transitionend",
-          () => {
+          (this.#transitionEndHandler = () => {
             if (this.open) {
               this.#autoSize();
               deleteCustomState(this, "--opening");
               this.dispatchEvent(new Event("opened"));
             }
-          },
+          }),
           { once: true },
         );
       }
@@ -323,12 +329,12 @@ export class M3eCollapsibleElement extends AttachInternals(LitElement) {
         this.#clearSize();
         this.addEventListener(
           "transitionend",
-          () => {
+          (this.#transitionEndHandler = () => {
             if (!this.open) {
               deleteCustomState(this, "--closing");
               this.dispatchEvent(new Event("closed"));
             }
-          },
+          }),
           { once: true },
         );
       }

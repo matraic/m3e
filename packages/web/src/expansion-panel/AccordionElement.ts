@@ -1,4 +1,4 @@
-import { css, CSSResultGroup, html, LitElement } from "lit";
+import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
 import { customElement, DesignToken } from "@m3e/web/core";
@@ -89,14 +89,28 @@ export class M3eAccordionElement extends LitElement {
   }
 
   /** @inheritdoc */
+  protected override willUpdate(changedProperties: PropertyValues<this>): void {
+    super.willUpdate(changedProperties);
+    if (changedProperties.has("multi") && !this.multi) {
+      this.#reconcileOpenPanels();
+    }
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     return html`<slot @slotchange=${this.#handleSlotChange} @opening=${this.#handleOpening}></slot>`;
   }
 
   /** @private */
   #handleSlotChange() {
-    this.#panels = [...this.querySelectorAll("m3e-expansion-panel")];
+    this.#panels = [...this.querySelectorAll("m3e-expansion-panel")].filter(
+      (panel) => panel.closest("m3e-accordion") === this,
+    );
+    this.#reconcileOpenPanels();
+  }
 
+  /** @private */
+  #reconcileOpenPanels(): void {
     if (this.multi) {
       return;
     }
@@ -112,7 +126,7 @@ export class M3eAccordionElement extends LitElement {
 
   /** @private */
   #handleOpening(e: Event): void {
-    if (!this.multi) {
+    if (!this.multi && e.target instanceof M3eExpansionPanelElement && this.#panels.includes(e.target)) {
       for (const panel of this.#panels.filter((x) => x !== e.target && x.open)) {
         panel.open = false;
       }
