@@ -794,7 +794,14 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
 
   /** @private */
   #handleSlotChange(): void {
-    const { added } = this.#listManager.setItems([...this.querySelectorAll("m3e-fab-menu-item")]);
+    const items: (LitElement & DisabledMixin)[] = [...this.querySelectorAll("m3e-fab-menu-item")];
+
+    const fab = this.#trigger?.closest<M3eFabElement>("m3e-fab");
+    if (fab) {
+      items.push(fab);
+    }
+
+    const { added } = this.#listManager.setItems(items);
     if (!this.#listManager.activeItem) {
       this.#listManager.updateActiveItem(added.find((x) => !x.disabled));
     }
