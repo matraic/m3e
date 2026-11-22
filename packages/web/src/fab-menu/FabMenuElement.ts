@@ -32,6 +32,9 @@ const viewportMargin = 8;
 /** The space, in pixels, between the menu and its trigger. */
 const menuOffset = 8;
 
+/** @internal */
+export const hideFabMenuForTrigger = Symbol("hideFabMenuForTrigger");
+
 /**
  * Returns when each item of a menu appears or disappears, as in Compose's `FloatingActionButtonMenu`: a counter animates
  * between 0 and the number of items with the slow effects spring (damping ratio 1, stiffness 800 in both motion
@@ -317,6 +320,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
 
   /** @private */ #fabTabIndex?: number;
   /** @private */ #trigger?: HTMLElement;
+  /** @private */ #pendingTrigger?: HTMLElement;
   /** @private */ #anchoringCleanup?: () => void;
   /** @private */ #clipFrame?: number;
   /** @private */ #focusTimer?: number;
@@ -324,6 +328,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   /** @private */ #scrollToEnd = false;
   /** @private */ #lastY = 0;
   /** @private */ #closeId = 0;
+  /** @private */ #showId = 0;
 
   /** @private */
   readonly #listManager = new RovingTabIndexManager<LitElement & DisabledMixin>()
@@ -395,9 +400,14 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       this.hide();
     }
 
+    const showId = ++this.#showId;
+    this.#pendingTrigger = trigger;
     this.#cancelClose();
     this.#anchoringCleanup?.();
-    this.#anchoringCleanup = await positionAnchor(
+    this.#anchoringCleanup = undefined;
+    let active = false;
+    let cancelled = false;
+    const cleanup = await positionAnchor(
       this,
       trigger,
       {
@@ -408,6 +418,8 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
         offset: menuOffset,
       },
       (x, y, position) => {
+        // An active anchor continues updating during the closing animation.
+        if (cancelled || (!active && showId !== this.#showId)) return;
         setCustomState(this, "--right", position.includes("end"));
         setCustomState(this, "--left", position.includes("start"));
         this.#lastY = y;
@@ -428,6 +440,19 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
         }
       },
     );
+
+    if (showId !== this.#showId || !this.isConnected || !trigger.isConnected) {
+      cancelled = true;
+      cleanup();
+      if (showId === this.#showId) this.#pendingTrigger = undefined;
+      return;
+    }
+    this.#pendingTrigger = undefined;
+    active = true;
+    this.#anchoringCleanup = () => {
+      cancelled = true;
+      cleanup();
+    };
 
     const items = this.#items();
     const animate = this.#animates();
@@ -469,8 +494,15 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     this.#hide(restoreFocus, true);
   }
 
+  /** @internal */
+  [hideFabMenuForTrigger](trigger: HTMLElement): void {
+    if (this.#trigger === trigger || this.#pendingTrigger === trigger) this.hide();
+  }
+
   /** @private */
   #hide(restoreFocus: boolean, animate: boolean): void {
+    this.#showId++;
+    this.#pendingTrigger = undefined;
     clearTimeout(this.#focusTimer);
     this.#focusTimer = undefined;
     if (this.#closing) {
@@ -538,6 +570,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
+    this.#hide(false, false);
     super.disconnectedCallback();
 
     clearTimeout(this.#focusTimer);

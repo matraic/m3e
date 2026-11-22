@@ -1,7 +1,7 @@
 import { ActionElementBase, customElement, HtmlFor } from "@m3e/web/core";
 import { addAriaReferencedId, removeAriaReferencedId } from "@m3e/web/core/a11y";
 
-import { M3eFabMenuElement } from "./FabMenuElement";
+import { hideFabMenuForTrigger, M3eFabMenuElement } from "./FabMenuElement";
 
 /**
  * An element, nested within a clickable element, used to open a floating action button (FAB) menu.
@@ -35,6 +35,8 @@ import { M3eFabMenuElement } from "./FabMenuElement";
  */
 @customElement("m3e-fab-menu-trigger")
 export class M3eFabMenuTriggerElement extends HtmlFor(ActionElementBase) {
+  /** @private */ #owner?: HTMLElement;
+
   /** The menu triggered by the element. */
   get menu(): M3eFabMenuElement | null {
     return this.control instanceof M3eFabMenuElement ? this.control : null;
@@ -45,22 +47,25 @@ export class M3eFabMenuTriggerElement extends HtmlFor(ActionElementBase) {
     super.attach(control);
 
     if (this.parentElement && control instanceof M3eFabMenuElement) {
-      this.parentElement.ariaHasPopup = "menu";
-      this.parentElement.ariaExpanded = "false";
+      this.#owner = this.parentElement;
+      this.#owner.ariaHasPopup = "menu";
+      this.#owner.ariaExpanded = "false";
       if (control.id) {
-        addAriaReferencedId(this.parentElement, "aria-controls", control.id);
+        addAriaReferencedId(this.#owner, "aria-controls", control.id);
       }
     }
   }
 
   /** @inheritdoc */
   override detach(): void {
-    if (this.parentElement) {
-      this.parentElement.ariaHasPopup = null;
-      this.parentElement.ariaExpanded = null;
+    if (this.#owner) {
+      this.menu?.[hideFabMenuForTrigger](this.#owner);
+      this.#owner.ariaHasPopup = null;
+      this.#owner.ariaExpanded = null;
       if (this.control?.id) {
-        removeAriaReferencedId(this.parentElement, "aria-controls", this.control.id);
+        removeAriaReferencedId(this.#owner, "aria-controls", this.control.id);
       }
+      this.#owner = undefined;
     }
 
     super.detach();
