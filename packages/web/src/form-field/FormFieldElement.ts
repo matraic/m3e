@@ -747,6 +747,9 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
 
   /** @private */ #ownsValidity = false;
   /** @private */ #control: FormFieldControl | null = null;
+  /** @private */ #disconnectedControl: FormFieldControl | null = null;
+  /** @private */ #controlRoot?: Document | ShadowRoot;
+  /** @private */ #controlForm?: HTMLFormElement | null;
   /** @private */ #removeValueInterceptor?: () => void;
   /** @private */ readonly #formResetHandler = () => this.#handleFormReset();
   /** @private */ readonly #controlInvalidHandler = () => this.#handleControlInvalid();
@@ -803,14 +806,14 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   /** @private */
   readonly #hintMutationController = new MutationController(this, {
     target: null,
-    config: { childList: true, subtree: true },
+    config: { childList: true, subtree: true, characterData: true },
     callback: () => this.#handleHintChange(),
   });
 
   /** @private */
   readonly #errorMutationController = new MutationController(this, {
     target: null,
-    config: { childList: true, subtree: true },
+    config: { childList: true, subtree: true, characterData: true },
     callback: () => this.#handleErrorChange(),
   });
 
@@ -833,6 +836,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   /** @private */ @state() private _validationMessage = "";
   /** @private */ #hintText = "";
   /** @private */ #errorText = "";
+  /** @private */ readonly #descriptions = new Set<string>();
 
   constructor() {
     super();
@@ -931,6 +935,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
+    this.#disconnectedControl = this.#control;
     this.#changeControl(null);
   }
 
@@ -938,6 +943,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   override reconnectedCallback(): void {
     super.reconnectedCallback();
     this.#initialize();
+    this.#disconnectedControl = null;
   }
 
   /** @inheritdoc */
@@ -972,14 +978,7 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
 
     if (changedProperties.has("_invalid") && this.#control) {
       this.#control.ariaInvalid = this._invalid ? "true" : null;
-
-      if (this.#errorText) {
-        if (this._invalid) {
-          M3eAriaDescriber.describe(this.#control, this.#errorText);
-        } else {
-          M3eAriaDescriber.removeDescription(this.#control, this.#errorText);
-        }
-      }
+      this.#syncDescriptions();
     }
   }
 
@@ -1018,8 +1017,10 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
         </div>
       </div>
       <span class="subscript" aria-hidden="true">
-        <span class="error"><slot name="error">${this._validationMessage}</slot></span>
-        <span class="hint"><slot name="hint"></slot></span>
+        <span class="error"
+          ><slot name="error" @slotchange=${this.#handleErrorChange}>${this._validationMessage}</slot></span
+        >
+        <span class="hint"><slot name="hint" @slotchange=${this.#handleHintChange}></slot></span>
       </span>`;
   }
 
@@ -1056,11 +1057,14 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
 
     this.#labelMutationController.observe(this._labelSlot);
 
-    this.#hintMutationController.observe(this._hint);
+    this.#hintMutationController.observe(this._hint.querySelector("slot")!);
     this.#handleHintChange();
 
-    this.#errorMutationController.observe(this._error);
+    this.#errorMutationController.observe(this._error.querySelector("slot")!);
     this.#handleErrorChange();
+
+    const controlSlot = this.shadowRoot?.querySelector<HTMLSlotElement>("slot:not([name])");
+    if (controlSlot) this.#changeControl(findFormFieldControl(controlSlot));
   }
 
   /** @private */
@@ -1142,20 +1146,22 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
   #changeControl(control: FormFieldControl | null): void {
     if (this.#control === control) return;
     if (this.#control) {
-      if (this.#hintText) {
-        M3eAriaDescriber.removeDescription(this.#control, this.#hintText);
+      for (const description of this.#descriptions) {
+        M3eAriaDescriber.removeDescription(this.#control, description, "tooltip", this.#controlRoot);
       }
-      if (this.#errorText) {
-        M3eAriaDescriber.removeDescription(this.#control, this.#errorText);
-      }
+      this.#descriptions.clear();
 
       this.#controlMutationController.unobserve(this.#control);
       this.#control.removeEventListener("invalid", this.#controlInvalidHandler);
-      this.#control.form?.removeEventListener("reset", this.#formResetHandler);
+      this.#controlForm?.removeEventListener("reset", this.#formResetHandler);
       this.#removeValueInterceptor?.();
       this.#removeValueInterceptor = undefined;
     }
     this.#control = control;
+    if (control && control !== this.#disconnectedControl) this._invalid = false;
+    const root = control?.getRootNode();
+    this.#controlRoot = root instanceof Document || root instanceof ShadowRoot ? root : undefined;
+    this.#controlForm = control?.form;
 
     if (["INPUT", "TEXTAREA", "M3E-DATE-INPUT"].includes(this.#control?.tagName ?? "")) {
       this._base.style.setProperty("--_form-field-cursor", "text");
@@ -1174,12 +1180,10 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     if (this.#control) {
       this.#controlMutationController.observe(this.#control);
       this.#control.addEventListener("invalid", this.#controlInvalidHandler);
-      this.#control.form?.addEventListener("reset", this.#formResetHandler);
-      this.#control.removeAttribute("aria-invalid");
+      this.#controlForm?.addEventListener("reset", this.#formResetHandler);
+      this.#control.ariaInvalid = this._invalid ? "true" : null;
 
-      if (this.#hintText) {
-        M3eAriaDescriber.describe(this.#control, this.#hintText);
-      }
+      this.#syncDescriptions();
 
       const tagname = this.#control.tagName.toLowerCase();
       if (tagname.startsWith("m3e-") && !customElements.get(tagname)) {
@@ -1212,15 +1216,8 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     const hintText = getTextContent(this._hint, true);
     if (hintText === this.#hintText) return;
 
-    if (this.#control && this.#hintText) {
-      M3eAriaDescriber.removeDescription(this.#control, this.#hintText);
-    }
-
     this.#hintText = hintText;
-
-    if (this.#control && this.#hintText) {
-      M3eAriaDescriber.describe(this.#control, this.#hintText);
-    }
+    this.#syncDescriptions();
   }
 
   /** @private */
@@ -1228,18 +1225,33 @@ export class M3eFormFieldElement extends ReconnectedCallback(AttachInternals(Lit
     const errorText = getTextContent(this._error, true);
     if (errorText === this.#errorText) return;
 
+    this.#errorText = errorText;
+
     if (this.#ownsValidity) {
       this.#updateCustomValidity();
     }
 
-    if (this.#control && this.#errorText) {
-      M3eAriaDescriber.removeDescription(this.#control, this.#errorText);
+    this.#syncDescriptions();
+  }
+
+  /** @private */
+  #syncDescriptions(): void {
+    if (!this.#control) return;
+    const descriptions = new Set<string>();
+    if (this.#hintText) descriptions.add(this.#hintText);
+    if (this._invalid && this.#errorText) descriptions.add(this.#errorText);
+
+    for (const description of this.#descriptions) {
+      if (!descriptions.has(description)) {
+        M3eAriaDescriber.removeDescription(this.#control, description, "tooltip", this.#controlRoot);
+        this.#descriptions.delete(description);
+      }
     }
-
-    this.#errorText = errorText;
-
-    if (this.#control && this.#errorText && this._invalid) {
-      M3eAriaDescriber.describe(this.#control, this.#errorText);
+    for (const description of descriptions) {
+      if (!this.#descriptions.has(description)) {
+        M3eAriaDescriber.describe(this.#control, description);
+        this.#descriptions.add(description);
+      }
     }
   }
 

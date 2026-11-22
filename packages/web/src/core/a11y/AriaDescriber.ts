@@ -69,14 +69,21 @@ export class M3eAriaDescriber {
    * @param {Element} element The element from which to remove a visually hidden description.
    * @param {string} message The message used to describe `element`.
    * @param {string} [role="tooltip"] The ARIA role of the message.
+   * @param {Document | ShadowRoot} [rootNode] The root in which the description was registered.
    */
-  static removeDescription(element: Element, message: string, role: string = "tooltip"): void {
+  static removeDescription(
+    element: Element,
+    message: string,
+    role: string = "tooltip",
+    rootNode?: Document | ShadowRoot,
+  ): void {
     if (isServer) {
       return;
     }
 
-    const rootNode = element.getRootNode() as ParentNode;
-    const container = this.#messageContainers.get(rootNode);
+    const root = rootNode ?? element.getRootNode();
+    if (!(root instanceof ShadowRoot || root instanceof Document)) return;
+    const container = this.#messageContainers.get(root);
     if (!container) {
       return;
     }
@@ -99,7 +106,7 @@ export class M3eAriaDescriber {
     // If there are no more registered messages, remove the container from the DOM.
     if (container.messageRegistry.size == 0) {
       container.containerElement?.remove();
-      this.#messageContainers.delete(rootNode);
+      this.#messageContainers.delete(root);
     }
   }
 
