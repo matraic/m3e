@@ -1092,6 +1092,7 @@ export class M3eDateInputElement
 
   /** @private */
   #handleFieldKeyDown(e: KeyboardEvent): void {
+    if (this.disabled) return;
     const field = <HTMLSpanElement>e.target;
     const id = <DateInputFieldSegment>field.id;
 
@@ -1356,6 +1357,7 @@ export class M3eDateInputElement
 
   /** @private */
   #handleFieldWheel(e: WheelEvent): void {
+    if (this.disabled) return;
     const field = <HTMLSpanElement>e.target;
     const id = <DateInputFieldSegment>field.id;
 
