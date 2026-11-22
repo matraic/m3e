@@ -26,12 +26,15 @@ import { M3eDatepickerElement } from "./DatepickerElement";
  */
 @customElement("m3e-datepicker-toggle")
 export class M3eDatepickerToggleElement extends HtmlFor(ActionElementBase) {
+  /** @private */ #trigger?: HTMLElement;
+
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
 
-    if (this.parentElement) {
-      this.parentElement.ariaHasPopup = "dialog";
+    this.#trigger = this.parentElement ?? undefined;
+    if (this.#trigger) {
+      this.#trigger.ariaHasPopup = "dialog";
     }
   }
 
@@ -39,8 +42,9 @@ export class M3eDatepickerToggleElement extends HtmlFor(ActionElementBase) {
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    if (this.parentElement) {
-      this.parentElement.ariaHasPopup = null;
+    if (this.#trigger) {
+      this.#trigger.ariaHasPopup = null;
+      this.#trigger = undefined;
     }
   }
 

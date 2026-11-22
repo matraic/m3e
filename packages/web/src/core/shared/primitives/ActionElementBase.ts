@@ -15,6 +15,7 @@ export abstract class ActionElementBase extends LitElement {
     }
   `;
 
+  /** @private */ #parent?: HTMLElement;
   /** @private */ readonly #clickHandler = (e: Event) => {
     if (!e.defaultPrevented) {
       this._onClick(e);
@@ -24,13 +25,15 @@ export abstract class ActionElementBase extends LitElement {
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
-    this.parentElement?.addEventListener("click", this.#clickHandler);
+    this.#parent = this.parentElement ?? undefined;
+    this.#parent?.addEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.parentElement?.removeEventListener("click", this.#clickHandler);
+    this.#parent?.removeEventListener("click", this.#clickHandler);
+    this.#parent = undefined;
   }
 
   /** @inheritdoc */

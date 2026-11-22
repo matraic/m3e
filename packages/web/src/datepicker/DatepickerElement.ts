@@ -631,6 +631,14 @@ export class M3eDatepickerElement extends HtmlFor(
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
+    if (this.#trigger) {
+      this.#trigger.ariaExpanded = "false";
+      this.#trigger = undefined;
+    }
+    this.#anchor = undefined;
+    clearTimeout(this.#closeTimeout);
+    this._open = false;
+    this.#clearSelectionState();
     this._variant = undefined;
     this.#breakpointUnobserve?.();
 
@@ -691,6 +699,12 @@ export class M3eDatepickerElement extends HtmlFor(
     calendar.date = this.date;
     calendar.rangeStart = this.rangeStart;
     calendar.rangeEnd = this.rangeEnd;
+    calendar.previousMonthLabel = this.previousMonthLabel;
+    calendar.previousYearLabel = this.previousYearLabel;
+    calendar.previousMultiYearLabel = this.previousMultiYearLabel;
+    calendar.nextMonthLabel = this.nextMonthLabel;
+    calendar.nextYearLabel = this.nextYearLabel;
+    calendar.nextMultiYearLabel = this.nextMultiYearLabel;
     calendar.specialDates = this.specialDates;
     calendar.blackoutDates = (<M3eDateInputElement>this.control)?.blackoutDates ?? this.blackoutDates;
 
