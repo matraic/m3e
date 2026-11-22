@@ -118,13 +118,21 @@ export class CarouselLayoutHarness {
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await render(carousel("uncontained", 8, "", false, "--m3e-carousel-item-width:160px"));
     const box = (await page.locator("m3e-carousel").locator(".viewport").boundingBox())!;
+    await page.clock.install();
+    await page.clock.pauseAt(new Date(Date.now() + 1000));
     yield;
     await page.mouse.move(box.x + 300, box.y + 100);
     await page.mouse.down();
-    await page.mouse.move(box.x + 180, box.y + 100, { steps: 4 });
+    // Advance event timestamps explicitly so runner delays cannot slow the swipe.
+    for (let step = 1; step <= 4; step++) {
+      await page.clock.runFor(16);
+      await page.mouse.move(box.x + 300 - step * 30, box.y + 100);
+    }
+    await page.clock.runFor(16);
     await page.mouse.up();
     const released = (await geometry(page)).scroll;
     yield;
+    await page.clock.runFor(100);
     await expect.poll(async () => (await geometry(page)).scroll).toBeGreaterThan(released + 20);
   }
 
