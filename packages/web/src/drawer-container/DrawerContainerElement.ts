@@ -249,6 +249,8 @@ export class M3eDrawerContainerElement extends SupportsDirectionality(
 
     if (this.startMode === "auto" || this.endMode === "auto") {
       this.#initBreakpointMonitoring();
+    } else {
+      this.#updateMode();
     }
   }
 
@@ -271,7 +273,7 @@ export class M3eDrawerContainerElement extends SupportsDirectionality(
       </div>
       <div
         class="content"
-        .inert="${(this._startMode !== "side" || this._endMode !== "side") && (this.start || this.end)}"
+        .inert="${(this._startMode !== "side" && this.start) || (this._endMode !== "side" && this.end)}"
       >
         <slot></slot>
       </div>

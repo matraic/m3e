@@ -29,17 +29,23 @@ import { M3eDrawerContainerElement } from "./DrawerContainerElement";
 export class M3eDrawerToggleElement extends HtmlFor(ActionElementBase) {
   /** @private */ readonly #drawerContainerChangeHandler = () => this.#handleDrawerContainerChange();
   /** @private */ #togglingDrawer = false;
+  /** @private */ #trigger?: HTMLElement;
+  /** @private */ #controlledId?: string;
+  /** @private */ #container?: M3eDrawerContainerElement;
 
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
     super.attach(control);
 
-    if (this.htmlFor && this.parentElement) {
-      addAriaReferencedId(this.parentElement, "aria-controls", this.htmlFor);
+    this.#trigger = this.parentElement ?? undefined;
+    this.#controlledId = this.htmlFor ?? undefined;
+    if (this.#controlledId && this.#trigger) {
+      addAriaReferencedId(this.#trigger, "aria-controls", this.#controlledId);
     }
 
     const container = control.closest("m3e-drawer-container");
     if (container) {
+      this.#container = container;
       container.addEventListener("change", this.#drawerContainerChangeHandler);
       this.#updateToggle(container, true);
     }
@@ -47,15 +53,18 @@ export class M3eDrawerToggleElement extends HtmlFor(ActionElementBase) {
 
   /** @inheritdoc */
   override detach(): void {
-    if (this.parentElement) {
-      if (this.htmlFor) {
-        removeAriaReferencedId(this.parentElement, "aria-controls", this.htmlFor);
+    if (this.#trigger) {
+      if (this.#controlledId) {
+        removeAriaReferencedId(this.#trigger, "aria-controls", this.#controlledId);
       }
 
-      this.parentElement.ariaExpanded = null;
+      this.#trigger.ariaExpanded = null;
     }
 
-    this.control?.closest("m3e-drawer-container")?.removeEventListener("change", this.#drawerContainerChangeHandler);
+    this.#container?.removeEventListener("change", this.#drawerContainerChangeHandler);
+    this.#trigger = undefined;
+    this.#controlledId = undefined;
+    this.#container = undefined;
 
     super.detach();
   }
@@ -106,7 +115,8 @@ export class M3eDrawerToggleElement extends HtmlFor(ActionElementBase) {
 
   /** @private */
   async #updateToggle(container: M3eDrawerContainerElement, syncToggle: boolean): Promise<void> {
-    if (!this.parentElement || !this.control) {
+    const trigger = this.#trigger;
+    if (!trigger || !this.control) {
       return;
     }
 
@@ -117,16 +127,16 @@ export class M3eDrawerToggleElement extends HtmlFor(ActionElementBase) {
       selected = container.end;
     }
 
-    this.parentElement.ariaExpanded = `${selected}`;
+    trigger.ariaExpanded = `${selected}`;
 
-    if (syncToggle && this.parentElement.hasAttribute("toggle")) {
-      this.parentElement.toggleAttribute("selected", selected);
+    if (syncToggle && trigger.hasAttribute("toggle")) {
+      trigger.toggleAttribute("selected", selected);
     }
 
-    if (this.parentElement instanceof LitElement) {
+    if (trigger instanceof LitElement) {
       // Wait for update and remove aria-pressed due to use of aria-expanded.
-      await (this.parentElement as LitElement).updateComplete;
-      this.parentElement.ariaPressed = null;
+      await trigger.updateComplete;
+      if (this.#trigger === trigger) trigger.ariaPressed = null;
     }
   }
 }
