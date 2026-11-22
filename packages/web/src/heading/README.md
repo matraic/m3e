@@ -30,7 +30,7 @@ Use `emphasized` to apply the emphasized typescale.
 <!-- Additional variants omitted for brevity -->
 ```
 
-Set `level` to apply `role="heading"` and the corresponding `aria-level`. Without `level`, the component has no heading role by default.
+Set `level` from `1` to `6` to apply `role="heading"` and the corresponding `aria-level`. Without a valid level, the component has no heading role.
 
 ```html
 <m3e-heading variant="headline" size="large" level="1">Page title</m3e-heading>
