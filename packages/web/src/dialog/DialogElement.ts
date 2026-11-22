@@ -352,6 +352,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
   /** @private */ #id = M3eDialogElement.__nextId++;
 
   /** @private */ #open = false;
+  /** @private */ #connectionVersion = 0;
   /** @private */ #escapePressedWithoutCancel = false;
   /** @private */ @state() private _withActions = false;
   /** @private */ @query(".base") private readonly _base!: HTMLDialogElement;
@@ -412,13 +413,28 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
    */
   returnValue = "";
 
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.#connectionVersion++;
+    this.open = false;
+    this._base?.close();
+    const collapsible = this.shadowRoot?.querySelector("m3e-collapsible");
+    if (collapsible) {
+      collapsible.open = false;
+    }
+  }
+
   /**
    * Asynchronously opens the dialog.
-   * @returns {Promise<void>} A `Promise` that resolves when the dialog is open.
+   * @returns {Promise<void>} A `Promise` that resolves when the dialog is open or disconnected during opening.
    */
   async show(): Promise<void> {
+    const connectionVersion = this.#connectionVersion;
     await this.updateComplete;
 
+    if (connectionVersion !== this.#connectionVersion) return;
+    if (!this.isConnected) throw new DOMException("Cannot open a disconnected dialog.", "InvalidStateError");
     if (this._base.open) {
       return;
     }
@@ -427,6 +443,7 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       this.open = false;
       return;
     }
+    if (!this.isConnected || connectionVersion !== this.#connectionVersion) return;
 
     const collapsible = this.shadowRoot?.querySelector("m3e-collapsible");
     if (collapsible) {
@@ -456,7 +473,9 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       return;
     }
 
+    const connectionVersion = this.#connectionVersion;
     await this.updateComplete;
+    if (!this.isConnected || connectionVersion !== this.#connectionVersion) return;
 
     this.#scrollLockController.unlock();
 
@@ -493,7 +512,6 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
       @close=${this.#handleClose}
       @cancel=${this.#handleCancel}
       @click=${this.#handleClick}
-      @keydown=${this.#handleKeyDown}
     >
       <div class="container">
         <m3e-focus-trap ?disabled="${this.noFocusTrap}">
@@ -550,16 +568,6 @@ export class M3eDialogElement extends AttachInternals(LitElement) {
   #handleClick(e: Event): void {
     if (!this.disableClose && e.target === this._base) {
       this.hide();
-    }
-  }
-
-  /** @private */
-  #handleKeyDown(e: KeyboardEvent): void {
-    if (e.key === "Escape" && !e.shiftKey && !e.ctrlKey) {
-      e.preventDefault();
-      if (!this.disableClose) {
-        this.hide();
-      }
     }
   }
 
