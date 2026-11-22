@@ -8,7 +8,8 @@ import { CarouselGeometryHarness } from "./carousel-geometry.harness";
 export const test = mergeTests(componentTest, bddTest).extend<{
   carouselGeometry: CarouselGeometryHarness;
 }>({
-  carouselGeometry: async (_, use) => use(new CarouselGeometryHarness()),
+  // eslint-disable-next-line no-empty-pattern
+  carouselGeometry: async ({}, use) => use(new CarouselGeometryHarness()),
 });
 const { Given, When, Then } = createBdd(test);
 
