@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 import { test as base } from "@playwright/test";
@@ -12,8 +12,8 @@ const coverageBundleUrl = "https://m3e.test/dist/all.js";
 /** Fixtures shared by component tests. */
 export const test = base.extend<
   CoverageOptions & {
-    /** Renders `html` in the page body, loads the bundle and waits for elements to finish their first update. */
-    render: (html: string, direction?: "ltr" | "rtl") => Promise<void>;
+    /** Renders `html`, loads the bundle, and runs optional setup code in the bundle scope. */
+    render: (html: string, direction?: "ltr" | "rtl", setupScript?: string) => Promise<void>;
   }
 >({
   collectCoverage: [false, { option: true }],
@@ -22,21 +22,33 @@ export const test = base.extend<
       throw new Error("The bundle is missing. Run `npm run build -w @m3e/web` before testing.");
     }
     const path = fileURLToPath(bundle);
+    let setupScript: string | undefined;
     if (collectCoverage) {
       await page.route(coverageBundleUrl, (route) =>
-        route.fulfill({ path, contentType: "text/javascript", headers: { "access-control-allow-origin": "*" } }),
+        setupScript
+          ? route.fulfill({
+              body: `${readFileSync(path, "utf8")}\n${setupScript}`,
+              contentType: "text/javascript",
+              headers: { "access-control-allow-origin": "*" },
+            })
+          : route.fulfill({ path, contentType: "text/javascript", headers: { "access-control-allow-origin": "*" } }),
       );
       await page.coverage.startJSCoverage({ resetOnNavigation: false });
     }
 
     try {
-      await use(async (html, direction) => {
+      await use(async (html, direction, script) => {
+        setupScript = script;
         const directionAttribute = direction ? ` dir="${direction}"` : "";
         await page.setContent(
           `<!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1"></head><body${directionAttribute}>${html}</body></html>`,
         );
         await page.addScriptTag(
-          collectCoverage ? { url: coverageBundleUrl, type: "module" } : { path, type: "module" },
+          collectCoverage
+            ? { url: coverageBundleUrl, type: "module" }
+            : script
+              ? { content: `${readFileSync(path, "utf8")}\n${script}`, type: "module" }
+              : { path, type: "module" },
         );
         await page.waitForFunction(() => customElements.get("m3e-theme") !== undefined);
         await page.evaluate(() =>
