@@ -59,6 +59,8 @@ import type { M3eMenuElement } from "./MenuElement";
  */
 @customElement("m3e-menu-trigger")
 export class M3eMenuTriggerElement extends HtmlFor(ActionElementBase) {
+  /** @private */ #parent?: HTMLElement;
+
   /** The menu triggered by the element. */
   get menu(): M3eMenuElement | null {
     return this.control?.tagName === "M3E-MENU" ? <M3eMenuElement>this.control : null;
@@ -71,6 +73,7 @@ export class M3eMenuTriggerElement extends HtmlFor(ActionElementBase) {
     const menu = this.menu;
     if (menu) {
       if (this.parentElement) {
+        this.#parent = this.parentElement;
         this.parentElement.ariaHasPopup = "menu";
         this.parentElement.ariaExpanded = "false";
         if (menu.id) {
@@ -85,15 +88,21 @@ export class M3eMenuTriggerElement extends HtmlFor(ActionElementBase) {
 
   /** @inheritdoc */
   override detach(): void {
-    if (this.parentElement) {
-      this.parentElement.ariaHasPopup = null;
-      this.parentElement.ariaExpanded = null;
+    const menu = this.menu;
+    const parent = this.#parent ?? this.parentElement;
+    if (parent) {
+      if (menu?.isOpen && parent.ariaExpanded === "true") {
+        menu.hide();
+      }
 
-      const menu = this.menu;
+      parent.ariaHasPopup = null;
+      parent.ariaExpanded = null;
+
       if (menu?.id) {
-        removeAriaReferencedId(this.parentElement, "aria-controls", menu.id);
+        removeAriaReferencedId(parent, "aria-controls", menu.id);
       }
     }
+    this.#parent = undefined;
 
     super.detach();
   }

@@ -180,7 +180,7 @@ export class M3eMenuItemElement extends LinkButton(Role(MenuItemElementBase, "me
 
   /** @private */
   #handleClick(e: Event): void {
-    if (!e.defaultPrevented && !this._hasSubmenu) {
+    if (!e.defaultPrevented && !this.disabled && !this._hasSubmenu) {
       this.menu?.hideAll(true);
     }
   }

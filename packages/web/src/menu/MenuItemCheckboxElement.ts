@@ -184,7 +184,7 @@ export class M3eMenuItemCheckboxElement extends Checked(Role(MenuItemElementBase
 
   /** @internal */
   #handleClick(e: Event): void {
-    if (!e.defaultPrevented) {
+    if (!e.defaultPrevented && !this.disabled) {
       this.checked = !this.checked;
       this.performUpdate();
 

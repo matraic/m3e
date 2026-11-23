@@ -170,7 +170,7 @@ export class M3eMenuItemRadioElement extends Checked(Role(MenuItemElementBase, "
 
   /** @private */
   #handleClick(e: Event): void {
-    if (!e.defaultPrevented) {
+    if (!e.defaultPrevented && !this.disabled) {
       this.checked = true;
       this.performUpdate();
 
