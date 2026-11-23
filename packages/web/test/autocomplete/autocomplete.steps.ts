@@ -242,6 +242,9 @@ Given("an autocomplete that is loading with a loading label of {string}", async 
 Given("an autocomplete that is loading with its loading message hidden", async ({ autocomplete }) =>
   autocomplete.show({ attributes: "loading hide-loading" }),
 );
+When("the application hides the menu and starts loading", async ({ autocomplete }) =>
+  autocomplete.hideMenuWhileLoading(),
+);
 
 Given("an autocomplete that requires an option to be selected", async ({ autocomplete }) =>
   autocomplete.show({ attributes: "required" }),

@@ -460,6 +460,8 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
 
   /** @private */
   get #shouldShowMenu(): boolean {
+    if (this.loading && this.hideLoading) return false;
+
     return (
       this.#options.some((x) => x.hidden === false) ||
       (this.loading && !this.hideLoading && this.loadingLabel.length > 0) ||
@@ -565,9 +567,11 @@ export class M3eAutocompleteElement extends ReconnectedCallback(HtmlFor(LitEleme
           if (this.loadingLabel) {
             M3eLiveAnnouncer.announce(this.loadingLabel, "polite");
           }
-          if (!this.#menu && this.#shouldShowMenu) {
-            this.#showMenu();
-          }
+        }
+        if (this.#menu && !this.#shouldShowMenu) {
+          this.#hideMenu();
+        } else if (this.#hasFocus && !this.#menu && this.#shouldShowMenu) {
+          this.#showMenu();
         }
       } else if (changedProperties.get("loading") === true) {
         this.#loadingCompletionPending = true;

@@ -381,6 +381,14 @@ Feature: Autocomplete
         | a loading label of "Finding fruit..." | displays "Finding fruit..."    |
         | its loading message hidden            | does not display "Loading..."  |
 
+    Scenario: Hiding the loading message closes an already open panel
+      Given an autocomplete with the fruit suggestions open
+      Then the visible suggestions are "Apples, Oranges, Bananas"
+      When the application hides the menu and starts loading
+      Then the combobox is collapsed
+      And no suggestion panel is visible
+      And the polite live region contains "Loading..."
+
   Rule: Leaving the input reconciles typed text with the committed selection
 
     Scenario: Leaving an optional autocomplete keeps edited text without committing a value

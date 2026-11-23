@@ -152,6 +152,13 @@ export class AutocompleteHarness {
     });
   }
 
+  hideMenuWhileLoading() {
+    return this.component.evaluate((element: M3eAutocompleteElement) => {
+      element.hideLoading = true;
+      element.loading = true;
+    });
+  }
+
   receiveSuggestions(labels: string[]) {
     return this.component.evaluate((element: M3eAutocompleteElement, results) => {
       const options = results.map((label) => {
