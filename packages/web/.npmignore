@@ -6,6 +6,8 @@ rollup.config.js
 tsconfig.json
 tsconfig.eslint.json
 playwright.config.ts
+playwright.coverage.config.ts
 test/
+coverage/
 test-results/
 playwright-report/
