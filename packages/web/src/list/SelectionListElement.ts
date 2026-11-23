@@ -152,12 +152,14 @@ export class M3eSelectionListElement extends Labelled(
 ) {
   /** @private */ readonly #keyDownHandler = (e: KeyboardEvent) => this[selectionManager].onKeyDown(e);
   /** @private */ readonly #changeHandler = (e: Event) => this.#handleChange(e);
+  /** @private */ #defaultSelectedOptions?: readonly M3eListOptionElement[];
 
   /** @private */
   readonly [selectionManager] = new SelectionManager<M3eListOptionElement>()
     .withWrap()
     .withHomeAndEnd()
-    .withVerticalOrientation();
+    .withVerticalOrientation()
+    .onSelectedItemsChange(() => this.requestUpdate());
 
   /**
    * Whether multiple items can be selected.
@@ -224,6 +226,20 @@ export class M3eSelectionListElement extends Labelled(
   }
 
   /** @inheritdoc */
+  formResetCallback(): void {
+    const manager = this[selectionManager];
+    for (const option of [...manager.selectedItems]) {
+      manager.deselect(option);
+    }
+    for (const option of this.#defaultSelectedOptions ?? []) {
+      manager.select(option, false);
+    }
+
+    this.markAsPristine();
+    this.markAsUntouched();
+  }
+
+  /** @inheritdoc */
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
 
@@ -253,8 +269,10 @@ export class M3eSelectionListElement extends Labelled(
     const { added } = this[selectionManager].setItems(this.items.filter((x) => x instanceof M3eListOptionElement));
     added.forEach((x) => setCustomState(x, "--hide-selection", this.hideSelectionIndicator));
 
+    this.#defaultSelectedOptions ??= [...this[selectionManager].selectedItems];
+
     if (!this[selectionManager].activeItem) {
-      this[selectionManager].updateActiveItem(added.find((x) => !x.disabled));
+      this[selectionManager].updateActiveItem(this.options.find((x) => !x.disabled));
     }
   }
 
