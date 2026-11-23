@@ -47,7 +47,7 @@ export class ListHarness {
   }
 
   async readFormData() {
-    this.formData = await this.page.locator("form").evaluate((form) =>
+    this.formData = await this.page.locator("form").evaluate((form: HTMLFormElement) =>
       Array.from(new FormData(form).entries(), ([name, value]): [string, string] => [name, String(value)]),
     );
   }
