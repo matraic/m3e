@@ -18,9 +18,11 @@
     />
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
+    <link href="progress-indicator.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.5/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.6/dist/all.min.js"></script>
     <script src="../main.js"></script>
+    <script src="./progress-indicator.js"></script>
   </head>
   <body>
     <m3e-theme strong-focus></m3e-theme>
@@ -53,6 +55,13 @@
           <code>value</code> attribute to indicate completion percentage and use <code>max</code> to specify the total
           number of steps or units of progress. In addition, you can provide content in the default slot.
         </p>
+        <p>
+          The <code>wavy</code> variant uses a rounded-star wave. It smoothly morphs to a circle through 10% progress
+          and from 95% onward, and back to the wave between those values. Each morph takes 500ms. Set
+          <code>--m3e-circular-wavy-progress-indicator-amplitude</code> to adjust the deformation:
+          <code>1.6px</code> produces the default rounded star, smaller values soften it, larger values deepen it, and
+          <code>0px</code> keeps it flat. Large amplitudes are limited to prevent the wave from folding over itself.
+        </p>
         <m3e-card variant="outlined" class="showcase">
           <div slot="content">
             <m3e-circular-progress-indicator value="25">25</m3e-circular-progress-indicator>
@@ -66,10 +75,32 @@
           >
         </m3e-card>
 
+        <m3e-heading m3e-toc-ignore variant="title" size="medium" level="5">Animating wavy to completion</m3e-heading>
+        <p>
+          Run this example of the <code>wavy</code> variant to advance from 0% to 100% over ten seconds. The indicator
+          starts as a circle, morphs into a wave after 10%, and smoothly returns to a circle from 95% as it completes.
+          Replay it to watch the morph again.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content" class="circular-progress-demo">
+            <m3e-circular-progress-indicator
+              id="circular-progress-demo"
+              variant="wavy"
+              value="0"
+              aria-label="Wavy example task progress"
+              >0</m3e-circular-progress-indicator
+            >
+            <m3e-button id="run-circular-progress">Run progress</m3e-button>
+          </div>
+        </m3e-card>
         <m3e-heading variant="title" size="medium" level="4">Indeterminate</m3e-heading>
         <p>
           Use the <code>indeterminate</code> attribute to change the mode to indeterminate. In this mode,
           <code>value</code> and <code>max</code> are ignored.
+        </p>
+        <p>
+          Set <code>--m3e-circular-progress-indicator-thickness</code> to customize the stroke of both the indicator and
+          its track.
         </p>
         <m3e-card variant="outlined" class="showcase">
           <div slot="content">
@@ -102,8 +133,8 @@
           number of steps or units of progress. This is the default mode.
         </p>
         <p>
-          When using the <code>wavy</code> variant, the indicator transitions to the flat appearance automatically when
-          progress reaches 100%.
+          The <code>wavy</code> variant smoothly morphs to a straight line through 10% progress and from 95% onward, and
+          back to the wave between those values. Each morph takes 500ms.
         </p>
         <m3e-card variant="outlined" class="showcase">
           <div slot="content">
@@ -117,6 +148,25 @@
 &lt;m3e-linear-progress-indicator value=&quot;25&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;
 &lt;m3e-linear-progress-indicator variant=&quot;wavy&quot; value=&quot;25&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
           >
+        </m3e-card>
+
+        <m3e-heading m3e-toc-ignore variant="title" size="medium" level="5">Animating wavy to completion</m3e-heading>
+        <p>
+          Run this example of the <code>wavy</code> variant to advance from 0% to 100% over ten seconds. The indicator
+          starts as a straight line, morphs into a wave after 10%, and smoothly flattens from 95% as it completes.
+          Replay it to watch the morph again.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content" class="linear-progress-demo">
+            <m3e-linear-progress-indicator
+              id="linear-progress-demo"
+              variant="wavy"
+              value="0"
+              aria-label="Wavy linear example task progress"
+            ></m3e-linear-progress-indicator>
+            <span id="linear-progress-value" class="linear-progress-value">0%</span>
+            <m3e-button id="run-linear-progress">Run progress</m3e-button>
+          </div>
         </m3e-card>
 
         <m3e-heading variant="title" size="medium" level="4">Indeterminate</m3e-heading>
@@ -144,26 +194,23 @@
           <code>value</code> determines the progress of the primary bar while the <code>buffer-value</code> attribute is
           used to show buffering progress.
         </p>
-        <p>
-          As with <code>determinate</code> mode, when using the <code>wavy</code> variant, the indicator transitions to
-          the flat appearance automatically when progress reaches 100%.
-        </p>
+        <p>As with <code>determinate</code> mode, the default wave is flat through 10% progress and from 95% onward.</p>
         <m3e-card variant="outlined" class="showcase">
           <div slot="content">
-            <m3e-linear-progress-indicator mode="buffer" value="10" buffer-value="25"></m3e-linear-progress-indicator>
+            <m3e-linear-progress-indicator mode="buffer" value="25" buffer-value="25"></m3e-linear-progress-indicator>
             <br />
             <m3e-linear-progress-indicator
               variant="wavy"
               mode="buffer"
-              value="10"
+              value="25"
               buffer-value="25"
             ></m3e-linear-progress-indicator>
           </div>
         </m3e-card>
         <m3e-card variant="outlined" class="example">
           <pre slot="content">
-&lt;m3e-linear-progress-indicator mode=&quot;buffer&quot; value=&quot;10&quot; buffer-value=&quot;25&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;
-&lt;m3e-linear-progress-indicator variant=&quot;wavy&quot; mode=&quot;buffer&quot; value=&quot;10&quot; buffer-value=&quot;25&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
+&lt;m3e-linear-progress-indicator mode=&quot;buffer&quot; value=&quot;25&quot; buffer-value=&quot;25&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;
+&lt;m3e-linear-progress-indicator variant=&quot;wavy&quot; mode=&quot;buffer&quot; value=&quot;25&quot; buffer-value=&quot;25&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
           >
         </m3e-card>
 
@@ -185,6 +232,56 @@
 &lt;m3e-linear-progress-indicator mode=&quot;query&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;
 &lt;m3e-linear-progress-indicator variant=&quot;wavy&quot; mode=&quot;query&quot;&gt;&lt;/m3e-linear-progress-indicator&gt;</pre
           >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Changing thickness</m3e-heading>
+        <p>
+          Set <code>--m3e-linear-progress-indicator-thickness</code> and
+          <code>--m3e-circular-progress-indicator-thickness</code> to customize their strokes. Use the slider to compare
+          the <code>flat</code> and <code>wavy</code> variants below, all showing 50% progress.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div id="progress-thickness-demo" slot="content" class="progress-thickness-demo">
+            <div class="progress-thickness-control">
+              <m3e-slider min="1" max="12" step="1">
+                <m3e-slider-thumb
+                  id="progress-thickness-thumb"
+                  value="4"
+                  aria-label="Stroke thickness"
+                ></m3e-slider-thumb>
+              </m3e-slider>
+              <span id="progress-thickness-value" class="progress-thickness-value">4px</span>
+            </div>
+            <div class="progress-thickness-examples">
+              <div class="progress-thickness-example">
+                <span>Linear <code>flat</code></span>
+                <m3e-linear-progress-indicator
+                  value="50"
+                  aria-label="Flat linear thickness example"
+                ></m3e-linear-progress-indicator>
+              </div>
+              <div class="progress-thickness-example">
+                <span>Linear <code>wavy</code></span>
+                <m3e-linear-progress-indicator
+                  variant="wavy"
+                  value="50"
+                  aria-label="Wavy linear thickness example"
+                ></m3e-linear-progress-indicator>
+              </div>
+              <div class="progress-thickness-example">
+                <span>Circular <code>flat</code></span>
+                <m3e-circular-progress-indicator value="50" aria-label="Flat circular thickness example"
+                  >50</m3e-circular-progress-indicator
+                >
+              </div>
+              <div class="progress-thickness-example">
+                <span>Circular <code>wavy</code></span>
+                <m3e-circular-progress-indicator variant="wavy" value="50" aria-label="Wavy circular thickness example"
+                  >50</m3e-circular-progress-indicator
+                >
+              </div>
+            </div>
+          </div>
         </m3e-card>
 
         <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>

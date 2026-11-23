@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Shape for M3E</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Shape for M3E" />
+    <base href="./" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <link href="../main.css" rel="stylesheet" />
+    <link href="shape.css" rel="stylesheet" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.6/dist/all.min.js"></script>
+    <script src="../main.js"></script>
+  </head>
+  <body>
+    <m3e-theme strong-focus></m3e-theme>
+    <div class="panes">
+      <m3e-content-pane id="body">
+        <m3e-heading m3e-toc-ignore variant="display" size="large" level="1">Shape</m3e-heading>
+        <p>
+          <a href="https://m3.material.io/styles/shape" target="_blank" rel="noopener noreferrer"
+            >Material Design 3 shape</a
+          >
+          uses corner size and shape family to give surfaces their outlines. The <strong>rounded</strong> family curves
+          corners; the <strong>cut</strong> family replaces the curve with a straight edge. M3E maps these families to
+          CSS <code>round</code> and <code>bevel</code>, respectively.
+        </p>
+
+        <m3e-heading variant="headline" size="medium" level="2">Shape tokens</m3e-heading>
+        <p>
+          Corner size is independent of family. Material corner tokens such as
+          <code>--md-sys-shape-corner-extra-large</code> provide radii; component properties such as
+          <code>--m3e-card-shape</code> can override them. A zero radius leaves a square corner regardless of family.
+        </p>
+        <p>
+          Set <code>--m3e-shape-family</code> on an ancestor to change the default family for supporting components. It
+          defaults to <code>round</code>. The core logical-corner properties
+          <code>--m3e-shape-family-start-start</code>, <code>--m3e-shape-family-start-end</code>,
+          <code>--m3e-shape-family-end-start</code>, and <code>--m3e-shape-family-end-end</code> can override individual
+          corners. Logical corners follow writing direction and writing mode.
+        </p>
+        <p>
+          Supporting surfaces can also define their own family and logical-corner properties. Generally, each corner
+          resolves its component corner override first, then the component family, the core corner override, and finally
+          the core family. Some related surfaces have additional fallbacks; see each component's CSS properties.
+        </p>
+        <m3e-callout>
+          <span slot="label">Browser support</span>
+          Cut and other non-round corners require CSS <code>corner-shape</code> support. Browsers without it retain
+          rounded corners. The examples also require an M3E build with shape-family support.
+          <a href="https://caniuse.com/mdn-css_properties_corner-shape" target="_blank" rel="noopener noreferrer"
+            >See supported browsers</a
+          >.
+        </m3e-callout>
+
+        <m3e-heading variant="headline" size="medium" level="2">Shape-aware components</m3e-heading>
+        <p>
+          Shape-family properties are available on surfaces in
+          <a href="../components/avatar.html">Avatar</a>, <a href="../components/badge.html">Badge</a>,
+          <a href="../components/bottom-sheet.html">Bottom Sheet</a>,
+          <a href="../components/breadcrumb.html">Breadcrumb</a>, <a href="../components/button.html">Button</a>,
+          <a href="../components/callout.html">Callout</a>, <a href="../components/card.html">Card</a>,
+          <a href="../components/chips.html">Chips</a>, <a href="../components/content-pane.html">Content Pane</a>,
+          <a href="../components/datepicker.html">Datepicker</a>, <a href="../components/dialog.html">Dialog</a>,
+          <a href="../components/drawer-container.html">Drawer Container</a>,
+          <a href="../components/expansion-panel.html">Expansion Panel</a>, <a href="../components/fab.html">FAB</a>,
+          <a href="../components/fab-menu.html">FAB Menu</a>, <a href="../components/icon-button.html">Icon Button</a>,
+          <a href="../components/list.html">List</a>, <a href="../components/menu.html">Menu</a>,
+          <a href="../components/nav-bar.html">Navigation Bar</a>,
+          <a href="../components/nav-menu.html">Navigation Menu</a>, <a href="../components/search.html">Search</a>,
+          <a href="../components/skeleton.html">Skeleton</a>, <a href="../components/snackbar.html">Snackbar</a>,
+          <a href="../components/swipe-reveal.html">Swipe Reveal</a>, <a href="../components/tabs.html">Tabs</a>,
+          <a href="../components/timepicker.html">Timepicker</a>, <a href="../components/toc.html">TOC</a>,
+          <a href="../components/toolbar.html">Toolbar</a>, <a href="../components/tooltip.html">Tooltip</a>, and
+          <a href="../components/tree.html">Tree</a>. Options and option panels also support families, as does the core
+          floating panel. Support applies to specific surfaces, not necessarily every element or part of a module.
+        </p>
+
+        <m3e-heading variant="headline" size="medium" level="2">Rounded and cut corners</m3e-heading>
+        <p>
+          These cards use the same corner size. The first uses the default rounded family, the second uses cut corners,
+          and the third mixes cut and rounded logical corners.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content" class="shape-cards">
+            <m3e-card class="shape-card">
+              <m3e-heading slot="header" variant="title" size="medium">Rounded</m3e-heading>
+              <div slot="content">Curved corners</div>
+            </m3e-card>
+            <m3e-card class="shape-card cut-card">
+              <m3e-heading slot="header" variant="title" size="medium">Cut</m3e-heading>
+              <div slot="content">Straight corners</div>
+            </m3e-card>
+            <m3e-card class="shape-card mixed-card">
+              <m3e-heading slot="header" variant="title" size="medium">Mixed</m3e-heading>
+              <div slot="content">Cut start-start and end-end corners</div>
+            </m3e-card>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-card class=&quot;shape-card&quot;&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-card&gt;
+&lt;m3e-card class=&quot;shape-card cut-card&quot;&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-card&gt;
+&lt;m3e-card class=&quot;shape-card mixed-card&quot;&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-card&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.shape-card {
+  --m3e-card-shape: var(--md-sys-shape-corner-extra-large, 28px);
+}
+.cut-card {
+  --m3e-card-shape-family: bevel;
+}
+.mixed-card {
+  --m3e-card-shape-family-start-start: bevel;
+  --m3e-card-shape-family-end-end: bevel;
+}</pre
+          >
+        </m3e-card>
+        <p>
+          Families also apply to interactive surfaces such as buttons. The button keeps its existing state-dependent
+          corner sizes while using the selected family.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-button class="cut-button" variant="filled" shape="square">Cut button</m3e-button>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-button class=&quot;cut-button&quot; variant=&quot;filled&quot; shape=&quot;square&quot;&gt;Cut button&lt;/m3e-button&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.cut-button {
+  --m3e-button-shape-family: bevel;
+}</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Other corner shapes</m3e-heading>
+        <p>
+          Family properties accept CSS <code>corner-shape</code> values beyond Material's rounded and cut families. For
+          example, <code>squircle</code> creates a softer, superellipse-like corner. These are CSS extensions rather
+          than additional Material shape families.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content" class="shape-cards">
+            <m3e-card class="shape-card squircle-card">
+              <m3e-heading slot="header" variant="title" size="medium">Squircle</m3e-heading>
+              <div slot="content">A CSS corner shape</div>
+            </m3e-card>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-card class=&quot;shape-card squircle-card&quot;&gt;
+  &lt;!-- Content omitted for brevity --&gt;
+&lt;/m3e-card&gt;</pre
+          >
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+.shape-card {
+  --m3e-card-shape: var(--md-sys-shape-corner-extra-large, 28px);
+}
+.squircle-card {
+  --m3e-card-shape-family: squircle;
+}</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="medium" level="2">Material Shape Library</m3e-heading>
+        <p>
+          For decorative shapes beyond component corners, the
+          <a href="../components/shape.html">Shape module</a> provides <code>m3e-shape</code>, with Material Shape
+          Library shapes, media clipping, and shape morphing.
+        </p>
+      </m3e-content-pane>
+      <m3e-toc class="toc" for="body">
+        <span slot="overline">On this page</span>
+        <span slot="title">Shape</span>
+      </m3e-toc>
+    </div>
+  </body>
+</html>

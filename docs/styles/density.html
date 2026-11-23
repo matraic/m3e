@@ -17,7 +17,7 @@
       rel="stylesheet"
     />
     <link href="../main.css" rel="stylesheet" />
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.5/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.6/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -46,20 +46,33 @@
         </p>
         <p>
           Density tokens are surfaced using the standardized <code>--md-sys-density-scale</code> and
-          <code>--md-sys-density-size</code> custom CSS properties. M3E provides the
-          <a href="../components/theme.html">Theme</a> component which can be used to systematically control
-          <code>--md-sys-density-scale</code> using its <code>density</code> attribute.
+          <code>--md-sys-density-size</code> custom CSS properties.
         </p>
+        <m3e-callout>
+          <span slot="label">M3E Theme</span>
+          The <a href="../components/theme.html">Theme</a> component controls <code>--md-sys-density-scale</code> using
+          its <code>density</code> attribute.
+        </m3e-callout>
 
         <m3e-heading variant="headline" size="medium" level="2">Density-aware components</m3e-heading>
         <p>
-          The following components support density scaling: <code>autocomplete</code>, <code>breadcrumb</code>,
-          <code>button-group</code>, <code>button</code>, <code>callout</code>, <code>checkbox</code>,
-          <code>chips</code>, <code>fab</code>, <code>form-field</code>, <code>icon button</code>, <code>list</code>,
-          <code>menu</code>, <code>nav menu</code>, <code>paginator</code>, <code>radio-group</code>,
-          <code>segmented button</code>, <code>select</code>, <code>split-button</code>, <code>switch</code>,
-          <code>tabs</code>, <code>toolbar</code>, and <code>tree</code>. Each component adapts its layout, spacing, and
-          touch targets based on the active density scale. Refer to the component's documentation for usage examples.
+          The following components support density scaling:
+          <a href="../components/autocomplete.html">Autocomplete</a>,
+          <a href="../components/breadcrumb.html">Breadcrumb</a>,
+          <a href="../components/button-group.html">Button Group</a>, <a href="../components/button.html">Button</a>,
+          <a href="../components/callout.html">Callout</a>, <a href="../components/checkbox.html">Checkbox</a>,
+          <a href="../components/chips.html">Chips</a>, <a href="../components/fab.html">FAB</a>,
+          <a href="../components/form-field.html">Form Field</a>,
+          <a href="../components/icon-button.html">Icon Button</a>, <a href="../components/list.html">List</a>,
+          <a href="../components/menu.html">Menu</a>, <a href="../components/nav-menu.html">Navigation Menu</a>,
+          <a href="../components/paginator.html">Paginator</a>,
+          <a href="../components/radio-group.html">Radio Group</a>,
+          <a href="../components/segmented-button.html">Segmented Button</a>,
+          <a href="../components/select.html">Select</a>, <a href="../components/split-button.html">Split Button</a>,
+          <a href="../components/switch.html">Switch</a>, <a href="../components/tabs.html">Tabs</a>,
+          <a href="../components/toolbar.html">Toolbar</a>, and <a href="../components/tree.html">Tree</a>. Each
+          component adapts its layout, spacing, and touch targets based on the active density scale. Refer to the
+          component's documentation for usage examples.
         </p>
 
         <m3e-heading variant="headline" size="medium" level="2">Touch surfaces</m3e-heading>

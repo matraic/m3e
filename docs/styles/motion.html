@@ -17,7 +17,7 @@
       rel="stylesheet"
     />
     <link href="../main.css" rel="stylesheet" />
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.5/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.6/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -46,10 +46,13 @@
         </p>
         <p>
           Motion tokens are surfaced using the standardized prefix <code>--md-sys-motion-*</code> and are defaulted to
-          spec-aligned values. M3E provides the <a href="../components/theme.html">Theme</a> component which can be used
-          to systematically control whether <strong>standard</strong> or <strong>expressive</strong> motion schemes are
-          used through its <code>motion</code> attribute.
+          spec-aligned values.
         </p>
+        <m3e-callout>
+          <span slot="label">M3E Theme</span>
+          The <a href="../components/theme.html">Theme</a> component controls whether <strong>standard</strong> or
+          <strong>expressive</strong> motion schemes are used through its <code>motion</code> attribute.
+        </m3e-callout>
 
         <m3e-heading variant="headline" size="medium" level="2">Reduced motion</m3e-heading>
         <p>

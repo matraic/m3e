@@ -17,7 +17,7 @@
       rel="stylesheet"
     />
     <link href="../main.css" rel="stylesheet" />
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.5/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.6/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -59,10 +59,13 @@
         <m3e-heading variant="headline" size="medium" level="2">Dynamic color</m3e-heading>
         <p>
           Dynamic color refers to runtime-generated color schemes derived from a single source color, allowing
-          personalized theming that adapts to system settings. M3E provides the
-          <a href="../components/theme.html">Theme</a> component, which leverages the
-          <code>@material/material-color-utils</code> library to apply dynamic color to theme-aware elements.
+          personalized theming that adapts to system settings.
         </p>
+        <m3e-callout>
+          <span slot="label">M3E Theme</span>
+          The <a href="../components/theme.html">Theme</a> component uses <code>@material/material-color-utils</code> to
+          apply dynamic color to theme-aware elements.
+        </m3e-callout>
 
         <m3e-heading variant="headline" size="medium" level="2">Forced colors</m3e-heading>
         <p>

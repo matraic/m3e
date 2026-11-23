@@ -19,7 +19,7 @@
     <link href="../main.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.5/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.6/dist/all.min.js"></script>
     <script src="autocomplete.js"></script>
     <script src="../main.js"></script>
   </head>
@@ -91,6 +91,10 @@
           can use the <code>filter</code> attribute to control this behavior. Supported values include:
           <code>contains</code> (default), <code>starts-with</code>, <code>ends-with</code> and <code>none</code>. In
           addition, use the <code>case-sensitive</code> attribute to control whether matching is case-sensitive.
+        </p>
+        <p>
+          When suggestions are grouped with <code>m3e-optgroup</code>, filtering hides groups with no matching options
+          and shows them again when at least one option matches.
         </p>
         <p>The following example illustrates a case-sensitive prefix match.</p>
         <m3e-card variant="outlined" class="showcase">
@@ -168,8 +172,9 @@ window.addEventListener(&quot;DOMContentLoaded&quot;, () =&gt; {
         <m3e-heading variant="headline" size="small" level="3">No data</m3e-heading>
         <p>
           Use the <code>no-data-label</code> attribute to control the text announced and displayed when no options
-          match. The <code>no-data</code> slot can be used to provide custom visual content for the empty state.
-          Alternatively, use the <code>hide-no-data</code> attribute to suppress the empty-state UI entirely.
+          match. Use the <code>no-data</code> slot to replace the visible empty-state message. Alternatively, use the
+          <code>hide-no-data</code> attribute to suppress the empty-state UI entirely. If loading finishes with no
+          matching options, the popup closes instead of showing the empty state.
         </p>
         <m3e-card variant="outlined" class="showcase">
           <div slot="content">
@@ -216,9 +221,8 @@ window.addEventListener(&quot;DOMContentLoaded&quot;, () =&gt; {
         <p>
           Use the <code>loading</code> attribute to control whether the <code>m3e-autocomplete</code> presents a loading
           UI. The <code>loading-label</code> attribute controls the text announced and displayed when enabled and the
-          <code>loading</code> slot can be used to provide custom visual content for the loading state. Use the
-          <code>hide-loading</code> attribute to suppress the loading-state UI entirely. <code>loading-label</code> will
-          still be announced when hidden.
+          <code>loading</code> slot can replace the visible loading message. Use the <code>hide-loading</code> attribute
+          to suppress the loading-state UI entirely. <code>loading-label</code> will still be announced when hidden.
         </p>
         <m3e-heading variant="title" size="medium" level="4">Initial load</m3e-heading>
         <p>
@@ -363,11 +367,19 @@ search.addEventListener(&quot;query&quot;, (e) =&gt; {
           >
         </m3e-card>
 
+        <m3e-heading variant="headline" size="small" level="3">Clearing a selection programatically</m3e-heading>
+        <p>
+          Call <code>clear()</code> to empty the input, clear the selection, and close the suggestions without moving
+          focus. Use <code>clear(true)</code> to return focus to the input instead. If a selection was cleared, the
+          autocomplete emits a <code>change</code> event.
+        </p>
+
         <m3e-heading variant="headline" size="small" level="3">Requiring an option to be selected</m3e-heading>
         <p>
           By default, <code>m3e-autocomplete</code> accepts any value typed into the input field, regardless of whether
-          it matches a listed option. To enforce selection from the available options, use the
-          <code>required</code> attribute.
+          it matches a listed option. If the user edits a selected option's label and leaves the input, the typed text
+          remains, but the committed option is cleared and the autocomplete emits a <code>change</code> event. To
+          enforce selection from the available options, use the <code>required</code> attribute.
         </p>
         <p>When <code>required</code> is set, the autocomplete behaves as follows:</p>
         <ul>
@@ -578,10 +590,15 @@ search.addEventListener(&quot;query&quot;, (e) =&gt; {
         </p>
         <p>
           The <code>aria-activedescendant</code> attribute is applied to the <code>input</code> element to indicate
-          which option is currently active within the listbox. Instead of moving DOM focus to each option, the select
-          retains focus while updating <code>aria-activedescendant</code> to reference the <code>id</code> of the
-          focused <code>m3e-option</code>. This approach preserves focus management and enables assistive technologies
-          to announce the active option during keyboard navigation, ensuring accessible and predictable interaction.
+          which option is currently active within the listbox. The Up and Down Arrow keys move the active option without
+          moving focus away from the input. The <code>aria-activedescendant</code> attribute references the active
+          option so assistive technologies can announce it. Escape closes the listbox and keeps focus on the input; Tab
+          closes it and moves focus to the next control. Down Arrow can reopen the listbox while focus remains on the
+          input. Returning focus to the input can also reopen the listbox while it is closing. Arrow navigation skips
+          disabled options.
+        </p>
+        <p>
+          When suggestions are grouped with <code>m3e-optgroup</code>, each visible group is exposed with its label.
         </p>
         <p>
           The <code>aria-owns</code> and <code>aria-controls</code> attributes are applied to the
@@ -606,7 +623,10 @@ search.addEventListener(&quot;query&quot;, (e) =&gt; {
         <p>
           The component provides built-in ARIA-friendly announcements for loading, no-data, and results updates. These
           announcements are exposed through a polite <code>aria-live</code> region so assistive technologies receive
-          timely, non-interruptive updates as the user types.
+          updates as the user types or as async results arrive, while the input has focus. If results arrive after the
+          user moves focus away, the popup stays closed and focus does not move. The results are available when the user
+          returns to the input. Custom content in the <code>loading</code> and <code>no-data</code> slots replaces the
+          visible messages without changing the text used for announcements.
         </p>
         <ul>
           <li>
@@ -614,13 +634,13 @@ search.addEventListener(&quot;query&quot;, (e) =&gt; {
             using the value of <code>loading-label</code>.
           </li>
           <li>
-            A no-data announcement is issued when no options match the current term and announces the value of
-            <code>no-data-label</code>.
+            The component announces <code>no-data-label</code> when typing changes the result count to zero or when
+            loading finishes with no matching options, even if <code>hide-no-data</code> hides the visible message.
           </li>
           <li>
-            A results announcement is issued when one or more options become available and announces the value of
-            <code>results-label</code>. If <code>results-label</code> is a function, it receives the number of matching
-            options and must return a string; if it is a plain string, it is announced as-is.
+            The component announces <code>results-label</code> when typing changes the number of matches or when loading
+            finishes with matching options. If <code>results-label</code> is a function, it receives the number of
+            matching options and must return a string; if it is a plain string, it is announced as-is.
           </li>
         </ul>
 

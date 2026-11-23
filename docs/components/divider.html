@@ -20,7 +20,7 @@
     <link href="divider.css" rel="stylesheet" />
     <link href="api-viewer.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.5/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.6/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -117,7 +117,10 @@
         <m3e-heading variant="headline" size="medium" level="2">Accessibility</m3e-heading>
         <p>
           The <code>m3e-divider</code> applies the ARIA <code>role="separator"</code>, implementing a non-focusable
-          separator used to separate content.
+          separator used to separate content. Its <code>aria-orientation</code> is <code>horizontal</code> by default
+          and changes to <code>vertical</code> when the <code>vertical</code> attribute is set. For a decorative
+          divider, use <code>role="none"</code> or <code>role="presentation"</code>; the divider then omits
+          <code>aria-orientation</code>.
         </p>
 
         <m3e-heading variant="headline" size="medium" level="2">Native module support</m3e-heading>

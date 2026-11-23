@@ -1,0 +1,23 @@
+.shape-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.shape-card {
+  flex: 1 1 180px;
+  margin-block-start: 0;
+  --m3e-card-shape: var(--md-sys-shape-corner-extra-large, 28px);
+}
+.cut-card {
+  --m3e-card-shape-family: bevel;
+}
+.mixed-card {
+  --m3e-card-shape-family-start-start: bevel;
+  --m3e-card-shape-family-end-end: bevel;
+}
+.cut-button {
+  --m3e-button-shape-family: bevel;
+}
+.squircle-card {
+  --m3e-card-shape-family: squircle;
+}

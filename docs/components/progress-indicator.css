@@ -1,0 +1,61 @@
+.circular-progress-demo,
+.linear-progress-demo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.linear-progress-demo m3e-linear-progress-indicator {
+  flex: 1;
+  min-width: 0;
+}
+
+.linear-progress-demo m3e-button {
+  flex: none;
+  min-width: 128px;
+}
+
+.linear-progress-value {
+  flex: none;
+  width: 5ch;
+  text-align: right;
+}
+
+.progress-thickness-demo {
+  display: grid;
+  gap: 24px;
+}
+
+.progress-thickness-control {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.progress-thickness-control m3e-slider {
+  flex: 1;
+  min-width: 0;
+}
+
+.progress-thickness-value {
+  flex: none;
+  width: 5ch;
+  text-align: right;
+}
+
+.progress-thickness-examples {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.progress-thickness-example {
+  display: grid;
+  grid-template-rows: auto 48px;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-thickness-example m3e-circular-progress-indicator {
+  justify-self: start;
+}
