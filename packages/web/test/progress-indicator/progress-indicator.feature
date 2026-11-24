@@ -82,6 +82,17 @@ Feature: Progress indicators
         | linear   |
         | circular |
 
+    Scenario Outline: A circular wave initializes inside a closed expansion panel
+      Given a circular wavy indicator in a closed expansion panel with mode "<mode>"
+      When the progress indicator renders
+      And the expansion panel opens
+      Then the circular indicator renders valid geometry without SVG errors
+
+      Examples:
+        | mode          |
+        | determinate   |
+        | indeterminate |
+
   Rule: Linear progress modes report determinate state accurately
 
     Scenario Outline: Indeterminate and query modes omit the current value

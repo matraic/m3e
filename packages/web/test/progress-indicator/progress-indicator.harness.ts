@@ -11,6 +11,7 @@ export class ProgressIndicatorHarness {
   kind: ProgressIndicatorKind = "linear";
   direction?: "ltr" | "rtl";
   strokeWidth = 2.5;
+  readonly svgErrors: string[] = [];
   readonly selector = () => `m3e-${this.kind}-progress-indicator`;
 
   constructor(
@@ -35,6 +36,39 @@ export class ProgressIndicatorHarness {
       `${this.html}<div id="progress-destination"></div><button id="after-progress">After</button>`,
       this.direction,
     );
+  }
+
+  prepareCollapsedCircularWave(mode: string) {
+    if (mode !== "determinate" && mode !== "indeterminate") throw new Error(`Unknown circular mode: ${mode}`);
+    this.kind = "circular";
+    this.page.on("console", (message) => {
+      if (message.type() === "error" && message.text().includes("<path> attribute d")) {
+        this.svgErrors.push(message.text());
+      }
+    });
+    const attributes = `variant="wavy" aria-label="Progress" ${mode === "indeterminate" ? "indeterminate" : 'value="50"'}`;
+    this.html = `<m3e-expansion-panel><span slot="header">Progress</span>${this.markup("circular", attributes)}</m3e-expansion-panel>`;
+  }
+
+  async openCircularWavePanel() {
+    await this.page.locator("m3e-expansion-panel").evaluate((element) => element.setAttribute("open", ""));
+    await expect(this.indicator).toBeVisible();
+  }
+
+  async verifyCollapsedCircularWave() {
+    await expect
+      .poll(() =>
+        this.indicator
+          .locator(".active-track")
+          .first()
+          .evaluate((element) => {
+            const path = element.matches("path") ? element : element.querySelector("path");
+            return path?.getAttribute("d");
+          }),
+      )
+      .toMatch(/^M (?!.*NaN).+/);
+    await expect(this.indicator.locator("path.track")).toHaveAttribute("d", /^M (?!.*NaN).+/);
+    expect(this.svgErrors).toEqual([]);
   }
 
   async circularWaveDepth(indicator = this.indicator): Promise<number> {

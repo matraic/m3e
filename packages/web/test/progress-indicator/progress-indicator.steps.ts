@@ -84,6 +84,15 @@ Then("the progress indicator is hidden", async ({ progressIndicator }) =>
   expect(progressIndicator.indicator).toBeHidden(),
 );
 
+Given(
+  "a circular wavy indicator in a closed expansion panel with mode {string}",
+  ({ progressIndicator }, mode: string) => progressIndicator.prepareCollapsedCircularWave(mode),
+);
+When("the expansion panel opens", async ({ progressIndicator }) => progressIndicator.openCircularWavePanel());
+Then("the circular indicator renders valid geometry without SVG errors", async ({ progressIndicator }) =>
+  progressIndicator.verifyCollapsedCircularWave(),
+);
+
 Given("a linear progress indicator with mode {string}", ({ progressIndicator }, mode: string) => {
   progressIndicator.kind = "linear";
   progressIndicator.html = progressIndicator.markup("linear", `aria-label="Progress" value="40" mode="${mode}"`);

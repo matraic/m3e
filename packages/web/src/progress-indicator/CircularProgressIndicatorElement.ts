@@ -558,9 +558,12 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
     if (element) {
       if (this.variant === "wavy") {
         const style = getComputedStyle(element);
+        const diameter = parseFloat(style.width);
+        const strokeWidth = parseFloat(style.height);
 
-        this.#diameter = parseFloat(style.width);
-        this.#strokeWidth = parseFloat(style.height);
+        // A hidden ancestor can leave dimensions unresolved until ResizeObserver reports a layout.
+        if (Number.isFinite(diameter)) this.#diameter = diameter;
+        if (Number.isFinite(strokeWidth)) this.#strokeWidth = strokeWidth;
       } else {
         this.#diameter = element.clientWidth;
         this.#strokeWidth = element.clientHeight;
@@ -574,9 +577,11 @@ export class M3eCircularProgressIndicatorElement extends ProgressElementIndicato
 
     if (element) {
       const style = getComputedStyle(element);
+      const amplitude = parseFloat(style.width);
+      const wavelength = parseFloat(style.height);
 
-      this.#amplitude = parseFloat(style.width);
-      this.#wavelength = parseFloat(style.height);
+      if (Number.isFinite(amplitude)) this.#amplitude = amplitude;
+      if (Number.isFinite(wavelength)) this.#wavelength = wavelength;
     }
   }
 
