@@ -145,7 +145,6 @@ export class M3eLoadingIndicatorElement extends ReconnectedCallback(Role(AttachI
     }
     .container.pull .active-indicator-wrapper {
       transform: rotate(var(--_pull-rotation, 0deg));
-      transition: transform ${DesignToken.motion.spring.fastEffects};
       will-change: transform;
     }
     .container.pull .active-indicator {
