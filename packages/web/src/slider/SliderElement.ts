@@ -656,10 +656,14 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
   /** @private Extent of the slider's bounding rect along its own axis. */ #cachedClientSize = 0;
   /** @private */ #lastThumbMoveTimestamp = 0;
 
-  constructor() {
-    super();
-    new ResizeController(this, { callback: () => this.#updateDimensions(true) });
-  }
+  /** @private */
+  readonly #resizeController = new ResizeController(this, {
+    skipInitial: true,
+    callback: () => {
+      this.#updateCachedDimensions();
+      this.#updateDimensions();
+    },
+  });
 
   /**
    * The orientation of the slider.
@@ -750,10 +754,11 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
   override connectedCallback(): void {
     super.connectedCallback();
 
+    this.#thumbs.forEach((thumb) => this.#resizeController.observe(thumb));
     this.#applySize();
     this.#applyOrientation();
     this.#directionalitySubscription = M3eDirectionality.observe(() => {
-      this.#updateDimensions(true);
+      this.#updateDimensions();
       this.requestUpdate();
     });
   }
@@ -788,7 +793,8 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
       // The axis changed, so every cached measurement and every thumb transform
       // now describes the wrong one.
       this.#updateThumbs();
-      this.#updateDimensions(true);
+      this.#resizeController.unobserve(this);
+      this.#resizeController.observe(this);
     }
   }
 
@@ -842,6 +848,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
 
   /** @private */
   #handleSlotChange(e: Event): void {
+    this.#thumbs.forEach((thumb) => this.#resizeController.unobserve(thumb));
     this.#thumbs = (<HTMLSlotElement>e.target)
       .assignedElements({ flatten: true })
       .filter((x) => x instanceof M3eSliderThumbElement);
@@ -856,6 +863,7 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
     }
 
     this.#updateThumbs();
+    this.#thumbs.forEach((thumb) => this.#resizeController.observe(thumb));
   }
 
   /** @private */
@@ -915,29 +923,31 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
     return Math.round(impreciseValue / step) * step;
   }
 
-  /** @private */
-  #updateCachedDimensions(force = false): void {
+  /**
+   * Refreshes layout sizes after resize delivery, or pointer coordinates before a new interaction.
+   * @private
+   */
+  #updateCachedDimensions(): void {
     if (!this.lowerThumb) return;
 
     const size = this.#vertical ? this.clientHeight : this.clientWidth;
     const thumbSize = this.#vertical ? this.lowerThumb.clientHeight : this.lowerThumb.clientWidth;
 
-    this.#cachedSize = !force && this.#cachedSize > 0 ? this.#cachedSize : size;
-    this.#cachedThumbSize = !force && this.#cachedThumbSize > 0 ? this.#cachedThumbSize : thumbSize;
+    this.#cachedSize = size;
+    this.#cachedThumbSize = thumbSize;
 
     const rect = this.getBoundingClientRect();
     const clientStart = this.#vertical ? rect.top : rect.left;
     const clientEnd = this.#vertical ? rect.bottom : rect.right;
     const clientSize = this.#vertical ? rect.height : rect.width;
 
-    this.#cachedClientStart = !force && this.#cachedClientStart > 0 ? this.#cachedClientStart : clientStart;
-    this.#cachedClientEnd = !force && this.#cachedClientEnd > 0 ? this.#cachedClientEnd : clientEnd;
-    this.#cachedClientSize = !force && this.#cachedClientSize > 0 ? this.#cachedClientSize : clientSize;
+    this.#cachedClientStart = clientStart;
+    this.#cachedClientEnd = clientEnd;
+    this.#cachedClientSize = clientSize;
   }
 
-  /** @private */
-  #updateDimensions(force = false): void {
-    this.#updateCachedDimensions(force);
+  /** Positions thumbs and tracks using the latest measured layout. @private */
+  #updateDimensions(): void {
     if (!this.lowerThumb) return;
 
     const lowerValue = this.lowerThumb.value ?? this.min;
@@ -1008,10 +1018,10 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
 
   /** @private */
   #handlePointerDown(e: PointerEvent): void {
-    this.#updateCachedDimensions(true);
-
     if (e.pointerType === "mouse" && e.button > 1) return;
     if (!this.lowerThumb || this.disabled) return;
+
+    this.#updateCachedDimensions();
 
     if (e.target instanceof HTMLElement) {
       e.target.setPointerCapture(e.pointerId);

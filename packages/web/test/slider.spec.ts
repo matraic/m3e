@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import type { M3eSliderElement, M3eSliderThumbElement } from "@m3e/web/slider";
 
 import { expect, test } from "./fixtures";
 
@@ -61,6 +62,96 @@ test.describe("m3e-slider", () => {
     `);
 
     await expect(page.getByRole("slider", { name: "Volume" })).toHaveAttribute("aria-orientation", "vertical");
+  });
+
+  test("initializes and updates values using resize-delivered dimensions", async ({ page, render }) => {
+    await page.evaluate(() => {
+      const reads: string[] = [];
+      Object.defineProperty(window, "sliderMeasurementReads", { value: reads });
+      let deliveringResize = false;
+      const NativeResizeObserver = window.ResizeObserver;
+      window.ResizeObserver = class extends NativeResizeObserver {
+        constructor(callback: ResizeObserverCallback) {
+          super((entries, observer) => {
+            deliveringResize = true;
+            try {
+              callback(entries, observer);
+            } finally {
+              deliveringResize = false;
+            }
+          });
+        }
+      };
+      for (const name of ["clientWidth", "clientHeight"]) {
+        const descriptor = Object.getOwnPropertyDescriptor(Element.prototype, name);
+        if (!descriptor?.get) throw new Error(`Missing native ${name} getter`);
+        const getter = descriptor.get;
+        Object.defineProperty(Element.prototype, name, {
+          ...descriptor,
+          get: function (this: Element) {
+            if (this.matches("m3e-slider, m3e-slider-thumb") && !deliveringResize) reads.push(name);
+            return getter.call(this);
+          },
+        });
+      }
+      const getRect = Element.prototype.getBoundingClientRect;
+      Element.prototype.getBoundingClientRect = function () {
+        if (this.matches("m3e-slider, m3e-slider-thumb") && !deliveringResize) reads.push("getBoundingClientRect");
+        return getRect.call(this);
+      };
+    });
+
+    await render(`<div id="hidden-slider" hidden>${single()}</div>`);
+    await page.locator("#hidden-slider").evaluate((element) => element.removeAttribute("hidden"));
+    const slider = page.locator("m3e-slider");
+    const thumb = page.locator("m3e-slider-thumb");
+    await expect(thumb).toHaveCSS("transform", "matrix(1, 0, 0, 1, 142, 0)");
+    await thumb.evaluate((element: M3eSliderThumbElement) => (element.value = 75));
+    await expect(thumb).toHaveCSS("transform", "matrix(1, 0, 0, 1, 213, 0)");
+
+    await slider.evaluate((element: M3eSliderElement) => {
+      element.style.height = "300px";
+      element.orientation = "vertical";
+    });
+    await expect(thumb).toHaveCSS("transform", "matrix(1, 0, 0, 1, 0, -213)");
+    expect(await page.evaluate(() => Object.getOwnPropertyDescriptor(window, "sliderMeasurementReads")?.value)).toEqual(
+      [],
+    );
+  });
+
+  test("updates sizing after thumb CSS changes, resizing, and reconnection", async ({ page, render }) => {
+    await render(`${single()}<div id="destination"></div>`);
+    const slider = page.locator("m3e-slider");
+    const thumb = page.locator("m3e-slider-thumb");
+    await expect(thumb).toHaveCSS("transform", "matrix(1, 0, 0, 1, 142, 0)");
+    await thumb.evaluate((element: HTMLElement) => element.style.setProperty("--m3e-slider-thumb-width", "12px"));
+    await expect(thumb).toHaveCSS("transform", "matrix(1, 0, 0, 1, 138, 0)");
+    await slider.evaluate((element: HTMLElement) => (element.style.width = "420px"));
+    await expect(thumb).toHaveCSS("transform", "matrix(1, 0, 0, 1, 198, 0)");
+    await slider.evaluate((element) => {
+      const destination = document.getElementById("destination");
+      if (!destination) throw new Error("Missing slider destination");
+      destination.appendChild(element);
+    });
+    await thumb.evaluate((element: HTMLElement) => element.style.setProperty("--m3e-slider-thumb-width", "20px"));
+    await expect(thumb).toHaveCSS("transform", "matrix(1, 0, 0, 1, 194, 0)");
+  });
+
+  test("refreshes pointer coordinates after the slider moves and is transformed", async ({ page, render }) => {
+    await render(single());
+    const slider = page.locator("m3e-slider");
+    const thumb = page.getByRole("slider", { name: "Volume" });
+    await expect(thumb).toHaveCSS("transform", "matrix(1, 0, 0, 1, 142, 0)");
+    await slider.evaluate((element: HTMLElement) => {
+      element.style.marginLeft = "150px";
+      element.style.transform = "scale(0.75)";
+    });
+    const box = await slider.boundingBox();
+    if (!box) throw new Error("Missing slider bounds");
+    await page.mouse.click(box.x + box.width * 0.8, box.y + box.height / 2);
+    const value = Number(await thumb.getAttribute("aria-valuenow"));
+    expect(value).toBeGreaterThanOrEqual(75);
+    expect(value).toBeLessThanOrEqual(85);
   });
 
   test("changes the value by one step with the arrow keys", async ({ page, render }) => {
