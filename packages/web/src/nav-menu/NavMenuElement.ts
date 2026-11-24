@@ -287,7 +287,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
     this.addEventListener("keydown", this.#keyDownHandler);
     this.addEventListener("keyup", this.#keyUpHandler);
-    this.addEventListener("pointerdown", this.#pointerDownHandler);
+    this.addEventListener("pointerdown", this.#pointerDownHandler, true);
 
     if (this.hasUpdated) {
       queueMicrotask(() => {
@@ -302,7 +302,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
     this.removeEventListener("keydown", this.#keyDownHandler);
     this.removeEventListener("keyup", this.#keyUpHandler);
-    this.removeEventListener("pointerdown", this.#pointerDownHandler);
+    this.removeEventListener("pointerdown", this.#pointerDownHandler, true);
   }
 
   /** @inheritdoc */
@@ -355,8 +355,10 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
 
         if (item.hasChildItems) {
           requestAnimationFrame(() => item.toggle());
-        } else if (!item.selected) {
-          this[selectionManager].select(item);
+        } else {
+          if (!item.selected) {
+            this[selectionManager].select(item);
+          }
           item.link?.click();
         }
         break;

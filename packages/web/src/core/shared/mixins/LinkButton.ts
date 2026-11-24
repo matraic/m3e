@@ -7,8 +7,11 @@ import { isDisabledInteractiveMixin } from "./DisabledInteractive";
 import { isDisabledMixin } from "./Disabled";
 import { hasKeys } from "./hasKeys";
 
-/** A symbol through which to access a function used to render a pseudo link. */
+/** @internal A symbol through which to access a function used to render a pseudo link. */
 export const renderPseudoLink = Symbol("renderPseudoLink");
+
+/** @internal A symbol through which to invoke link activation for a click. */
+export const handleLinkClick = Symbol("handleLinkClick");
 
 /** Specifies the possible targets for a link. */
 export type LinkTarget = "_self" | "_blank" | "_parent" | "_top" | (string & {});
@@ -42,6 +45,9 @@ export interface LinkButtonMixin {
 
   /** Function used to render a pseudo link. */
   [renderPseudoLink](): unknown;
+
+  /** Function used to handle link activation. */
+  [handleLinkClick](event: Event): void;
 }
 
 /**
@@ -52,8 +58,6 @@ export interface LinkButtonMixin {
 export function isLinkButtonMixin(value: unknown): value is LinkButtonMixin {
   return hasKeys<LinkButtonMixin>(value, "download", "href", "rel", "target");
 }
-
-const _clickHandler = Symbol("_clickHandler");
 
 /**
  * Mixin to augment an element with behavior that supports functioning as a link.
@@ -68,7 +72,7 @@ export function LinkButton<T extends Constructor<LitElement>>(
 ): Constructor<LinkButtonMixin> & T {
   abstract class _LinkButtonMixin extends base implements LinkButtonMixin {
     /** @private */ #usesAutomaticLinkRole = false;
-    /** @private */ private [_clickHandler] = async (e: Event) => {
+    /** @internal */ readonly [handleLinkClick] = async (e: Event) => {
       if (isDisabledInteractiveMixin(this) && this.disabledInteractive) {
         e.preventDefault();
         e.stopPropagation();
@@ -145,7 +149,7 @@ export function LinkButton<T extends Constructor<LitElement>>(
     set download(value: string | null) {
       const old = this.download;
       if (old !== value) {
-        if (value) {
+        if (value !== null) {
           this.setAttribute("download", value);
         } else {
           this.removeAttribute("download");
@@ -158,7 +162,7 @@ export function LinkButton<T extends Constructor<LitElement>>(
     override connectedCallback(): void {
       super.connectedCallback();
       if (!disableClick) {
-        this.addEventListener("click", this[_clickHandler]);
+        this.addEventListener("click", this[handleLinkClick]);
       }
       this.#syncRoleWithHref();
     }
@@ -175,7 +179,7 @@ export function LinkButton<T extends Constructor<LitElement>>(
     override disconnectedCallback(): void {
       super.disconnectedCallback();
       if (!disableClick) {
-        this.removeEventListener("click", this[_clickHandler]);
+        this.removeEventListener("click", this[handleLinkClick]);
       }
     }
 
@@ -189,7 +193,7 @@ export function LinkButton<T extends Constructor<LitElement>>(
             href="${this.href}"
             target="${ifDefined(this.target || undefined)}"
             rel="${ifDefined(this.rel || undefined)}"
-            download="${ifDefined(this.download || undefined)}"
+            download="${ifDefined(this.download ?? undefined)}"
             tabindex="-1"
             aria-hidden="true"
             @pointerdown=${this.#handleLinkPointerDown}

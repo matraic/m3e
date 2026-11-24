@@ -34,6 +34,18 @@ Nest navigation menu items to organize multiple levels.
 </m3e-nav-menu>
 ```
 
+Use `href` on a leaf item to navigate to a destination. Parent items continue to expand and collapse.
+
+```html
+<m3e-nav-menu aria-label="Documentation">
+  <m3e-nav-menu-item href="/guides" target="_self">
+    <span slot="label">Guides</span>
+  </m3e-nav-menu-item>
+</m3e-nav-menu>
+```
+
+Existing links in the `label` slot remain supported. If both are provided, `href` takes precedence.
+
 Group related destinations with `m3e-nav-menu-item-group` and a `label` slot.
 
 ```html
@@ -118,11 +130,15 @@ This section details the attributes, slots, events, and CSS custom properties av
 
 #### ⚙️ Attributes
 
-| Attribute  | Type      | Default | Description                   |
-| ---------- | --------- | ------- | ----------------------------- |
-| `disabled` | `boolean` | `false` | Whether the item is disabled. |
-| `open`     | `boolean` | `false` | Whether the item is expanded. |
-| `selected` | `boolean` | `false` | Whether the item is selected. |
+| Attribute  | Type      | Default | Description                                                    |
+| ---------- | --------- | ------- | -------------------------------------------------------------- |
+| `disabled` | `boolean` | `false` | Whether the item is disabled.                                  |
+| `download` | `string`  | —       | Downloads the destination, optionally specifying a filename.   |
+| `href`     | `string`  | `""`    | Destination URL for a leaf item.                               |
+| `open`     | `boolean` | `false` | Whether the item is expanded.                                  |
+| `rel`      | `string`  | `""`    | Relationship between the current document and the destination. |
+| `selected` | `boolean` | `false` | Whether the item is selected.                                  |
+| `target`   | `string`  | `""`    | Browsing context in which to open the destination.             |
 
 #### 🔔 Events
 

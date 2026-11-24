@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { css, CSSResultGroup, html, LitElement, PropertyValues, unsafeCSS } from "lit";
+import { css, CSSResultGroup, html, LitElement, nothing, PropertyValues, unsafeCSS } from "lit";
 import { property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
@@ -10,9 +10,12 @@ import {
   Disabled,
   hasAssignedNodes,
   hasCustomState,
+  handleLinkClick,
+  LinkButton,
   M3eFocusRingElement,
   M3eSelectionIndicatorElement,
   registerStyleSheet,
+  renderPseudoLink,
   Role,
   Selected,
   setCustomState,
@@ -54,6 +57,17 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  * ```
  *
  * @example
+ * Use `href` for a leaf destination.
+ *
+ * ```html
+ * <m3e-nav-menu aria-label="Documentation">
+ *   <m3e-nav-menu-item href="/guides" target="_self">
+ *     <span slot="label">Guides</span>
+ *   </m3e-nav-menu-item>
+ * </m3e-nav-menu>
+ * ```
+ *
+ * @example
  * Group related destinations with `m3e-nav-menu-item-group` and a `label` slot.
  *
  * ```html
@@ -85,8 +99,12 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  * @slot toggle-icon - Renders the toggle icon.
  *
  * @attr disabled - Whether the element is disabled.
+ * @attr download - Whether the `target` of the link button will be downloaded, optionally specifying the new name of the file.
+ * @attr href - The URL to which the link button points.
  * @attr open - Whether the item is expanded.
+ * @attr rel - The relationship between the `target` of the link button and the document.
  * @attr selected - Whether the item is selected.
+ * @attr target - The target of the link button.
  *
  * @fires opening - Dispatched when the item begins to open.
  * @fires opened - Dispatched when the item has opened.
@@ -133,7 +151,7 @@ import type { M3eNavMenuElement } from "./NavMenuElement";
  */
 @customElement("m3e-nav-menu-item")
 export class M3eNavMenuItemElement extends SuppressInitialAnimation(
-  Selected(Disabled(AttachInternals(Role(LitElement, "treeitem"), true))),
+  LinkButton(Selected(Disabled(AttachInternals(Role(LitElement, "treeitem"), true))), true),
 ) {
   static {
     registerStyleSheet(css`
@@ -176,6 +194,13 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
       line-height: var(--m3e-nav-menu-item-line-height, ${DesignToken.typescale.standard.label.large.lineHeight});
       letter-spacing: var(--m3e-nav-menu-item-tracking, ${DesignToken.typescale.standard.label.large.tracking});
       transition: ${unsafeCSS(`color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`)};
+    }
+    .base > a {
+      all: unset;
+      display: block;
+      position: absolute;
+      inset: 0;
+      z-index: 1;
     }
     * {
       user-select: none;
@@ -382,6 +407,7 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
   /** @private */ #menu: M3eNavMenuElement | null = null;
   /** @private */ #path = new Array<M3eNavMenuItemElement>();
   /** @private */ #link: HTMLAnchorElement | null = null;
+  /** @private */ readonly #clickHandler = (e: MouseEvent) => this.#handleClick(e);
 
   /**
    * Whether the item is expanded.
@@ -389,9 +415,9 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
    */
   @property({ type: Boolean, reflect: true }) open = false;
 
-  /** A reference to the nested `HTMLAnchorElement`. */
+  /** A reference to the destination's `HTMLAnchorElement`, if present. */
   get link(): HTMLAnchorElement | null {
-    return this.#link;
+    return (this.href ? this.shadowRoot?.querySelector(".base > a") : this.#link) ?? null;
   }
 
   /** A reference to the element used to present the label of the item. */
@@ -478,12 +504,14 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
 
     this.style.setProperty("--_nav-menu-item-level", `${this.level}`);
     this.#menu = this.closest("m3e-nav-menu");
+    this.addEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.#path.length = 0;
+    this.removeEventListener("click", this.#clickHandler);
   }
 
   /** @inheritdoc */
@@ -525,7 +553,8 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="base" @click=${this.#handleClick}>
+    return html`<div class="base" @click=${this.#handleBaseClick}>
+        ${this.hasChildItems ? nothing : this[renderPseudoLink]()}
         <m3e-focus-ring class="focus-ring" inward ?disabled="${this.disabled}"></m3e-focus-ring>
         <m3e-selection-indicator
           bounce
@@ -598,14 +627,59 @@ export class M3eNavMenuItemElement extends SuppressInitialAnimation(
   }
 
   /** @private */
-  #handleClick(): void {
-    if (this.disabled) return;
+  #handleBaseClick(e: MouseEvent): void {
+    if (this.disabled) {
+      e.preventDefault();
+      return;
+    }
+
+    if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+
+    if (e.composedPath()[0] === this.shadowRoot?.querySelector(".base > a")) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      this.dispatchEvent(
+        new MouseEvent("click", {
+          bubbles: true,
+          cancelable: true,
+          composed: true,
+          detail: e.detail,
+          button: e.button,
+          clientX: e.clientX,
+          clientY: e.clientY,
+          screenX: e.screenX,
+          screenY: e.screenY,
+        }),
+      );
+    }
+  }
+
+  /** @private */
+  #handleClick(e: MouseEvent): void {
+    if (e.composedPath().find((node) => node instanceof M3eNavMenuItemElement) !== this) return;
+
+    if (this.disabled) {
+      e.preventDefault();
+      return;
+    }
+
+    if (e.defaultPrevented) return;
 
     this.#menu?.[selectionManager].setActiveItem(this);
+    if (e.detail > 0 && e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey) {
+      this.#menu?.focus({ preventScroll: true });
+    }
+
     if (!this._hasChildItems) {
       this.#menu?.[selectionManager].select(this);
       this.#path.forEach((x) => (x.selected = this.selected));
-      this.#link?.click();
+
+      if (this.href) {
+        this[handleLinkClick](e);
+      } else if (this.#link && !e.composedPath().includes(this.#link)) {
+        this.#link.click();
+      }
 
       const drawerContainer = this.closest("m3e-drawer-container");
       if (drawerContainer) {
