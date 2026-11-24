@@ -1152,8 +1152,6 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
 
     if (!this.#activeThumb) return;
 
-    const value = this.#activeThumb.value ?? 0;
-
     let min = this.min;
     let max = this.max;
 
@@ -1162,6 +1160,8 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
     } else if (this.upperThumb) {
       max = Math.min(max, this.upperThumb.value ?? this.max);
     }
+
+    const value = this.#activeThumb.value ?? min;
 
     // A vertical slider runs bottom-to-top, so ArrowUp always increases and
     // directionality — an inline-axis concern — does not apply.
