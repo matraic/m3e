@@ -34,14 +34,18 @@ import { M3eNavRailElement } from "./NavRailElement";
 @customElement("m3e-nav-rail-toggle")
 export class M3eNavRailToggleElement extends HtmlFor(ActionElementBase) {
   /** @private */ readonly #modeChangeHandler = () => this.#updateToggle();
+  /** @private */ #host?: HTMLElement;
+  /** @private */ #controlsId?: string;
 
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
+    this.#host = this.parentElement ?? undefined;
     if (control instanceof M3eNavRailElement) {
       control.addEventListener("mode-change", this.#modeChangeHandler);
     }
     if (this.htmlFor && this.parentElement) {
       addAriaReferencedId(this.parentElement, "aria-controls", this.htmlFor);
+      this.#controlsId = this.htmlFor;
     }
     super.attach(control);
     this.#updateToggle();
@@ -51,12 +55,16 @@ export class M3eNavRailToggleElement extends HtmlFor(ActionElementBase) {
   override detach(): void {
     this.control?.removeEventListener("mode-change", this.#modeChangeHandler);
 
-    if (this.parentElement) {
-      if (this.htmlFor) {
-        removeAriaReferencedId(this.parentElement, "aria-controls", this.htmlFor);
+    // The toggle is already disconnected when removed, and `for` may already have changed, so use what attach recorded.
+    const host = this.#host ?? this.parentElement;
+    if (host) {
+      if (this.#controlsId) {
+        removeAriaReferencedId(host, "aria-controls", this.#controlsId);
       }
-      this.parentElement.ariaExpanded = null;
+      host.ariaExpanded = null;
     }
+    this.#host = undefined;
+    this.#controlsId = undefined;
 
     super.detach();
   }
