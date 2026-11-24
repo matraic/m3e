@@ -5,6 +5,7 @@ import {
   DesignToken,
   FocusController,
   forcedColorsActive,
+  MutationController,
   PressedController,
   registerStyleSheet,
   Role,
@@ -192,6 +193,22 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
   constructor() {
     super();
 
+    new MutationController(this, {
+      config: { childList: true, subtree: true },
+      callback: (records) => {
+        if (
+          records.some((record) =>
+            [...record.addedNodes, ...record.removedNodes].some(
+              (node) =>
+                node instanceof Element &&
+                (node.matches("m3e-nav-menu-item") || node.querySelector("m3e-nav-menu-item")),
+            ),
+          )
+        ) {
+          this.#handleSlotChange();
+        }
+      },
+    });
     new PressedController(this, { callback: (pressed) => (this.#ignoreFocus = pressed) });
     new FocusController(this, {
       callback: () => {
@@ -271,6 +288,12 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
     this.addEventListener("keydown", this.#keyDownHandler);
     this.addEventListener("keyup", this.#keyUpHandler);
     this.addEventListener("pointerdown", this.#pointerDownHandler);
+
+    if (this.hasUpdated) {
+      queueMicrotask(() => {
+        if (this.isConnected) this.#handleSlotChange();
+      });
+    }
   }
 
   /** @inheritdoc */
@@ -297,6 +320,13 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
     const { added } = this[selectionManager].setItems([...this.querySelectorAll("m3e-nav-menu-item")]);
     for (const item of added) {
       item.id = item.id || `m3e-nav-menu-item-${M3eNavMenuElement.__nextId++}`;
+    }
+    if (!this[selectionManager].activeItem) {
+      const fallback =
+        this.selected && !this[selectionManager].skipPredicate(this.selected)
+          ? this.selected
+          : this.items.find((item) => !this[selectionManager].skipPredicate(item));
+      this[selectionManager].setActiveItem(fallback);
     }
     if (this[selectionManager].activeItem) {
       this.setAttribute("aria-activedescendant", this[selectionManager].activeItem.id);
