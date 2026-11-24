@@ -720,7 +720,11 @@ export class M3eNavItemElement extends SupportsDirectionality(
 
   /** @private */
   #handleClick(e: Event): void {
-    if (e.defaultPrevented || this.disabled) return;
+    if (this.disabled) {
+      e.preventDefault();
+      return;
+    }
+    if (e.defaultPrevented) return;
 
     if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
       this.selected = true;

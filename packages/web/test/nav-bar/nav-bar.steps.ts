@@ -1,4 +1,5 @@
 import { mergeTests } from "@playwright/test";
+import type { M3eNavBarElement } from "@m3e/web/nav-bar";
 import { createBdd, test as bddTest } from "playwright-bdd";
 
 import { expect, test as componentTest } from "../fixtures";
@@ -89,4 +90,157 @@ Then("the primary bar has {int} destination", async ({ navBar }, count: number) 
 );
 Then("destination {string} is laid out {string}", async ({ navBar }, name: string, orientation: string) =>
   expect(navBar.destination(name)).toHaveAttribute("orientation", orientation),
+);
+
+const small = { width: 400, height: 800 };
+const large = { width: 1400, height: 800 };
+
+Given("a navigation bar layout fixture", ({ navBar }) => navBar.layout());
+When("the navigation bar layout renders", async ({ navBar }) => navBar.render());
+Then("every destination is laid out {string}", async ({ navBar }, orientation: string) => {
+  for (const item of await navBar.items.all()) {
+    await expect(item).toHaveAttribute("orientation", orientation);
+  }
+});
+When("the application sets the bar mode to {string}", async ({ navBar }, mode: string) =>
+  navBar.bar.evaluate((bar, mode) => bar.setAttribute("mode", mode), mode),
+);
+
+Given("a navigation bar layout fixture in mode {string}", ({ navBar }, mode: string) =>
+  navBar.layout(`mode="${mode}"`),
+);
+Then("the bar mode is {string}", async ({ navBar }, mode: string) => expect(navBar.bar).toHaveAttribute("mode", mode));
+
+When("the application adds a layout destination", async ({ navBar }) => navBar.appendDestination("Added"));
+
+Given("a small viewport", async ({ page }) => page.setViewportSize(small));
+When("the viewport becomes large", async ({ page }) => page.setViewportSize(large));
+When("the viewport becomes small", async ({ page }) => page.setViewportSize(small));
+
+When("the application moves the bar to another container", async ({ navBar }) =>
+  navBar.bar.evaluate((bar) => document.querySelector("#destination")!.append(bar)),
+);
+
+Given("a navigation bar layout fixture with bevel items and a round focus ring", ({ navBar }) =>
+  navBar.layout(`style="--m3e-nav-item-shape-family: bevel; --m3e-nav-item-focus-ring-shape-family: round"`),
+);
+Then("the destination layers use the bevel shape", async ({ navBar }) => {
+  for (const surface of await navBar.items.first().locator(".outer, .inner, m3e-selection-indicator.indicator").all()) {
+    await expect(surface).toHaveCSS("corner-shape", "superellipse(0)");
+  }
+});
+Then(
+  "the destination focus ring is {word} with a {int}px radius",
+  async ({ navBar }, shape: string, radius: number) => {
+    const ring = navBar.items.first().locator(".focus-ring");
+    await expect(ring).toHaveCSS("corner-shape", shape === "round" ? "superellipse(1)" : "superellipse(0)");
+    await expect(ring).toHaveCSS("border-radius", `${radius}px`);
+  },
+);
+
+Then("destination {string} has a visible navigation focus ring", async ({ navBar }, name: string) =>
+  expect(navBar.destination(name).locator("m3e-focus-ring .outline")).toHaveClass(/visible/),
+);
+Then("destination {string} has no visible navigation focus ring", async ({ navBar }, name: string) =>
+  expect(navBar.destination(name).locator("m3e-focus-ring .outline")).not.toHaveClass(/visible/),
+);
+
+When("the application enables destination {string}", async ({ navBar }, name: string) =>
+  navBar.destination(name).evaluate((item) => item.removeAttribute("disabled")),
+);
+
+Given("a navigation bar with a separate selected icon", ({ navBar }) => {
+  navBar.html = `<m3e-nav-bar id="bar">
+    <m3e-nav-item value="home">
+      <m3e-icon slot="icon" aria-hidden="true">home</m3e-icon>
+      <m3e-icon id="selected-home-icon" slot="selected-icon" aria-hidden="true">favorite</m3e-icon>Home
+    </m3e-nav-item>
+    <m3e-nav-item value="search" selected>Search</m3e-nav-item>
+  </m3e-nav-bar>`;
+});
+Then("the default Home icon is visible", async ({ navBar }) =>
+  expect(navBar.destination("Home").locator('m3e-icon[slot="icon"]')).toBeVisible(),
+);
+Then("the selected Home icon is hidden", async ({ page }) => expect(page.locator("#selected-home-icon")).toBeHidden());
+Then("the selected Home icon is visible", async ({ page }) =>
+  expect(page.locator("#selected-home-icon")).toBeVisible(),
+);
+Then("the default Home icon is hidden", async ({ navBar }) =>
+  expect(navBar.destination("Home").locator('m3e-icon[slot="icon"]')).toBeHidden(),
+);
+
+When("the application adds a selected Home icon", async ({ navBar }) =>
+  navBar.destination("Home").evaluate((item) => {
+    const icon = document.createElement("m3e-icon");
+    icon.id = "selected-home-icon";
+    icon.slot = "selected-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = "favorite";
+    item.append(icon);
+  }),
+);
+When("the application removes the selected Home icon", async ({ page }) =>
+  page.locator("#selected-home-icon").evaluate((icon) => icon.remove()),
+);
+
+Given("a navigation bar with a fragment link", ({ navBar }) => {
+  navBar.html = `<m3e-nav-bar id="bar" aria-label="Primary">
+    <m3e-nav-item id="home-link" value="home" href="#home-page">Home</m3e-nav-item>
+  </m3e-nav-bar>`;
+});
+When("the user activates the Home link using {string}", async ({ page }, activation: string) => {
+  const link = page.getByRole("link", { name: "Home", exact: true });
+  if (activation === "pointer") {
+    await link.locator(".outer > a").click();
+  } else {
+    await link.focus();
+    await page.keyboard.press(activation);
+  }
+});
+Then("the navigation bar page fragment is {string}", async ({ page }, hash: string) =>
+  expect.poll(() => page.evaluate(() => location.hash)).toBe(hash),
+);
+Then("the Home navigation link is current", async ({ page }) =>
+  expect(page.getByRole("link", { name: "Home", exact: true })).toHaveAttribute("aria-current", "true"),
+);
+
+Given("a navigation bar with an external link", async ({ navBar, page }) => {
+  await page
+    .context()
+    .route("https://m3e.test/**", (route) =>
+      route.fulfill({ contentType: "text/html", body: "<title>Destination</title>" }),
+    );
+  navBar.html = `<m3e-nav-bar id="bar">
+    <m3e-nav-item id="home-link" href="https://m3e.test/home">Home</m3e-nav-item>
+  </m3e-nav-bar>`;
+});
+When("the user opens the Home link in a new tab", async ({ page }) => {
+  const [popup] = await Promise.all([
+    page.context().waitForEvent("page"),
+    page.locator("#home-link .outer > a").click({ modifiers: ["Control"] }),
+  ]);
+  await expect(popup).toHaveURL("https://m3e.test/home");
+  await popup.close();
+  await expect(page).toHaveURL("about:blank");
+});
+
+Given("a navigation bar with a disabled fragment link", ({ navBar }) => {
+  navBar.html = `<m3e-nav-bar id="bar">
+    <m3e-nav-item id="home-link" value="home" href="#home-page" disabled>Home</m3e-nav-item>
+  </m3e-nav-bar>`;
+});
+When("the application dispatches a click on the Home link", async ({ page }) =>
+  page.locator("#home-link").dispatchEvent("click"),
+);
+
+Then("the primary bar tracks destinations {string} with matching owners", async ({ navBar }, values: string) =>
+  expect.poll(() => navBar.membership()).toEqual({ values: values.split(", "), ownersMatch: true }),
+);
+
+Then("the secondary bar tracks destinations {string} with matching owners", async ({ navBar }, values: string) =>
+  expect.poll(() => navBar.membership("#secondary")).toEqual({ values: values.split(", "), ownersMatch: true }),
+);
+
+Then("the effective navigation bar mode is {string}", async ({ navBar }, mode: string) =>
+  expect.poll(() => navBar.bar.evaluate((bar: M3eNavBarElement) => bar.currentMode)).toBe(mode),
 );

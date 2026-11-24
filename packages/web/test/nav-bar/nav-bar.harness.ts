@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import type { M3eNavBarElement } from "@m3e/web/nav-bar";
 
 type EventLog = { navEvents: string[] };
 
@@ -80,9 +81,14 @@ export class NavBarHarness {
   }
 
   selectedValue() {
-    return this.bar.evaluate(
-      (bar) => (bar as HTMLElement & { selected: HTMLElement | null }).selected?.getAttribute("value") ?? null,
-    );
+    return this.bar.evaluate((bar: M3eNavBarElement) => bar.selected?.getAttribute("value") ?? null);
+  }
+
+  async membership(selector = "#bar") {
+    return this.page.locator(selector).evaluate((bar: M3eNavBarElement) => ({
+      values: bar.items.map((item) => item.getAttribute("value")),
+      ownersMatch: bar.items.every((item) => item.navBar === bar),
+    }));
   }
 
   appendDestination(label: string, selected = false) {

@@ -141,3 +141,202 @@ Feature: Navigation bar
       And the application moves destination "Home" to the secondary bar
       Then destination "Inbox" is the current page
       And destination "Home" is not the current page
+
+  Rule: The mode determines destination orientation
+
+    Scenario: Compact and expanded modes switch destination orientation
+
+      Given a navigation bar layout fixture
+      When the navigation bar layout renders
+      Then every destination is laid out "vertical"
+      When the application sets the bar mode to "expanded"
+      Then every destination is laid out "horizontal"
+      When the application sets the bar mode to "compact"
+      Then every destination is laid out "vertical"
+
+    Scenario: An invalid mode falls back to compact
+
+      Given a navigation bar layout fixture in mode "bogus"
+      When the navigation bar layout renders
+      Then the bar mode is "compact"
+      And every destination is laid out "vertical"
+
+    Scenario: Destinations added later adopt the current orientation
+
+      Given a navigation bar layout fixture in mode "expanded"
+      When the navigation bar layout renders
+      And the application adds a layout destination
+      Then every destination is laid out "horizontal"
+
+  Rule: Auto mode follows the viewport
+
+    Scenario: Auto mode is compact on small viewports and expanded on large ones
+
+      Given a small viewport
+      And a navigation bar layout fixture in mode "auto"
+      When the navigation bar layout renders
+      Then every destination is laid out "vertical"
+      When the viewport becomes large
+      Then every destination is laid out "horizontal"
+      When the viewport becomes small
+      Then every destination is laid out "vertical"
+
+    Scenario: A moved auto mode bar keeps following the viewport
+
+      Given a small viewport
+      And a navigation bar layout fixture in mode "auto"
+      When the navigation bar layout renders
+      And the application moves the bar to another container
+      Then every destination is laid out "vertical"
+      When the viewport becomes large
+      Then every destination is laid out "horizontal"
+
+    Scenario: Leaving auto mode stops following the viewport
+
+      Given a small viewport
+      And a navigation bar layout fixture in mode "auto"
+      When the navigation bar layout renders
+      And the application sets the bar mode to "compact"
+      When the viewport becomes large
+      Then every destination is laid out "vertical"
+
+  Rule: Destination shapes remain consistent across orientations
+
+    Scenario: Item layers keep their shape with an independent focus ring shape
+
+      Given a navigation bar layout fixture with bevel items and a round focus ring
+      When the navigation bar layout renders
+      Then the destination layers use the bevel shape
+      And the destination focus ring is round with a 12px radius
+      When the application sets the bar mode to "expanded"
+      Then every destination is laid out "horizontal"
+      And the destination focus ring is bevel with a 9999px radius
+      And the destination layers use the bevel shape
+
+  Rule: Focus remains accessible across layouts
+
+    Scenario Outline: Keyboard focus shows a ring and pointer focus hides it
+
+      Given a navigation bar with home, search, and disabled settings destinations
+      When the navigation bar renders
+      And the application sets the bar mode to "<mode>"
+      And the user focuses the control before the bar
+      And the user presses "Tab" on the navigation bar
+      Then destination "Home" has a visible navigation focus ring
+      When the user clicks destination "Search"
+      Then destination "Search" is focused
+      And destination "Search" has no visible navigation focus ring
+
+      Examples:
+        | mode     |
+        | compact  |
+        | expanded |
+
+    Scenario: Re-enabling a destination restores its tab stop and activation
+
+      Given a navigation bar with home, search, and disabled settings destinations
+      When the navigation bar renders
+      And the application enables destination "Settings"
+      And the user focuses destination "Search"
+      And the user presses "Tab" on the navigation bar
+      Then destination "Settings" is focused
+      When the user presses "Enter" on the navigation bar
+      Then destination "Settings" is the current page
+      And destination "Home" is not the current page
+
+  Rule: Selected icons follow selection and slot changes
+
+    Scenario: A selected icon replaces the default icon without changing the accessible name
+
+      Given a navigation bar with a separate selected icon
+      When the navigation bar renders
+      Then the default Home icon is visible
+      And the selected Home icon is hidden
+      When the user clicks destination "Home"
+      Then the selected Home icon is visible
+      And the default Home icon is hidden
+      And destination "Home" is the current page
+      When the user clicks destination "Search"
+      Then the default Home icon is visible
+      And the selected Home icon is hidden
+
+    Scenario: Adding and removing a selected icon restores the default icon
+
+      Given a navigation bar with home, search, and disabled settings destinations
+      When the navigation bar renders
+      And the application adds a selected Home icon
+      Then the selected Home icon is visible
+      And the default Home icon is hidden
+      When the application removes the selected Home icon
+      Then the default Home icon is visible
+      And destination "Home" is the current page
+
+  Rule: Link activation preserves navigation semantics
+
+    Scenario Outline: Activating a link selects and navigates
+
+      Given a navigation bar with a fragment link
+      When the navigation bar renders
+      And the application listens for navigation events
+      And the user activates the Home link using "<activation>"
+      Then the navigation bar page fragment is "#home-page"
+      And the Home navigation link is current
+      And the bar reports "home" as selected
+      And the navigation events "beforeinput, input, change" were dispatched
+
+      Examples:
+        | activation |
+        | pointer    |
+        | Enter      |
+        | Space      |
+
+    Scenario: A modified link click opens a new tab without navigating the current page
+
+      Given a navigation bar with an external link
+      When the navigation bar renders
+      And the user opens the Home link in a new tab
+      Then the navigation bar page fragment is ""
+
+    Scenario: A disabled linked destination cannot be programmatically activated
+
+      Given a navigation bar with a disabled fragment link
+      When the navigation bar renders
+      And the application listens for navigation events
+      And the application dispatches a click on the Home link
+      Then the bar reports no selection
+      And no navigation events were dispatched
+      And the navigation bar page fragment is ""
+
+  Rule: Reconnection restores ownership without duplicate interaction
+
+    Scenario: A moved bar retains membership and emits one event sequence
+
+      Given a navigation bar with home, search, and disabled settings destinations
+      When the navigation bar renders
+      And the application listens for navigation events
+      And the application moves the bar to another container
+      Then the primary bar tracks destinations "home, search, settings" with matching owners
+      When the user clicks destination "Search"
+      Then the bar reports "search" as selected
+      And the navigation events "beforeinput, input, change" were dispatched
+
+    Scenario: Moving a destination updates both bars' public membership and ownership
+
+      Given a compact primary bar and an expanded secondary bar
+      When the navigation bar renders
+      And the application moves destination "Search" to the secondary bar
+      Then the primary bar tracks destinations "home" with matching owners
+      And the secondary bar tracks destinations "inbox, search" with matching owners
+
+    Scenario: Entering auto mode starts viewport monitoring
+
+      Given a small viewport
+      And a navigation bar layout fixture in mode "expanded"
+      When the navigation bar layout renders
+      Then every destination is laid out "horizontal"
+      When the application sets the bar mode to "auto"
+      Then the effective navigation bar mode is "compact"
+      And every destination is laid out "vertical"
+      When the viewport becomes large
+      Then the effective navigation bar mode is "expanded"
+      And every destination is laid out "horizontal"
