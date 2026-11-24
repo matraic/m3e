@@ -302,6 +302,14 @@ Then("its indeterminate animation continues", async ({ progressIndicator }) => {
   }
 });
 
+Given("a hidden wavy linear indicator in {string} mode", ({ progressIndicator }, mode: string) =>
+  progressIndicator.prepareHiddenLinearWave(mode),
+);
+Then(
+  "revealing and resizing the linear indicator updates its wave without synchronous width reads",
+  async ({ progressIndicator }) => progressIndicator.verifyObservedLinearWidth(),
+);
+
 Given("a paused wavy indeterminate circular progress indicator", async ({ page, progressIndicator }) => {
   const start = new Date("2026-01-01T00:00:00Z");
   await page.clock.install({ time: start });

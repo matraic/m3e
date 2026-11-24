@@ -365,6 +365,7 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
   /** @private */ #maskId = `m3e-linear-progress-mask-${M3eLinearProgressIndicatorElement.__nextMaskId++}`;
 
   /** @private */ #strokeWidth = 0;
+  /** @private */ #width = 0;
   /** @private */ #amplitude = 0;
   /** @private */ #wavelength = 0;
 
@@ -378,7 +379,13 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
   /** @private */ readonly #resizeController = new ResizeController(this, {
     skipInitial: true,
     target: null,
-    callback: () => {
+    callback: (entries) => {
+      for (const entry of entries) {
+        if (entry.target.classList.contains("stroke")) {
+          this.#width = Math.round(entry.contentRect.width);
+        }
+      }
+
       this.#updateStroke();
       this.#updateAmplitudeAndWavelength();
 
@@ -524,9 +531,9 @@ export class M3eLinearProgressIndicatorElement extends SupportsDirectionality(Pr
   /** @inheritdoc */
   protected override render(): unknown {
     const clampedValue = Math.max(0, Math.min(this.value, this.max));
-    const activeWidth = (clampedValue / this.max) * this.clientWidth;
+    const activeWidth = (clampedValue / this.max) * this.#width;
     const waveWidth =
-      this.mode === "indeterminate" || this.mode === "query" ? this.clientWidth : activeWidth + this.#wavelength * 3;
+      this.mode === "indeterminate" || this.mode === "query" ? this.#width : activeWidth + this.#wavelength * 3;
     const amplitude = this.#wavyAmplitude.value ?? this.#getTargetAmplitude();
 
     const wave =

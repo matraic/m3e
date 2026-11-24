@@ -219,6 +219,18 @@ Feature: Progress indicators
         | linear   |
         | circular |
 
+    Scenario Outline: A hidden linear wave recovers its size without measuring width during rendering
+      Given a hidden wavy linear indicator in "<mode>" mode
+      When the progress indicator renders
+      Then revealing and resizing the linear indicator updates its wave without synchronous width reads
+
+      Examples:
+        | mode          |
+        | determinate   |
+        | buffer        |
+        | indeterminate |
+        | query         |
+
   Rule: Circular indeterminate progress animates continuously
 
     Scenario: A wavy spinner completes its six-second sweep and rotation cycle

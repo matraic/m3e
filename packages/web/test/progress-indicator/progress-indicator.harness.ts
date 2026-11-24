@@ -38,6 +38,57 @@ export class ProgressIndicatorHarness {
     );
   }
 
+  prepareHiddenLinearWave(mode: string) {
+    if (!["determinate", "buffer", "indeterminate", "query"].includes(mode)) {
+      throw new Error(`Unknown linear mode: ${mode}`);
+    }
+    this.kind = "linear";
+    this.html = `<div id="hidden-progress" hidden>${this.markup(
+      "linear",
+      `variant="wavy" mode="${mode}" value="50" buffer-value="75" style="width: 200px"`,
+    )}</div>`;
+  }
+
+  async verifyObservedLinearWidth() {
+    await this.indicator.evaluate((element) => {
+      const descriptor = Object.getOwnPropertyDescriptor(Element.prototype, "clientWidth");
+      if (!descriptor?.get) throw new Error("Missing native clientWidth getter");
+      const getWidth = descriptor.get;
+      let widthReads = 0;
+      Object.defineProperty(element, "widthReadCount", { get: () => widthReads });
+      Object.defineProperty(element, "clientWidth", {
+        get() {
+          widthReads++;
+          return getWidth.call(this);
+        },
+      });
+      element.parentElement?.removeAttribute("hidden");
+    });
+
+    const mode = await this.indicator.getAttribute("mode");
+    const masked = mode === "indeterminate" || mode === "query";
+    const wave = this.indicator.locator("svg.wave");
+    await expect(wave).toHaveAttribute("width", String(masked ? 200 : 220));
+
+    await this.indicator.evaluate((element: M3eLinearProgressIndicatorElement) => {
+      element.value = 60;
+      element.style.width = "280.75px";
+      element.style.paddingInline = "8px";
+      element.style.transform = "scale(0.75)";
+    });
+    // Match the previous integer clientWidth semantics, including padding but excluding transforms.
+    await expect(wave).toHaveAttribute("width", String(masked ? 297 : 298.2));
+    await expect(this.indicator.locator(".progress")).toHaveCSS("--_translate-x", "-178.2px");
+    await expect(this.indicator.locator(".wave-path")).toHaveAttribute("d", /^M (?!.*NaN).+/);
+    expect(
+      await this.indicator.evaluate((element) => {
+        const descriptor = Object.getOwnPropertyDescriptor(element, "widthReadCount");
+        if (!descriptor?.get) throw new Error("Missing width-read counter");
+        return descriptor.get.call(element);
+      }),
+    ).toBe(0);
+  }
+
   prepareCollapsedCircularWave(mode: string) {
     if (mode !== "determinate" && mode !== "indeterminate") throw new Error(`Unknown circular mode: ${mode}`);
     this.kind = "circular";
