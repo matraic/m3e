@@ -261,6 +261,55 @@ test.describe("m3e-slider", () => {
     expect(value).toBeLessThanOrEqual(25);
   });
 
+  for (const [orientation, direction] of [
+    ["horizontal", "ltr"],
+    ["horizontal", "rtl"],
+    ["vertical", "ltr"],
+  ] as const) {
+    test(`moves range thumbs to track clicks outside the selection in ${orientation} ${direction}`, async ({
+      page,
+      render,
+    }) => {
+      await render(range(`orientation="${orientation}"`), direction);
+      const lower = page.getByRole("slider", { name: "Minimum" });
+      const upper = page.getByRole("slider", { name: "Maximum" });
+      await expect(upper).toHaveCSS(
+        "transform",
+        orientation === "vertical"
+          ? "matrix(1, 0, 0, 1, 0, -138)"
+          : `matrix(1, 0, 0, 1, ${direction === "rtl" ? -213 : 213}, 0)`,
+      );
+      await record(page, "m3e-slider");
+      const box = await page.locator("m3e-slider").boundingBox();
+      const thumbBox = await lower.boundingBox();
+      if (!box || !thumbBox) throw new Error("Missing range slider bounds");
+      const vertical = orientation === "vertical";
+      const size = vertical ? box.height : box.width;
+      const thumbSize = vertical ? thumbBox.height : thumbBox.width;
+      for (const value of [90, 10]) {
+        const offset = thumbSize / 2 + (size - thumbSize) * (value / 100);
+        await page.mouse.click(
+          vertical ? box.x + box.width / 2 : direction === "rtl" ? box.x + box.width - offset : box.x + offset,
+          vertical ? box.y + box.height - offset : box.y + box.height / 2,
+        );
+        await expect(upper).toHaveAttribute("aria-valuenow", "90");
+        await expect(lower).toHaveAttribute("aria-valuenow", value === 90 ? "25" : "10");
+      }
+      expect(await events(page)).toEqual(["beforeinput", "input", "change", "beforeinput", "input", "change"]);
+    });
+  }
+
+  test("does not move another range thumb when clicking beyond a disabled upper thumb", async ({ page, render }) => {
+    await render(range().replace('value="75"', 'disabled value="75"'));
+    const box = await page.locator("m3e-slider").boundingBox();
+    if (!box) throw new Error("Missing range slider bounds");
+    await record(page, "m3e-slider");
+    await page.mouse.click(box.x + box.width * 0.95, box.y + box.height / 2);
+    await expect(page.getByRole("slider", { name: "Minimum" })).toHaveAttribute("aria-valuenow", "25");
+    await expect(page.getByRole("slider", { name: "Maximum" })).toHaveAttribute("aria-valuenow", "75");
+    expect(await events(page)).toEqual([]);
+  });
+
   test("moves the thumb when dragged", async ({ page, render }) => {
     await render(single());
     const thumb = page.getByRole("slider", { name: "Volume" });

@@ -1037,18 +1037,9 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
     }
 
     const value = this.#valueFromPoint(e);
-    let min = this.min;
-    let max = this.max;
-
-    if (this.#activeThumb === this.upperThumb) {
-      min = Math.max(min, this.lowerThumb?.value ?? 0);
-    } else if (this.upperThumb) {
-      max = Math.min(max, this.upperThumb.value ?? this.max);
-    }
 
     if (!this.upperThumb) {
       if (!this.lowerThumb.disabled) {
-        this.#changeThumb(this.lowerThumb, Math.min(max, Math.max(min, value)), true);
         this.#activeThumb = this.lowerThumb;
       }
     } else {
@@ -1057,27 +1048,31 @@ export class M3eSliderElement extends SupportsDirectionality(AttachInternals(Lit
 
       if (value < lowerValue) {
         if (!this.lowerThumb.disabled) {
-          this.#changeThumb(this.lowerThumb, Math.min(max, Math.max(min, value)), true);
           this.#activeThumb = this.lowerThumb;
         }
       } else if (value > upperValue) {
         if (!this.upperThumb.disabled) {
-          this.#changeThumb(this.upperThumb, Math.min(max, Math.max(min, value)), true);
           this.#activeThumb = this.upperThumb;
         }
       } else {
         const mid = (lowerValue + upperValue) / 2;
         if (value < mid && !this.lowerThumb.disabled) {
-          this.#changeThumb(this.lowerThumb, Math.min(max, Math.max(min, value)), true);
           this.#activeThumb = this.lowerThumb;
         } else if (!this.upperThumb.disabled) {
-          this.#changeThumb(this.upperThumb, Math.min(max, Math.max(min, value)), true);
           this.#activeThumb = this.upperThumb;
         }
       }
     }
 
     if (this.#activeThumb) {
+      const min =
+        this.#activeThumb === this.upperThumb ? Math.max(this.min, this.lowerThumb.value ?? this.min) : this.min;
+      const max =
+        this.#activeThumb === this.lowerThumb && this.upperThumb
+          ? Math.min(this.max, this.upperThumb.value ?? this.max)
+          : this.max;
+
+      this.#changeThumb(this.#activeThumb, Math.min(max, Math.max(min, value)), true);
       addCustomState(this.#activeThumb, "--active");
     }
   }
