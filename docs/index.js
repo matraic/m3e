@@ -45,7 +45,7 @@ window.addEventListener("DOMContentLoaded", () => {
       currentPath = path;
     }
 
-    const menuItem = document.querySelector(`a[href='${path}']`)?.closest("m3e-nav-menu-item");
+    const menuItem = document.querySelector(`m3e-nav-menu-item[href='${path}']`);
     if (menuItem) {
       menuItem.selected = true;
     }

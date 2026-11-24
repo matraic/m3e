@@ -20,7 +20,7 @@
     <link href="api-viewer.css" rel="stylesheet" />
     <link href="nav-menu.css" rel="stylesheet" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/api-viewer-element/+esm"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.6/dist/all.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@m3e/web@2.13.7/dist/all.min.js"></script>
     <script src="../main.js"></script>
   </head>
   <body>
@@ -155,6 +155,33 @@
     &lt;m3e-heading slot="label" variant="label" size="large"&gt;Personal folders&lt;/m3e-heading&gt;
     &lt;!-- Items omitted for brevity --&gt;;
   &lt;/m3e-nav-menu-item-group&gt;
+&lt;/m3e-nav-menu&gt;</pre
+          >
+        </m3e-card>
+
+        <m3e-heading variant="headline" size="small" level="3">Links</m3e-heading>
+        <p>
+          Menu items without children can behave like links by specifying a URL using the
+          <code>href</code> attribute. You can also specify <code>target</code>, <code>rel</code> and
+          <code>download</code> similar to native anchor tags.
+        </p>
+        <m3e-card variant="outlined" class="showcase">
+          <div slot="content">
+            <m3e-nav-menu aria-label="External links">
+              <m3e-nav-menu-item href="https://www.google.com" target="_blank">
+                <m3e-icon slot="icon" name="open_in_new_window" aria-hidden="true"></m3e-icon>
+                <span slot="label">Google</span>
+              </m3e-nav-menu-item>
+            </m3e-nav-menu>
+          </div>
+        </m3e-card>
+        <m3e-card variant="outlined" class="example">
+          <pre slot="content">
+&lt;m3e-nav-menu aria-label=&quot;External links&quot;&gt;
+  &lt;m3e-nav-menu-item href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;
+    &lt;m3e-icon slot=&quot;icon&quot; name=&quot;open_in_new_window&quot; aria-hidden=&quot;true&quot;&gt;&lt;/m3e-icon&gt;
+    &lt;span slot=&quot;label&quot;&gt;Google&lt;/span&gt;
+  &lt;/m3e-nav-menu-item&gt;
 &lt;/m3e-nav-menu&gt;</pre
           >
         </m3e-card>
