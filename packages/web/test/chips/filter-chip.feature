@@ -130,6 +130,13 @@ Feature: Filter chips and filter chip sets
     Then filter chip "Design" exposes pressed state "true"
     And the original filter set has no selected values
 
+  Scenario: A chip moved to a multi-select set becomes a tab stop
+    Given a single-select filter set and a multi-select destination set
+    When the filter chips render
+    Then filter chip "Accessibility" is not a tab stop
+    When the application moves Accessibility into the destination filter set
+    Then filter chip "Accessibility" is a tab stop
+
   Scenario: A single-selection form submits its initial and replacement selections
     Given an initially selected filter set in a form
     When the filter chips render

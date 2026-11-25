@@ -6,6 +6,7 @@ import { FocusKeyManager } from "./FocusKeyManager";
  */
 export class RovingTabIndexManager<T extends HTMLElement> extends FocusKeyManager<T> {
   /** @private */ #disableRovingTabIndex = false;
+  /** @private */ #independentTabStops = true;
 
   /** @inheritdoc */
   override updateActiveItem(item: T | null | undefined): void {
@@ -25,11 +26,11 @@ export class RovingTabIndexManager<T extends HTMLElement> extends FocusKeyManage
   override setItems(items: T[]): { added: readonly T[]; removed: readonly T[] } {
     const result = super.setItems(items);
 
-    if (!this.#disableRovingTabIndex) {
-      for (const added of result.added) {
-        if (added !== this.activeItem && !this.skipPredicate(added)) {
-          added.setAttribute("tabindex", "-1");
-        }
+    for (const added of result.added) {
+      if (this.#disableRovingTabIndex && this.#independentTabStops && !this.skipPredicate(added)) {
+        added.setAttribute("tabindex", "0");
+      } else if (!this.#disableRovingTabIndex && added !== this.activeItem && !this.skipPredicate(added)) {
+        added.setAttribute("tabindex", "-1");
       }
     }
 
@@ -39,14 +40,18 @@ export class RovingTabIndexManager<T extends HTMLElement> extends FocusKeyManage
   /**
    * Configures whether roving tab index is disabled.
    * @param {boolean} [disabled=true] Whether the roving tab index is disabled.
+   * @param {boolean} [independentTabStops=true] Whether enabled items become tab stops when roving is disabled.
    * @returns {RovingTabIndexManager<T>} The configured roving tab index manager.
    */
-  disableRovingTabIndex(disabled: boolean = true): this {
-    if (disabled !== this.#disableRovingTabIndex) {
+  disableRovingTabIndex(disabled: boolean = true, independentTabStops: boolean = true): this {
+    if (disabled !== this.#disableRovingTabIndex || independentTabStops !== this.#independentTabStops) {
       this.#disableRovingTabIndex = disabled;
-      for (const item of this.items) {
-        if (!this.skipPredicate(item)) {
-          item?.setAttribute("tabindex", this.#disableRovingTabIndex || item === this.activeItem ? "0" : "-1");
+      this.#independentTabStops = independentTabStops;
+      if (!disabled || independentTabStops) {
+        for (const item of this.items) {
+          if (!this.skipPredicate(item)) {
+            item.setAttribute("tabindex", disabled || item === this.activeItem ? "0" : "-1");
+          }
         }
       }
     }

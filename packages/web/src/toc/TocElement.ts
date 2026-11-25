@@ -262,7 +262,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   /** @private */ readonly #selectionManager = new SelectionManager<M3eTocItemElement>()
     .withHomeAndEnd()
     .withVerticalOrientation()
-    .disableRovingTabIndex()
+    .disableRovingTabIndex(true, false)
     .onSelectedItemsChange(() => {
       for (const target of this.#resizeController.targets) {
         this.#resizeController.unobserve(target);

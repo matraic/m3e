@@ -210,7 +210,7 @@ export class M3eTreeElement extends Role(LitElement, "tree") {
     .withPageUpAndDown()
     .withTypeahead()
     .withSkipPredicate((x) => x.disabled || !x.visible)
-    .disableRovingTabIndex()
+    .disableRovingTabIndex(true, false)
     .onActiveItemChange(() => {
       if (this[selectionManager].activeItem) {
         this.#activateItem(this[selectionManager].activeItem);

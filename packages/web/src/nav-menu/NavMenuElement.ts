@@ -167,7 +167,7 @@ export class M3eNavMenuElement extends Role(LitElement, "tree") {
     .withHomeAndEnd()
     .withTypeahead()
     .withSkipPredicate((x) => x.disabled || !x.visible)
-    .disableRovingTabIndex()
+    .disableRovingTabIndex(true, false)
     .onActiveItemChange(() => {
       if (this[selectionManager].activeItem) {
         this.#activateItem(this[selectionManager].activeItem);

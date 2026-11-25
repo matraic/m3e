@@ -118,6 +118,22 @@ Then("the original filter set has no selected values", async ({ chips }) =>
   expect.poll(() => chips.filterSet.evaluate((set: M3eFilterChipSetElement) => set.value)).toBeNull(),
 );
 
+Given("a single-select filter set and a multi-select destination set", ({ chips }) => {
+  chips.markup = `<m3e-filter-chip-set aria-label="Topics">
+    <m3e-filter-chip>Design</m3e-filter-chip><m3e-filter-chip>Accessibility</m3e-filter-chip>
+  </m3e-filter-chip-set>
+  <m3e-filter-chip-set id="destination-filter-set" multi aria-label="Destination"></m3e-filter-chip-set>`;
+});
+Then("filter chip {string} is not a tab stop", async ({ chips }, name: string) =>
+  expect(chips.filterChip(name)).toHaveAttribute("tabindex", "-1"),
+);
+When("the application moves Accessibility into the destination filter set", async ({ chips }) =>
+  chips.moveToSet(chips.filterChip("Accessibility"), "destination-filter-set"),
+);
+Then("filter chip {string} is a tab stop", async ({ chips }, name: string) =>
+  expect(chips.filterChip(name)).toHaveAttribute("tabindex", "0"),
+);
+
 Given("an initially selected filter set in a form", ({ chips }) => {
   chips.markup = `<form id="chip-form"><m3e-filter-chip-set name="topic" aria-label="Topics">
     <m3e-filter-chip value="design" selected>Design</m3e-filter-chip>

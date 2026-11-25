@@ -70,6 +70,19 @@ test.describe("m3e-tree", () => {
     await expect(page.locator("m3e-tree")).not.toHaveAttribute("aria-multiselectable");
   });
 
+  test("tree items added later do not become tab stops", async ({ page, render }) => {
+    await render(tree());
+    const treeElement = page.locator("m3e-tree");
+    await treeElement.evaluate((el) =>
+      el.insertAdjacentHTML("beforeend", `<m3e-tree-item id="new"><span slot="label">New</span></m3e-tree-item>`),
+    );
+
+    await expect
+      .poll(() => treeElement.evaluate((el) => (el as Tree).items.some((item) => item.id === "new")))
+      .toBe(true);
+    await expect(page.locator("#new")).not.toHaveAttribute("tabindex", "0");
+  });
+
   test("multi sets aria-multiselectable", async ({ page, render }) => {
     await render(tree());
     const el = page.locator("m3e-tree");

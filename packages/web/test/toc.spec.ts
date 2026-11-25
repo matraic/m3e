@@ -44,6 +44,15 @@ test.describe("m3e-toc", () => {
       ]);
   });
 
+  test("preserves the tab index of generated items", async ({ page, render }) => {
+    await render(content());
+    const toc = page.locator("m3e-toc");
+    await expect(toc.locator("m3e-toc-item")).toHaveCount(3);
+    await expect
+      .poll(() => toc.locator("m3e-toc-item").evaluateAll((items) => items.map((item) => item.tabIndex)))
+      .toEqual([-1, -1, -1]);
+  });
+
   test("max-depth controls how many levels are shown", async ({ page, render }) => {
     await render(content());
     const toc = page.locator("m3e-toc");
