@@ -102,7 +102,15 @@ export class SelectionManager<
     const { added, removed } = super.setItems(items);
 
     this.#selectedItems = this.#selectedItems.filter((x) => !removed.includes(x));
-    this.#selectedItems.push(...added.filter((x) => isCheckedOrSelected(x)));
+    const newlySelected = added.filter((x) => isCheckedOrSelected(x));
+    if (!this.multi && this.#selectedItems.length > 0 && newlySelected.length > 0) {
+      // An item selected after the selection was established takes over from the existing one.
+      for (const existing of this.#selectedItems) {
+        checkOrSelect(existing, false);
+      }
+      this.#selectedItems = [];
+    }
+    this.#selectedItems.push(...newlySelected);
     this.#enforceSingleSelect();
     this.#onSelectedItemsChangeCallback?.();
     return { added, removed };
