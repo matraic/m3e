@@ -75,7 +75,7 @@ This section details the attributes, slots and CSS custom properties available f
 
 | Attribute   | Type                                            | Default  | Description                                          |
 | ----------- | ----------------------------------------------- | -------- | ---------------------------------------------------- |
-| `animation` | `"pulse" \| "wave" \| "none"`                   | `"none"` | The animation effect of the skeleton.                |
+| `animation` | `"pulse" \| "wave" \| "none"`                   | `"wave"` | The animation effect of the skeleton.                |
 | `shape`     | `"circular" \| "rounded" \| "square" \| "auto"` | `"auto"` | The shape of the skeleton.                           |
 | `loaded`    | `boolean`                                       | `false`  | Whether the content of the skeleton has been loaded. |
 
