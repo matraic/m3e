@@ -481,6 +481,10 @@ export class M3eSelectElement
   protected override update(changedProperties: PropertyValues): void {
     super.update(changedProperties);
 
+    if (changedProperties.has("disabled") && this.disabled) {
+      this.#hideMenu();
+    }
+
     if (changedProperties.has("hideSelectionIndicator")) {
       this.#options.forEach((x) => setCustomState(x, "--hide-selection-indicator", this.hideSelectionIndicator));
     }
@@ -554,13 +558,11 @@ export class M3eSelectElement
 
     clone.disabled = e.target.disabled;
 
-    if (clone.selected === e.target.selected) return;
-
-    clone.selected = e.target.selected;
-
-    if (!this.isUpdatePending) {
-      this.requestUpdate();
+    if (clone.selected !== e.target.selected) {
+      clone.selected = e.target.selected;
     }
+
+    this.requestUpdate();
 
     this.#formField?.notifyControlStateChange(true);
   }
@@ -590,6 +592,7 @@ export class M3eSelectElement
       : [...this.querySelectorAll("m3e-option")];
 
     this.#applyPendingValue();
+    this.requestUpdate();
 
     this.#formField?.notifyControlStateChange();
     if (this.#menu) {
@@ -608,7 +611,7 @@ export class M3eSelectElement
 
   /** @private */
   #handleKeyDown(e: KeyboardEvent): void {
-    if (e.defaultPrevented) return;
+    if (e.defaultPrevented || this.disabled) return;
     this.#ignoreFocusVisible = false;
 
     switch (e.key) {
@@ -663,7 +666,7 @@ export class M3eSelectElement
 
   /** @private */
   #handleKeyUp(e: KeyboardEvent): void {
-    if (e.defaultPrevented) return;
+    if (e.defaultPrevented || this.disabled) return;
 
     if (this.#ignoreKeyUp) {
       this.#ignoreKeyUp = false;
@@ -803,7 +806,7 @@ export class M3eSelectElement
 
   /** @private */
   #showMenu(): void {
-    if (this.#menu || this._options.length == 0) return;
+    if (this.disabled || this.#menu || this._options.length == 0) return;
 
     this.#menu = document.createElement("m3e-option-panel");
     if (this.multi) {
@@ -892,6 +895,7 @@ export class M3eSelectElement
 
   /** @private */
   #selectOption(option: M3eOptionElement): void {
+    if (this.disabled || option.disabled) return;
     const selected = this.multi ? !option.selected : true;
     if (option.selected === selected) return;
 
