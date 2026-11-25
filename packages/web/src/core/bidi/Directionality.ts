@@ -51,7 +51,10 @@ export class M3eDirectionality {
   static observe(callback: () => void): () => void {
     this.#observers.push(callback);
     return () => {
-      this.#observers.splice(this.#observers.indexOf(callback), 1);
+      const index = this.#observers.indexOf(callback);
+      if (index >= 0) {
+        this.#observers.splice(index, 1);
+      }
     };
   }
 
