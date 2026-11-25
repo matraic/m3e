@@ -275,7 +275,7 @@ export class M3eSearchViewElement extends ReconnectedCallback(AttachInternals(Li
       this.#breakpointUnobserve?.();
 
       const previousMode = changedProperties.get("mode");
-      if (previousMode && previousMode !== this.mode && this.open) {
+      if (this.hasUpdated && previousMode && previousMode !== this.mode && this.open) {
         this.open = false;
       }
 
