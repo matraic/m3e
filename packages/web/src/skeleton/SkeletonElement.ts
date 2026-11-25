@@ -7,9 +7,11 @@ import {
   DesignToken,
   ReconnectedCallback,
   registerStyleSheet,
+  ResizeController,
   setCustomState,
   waitForUpgrade,
 } from "@m3e/web/core";
+
 import { positionAnchor } from "@m3e/web/core/anchoring";
 
 import { isSkeletonShape, SkeletonShape } from "./SkeletonShape";
@@ -269,6 +271,22 @@ export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitE
   `;
 
   /** @private */ readonly #anchoringCleanupMap = new Map<HTMLElement, () => void>();
+  /** @private */ readonly #slottedResizeMap = new Map<HTMLElement, HTMLElement>();
+  /** @private */
+  readonly #resizeController = new ResizeController(this, {
+    target: null,
+    skipInitial: true,
+    callback: (entries) => {
+      for (const entry of entries) {
+        const shape = this.#slottedResizeMap.get(entry.target as HTMLElement);
+        if (!shape) continue;
+
+        const element = entry.target as HTMLElement;
+        shape.style.width = `${element.offsetWidth}px`;
+        shape.style.height = `${element.offsetHeight}px`;
+      }
+    },
+  });
 
   /** @private */ #animation: Animation | null = null;
 
@@ -375,6 +393,11 @@ export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitE
       item[1]();
     }
     this.#anchoringCleanupMap.clear();
+
+    for (const element of this.#slottedResizeMap.keys()) {
+      this.#resizeController.unobserve(element);
+    }
+    this.#slottedResizeMap.clear();
   }
 
   /** @private */
@@ -405,6 +428,8 @@ export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitE
     }
     shape.style.setProperty("--_skeleton-auto-shape", surfaceStyle.borderRadius);
     shape.style.setProperty("--_skeleton-auto-corner-shape", surfaceStyle.getPropertyValue("corner-shape"));
+    shape.style.width = `${element.offsetWidth}px`;
+    shape.style.height = `${element.offsetHeight}px`;
 
     const anchoringCleanup = await positionAnchor(
       shape,
@@ -415,12 +440,12 @@ export class M3eSkeletonElement extends ReconnectedCallback(AttachInternals(LitE
       (x, y) => {
         shape.style.left = `${x}px`;
         shape.style.top = `${y - element.clientHeight}px`;
-        shape.style.width = `${element.clientWidth}px`;
-        shape.style.height = `${element.clientHeight}px`;
       },
     );
 
     this.#anchoringCleanupMap.set(shape, anchoringCleanup);
+    this.#slottedResizeMap.set(element, shape);
+    this.#resizeController.observe(element);
     this.shadowRoot?.appendChild(shape);
   }
 
