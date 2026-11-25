@@ -918,7 +918,7 @@ export class M3eSelectElement
 
   /** @private */
   async #applyPendingValue(): Promise<void> {
-    if (!this._pendingValue) return;
+    if (!this._pendingValue || this.options.length === 0) return;
     const values = !this._pendingValue.value
       ? null
       : !Array.isArray(this._pendingValue.value)
