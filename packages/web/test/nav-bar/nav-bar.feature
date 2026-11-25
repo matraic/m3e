@@ -105,14 +105,14 @@ Feature: Navigation bar
       And destination "Home" is not the current page
       And the bar reports "inbox" as selected
 
-    Scenario: Adding a selected destination preserves the existing selection
+    Scenario: Adding a selected destination takes over the existing selection
 
       Given a navigation bar with home, search, and disabled settings destinations
       When the navigation bar renders
       And the application adds selected destination "Inbox"
-      Then destination "Home" is the current page
-      And destination "Inbox" is not the current page
-      And the bar reports "home" as selected
+      Then destination "Inbox" is the current page
+      And destination "Home" is not the current page
+      And the bar reports "inbox" as selected
 
     Scenario: Removing the selected destination clears the bar selection
 
@@ -134,13 +134,13 @@ Feature: Navigation bar
       And destination "Inbox" is not the current page
       And destination "Home" is the current page
 
-    Scenario: A selected destination moved into another bar does not replace its selection
+    Scenario: A selected destination moved into another bar takes over its selection
 
       Given a compact primary bar and an expanded secondary bar
       When the navigation bar renders
       And the application moves destination "Home" to the secondary bar
-      Then destination "Inbox" is the current page
-      And destination "Home" is not the current page
+      Then destination "Home" is the current page
+      And destination "Inbox" is not the current page
 
   Rule: The mode determines destination orientation
 
