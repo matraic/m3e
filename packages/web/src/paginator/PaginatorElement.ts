@@ -340,7 +340,7 @@ export class M3ePaginatorElement extends SupportsDirectionality(AttachInternals(
   protected override willUpdate(changedProperties: PropertyValues<this>): void {
     super.willUpdate(changedProperties);
 
-    if (changedProperties.has("pageIndex")) {
+    if (changedProperties.has("pageIndex") || changedProperties.has("pageSize") || changedProperties.has("pageSizes")) {
       const pageSizes = this.#parsePageSizes();
       if (!pageSizes.includes(this.pageSize)) {
         this.pageSizes = [...pageSizes, this.pageSize].join(",");
