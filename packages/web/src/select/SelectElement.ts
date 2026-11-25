@@ -14,6 +14,7 @@ import {
   Touched,
   DesignToken,
   formValue,
+  defaultValue,
   M3eFocusRingElement,
   scrollIntoViewIfNeeded,
   Role,
@@ -285,6 +286,7 @@ export class M3eSelectElement
   /** @private */ static __nextId = 0;
 
   /** @private */ @state() private _pendingValue?: { value: string | readonly string[] | null };
+  /** @private */ #initialValue?: { value: string | readonly string[] | null };
 
   /** @private */ private _options = new Array<M3eOptionElement>();
   /** @private */ #clone?: HTMLElement;
@@ -404,6 +406,11 @@ export class M3eSelectElement
     return <string | null>values;
   }
 
+  /** @inheritdoc @internal */
+  override get [defaultValue]() {
+    return this.#initialValue?.value ?? null;
+  }
+
   /** @inheritdoc */
   get shouldLabelFloat(): boolean {
     return this.selected.filter((x) => !x.isEmpty).length > 0;
@@ -451,6 +458,7 @@ export class M3eSelectElement
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
+    this.#initialValue ??= { value: this.value };
 
     this.ariaHasPopup = "listbox";
     this.ariaExpanded = "false";
@@ -505,6 +513,12 @@ export class M3eSelectElement
     }
 
     this.#initMutation();
+  }
+
+  /** @inheritdoc */
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    this.#formField?.notifyControlStateChange();
   }
 
   /** @inheritdoc */
@@ -923,11 +937,12 @@ export class M3eSelectElement
   /** @private */
   async #applyPendingValue(): Promise<void> {
     if (!this._pendingValue || this.options.length === 0) return;
-    const values = !this._pendingValue.value
-      ? null
-      : !Array.isArray(this._pendingValue.value)
-        ? [this._pendingValue.value]
-        : this._pendingValue.value;
+    const values =
+      this._pendingValue.value === null
+        ? null
+        : !Array.isArray(this._pendingValue.value)
+          ? [this._pendingValue.value]
+          : this._pendingValue.value;
 
     this._pendingValue = undefined;
 
