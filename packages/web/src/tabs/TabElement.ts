@@ -236,17 +236,22 @@ export class M3eTabElement extends Selected(
   override attach(control: HTMLElement): void {
     super.attach(control);
 
+    this.id = this.id || `m3e-tab-${M3eTabElement.__nextId++}`;
     control.id = control.id || `m3e-tab-panel-${M3eTabElement.__nextId++}`;
     addAriaReferencedId(this, "aria-controls", control.id);
+    addAriaReferencedId(control, "aria-labelledby", this.id);
+    this.closest("m3e-tabs")?.requestUpdate();
   }
 
   /** @inheritdoc */
   override detach(): void {
     if (this.control && this.control.id) {
       removeAriaReferencedId(this, "aria-controls", this.control.id);
+      removeAriaReferencedId(this.control, "aria-labelledby", this.id);
     }
 
     super.detach();
+    this.closest("m3e-tabs")?.requestUpdate();
   }
 
   /** @inheritdoc */
