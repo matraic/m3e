@@ -156,6 +156,7 @@ export class M3eSegmentedButtonElement extends Labelled(
   `;
 
   /** @private */ #directionalitySubscription?: () => void;
+  /** @private */ readonly #defaultChecked = new WeakMap<M3eButtonSegmentElement, boolean>();
 
   /** @internal */
   readonly [selectionManager] = new SelectionManager<M3eButtonSegmentElement>()
@@ -229,6 +230,17 @@ export class M3eSegmentedButtonElement extends Labelled(
   }
 
   /** @inheritdoc */
+  formResetCallback(): void {
+    const segments = this.segments;
+    segments.forEach((x) => (x.checked = false));
+    const defaults = segments.filter((x) => this.#defaultChecked.get(x));
+    (this.multi ? defaults : defaults.slice(0, 1)).forEach((x) => (x.checked = true));
+
+    this.markAsPristine();
+    this.markAsUntouched();
+  }
+
+  /** @inheritdoc */
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
 
@@ -275,7 +287,10 @@ export class M3eSegmentedButtonElement extends Labelled(
   /** @private */
   #handleSlotChange() {
     const { added } = this[selectionManager].setItems([...this.querySelectorAll("m3e-button-segment")]);
-    added.forEach((x) => setCustomState(x, "--hide-selection", this.hideSelectionIndicator));
+    added.forEach((x) => {
+      this.#defaultChecked.set(x, x.checked);
+      setCustomState(x, "--hide-selection", this.hideSelectionIndicator);
+    });
     this[selectionManager].items.forEach((segment, i) => {
       setCustomState(segment, "--first", i == 0);
       setCustomState(segment, "--last", i == this[selectionManager].items.length - 1);
