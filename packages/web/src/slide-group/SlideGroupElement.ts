@@ -192,6 +192,14 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
   }
 
   /** @inheritdoc */
+  protected override updated(changedProperties: PropertyValues): void {
+    super.updated(changedProperties);
+    if (changedProperties.has("disabled") || changedProperties.has("vertical") || changedProperties.has("threshold")) {
+      this._updatePaging();
+    }
+  }
+
+  /** @inheritdoc */
   protected override render(): unknown {
     const prevButton = html`<m3e-icon-button
       class="prev-button"
@@ -230,7 +238,7 @@ export class M3eSlideGroupElement extends ReconnectedCallback(LitElement) {
     </m3e-icon-button>`;
 
     return html`${this._canPage ? prevButton : nothing}
-      <div class="content" @scroll=${this._updatePaging}><slot></slot></div>
+      <div class="content" @scroll=${this._updatePaging}><slot @slotchange=${this._updatePaging}></slot></div>
       ${this._canPage ? nextButton : nothing}`;
   }
 
