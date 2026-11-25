@@ -254,6 +254,18 @@ export class M3eTabElement extends Selected(
     this.closest("m3e-tabs")?.requestUpdate();
   }
 
+  /** @internal Activates the tab in response to user interaction. */
+  _activate(): void {
+    if (this.disabled || this.selected) return;
+
+    if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
+      this.selected = true;
+      this.closest("m3e-tabs")?.[selectionManager].notifySelectionChange(this);
+      this.dispatchEvent(new Event("input", { bubbles: true }));
+      this.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  }
+
   /** @inheritdoc */
   override connectedCallback(): void {
     super.connectedCallback();
@@ -276,8 +288,16 @@ export class M3eTabElement extends Selected(
   protected override update(changedProperties: PropertyValues<this>): void {
     super.update(changedProperties);
 
+    const manager = this.closest("m3e-tabs")?.[selectionManager];
+    if (changedProperties.has("disabled") && manager?.items.includes(this)) {
+      const active = manager.activeItem;
+      manager.updateActiveItem(
+        active && !active.disabled ? active : (manager.items.find((tab) => !tab.disabled) ?? null),
+      );
+    }
+
     if (changedProperties.has("selected")) {
-      this.closest("m3e-tabs")?.[selectionManager].notifySelectionChange(this);
+      manager?.notifySelectionChange(this);
     }
   }
 
@@ -301,13 +321,8 @@ export class M3eTabElement extends Selected(
       e.stopImmediatePropagation();
     }
 
-    if (e.defaultPrevented || this.selected) return;
-
-    if (this.dispatchEvent(new Event("beforeinput", { bubbles: true, cancelable: true }))) {
-      this.selected = true;
-      this.closest("m3e-tabs")?.[selectionManager].notifySelectionChange(this);
-      this.dispatchEvent(new Event("input", { bubbles: true }));
-      this.dispatchEvent(new Event("change", { bubbles: true }));
+    if (!e.defaultPrevented) {
+      this._activate();
     }
   }
 }

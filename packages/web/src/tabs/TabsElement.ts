@@ -699,15 +699,9 @@ export class M3eTabsElement extends SupportsDirectionality(AttachInternals(LitEl
           }
 
           if (dir === "right") {
-            // go to the previous tab only if its not disabled.
-            if (this.selectedIndex > 0 && this.tabs.length > 1 && !this.tabs[this.selectedIndex - 1].disabled) {
-              this.selectedIndex--;
-            }
+            this.tabs[this.selectedIndex - 1]?._activate();
           } else if (dir === "left") {
-            // go to the next tab only if its not disabled.
-            if (this.selectedIndex < this.tabs.length - 1 && !this.tabs[this.selectedIndex + 1].disabled) {
-              this.selectedIndex++;
-            }
+            this.tabs[this.selectedIndex + 1]?._activate();
           }
         }
         break;
