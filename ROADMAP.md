@@ -14,3 +14,4 @@ Have an idea for a component or improvement? [Submit an enhancement request](htt
 
 - **Numeric and masked inputs** — Standalone inputs for use with `m3e-form-field` and as building blocks for prebuilt fields.
 - **Scroll view** — Overscroll stretch and auto-hiding scrollbars.
+- **Motion engine** — A reusable `@m3e/web/motion` module for components and applications, with primitives for FLIP transitions, animation-frame drivers, springs, and gesture-driven motion.
