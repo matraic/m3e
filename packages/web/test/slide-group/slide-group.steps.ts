@@ -102,7 +102,7 @@ Given("the slide-group document reads right to left", ({ slideGroup }) => {
   slideGroup.direction = "rtl";
 });
 When("the slide-group document changes to right to left", async ({ slideGroup }) =>
-  slideGroup.page.locator("body").evaluate((body) => (body.dir = "rtl")),
+  slideGroup.page.locator("body").evaluate((body) => body.setAttribute("dir", "rtl")),
 );
 
 When("the application changes the slide group to {int} items", async ({ slideGroup }, count: number) =>

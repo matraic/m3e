@@ -185,7 +185,7 @@ Given("the tabs document reads right to left", ({ tabs }) => {
   tabs.direction = "rtl";
 });
 When("the tabs document changes to right to left", async ({ tabs }) =>
-  tabs.page.locator("body").evaluate((body) => (body.dir = "rtl")),
+  tabs.page.locator("body").evaluate((body) => body.setAttribute("dir", "rtl")),
 );
 
 When("the application disables the tab named {string}", async ({ tabs }, name: string) =>
