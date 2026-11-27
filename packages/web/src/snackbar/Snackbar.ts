@@ -123,7 +123,9 @@ export class M3eSnackbar {
 
   /** Dismisses the currently visible snackbar. */
   static dismiss(): void {
-    M3eSnackbarElement.current?.hidePopover();
+    if (M3eSnackbarElement.current) {
+      M3eSnackbarElement.current.open = false;
+    }
   }
 }
 
