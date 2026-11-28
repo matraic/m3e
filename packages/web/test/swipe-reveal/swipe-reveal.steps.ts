@@ -989,7 +989,7 @@ Then("content overshoot is limited to the action width plus {int} pixels", async
     page.locator("#a").evaluate((host) => {
       const content = host.shadowRoot!.querySelector<HTMLElement>(".content")!;
       const state = window as typeof window & {
-        swipeRevealSnapshots?: Record<string, { left: number }>;
+        swipeRevealSnapshots?: Record<string, { left: number; trailingWidth: number }>;
       };
       return {
         width: state.swipeRevealSnapshots!.a.trailingWidth,
