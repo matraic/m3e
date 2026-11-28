@@ -1,7 +1,7 @@
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { AttachInternals, customElement, Role, setCustomEnumState, Vertical } from "@m3e/web/core";
+import { AttachInternals, customElement, Role, setCustomEnumState, Vertical, waitForUpdate } from "@m3e/web/core";
 import { RovingTabIndexManager, M3eInteractivityChecker } from "@m3e/web/core/a11y";
 import { M3eDirectionality } from "@m3e/web/core/bidi";
 
@@ -215,6 +215,7 @@ export class M3eToolbarElement extends Vertical(Role(AttachInternals(LitElement)
   static override styles: CSSResultGroup = [ToolbarStyle, ToolbarShapeStyle, ToolbarVariantStyle];
 
   /** @private */ #directionalitySubscription?: () => void;
+  /** @private */ #slotChangeVersion = 0;
   /** @private */ #focusKeyManager = new RovingTabIndexManager()
     .withHomeAndEnd()
     .withWrap()
@@ -303,7 +304,15 @@ export class M3eToolbarElement extends Vertical(Role(AttachInternals(LitElement)
   }
 
   /** @private */
-  #handleSlotChange(): void {
+  async #handleSlotChange(): Promise<void> {
+    const version = ++this.#slotChangeVersion;
+
+    await Promise.all(
+      [...this.querySelectorAll("*")].filter((item) => item instanceof LitElement).map((item) => waitForUpdate(item)),
+    );
+
+    if (version !== this.#slotChangeVersion || !this.isConnected) return;
+
     const items = M3eInteractivityChecker.findInteractiveElements(this, true);
     const { added } = this.#focusKeyManager.setItems(items);
     if (!this.#focusKeyManager.activeItem) {
