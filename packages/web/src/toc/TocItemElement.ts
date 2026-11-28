@@ -6,6 +6,8 @@ import {
   customElement,
   DesignToken,
   Disabled,
+  Focusable,
+  M3eFocusRingElement,
   M3eStateLayerElement,
   Role,
   Selected,
@@ -65,11 +67,11 @@ import { TocNode } from "./TocGenerator";
  * @cssprop --m3e-toc-item-selected-color - Text color for selected items.
  */
 @customElement("m3e-toc-item")
-export class M3eTocItemElement extends Selected(Disabled(AttachInternals(Role(LitElement, "link")))) {
+export class M3eTocItemElement extends Selected(Focusable(Disabled(AttachInternals(Role(LitElement, "link"))))) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
-      contain: layout style paint;
+      contain: layout style;
       display: inline-block;
       position: relative;
       outline: none;
@@ -139,8 +141,29 @@ export class M3eTocItemElement extends Selected(Disabled(AttachInternals(Role(Li
   `;
 
   /** @private */ @query(".base") private readonly _base?: HTMLElement;
+  /** @private */ @query(".focus-ring") private readonly _focusRing?: M3eFocusRingElement;
   /** @private */ @query(".state-layer") private readonly _stateLayer?: M3eStateLayerElement;
   /** @internal */ @state() node?: TocNode;
+
+  /** @private */
+  readonly #keyDownHandler = (event: KeyboardEvent) => {
+    if (event.target === this && event.key === "Enter" && !event.repeat && !event.defaultPrevented && !this.disabled) {
+      event.preventDefault();
+      this.click();
+    }
+  };
+
+  /** @inheritdoc */
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener("keydown", this.#keyDownHandler);
+  }
+
+  /** @inheritdoc */
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener("keydown", this.#keyDownHandler);
+  }
 
   /** @internal */
   protected override update(changedProperties: PropertyValues<this>): void {
@@ -163,12 +186,14 @@ export class M3eTocItemElement extends Selected(Disabled(AttachInternals(Role(Li
   /** @inheritdoc */
   protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
     super.firstUpdated(_changedProperties);
+    this._focusRing?.attach(this);
     this._stateLayer?.attach(this);
   }
 
   /** @inheritdoc */
   override render(): unknown {
-    return html`<m3e-state-layer class="state-layer"></m3e-state-layer>
+    return html`<m3e-focus-ring class="focus-ring" ?disabled=${this.disabled}></m3e-focus-ring>
+      <m3e-state-layer class="state-layer"></m3e-state-layer>
       <div class="base"><slot></slot></div>`;
   }
 }

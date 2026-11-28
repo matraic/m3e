@@ -444,7 +444,7 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   /** @private */
   #renderNode(node: TocNode): unknown {
     return html`<li>
-      <m3e-toc-item tabindex="-1" .node="${node}" @click=${this.#handleClick}>${node.label}</m3e-toc-item>
+      <m3e-toc-item tabindex="0" .node="${node}" @click=${this.#handleClick}>${node.label}</m3e-toc-item>
       ${node.nodes.length == 0
         ? nothing
         : html`<ul>
