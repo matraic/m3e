@@ -472,8 +472,10 @@ export class M3eStepElement extends SupportsDirectionality(
   /** @inheritdoc */
   override attach(control: HTMLElement): void {
     if (control instanceof M3eStepPanelElement) {
+      this.id = this.id || `m3e-step-${M3eStepElement.__nextId++}`;
       control.id = control.id || `m3e-step-panel-${M3eStepElement.__nextId++}`;
       addAriaReferencedId(this, "aria-controls", control.id);
+      addAriaReferencedId(control, "aria-labelledby", this.id);
       control.style.order = this.style.order;
     }
     super.attach(control);
@@ -485,6 +487,7 @@ export class M3eStepElement extends SupportsDirectionality(
       this.control.style.order = "";
       if (this.control.id) {
         removeAriaReferencedId(this, "aria-controls", this.control.id);
+        removeAriaReferencedId(this.control, "aria-labelledby", this.id);
       }
     }
 
