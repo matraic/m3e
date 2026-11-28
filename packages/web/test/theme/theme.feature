@@ -23,6 +23,11 @@ Feature: Theme
       Then the unknown motion scheme becomes "standard"
       And its spring tokens match the standard theme
 
+    Scenario: Springs fall back to cubic-bezier when linear easing is unavailable
+      Given an expressive theme containing a standard theme without linear easing support
+      Then both themes provide valid cubic-bezier spring transitions
+      And the nested standard springs differ from the expressive springs
+
   Rule: Color tokens respond to the theme configuration
 
     Scenario: Changing the source color updates tokens and dispatches a change event
@@ -83,6 +88,18 @@ Feature: Theme
         | dark   |
         | light  |
 
+    Scenario: Auto themes update when the system preference changes
+      Given auto, light, and dark themes with a light system preference
+      Then the auto theme matches the light theme
+      When the theme system preference changes to "dark"
+      Then the auto theme matches the dark theme
+      When the theme system preference changes to "light"
+      Then the auto theme matches the light theme
+
+    Scenario: Invalid scheme and contrast use defaults
+      Given a theme with invalid scheme and contrast
+      Then the theme uses auto scheme and standard contrast
+
   Rule: Density and focus indicators are configurable
 
     Scenario Outline: Density is reflected in the density token
@@ -137,3 +154,15 @@ Feature: Theme
         | motion       | standard | motion      |
         | density      | -2       | density     |
         | strong-focus |          | strongFocus |
+
+  Rule: A source color can be extracted from an image
+
+    Scenario Outline: A solid image yields its source color
+      Given an image filled with "<color>"
+      When its theme source color is extracted
+      Then the extracted theme color is "<color>"
+
+      Examples:
+        | color   |
+        | #ff0000 |
+        | #0000ff |

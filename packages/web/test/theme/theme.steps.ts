@@ -51,6 +51,31 @@ Then("its spring tokens match the standard theme", async ({ theme }) => {
   expect(await theme.readSprings("#unknown-probe")).toEqual(await theme.readSprings("#standard-probe"));
 });
 
+Given("an expressive theme containing a standard theme without linear easing support", async ({ render }) => {
+  await render(
+    `<m3e-theme motion="expressive"><div id="fallback-expressive"></div>
+      <m3e-theme motion="standard"><div id="fallback-standard"></div></m3e-theme></m3e-theme>`,
+    undefined,
+    `const nativeSupports = CSS.supports.bind(CSS);
+     CSS.supports = (property, value) =>
+       property === "transition-timing-function" && value === "linear(0, 1)"
+         ? false : nativeSupports(property, value);`,
+  );
+});
+Then("both themes provide valid cubic-bezier spring transitions", async ({ theme, page }) => {
+  for (const selector of ["#fallback-expressive", "#fallback-standard"]) {
+    const springs = await theme.readSprings(selector);
+    expect(springs).toHaveLength(6);
+    for (const spring of springs) {
+      expect(spring).toContain("cubic-bezier(");
+      expect(await page.evaluate((value) => CSS.supports("transition", `opacity ${value}`), spring)).toBe(true);
+    }
+  }
+});
+Then("the nested standard springs differ from the expressive springs", async ({ theme }) => {
+  expect(await theme.readSprings("#fallback-standard")).not.toEqual(await theme.readSprings("#fallback-expressive"));
+});
+
 Given("a light theme with source color {string}", async ({ theme }, color: string) => {
   await theme.show(`<m3e-theme color="${color}" scheme="light"><div id="probe"></div></m3e-theme>`);
   theme.initialPrimary = await theme.readPrimary();
@@ -134,6 +159,35 @@ Then("their surface colors match", async ({ theme }) => {
     .toBe(await theme.readToken("#explicit", "--md-sys-color-surface"));
 });
 
+Given("auto, light, and dark themes with a light system preference", async ({ theme, page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await theme.show(`<div><m3e-theme scheme="auto"><div id="auto"></div></m3e-theme>
+    <m3e-theme scheme="light"><div id="light"></div></m3e-theme>
+    <m3e-theme scheme="dark"><div id="dark"></div></m3e-theme></div>`);
+});
+Then("the auto theme matches the light theme", async ({ theme }) => {
+  await expect
+    .poll(() => theme.readToken("#auto", "--md-sys-color-surface"))
+    .toBe(await theme.readToken("#light", "--md-sys-color-surface"));
+});
+When("the theme system preference changes to {string}", async ({ page }, scheme: string) => {
+  if (scheme !== "light" && scheme !== "dark") throw new RangeError(`Unknown color scheme: ${scheme}`);
+  await page.emulateMedia({ colorScheme: scheme });
+});
+Then("the auto theme matches the dark theme", async ({ theme }) => {
+  await expect
+    .poll(() => theme.readToken("#auto", "--md-sys-color-surface"))
+    .toBe(await theme.readToken("#dark", "--md-sys-color-surface"));
+});
+
+Given("a theme with invalid scheme and contrast", async ({ theme }) => {
+  await theme.show(`<m3e-theme id="live" scheme="invalid" contrast="invalid"></m3e-theme>`);
+});
+Then("the theme uses auto scheme and standard contrast", async ({ theme }) => {
+  expect(await theme.readProperty("#live", "scheme")).toBe("auto");
+  expect(await theme.readProperty("#live", "contrast")).toBe("standard");
+});
+
 Given("a theme with density {int}", async ({ theme }, density: number) => {
   await theme.show(`<m3e-theme density="${density}"><div id="probe"></div></m3e-theme>`);
 });
@@ -194,3 +248,27 @@ Then(
     await expect.poll(() => theme.readTokens("#live-probe")).toEqual(await theme.readTokens("#fresh-probe"));
   },
 );
+
+Given("an image filled with {string}", async ({ page, render }, color: string) => {
+  await render('<img id="source" alt="Source color">', undefined, "window.extractThemeColor = getColorFromImage;");
+  await page.locator("#source").evaluate(async (image: HTMLImageElement, value) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = 32;
+    const context = canvas.getContext("2d");
+    if (!context) throw new Error("Canvas context is unavailable.");
+    context.fillStyle = value;
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    image.src = canvas.toDataURL();
+    await image.decode();
+  }, color);
+});
+When("its theme source color is extracted", async ({ theme, page }) => {
+  theme.extractedColor = await page.locator("#source").evaluate((image: HTMLImageElement) => {
+    const extract = (window as typeof window & { extractThemeColor: (image: HTMLImageElement) => Promise<string> })
+      .extractThemeColor;
+    return extract(image);
+  });
+});
+Then("the extracted theme color is {string}", ({ theme }, color: string) => {
+  expect(theme.extractedColor.toLowerCase()).toBe(color.toLowerCase());
+});

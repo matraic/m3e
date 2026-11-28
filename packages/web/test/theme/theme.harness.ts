@@ -13,6 +13,8 @@ const TOKENS = [
 
 export class ThemeHarness {
   initialPrimary = "";
+  initialIconFills: string[] = [];
+  extractedColor = "";
   changeDispatched = false;
 
   constructor(
@@ -30,6 +32,15 @@ export class ThemeHarness {
 
   readPrimary() {
     return this.readToken("#probe", "--md-sys-color-primary");
+  }
+
+  readIconFills(selector: string) {
+    return this.page.locator(selector).evaluate((icon) => {
+      const surface = icon.shadowRoot?.querySelector(".container");
+      const primary = icon.shadowRoot?.querySelector(".color");
+      if (!surface || !primary) throw new Error("Theme icon paths are missing.");
+      return [getComputedStyle(surface).fill, getComputedStyle(primary).fill];
+    });
   }
 
   readSprings(selector: string) {
